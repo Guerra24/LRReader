@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="LRReader.Views.HostPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LRReader.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:appmodel="using:Windows.ApplicationModel"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="TitleBar" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="32">
+            <Grid.Background>
+                <AcrylicBrush
+                    BackgroundSource="HostBackdrop"
+                    TintColor="{ThemeResource BrushDeepBackgroundColor}"
+                    TintOpacity="0.7"
+                    FallbackColor="{ThemeResource ColorHamburgerBackground}"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="MainTitleBar" Width="Auto" Background="Transparent"/>
+            <Grid x:Name="TitleBarLeft" HorizontalAlignment="Left">
+                <TextBlock x:Name="AppTitle" Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind appmodel:Package.Current.DisplayName}" VerticalAlignment="Center" IsHitTestVisible="False" Margin="12,0,0,0"/>
+            </Grid>
+            <Grid x:Name="TitleBarRight" HorizontalAlignment="Right">
+            </Grid>
+        </Grid>
+        <Frame Grid.Row="1" x:Name="ContentFrame">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
+    </Grid>
+</Page>

@@ -1,0 +1,26 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="BrushBaseBackground" Color="Black" />
+            <SolidColorBrush x:Key="BrushText" Color="Black" />
+            <SolidColorBrush x:Key="BrushTextInverted" Color="White" />
+            <SolidColorBrush x:Key="BrushDeepBackground" Color="White" />
+            <Color x:Key="BrushDeepBackgroundColor">White</Color>
+            <SolidColorBrush x:Key="BrushHamburgerBackground" Color="#eaeaea" />
+            <Color x:Key="ColorHamburgerBackground">#eaeaea</Color>
+            <AcrylicBrush x:Key="GridOverGridBackground" BackgroundSource="Backdrop" TintColor="{StaticResource BrushDeepBackgroundColor}" TintOpacity="0.6" FallbackColor="{StaticResource BrushDeepBackgroundColor}"/>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="BrushText" Color="White" />
+            <SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
+            <SolidColorBrush x:Key="BrushTextInverted" Color="Black" />
+            <SolidColorBrush x:Key="BrushDeepBackground" Color="#0a0a0a" />
+            <Color x:Key="BrushDeepBackgroundColor">#0a0a0a</Color>
+            <SolidColorBrush x:Key="BrushHamburgerBackground" Color="#1f1f1f" />
+            <Color x:Key="ColorHamburgerBackground">#1f1f1f</Color>
+            <AcrylicBrush x:Key="GridOverGridBackground" BackgroundSource="Backdrop" TintColor="{StaticResource BrushDeepBackgroundColor}" TintOpacity="0.6" FallbackColor="{StaticResource BrushDeepBackgroundColor}"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>
