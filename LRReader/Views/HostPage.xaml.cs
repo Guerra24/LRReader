@@ -1,4 +1,5 @@
-﻿using LRReader.Views.Main;
+﻿using LRReader.Internal;
+using LRReader.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -16,6 +18,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -32,59 +35,101 @@ namespace LRReader.Views
 			this.InitializeComponent();
 			CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 			coreTitleBar.ExtendViewIntoTitleBar = true;
-			TitleBar.Height = coreTitleBar.Height;
-			Window.Current.SetTitleBar(MainTitleBar);
-			coreTitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
-			coreTitleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
-			Window.Current.Activated += TitleBar_Activated;
 
 			ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 			titleBar.ButtonForegroundColor = (Color)this.Resources["SystemBaseHighColor"];
 
-			// Load index page
-			ContentFrame.Navigate(typeof(FirstRun));
-			ContentFrame.Navigated += OnContentNavigatedTo;
-			SystemNavigationManager.GetForCurrentView().BackRequested += OnContentBackRequested;
+			Global.Init(); // Init global static data
+			Global.EventManager.ShowErrorEvent += ShowError;
+
+			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
+
+			object firstRun = roamingSettings.Values["FirstRun"];
+			if (firstRun != null)
+			{
+				if (!(bool)firstRun)
+				{
+					Global.LRRApi.RefreshSettings();
+					NavView.SelectedItem = NavView.MenuItems[0];
+					NavView_Navigate("archives", new EntranceNavigationTransitionInfo());
+				}
+			}
+			else
+			{
+				ContentFrame.Navigate(typeof(FirstRun), new DrillInNavigationTransitionInfo());
+			}
 		}
 
-		private void OnContentNavigatedTo(object sender, NavigationEventArgs e)
+		private readonly List<(string Tag, Type Page)> pages = new List<(string Tag, Type Page)>
 		{
-			SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
-		}
+			("archives", typeof(ArchivesPage)),
+			("archives", typeof(ArchivePage)),
+			("archives", typeof(ReaderPage)),
+			("stats", typeof(StatisticsPage))
+		};
 
-		private void OnContentBackRequested(object sender, BackRequestedEventArgs e)
+		private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
 		{
 			ContentFrame.GoBack();
 		}
 
-		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
+		private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
 		{
-			TitleBar.Height = coreTitleBar.Height;
-			TitleBarLeft.Margin = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0, 0, 0);
-			TitleBarRight.Margin = new Thickness(0, 0, coreTitleBar.SystemOverlayRightInset, 0);
+			if (args.IsSettingsInvoked)
+			{
+				NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
+			}
+			else if (args.InvokedItemContainer != null)
+			{
+				var tag = args.InvokedItemContainer.Tag.ToString();
+				NavView_Navigate(tag, args.RecommendedNavigationTransitionInfo);
+			}
 		}
 
-		private void TitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+		private void NavView_Navigate(string tag, NavigationTransitionInfo transInfo)
 		{
-			if (sender.IsVisible)
+			Type page = null;
+			if (tag == "settings")
 			{
-				TitleBar.Visibility = Visibility.Visible;
+				page = typeof(SettingsPage);
 			}
 			else
 			{
-				TitleBar.Visibility = Visibility.Collapsed;
+				var item = pages.FirstOrDefault(p => p.Tag.Equals(tag));
+				page = item.Page;
+			}
+			Type prevPage = ContentFrame.CurrentSourcePageType;
+			if (!(page is null) && !Type.Equals(prevPage, page))
+			{
+				ContentFrame.Navigate(page, null, transInfo);
 			}
 		}
-		private void TitleBar_Activated(object sender, WindowActivatedEventArgs e)
+
+		private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
 		{
-			SolidColorBrush foreground = null;
-			if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
-				foreground = new SolidColorBrush((Color)this.Resources["SystemBaseHighColor"]);
-			else
-				foreground = new SolidColorBrush(Colors.Gray);
-			AppTitle.Foreground = foreground;
+			if (ContentFrame.SourcePageType == typeof(SettingsPage))
+			{
+				NavView.SelectedItem = NavView.SettingsItem;
+			}
+			else if (ContentFrame.SourcePageType != null)
+			{
+				var item = pages.FirstOrDefault(p => p.Page == e.SourcePageType);
+
+				NavView.SelectedItem = NavView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(n => n.Tag.Equals(item.Tag));
+			}
+		}
+
+		private async void ShowError(string title, string content)
+		{
+			ContentDialog noServer = new ContentDialog()
+			{
+				Title = title,
+				Content = content,
+				CloseButtonText = "Ok"
+			};
+			await noServer.ShowAsync();
 		}
 	}
 }

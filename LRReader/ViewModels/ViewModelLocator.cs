@@ -7,6 +7,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using CommonServiceLocator;
+using LRReader.Internal;
+using Windows.Storage;
 
 namespace LRReader.ViewModels
 {
@@ -17,14 +19,31 @@ namespace LRReader.ViewModels
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
 			SimpleIoc.Default.Register<INavigationService, NavigationService>();
-			SimpleIoc.Default.Register<MainPageViewModel>();
+			SimpleIoc.Default.Register<ArchivesPageViewModel>();
+			SimpleIoc.Default.Register<ArchivePageViewModel>();
+			SimpleIoc.Default.Register<ReaderPageViewModel>();
 		}
 
-		public MainPageViewModel MainPageInstance
+		public ArchivesPageViewModel ArchivesPageInstance
 		{
 			get
 			{
-				return ServiceLocator.Current.GetInstance<MainPageViewModel>();
+				return ServiceLocator.Current.GetInstance<ArchivesPageViewModel>();
+			}
+		}
+
+		public ArchivePageViewModel ArchivePageInstance
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<ArchivePageViewModel>();
+			}
+		}
+		public ReaderPageViewModel ReaderPageInstance
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<ReaderPageViewModel>();
 			}
 		}
 	}

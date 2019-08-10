@@ -8,9 +8,12 @@
             <SolidColorBrush x:Key="BrushTextInverted" Color="White" />
             <SolidColorBrush x:Key="BrushDeepBackground" Color="White" />
             <Color x:Key="BrushDeepBackgroundColor">White</Color>
+            <SolidColorBrush x:Key="BrushAnimeItemBackground" Color="#E5E5E5" />
             <SolidColorBrush x:Key="BrushHamburgerBackground" Color="#eaeaea" />
             <Color x:Key="ColorHamburgerBackground">#eaeaea</Color>
             <AcrylicBrush x:Key="GridOverGridBackground" BackgroundSource="Backdrop" TintColor="{StaticResource BrushDeepBackgroundColor}" TintOpacity="0.6" FallbackColor="{StaticResource BrushDeepBackgroundColor}"/>
+            <Color x:Key="ColorNavTop">#171717</Color>
+            <SolidColorBrush x:Key="BrushItemGridBackground" Color="#E5E5E5" />
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="BrushText" Color="White" />
@@ -18,9 +21,12 @@
             <SolidColorBrush x:Key="BrushTextInverted" Color="Black" />
             <SolidColorBrush x:Key="BrushDeepBackground" Color="#0a0a0a" />
             <Color x:Key="BrushDeepBackgroundColor">#0a0a0a</Color>
+            <SolidColorBrush x:Key="BrushAnimeItemBackground" Color="#2f2f2f" />
             <SolidColorBrush x:Key="BrushHamburgerBackground" Color="#1f1f1f" />
             <Color x:Key="ColorHamburgerBackground">#1f1f1f</Color>
             <AcrylicBrush x:Key="GridOverGridBackground" BackgroundSource="Backdrop" TintColor="{StaticResource BrushDeepBackgroundColor}" TintOpacity="0.6" FallbackColor="{StaticResource BrushDeepBackgroundColor}"/>
+            <Color x:Key="ColorNavTop">#171717</Color>
+            <SolidColorBrush x:Key="BrushItemGridBackground" Color="#1f1f1f" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

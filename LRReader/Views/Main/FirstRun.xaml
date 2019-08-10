@@ -6,21 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Unloaded="Page_Unloaded">
 
     <Grid>
-        <Grid.Background>
-            <AcrylicBrush
-                    BackgroundSource="HostBackdrop"
-                    TintColor="{ThemeResource BrushDeepBackgroundColor}"
-                    TintOpacity="0.7"
-                    FallbackColor="{ThemeResource BrushDeepBackgroundColor}"/>
-        </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10">
             <TextBlock Text="Welcome" FontSize="28" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <TextBox PlaceholderText="Server Address" Width="200" Margin="0,0,0,10"/>
-            <TextBox PlaceholderText="API Key" Margin="0,0,0,10"/>
-            <Button HorizontalAlignment="Center">Accept</Button>
+            <TextBox Name="Server" PlaceholderText="Server Address" Width="200" Margin="0,0,0,10"/>
+            <TextBox Name="ApiKey" PlaceholderText="API Key" Margin="0,0,0,10"/>
+            <Button Name="AcceptBtn" HorizontalAlignment="Center" Click="AcceptBtn_Click">Accept</Button>
         </StackPanel>
     </Grid>
 </Page>
