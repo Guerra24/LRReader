@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Internal\Converters.cs" />
     <Compile Include="Internal\EventManager.cs" />
     <Compile Include="Internal\Global.cs" />
     <Compile Include="Internal\ImageManager.cs" />

@@ -31,6 +31,32 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("IsLoading");
 			}
 		}
+		private bool _loadingArchives = false;
+		public bool LoadingArchives
+		{
+			get
+			{
+				return _loadingArchives;
+			}
+			set
+			{
+				_loadingArchives = value;
+				RaisePropertyChanged("LoadingArchives");
+			}
+		}
+		private bool _refreshOnErrorButton = false;
+		public bool RefreshOnErrorButton
+		{
+			get
+			{
+				return _refreshOnErrorButton;
+			}
+			set
+			{
+				_refreshOnErrorButton = value;
+				RaisePropertyChanged("RefreshOnErrorButton");
+			}
+		}
 		private ObservableCollection<Archive> _archiveList = new ObservableCollection<Archive>();
 		public ObservableCollection<Archive> ArchiveList
 		{
@@ -46,6 +72,8 @@ namespace LRReader.ViewModels
 		public async Task Refresh()
 		{
 			ArchiveList.Clear();
+			LoadingArchives = true;
+			RefreshOnErrorButton = false;
 
 			var client = Global.LRRApi.GetClient();
 
@@ -54,6 +82,14 @@ namespace LRReader.ViewModels
 			var r = await client.ExecuteGetTaskAsync(rq);
 
 			var result = LRRApi.GetResult<List<Archive>>(r);
+
+			LoadingArchives = false;
+			if(!r.IsSuccessful)
+			{
+				RefreshOnErrorButton = true;
+				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return;
+			}
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:

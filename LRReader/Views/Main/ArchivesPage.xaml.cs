@@ -51,5 +51,10 @@ namespace LRReader.Views.Main
 			_selectedID = (e.ClickedItem as Archive).arcid;
 			Frame.Navigate(typeof(ArchivePage), e.ClickedItem, new DrillInNavigationTransitionInfo());
 		}
+
+		private async void Button_Click(object sender, RoutedEventArgs e)
+		{
+			await Data.Refresh();
+		}
 	}
 }

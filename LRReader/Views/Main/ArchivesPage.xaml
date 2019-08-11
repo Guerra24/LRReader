@@ -5,11 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:items="using:LRReader.Views.Items"
     xmlns:local="using:LRReader.Views.Main"
+    xmlns:convrt="using:LRReader.Internal"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding ArchivesPageInstance, Source={StaticResource Locator}}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <convrt:BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Page.Resources>
 
     <Grid>
         <GridView
@@ -43,5 +48,7 @@
                 </TransitionCollection>
             </GridView.ItemContainerTransitions>
         </GridView>
+        <ProgressRing IsActive="{Binding LoadingArchives}" Width="80" Height="80"/>
+        <Button HorizontalAlignment="Center" Visibility="{Binding Path=RefreshOnErrorButton, Converter={StaticResource BoolToVis}}" Click="Button_Click">Retry</Button>
     </Grid>
 </Page>
