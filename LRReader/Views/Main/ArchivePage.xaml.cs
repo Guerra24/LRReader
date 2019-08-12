@@ -49,5 +49,10 @@ namespace LRReader.Views.Main
 			//animation.Configuration = new DirectConnectedAnimationConfiguration();
 			Frame.Navigate(typeof(ReaderPage), new ReaderPagePayload() { Archive = Data.Archive, Image = e.ClickedItem as string }, new DrillInNavigationTransitionInfo()); //new SuppressNavigationTransitionInfo());
 		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Data.LoadImages();
+		}
 	}
 }

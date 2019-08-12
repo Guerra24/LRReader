@@ -1,28 +1,23 @@
 ﻿<UserControl
-    x:Class="LRReader.Views.Items.ArchiveImage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:LRReader.Views.Items"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="282"
-    d:DesignWidth="200"
-    DataContextChanged="UserControl_DataContextChanged"
-    mc:Ignorable="d">
+	x:Class="LRReader.Views.Items.ArchiveImage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.Views.Items"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DesignHeight="282"
+	d:DesignWidth="200"
+	DataContextChanged="UserControl_DataContextChanged"
+	mc:Ignorable="d">
 
-    <Grid
-        Width="200"
-        Height="282"
-        Background="{ThemeResource BrushItemGridBackground}">
-        <Image Name="Image" ImageOpened="Image_ImageOpened">
-            <Image.Source>
-                <BitmapImage UriSource="{Binding}" />
-            </Image.Source>
-        </Image>
-        <ProgressRing
-            Name="Ring"
-            Width="50"
-            Height="50"
-            IsActive="True" />
-    </Grid>
+	<Grid Width="200" Height="282" Background="{ThemeResource BrushItemGridBackground}">
+		<Image Name="Image" ImageOpened="Image_ImageOpened">
+			<Image.Source>
+				<BitmapImage DecodePixelWidth="200" UriSource="{Binding}" />
+			</Image.Source>
+		</Image>
+		<ProgressRing
+			Name="Ring" Width="50" Height="50"
+			IsActive="True" />
+	</Grid>
 </UserControl>

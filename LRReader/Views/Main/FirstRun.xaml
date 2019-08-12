@@ -1,19 +1,24 @@
 ﻿<Page
-    x:Class="LRReader.Views.Main.FirstRun"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LRReader.Views.Main"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Unloaded="Page_Unloaded">
+	x:Class="LRReader.Views.Main.FirstRun"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.Views.Main"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	Unloaded="Page_Unloaded"
+	mc:Ignorable="d">
 
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10">
-            <TextBlock Text="Welcome" FontSize="28" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <TextBox Name="Server" PlaceholderText="Server Address" Width="200" Margin="0,0,0,10"/>
-            <TextBox Name="ApiKey" PlaceholderText="API Key" Margin="0,0,0,10"/>
-            <Button Name="AcceptBtn" HorizontalAlignment="Center" Click="AcceptBtn_Click">Accept</Button>
-        </StackPanel>
-    </Grid>
+	<Grid>
+		<StackPanel Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock
+				Margin="0,0,0,10" HorizontalAlignment="Center" FontSize="28"
+				Text="Welcome" />
+			<TextBox
+				Name="Server" Width="200" Margin="0,0,0,10"
+				PlaceholderText="Server Address" />
+			<TextBox Name="ApiKey" Margin="0,0,0,10" PlaceholderText="API Key" />
+			<Button Name="AcceptBtn" HorizontalAlignment="Center" Click="AcceptBtn_Click">Accept</Button>
+		</StackPanel>
+	</Grid>
 </Page>

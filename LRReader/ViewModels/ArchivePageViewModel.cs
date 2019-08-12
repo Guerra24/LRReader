@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
 using LRReader.Models.Main;
 using RestSharp;
@@ -29,6 +30,32 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("IsLoading");
 			}
 		}
+		private bool _loadingImages = false;
+		public bool LoadingImages
+		{
+			get
+			{
+				return _loadingImages;
+			}
+			set
+			{
+				_loadingImages = value;
+				RaisePropertyChanged("LoadingImages");
+			}
+		}
+		private bool _refreshOnErrorButton = false;
+		public bool RefreshOnErrorButton
+		{
+			get
+			{
+				return _refreshOnErrorButton;
+			}
+			set
+			{
+				_refreshOnErrorButton = value;
+				RaisePropertyChanged("RefreshOnErrorButton");
+			}
+		}
 		private ObservableCollection<String> _archiveImages = new ObservableCollection<String>();
 		public ObservableCollection<string> ArchiveImages
 		{
@@ -56,6 +83,9 @@ namespace LRReader.ViewModels
 
 		public void LoadImages()
 		{
+			LoadingImages = true;
+			RefreshOnErrorButton = false;
+
 			var client = Global.LRRApi.GetClient();
 
 			var rq = new RestRequest("api/extract");
@@ -69,13 +99,20 @@ namespace LRReader.ViewModels
 			{
 				ArchiveImages.Add(client.BaseUrl + s);
 			}*/
-			 client.GetAsync<ArchiveImages>(rq, async (r, h) =>
-			{
-				foreach (var s in r.Data.pages)
-				{
-					await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => ArchiveImages.Add(client.BaseUrl + s));
-				}
-			});
+			client.GetAsync<ArchiveImages>(rq, async (r, h) =>
+		   {
+			   await DispatcherHelper.RunAsync(() => LoadingImages = false);
+			   if (!r.IsSuccessful)
+			   {
+				   await DispatcherHelper.RunAsync(() => RefreshOnErrorButton = true);
+				   Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+				   return;
+			   }
+			   foreach (var s in r.Data.pages)
+			   {
+				   await DispatcherHelper.RunAsync(() => ArchiveImages.Add(client.BaseUrl + s));
+			   }
+		   });
 		}
 	}
 }

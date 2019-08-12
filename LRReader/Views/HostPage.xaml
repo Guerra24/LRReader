@@ -1,39 +1,38 @@
 ﻿<Page
-    x:Class="LRReader.Views.HostPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:appmodel="using:Windows.ApplicationModel"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:LRReader.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    mc:Ignorable="d">
-    <Page.Resources>
-        <ResourceDictionary>
-            <AcrylicBrush
-                x:Key="NavigationViewTopPaneBackground"
-                BackgroundSource="HostBackdrop"
-                FallbackColor="{ThemeResource ColorNavTop}"
-                TintColor="{ThemeResource SystemChromeMediumColor}"
-                TintOpacity=".5" />
-        </ResourceDictionary>
-    </Page.Resources>
+	x:Class="LRReader.Views.HostPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:appmodel="using:Windows.ApplicationModel"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	mc:Ignorable="d">
+	<Page.Resources>
+		<ResourceDictionary>
+			<AcrylicBrush
+				x:Key="NavigationViewTopPaneBackground" BackgroundSource="HostBackdrop"
+				FallbackColor="{ThemeResource ColorNavTop}"
+				TintColor="{ThemeResource SystemChromeMediumColor}"
+				TintOpacity=".5" />
+		</ResourceDictionary>
+	</Page.Resources>
 
-    <Grid>
-        <NavigationView
-            Name="NavView"
-            Grid.Row="0"
-            BackRequested="NavView_BackRequested"
-            IsBackEnabled="{Binding ElementName=ContentFrame, Path=CanGoBack, Mode=OneWay}"
-            PaneDisplayMode="Top" ItemInvoked="NavView_ItemInvoked">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Tag="archives" Content="Archives"/>
-                <NavigationViewItem Tag="stats" Content="Statistics"/>
-            </NavigationView.MenuItems>
-            <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox Name="NavViewSearchBox" PlaceholderText="Search..." MinWidth="200" QueryIcon="Find"/>
-            </NavigationView.AutoSuggestBox>
-            <Frame Name="ContentFrame" CacheSize="10" Navigated="ContentFrame_Navigated" />
-        </NavigationView>
-    </Grid>
+	<Grid>
+		<NavigationView
+			Name="NavView" Grid.Row="0" BackRequested="NavView_BackRequested"
+			IsBackEnabled="{Binding ElementName=ContentFrame, Path=CanGoBack, Mode=OneWay}"
+			ItemInvoked="NavView_ItemInvoked" PaneDisplayMode="Top">
+			<NavigationView.MenuItems>
+				<NavigationViewItem Content="Archives" Tag="archives" />
+				<NavigationViewItem Content="Statistics" Tag="stats" />
+			</NavigationView.MenuItems>
+			<NavigationView.AutoSuggestBox>
+				<AutoSuggestBox
+					Name="NavViewSearchBox" MinWidth="200" PlaceholderText="Search..."
+					QueryIcon="Find" />
+			</NavigationView.AutoSuggestBox>
+			<Frame Name="ContentFrame" CacheSize="10" Navigated="ContentFrame_Navigated" />
+		</NavigationView>
+	</Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using LRReader.Internal;
+﻿using GalaSoft.MvvmLight.Threading;
+using LRReader.Internal;
 using LRReader.Views.Main;
 using System;
 using System.Collections.Generic;
@@ -123,13 +124,17 @@ namespace LRReader.Views
 
 		private async void ShowError(string title, string content)
 		{
-			ContentDialog noServer = new ContentDialog()
+			await DispatcherHelper.RunAsync(async () =>
 			{
-				Title = title,
-				Content = content,
-				CloseButtonText = "Ok"
-			};
-			await noServer.ShowAsync();
+
+				ContentDialog noServer = new ContentDialog()
+				{
+					Title = title,
+					Content = content,
+					CloseButtonText = "Ok"
+				};
+				await noServer.ShowAsync();
+			});
 		}
 	}
 }

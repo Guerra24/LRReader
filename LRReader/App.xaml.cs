@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using LRReader.Views;
+using GalaSoft.MvvmLight.Threading;
 
 namespace LRReader
 {
@@ -72,6 +73,7 @@ namespace LRReader
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+			DispatcherHelper.Initialize();
         }
 
         /// <summary>
