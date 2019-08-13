@@ -124,12 +124,15 @@
     <Compile Include="Internal\Global.cs" />
     <Compile Include="Internal\ImageManager.cs" />
     <Compile Include="Internal\PagePayloads.cs" />
+    <Compile Include="Internal\SettingsManager.cs" />
+    <Compile Include="Internal\Util.cs" />
     <Compile Include="Models\Api\LRRApi.cs" />
     <Compile Include="Models\Main\Archive.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ReaderPageViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\ArchivesPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\HostPage.xaml.cs">
       <DependentUpon>HostPage.xaml</DependentUpon>

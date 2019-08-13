@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LRReader.Internal;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,26 @@ namespace LRReader.Views.Items
 		public ReaderImage()
 		{
 			this.InitializeComponent();
+		}
+
+		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+		{
+			var point = e.GetPosition(ScrollViewer);
+			if (Math.Abs(ScrollViewer.ZoomFactor - Global.SettingsManager.BaseZoom) > 0.20)
+				ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom);
+			else
+				ScrollViewer.ChangeView(point.X, point.Y, Global.SettingsManager.ZoomedFactor);
+		}
+
+		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			Image.MaxWidth = ScrollViewer.ActualWidth;
+			Image.MaxHeight = ScrollViewer.ActualHeight;
+		}
+
+		private void Image_ImageOpened(object sender, RoutedEventArgs e)
+		{
+			ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom);
 		}
 	}
 }

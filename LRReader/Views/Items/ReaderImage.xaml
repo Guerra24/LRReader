@@ -9,9 +9,9 @@
 	d:DesignWidth="400"
 	mc:Ignorable="d">
 
-	<Image Name="Image" x:FieldModifier="public">
-		<Image.Source>
-			<BitmapImage UriSource="{Binding}" />
-		</Image.Source>
-	</Image>
+	<ScrollViewer
+		Name="ScrollViewer" DoubleTapped="ScrollViewer_DoubleTapped" HorizontalScrollBarVisibility="Auto"
+		SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto">
+		<Image Name="Image" x:FieldModifier="public" Source="{Binding}" ImageOpened="Image_ImageOpened" />
+	</ScrollViewer>
 </UserControl>

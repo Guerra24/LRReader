@@ -41,6 +41,7 @@ namespace LRReader.Views.Main
 			base.OnNavigatedTo(e);
 			Data.Archive = e.Parameter as Archive;
 			Data.LoadImages();
+			Data.LoadTags();
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)

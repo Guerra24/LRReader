@@ -52,6 +52,27 @@ namespace LRReader.Views.Main
 			//var item = FlipView.ContainerFromItem(FlipView.SelectedItem) as FlipViewItem;
 			//anim?.TryStart((item.ContentTemplateRoot as ReaderImage).Image);
 			FlipView.Focus(FocusState.Programmatic);
+			// Let's remove the buttons
+			var grid = (Grid)VisualTreeHelper.GetChild(FlipView, 0);
+			for (int i = grid.Children.Count - 1; i >= 0; i--)
+				if (grid.Children[i] is Button)
+					grid.Children.RemoveAt(i);
+		}
+
+		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			var point = e.GetPosition(FlipView);
+			double distance = FlipView.ActualWidth / 6.0;
+			if (point.X < distance)
+			{
+				if (FlipView.SelectedIndex > 0)
+					--FlipView.SelectedIndex;
+			}
+			else if (point.X > FlipView.ActualWidth - distance)
+			{
+				if (FlipView.SelectedIndex < FlipView.Items.Count - 1)
+					++FlipView.SelectedIndex;
+			}
 		}
 	}
 }

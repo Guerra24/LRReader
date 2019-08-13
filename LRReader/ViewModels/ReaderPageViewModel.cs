@@ -29,7 +29,7 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("IsLoading");
 			}
 		}
-		private ObservableCollection<String> _archiveImages = new ObservableCollection<String>();
+		private ObservableCollection<string> _archiveImages = new ObservableCollection<string>();
 		public ObservableCollection<string> ArchiveImages
 		{
 			get

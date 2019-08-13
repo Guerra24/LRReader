@@ -1,4 +1,5 @@
-﻿using LRReader.Models.Main;
+﻿using LRReader.Internal;
+using LRReader.Models.Main;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -25,13 +26,11 @@ namespace LRReader.Models.Api
 
 		public void RefreshSettings()
 		{
-			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-			string serverAddress = roamingSettings.Values["ServerAddress"] as string;
-			client.BaseUrl = new Uri(serverAddress);
-			apiKey = roamingSettings.Values["ApiKey"] as string;
+			var sm = Global.SettingsManager;
+			client.BaseUrl = new Uri(sm.ServerAddress);
+			apiKey = sm.ServerApiKey;
 			if (!string.IsNullOrEmpty(apiKey))
 			{
-				Debug.WriteLine("Using key");
 				client.RemoveDefaultParameter("key");
 				client.AddDefaultParameter("key", apiKey);
 			}

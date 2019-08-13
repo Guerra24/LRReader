@@ -16,7 +16,7 @@
 			Name="FlipView" Background="Transparent" FocusVisualPrimaryThickness="0"
 			FocusVisualSecondaryThickness="0"
 			ItemsSource="{Binding ArchiveImages}"
-			Loaded="FlipView_Loaded" UseTouchAnimationsForAllNavigation="True">
+			Loaded="FlipView_Loaded" UseTouchAnimationsForAllNavigation="True" Tapped="FlipView_Tapped">
 			<FlipView.ItemTemplate>
 				<DataTemplate>
 					<items:ReaderImage />

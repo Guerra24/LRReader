@@ -33,10 +33,7 @@ namespace LRReader.ViewModels
 		private bool _loadingImages = false;
 		public bool LoadingImages
 		{
-			get
-			{
-				return _loadingImages;
-			}
+			get => _loadingImages;
 			set
 			{
 				_loadingImages = value;
@@ -46,10 +43,7 @@ namespace LRReader.ViewModels
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
 		{
-			get
-			{
-				return _refreshOnErrorButton;
-			}
+			get => _refreshOnErrorButton;
 			set
 			{
 				_refreshOnErrorButton = value;
@@ -59,18 +53,12 @@ namespace LRReader.ViewModels
 		private ObservableCollection<String> _archiveImages = new ObservableCollection<String>();
 		public ObservableCollection<string> ArchiveImages
 		{
-			get
-			{
-				return _archiveImages;
-			}
+			get => _archiveImages;
 		}
 		private Archive _archive = new Archive();
 		public Archive Archive
 		{
-			get
-			{
-				return _archive;
-			}
+			get => _archive;
 			set
 			{
 				if (!_archive.Equals(value))
@@ -80,11 +68,27 @@ namespace LRReader.ViewModels
 				}
 			}
 		}
+		private ObservableCollection<string> _tags = new ObservableCollection<string>();
+		public ObservableCollection<string> Tags
+		{
+			get => _tags;
+		}
+
+		public void LoadTags()
+		{
+			Tags.Clear();
+
+			foreach (var s in Archive.tags.Split(", "))
+			{
+				Tags.Add(s);
+			}
+		}
 
 		public void LoadImages()
 		{
 			LoadingImages = true;
 			RefreshOnErrorButton = false;
+			ArchiveImages.Clear();
 
 			var client = Global.LRRApi.GetClient();
 
@@ -92,7 +96,6 @@ namespace LRReader.ViewModels
 
 			rq.AddParameter("id", Archive.arcid);
 
-			ArchiveImages.Clear();
 			/*var r = client.Get<ArchiveImages>(rq);
 
 			foreach (var s in r.Data.pages)

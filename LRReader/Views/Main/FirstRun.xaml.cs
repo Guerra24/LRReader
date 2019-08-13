@@ -37,15 +37,8 @@ namespace LRReader.Views.Main
 		{
 			if (!string.IsNullOrEmpty(Server.Text))
 			{
-				ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
 				if (Uri.IsWellFormedUriString(Server.Text, UriKind.Absolute))
 				{
-					roamingSettings.Values["ServerAddress"] = Server.Text;
-					if (!string.IsNullOrEmpty(ApiKey.Text))
-						roamingSettings.Values["ApiKey"] = ApiKey.Text;
-					else
-						roamingSettings.Values["ApiKey"] = "";
-					roamingSettings.Values["FirstRun"] = false;
 					Global.LRRApi.RefreshSettings();
 					Frame.Navigate(typeof(ArchivesPage), new DrillInNavigationTransitionInfo());
 				}
@@ -63,6 +56,7 @@ namespace LRReader.Views.Main
 		private void Page_Unloaded(object sender, RoutedEventArgs e)
 		{
 			Frame.BackStack.Clear();
+			Global.EventManager.ShowHeader(true);
 		}
 	}
 }

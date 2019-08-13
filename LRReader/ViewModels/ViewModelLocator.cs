@@ -22,29 +22,24 @@ namespace LRReader.ViewModels
 			SimpleIoc.Default.Register<ArchivesPageViewModel>();
 			SimpleIoc.Default.Register<ArchivePageViewModel>();
 			SimpleIoc.Default.Register<ReaderPageViewModel>();
+			SimpleIoc.Default.Register<SettingsPageViewModel>();
 		}
 
 		public ArchivesPageViewModel ArchivesPageInstance
 		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<ArchivesPageViewModel>();
-			}
+			get => ServiceLocator.Current.GetInstance<ArchivesPageViewModel>();
 		}
-
 		public ArchivePageViewModel ArchivePageInstance
 		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<ArchivePageViewModel>();
-			}
+			get => ServiceLocator.Current.GetInstance<ArchivePageViewModel>();
 		}
 		public ReaderPageViewModel ReaderPageInstance
 		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<ReaderPageViewModel>();
-			}
+			get => ServiceLocator.Current.GetInstance<ReaderPageViewModel>();
+		}
+		public SettingsPageViewModel SettingsPageInstance
+		{
+			get => ServiceLocator.Current.GetInstance<SettingsPageViewModel>();
 		}
 	}
 }

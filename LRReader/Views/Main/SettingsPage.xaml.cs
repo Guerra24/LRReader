@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,47 +25,34 @@ namespace LRReader.Views.Main
 	/// </summary>
 	public sealed partial class SettingsPage : Page
 	{
+		private SettingsPageViewModel Data;
+
 		public SettingsPage()
 		{
 			this.InitializeComponent();
+			Data = DataContext as SettingsPageViewModel;
 		}
 
-		private void ApplyCntBtn_Click(object sender, RoutedEventArgs e)
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
-			if (!string.IsNullOrEmpty(Server.Text))
+			base.OnNavigatingFrom(e);
+			if (!string.IsNullOrEmpty(Data.SettingsManager.ServerAddress))
 			{
-				ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-				if (Uri.IsWellFormedUriString(Server.Text, UriKind.Absolute))
+				if (Uri.IsWellFormedUriString(Data.SettingsManager.ServerAddress, UriKind.Absolute))
 				{
-					roamingSettings.Values["ServerAddress"] = Server.Text;
-					if (!string.IsNullOrEmpty(ApiKey.Password))
-						roamingSettings.Values["ApiKey"] = ApiKey.Password;
-					else
-						roamingSettings.Values["ApiKey"] = "";
 					Global.LRRApi.RefreshSettings();
-				} else
+				}
+				else
 				{
+					e.Cancel = true;
 					Global.EventManager.ShowError("Connection Error", "Invalid address");
 				}
 			}
 			else
 			{
+				e.Cancel = true;
 				Global.EventManager.ShowError("Connection Error", "Empty server address");
 			}
-		}
-
-		private void Page_Loaded(object sender, RoutedEventArgs e)
-		{
-			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-			Server.Text = roamingSettings.Values["ServerAddress"] as string;
-			ApiKey.Password = roamingSettings.Values["ApiKey"] as string;
-		}
-
-		private void ResetCntBtn_Click(object sender, RoutedEventArgs e)
-		{
-			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-			Server.Text = roamingSettings.Values["ServerAddress"] as string;
-			ApiKey.Password = roamingSettings.Values["ApiKey"] as string;
 		}
 	}
 }

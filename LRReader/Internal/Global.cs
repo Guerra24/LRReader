@@ -12,6 +12,7 @@ namespace LRReader.Internal
 		public static LRRApi LRRApi { get; set; }
 		public static ImageManager ImageManager { get; set; }
 		public static EventManager EventManager { get; set; }
+		public static SettingsManager SettingsManager { get; set; }
 
 		public static void Init()
 		{
@@ -19,6 +20,7 @@ namespace LRReader.Internal
 			ImageManager = new ImageManager();
 			ImageManager.Init();
 			EventManager = new EventManager();
+			SettingsManager = new SettingsManager();
 		}
 
 	}

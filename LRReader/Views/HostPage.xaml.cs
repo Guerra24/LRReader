@@ -10,8 +10,10 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -44,22 +46,22 @@ namespace LRReader.Views
 
 			Global.Init(); // Init global static data
 			Global.EventManager.ShowErrorEvent += ShowError;
+			Global.EventManager.ShowHeaderEvent += ShowHeader;
 
 			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
 
-			object firstRun = roamingSettings.Values["FirstRun"];
-			if (firstRun != null)
+			bool firstRun = string.IsNullOrEmpty(Global.SettingsManager.ServerAddress);
+			if (firstRun)
 			{
-				if (!(bool)firstRun)
-				{
-					Global.LRRApi.RefreshSettings();
-					NavView.SelectedItem = NavView.MenuItems[0];
-					NavView_Navigate("archives", new EntranceNavigationTransitionInfo());
-				}
+				NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+				NavView.IsPaneVisible = false;
+				ContentFrame.Navigate(typeof(FirstRun), new DrillInNavigationTransitionInfo());
 			}
 			else
 			{
-				ContentFrame.Navigate(typeof(FirstRun), new DrillInNavigationTransitionInfo());
+				Global.LRRApi.RefreshSettings();
+				NavView.SelectedItem = NavView.MenuItems[0];
+				NavView_Navigate("archives", new EntranceNavigationTransitionInfo());
 			}
 		}
 
@@ -73,7 +75,17 @@ namespace LRReader.Views
 
 		private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
 		{
-			ContentFrame.GoBack();
+			OnBackRequested();
+		}
+
+		private bool OnBackRequested()
+		{
+			if (ContentFrame.CanGoBack)
+			{
+				ContentFrame.GoBack();
+				return true;
+			}
+			return false;
 		}
 
 		private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -135,6 +147,11 @@ namespace LRReader.Views
 				};
 				await noServer.ShowAsync();
 			});
+		}
+		private void ShowHeader(bool value)
+		{
+			NavView.IsPaneVisible = value;
+			NavView.IsBackButtonVisible = value ? NavigationViewBackButtonVisible.Auto : NavigationViewBackButtonVisible.Collapsed;
 		}
 	}
 }
