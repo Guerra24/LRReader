@@ -128,11 +128,13 @@
     <Compile Include="Internal\Util.cs" />
     <Compile Include="Models\Api\LRRApi.cs" />
     <Compile Include="Models\Main\Archive.cs" />
+    <Compile Include="Models\Main\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ReaderPageViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\ArchivesPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\HostPage.xaml.cs">
       <DependentUpon>HostPage.xaml</DependentUpon>
@@ -201,6 +203,9 @@
     </PackageReference>
     <PackageReference Include="RestSharp">
       <Version>106.6.10</Version>
+    </PackageReference>
+    <PackageReference Include="WinRTXamlToolkit.Controls.DataVisualization.UWP">
+      <Version>2.3.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

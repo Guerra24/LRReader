@@ -23,6 +23,7 @@ namespace LRReader.ViewModels
 			SimpleIoc.Default.Register<ArchivePageViewModel>();
 			SimpleIoc.Default.Register<ReaderPageViewModel>();
 			SimpleIoc.Default.Register<SettingsPageViewModel>();
+			SimpleIoc.Default.Register<StatisticsPageViewModel>();
 		}
 
 		public ArchivesPageViewModel ArchivesPageInstance
@@ -40,6 +41,10 @@ namespace LRReader.ViewModels
 		public SettingsPageViewModel SettingsPageInstance
 		{
 			get => ServiceLocator.Current.GetInstance<SettingsPageViewModel>();
+		}
+		public StatisticsPageViewModel StatisticsPageInstance
+		{
+			get => ServiceLocator.Current.GetInstance<StatisticsPageViewModel>();
 		}
 	}
 }

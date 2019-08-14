@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LRReader.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,24 @@ namespace LRReader.Views.Main
 	/// </summary>
 	public sealed partial class StatisticsPage : Page
 	{
+
+		private StatisticsPageViewModel Data;
+
 		public StatisticsPage()
 		{
 			this.InitializeComponent();
+			Data = DataContext as StatisticsPageViewModel;
+		}
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			await Data.LoadTagStats();
+		}
+
+		private async void Button_Click(object sender, RoutedEventArgs e)
+		{
+			await Data.LoadTagStats();
 		}
 	}
 }

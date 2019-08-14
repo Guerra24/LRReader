@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
 using LRReader.Models.Api;
 using LRReader.Models.Main;
 using RestSharp;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace LRReader.ViewModels
 {
-	public class ArchivesPageViewModel : ViewModelBase
+	public class StatisticsPageViewModel : ViewModelBase
 	{
 		private bool _isLoading = false;
 		public bool IsLoading
@@ -28,14 +25,14 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("IsLoading");
 			}
 		}
-		private bool _loadingArchives = false;
-		public bool LoadingArchives
+		private bool _loadingStats = false;
+		public bool LoadingStats
 		{
-			get => _loadingArchives;
+			get => _loadingStats;
 			set
 			{
-				_loadingArchives = value;
-				RaisePropertyChanged("LoadingArchives");
+				_loadingStats = value;
+				RaisePropertyChanged("LoadingStats");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -48,25 +45,24 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("RefreshOnErrorButton");
 			}
 		}
-		private ObservableCollection<Archive> _archiveList = new ObservableCollection<Archive>();
-		public ObservableCollection<Archive> ArchiveList => _archiveList;
+		private ObservableCollection<TagStats> _tagStats = new ObservableCollection<TagStats>();
+		public ObservableCollection<TagStats> TagStats => _tagStats;
 
-		public async Task Refresh()
+		public async Task LoadTagStats()
 		{
-			ArchiveList.Clear();
-			LoadingArchives = true;
+			TagStats.Clear();
+			LoadingStats = true;
 			RefreshOnErrorButton = false;
-
 			var client = Global.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/archivelist");
+			var rq = new RestRequest("api/tagstats");
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<List<Archive>>(r);
+			var result = LRRApi.GetResult<List<TagStats>>(r);
 
-			LoadingArchives = false;
-			if(!r.IsSuccessful)
+			LoadingStats = false;
+			if (!r.IsSuccessful)
 			{
 				RefreshOnErrorButton = true;
 				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
@@ -75,16 +71,19 @@ namespace LRReader.ViewModels
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:
-					foreach (var a in result.Data.OrderBy(a => a.title))
+					int total = 0;
+					foreach (var a in result.Data.OrderByDescending(a => a.weight))
 					{
-						ArchiveList.Add(a);
+						if (total > 20)
+							break;
+						TagStats.Add(a);
+						total++;
 					}
 					break;
 				case HttpStatusCode.Unauthorized:
 					Global.EventManager.ShowError("API Error", result.Error.error);
 					break;
 			}
-
 		}
 	}
 }

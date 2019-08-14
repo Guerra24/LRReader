@@ -2,12 +2,32 @@
 	x:Class="LRReader.Views.Main.StatisticsPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:convrt="using:LRReader.Internal"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding StatisticsPageInstance, Source={StaticResource Locator}}"
 	NavigationCacheMode="Enabled"
 	mc:Ignorable="d">
 
-	<Grid />
+	<Page.Resources>
+		<convrt:BooleanToVisibilityConverter x:Key="BoolToVis" />
+	</Page.Resources>
+
+	<Grid>
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<StackPanel>
+				<charting:Chart>
+					<charting:PieSeries IndependentValuePath="text" DependentValuePath="weight"  ItemsSource="{Binding TagStats}"/>
+				</charting:Chart>
+				<charting:Chart Height="400">
+					<charting:ColumnSeries Title="Tags" IndependentValuePath="text" DependentValuePath="weight"  ItemsSource="{Binding TagStats}"/>
+				</charting:Chart>
+			</StackPanel>
+		</ScrollViewer>
+		<ProgressRing Width="80" Height="80" IsActive="{Binding LoadingStats}" />
+		<Button HorizontalAlignment="Center" Click="Button_Click" Visibility="{Binding Path=RefreshOnErrorButton, Converter={StaticResource BoolToVis}}">Retry</Button>
+	</Grid>
 </Page>
