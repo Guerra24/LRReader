@@ -11,11 +11,7 @@
 	mc:Ignorable="d">
 
 	<Grid Width="200" Height="282" Background="{ThemeResource BrushItemGridBackground}">
-		<Image Name="Image" ImageOpened="Image_ImageOpened">
-			<Image.Source>
-				<BitmapImage DecodePixelWidth="200" UriSource="{Binding}" />
-			</Image.Source>
-		</Image>
+		<Image Name="Image" ImageOpened="Image_ImageOpened" />
 		<ProgressRing
 			Name="Ring" Width="50" Height="50"
 			IsActive="True" />

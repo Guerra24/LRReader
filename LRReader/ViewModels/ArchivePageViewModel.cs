@@ -113,7 +113,7 @@ namespace LRReader.ViewModels
 			   }
 			   foreach (var s in r.Data.pages)
 			   {
-				   await DispatcherHelper.RunAsync(() => ArchiveImages.Add(client.BaseUrl + s));
+				   await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
 			   }
 		   });
 		}

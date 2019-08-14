@@ -70,6 +70,19 @@ namespace LRReader.Internal
 				RaisePropertyChanged("ZoomedFactor");
 			}
 		}
+		public bool ImageCaching
+		{
+			get
+			{
+				var val = localSettings.Values["ImageCaching"];
+				return val != null ? (bool)val : false;
+			}
+			set
+			{
+				localSettings.Values["ImageCaching"] = value;
+				RaisePropertyChanged("ImageCaching");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = roamedSettings.Values["Profiles"];

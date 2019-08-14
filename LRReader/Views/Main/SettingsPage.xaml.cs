@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -27,10 +28,23 @@ namespace LRReader.Views.Main
 	{
 		private SettingsPageViewModel Data;
 
+		private string cacheSizeInMB;
+
 		public SettingsPage()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
+		}
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			ButtonClearCache.IsEnabled = false;
+			RingCacheClear.IsActive = true;
+			cacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
+			Bindings.Update();
+			RingCacheClear.IsActive = false;
+			ButtonClearCache.IsEnabled = true;
 		}
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -123,6 +137,17 @@ namespace LRReader.Views.Main
 		private bool ValidateServerAddress()
 		{
 			return !string.IsNullOrEmpty(ProfileServerAddress.Text) && Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute);
+		}
+
+		private async void ButtonClearCache_Click(object sender, RoutedEventArgs e)
+		{
+			ButtonClearCache.IsEnabled = false;
+			RingCacheClear.IsActive = true;
+			await Global.ImageManager.ClearCache();
+			cacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
+			Bindings.Update();
+			RingCacheClear.IsActive = false;
+			ButtonClearCache.IsEnabled = true;
 		}
 	}
 }

@@ -67,7 +67,7 @@ namespace LRReader.ViewModels
 
 			foreach (var s in r.Data.pages)
 			{
-				ArchiveImages.Add(client.BaseUrl + s);
+				ArchiveImages.Add(s);
 			}
 		}
 	}
