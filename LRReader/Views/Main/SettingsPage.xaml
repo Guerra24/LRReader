@@ -5,20 +5,29 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:internal="using:LRReader.Internal"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
+	<Page.Resources>
+		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+	</Page.Resources>
+
 	<Grid>
 		<StackPanel Width="400" Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,5" FontSize="24" Text="Connection" />
-			<TextBox
-				Grid.Row="1" Margin="0,0,0,10" PlaceholderText="Server Address"
-				Text="{Binding SettingsManager.ServerAddress, Mode=TwoWay}" />
-			<PasswordBox
-				Grid.Row="2" Margin="0,0,0,10"
-				Password="{Binding SettingsManager.ServerApiKey, Mode=TwoWay}"
-				PlaceholderText="API Key" />
+			<ComboBox MinWidth="200"
+				Margin="0,0,0,10"
+				ItemsSource="{Binding SettingsManager.Profiles}"
+				PlaceholderText="Server Profile"
+				SelectedItem="{Binding SettingsManager.Profile, Mode=TwoWay}"
+				SelectionChanged="ComboBox_SelectionChanged" />
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+				<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add Profile" />
+				<Button Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit" />
+				<Button Click="ButtonRemove_Click" Content="Remove" IsEnabled="{Binding SettingsManager.Profile, Converter={StaticResource NullToBooleanConverter}}" />
+			</StackPanel>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Reader" />
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -51,12 +60,29 @@
 					Text="{Binding SettingsManager.ZoomedFactor}" />
 			</Grid>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="App" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Use Shared Settings" IsOn="{Binding SettingsManager.UseRoamedSettings, Mode=TwoWay}" />
+			<ToggleSwitch
+				Margin="0,0,0,10" Header="Cache Images" IsEnabled="False"
+				IsOn="False" />
+			<Button Margin="0,0,0,10" Content="Clear Cache" IsEnabled="False"/>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="About" />
 			<TextBlock Margin="0,0,0,10">
 				<Run>LRReader version</Run>
 				<Run Text="{Binding Version}" />
 			</TextBlock>
 		</StackPanel>
+		<ContentDialog
+			Name="ServerProfileDialog" Title="Server Profile" CloseButtonText="Cancel"
+			IsPrimaryButtonEnabled="False" PrimaryButtonText="Add">
+			<StackPanel>
+				<TextBox
+					Name="ProfileName" Margin="0,0,0,10" PlaceholderText="Profile Name"
+					TextChanging="ProfileName_TextChanging" />
+				<TextBox
+					Name="ProfileServerAddress" Margin="0,0,0,10" PlaceholderText="Server Address"
+					TextChanging="ProfileServerAddress_TextChanging" />
+				<PasswordBox Name="ProfileServerApiKey" Margin="0,0,0,10" PlaceholderText="API Key" />
+				<TextBlock Name="ProfileError" Foreground="#FF4141" />
+			</StackPanel>
+		</ContentDialog>
 	</Grid>
 </Page>

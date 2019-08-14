@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -10,20 +11,46 @@
 	Unloaded="Page_Unloaded"
 	mc:Ignorable="d">
 
+	<Page.Resources>
+		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+	</Page.Resources>
+
 	<Grid>
-		<StackPanel Padding="10" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+		<StackPanel
+			Width="300" Padding="10" HorizontalAlignment="Center"
+			VerticalAlignment="Center">
 			<TextBlock
 				Margin="0,0,0,10" HorizontalAlignment="Center" FontSize="28"
 				Text="Welcome" />
-			<TextBox
-				Name="Server" Grid.Row="1" Margin="0,0,0,10"
-				PlaceholderText="Server Address"
-				Text="{Binding SettingsManager.ServerAddress, Mode=TwoWay}" />
-			<PasswordBox
-				Name="ApiKey" Grid.Row="2" Margin="0,0,0,10"
-				Password="{Binding SettingsManager.ServerApiKey, Mode=TwoWay}"
-				PlaceholderText="API Key" />
-			<Button Name="AcceptBtn" HorizontalAlignment="Center" Click="AcceptBtn_Click">Accept</Button>
+			<TextBlock Margin="0,0,0,10" Text="First we need to setup a profle." />
+			<ComboBox
+				Margin="0,0,0,10" HorizontalAlignment="Stretch"
+				IsEnabled="{Binding SettingsManager.ProfilesAvailable}"
+				ItemsSource="{Binding SettingsManager.Profiles}"
+				PlaceholderText="Server Profile"
+				SelectedItem="{Binding SettingsManager.Profile, Mode=TwoWay}"
+				SelectionChanged="ComboBox_SelectionChanged" />
+			<StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add Profile" />
+				<Button
+					Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit"
+					IsEnabled="{Binding SettingsManager.Profile, Converter={StaticResource NullToBooleanConverter}}" />
+				<Button Click="ButtonContinue_Click" Content="Continue" IsEnabled="{Binding SettingsManager.Profile, Converter={StaticResource NullToBooleanConverter}}" />
+			</StackPanel>
 		</StackPanel>
+		<ContentDialog
+			Name="ServerProfileDialog" Title="Server Profile" CloseButtonText="Cancel"
+			IsPrimaryButtonEnabled="False" PrimaryButtonText="Add">
+			<StackPanel>
+				<TextBox
+					Name="ProfileName" Margin="0,0,0,10" PlaceholderText="Profile Name"
+					TextChanging="ProfileName_TextChanging" />
+				<TextBox
+					Name="ProfileServerAddress" Margin="0,0,0,10" PlaceholderText="Server Address"
+					TextChanging="ProfileServerAddress_TextChanging" />
+				<PasswordBox Name="ProfileServerApiKey" Margin="0,0,0,10" PlaceholderText="API Key" />
+				<TextBlock Name="ProfileError" Foreground="#FF4141" />
+			</StackPanel>
+		</ContentDialog>
 	</Grid>
 </Page>

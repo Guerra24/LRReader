@@ -33,26 +33,96 @@ namespace LRReader.Views.Main
 			Data = DataContext as SettingsPageViewModel;
 		}
 
-		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
 		{
-			base.OnNavigatingFrom(e);
-			if (!string.IsNullOrEmpty(Data.SettingsManager.ServerAddress))
+			ProfileError.Text = "";
+			ServerProfileDialog.PrimaryButtonText = "Add";
+			var result = await ServerProfileDialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
 			{
-				if (Uri.IsWellFormedUriString(Data.SettingsManager.ServerAddress, UriKind.Absolute))
-				{
-					Global.LRRApi.RefreshSettings();
-				}
-				else
-				{
-					e.Cancel = true;
-					Global.EventManager.ShowError("Connection Error", "Invalid address");
-				}
+				Data.SettingsManager.AddProfile(ProfileName.Text, ProfileServerAddress.Text, ProfileServerApiKey.Password);
 			}
-			else
+			ProfileName.Text = "";
+			ProfileServerAddress.Text = "";
+			ProfileServerApiKey.Password = "";
+		}
+
+		private async void ButtonEdit_Click(object sender, RoutedEventArgs e)
+		{
+			ProfileError.Text = "";
+			ServerProfileDialog.PrimaryButtonText = "Save";
+			ServerProfile profile = Data.SettingsManager.Profile;
+			ProfileName.Text = profile.Name;
+			ProfileServerAddress.Text = profile.ServerAddress;
+			ProfileServerApiKey.Password = profile.ServerApiKey;
+
+			var result = await ServerProfileDialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
 			{
-				e.Cancel = true;
-				Global.EventManager.ShowError("Connection Error", "Empty server address");
+				Data.SettingsManager.ModifyProfile(profile.UID, ProfileName.Text, ProfileServerAddress.Text, ProfileServerApiKey.Password);
+				Global.LRRApi.RefreshSettings();
 			}
+			ProfileName.Text = "";
+			ProfileServerAddress.Text = "";
+			ProfileServerApiKey.Password = "";
+		}
+
+		private async void ButtonRemove_Click(object sender, RoutedEventArgs e)
+		{
+			ContentDialog dialog = new ContentDialog { Title = "Remove Profile?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
+			var result = await dialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
+			{
+				var sm = Data.SettingsManager;
+				sm.Profiles.Remove(sm.Profile);
+				sm.Profile = null;
+				sm.Profile = sm.Profiles.First();
+			}
+		}
+
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (Data.SettingsManager.Profile != null)
+				Global.LRRApi.RefreshSettings();
+		}
+
+		private void ProfileName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+		{
+			bool allow = true;
+			ProfileError.Text = "";
+			if (string.IsNullOrEmpty(ProfileName.Text))
+			{
+				ProfileError.Text = "Empty Profile Name";
+				allow = false;
+			}
+			ServerProfileDialog.IsPrimaryButtonEnabled = allow && ValidateServerAddress();
+		}
+
+		private void ProfileServerAddress_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+		{
+			bool allow = true;
+			ProfileError.Text = "";
+			if (string.IsNullOrEmpty(ProfileServerAddress.Text))
+			{
+				ProfileError.Text = "Empty Server Address";
+				allow = false;
+			}
+			if (!Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute))
+			{
+				ProfileError.Text = "Invalid Server Address";
+				allow = false;
+			}
+			ServerProfileDialog.IsPrimaryButtonEnabled = allow && ValidateProfileName();
+		}
+
+		private bool ValidateProfileName()
+		{
+			return !string.IsNullOrEmpty(ProfileName.Text);
+		}
+
+		private bool ValidateServerAddress()
+		{
+			return !string.IsNullOrEmpty(ProfileServerAddress.Text) && Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute);
 		}
 	}
 }

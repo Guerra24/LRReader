@@ -27,8 +27,8 @@ namespace LRReader.Models.Api
 		public void RefreshSettings()
 		{
 			var sm = Global.SettingsManager;
-			client.BaseUrl = new Uri(sm.ServerAddress);
-			apiKey = sm.ServerApiKey;
+			client.BaseUrl = new Uri(sm.Profile.ServerAddress);
+			apiKey = sm.Profile.ServerApiKey;
 			if (!string.IsNullOrEmpty(apiKey))
 			{
 				client.RemoveDefaultParameter("key");

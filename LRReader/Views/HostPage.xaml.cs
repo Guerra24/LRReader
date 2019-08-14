@@ -50,7 +50,7 @@ namespace LRReader.Views
 
 			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
 
-			bool firstRun = string.IsNullOrEmpty(Global.SettingsManager.ServerAddress);
+			bool firstRun = Global.SettingsManager.Profile == null;
 			if (firstRun)
 			{
 				NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;

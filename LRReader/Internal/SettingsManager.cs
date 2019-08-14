@@ -1,7 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,42 +15,45 @@ namespace LRReader.Internal
 {
 	public class SettingsManager : ViewModelBase
 	{
-		private ApplicationDataContainer settings;
+		private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+		private ApplicationDataContainer roamedSettings = ApplicationData.Current.RoamingSettings;
 
-		public bool UseRoamedSettings
+		private ObservableCollection<ServerProfile> _profiles;
+		public ObservableCollection<ServerProfile> Profiles
 		{
-			get
-			{
-				object val = ApplicationData.Current.LocalSettings.Values["UseRoamedSettings"];
-				return val != null ? (bool)val : false;
-			}
+			get => _profiles;
 			set
 			{
-				ApplicationData.Current.LocalSettings.Values["UseRoamedSettings"] = value;
-				settings = value ? ApplicationData.Current.RoamingSettings : ApplicationData.Current.LocalSettings;
-				RaisePropertyChanged(string.Empty);
+				_profiles = value;
+				RaisePropertyChanged("Profiles");
 			}
 		}
-		public string ServerAddress
+		private ServerProfile _profile;
+		public ServerProfile Profile
 		{
-			get => settings.Values["ServerAddress"] as string;
-			set => settings.Values["ServerAddress"] = value;
+			get => _profile;
+			set
+			{
+				if (value != null)
+					localSettings.Values["ProfileUID"] = value.UID;
+				_profile = value;
+				RaisePropertyChanged("Profile");
+			}
 		}
-		public string ServerApiKey
+		public bool ProfilesAvailable
 		{
-			get => settings.Values["ServerApiKey"] as string;
-			set => settings.Values["ServerApiKey"] = value;
+			get => Profiles.Count > 0;
 		}
 		public float BaseZoom
 		{
 			get
 			{
-				var val = settings.Values["BaseZoom"];
+				var val = localSettings.Values["BaseZoom"];
 				return val != null ? (float)val : 1.0f;
 			}
 			set
 			{
-				settings.Values["BaseZoom"] = value;
+				localSettings.Values["BaseZoom"] = value;
 				RaisePropertyChanged("BaseZoom");
 			}
 		}
@@ -54,19 +61,79 @@ namespace LRReader.Internal
 		{
 			get
 			{
-				var val = settings.Values["ZoomedFactor"];
+				var val = localSettings.Values["ZoomedFactor"];
 				return val != null ? (float)val : 2.0f;
 			}
 			set
 			{
-				settings.Values["ZoomedFactor"] = value;
+				localSettings.Values["ZoomedFactor"] = value;
 				RaisePropertyChanged("ZoomedFactor");
 			}
 		}
 		public SettingsManager()
 		{
-			object value = ApplicationData.Current.LocalSettings.Values["UseRoamedSettings"];
-			settings = (value != null ? (bool)value : false) ? ApplicationData.Current.RoamingSettings : ApplicationData.Current.LocalSettings;
+			var profiles = roamedSettings.Values["Profiles"];
+			if (profiles != null)
+			{
+				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles as string);
+			}
+			else
+			{
+				Profiles = new ObservableCollection<ServerProfile>();
+			}
+			Profiles.CollectionChanged += ProfilesChanges;
+
+			var profile = localSettings.Values["ProfileUID"];
+			if (profile != null)
+			{
+				Profile = Profiles.FirstOrDefault(p => p.UID.Equals(profile as string));
+			}
+		}
+
+		private void ProfilesChanges(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			roamedSettings.Values["Profiles"] = JsonConvert.SerializeObject(Profiles);
+			RaisePropertyChanged("ProfilesAvailable");
+		}
+
+		public void AddProfile(string name, string address, string apikey)
+		{
+			ServerProfile profile = new ServerProfile();
+			profile.Name = name;
+			profile.ServerAddress = address;
+			profile.ServerApiKey = apikey;
+			Profiles.Add(profile);
+		}
+
+		public void ModifyProfile(string uid, string name, string address, string apikey)
+		{
+			var profile = Profiles.FirstOrDefault(p => p.UID.Equals(uid));
+			profile.Name = name;
+			profile.ServerAddress = address;
+			profile.ServerApiKey = apikey;
+			profile.Update();
+		}
+	}
+	public class ServerProfile : ObservableObject
+	{
+		public string UID { get; set; }
+		public string Name { get; set; }
+		public string ServerAddress { get; set; }
+		public string ServerApiKey { get; set; }
+
+		public ServerProfile()
+		{
+			UID = Guid.NewGuid().ToString();
+		}
+
+		public void Update()
+		{
+			RaisePropertyChanged(string.Empty);
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }
