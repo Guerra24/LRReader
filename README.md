@@ -23,7 +23,7 @@ No icon for now 🤷‍♂️
 Sideload only for now. 
 
 ### First time
-Unzip and right click `Add-AppDevPackage.ps1` > Run with powershell
+Unzip and right click `Add-AppDevPackage.ps1` > Run with powershell<br>
 This will add the self-signed certificate and install the app.
 
 ### Upgrade
