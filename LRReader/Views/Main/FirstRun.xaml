@@ -8,7 +8,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	mc:Ignorable="d">
+	mc:Ignorable="d" Unloaded="Page_Unloaded">
 
 	<Page.Resources>
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
