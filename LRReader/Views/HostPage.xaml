@@ -30,7 +30,7 @@
 			<NavigationView.AutoSuggestBox>
 				<AutoSuggestBox
 					Name="NavViewSearchBox" MinWidth="200" PlaceholderText="Search..."
-					QueryIcon="Find" />
+					QueryIcon="Find" QuerySubmitted="NavViewSearchBox_QuerySubmitted" TextChanged="NavViewSearchBox_TextChanged" />
 			</NavigationView.AutoSuggestBox>
 			<Frame Name="ContentFrame" CacheSize="10" Navigated="ContentFrame_Navigated" />
 		</NavigationView>

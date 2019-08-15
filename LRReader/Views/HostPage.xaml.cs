@@ -153,5 +153,15 @@ namespace LRReader.Views
 			NavView.IsPaneVisible = value;
 			NavView.IsBackButtonVisible = value ? NavigationViewBackButtonVisible.Auto : NavigationViewBackButtonVisible.Collapsed;
 		}
+
+		private void NavViewSearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+		{
+			Global.EventManager.SearchTextChanged(sender, args);
+		}
+
+		private void NavViewSearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+		{
+			Global.EventManager.SearchQuerySubmitted(sender, args);
+		}
 	}
 }

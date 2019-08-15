@@ -8,7 +8,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	Unloaded="Page_Unloaded"
 	mc:Ignorable="d">
 
 	<Page.Resources>

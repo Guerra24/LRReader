@@ -1,4 +1,5 @@
-﻿using LRReader.Models.Main;
+﻿using LRReader.Internal;
+using LRReader.Models.Main;
 using LRReader.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,14 @@ namespace LRReader.Views.Main
 			await Data.Refresh();
 			if (!string.IsNullOrEmpty(_selectedID))
 				ArchivesGrid.ScrollIntoView(Data.ArchiveList.FirstOrDefault(a => a.arcid.Equals(_selectedID)));
+			Global.EventManager.SearchTextChangedEvent += SearchTextChanged;
+			Global.EventManager.SearchQuerySubmittedEvent += SearchQuerySubmitted;
+		}
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+		{
+			base.OnNavigatingFrom(e);
+			Global.EventManager.SearchTextChangedEvent -= SearchTextChanged;
+			Global.EventManager.SearchQuerySubmittedEvent -= SearchQuerySubmitted;
 		}
 
 		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -55,6 +64,28 @@ namespace LRReader.Views.Main
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
 			await Data.Refresh();
+		}
+
+		public void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+		{
+			if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+			{
+				//Set the ItemsSource to be your filtered dataset
+				//sender.ItemsSource = dataset;
+				Debug.WriteLine(sender.Text);
+			}
+		}
+
+		public void SearchQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+		{
+			if (args.ChosenSuggestion != null)
+			{
+				// User selected an item from the suggestion list, take an action on it here.
+			}
+			else
+			{
+				// Use args.QueryText to determine what to do.
+			}
 		}
 	}
 }

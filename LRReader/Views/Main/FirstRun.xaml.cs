@@ -37,8 +37,9 @@ namespace LRReader.Views.Main
 			Data = DataContext as SettingsPageViewModel;
 		}
 
-		private void Page_Unloaded(object sender, RoutedEventArgs e)
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
+			base.OnNavigatingFrom(e);
 			Frame.BackStack.Clear();
 			Global.EventManager.ShowHeader(true);
 		}
