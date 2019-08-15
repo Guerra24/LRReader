@@ -31,8 +31,8 @@ Unzip and run the `LRReader_<version>_x86_x64_arm64.msixbundle` file, the app in
 
 ## Screenshots
 
-[Main View](.github/screenshots/01.png)<br>
-[Search](.github/screenshots/02.png)<br>
-[Archive View](.github/screenshots/03.png)<br>
-[Reader](.github/screenshots/04.png)<br>
-[Settings](.github/screenshots/05.png)<br>
+![Main View](.github/screenshots/01.png)<br>
+![Search](.github/screenshots/02.png)<br>
+![Archive View](.github/screenshots/03.png)<br>
+![Reader](.github/screenshots/04.png)<br>
+![Settings](.github/screenshots/05.png)<br>
