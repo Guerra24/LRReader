@@ -70,9 +70,19 @@ namespace LRReader.Views.Main
 		{
 			if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
 			{
-				//Set the ItemsSource to be your filtered dataset
-				//sender.ItemsSource = dataset;
-				Debug.WriteLine(sender.Text);
+				if (!string.IsNullOrEmpty(sender.Text))
+				{
+					IEnumerable<Archive> listSearch = Data.ArchiveList;
+					foreach (var s in sender.Text.ToUpper().Split(" "))
+					{
+						listSearch = listSearch.Where(a => a.title.ToUpper().Contains(s) || a.tags.ToUpper().Contains(s));
+					}
+					ArchivesGrid.ItemsSource = listSearch;
+				}
+				else
+				{
+					ArchivesGrid.ItemsSource = Data.ArchiveList;
+				}
 			}
 		}
 

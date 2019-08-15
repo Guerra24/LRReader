@@ -28,20 +28,10 @@ namespace LRReader.Internal
 
 		public async Task<StorageFile> DownloadThumbnailAsync(string id)
 		{
-			IStorageItem thumb = await thumbnailsFolder.TryGetItemAsync(id);
-			if (thumb != null)
-			{
-				StorageFile tmp = await thumbnailsFolder.GetFileAsync(id);
-				int i = 0;
-				while (i < 20)
-				{
-					i++;
-					BasicProperties bp = await tmp.GetBasicPropertiesAsync();
-					if (bp.Size != 0)
-						return tmp;
-					await Task.Delay(200);
-				}
-			}
+			StorageFile thumbnail = await thumbnailsFolder.CreateFileAsync(id, CreationCollisionOption.OpenIfExists);
+			BasicProperties bp = await thumbnail.GetBasicPropertiesAsync();
+			if (bp.Size != 0)
+				return thumbnail;
 
 			var client = Global.LRRApi.GetClient();
 
@@ -53,11 +43,9 @@ namespace LRReader.Internal
 
 			if (r.StatusCode == HttpStatusCode.OK)
 			{
-				StorageFile thumbnail = await thumbnailsFolder.CreateFileAsync(id, CreationCollisionOption.ReplaceExisting);
 				await FileIO.WriteBytesAsync(thumbnail, r.RawBytes);
 				return thumbnail;
 			}
-
 			return null;
 		}
 

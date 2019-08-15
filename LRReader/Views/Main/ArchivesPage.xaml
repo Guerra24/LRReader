@@ -39,7 +39,6 @@
 			</GridView.ItemContainerStyle>
 			<GridView.ItemContainerTransitions>
 				<TransitionCollection>
-					<PopupThemeTransition FromVerticalOffset="200" />
 					<!--<AddDeleteThemeTransition />-->
 					<ReorderThemeTransition />
 					<RepositionThemeTransition />
