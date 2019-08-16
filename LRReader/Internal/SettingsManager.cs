@@ -36,8 +36,11 @@ namespace LRReader.Internal
 			{
 				if (value != null)
 					localSettings.Values["ProfileUID"] = value.UID;
-				_profile = value;
-				RaisePropertyChanged("Profile");
+				if (_profile != value)
+				{
+					_profile = value;
+					RaisePropertyChanged("Profile");
+				}
 			}
 		}
 		public bool ProfilesAvailable

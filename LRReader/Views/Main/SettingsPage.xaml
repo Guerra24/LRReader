@@ -26,7 +26,7 @@
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add Profile" />
 				<Button Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit" />
-				<Button Click="ButtonRemove_Click" Content="Remove" IsEnabled="{x:Bind Data.SettingsManager.AtLeastOneProfile}" />
+				<Button Click="ButtonRemove_Click" Content="Remove" IsEnabled="{x:Bind Data.SettingsManager.AtLeastOneProfile, Mode=OneWay}" />
 			</StackPanel>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Reader" />
 			<Grid>
