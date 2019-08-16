@@ -31,5 +31,19 @@ namespace LRReader.ViewModels
 		{
 			get => Util.GetAppVersion();
 		}
+		private string _cacheSizeInMB;
+		public string CacheSizeInMB
+		{
+			get => _cacheSizeInMB;
+			set
+			{
+				_cacheSizeInMB = value;
+				RaisePropertyChanged("CacheSizeInMB");
+			}
+		}
+		public async Task UpdateCacheSize()
+		{
+			CacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
+		}
 	}
 }

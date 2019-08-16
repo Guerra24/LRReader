@@ -24,17 +24,17 @@
 			<TextBlock Margin="0,0,0,10" Text="First we need to setup a profle." />
 			<ComboBox
 				Margin="0,0,0,10" HorizontalAlignment="Stretch"
-				IsEnabled="{Binding SettingsManager.ProfilesAvailable}"
-				ItemsSource="{Binding SettingsManager.Profiles}"
+				IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
+				ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
 				PlaceholderText="Server Profile"
-				SelectedItem="{Binding SettingsManager.Profile, Mode=TwoWay}"
+				SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}"
 				SelectionChanged="ComboBox_SelectionChanged" />
 			<StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add Profile" />
 				<Button
 					Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit"
-					IsEnabled="{Binding SettingsManager.Profile, Converter={StaticResource NullToBooleanConverter}}" />
-				<Button Click="ButtonContinue_Click" Content="Continue" IsEnabled="{Binding SettingsManager.Profile, Converter={StaticResource NullToBooleanConverter}}" />
+					IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+				<Button Click="ButtonContinue_Click" Content="Continue" IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 			</StackPanel>
 		</StackPanel>
 		<ContentDialog

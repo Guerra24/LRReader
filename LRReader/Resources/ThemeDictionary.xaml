@@ -16,7 +16,7 @@
 				FallbackColor="{StaticResource BrushDeepBackgroundColor}"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
-			<Color x:Key="ColorNavTop">#171717</Color>
+			<Color x:Key="ColorNavTop">#F2F2F2</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#E5E5E5" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">

@@ -21,7 +21,7 @@
 	<Grid>
 		<NavigationView
 			Name="NavView" Grid.Row="0" BackRequested="NavView_BackRequested"
-			IsBackEnabled="{Binding ElementName=ContentFrame, Path=CanGoBack, Mode=OneWay}"
+			IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
 			ItemInvoked="NavView_ItemInvoked" PaneDisplayMode="Top">
 			<NavigationView.MenuItems>
 				<NavigationViewItem Content="Archives" Tag="archives" />

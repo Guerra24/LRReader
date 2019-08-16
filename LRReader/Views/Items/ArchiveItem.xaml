@@ -17,8 +17,9 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock
-			Grid.Row="0" HorizontalAlignment="Center" FontSize="16"
-			Text="{Binding title}"
+			Name="Title" Grid.Row="0" HorizontalAlignment="Center"
+			FontSize="16"
+			Text="{x:Bind Archive.title}"
 			TextTrimming="CharacterEllipsis" />
 		<Grid Grid.Row="1" Height="282" BorderBrush="{ThemeResource SystemAccentColor}">
 			<Image Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />

@@ -28,8 +28,6 @@ namespace LRReader.Views.Main
 	{
 		private SettingsPageViewModel Data;
 
-		private string cacheSizeInMB;
-
 		public SettingsPage()
 		{
 			this.InitializeComponent();
@@ -41,8 +39,7 @@ namespace LRReader.Views.Main
 			base.OnNavigatedTo(e);
 			ButtonClearCache.IsEnabled = false;
 			RingCacheClear.IsActive = true;
-			cacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
-			Bindings.Update();
+			await Data.UpdateCacheSize();
 			RingCacheClear.IsActive = false;
 			ButtonClearCache.IsEnabled = true;
 		}
@@ -144,8 +141,7 @@ namespace LRReader.Views.Main
 			ButtonClearCache.IsEnabled = false;
 			RingCacheClear.IsActive = true;
 			await Global.ImageManager.ClearCache();
-			cacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
-			Bindings.Update();
+			await Data.UpdateCacheSize();
 			RingCacheClear.IsActive = false;
 			ButtonClearCache.IsEnabled = true;
 		}

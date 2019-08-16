@@ -27,6 +27,7 @@ namespace LRReader.Views.Items
 	public sealed partial class ArchiveItem : UserControl
 	{
 
+		private Archive Archive;
 		private string _oldID = "";
 
 		public ArchiveItem()
@@ -38,12 +39,13 @@ namespace LRReader.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			Archive n = args.NewValue as Archive;
-			if (!_oldID.Equals(n.arcid))
+			Archive = args.NewValue as Archive;
+			if (!_oldID.Equals(Archive.arcid))
 			{
+				Title.Opacity = 0;
 				Thumbnail.Visibility = Visibility.Collapsed;
 				Ring.Visibility = Visibility.Visible;
-				StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(n.arcid);
+				StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(Archive.arcid);
 
 				using (var ras = await file.OpenAsync(FileAccessMode.Read))
 				{
@@ -55,8 +57,10 @@ namespace LRReader.Views.Items
 					Thumbnail.Source = image;
 					Thumbnail.Visibility = Visibility.Visible;
 					Ring.Visibility = Visibility.Collapsed;
+					Title.Opacity = 1;
 				}
-				_oldID = n.arcid;
+				_oldID = Archive.arcid;
+				Bindings.Update();
 			}
 		}
 

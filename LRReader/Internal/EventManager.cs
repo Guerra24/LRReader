@@ -21,22 +21,22 @@ namespace LRReader.Internal
 
 		public void ShowError(string title, string content)
 		{
-			ShowErrorEvent(title, content);
+			ShowErrorEvent?.Invoke(title, content);
 		}
 
 		public void ShowHeader(bool value)
 		{
-			ShowHeaderEvent(value);
+			ShowHeaderEvent?.Invoke(value);
 		}
 
 		public void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
-			SearchTextChangedEvent(sender, args);
+			SearchTextChangedEvent?.Invoke(sender, args);
 		}
 
 		public void SearchQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
-			SearchQuerySubmittedEvent(sender, args);
+			SearchQuerySubmittedEvent?.Invoke(sender, args);
 		}
 	}
 }

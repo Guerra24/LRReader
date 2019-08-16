@@ -28,13 +28,16 @@
 			</Grid.RowDefinitions>
 			<TextBlock
 				Margin="0,0,0,10" FontSize="24"
-				Text="{Binding Archive.title}"
+				Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 				TextWrapping="WrapWholeWords" />
-			<GridView Grid.Row="1" ItemsSource="{Binding Tags}" SelectionMode="None" IsItemClickEnabled="True">
+			<GridView
+				Grid.Row="1" IsItemClickEnabled="True"
+				ItemsSource="{x:Bind Data.Tags, Mode=OneWay}"
+				SelectionMode="None">
 				<GridView.ItemTemplate>
-					<DataTemplate>
+					<DataTemplate x:DataType="x:String">
 						<Grid Padding="2,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
-							<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" />
+							<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{x:Bind}" />
 						</Grid>
 					</DataTemplate>
 				</GridView.ItemTemplate>
@@ -57,7 +60,7 @@
 		<GridView
 			Name="ImagesGrid" Grid.Row="1" IsItemClickEnabled="True"
 			ItemClick="ImagesGrid_ItemClick"
-			ItemsSource="{Binding ArchiveImages}"
+			ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
 			SelectionMode="None">
 			<GridView.ItemTemplate>
 				<DataTemplate>
@@ -86,10 +89,10 @@
 		</GridView>
 		<ProgressRing
 			Grid.Row="1" Width="80" Height="80"
-			IsActive="{Binding LoadingImages}" />
+			IsActive="{x:Bind Data.LoadingImages, Mode=OneWay}" />
 		<Button
 			Grid.Row="1" HorizontalAlignment="Center" Click="Button_Click"
-			Visibility="{Binding Path=RefreshOnErrorButton, Converter={StaticResource BoolToVis}}">
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
 			Retry
 		</Button>
 	</Grid>

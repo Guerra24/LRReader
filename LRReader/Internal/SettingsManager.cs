@@ -44,6 +44,10 @@ namespace LRReader.Internal
 		{
 			get => Profiles.Count > 0;
 		}
+		public bool AtLeastOneProfile
+		{
+			get => Profiles.Count > 1;
+		}
 		public float BaseZoom
 		{
 			get
@@ -107,6 +111,7 @@ namespace LRReader.Internal
 		{
 			roamedSettings.Values["Profiles"] = JsonConvert.SerializeObject(Profiles);
 			RaisePropertyChanged("ProfilesAvailable");
+			RaisePropertyChanged("AtLeastOneProfile");
 		}
 
 		public void AddProfile(string name, string address, string apikey)
