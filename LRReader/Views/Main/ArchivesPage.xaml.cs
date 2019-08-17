@@ -66,7 +66,7 @@ namespace LRReader.Views.Main
 			await Data.Refresh();
 		}
 
-		public async void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+		public void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
 			{
@@ -74,13 +74,10 @@ namespace LRReader.Views.Main
 				{
 					IEnumerable<Archive> listSearch = Data.ArchiveList;
 					var text = sender.Text.ToUpper();
-					await Task.Run(() =>
+					foreach (var s in text.Split(" "))
 					{
-						foreach (var s in text.Split(" "))
-						{
-							listSearch = listSearch.Where(a => a.title.ToUpper().Contains(s) || a.tags.ToUpper().Contains(s));
-						}
-					});
+						listSearch = listSearch.Where(a => a.title.ToUpper().Contains(s) || a.tags.ToUpper().Contains(s));
+					}
 					ArchivesGrid.ItemsSource = listSearch;
 				}
 				else
