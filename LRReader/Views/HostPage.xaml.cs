@@ -44,25 +44,28 @@ namespace LRReader.Views
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 			titleBar.ButtonForegroundColor = (Color)this.Resources["SystemBaseHighColor"];
 
-			Global.Init(); // Init global static data
 			Global.EventManager.ShowErrorEvent += ShowError;
 			Global.EventManager.ShowHeaderEvent += ShowHeader;
+		}
 
-			ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
-
-			bool firstRun = Global.SettingsManager.Profile == null;
-			if (firstRun)
+		private async void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			await DispatcherHelper.RunAsync(() =>
 			{
-				NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-				NavView.IsPaneVisible = false;
-				ContentFrame.Navigate(typeof(FirstRun), new DrillInNavigationTransitionInfo());
-			}
-			else
-			{
-				Global.LRRApi.RefreshSettings();
-				NavView.SelectedItem = NavView.MenuItems[0];
-				NavView_Navigate("archives", new EntranceNavigationTransitionInfo());
-			}
+				bool firstRun = Global.SettingsManager.Profile == null;
+				if (firstRun)
+				{
+					NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+					NavView.IsPaneVisible = false;
+					ContentFrame.Navigate(typeof(FirstRun), new DrillInNavigationTransitionInfo());
+				}
+				else
+				{
+					Global.LRRApi.RefreshSettings();
+					NavView.SelectedItem = NavView.MenuItems[0];
+					NavView_Navigate("archives", new EntranceNavigationTransitionInfo());
+				}
+			});
 		}
 
 		private readonly List<(string Tag, Type Page)> pages = new List<(string Tag, Type Page)>

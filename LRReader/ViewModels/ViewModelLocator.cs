@@ -16,9 +16,11 @@ namespace LRReader.ViewModels
 	{
 		public ViewModelLocator()
 		{
+
+			Global.Init(); // Init global static data
+
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-			SimpleIoc.Default.Register<INavigationService, NavigationService>();
 			SimpleIoc.Default.Register<ArchivesPageViewModel>();
 			SimpleIoc.Default.Register<ArchivePageViewModel>();
 			SimpleIoc.Default.Register<ReaderPageViewModel>();
