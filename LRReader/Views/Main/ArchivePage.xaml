@@ -38,7 +38,7 @@
 				<GridView.ItemTemplate>
 					<DataTemplate x:DataType="x:String">
 						<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
-							<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{x:Bind}" />
+							<TextBlock Text="{x:Bind}" />
 						</Grid>
 					</DataTemplate>
 				</GridView.ItemTemplate>

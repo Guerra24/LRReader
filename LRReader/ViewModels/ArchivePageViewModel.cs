@@ -80,9 +80,9 @@ namespace LRReader.ViewModels
 		{
 			Tags.Clear();
 
-			foreach (var s in Archive.tags.Split(", "))
+			foreach (var s in Archive.tags.Split(","))
 			{
-				Tags.Add(s);
+				Tags.Add(s.Trim());
 			}
 		}
 
