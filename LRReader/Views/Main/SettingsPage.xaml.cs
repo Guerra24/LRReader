@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.ViewModels;
+using LRReader.Views.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,36 +47,28 @@ namespace LRReader.Views.Main
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
 		{
-			ProfileError.Text = "";
-			ServerProfileDialog.PrimaryButtonText = "Add";
-			var result = await ServerProfileDialog.ShowAsync();
+			ServerProfileDialog dialog = new ServerProfileDialog(false);
+			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				Data.SettingsManager.AddProfile(ProfileName.Text, ProfileServerAddress.Text, ProfileServerApiKey.Password);
+				Data.SettingsManager.AddProfile(dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
 			}
-			ProfileName.Text = "";
-			ProfileServerAddress.Text = "";
-			ProfileServerApiKey.Password = "";
 		}
 
 		private async void ButtonEdit_Click(object sender, RoutedEventArgs e)
 		{
-			ProfileError.Text = "";
-			ServerProfileDialog.PrimaryButtonText = "Save";
+			ServerProfileDialog dialog = new ServerProfileDialog(true);
 			ServerProfile profile = Data.SettingsManager.Profile;
-			ProfileName.Text = profile.Name;
-			ProfileServerAddress.Text = profile.ServerAddress;
-			ProfileServerApiKey.Password = profile.ServerApiKey;
+			dialog.ProfileName.Text = profile.Name;
+			dialog.ProfileServerAddress.Text = profile.ServerAddress;
+			dialog.ProfileServerApiKey.Password = profile.ServerApiKey;
 
-			var result = await ServerProfileDialog.ShowAsync();
+			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				Data.SettingsManager.ModifyProfile(profile.UID, ProfileName.Text, ProfileServerAddress.Text, ProfileServerApiKey.Password);
+				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
 				Global.LRRApi.RefreshSettings();
 			}
-			ProfileName.Text = "";
-			ProfileServerAddress.Text = "";
-			ProfileServerApiKey.Password = "";
 		}
 
 		private async void ButtonRemove_Click(object sender, RoutedEventArgs e)
@@ -95,45 +88,6 @@ namespace LRReader.Views.Main
 		{
 			if (Data.SettingsManager.Profile != null)
 				Global.LRRApi.RefreshSettings();
-		}
-
-		private void ProfileName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
-		{
-			bool allow = true;
-			ProfileError.Text = "";
-			if (string.IsNullOrEmpty(ProfileName.Text))
-			{
-				ProfileError.Text = "Empty Profile Name";
-				allow = false;
-			}
-			ServerProfileDialog.IsPrimaryButtonEnabled = allow && ValidateServerAddress();
-		}
-
-		private void ProfileServerAddress_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
-		{
-			bool allow = true;
-			ProfileError.Text = "";
-			if (string.IsNullOrEmpty(ProfileServerAddress.Text))
-			{
-				ProfileError.Text = "Empty Server Address";
-				allow = false;
-			}
-			if (!Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute))
-			{
-				ProfileError.Text = "Invalid Server Address";
-				allow = false;
-			}
-			ServerProfileDialog.IsPrimaryButtonEnabled = allow && ValidateProfileName();
-		}
-
-		private bool ValidateProfileName()
-		{
-			return !string.IsNullOrEmpty(ProfileName.Text);
-		}
-
-		private bool ValidateServerAddress()
-		{
-			return !string.IsNullOrEmpty(ProfileServerAddress.Text) && Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute);
 		}
 
 		private async void ButtonClearCache_Click(object sender, RoutedEventArgs e)

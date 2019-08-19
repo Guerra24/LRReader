@@ -1,6 +1,7 @@
 ﻿using LRReader.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -54,17 +55,13 @@ namespace LRReader.Views.Items
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
 		{
-			var point = e.GetPosition(ScrollViewer);
+			var point = e.GetPosition(Image);
+			var ttv = Image.TransformToVisual(this);
+			var center = ttv.TransformPoint(new Point(0, 0));
 			if (Math.Abs(ScrollViewer.ZoomFactor - Global.SettingsManager.BaseZoom) > 0.20)
 				ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom);
 			else
-				ScrollViewer.ChangeView(point.X, point.Y, Global.SettingsManager.ZoomedFactor);
-		}
-
-		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			Image.MaxWidth = ScrollViewer.ActualWidth;
-			Image.MaxHeight = ScrollViewer.ActualHeight;
+				ScrollViewer.ChangeView(point.X - center.X, point.Y, Global.SettingsManager.ZoomedFactor);
 		}
 
 		private void Image_ImageOpened(object sender, RoutedEventArgs e)

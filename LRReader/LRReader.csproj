@@ -145,6 +145,9 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\StatisticsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\Dialogs\ServerProfileDialog.xaml.cs">
+      <DependentUpon>ServerProfileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HostPage.xaml.cs">
       <DependentUpon>HostPage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Resources\ThemeDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ServerProfileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

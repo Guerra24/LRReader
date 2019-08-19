@@ -11,7 +11,7 @@
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
-	<Grid Padding="0" Background="{ThemeResource BrushItemGridBackground}">
+	<Grid Padding="0" Background="{ThemeResource BrushItemGridBackground}" ToolTipService.ToolTip="{x:Bind Archive.title}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />

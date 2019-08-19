@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
+using LRReader.Models.Api;
 using LRReader.Models.Main;
 using RestSharp;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -56,18 +58,34 @@ namespace LRReader.ViewModels
 
 		public void LoadImages()
 		{
+			ArchiveImages.Clear();
+
 			var client = Global.LRRApi.GetClient();
 
 			var rq = new RestRequest("api/extract");
 
 			rq.AddParameter("id", Archive.arcid);
 
-			ArchiveImages.Clear();
-			var r = client.Get<ArchiveImages>(rq);
+			var r = client.Get(rq);
 
-			foreach (var s in r.Data.pages)
+			var result = LRRApi.GetResult<ArchiveImages>(r);
+
+			if (!r.IsSuccessful)
 			{
-				ArchiveImages.Add(s);
+				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return;
+			}
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					foreach (var s in result.Data.pages)
+					{
+						ArchiveImages.Add(s);
+					}
+					break;
+				case HttpStatusCode.Unauthorized:
+					Global.EventManager.ShowError("API Error", result.Error.error);
+					break;
 			}
 		}
 	}

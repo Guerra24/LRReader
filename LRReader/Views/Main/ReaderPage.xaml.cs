@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -44,13 +45,13 @@ namespace LRReader.Views.Main
 			Data.Archive = payload.Archive;
 			Data.LoadImages();
 			FlipView.SelectedIndex = Data.ArchiveImages.IndexOf(payload.Image);
+			//var item = FlipView.ContainerFromItem(FlipView.SelectedItem) as FlipViewItem;
+			//var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("imageReaderForward");
+			//anim?.TryStart((item.ContentTemplateRoot as ReaderImage).Image);
 		}
 
 		private void FlipView_Loaded(object sender, RoutedEventArgs e)
 		{
-			//var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("imageReaderForward");
-			//var item = FlipView.ContainerFromItem(FlipView.SelectedItem) as FlipViewItem;
-			//anim?.TryStart((item.ContentTemplateRoot as ReaderImage).Image);
 			FlipView.Focus(FocusState.Programmatic);
 			// Let's remove the buttons
 			var grid = (Grid)VisualTreeHelper.GetChild(FlipView, 0);

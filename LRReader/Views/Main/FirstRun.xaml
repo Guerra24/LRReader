@@ -8,7 +8,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	mc:Ignorable="d" Unloaded="Page_Unloaded">
+	Unloaded="Page_Unloaded"
+	mc:Ignorable="d">
 
 	<Page.Resources>
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
@@ -37,19 +38,5 @@
 				<Button Click="ButtonContinue_Click" Content="Continue" IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 			</StackPanel>
 		</StackPanel>
-		<ContentDialog
-			Name="ServerProfileDialog" Title="Server Profile" CloseButtonText="Cancel"
-			IsPrimaryButtonEnabled="False" PrimaryButtonText="Add">
-			<StackPanel>
-				<TextBox
-					Name="ProfileName" Margin="0,0,0,10" PlaceholderText="Profile Name"
-					TextChanging="ProfileName_TextChanging" />
-				<TextBox
-					Name="ProfileServerAddress" Margin="0,0,0,10" PlaceholderText="Server Address"
-					TextChanging="ProfileServerAddress_TextChanging" />
-				<PasswordBox Name="ProfileServerApiKey" Margin="0,0,0,10" PlaceholderText="API Key" />
-				<TextBlock Name="ProfileError" Foreground="#FF4141" />
-			</StackPanel>
-		</ContentDialog>
 	</Grid>
 </Page>

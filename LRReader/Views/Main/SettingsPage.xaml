@@ -14,7 +14,7 @@
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 	</Page.Resources>
 
-	<Grid>
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<StackPanel Width="400" Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,5" FontSize="24" Text="Connection" />
 			<ComboBox
@@ -73,34 +73,11 @@
 					Name="RingCacheClear" Width="30" Height="30"
 					VerticalAlignment="Center" />
 			</StackPanel>
-			<ToggleSwitch Margin="0,0,0,10" Header="Cache JSON to Disk" IsEnabled="False" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button
-					Name="ButtonClearJsonCache" Margin="0,0,10,0" Content="Clear Cache"
-					IsEnabled="False" />
-				<ProgressRing
-					Name="RingCacheJsonClear" Width="30" Height="30"
-					VerticalAlignment="Center" />
-			</StackPanel>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="About" />
 			<TextBlock Margin="0,0,0,10">
 				<Run>LRReader version</Run>
 				<Run Text="{x:Bind Data.Version}" />
 			</TextBlock>
 		</StackPanel>
-		<ContentDialog
-			Name="ServerProfileDialog" Title="Server Profile" CloseButtonText="Cancel"
-			IsPrimaryButtonEnabled="False" PrimaryButtonText="Add">
-			<StackPanel>
-				<TextBox
-					Name="ProfileName" Margin="0,0,0,10" PlaceholderText="Profile Name"
-					TextChanging="ProfileName_TextChanging" />
-				<TextBox
-					Name="ProfileServerAddress" Margin="0,0,0,10" PlaceholderText="Server Address"
-					TextChanging="ProfileServerAddress_TextChanging" />
-				<PasswordBox Name="ProfileServerApiKey" Margin="0,0,0,10" PlaceholderText="API Key" />
-				<TextBlock Name="ProfileError" Foreground="#FF4141" />
-			</StackPanel>
-		</ContentDialog>
-	</Grid>
+	</ScrollViewer>
 </Page>

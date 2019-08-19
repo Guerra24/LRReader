@@ -36,12 +36,12 @@ namespace LRReader.Views.Main
 			Data = DataContext as ArchivePageViewModel;
 		}
 
-		protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
 			Data.Archive = e.Parameter as Archive;
-			Data.LoadImages();
 			Data.LoadTags();
+			await Data.LoadImages();
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -51,9 +51,9 @@ namespace LRReader.Views.Main
 			Frame.Navigate(typeof(ReaderPage), new ReaderPagePayload() { Archive = Data.Archive, Image = e.ClickedItem as string }, new DrillInNavigationTransitionInfo()); //new SuppressNavigationTransitionInfo());
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			Data.LoadImages();
+			await Data.LoadImages();
 		}
 	}
 }

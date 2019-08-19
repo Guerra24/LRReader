@@ -2,6 +2,7 @@
 	x:Class="LRReader.Views.Main.ArchivePage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:WinRTXamlToolkit.Controls"
 	xmlns:convrt="using:LRReader.Internal"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:items="using:LRReader.Views.Items"
@@ -21,7 +22,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Grid Padding="50,20,50,5">
+		<Grid Padding="50,5,50,0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
@@ -36,14 +37,14 @@
 				SelectionMode="None">
 				<GridView.ItemTemplate>
 					<DataTemplate x:DataType="x:String">
-						<Grid Padding="2,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
+						<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
 							<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{x:Bind}" />
 						</Grid>
 					</DataTemplate>
 				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>
 					<ItemsPanelTemplate>
-						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+						<controls:WrapPanel />
 					</ItemsPanelTemplate>
 				</GridView.ItemsPanel>
 				<GridView.ItemContainerStyle>
@@ -52,7 +53,6 @@
 						<Setter Property="Margin" Value="1" />
 						<Setter Property="MinWidth" Value="0" />
 						<Setter Property="MinHeight" Value="0" />
-						<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 					</Style>
 				</GridView.ItemContainerStyle>
 			</GridView>

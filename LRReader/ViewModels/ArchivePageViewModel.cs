@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
+using LRReader.Models.Api;
 using LRReader.Models.Main;
 using RestSharp;
 using System;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using System.Net;
 
 namespace LRReader.ViewModels
 {
@@ -84,7 +86,7 @@ namespace LRReader.ViewModels
 			}
 		}
 
-		public void LoadImages()
+		public async Task LoadImages()
 		{
 			LoadingImages = true;
 			RefreshOnErrorButton = false;
@@ -96,26 +98,33 @@ namespace LRReader.ViewModels
 
 			rq.AddParameter("id", Archive.arcid);
 
-			/*var r = client.Get<ArchiveImages>(rq);
+			var r = await client.ExecuteGetTaskAsync(rq);
 
-			foreach (var s in r.Data.pages)
+			var result = LRRApi.GetResult<ArchiveImages>(r);
+
+			LoadingImages = false;
+			if (!r.IsSuccessful)
 			{
-				ArchiveImages.Add(client.BaseUrl + s);
-			}*/
-			client.GetAsync<ArchiveImages>(rq, async (r, h) =>
-		   {
-			   await DispatcherHelper.RunAsync(() => LoadingImages = false);
-			   if (!r.IsSuccessful)
-			   {
-				   await DispatcherHelper.RunAsync(() => RefreshOnErrorButton = true);
-				   Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				   return;
-			   }
-			   foreach (var s in r.Data.pages)
-			   {
-				   await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
-			   }
-		   });
+				RefreshOnErrorButton = true;
+				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return;
+			}
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					await Task.Run(async () =>
+					{
+						foreach (var s in result.Data.pages)
+						{
+							await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
+						}
+					});
+					break;
+				case HttpStatusCode.Unauthorized:
+					RefreshOnErrorButton = true;
+					Global.EventManager.ShowError("API Error", result.Error.error);
+					break;
+			}
 		}
 	}
 }

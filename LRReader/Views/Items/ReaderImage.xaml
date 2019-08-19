@@ -7,11 +7,16 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	mc:Ignorable="d" DataContextChanged="UserControl_DataContextChanged">
+	DataContextChanged="UserControl_DataContextChanged"
+	mc:Ignorable="d">
 
 	<ScrollViewer
 		Name="ScrollViewer" DoubleTapped="ScrollViewer_DoubleTapped" HorizontalScrollBarVisibility="Auto"
-		SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto">
-		<Image Name="Image" x:FieldModifier="public" ImageOpened="Image_ImageOpened" />
+		MinZoomFactor="1" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled">
+		<Image
+			Name="Image"
+			MaxWidth="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxHeight="{x:Bind ScrollViewer.ViewportHeight, Mode=OneWay}"
+			x:FieldModifier="public" ImageOpened="Image_ImageOpened" />
 	</ScrollViewer>
 </UserControl>

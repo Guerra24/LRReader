@@ -81,6 +81,7 @@ namespace LRReader.ViewModels
 					}
 					break;
 				case HttpStatusCode.Unauthorized:
+					RefreshOnErrorButton = true;
 					Global.EventManager.ShowError("API Error", result.Error.error);
 					break;
 			}
