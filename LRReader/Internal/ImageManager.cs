@@ -49,6 +49,23 @@ namespace LRReader.Internal
 			return null;
 		}
 
+		public async Task<byte[]> DownloadThumbnailRuntime(string id)
+		{
+			var client = Global.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/thumbnail");
+
+			rq.AddParameter("id", id);
+
+			var r = await client.ExecuteGetTaskAsync(rq);
+
+			if (r.StatusCode == HttpStatusCode.OK)
+			{
+				return r.RawBytes;
+			}
+			return null;
+		}
+
 		public async Task<BitmapImage> DownloadImageCache(string path)
 		{
 			return await ImageCache.Instance.GetFromCacheAsync(new Uri(Global.SettingsManager.Profile.ServerAddress + "/" + path));

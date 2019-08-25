@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -45,7 +46,7 @@ namespace LRReader.Views.Items
 				Title.Opacity = 0;
 				Thumbnail.Visibility = Visibility.Collapsed;
 				Ring.Visibility = Visibility.Visible;
-				StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(Archive.arcid);
+				/*StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(Archive.arcid);
 
 				using (var ras = await file.OpenAsync(FileAccessMode.Read))
 				{
@@ -58,7 +59,22 @@ namespace LRReader.Views.Items
 					Thumbnail.Visibility = Visibility.Visible;
 					Ring.Visibility = Visibility.Collapsed;
 					Title.Opacity = 1;
+				}*/
+				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+				{
+					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(Archive.arcid);
+					await stream.WriteAsync(bytes.AsBuffer());
+					stream.Seek(0);
+					var image = new BitmapImage();
+					await image.SetSourceAsync(stream);
+					if (image.PixelHeight != 0 && image.PixelWidth != 0)
+						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+							Thumbnail.Stretch = Stretch.Uniform;
+					Thumbnail.Source = image;
 				}
+				Thumbnail.Visibility = Visibility.Visible;
+				Ring.Visibility = Visibility.Collapsed;
+				Title.Opacity = 1;
 				_oldID = Archive.arcid;
 				Bindings.Update();
 			}

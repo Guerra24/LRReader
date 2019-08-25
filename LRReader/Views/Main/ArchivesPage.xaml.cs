@@ -47,10 +47,12 @@ namespace LRReader.Views.Main
 				ArchivesGrid.ScrollIntoView(Data.ArchiveList.FirstOrDefault(a => a.arcid.Equals(_selectedID)));
 			Global.EventManager.SearchTextChangedEvent += SearchTextChanged;
 			Global.EventManager.SearchQuerySubmittedEvent += SearchQuerySubmitted;
+			Global.EventManager.ShowSearchBox(true);
 		}
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 			base.OnNavigatingFrom(e);
+			Global.EventManager.ShowSearchBox(false);
 			Global.EventManager.SearchTextChangedEvent -= SearchTextChanged;
 			Global.EventManager.SearchQuerySubmittedEvent -= SearchQuerySubmitted;
 		}

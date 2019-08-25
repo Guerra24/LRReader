@@ -46,6 +46,7 @@ namespace LRReader.Views
 
 			Global.EventManager.ShowErrorEvent += ShowError;
 			Global.EventManager.ShowHeaderEvent += ShowHeader;
+			Global.EventManager.ShowSearchBoxEvent += ShowSearchBox;
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -157,6 +158,11 @@ namespace LRReader.Views
 			NavView.IsBackButtonVisible = value ? NavigationViewBackButtonVisible.Auto : NavigationViewBackButtonVisible.Collapsed;
 		}
 
+		private void ShowSearchBox(bool visible)
+		{
+			NavViewSearchBox.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+		}
+
 		private void NavViewSearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			Global.EventManager.SearchTextChanged(sender, args);
@@ -166,5 +172,6 @@ namespace LRReader.Views
 		{
 			Global.EventManager.SearchQuerySubmitted(sender, args);
 		}
+
 	}
 }

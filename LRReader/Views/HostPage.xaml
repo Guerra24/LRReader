@@ -26,12 +26,15 @@
 			ItemInvoked="NavView_ItemInvoked" PaneDisplayMode="Top">
 			<NavigationView.MenuItems>
 				<NavigationViewItem Content="Archives" Icon="Library" Tag="archives" />
-				<NavigationViewItem Content="Statistics" Icon="Tag" Tag="stats" />
+				<NavigationViewItem
+					Content="Statistics" Icon="Tag" Tag="stats"
+					Visibility="Collapsed" />
 			</NavigationView.MenuItems>
 			<NavigationView.AutoSuggestBox>
 				<AutoSuggestBox
 					Name="NavViewSearchBox" MinWidth="200" PlaceholderText="Search..."
-					QueryIcon="Find" QuerySubmitted="NavViewSearchBox_QuerySubmitted" TextChanged="NavViewSearchBox_TextChanged" />
+					QueryIcon="Find" QuerySubmitted="NavViewSearchBox_QuerySubmitted" TextChanged="NavViewSearchBox_TextChanged"
+					Visibility="Collapsed" />
 			</NavigationView.AutoSuggestBox>
 			<Frame Name="ContentFrame" CacheSize="20" Navigated="ContentFrame_Navigated" />
 		</NavigationView>
