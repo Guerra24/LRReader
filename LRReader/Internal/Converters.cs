@@ -42,4 +42,41 @@ namespace LRReader.Internal
 			throw new NotImplementedException();
 		}
 	}
+
+	public class NegateBoolConverter : IValueConverter
+	{
+		public NegateBoolConverter()
+		{
+		}
+
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return !(bool)value;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			throw new NotImplementedException();
+		}
+	}
+	public class NegateBoolToVisibilityConverter : IValueConverter
+	{
+		public NegateBoolToVisibilityConverter()
+		{
+		}
+
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			if (value is bool && (bool)value)
+			{
+				return Visibility.Collapsed;
+			}
+			return Visibility.Visible;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			return (value is Visibility && (Visibility)value == Visibility.Collapsed);
+		}
+	}
 }

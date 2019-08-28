@@ -17,6 +17,6 @@
 			Name="Image"
 			MaxWidth="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
 			MaxHeight="{x:Bind ScrollViewer.ViewportHeight, Mode=OneWay}"
-			x:FieldModifier="public" ImageOpened="Image_ImageOpened" />
+			ImageOpened="Image_ImageOpened" />
 	</ScrollViewer>
 </UserControl>

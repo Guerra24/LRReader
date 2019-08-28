@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,26 +16,22 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Main
+namespace LRReader.Views.Tabs.Content
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class SettingsPage : Page
+	public sealed partial class SettingsTabContent : UserControl
 	{
 		private SettingsPageViewModel Data;
 
-		public SettingsPage()
+		public SettingsTabContent()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
 		}
 
-		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			base.OnNavigatedTo(e);
 			await Data.UpdateCacheSize();
 		}
 
@@ -91,5 +85,6 @@ namespace LRReader.Views.Main
 			await Data.ClearCache();
 			await Data.UpdateCacheSize();
 		}
+
 	}
 }

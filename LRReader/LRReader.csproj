@@ -139,6 +139,7 @@
     <Compile Include="Models\Main\Archive.cs" />
     <Compile Include="Models\Main\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\ReaderPageViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\ArchivesPageViewModel.cs" />
@@ -150,6 +151,9 @@
     </Compile>
     <Compile Include="Views\HostPage.xaml.cs">
       <DependentUpon>HostPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HostTabPage.xaml.cs">
+      <DependentUpon>HostTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Items\ArchiveImage.xaml.cs">
       <DependentUpon>ArchiveImage.xaml</DependentUpon>
@@ -177,6 +181,30 @@
     </Compile>
     <Compile Include="Views\Main\StatisticsPage.xaml.cs">
       <DependentUpon>StatisticsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\ArchivesTab.xaml.cs">
+      <DependentUpon>ArchivesTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\ArchiveTab.xaml.cs">
+      <DependentUpon>ArchiveTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\ArchivesTabContent.xaml.cs">
+      <DependentUpon>ArchivesTabContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\ArchiveTabContent.xaml.cs">
+      <DependentUpon>ArchiveTabContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\FirstRunTabContent.xaml.cs">
+      <DependentUpon>FirstRunTabContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\SettingsTabContent.xaml.cs">
+      <DependentUpon>SettingsTabContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\FirstRunTab.xaml.cs">
+      <DependentUpon>FirstRunTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\SettingsTab.xaml.cs">
+      <DependentUpon>SettingsTab.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +235,9 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
       <Version>5.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>5.1.1</Version>
+    </PackageReference>
     <PackageReference Include="MvvmLight">
       <Version>5.4.1.1</Version>
     </PackageReference>
@@ -231,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HostPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HostTabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -267,6 +302,38 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Main\StatisticsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\ArchivesTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\ArchiveTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\ArchivesTabContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\ArchiveTabContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\FirstRunTabContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\SettingsTabContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\FirstRunTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\SettingsTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

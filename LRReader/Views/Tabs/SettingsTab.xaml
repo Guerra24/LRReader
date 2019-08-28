@@ -1,0 +1,17 @@
+﻿<controls:TabViewItem
+	x:Class="LRReader.Views.Tabs.SettingsTab"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:content="using:LRReader.Views.Tabs.Content"
+	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.Views.Tabs"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DesignHeight="1000"
+	d:DesignWidth="1200"
+	Header="Settings"
+	Icon="Setting"
+	mc:Ignorable="d">
+
+	<content:SettingsTabContent />
+</controls:TabViewItem>

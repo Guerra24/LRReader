@@ -75,6 +75,16 @@ namespace LRReader.ViewModels
 		{
 			get => _tags;
 		}
+		private bool _showReader = false;
+		public bool ShowReader
+		{
+			get => _showReader;
+			set
+			{
+				_showReader = value;
+				RaisePropertyChanged("ShowReader");
+			}
+		}
 
 		public void LoadTags()
 		{

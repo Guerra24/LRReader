@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media.Animation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -41,7 +42,9 @@ namespace LRReader.Views.Items
 				{
 					var image = await Global.ImageManager.DownloadImageCache(n);
 					Image.Source = image;
-					ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom);
+					ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom, true);
+					//var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("imageReaderForward" + n);
+					//anim?.TryStart(Image);
 				}
 				else
 				{
@@ -66,7 +69,9 @@ namespace LRReader.Views.Items
 
 		private void Image_ImageOpened(object sender, RoutedEventArgs e)
 		{
-			ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom);
+			//var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("imageReaderForward" + _oldUrl);
+			//anim?.TryStart(Image);
+			ScrollViewer.ChangeView(0, 0, Global.SettingsManager.BaseZoom, true);
 		}
 
 	}

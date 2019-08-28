@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,27 +16,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Main
+namespace LRReader.Views.Tabs.Content
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class SettingsPage : Page
+	public sealed partial class FirstRunTabContent : UserControl
 	{
 		private SettingsPageViewModel Data;
 
-		public SettingsPage()
+		public FirstRunTabContent()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
-		}
-
-		protected override async void OnNavigatedTo(NavigationEventArgs e)
-		{
-			base.OnNavigatedTo(e);
-			await Data.UpdateCacheSize();
 		}
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -63,33 +52,18 @@ namespace LRReader.Views.Main
 			if (result == ContentDialogResult.Primary)
 			{
 				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
-				Global.LRRApi.RefreshSettings();
 			}
 		}
 
-		private async void ButtonRemove_Click(object sender, RoutedEventArgs e)
+		private void ButtonContinue_Click(object sender, RoutedEventArgs e)
 		{
-			ContentDialog dialog = new ContentDialog { Title = "Remove Profile?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				var sm = Data.SettingsManager;
-				sm.Profiles.Remove(sm.Profile);
-				sm.Profile = null;
-				sm.Profile = sm.Profiles.First();
-			}
+			Global.EventManager.CloseAllTabs();
+			Global.EventManager.AddTab(new ArchivesTab());
 		}
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (Data.SettingsManager.Profile != null)
-				Global.LRRApi.RefreshSettings();
-		}
-
-		private async void ButtonClearCache_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.ClearCache();
-			await Data.UpdateCacheSize();
+			Global.LRRApi.RefreshSettings();
 		}
 	}
 }

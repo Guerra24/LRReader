@@ -46,7 +46,7 @@ namespace LRReader.Views.Main
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			//var animation = ImagesGrid.PrepareConnectedAnimation("imageReaderForward", e.ClickedItem, "Image");
+			//var animation = ImagesGrid.PrepareConnectedAnimation("imageReaderForward" + e.ClickedItem as string, e.ClickedItem, "Image");
 			//animation.Configuration = new DirectConnectedAnimationConfiguration();
 			Frame.Navigate(typeof(ReaderPage), new ReaderPagePayload() { Archive = Data.Archive, Image = e.ClickedItem as string }, new DrillInNavigationTransitionInfo()); //new SuppressNavigationTransitionInfo());
 		}

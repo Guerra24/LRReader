@@ -41,9 +41,31 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("CacheSizeInMB");
 			}
 		}
+		private bool _progressCache;
+		public bool ProgressCache
+		{
+			get => _progressCache;
+			set
+			{
+				_progressCache = value;
+				RaisePropertyChanged("ProgressCache");
+			}
+		}
 		public async Task UpdateCacheSize()
 		{
+			if (ProgressCache)
+				return;
+			ProgressCache = true;
 			CacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
+			ProgressCache = false;
+		}
+		public async Task ClearCache()
+		{
+			if (ProgressCache)
+				return;
+			ProgressCache = true;
+			await Global.ImageManager.ClearCache();
+			ProgressCache = false;
 		}
 	}
 }

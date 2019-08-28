@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,9 @@ namespace LRReader.Internal
 	public delegate void SearchQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args);
 	public delegate void ShowSearchBox(bool visible);
 
+	public delegate void AddTab(TabViewItem tab);
+	public delegate void CloseAllTabs();
+
 	public class EventManager
 	{
 		public event ShowError ShowErrorEvent;
@@ -20,6 +24,9 @@ namespace LRReader.Internal
 		public event SearchTextChanged SearchTextChangedEvent;
 		public event SearchQuerySubmitted SearchQuerySubmittedEvent;
 		public event ShowSearchBox ShowSearchBoxEvent;
+
+		public event AddTab AddTabEvent;
+		public event CloseAllTabs CloseAllTabsEvent;
 
 		public void ShowError(string title, string content)
 		{
@@ -44,6 +51,16 @@ namespace LRReader.Internal
 		public void ShowSearchBox(bool visible)
 		{
 			ShowSearchBoxEvent?.Invoke(visible);
+		}
+
+		public void AddTab(TabViewItem tab)
+		{
+			AddTabEvent?.Invoke(tab);
+		}
+
+		public void CloseAllTabs()
+		{
+			CloseAllTabsEvent?.Invoke();
 		}
 	}
 }
