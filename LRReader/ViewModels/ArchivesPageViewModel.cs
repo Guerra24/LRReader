@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
 using LRReader.Models.Api;
 using LRReader.Models.Main;
@@ -50,6 +51,16 @@ namespace LRReader.ViewModels
 		}
 		private ObservableCollection<Archive> _archiveList = new ObservableCollection<Archive>();
 		public ObservableCollection<Archive> ArchiveList => _archiveList;
+		private bool _newOnly;
+		public bool NewOnly
+		{
+			get => _newOnly;
+			set
+			{
+				_newOnly = value;
+				RaisePropertyChanged("NewOnly");
+			}
+		}
 
 		public async Task Refresh()
 		{
@@ -66,7 +77,7 @@ namespace LRReader.ViewModels
 			var result = LRRApi.GetResult<List<Archive>>(r);
 
 			LoadingArchives = false;
-			if(!r.IsSuccessful)
+			if (!r.IsSuccessful)
 			{
 				RefreshOnErrorButton = true;
 				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
@@ -75,10 +86,13 @@ namespace LRReader.ViewModels
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:
-					foreach (var a in result.Data.OrderBy(a => a.title))
+					await Task.Run(async () =>
 					{
-						ArchiveList.Add(a);
-					}
+						foreach (var a in result.Data.OrderBy(a => a.title))
+						{
+							await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
+						}
+					});
 					break;
 				case HttpStatusCode.Unauthorized:
 					RefreshOnErrorButton = true;

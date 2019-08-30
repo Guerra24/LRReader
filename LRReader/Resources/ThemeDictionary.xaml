@@ -13,7 +13,7 @@
 			<Color x:Key="ColorHamburgerBackground">#eaeaea</Color>
 			<AcrylicBrush
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop"
-				FallbackColor="{StaticResource BrushDeepBackgroundColor}"
+				FallbackColor="#E5E5E5"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#F2F2F2</Color>
@@ -30,7 +30,7 @@
 			<Color x:Key="ColorHamburgerBackground">#1f1f1f</Color>
 			<AcrylicBrush
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop"
-				FallbackColor="{StaticResource BrushDeepBackgroundColor}"
+				FallbackColor="#1f1f1f"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#171717</Color>

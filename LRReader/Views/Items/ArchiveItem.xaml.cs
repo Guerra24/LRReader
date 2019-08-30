@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Models.Main;
+using LRReader.ViewModels.Items;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -28,20 +29,23 @@ namespace LRReader.Views.Items
 	public sealed partial class ArchiveItem : UserControl
 	{
 
-		private Archive Archive;
+		private ArchiveItemViewModel ViewModel;
+
 		private string _oldID = "";
 
 		public ArchiveItem()
 		{
 			this.InitializeComponent();
+			ViewModel = new ArchiveItemViewModel();
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)
 				return;
-			Archive = args.NewValue as Archive;
-			if (!_oldID.Equals(Archive.arcid))
+			ViewModel.Archive = args.NewValue as Archive;
+
+			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
 				Title.Opacity = 0;
 				Thumbnail.Visibility = Visibility.Collapsed;
@@ -62,7 +66,7 @@ namespace LRReader.Views.Items
 				}*/
 				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
 				{
-					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(Archive.arcid);
+					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Archive.arcid);
 					await stream.WriteAsync(bytes.AsBuffer());
 					stream.Seek(0);
 					var image = new BitmapImage();
@@ -75,8 +79,7 @@ namespace LRReader.Views.Items
 				Thumbnail.Visibility = Visibility.Visible;
 				Ring.Visibility = Visibility.Collapsed;
 				Title.Opacity = 1;
-				_oldID = Archive.arcid;
-				Bindings.Update();
+				_oldID = ViewModel.Archive.arcid;
 			}
 		}
 

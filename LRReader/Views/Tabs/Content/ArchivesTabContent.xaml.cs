@@ -58,6 +58,10 @@ namespace LRReader.Views.Tabs.Content
 				if (!string.IsNullOrEmpty(sender.Text))
 				{
 					IEnumerable<Archive> listSearch = Data.ArchiveList;
+					if (Data.NewOnly)
+					{
+						listSearch = listSearch.Where(a => a.isnew.Equals("block"));
+					}
 					var text = sender.Text.ToUpper();
 					foreach (var s in text.Split(" "))
 					{
@@ -81,6 +85,28 @@ namespace LRReader.Views.Tabs.Content
 			else
 			{
 				// Use args.QueryText to determine what to do.
+			}
+		}
+
+		private void RandomButton_Click(object sender, RoutedEventArgs e)
+		{
+			var random = new Random();
+			var list = ArchivesGrid.ItemsSource as IEnumerable<Archive>;
+			var item = list.ElementAt(random.Next(list.Count()));
+			Global.EventManager.AddTab(new ArchiveTab(item));
+		}
+
+		private void NewOnlyButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (Data.NewOnly)
+			{
+				IEnumerable<Archive> listSearch = Data.ArchiveList;
+				listSearch = listSearch.Where(a => a.isnew.Equals("block"));
+				ArchivesGrid.ItemsSource = listSearch;
+			}
+			else
+			{
+				ArchivesGrid.ItemsSource = Data.ArchiveList;
 			}
 		}
 	}
