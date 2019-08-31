@@ -12,6 +12,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -83,5 +85,40 @@ namespace LRReader.Views.Items
 			}
 		}
 
+		private async void EditMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddress + "/edit?id=" + ViewModel.Archive.arcid));
+		}
+
+		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			var download = await ViewModel.DownloadArchive();
+
+			var savePicker = new FileSavePicker();
+			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+			savePicker.FileTypeChoices.Add(download.Type + " File", new List<string>() { download.Type });
+			savePicker.SuggestedFileName = download.Name;
+
+			StorageFile file = await savePicker.PickSaveFileAsync();
+			if (file != null)
+			{
+				CachedFileManager.DeferUpdates(file);
+				await FileIO.WriteBytesAsync(file, download.Data);
+				FileUpdateStatus status =
+					await CachedFileManager.CompleteUpdatesAsync(file);
+				if (status == FileUpdateStatus.Complete)
+				{
+					//save
+				}
+				else
+				{
+					// not saved
+				}
+			}
+			else
+			{
+				//cancel
+			}
+		}
 	}
 }

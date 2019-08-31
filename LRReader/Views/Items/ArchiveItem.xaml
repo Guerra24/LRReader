@@ -12,8 +12,8 @@
 	mc:Ignorable="d">
 	<UserControl.ContextFlyout>
 		<MenuFlyout>
-			<MenuFlyoutItem Text="Edit" Icon="Edit" IsEnabled="False" />
-			<MenuFlyoutItem Text="Download archive" Icon="Download" IsEnabled="False" />
+			<MenuFlyoutItem Click="EditMenuItem_Click" Icon="Edit" Text="Edit (Opens in browser)" />
+			<MenuFlyoutItem Click="DownloadMenuItem_Click" Icon="Download" Text="Download archive" />
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.System;
 
 namespace LRReader.Internal
 {
@@ -16,6 +17,11 @@ namespace LRReader.Internal
 			PackageVersion version = packageId.Version;
 
 			return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+		}
+
+		public static async Task<bool> OpenInBrowser(Uri uri)
+		{
+			return await Launcher.LaunchUriAsync(uri);
 		}
 	}
 }
