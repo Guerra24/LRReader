@@ -37,6 +37,7 @@ namespace LRReader.ViewModels
 			{
 				_loadingArchives = value;
 				RaisePropertyChanged("LoadingArchives");
+				RaisePropertyChanged("ControlsEnabled");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -47,6 +48,7 @@ namespace LRReader.ViewModels
 			{
 				_refreshOnErrorButton = value;
 				RaisePropertyChanged("RefreshOnErrorButton");
+				RaisePropertyChanged("ControlsEnabled");
 			}
 		}
 		private ObservableCollection<Archive> _archiveList = new ObservableCollection<Archive>();
@@ -60,6 +62,10 @@ namespace LRReader.ViewModels
 				_newOnly = value;
 				RaisePropertyChanged("NewOnly");
 			}
+		}
+		public bool ControlsEnabled
+		{
+			get => !LoadingArchives && !RefreshOnErrorButton;
 		}
 		public async Task Refresh()
 		{

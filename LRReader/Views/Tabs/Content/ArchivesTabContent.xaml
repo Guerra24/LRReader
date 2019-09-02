@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.Views.Items"
 	xmlns:local="using:LRReader.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,6 +12,10 @@
 	DataContext="{Binding ArchivesPageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
+	</UserControl.Resources>
 
 	<Grid>
 		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
@@ -25,18 +30,21 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<AutoSuggestBox
-							MinWidth="300" HorizontalAlignment="Center" PlaceholderText="Search"
-							QueryIcon="Find" TextChanged="SearchTextChanged" />
+							MinWidth="300" HorizontalAlignment="Center"
+							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+							PlaceholderText="Search" QueryIcon="Find" TextChanged="SearchTextChanged" />
 						<StackPanel
 							Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">
 							<ToggleButton
 								Width="150" Margin="0,0,5,0" Click="NewOnlyButton_Click"
 								Content="New archives only"
-								IsChecked="{x:Bind Data.NewOnly, Mode=TwoWay}" />
+								IsChecked="{x:Bind Data.NewOnly, Mode=TwoWay}"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<Button
 								Width="150" Margin="5,0,0,0" Click="RandomButton_Click"
-								Content="Random archive" />
+								Content="Random archive"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 						</StackPanel>
 					</Grid>
 				</GridView.Header>

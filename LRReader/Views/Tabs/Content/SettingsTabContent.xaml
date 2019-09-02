@@ -24,7 +24,7 @@
 				MinWidth="200" Margin="0,0,0,10"
 				IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 				ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-				PlaceholderText="Server Profile"
+				PlaceholderText="Select Profile"
 				SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}"
 				SelectionChanged="ComboBox_SelectionChanged" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">

@@ -13,6 +13,7 @@
 
 	<UserControl.Resources>
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -22,12 +23,12 @@
 			<TextBlock
 				Margin="0,0,0,10" HorizontalAlignment="Center" FontSize="28"
 				Text="Welcome" />
-			<TextBlock Margin="0,0,0,10" Text="First we need to setup a profle." />
+			<TextBlock Margin="0,0,0,10" Text="First we need to setup a profle." Visibility="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 			<ComboBox
 				Margin="0,0,0,10" HorizontalAlignment="Stretch"
 				IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 				ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-				PlaceholderText="Server Profile"
+				PlaceholderText="Select Profile"
 				SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}"
 				SelectionChanged="ComboBox_SelectionChanged" />
 			<StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
