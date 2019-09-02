@@ -17,50 +17,44 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<Grid Padding="50,5,50,0">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-			<TextBlock
-				Margin="0,0,0,10" FontSize="24"
-				Text="{x:Bind Data.Archive.title, Mode=OneWay}"
-				TextWrapping="WrapWholeWords" />
-			<GridView
-				Grid.Row="1" IsItemClickEnabled="True"
-				ItemsSource="{x:Bind Data.Tags, Mode=OneWay}"
-				SelectionMode="None">
-				<GridView.ItemTemplate>
-					<DataTemplate x:DataType="x:String">
-						<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
-							<TextBlock Text="{x:Bind}" />
-						</Grid>
-					</DataTemplate>
-				</GridView.ItemTemplate>
-				<GridView.ItemsPanel>
-					<ItemsPanelTemplate>
-						<controls:WrapPanel />
-					</ItemsPanelTemplate>
-				</GridView.ItemsPanel>
-				<GridView.ItemContainerStyle>
-					<Style TargetType="GridViewItem">
-						<Setter Property="Padding" Value="0" />
-						<Setter Property="Margin" Value="1" />
-						<Setter Property="MinWidth" Value="0" />
-						<Setter Property="MinHeight" Value="0" />
-					</Style>
-				</GridView.ItemContainerStyle>
-			</GridView>
-		</Grid>
 		<GridView
-			Name="ImagesGrid" Grid.Row="1" IsItemClickEnabled="True"
-			ItemClick="ImagesGrid_ItemClick"
+			Name="ImagesGrid" IsItemClickEnabled="True" ItemClick="ImagesGrid_ItemClick"
 			ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
 			SelectionMode="None">
+			<GridView.Header>
+				<StackPanel Padding="50,5,50,5">
+					<TextBlock
+						Margin="0,0,0,10" FontSize="24"
+						Text="{x:Bind Data.Archive.title, Mode=OneWay}"
+						TextWrapping="WrapWholeWords" />
+					<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
+						<GridView.ItemTemplate>
+							<DataTemplate x:DataType="x:String">
+								<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
+									<TextBlock Text="{x:Bind}" />
+								</Grid>
+							</DataTemplate>
+						</GridView.ItemTemplate>
+						<GridView.ItemsPanel>
+							<ItemsPanelTemplate>
+								<controls:WrapPanel />
+							</ItemsPanelTemplate>
+						</GridView.ItemsPanel>
+						<GridView.ItemContainerStyle>
+							<Style TargetType="GridViewItem">
+								<Setter Property="Padding" Value="0" />
+								<Setter Property="Margin" Value="1" />
+								<Setter Property="MinWidth" Value="0" />
+								<Setter Property="MinHeight" Value="0" />
+							</Style>
+						</GridView.ItemContainerStyle>
+					</GridView>
+					<StackPanel Orientation="Horizontal" Visibility="Collapsed">
+						<Button Content="Edit (Opens in Browser)" />
+						<Button Margin="10,0,0,0" Content="Download" />
+					</StackPanel>
+				</StackPanel>
+			</GridView.Header>
 			<GridView.ItemTemplate>
 				<DataTemplate>
 					<items:ArchiveImage />
@@ -95,7 +89,7 @@
 			Retry
 		</Button>
 		<FlipView
-			Name="FlipView" Grid.RowSpan="2"
+			Name="FlipView" Grid.RowSpan="2" d:IsHidden="True"
 			x:Load="{x:Bind Data.ShowReader, Mode=OneWay}"
 			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 			FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"

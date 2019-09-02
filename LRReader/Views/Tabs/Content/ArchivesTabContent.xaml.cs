@@ -117,5 +117,10 @@ namespace LRReader.Views.Tabs.Content
 				await Data.Refresh(false);
 			}
 		}
+
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			await Data.Refresh();
+		}
 	}
 }

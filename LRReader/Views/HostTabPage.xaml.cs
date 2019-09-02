@@ -53,6 +53,7 @@ namespace LRReader.Views
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 			titleBar.ButtonForegroundColor = (Color)this.Resources["SystemBaseHighColor"];
+			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
 
 			Window.Current.SetTitleBar(TitleBar);
 
@@ -107,7 +108,7 @@ namespace LRReader.Views
 			AppView.TryEnterFullScreenMode();
 		}
 
-		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args)
 		{
 			Data.FullScreen = AppView.IsFullScreenMode;
 		}

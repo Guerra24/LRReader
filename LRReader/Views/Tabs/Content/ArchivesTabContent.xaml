@@ -22,7 +22,7 @@
 			<GridView
 				Name="ArchivesGrid" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
-				SelectionMode="None">
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
 				<GridView.Header>
 					<Grid Margin="0,10,0,10">
 						<Grid.RowDefinitions>
@@ -48,6 +48,9 @@
 						</StackPanel>
 					</Grid>
 				</GridView.Header>
+				<GridView.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>
 						<items:ArchiveItem />

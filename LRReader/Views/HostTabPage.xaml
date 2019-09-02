@@ -10,7 +10,6 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding HostTabPageInstace, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
-	SizeChanged="Page_SizeChanged"
 	mc:Ignorable="d">
 
 	<Grid>
@@ -34,7 +33,7 @@
 				<x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
 			</controls:TabView.Resources>
 			<controls:TabView.TabActionHeader>
-				<StackPanel Orientation="Horizontal">
+				<StackPanel Orientation="Horizontal" Visibility="Collapsed">
 					<Button
 						Name="NewSearchTab" Width="32"
 						Height="{StaticResource TabViewItemHeaderMinHeight}"

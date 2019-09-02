@@ -107,6 +107,7 @@
 				<Run>LRReader version</Run>
 				<Run Text="{x:Bind Data.Version}" />
 			</TextBlock>
+			<HyperlinkButton Content="Open on Github" NavigateUri="https://github.com/Guerra24/LRReader"/>
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>
