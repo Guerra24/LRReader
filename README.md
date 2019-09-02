@@ -1,23 +1,23 @@
-No icon for now 🤷‍♂️
+![Logo](.github/logo.png)<br><br>
 
 ## Features
-- Archives list
-- Archive overview (with tags) & reader
-- Configurable reader's base zoom and zoomed factor
+- Archives list.
 - Search by name and/or tag.
-- Permanent thumbnail caching
-- Optional image caching
-- Basic statistics
-- Multiple servers
+- Show new archives only.
+- Download archives.
+- Archive overview (with tags) & reader.
+- Configurable reader's base zoom and zoomed factor.
+- Optional image caching.
+- Multiple servers.
+- Restart server's background worker.
+- Clear "All New" flags.
+- Download database.
+- Fullscreen.
 
 ## Requirements
 
-- Windows 10 Build 17763 (x86, x64 or ARM64)
-- LANraragi v0.6.0-BETA.2
-
-## Issues
-- Thumbnail caching may crash, app should work normally in the next run.
-- LANraragi API does not respond correctly when using API Key with No-Fun mode. It will crash when using no key or wrong one, already fixed in LANraragi repo, waiting for proper release.
+- Windows 10 1803 (x86, x64, ARM or ARM64)
+- LANraragi v0.6.3 ([this exact commit](https://github.com/Difegue/LANraragi/commit/865350a10d96346420ce558c6811da3cf4131408) or newer as it fixes issues with thumbnails and apis)
 
 ## Installing
 Sideload only for now. 
@@ -27,7 +27,7 @@ Unzip and right click `Add-AppDevPackage.ps1` > Run with powershell<br>
 This will add the self-signed certificate and install the app.
 
 ### Upgrade
-Unzip and run the `LRReader_<version>_x86_x64_arm64.msixbundle` file, the app installer should pop-up.
+Unzip and run the `LRReader_<version>_x86_x64_arm_arm64.appxbundle` file, the app installer should pop-up.
 
 ## Screenshots
 
