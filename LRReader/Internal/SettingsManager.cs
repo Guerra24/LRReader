@@ -143,6 +143,9 @@ namespace LRReader.Internal
 		public string ServerAddress { get; set; }
 		public string ServerApiKey { get; set; }
 
+		[JsonIgnore]
+		public bool HasApiKey { get => !string.IsNullOrEmpty(ServerApiKey); }
+
 		public ServerProfile()
 		{
 			UID = Guid.NewGuid().ToString();
@@ -151,11 +154,6 @@ namespace LRReader.Internal
 		public void Update()
 		{
 			RaisePropertyChanged(string.Empty);
-		}
-
-		public bool HasApiKey()
-		{
-			return !string.IsNullOrEmpty(ServerApiKey);
 		}
 
 		public override string ToString()

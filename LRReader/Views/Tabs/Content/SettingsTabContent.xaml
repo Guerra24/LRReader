@@ -15,13 +15,14 @@
 	<UserControl.Resources>
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</UserControl.Resources>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<StackPanel Width="400" Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,5" FontSize="24" Text="Connection" />
 			<ComboBox
-				MinWidth="200" Margin="0,0,0,10"
+				Name="ProfileSelection" MinWidth="200" Margin="0,0,0,10"
 				IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 				ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
 				PlaceholderText="Select Profile"
@@ -80,26 +81,27 @@
 					IsActive="{x:Bind Data.ProgressCache, Mode=OneWay}" />
 			</StackPanel>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Server" />
+			<TextBlock Margin="0,0,0,5" Text="API Key required to use server options" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<Button
 					Margin="0,0,10,0" Click="RestartWorkerButton_Click" Content="Restart"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 					ToolTipService.ToolTip="(Re)Starts the Shinobu Background Worker" />
 				<Button
 					Click="StopWorkerButton_Click" Content="Stop"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 					ToolTipService.ToolTip="Stops the Shinobu Background Worker" />
 			</StackPanel>
 			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Database" />
 			<Button
-				Margin="0,0,0,10" Click="DownloadDBButton_Click" Content="Download database"
-				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
-				ToolTipService.ToolTip="Returns a backup in JSON form. This backup can be reimported manually" />
-			<Button
-				Click="ClearAllNewButton_Click" Content="Clear all new"
-				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+				Margin="0,0,0,10" Click="ClearAllNewButton_Click" Content="Clear all new"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 				ToolTipService.ToolTip="Clears the 'New!' flag on all archives" />
+			<Button
+				Click="DownloadDBButton_Click" Content="Download database"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+				ToolTipService.ToolTip="Returns a backup in JSON form. This backup can be reimported manually" />
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="About" />
 			<TextBlock Margin="0,0,0,10">
 				<Run>LRReader version</Run>

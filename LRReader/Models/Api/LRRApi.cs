@@ -30,7 +30,7 @@ namespace LRReader.Models.Api
 		{
 			var sm = Global.SettingsManager;
 			client.BaseUrl = new Uri(sm.Profile.ServerAddress);
-			if (sm.Profile.HasApiKey())
+			if (sm.Profile.HasApiKey)
 			{
 				apiKey = sm.Profile.ServerApiKey;
 				client.RemoveDefaultParameter("key");
