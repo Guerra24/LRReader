@@ -8,6 +8,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -86,5 +89,52 @@ namespace LRReader.Views.Tabs.Content
 			await Data.UpdateCacheSize();
 		}
 
+		private void RestartWorkerButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.RestartWorker();
+		}
+
+		private void StopWorkerButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.StopWorker();
+		}
+
+		private async void DownloadDBButton_Click(object sender, RoutedEventArgs e)
+		{
+			var download = await Data.DownloadDB();
+			if (download == null)
+				return;
+
+			var savePicker = new FileSavePicker();
+			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+			savePicker.FileTypeChoices.Add(download.Type + " File", new List<string>() { download.Type });
+			savePicker.SuggestedFileName = download.Name;
+
+			StorageFile file = await savePicker.PickSaveFileAsync();
+			if (file != null)
+			{
+				CachedFileManager.DeferUpdates(file);
+				await FileIO.WriteBytesAsync(file, download.Data);
+				FileUpdateStatus status =
+					await CachedFileManager.CompleteUpdatesAsync(file);
+				if (status == FileUpdateStatus.Complete)
+				{
+					//save
+				}
+				else
+				{
+					// not saved
+				}
+			}
+			else
+			{
+				//cancel
+			}
+		}
+
+		private void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.ClearAllNew();
+		}
 	}
 }

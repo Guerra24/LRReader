@@ -117,13 +117,14 @@ namespace LRReader.Internal
 			RaisePropertyChanged("AtLeastOneProfile");
 		}
 
-		public void AddProfile(string name, string address, string apikey)
+		public ServerProfile AddProfile(string name, string address, string apikey)
 		{
 			ServerProfile profile = new ServerProfile();
 			profile.Name = name;
 			profile.ServerAddress = address;
 			profile.ServerApiKey = apikey;
 			Profiles.Add(profile);
+			return profile;
 		}
 
 		public void ModifyProfile(string uid, string name, string address, string apikey)
@@ -150,6 +151,11 @@ namespace LRReader.Internal
 		public void Update()
 		{
 			RaisePropertyChanged(string.Empty);
+		}
+
+		public bool HasApiKey()
+		{
+			return !string.IsNullOrEmpty(ServerApiKey);
 		}
 
 		public override string ToString()

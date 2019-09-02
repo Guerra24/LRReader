@@ -36,7 +36,7 @@ namespace LRReader.Views.Tabs.Content
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				Data.SettingsManager.AddProfile(dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
+				Data.SettingsManager.Profile = Data.SettingsManager.AddProfile(dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
 			}
 		}
 

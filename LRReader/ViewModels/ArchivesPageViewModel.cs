@@ -61,11 +61,16 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("NewOnly");
 			}
 		}
-
 		public async Task Refresh()
 		{
+			await Refresh(true);
+		}
+
+		public async Task Refresh(bool animate)
+		{
 			ArchiveList.Clear();
-			LoadingArchives = true;
+			if (animate)
+				LoadingArchives = true;
 			RefreshOnErrorButton = false;
 
 			var client = Global.LRRApi.GetClient();
@@ -76,7 +81,8 @@ namespace LRReader.ViewModels
 
 			var result = LRRApi.GetResult<List<Archive>>(r);
 
-			LoadingArchives = false;
+			if (animate)
+				LoadingArchives = false;
 			if (!r.IsSuccessful)
 			{
 				RefreshOnErrorButton = true;

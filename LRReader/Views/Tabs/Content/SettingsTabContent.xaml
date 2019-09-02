@@ -79,6 +79,27 @@
 					Width="30" Height="30" VerticalAlignment="Center"
 					IsActive="{x:Bind Data.ProgressCache, Mode=OneWay}" />
 			</StackPanel>
+			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Server" />
+			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+				<Button
+					Margin="0,0,10,0" Click="RestartWorkerButton_Click" Content="Restart"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+					ToolTipService.ToolTip="(Re)Starts the Shinobu Background Worker" />
+				<Button
+					Click="StopWorkerButton_Click" Content="Stop"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+					ToolTipService.ToolTip="Stops the Shinobu Background Worker" />
+			</StackPanel>
+			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Database" />
+			<Button
+				Margin="0,0,0,10" Click="DownloadDBButton_Click" Content="Download database"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+				ToolTipService.ToolTip="Returns a backup in JSON form. This backup can be reimported manually" />
+			<Button
+				Click="ClearAllNewButton_Click" Content="Clear all new"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey(), Mode=OneWay}"
+				ToolTipService.ToolTip="Clears the 'New!' flag on all archives" />
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="About" />
 			<TextBlock Margin="0,0,0,10">
 				<Run>LRReader version</Run>

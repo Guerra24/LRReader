@@ -48,7 +48,7 @@ namespace LRReader.ViewModels.Items
 		}
 		public bool IsNew
 		{
-			get => _archive != null ? _archive.isnew.Equals("block") : false;
+			get => _archive != null ? _archive.IsNewArchive() : false;
 		}
 
 		public async Task<DownloadPayload> DownloadArchive()
@@ -81,11 +81,5 @@ namespace LRReader.ViewModels.Items
 			}
 			return null;
 		}
-	}
-	public class DownloadPayload
-	{
-		public byte[] Data { get; set; }
-		public string Name { get; set; }
-		public string Type { get; set; }
 	}
 }

@@ -136,5 +136,32 @@ namespace LRReader.ViewModels
 					break;
 			}
 		}
+
+		public async void ClearNew()
+		{
+			var client = Global.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/clear_new");
+
+			rq.AddParameter("id", Archive.arcid);
+
+			var r = await client.ExecuteGetTaskAsync(rq);
+
+			var result = LRRApi.GetResult<ApiResult>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return;
+			}
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					break;
+				case HttpStatusCode.Unauthorized:
+					Global.EventManager.ShowError("API Error", result.Error.error);
+					break;
+			}
+		}
 	}
 }

@@ -60,7 +60,7 @@ namespace LRReader.Views.Tabs.Content
 					IEnumerable<Archive> listSearch = Data.ArchiveList;
 					if (Data.NewOnly)
 					{
-						listSearch = listSearch.Where(a => a.isnew.Equals("block"));
+						listSearch = listSearch.Where(a => a.IsNewArchive());
 					}
 					var text = sender.Text.ToUpper();
 					foreach (var s in text.Split(" "))
@@ -101,12 +101,20 @@ namespace LRReader.Views.Tabs.Content
 			if (Data.NewOnly)
 			{
 				IEnumerable<Archive> listSearch = Data.ArchiveList;
-				listSearch = listSearch.Where(a => a.isnew.Equals("block"));
+				listSearch = listSearch.Where(a => a.IsNewArchive());
 				ArchivesGrid.ItemsSource = listSearch;
 			}
 			else
 			{
 				ArchivesGrid.ItemsSource = Data.ArchiveList;
+			}
+		}
+
+		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		{
+			using (var deferral = args.GetDeferral())
+			{
+				await Data.Refresh(false);
 			}
 		}
 	}

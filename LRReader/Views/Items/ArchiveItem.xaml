@@ -17,7 +17,7 @@
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
-	<Grid Padding="0" Background="{ThemeResource BrushItemGridBackground}" ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}">
+	<Grid Padding="0" Background="{ThemeResource BrushItemGridBackground}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -26,7 +26,8 @@
 			Name="Title" Grid.Row="0" HorizontalAlignment="Center"
 			FontSize="16"
 			Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
-			TextTrimming="CharacterEllipsis" />
+			TextTrimming="CharacterEllipsis"
+			ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
 		<Grid Grid.Row="1" Height="282" BorderBrush="{ThemeResource SystemAccentColor}">
 			<Image Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />
 			<Grid

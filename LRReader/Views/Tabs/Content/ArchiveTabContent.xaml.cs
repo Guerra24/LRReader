@@ -45,6 +45,11 @@ namespace LRReader.Views.Tabs.Content
 			//animation.Configuration = new DirectConnectedAnimationConfiguration();
 			Data.ShowReader = true;
 			FlipView.SelectedIndex = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
+			if (Data.Archive.IsNewArchive())
+			{
+				Data.ClearNew();
+				Data.Archive.isnew = "false";
+			}
 		}
 
 		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
