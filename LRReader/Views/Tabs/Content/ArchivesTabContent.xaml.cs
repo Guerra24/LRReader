@@ -71,7 +71,14 @@ namespace LRReader.Views.Tabs.Content
 				}
 				else
 				{
-					ArchivesGrid.ItemsSource = Data.ArchiveList;
+					if (Data.NewOnly)
+					{
+						ArchivesGrid.ItemsSource  = Data.ArchiveList.Where(a => a.IsNewArchive());
+					}
+					else
+					{
+						ArchivesGrid.ItemsSource = Data.ArchiveList;
+					}
 				}
 			}
 		}
