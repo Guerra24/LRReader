@@ -1,4 +1,4 @@
-![Logo](.github/logo.png)<br><br>
+![Logo](.github/logo.png)
 
 ## Features
 - Archives list.
