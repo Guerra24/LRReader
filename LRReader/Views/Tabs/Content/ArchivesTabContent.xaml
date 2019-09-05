@@ -32,7 +32,9 @@
 						<AutoSuggestBox
 							MinWidth="300" HorizontalAlignment="Center"
 							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-							PlaceholderText="Search" QueryIcon="Find" TextChanged="SearchTextChanged" />
+							ItemsSource="{x:Bind Data.Suggestions, Mode=OneWay}"
+							PlaceholderText="Search" QueryIcon="Find" QuerySubmitted="SearchQuerySubmitted"
+							TextChanged="SearchTextChanged" />
 						<StackPanel
 							Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">

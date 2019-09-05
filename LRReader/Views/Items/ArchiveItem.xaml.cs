@@ -93,6 +93,7 @@ namespace LRReader.Views.Items
 
 		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
 		{
+			ViewModel.Downloading = true;
 			var download = await ViewModel.DownloadArchive();
 
 			var savePicker = new FileSavePicker();
@@ -101,6 +102,7 @@ namespace LRReader.Views.Items
 			savePicker.SuggestedFileName = download.Name;
 
 			StorageFile file = await savePicker.PickSaveFileAsync();
+			ViewModel.Downloading = false;
 			if (file != null)
 			{
 				CachedFileManager.DeferUpdates(file);

@@ -1,4 +1,5 @@
-﻿using LRReader.Models.Main;
+﻿using LRReader.Internal;
+using LRReader.Models.Main;
 using LRReader.ViewModels;
 using LRReader.Views.Items;
 using System;
@@ -9,6 +10,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -87,6 +91,44 @@ namespace LRReader.Views.Tabs.Content
 		{
 			if (Data.ShowReader)
 				Data.ShowReader = false;
+		}
+
+		private async void EditButton_Click(object sender, RoutedEventArgs e)
+		{
+			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddress + "/edit?id=" + Data.Archive.arcid));
+		}
+
+		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.Downloading = true;
+			var download = await Data.DownloadArchive();
+
+			var savePicker = new FileSavePicker();
+			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+			savePicker.FileTypeChoices.Add(download.Type + " File", new List<string>() { download.Type });
+			savePicker.SuggestedFileName = download.Name;
+
+			StorageFile file = await savePicker.PickSaveFileAsync();
+			Data.Downloading = false;
+			if (file != null)
+			{
+				CachedFileManager.DeferUpdates(file);
+				await FileIO.WriteBytesAsync(file, download.Data);
+				FileUpdateStatus status =
+					await CachedFileManager.CompleteUpdatesAsync(file);
+				if (status == FileUpdateStatus.Complete)
+				{
+					//save
+				}
+				else
+				{
+					// not saved
+				}
+			}
+			else
+			{
+				//cancel
+			}
 		}
 	}
 }

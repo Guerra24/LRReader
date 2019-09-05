@@ -14,24 +14,12 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using System.Net;
+using LRReader.ViewModels.Base;
 
 namespace LRReader.ViewModels
 {
-	public class ArchivePageViewModel : ViewModelBase
+	public class ArchivePageViewModel : ArchiveBaseViewModel
 	{
-		private bool _isLoading = false;
-		public bool IsLoading
-		{
-			get
-			{
-				return _isLoading;
-			}
-			set
-			{
-				_isLoading = value;
-				RaisePropertyChanged("IsLoading");
-			}
-		}
 		private bool _loadingImages = false;
 		public bool LoadingImages
 		{
@@ -56,19 +44,6 @@ namespace LRReader.ViewModels
 		public ObservableCollection<string> ArchiveImages
 		{
 			get => _archiveImages;
-		}
-		private Archive _archive = new Archive();
-		public Archive Archive
-		{
-			get => _archive;
-			set
-			{
-				if (!_archive.Equals(value))
-				{
-					_archive = value;
-					RaisePropertyChanged("Archive");
-				}
-			}
 		}
 		private ObservableCollection<string> _tags = new ObservableCollection<string>();
 		public ObservableCollection<string> Tags
@@ -113,7 +88,7 @@ namespace LRReader.ViewModels
 			var result = LRRApi.GetResult<ArchiveImages>(r);
 
 			LoadingImages = false;
-			if (!r.IsSuccessful)
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				RefreshOnErrorButton = true;
 				Global.EventManager.ShowError("Network Error", r.ErrorMessage);

@@ -14,6 +14,7 @@
 
 	<UserControl.Resources>
 		<convrt:BooleanToVisibilityConverter x:Key="BoolToVis" />
+		<convrt:NegateBoolConverter x:Key="NegateBool" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -49,9 +50,11 @@
 							</Style>
 						</GridView.ItemContainerStyle>
 					</GridView>
-					<StackPanel Orientation="Horizontal" Visibility="Collapsed">
-						<Button Content="Edit (Opens in Browser)" />
-						<Button Margin="10,0,0,0" Content="Download" />
+					<StackPanel Orientation="Horizontal">
+						<Button Click="EditButton_Click" Content="Edit (Opens in Browser)" />
+						<Button
+							Margin="10,0,0,0" Click="DonwloadButton_Click" Content="Download"
+							IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
 					</StackPanel>
 				</StackPanel>
 			</GridView.Header>

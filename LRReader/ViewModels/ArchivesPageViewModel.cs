@@ -51,8 +51,7 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("ControlsEnabled");
 			}
 		}
-		private ObservableCollection<Archive> _archiveList = new ObservableCollection<Archive>();
-		public ObservableCollection<Archive> ArchiveList => _archiveList;
+		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
 		private bool _newOnly;
 		public bool NewOnly
 		{
@@ -67,6 +66,11 @@ namespace LRReader.ViewModels
 		{
 			get => !LoadingArchives && !RefreshOnErrorButton;
 		}
+		private bool _internalLoadingArchives;
+		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
+		private ObservableCollection<TagStats> _tagStats = new ObservableCollection<TagStats>();
+		public ObservableCollection<TagStats> TagStats => _tagStats;
+
 		public async Task Refresh()
 		{
 			await Refresh(true);
@@ -74,6 +78,9 @@ namespace LRReader.ViewModels
 
 		public async Task Refresh(bool animate)
 		{
+			if (_internalLoadingArchives)
+				return;
+			_internalLoadingArchives = true;
 			ArchiveList.Clear();
 			if (animate)
 				LoadingArchives = true;
@@ -89,7 +96,7 @@ namespace LRReader.ViewModels
 
 			if (animate)
 				LoadingArchives = false;
-			if (!r.IsSuccessful)
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				RefreshOnErrorButton = true;
 				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
@@ -111,7 +118,41 @@ namespace LRReader.ViewModels
 					Global.EventManager.ShowError("API Error", result.Error.error);
 					break;
 			}
+			_internalLoadingArchives = false;
+		}
 
+		public async Task LoadTagStats()
+		{
+			TagStats.Clear();
+			var client = Global.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/tagstats");
+
+			var r = await client.ExecuteGetTaskAsync(rq);
+
+			var result = LRRApi.GetResult<List<TagStats>>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return;
+			}
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					await Task.Run(() =>
+					{
+						foreach (var a in result.Data.OrderByDescending(a => a.weight))
+						{
+							TagStats.Add(a);
+						}
+					});
+					break;
+				case HttpStatusCode.Unauthorized:
+					RefreshOnErrorButton = true;
+					Global.EventManager.ShowError("API Error", result.Error.error);
+					break;
+			}
 		}
 	}
 }

@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Light">
-			<SolidColorBrush x:Key="BrushBaseBackground" Color="Black" />
+			<SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
 			<SolidColorBrush x:Key="BrushText" Color="Black" />
 			<SolidColorBrush x:Key="BrushTextInverted" Color="White" />
 			<SolidColorBrush x:Key="BrushDeepBackground" Color="White" />
@@ -21,7 +21,7 @@
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
-			<SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
+			<SolidColorBrush x:Key="BrushBaseBackground" Color="Black" />
 			<SolidColorBrush x:Key="BrushTextInverted" Color="Black" />
 			<SolidColorBrush x:Key="BrushDeepBackground" Color="#0a0a0a" />
 			<Color x:Key="BrushDeepBackgroundColor">#0a0a0a</Color>

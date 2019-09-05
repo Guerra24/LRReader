@@ -139,6 +139,7 @@
     <Compile Include="Models\Main\Archive.cs" />
     <Compile Include="Models\Main\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
     <Compile Include="ViewModels\ReaderPageViewModel.cs" />

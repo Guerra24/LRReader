@@ -22,8 +22,6 @@ namespace LRReader.ViewModels
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
 			SimpleIoc.Default.Register<ArchivesPageViewModel>();
-			SimpleIoc.Default.Register<ArchivePageViewModel>();
-			SimpleIoc.Default.Register<ReaderPageViewModel>();
 			SimpleIoc.Default.Register<SettingsPageViewModel>();
 			SimpleIoc.Default.Register<StatisticsPageViewModel>();
 			SimpleIoc.Default.Register<HostTabPageViewModel>();
@@ -32,14 +30,6 @@ namespace LRReader.ViewModels
 		public ArchivesPageViewModel ArchivesPageInstance
 		{
 			get => ServiceLocator.Current.GetInstance<ArchivesPageViewModel>();
-		}
-		public ArchivePageViewModel ArchivePageInstance
-		{
-			get => ServiceLocator.Current.GetInstance<ArchivePageViewModel>();
-		}
-		public ReaderPageViewModel ReaderPageInstance
-		{
-			get => ServiceLocator.Current.GetInstance<ReaderPageViewModel>();
 		}
 		public SettingsPageViewModel SettingsPageInstance
 		{
