@@ -17,7 +17,7 @@
 ## Requirements
 
 - Windows 10 1803 (x86, x64, ARM or ARM64)
-- LANraragi v0.6.3 ([this exact commit](https://github.com/Difegue/LANraragi/commit/865350a10d96346420ce558c6811da3cf4131408) or newer as it fixes issues with thumbnails and apis)
+- LANraragi v0.6.4
 
 ## Installing
 Sideload only for now. 
