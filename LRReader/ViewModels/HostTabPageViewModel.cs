@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
-using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,8 +24,7 @@ namespace LRReader.ViewModels
 			}
 		}
 
-		private ObservableCollection<TabViewItem> _tabs = new ObservableCollection<TabViewItem>();
-		public ObservableCollection<TabViewItem> Tabs => _tabs;
+		public ObservableCollection<TabViewItem> Tabs = new ObservableCollection<TabViewItem>();
 
 		private TabViewItem _currentTab;
 		public TabViewItem CurrentTab

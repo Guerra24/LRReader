@@ -263,8 +263,8 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
       <Version>5.1.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>5.1.1</Version>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.2.190830001</Version>
     </PackageReference>
     <PackageReference Include="MvvmLight">
       <Version>5.4.1.1</Version>

@@ -2,6 +2,7 @@
 using LRReader.Internal;
 using LRReader.ViewModels;
 using LRReader.Views.Tabs;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,7 +47,7 @@ namespace LRReader.Views
 
 			CoreApplicationViewTitleBar coreTitleBar = CoreView.TitleBar;
 			coreTitleBar.ExtendViewIntoTitleBar = true;
-			TitleBar.Height = coreTitleBar.Height;
+			//TitleBar.Height = coreTitleBar.Height;
 			coreTitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
 
 			ApplicationViewTitleBar titleBar = AppView.TitleBar;
@@ -79,7 +80,7 @@ namespace LRReader.Views
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
 		{
-			TitleBar.Height = coreTitleBar.Height;
+			//TitleBar.Height = coreTitleBar.Height;
 			//TitleBarLeft.Margin = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0, 0, 0);
 			TabViewEndHeader.Margin = new Thickness(0, 0, coreTitleBar.SystemOverlayRightInset, 0);
 		}
@@ -111,6 +112,11 @@ namespace LRReader.Views
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args)
 		{
 			Data.FullScreen = AppView.IsFullScreenMode;
+		}
+
+		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+		{
+			Data.Tabs.Remove(args.Tab);
 		}
 	}
 }
