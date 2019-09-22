@@ -53,6 +53,8 @@ namespace LRReader.Views.Tabs.Content
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
 			await Data.Refresh();
+			await Data.LoadTagStats();
+			HandleSearch();
 		}
 
 		public void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -147,6 +149,7 @@ namespace LRReader.Views.Tabs.Content
 			using (var deferral = args.GetDeferral())
 			{
 				await Data.Refresh(false);
+				await Data.LoadTagStats();
 			}
 			HandleSearch();
 		}
@@ -154,6 +157,7 @@ namespace LRReader.Views.Tabs.Content
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			await Data.Refresh();
+			await Data.LoadTagStats();
 			HandleSearch();
 		}
 	}

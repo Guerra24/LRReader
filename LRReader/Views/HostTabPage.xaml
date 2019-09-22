@@ -24,11 +24,12 @@
 			</Grid.Background>
 		</Grid>
 		<controls:TabView
-			Name="TabView" Background="Transparent" CanReorderTabs="False"
-			IsAddTabButtonVisible="False"
+			Name="TabView" VerticalAlignment="Stretch" Background="Transparent"
+			CanReorderTabs="False" IsAddTabButtonVisible="False"
 			SelectedItem="{x:Bind Data.CurrentTab, Mode=TwoWay}"
+			TabCloseRequested="TabView_TabCloseRequested"
 			TabItemsSource="{x:Bind Data.Tabs}"
-			TabWidthMode="SizeToContent" TabCloseRequested="TabView_TabCloseRequested">
+			TabWidthMode="SizeToContent">
 			<controls:TabView.TabStripFooter>
 				<Grid>
 					<Grid.ColumnDefinitions>
