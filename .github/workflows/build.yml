@@ -1,14 +1,13 @@
-name: CI
-
+name: Release Delivery
 on: [push]
-
 jobs:
-  build:
-    runs-on: windows-latest
+  buildAppXBundle:
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
     - name: Build AppXBundle
       run: |
+        dotnet restore LRReader\LRReader.csproj
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv" LRReader.sln /Build Debug
