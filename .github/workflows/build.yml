@@ -11,7 +11,4 @@ jobs:
         fetch-depth: 1
     - name: Build AppXBundle
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        dir
-        devenv /build Release LRReader.sln
-        dir LRReader\AppPackages
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv" LRReader.sln /Build Debug
