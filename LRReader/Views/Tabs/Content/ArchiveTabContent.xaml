@@ -18,71 +18,76 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<GridView
-			Name="ImagesGrid" IsItemClickEnabled="True" ItemClick="ImagesGrid_ItemClick"
-			ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
-			SelectionMode="None">
-			<GridView.Header>
-				<StackPanel Padding="50,5,50,5">
-					<TextBlock
-						Margin="0,0,0,10" FontSize="24"
-						Text="{x:Bind Data.Archive.title, Mode=OneWay}"
-						TextWrapping="WrapWholeWords" />
-					<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
-						<GridView.ItemTemplate>
-							<DataTemplate x:DataType="x:String">
-								<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
-									<TextBlock Text="{x:Bind}" />
-								</Grid>
-							</DataTemplate>
-						</GridView.ItemTemplate>
-						<GridView.ItemsPanel>
-							<ItemsPanelTemplate>
-								<controls:WrapPanel />
-							</ItemsPanelTemplate>
-						</GridView.ItemsPanel>
-						<GridView.ItemContainerStyle>
-							<Style TargetType="GridViewItem">
-								<Setter Property="Padding" Value="0" />
-								<Setter Property="Margin" Value="1" />
-								<Setter Property="MinWidth" Value="0" />
-								<Setter Property="MinHeight" Value="0" />
-							</Style>
-						</GridView.ItemContainerStyle>
-					</GridView>
-					<StackPanel Orientation="Horizontal">
-						<Button Click="EditButton_Click" Content="Edit (Opens in Browser)" />
-						<Button
-							Margin="10,0,0,0" Click="DonwloadButton_Click" Content="Download"
-							IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
+		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+			<GridView
+				Name="ImagesGrid" IsItemClickEnabled="True" ItemClick="ImagesGrid_ItemClick"
+				ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				<GridView.Header>
+					<StackPanel Padding="50,5,50,5">
+						<TextBlock
+							Margin="0,0,0,10" FontSize="24"
+							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
+							TextWrapping="WrapWholeWords" />
+						<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
+							<GridView.ItemTemplate>
+								<DataTemplate x:DataType="x:String">
+									<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
+										<TextBlock Text="{x:Bind}" />
+									</Grid>
+								</DataTemplate>
+							</GridView.ItemTemplate>
+							<GridView.ItemsPanel>
+								<ItemsPanelTemplate>
+									<controls:WrapPanel />
+								</ItemsPanelTemplate>
+							</GridView.ItemsPanel>
+							<GridView.ItemContainerStyle>
+								<Style TargetType="GridViewItem">
+									<Setter Property="Padding" Value="0" />
+									<Setter Property="Margin" Value="1" />
+									<Setter Property="MinWidth" Value="0" />
+									<Setter Property="MinHeight" Value="0" />
+								</Style>
+							</GridView.ItemContainerStyle>
+						</GridView>
+						<StackPanel Orientation="Horizontal">
+							<Button Click="EditButton_Click" Content="Edit (Opens in Browser)" />
+							<Button
+								Margin="10,0,0,0" Click="DonwloadButton_Click" Content="Download"
+								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
+						</StackPanel>
 					</StackPanel>
-				</StackPanel>
-			</GridView.Header>
-			<GridView.ItemTemplate>
-				<DataTemplate>
-					<items:ArchiveImage />
-				</DataTemplate>
-			</GridView.ItemTemplate>
-			<GridView.ItemsPanel>
-				<ItemsPanelTemplate>
-					<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
-				</ItemsPanelTemplate>
-			</GridView.ItemsPanel>
-			<GridView.ItemContainerStyle>
-				<Style TargetType="GridViewItem">
-					<Setter Property="Padding" Value="0" />
-					<Setter Property="Margin" Value="5" />
-				</Style>
-			</GridView.ItemContainerStyle>
-			<GridView.ItemContainerTransitions>
-				<TransitionCollection>
-					<PopupThemeTransition FromVerticalOffset="200" />
-					<!--<AddDeleteThemeTransition />-->
-					<ReorderThemeTransition />
-					<RepositionThemeTransition />
-				</TransitionCollection>
-			</GridView.ItemContainerTransitions>
-		</GridView>
+				</GridView.Header>
+				<GridView.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+				</GridView.KeyboardAccelerators>
+				<GridView.ItemTemplate>
+					<DataTemplate>
+						<items:ArchiveImage />
+					</DataTemplate>
+				</GridView.ItemTemplate>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemContainerStyle>
+					<Style TargetType="GridViewItem">
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Margin" Value="5" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemContainerTransitions>
+					<TransitionCollection>
+						<PopupThemeTransition FromVerticalOffset="200" />
+						<!--<AddDeleteThemeTransition />-->
+						<ReorderThemeTransition />
+						<RepositionThemeTransition />
+					</TransitionCollection>
+				</GridView.ItemContainerTransitions>
+			</GridView>
+		</RefreshContainer>
 		<ProgressRing
 			Grid.Row="1" Width="80" Height="80"
 			IsActive="{x:Bind Data.LoadingImages, Mode=OneWay}" />

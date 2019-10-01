@@ -73,11 +73,11 @@ namespace LRReader.Views.Tabs.Content
 					else
 					{
 						text = sQuery.Split(" ").Last();
-						query = sender.Text.Substring(0, sQuery.LastIndexOf(" "));
+						query = sender.Text.Substring(0, Math.Max(0, sQuery.LastIndexOf(" ")));
 					};
-					foreach (var t in Data.TagStats.Where(t => t.text.ToUpper().Contains(text)))
+					foreach (var t in Data.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
 					{
-						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.text);
+						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
 					}
 				}
 				else

@@ -99,6 +99,7 @@ namespace LRReader.ViewModels
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				RefreshOnErrorButton = true;
+				_internalLoadingArchives = false;
 				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return;
 			}

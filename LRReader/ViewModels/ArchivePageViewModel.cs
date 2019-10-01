@@ -60,6 +60,7 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("ShowReader");
 			}
 		}
+		private bool _internalLoadingImages;
 
 		public void LoadTags()
 		{
@@ -73,7 +74,16 @@ namespace LRReader.ViewModels
 
 		public async Task LoadImages()
 		{
-			LoadingImages = true;
+			await LoadImages(true);
+		}
+
+		public async Task LoadImages(bool animate)
+		{
+			if (_internalLoadingImages)
+				return;
+			_internalLoadingImages = true;
+			if (animate)
+				LoadingImages = true;
 			RefreshOnErrorButton = false;
 			ArchiveImages.Clear();
 
@@ -87,10 +97,12 @@ namespace LRReader.ViewModels
 
 			var result = LRRApi.GetResult<ArchiveImages>(r);
 
-			LoadingImages = false;
+			if (animate)
+				LoadingImages = false;
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				RefreshOnErrorButton = true;
+				_internalLoadingImages = false;
 				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return;
 			}
@@ -110,6 +122,7 @@ namespace LRReader.ViewModels
 					Global.EventManager.ShowError("API Error", result.Error.error);
 					break;
 			}
+			_internalLoadingImages = false;
 		}
 
 		public async void ClearNew()

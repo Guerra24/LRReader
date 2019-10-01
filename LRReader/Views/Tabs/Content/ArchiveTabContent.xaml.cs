@@ -58,6 +58,7 @@ namespace LRReader.Views.Tabs.Content
 
 		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
+			Data.LoadTags();
 			await Data.LoadImages();
 		}
 
@@ -129,6 +130,22 @@ namespace LRReader.Views.Tabs.Content
 			{
 				//cancel
 			}
+		}
+
+		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		{
+			using (var deferral = args.GetDeferral())
+			{
+				Data.LoadTags();
+				await Data.LoadImages(false);
+			}
+		}
+
+
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			Data.LoadTags();
+			await Data.LoadImages();
 		}
 	}
 }
