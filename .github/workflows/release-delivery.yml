@@ -10,3 +10,11 @@ jobs:
     - name: Build AppxBundle
       run: |
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -nologo -r -v:minimal -p:Configuration=Release
+    - name: Zip Bundle
+      run: |
+        mkdir Artifacts
+        "C:\Program Files\7-Zip\7z.exe" a -r -tzip -mm=LZMA -mmt=on -mx=7 Artifacts/LRReader.zip ./LRReader/AppPackages/*
+    - uses: actions/upload-artifact@master
+      with:
+        name: Upload Bundle
+        path: Artifacts
