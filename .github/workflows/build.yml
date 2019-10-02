@@ -9,4 +9,5 @@ jobs:
         fetch-depth: 1
     - name: Build AppxBundle
       run: |
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -t:Restore
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -p:Configuration=Debug;AppxBundle=Always
