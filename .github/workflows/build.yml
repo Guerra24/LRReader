@@ -1,13 +1,12 @@
 name: Release Delivery
 on: [push]
 jobs:
-  buildAppXBundle:
+  buildAppxBundle:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
-    - name: Build AppXBundle
+    - name: Build AppxBundle
       run: |
-        dotnet restore LRReader\LRReader.csproj
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv" LRReader.sln /Build Debug
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -p:Configuration=Debug;AppxBundle=Always
