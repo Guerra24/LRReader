@@ -59,6 +59,8 @@ namespace LRReader.Views
 			Window.Current.SetTitleBar(TitleBar);
 
 			Global.EventManager.ShowErrorEvent += ShowError;
+			Global.EventManager.AddTabEvent += AddTab;
+			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -116,7 +118,26 @@ namespace LRReader.Views
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			Data.Tabs.Remove(args.Tab);
+			TabViewControl.TabItems.Remove(args.Tab);
+		}
+
+		public async void AddTab(TabViewItem tab)
+		{
+			var current = TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(tab.Header)) as TabViewItem;
+			if (current != null)
+			{
+				Data.CurrentTab = current;
+			}
+			else
+			{
+				TabViewControl.TabItems.Add(tab);
+				await DispatcherHelper.RunAsync(() => Data.CurrentTab = tab);
+			}
+		}
+
+		public void CloseAllTabs()
+		{
+			TabViewControl.TabItems.Clear();
 		}
 	}
 }

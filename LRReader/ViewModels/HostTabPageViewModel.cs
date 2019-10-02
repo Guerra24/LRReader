@@ -24,8 +24,6 @@ namespace LRReader.ViewModels
 			}
 		}
 
-		public ObservableCollection<TabViewItem> Tabs = new ObservableCollection<TabViewItem>();
-
 		private TabViewItem _currentTab;
 		public TabViewItem CurrentTab
 		{
@@ -56,31 +54,6 @@ namespace LRReader.ViewModels
 		public bool Windowed
 		{
 			get => !_fullscreen;
-		}
-
-		public HostTabPageViewModel()
-		{
-			Global.EventManager.AddTabEvent += AddTab;
-			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
-		}
-
-		public async void AddTab(TabViewItem tab)
-		{
-			var current = Tabs.FirstOrDefault(t => t.Header.Equals(tab.Header));
-			if (current != null)
-			{
-				CurrentTab = current;
-			}
-			else
-			{
-				Tabs.Add(tab);
-				await DispatcherHelper.RunAsync(() => CurrentTab = tab);
-			}
-		}
-
-		public void CloseAllTabs()
-		{
-			Tabs.Clear();
 		}
 
 	}
