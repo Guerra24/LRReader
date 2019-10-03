@@ -1,6 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Models.Main;
 using LRReader.ViewModels.Items;
+using LRReader.Views.Tabs;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,11 @@ namespace LRReader.Views.Items
 			}
 		}
 
+		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+		{
+			Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
+		}
+
 		private async void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddress + "/edit?id=" + ViewModel.Archive.arcid));
@@ -123,5 +129,6 @@ namespace LRReader.Views.Items
 				//cancel
 			}
 		}
+
 	}
 }

@@ -19,6 +19,7 @@
 
 	<UserControl.ContextFlyout>
 		<MenuFlyout>
+			<MenuFlyoutItem Click="MenuFlyoutItem_Click" Icon="Add" Text="Open in new tab" />
 			<MenuFlyoutItem Click="EditMenuItem_Click" Icon="Edit" Text="Edit (Opens in browser)" />
 			<MenuFlyoutItem
 				Click="DownloadMenuItem_Click" Icon="Download"
@@ -33,8 +34,8 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock
-			Name="Title" Grid.Row="0" HorizontalAlignment="Center"
-			FontSize="16"
+			Name="Title" Grid.Row="0" Padding="5,0"
+			HorizontalAlignment="Center" FontSize="16"
 			Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
 			TextTrimming="CharacterEllipsis"
 			ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />

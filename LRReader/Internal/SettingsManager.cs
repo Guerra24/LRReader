@@ -90,6 +90,45 @@ namespace LRReader.Internal
 				RaisePropertyChanged("ImageCaching");
 			}
 		}
+		public bool ReadRTL
+		{
+			get
+			{
+				var val = localSettings.Values["ReadRTL"];
+				return val != null ? (bool)val : false;
+			}
+			set
+			{
+				localSettings.Values["ReadRTL"] = value;
+				RaisePropertyChanged("ReadRTL");
+			}
+		}
+		public bool TwoPages
+		{
+			get
+			{
+				var val = localSettings.Values["TwoPages"];
+				return val != null ? (bool)val : false;
+			}
+			set
+			{
+				localSettings.Values["TwoPages"] = value;
+				RaisePropertyChanged("TwoPages");
+			}
+		}
+		public bool SwitchTabArchive
+		{
+			get
+			{
+				var val = localSettings.Values["SwitchTabArchive"];
+				return val != null ? (bool)val : true;
+			}
+			set
+			{
+				localSettings.Values["SwitchTabArchive"] = value;
+				RaisePropertyChanged("SwitchTabArchive");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = roamedSettings.Values["Profiles"];

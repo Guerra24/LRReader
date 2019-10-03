@@ -47,7 +47,7 @@ namespace LRReader.Views.Tabs.Content
 
 		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive));
+			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
 		}
 
 		private async void Button_Click(object sender, RoutedEventArgs e)

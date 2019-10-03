@@ -121,7 +121,7 @@ namespace LRReader.Views
 			TabViewControl.TabItems.Remove(args.Tab);
 		}
 
-		public async void AddTab(TabViewItem tab)
+		public async void AddTab(TabViewItem tab, bool switchToTab)
 		{
 			var current = TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(tab.Header)) as TabViewItem;
 			if (current != null)
@@ -131,7 +131,8 @@ namespace LRReader.Views
 			else
 			{
 				TabViewControl.TabItems.Add(tab);
-				await DispatcherHelper.RunAsync(() => Data.CurrentTab = tab);
+				if (switchToTab)
+					await DispatcherHelper.RunAsync(() => Data.CurrentTab = tab);
 			}
 		}
 

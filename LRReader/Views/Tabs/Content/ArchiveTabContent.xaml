@@ -32,7 +32,7 @@
 						<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
 							<GridView.ItemTemplate>
 								<DataTemplate x:DataType="x:String">
-									<Grid Padding="4,3" Background="{ThemeResource ButtonPointerOverBackgroundThemeBrush}">
+									<Grid Padding="4,3" CornerRadius="2" Background="{ThemeResource BrushTagBackground}">
 										<TextBlock Text="{x:Bind}" />
 									</Grid>
 								</DataTemplate>
@@ -101,7 +101,7 @@
 			x:Load="{x:Bind Data.ShowReader, Mode=OneWay}"
 			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 			FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
-			ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
+			ItemsSource="{x:Bind Data.ArchiveImagesReader, Mode=OneWay}"
 			Loaded="FlipView_Loaded" Tapped="FlipView_Tapped" UseTouchAnimationsForAllNavigation="True">
 			<FlipView.ItemTemplate>
 				<DataTemplate>

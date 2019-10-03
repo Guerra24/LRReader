@@ -18,6 +18,7 @@
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#F2F2F2</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#E5E5E5" />
+			<SolidColorBrush x:Key="BrushTagBackground" Color="#CCCCCC" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -35,6 +36,7 @@
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#171717</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#1f1f1f" />
+			<SolidColorBrush x:Key="BrushTagBackground" Color="#333333" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

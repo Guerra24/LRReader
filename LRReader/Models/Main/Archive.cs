@@ -30,4 +30,10 @@ namespace LRReader.Models.Main
 	{
 		public List<string> pages { get; set; }
 	}
+
+	public class ArchiveImageSet
+	{
+		public string LeftImage;
+		public string RightImage;
+	}
 }

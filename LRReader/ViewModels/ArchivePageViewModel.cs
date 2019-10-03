@@ -40,16 +40,9 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("RefreshOnErrorButton");
 			}
 		}
-		private ObservableCollection<String> _archiveImages = new ObservableCollection<String>();
-		public ObservableCollection<string> ArchiveImages
-		{
-			get => _archiveImages;
-		}
-		private ObservableCollection<string> _tags = new ObservableCollection<string>();
-		public ObservableCollection<string> Tags
-		{
-			get => _tags;
-		}
+		public ObservableCollection<string> ArchiveImages = new ObservableCollection<string>();
+		public ObservableCollection<ArchiveImageSet> ArchiveImagesReader = new ObservableCollection<ArchiveImageSet>();
+		public ObservableCollection<string> Tags = new ObservableCollection<string>();
 		private bool _showReader = false;
 		public bool ShowReader
 		{
@@ -86,6 +79,7 @@ namespace LRReader.ViewModels
 				LoadingImages = true;
 			RefreshOnErrorButton = false;
 			ArchiveImages.Clear();
+			ArchiveImagesReader.Clear();
 
 			var client = Global.LRRApi.GetClient();
 
@@ -109,13 +103,57 @@ namespace LRReader.ViewModels
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:
+					List<ArchiveImageSet> tmp = new List<ArchiveImageSet>();
 					await Task.Run(async () =>
 					{
 						foreach (var s in result.Data.pages)
 						{
 							await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
 						}
+						List<string> images = new List<string>(result.Data.pages);
+						for (int k = 0; k < images.Count; k++)
+						{
+							var i = new ArchiveImageSet();
+							if (Global.SettingsManager.TwoPages)
+							{
+								if (Global.SettingsManager.ReadRTL)
+								{
+									if (k == 0)
+										i.RightImage = images.ElementAt(k);
+									else if (k == images.Count - 1)
+										i.LeftImage = images.ElementAt(k);
+									else
+									{
+										i.RightImage = images.ElementAt(k);
+										i.LeftImage = images.ElementAt(++k);
+									}
+								}
+								else
+								{
+									if (k == 0)
+										i.LeftImage = images.ElementAt(k);
+									else if (k == images.Count - 1)
+										i.RightImage = images.ElementAt(k);
+									else
+									{
+										i.LeftImage = images.ElementAt(k);
+										i.RightImage = images.ElementAt(++k);
+									}
+								}
+							}
+							else
+							{
+								i.LeftImage = images.ElementAt(k);
+							}
+							tmp.Add(i);
+						}
+						if (Global.SettingsManager.ReadRTL)
+							tmp.Reverse();
 					});
+					foreach (var i in tmp)
+					{
+						ArchiveImagesReader.Add(i);
+					}
 					break;
 				case HttpStatusCode.Unauthorized:
 					RefreshOnErrorButton = true;

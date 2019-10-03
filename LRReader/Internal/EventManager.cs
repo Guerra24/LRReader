@@ -10,7 +10,7 @@ namespace LRReader.Internal
 {
 	public delegate void ShowError(string title, string content);
 
-	public delegate void AddTab(TabViewItem tab);
+	public delegate void AddTab(TabViewItem tab, bool switchToTab);
 	public delegate void CloseAllTabs();
 
 	public class EventManager
@@ -27,7 +27,11 @@ namespace LRReader.Internal
 
 		public void AddTab(TabViewItem tab)
 		{
-			AddTabEvent?.Invoke(tab);
+			AddTabEvent?.Invoke(tab, true);
+		}
+		public void AddTab(TabViewItem tab, bool switchToTab)
+		{
+			AddTabEvent?.Invoke(tab, switchToTab);
 		}
 
 		public void CloseAllTabs()

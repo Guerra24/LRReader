@@ -48,7 +48,30 @@ namespace LRReader.Views.Tabs.Content
 			//var animation = ImagesGrid.PrepareConnectedAnimation("imageReaderForward" + e.ClickedItem as string, e.ClickedItem, "Image");
 			//animation.Configuration = new DirectConnectedAnimationConfiguration();
 			Data.ShowReader = true;
-			FlipView.SelectedIndex = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
+			int i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
+			int count = Data.ArchiveImages.Count;
+			if (Global.SettingsManager.TwoPages)
+			{
+				if (i != 0)
+				{
+					--i; i /= 2; ++i;
+				}
+				if (Global.SettingsManager.ReadRTL)
+				{
+					--count; count /= 2; ++count;
+					FlipView.SelectedIndex = count - i - (count % 2);
+				}
+				else
+					FlipView.SelectedIndex = i;
+			}
+			else
+			{
+				if (Global.SettingsManager.ReadRTL)
+					FlipView.SelectedIndex = count - i - 1;
+				else
+					FlipView.SelectedIndex = i;
+			}
+
 			if (Data.Archive.IsNewArchive())
 			{
 				Data.ClearNew();
