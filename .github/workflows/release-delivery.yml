@@ -28,6 +28,6 @@ jobs:
     - name: Upload to Release
       uses: Shopify/upload-to-release@master
       with:
-        name: LRReader
+        name: LRReader.zip
         path: Artifacts/LRReader.zip
         repo-token: ${{ secrets.GITHUB_TOKEN }}
