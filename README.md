@@ -1,7 +1,7 @@
 ![Logo](.github/logo.png)
 
-![](https://github.com/Guerra24/LRReader/workflows/.github/workflows/push-continous-delivery.yml/badge.svg)
-![](https://github.com/Guerra24/LRReader/workflows/.github/workflows/release-delivery.yml/badge.svg)
+[<img src="https://github.com/Guerra24/LRReader/workflows/Continuous%20Delivery/badge.svg">](https://github.com/Guerra24/LRReader/actions?workflow=Continuous+Delivery)
+[<img src="https://github.com/Guerra24/LRReader/workflows/Release%20Delivery/badge.svg">](https://github.com/Guerra24/LRReader/actions?workflow=Release+Delivery)
 
 ## Features
 - Archives list.
