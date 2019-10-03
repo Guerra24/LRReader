@@ -14,7 +14,8 @@ jobs:
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Cert.pfx.gpg
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -nologo -r -v:minimal -p:Configuration=Debug;AppxBundlePlatforms="x86|x64";AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
-    - uses: actions/upload-artifact@master
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
       with:
         name: LRReader
         path: LRReader/AppPackages

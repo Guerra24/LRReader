@@ -1,5 +1,5 @@
 name: Release Delivery
-on: [push]
+on: [release]
 jobs:
   buildAppxBundle:
     runs-on: windows-2019
@@ -13,8 +13,19 @@ jobs:
         CERT_GPG: ${{ secrets.CERT_GPG }}
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Cert.pfx.gpg
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
-    - uses: actions/upload-artifact@master
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -nologo -r -v:minimal -p:Configuration=Debug;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
+    - name: Zip Bundle for Release
+      run: |
+        mkdir Artifacts
+        "C:\Program Files\7-Zip\7z.exe" a -r -tzip -mm=LZMA -mmt=on -mx=7 Artifacts/LRReader.zip ./LRReader/AppPackages/*
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
       with:
         name: LRReader
         path: LRReader/AppPackages
+    - name: Upload to Release
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: 'Artifacts/*'
