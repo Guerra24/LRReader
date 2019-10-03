@@ -1,5 +1,7 @@
 name: Release Delivery
-on: [release]
+on:
+  release:
+    types: [published]
 jobs:
   buildAppxBundle:
     runs-on: windows-2019
@@ -13,7 +15,7 @@ jobs:
         CERT_GPG: ${{ secrets.CERT_GPG }}
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Cert.pfx.gpg
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -nologo -r -v:minimal -p:Configuration=Debug;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader\LRReader.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
     - name: Zip Bundle for Release
       run: |
         mkdir Artifacts

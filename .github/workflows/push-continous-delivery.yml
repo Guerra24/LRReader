@@ -1,5 +1,5 @@
 name: Continuous Delivery
-on: [push]
+on: push
 jobs:
   buildAppxBundle:
     runs-on: windows-2019
