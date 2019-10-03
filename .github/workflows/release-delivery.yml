@@ -26,8 +26,8 @@ jobs:
         name: LRReader
         path: LRReader/AppPackages
     - name: Upload to Release
-      uses: skx/github-action-publish-binaries@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: Shopify/upload-to-release@master
       with:
-        args: 'Artifacts/*'
+        name: LRReader
+        path: Artifacts/LRReader.zip
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
