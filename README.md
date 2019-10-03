@@ -1,5 +1,8 @@
 ![Logo](.github/logo.png)
 
+![](https://github.com/Guerra24/LRReader/workflows/.github/workflows/push-continous-delivery.yml/badge.svg)
+![](https://github.com/Guerra24/LRReader/workflows/.github/workflows/release-delivery.yml/badge.svg)
+
 ## Features
 - Archives list.
 - Search by name and/or tag.
