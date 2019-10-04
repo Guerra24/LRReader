@@ -66,6 +66,22 @@ namespace LRReader.Internal
 			return null;
 		}
 
+		public async Task<BitmapImage> DownloadImage(string path)
+		{
+			if (string.IsNullOrEmpty(path))
+				return null;
+			if (Global.SettingsManager.ImageCaching)
+			{
+				return await DownloadImageCache(path);
+			}
+			else
+			{
+				var image = new BitmapImage();
+				image.UriSource = new Uri(Global.SettingsManager.Profile.ServerAddress + "/" + path);
+				return image;
+			}
+		}
+
 		public async Task<BitmapImage> DownloadImageCache(string path)
 		{
 			return await ImageCache.Instance.GetFromCacheAsync(new Uri(Global.SettingsManager.Profile.ServerAddress + "/" + path));

@@ -36,7 +36,7 @@
 				<Button Click="ButtonRemove_Click" Content="Remove" IsEnabled="{x:Bind Data.SettingsManager.AtLeastOneProfile, Mode=OneWay}" />
 			</StackPanel>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Reader" />
-			<Grid>
+			<Grid Width="350">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="40" />
@@ -44,14 +44,14 @@
 				<Slider
 					Margin="0,0,0,10" Header="Base Zoom" Maximum="5"
 					Minimum="1" StepFrequency="0.25" TickFrequency="0.5"
-					TickPlacement="BottomRight"
+					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used by default"
 					Value="{x:Bind Data.SettingsManager.BaseZoom, Mode=TwoWay}" />
 				<TextBlock
 					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
 					VerticalAlignment="Center"
 					Text="{x:Bind Data.SettingsManager.BaseZoom, Mode=OneWay}" />
 			</Grid>
-			<Grid>
+			<Grid Width="350">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="40" />
@@ -59,13 +59,12 @@
 				<Slider
 					Margin="0,0,0,10" Header="Zoomed Factor" Maximum="10"
 					Minimum="1" StepFrequency="0.25" TickFrequency="0.5"
-					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used by default"
+					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used when double-tapped"
 					Value="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=TwoWay}" />
 				<TextBlock
 					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
 					VerticalAlignment="Center"
-					Text="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=OneWay}"
-					ToolTipService.ToolTip="Zoom used when double-tapped" />
+					Text="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=OneWay}" />
 			</Grid>
 			<ToggleSwitch
 				Margin="0,0,0,10" Header="Read right-to-left"

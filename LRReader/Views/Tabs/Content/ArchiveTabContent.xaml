@@ -32,7 +32,7 @@
 						<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
 							<GridView.ItemTemplate>
 								<DataTemplate x:DataType="x:String">
-									<Grid Padding="4,3" CornerRadius="2" Background="{ThemeResource BrushTagBackground}">
+									<Grid Padding="4,3" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
 										<TextBlock Text="{x:Bind}" />
 									</Grid>
 								</DataTemplate>
@@ -60,7 +60,7 @@
 					</StackPanel>
 				</GridView.Header>
 				<GridView.KeyboardAccelerators>
-					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind Data.ShowReader, Converter={StaticResource NegateBool}}" />
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>

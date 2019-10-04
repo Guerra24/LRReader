@@ -9,16 +9,16 @@ using Windows.UI.Xaml.Controls;
 namespace LRReader.Internal
 {
 	public delegate void ShowError(string title, string content);
-
 	public delegate void AddTab(TabViewItem tab, bool switchToTab);
 	public delegate void CloseAllTabs();
+	public delegate void RebuildReaderImagesSet();
 
 	public class EventManager
 	{
 		public event ShowError ShowErrorEvent;
-
 		public event AddTab AddTabEvent;
 		public event CloseAllTabs CloseAllTabsEvent;
+		public event RebuildReaderImagesSet RebuildReaderImagesSetEvent;
 
 		public void ShowError(string title, string content)
 		{
@@ -37,6 +37,11 @@ namespace LRReader.Internal
 		public void CloseAllTabs()
 		{
 			CloseAllTabsEvent?.Invoke();
+		}
+
+		public void RebuildReaderImagesSet()
+		{
+			RebuildReaderImagesSetEvent?.Invoke();
 		}
 	}
 }

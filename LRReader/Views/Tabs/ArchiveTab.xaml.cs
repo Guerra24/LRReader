@@ -41,5 +41,10 @@ namespace LRReader.Views.Tabs
 			loaded = true;
 			TabContent.LoadArchive(archive);
 		}
+
+		public void UnloadInternal()
+		{
+			TabContent.RemoveEvent();
+		}
 	}
 }

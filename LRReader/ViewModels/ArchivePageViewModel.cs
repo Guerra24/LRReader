@@ -79,7 +79,6 @@ namespace LRReader.ViewModels
 				LoadingImages = true;
 			RefreshOnErrorButton = false;
 			ArchiveImages.Clear();
-			ArchiveImagesReader.Clear();
 
 			var client = Global.LRRApi.GetClient();
 
@@ -103,57 +102,13 @@ namespace LRReader.ViewModels
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:
-					List<ArchiveImageSet> tmp = new List<ArchiveImageSet>();
 					await Task.Run(async () =>
 					{
 						foreach (var s in result.Data.pages)
 						{
 							await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
 						}
-						List<string> images = new List<string>(result.Data.pages);
-						for (int k = 0; k < images.Count; k++)
-						{
-							var i = new ArchiveImageSet();
-							if (Global.SettingsManager.TwoPages)
-							{
-								if (Global.SettingsManager.ReadRTL)
-								{
-									if (k == 0)
-										i.RightImage = images.ElementAt(k);
-									else if (k == images.Count - 1)
-										i.LeftImage = images.ElementAt(k);
-									else
-									{
-										i.RightImage = images.ElementAt(k);
-										i.LeftImage = images.ElementAt(++k);
-									}
-								}
-								else
-								{
-									if (k == 0)
-										i.LeftImage = images.ElementAt(k);
-									else if (k == images.Count - 1)
-										i.RightImage = images.ElementAt(k);
-									else
-									{
-										i.LeftImage = images.ElementAt(k);
-										i.RightImage = images.ElementAt(++k);
-									}
-								}
-							}
-							else
-							{
-								i.LeftImage = images.ElementAt(k);
-							}
-							tmp.Add(i);
-						}
-						if (Global.SettingsManager.ReadRTL)
-							tmp.Reverse();
 					});
-					foreach (var i in tmp)
-					{
-						ArchiveImagesReader.Add(i);
-					}
 					break;
 				case HttpStatusCode.Unauthorized:
 					RefreshOnErrorButton = true;
@@ -187,6 +142,57 @@ namespace LRReader.ViewModels
 				case HttpStatusCode.Unauthorized:
 					Global.EventManager.ShowError("API Error", result.Error.error);
 					break;
+			}
+		}
+
+		public async void CreateImageSets()
+		{
+			ArchiveImagesReader.Clear();
+			List<ArchiveImageSet> tmp = new List<ArchiveImageSet>();
+			await Task.Run(() =>
+			{
+				for (int k = 0; k < ArchiveImages.Count; k++)
+				{
+					var i = new ArchiveImageSet();
+					if (Global.SettingsManager.TwoPages)
+					{
+						if (Global.SettingsManager.ReadRTL)
+						{
+							if (k == 0)
+								i.RightImage = ArchiveImages.ElementAt(k);
+							else if (k == ArchiveImages.Count - 1)
+								i.LeftImage = ArchiveImages.ElementAt(k);
+							else
+							{
+								i.RightImage = ArchiveImages.ElementAt(k);
+								i.LeftImage = ArchiveImages.ElementAt(++k);
+							}
+						}
+						else
+						{
+							if (k == 0)
+								i.LeftImage = ArchiveImages.ElementAt(k);
+							else if (k == ArchiveImages.Count - 1)
+								i.RightImage = ArchiveImages.ElementAt(k);
+							else
+							{
+								i.LeftImage = ArchiveImages.ElementAt(k);
+								i.RightImage = ArchiveImages.ElementAt(++k);
+							}
+						}
+					}
+					else
+					{
+						i.LeftImage = ArchiveImages.ElementAt(k);
+					}
+					tmp.Add(i);
+				}
+				if (Global.SettingsManager.ReadRTL)
+					tmp.Reverse();
+			});
+			foreach (var i in tmp)
+			{
+				ArchiveImagesReader.Add(i);
 			}
 		}
 	}

@@ -34,19 +34,17 @@ namespace LRReader.Views.Tabs.Content
 		{
 			this.InitializeComponent();
 			Data = new ArchivePageViewModel();
+			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
 		}
 
-		public async void LoadArchive(Archive archive)
+		public void LoadArchive(Archive archive)
 		{
 			Data.Archive = archive;
-			Data.LoadTags();
-			await Data.LoadImages();
+			Reload(true);
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			//var animation = ImagesGrid.PrepareConnectedAnimation("imageReaderForward" + e.ClickedItem as string, e.ClickedItem, "Image");
-			//animation.Configuration = new DirectConnectedAnimationConfiguration();
 			Data.ShowReader = true;
 			int i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
 			int count = Data.ArchiveImages.Count;
@@ -77,12 +75,6 @@ namespace LRReader.Views.Tabs.Content
 				Data.ClearNew();
 				Data.Archive.isnew = "false";
 			}
-		}
-
-		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-		{
-			Data.LoadTags();
-			await Data.LoadImages();
 		}
 
 		private void FlipView_Loaded(object sender, RoutedEventArgs e)
@@ -155,20 +147,34 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		private void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				Data.LoadTags();
-				await Data.LoadImages(false);
+				Reload(false);
 			}
 		}
 
+		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			Reload(true);
+		}
 
-		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private void RefreshButton_Click(object sender, RoutedEventArgs e)
+		{
+			Reload(true);
+		}
+
+		private async void Reload(bool animate)
 		{
 			Data.LoadTags();
-			await Data.LoadImages();
+			await Data.LoadImages(animate);
+			Data.CreateImageSets();
+		}
+
+		public void RemoveEvent()
+		{
+			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
 	}
 }

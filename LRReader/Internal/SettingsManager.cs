@@ -101,6 +101,7 @@ namespace LRReader.Internal
 			{
 				localSettings.Values["ReadRTL"] = value;
 				RaisePropertyChanged("ReadRTL");
+				Global.EventManager.RebuildReaderImagesSet();
 			}
 		}
 		public bool TwoPages
@@ -114,6 +115,7 @@ namespace LRReader.Internal
 			{
 				localSettings.Values["TwoPages"] = value;
 				RaisePropertyChanged("TwoPages");
+				Global.EventManager.RebuildReaderImagesSet();
 			}
 		}
 		public bool SwitchTabArchive

@@ -118,6 +118,8 @@ namespace LRReader.Views
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
+			if (args.Tab is ArchiveTab unTab)
+				unTab.UnloadInternal();
 			TabViewControl.TabItems.Remove(args.Tab);
 		}
 
