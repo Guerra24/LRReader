@@ -10,6 +10,8 @@
 - Download archives.
 - Archive overview (with tags) & reader.
 - Configurable reader's base zoom and zoomed factor.
+- Right-to-Left mode.
+- Two pages mode.
 - Optional image caching.
 - Multiple servers.
 - Restart server's background worker.
@@ -20,10 +22,14 @@
 ## Requirements
 
 - Windows 10 1803 (x86, x64, ARM or ARM64)
-- LANraragi v0.6.4
+- LANraragi v0.6.4+
 
 ## Installing
 Sideload only for now. 
+
+For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases)
+
+For nightly check the [Actions page](https://github.com/Guerra24/LRReader/actions?workflow=Continuous+Delivery)
 
 ### First time
 Unzip and right click `Add-AppDevPackage.ps1` > Run with powershell<br>
