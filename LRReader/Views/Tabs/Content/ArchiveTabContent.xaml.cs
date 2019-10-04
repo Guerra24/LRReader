@@ -56,8 +56,9 @@ namespace LRReader.Views.Tabs.Content
 				}
 				if (Global.SettingsManager.ReadRTL)
 				{
+					int preDiv = count;
 					--count; count /= 2; ++count;
-					FlipView.SelectedIndex = count - i - (count % 2);
+					FlipView.SelectedIndex = count - i - (preDiv % 2);
 				}
 				else
 					FlipView.SelectedIndex = i;
