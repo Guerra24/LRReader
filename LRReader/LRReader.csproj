@@ -161,6 +161,9 @@
     <Compile Include="Views\Items\ArchiveItem.xaml.cs">
       <DependentUpon>ArchiveItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Items\NotificationItem.xaml.cs">
+      <DependentUpon>NotificationItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\ReaderImage.xaml.cs">
       <DependentUpon>ReaderImage.xaml</DependentUpon>
     </Compile>
@@ -267,6 +270,9 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
       <Version>5.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>5.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.2.190917002</Version>
     </PackageReference>
@@ -302,6 +308,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Items\ArchiveItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Items\NotificationItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

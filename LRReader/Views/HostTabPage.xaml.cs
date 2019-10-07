@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
 using LRReader.ViewModels;
+using LRReader.Views.Items;
 using LRReader.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -88,18 +89,9 @@ namespace LRReader.Views
 			TabViewEndHeader.Margin = new Thickness(0, 0, coreTitleBar.SystemOverlayRightInset, 0);
 		}
 
-		private async void ShowError(string title, string content)
+		private void ShowError(string title, string content)
 		{
-			await DispatcherHelper.RunAsync(async () =>
-			{
-				ContentDialog noServer = new ContentDialog()
-				{
-					Title = title,
-					Content = content,
-					CloseButtonText = "Ok"
-				};
-				await noServer.ShowAsync();
-			});
+			Notifications.Show(new NotificationItem(title, content), 5000);
 		}
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e)

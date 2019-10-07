@@ -123,6 +123,8 @@ namespace LRReader.ViewModels
 						var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
 						if (archive != null)
 							Global.EventManager.AddTab(new ArchiveTab(archive), false);
+						else
+							Global.EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
 					break;
 				case HttpStatusCode.Unauthorized:
