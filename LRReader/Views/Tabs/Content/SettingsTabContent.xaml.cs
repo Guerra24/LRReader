@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.Models.Main;
 using LRReader.ViewModels;
 using LRReader.Views.Dialogs;
 using System;

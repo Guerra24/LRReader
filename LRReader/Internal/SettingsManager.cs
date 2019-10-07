@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using LRReader.Models.Main;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -142,6 +143,11 @@ namespace LRReader.Internal
 			{
 				Profiles = new ObservableCollection<ServerProfile>();
 			}
+
+			UpgradeProfiles();
+
+			SaveProfiles();
+
 			Profiles.CollectionChanged += ProfilesChanges;
 
 			var profile = localSettings.Values["ProfileUID"];
@@ -151,9 +157,23 @@ namespace LRReader.Internal
 			}
 		}
 
+		private void UpgradeProfiles()
+		{
+			foreach (var p in Profiles)
+			{
+				switch (p.Version)
+				{
+					case 0:
+						p.Version = 1;
+						p.Bookmarks = new List<BookmarkedArchive>();
+						break;
+				}
+			}
+		}
+
 		private void ProfilesChanges(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			roamedSettings.Values["Profiles"] = JsonConvert.SerializeObject(Profiles);
+			SaveProfiles();
 			RaisePropertyChanged("ProfilesAvailable");
 			RaisePropertyChanged("AtLeastOneProfile");
 		}
@@ -175,31 +195,12 @@ namespace LRReader.Internal
 			profile.ServerAddress = address;
 			profile.ServerApiKey = apikey;
 			profile.Update();
-		}
-	}
-	public class ServerProfile : ObservableObject
-	{
-		public string UID { get; set; }
-		public string Name { get; set; }
-		public string ServerAddress { get; set; }
-		public string ServerApiKey { get; set; }
-
-		[JsonIgnore]
-		public bool HasApiKey { get => !string.IsNullOrEmpty(ServerApiKey); }
-
-		public ServerProfile()
-		{
-			UID = Guid.NewGuid().ToString();
+			SaveProfiles();
 		}
 
-		public void Update()
+		public void SaveProfiles()
 		{
-			RaisePropertyChanged(string.Empty);
-		}
-
-		public override string ToString()
-		{
-			return Name;
+			roamedSettings.Values["Profiles"] = JsonConvert.SerializeObject(Profiles);
 		}
 	}
 }

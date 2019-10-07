@@ -31,7 +31,6 @@ namespace LRReader.Views.Tabs
 			this.InitializeComponent();
 			this.archive = archive;
 			Header = archive.title;
-			IconSource = new SymbolIconSource() { Symbol = Symbol.Pictures };
 		}
 
 		private void TabViewItem_Loaded(object sender, RoutedEventArgs e)

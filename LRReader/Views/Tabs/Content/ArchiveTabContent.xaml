@@ -53,6 +53,7 @@
 						</GridView>
 						<StackPanel Orientation="Horizontal">
 							<Button Click="EditButton_Click" Content="Edit (Opens in Browser)" />
+							<ToggleButton Margin="10,0,0,0" Content="Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" />
 							<Button
 								Margin="10,0,0,0" Click="DonwloadButton_Click" Content="Download"
 								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />

@@ -12,6 +12,7 @@ namespace LRReader.Internal
 	public delegate void AddTab(TabViewItem tab, bool switchToTab);
 	public delegate void CloseAllTabs();
 	public delegate void RebuildReaderImagesSet();
+	public delegate void CloseTabWithHeader(string header);
 
 	public class EventManager
 	{
@@ -19,6 +20,7 @@ namespace LRReader.Internal
 		public event AddTab AddTabEvent;
 		public event CloseAllTabs CloseAllTabsEvent;
 		public event RebuildReaderImagesSet RebuildReaderImagesSetEvent;
+		public event CloseTabWithHeader CloseTabWithHeaderEvent;
 
 		public void ShowError(string title, string content)
 		{
@@ -42,6 +44,11 @@ namespace LRReader.Internal
 		public void RebuildReaderImagesSet()
 		{
 			RebuildReaderImagesSetEvent?.Invoke();
+		}
+
+		public void CloseTabWithHeader(string header)
+		{
+			CloseTabWithHeaderEvent?.Invoke(header);
 		}
 	}
 }

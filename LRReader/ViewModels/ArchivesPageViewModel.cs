@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
 using LRReader.Models.Api;
 using LRReader.Models.Main;
+using LRReader.Views.Tabs;
 using RestSharp;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
@@ -68,8 +69,7 @@ namespace LRReader.ViewModels
 		}
 		private bool _internalLoadingArchives;
 		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
-		private ObservableCollection<TagStats> _tagStats = new ObservableCollection<TagStats>();
-		public ObservableCollection<TagStats> TagStats => _tagStats;
+		public ObservableCollection<TagStats> TagStats = new ObservableCollection<TagStats>();
 
 		public async Task Refresh()
 		{
@@ -106,13 +106,24 @@ namespace LRReader.ViewModels
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:
+					foreach (var b in Global.SettingsManager.Profile.Bookmarks)
+					{
+						var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
+						if (archive != null)
+							Global.EventManager.CloseTabWithHeader(archive.title);
+					}
 					await Task.Run(async () =>
 					{
 						foreach (var a in result.Data.OrderBy(a => a.title))
-						{
 							await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
-						}
+
 					});
+					foreach (var b in Global.SettingsManager.Profile.Bookmarks)
+					{
+						var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
+						if (archive != null)
+							Global.EventManager.AddTab(new ArchiveTab(archive), false);
+					}
 					break;
 				case HttpStatusCode.Unauthorized:
 					RefreshOnErrorButton = true;

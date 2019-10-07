@@ -137,6 +137,7 @@
     <Compile Include="Internal\Util.cs" />
     <Compile Include="Models\Api\LRRApi.cs" />
     <Compile Include="Models\Main\Archive.cs" />
+    <Compile Include="Models\Main\Profile.cs" />
     <Compile Include="Models\Main\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
@@ -162,6 +163,9 @@
     </Compile>
     <Compile Include="Views\Items\ReaderImage.xaml.cs">
       <DependentUpon>ReaderImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\StatisticsPage.xaml.cs">
       <DependentUpon>StatisticsPage.xaml</DependentUpon>
@@ -302,6 +306,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Items\ReaderImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\LoadingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

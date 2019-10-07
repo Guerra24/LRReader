@@ -15,6 +15,8 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using System.Net;
 using LRReader.ViewModels.Base;
+using Windows.UI.Xaml.Controls;
+using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
 namespace LRReader.ViewModels
 {
@@ -53,7 +55,39 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("ShowReader");
 			}
 		}
+		public bool Bookmarked
+		{
+			get
+			{
+				return Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid)) != null;
+			}
+			set
+			{
+				if (value)
+					Global.SettingsManager.Profile.Bookmarks.Add(new BookmarkedArchive() { archiveID = Archive.arcid });
+				else
+					Global.SettingsManager.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
+				Global.SettingsManager.SaveProfiles();
+				RaisePropertyChanged("Bookmarked");
+				RaisePropertyChanged("Icon");
+			}
+		}
+
+		private SymbolIconSource _symbolIcon = new SymbolIconSource() { Symbol = Symbol.Pictures };
+		public SymbolIconSource Icon
+		{
+			get => new SymbolIconSource() { Symbol = Bookmarked ? Symbol.Favorite : Symbol.Pictures };
+		}
 		private bool _internalLoadingImages;
+
+		public async void Reload(bool animate)
+		{
+			LoadTags();
+			await LoadImages(animate);
+			CreateImageSets();
+			RaisePropertyChanged("Bookmarked");
+			RaisePropertyChanged("Icon");
+		}
 
 		public void LoadTags()
 		{

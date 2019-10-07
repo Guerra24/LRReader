@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using LRReader.Views;
 using GalaSoft.MvvmLight.Threading;
+using LRReader.Views.Main;
 
 namespace LRReader
 {

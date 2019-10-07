@@ -61,6 +61,7 @@ namespace LRReader.Views
 			Global.EventManager.ShowErrorEvent += ShowError;
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
+			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -125,10 +126,11 @@ namespace LRReader.Views
 
 		public async void AddTab(TabViewItem tab, bool switchToTab)
 		{
-			var current = TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(tab.Header)) as TabViewItem;
+			var current = GetTabFromHeader(tab.Header);
 			if (current != null)
 			{
-				Data.CurrentTab = current;
+				if (switchToTab)
+					Data.CurrentTab = current;
 			}
 			else
 			{
@@ -142,5 +144,16 @@ namespace LRReader.Views
 		{
 			TabViewControl.TabItems.Clear();
 		}
+
+		public void CloseTabWithHeader(string header)
+		{
+			var tab = GetTabFromHeader(header);
+			if (tab != null)
+			{
+				TabViewControl.TabItems.Remove(tab);
+			}
+		}
+
+		private TabViewItem GetTabFromHeader(object header) => TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(header)) as TabViewItem;
 	}
 }

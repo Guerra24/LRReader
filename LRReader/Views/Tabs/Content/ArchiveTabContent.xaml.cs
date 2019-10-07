@@ -28,7 +28,7 @@ namespace LRReader.Views.Tabs.Content
 {
 	public sealed partial class ArchiveTabContent : UserControl
 	{
-		private ArchivePageViewModel Data;
+		public ArchivePageViewModel Data;
 
 		public ArchiveTabContent()
 		{
@@ -40,7 +40,7 @@ namespace LRReader.Views.Tabs.Content
 		public void LoadArchive(Archive archive)
 		{
 			Data.Archive = archive;
-			Reload(true);
+			Data.Reload(true);
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -152,25 +152,18 @@ namespace LRReader.Views.Tabs.Content
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				Reload(false);
+				Data.Reload(false);
 			}
 		}
 
 		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			Reload(true);
+			Data.Reload(true);
 		}
 
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
-			Reload(true);
-		}
-
-		private async void Reload(bool animate)
-		{
-			Data.LoadTags();
-			await Data.LoadImages(animate);
-			Data.CreateImageSets();
+			Data.Reload(true);
 		}
 
 		public void RemoveEvent()
