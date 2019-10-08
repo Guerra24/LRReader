@@ -34,13 +34,18 @@ namespace LRReader.Views.Items
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
+			LeftImage.Source = null;
+			RightImage.Source = null;
 			if (args.NewValue == null)
 				return;
 			ArchiveImageSet n = args.NewValue as ArchiveImageSet;
 			var lImage = await Global.ImageManager.DownloadImage(n.LeftImage);
 			var rImage = await Global.ImageManager.DownloadImage(n.RightImage);
-			LeftImage.Source = lImage;
-			RightImage.Source = rImage;
+			await DispatcherHelper.RunAsync(() =>
+			{
+				LeftImage.Source = lImage;
+				RightImage.Source = rImage;
+			});
 		}
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
