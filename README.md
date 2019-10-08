@@ -12,6 +12,7 @@
 - Configurable reader's base zoom and zoomed factor.
 - Right-to-Left mode.
 - Two pages mode.
+- Bookmarks.
 - Optional image caching.
 - Multiple servers.
 - Restart server's background worker.
@@ -44,4 +45,5 @@ Unzip and run the `LRReader_<version>_x86_x64_arm_arm64.appxbundle` file, the ap
 ![Search](.github/screenshots/02.png)<br>
 ![Archive View](.github/screenshots/03.png)<br>
 ![Reader](.github/screenshots/04.png)<br>
+![Reader two pages](.github/screenshots/04_1.png)<br>
 ![Settings](.github/screenshots/05.png)<br>
