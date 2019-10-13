@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Main;
 using GalaSoft.MvvmLight.Threading;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

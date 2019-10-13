@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
-using LRReader.Models.Api;
+using LRReader.Shared.Models.Api;
 using RestSharp;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LRReader.Models.Main
+namespace LRReader.Shared.Models.Main
 {
 	public class Archive
 	{

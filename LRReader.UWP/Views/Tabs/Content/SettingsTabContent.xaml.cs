@@ -1,5 +1,5 @@
 ﻿using LRReader.Internal;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Main;
 using LRReader.ViewModels;
 using LRReader.Views.Dialogs;
 using System;
@@ -61,7 +61,7 @@ namespace LRReader.Views.Tabs.Content
 			if (result == ContentDialogResult.Primary)
 			{
 				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
-				Global.LRRApi.RefreshSettings();
+				Global.LRRApi.RefreshSettings(Data.SettingsManager.Profile);
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace LRReader.Views.Tabs.Content
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (Data.SettingsManager.Profile != null)
-				Global.LRRApi.RefreshSettings();
+				Global.LRRApi.RefreshSettings(Data.SettingsManager.Profile);
 		}
 
 		private async void ButtonClearCache_Click(object sender, RoutedEventArgs e)

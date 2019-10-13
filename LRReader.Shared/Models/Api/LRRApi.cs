@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serialization;
@@ -10,9 +9,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace LRReader.Models.Api
+namespace LRReader.Shared.Models.Api
 {
 	public class LRRApi
 	{
@@ -26,13 +24,12 @@ namespace LRReader.Models.Api
 			client.UseSerializer(() => new JsonNetSerializer());
 		}
 
-		public void RefreshSettings()
+		public void RefreshSettings(ServerProfile profile)
 		{
-			var sm = Global.SettingsManager;
-			client.BaseUrl = new Uri(sm.Profile.ServerAddress);
-			if (sm.Profile.HasApiKey)
+			client.BaseUrl = new Uri(profile.ServerAddress);
+			if (profile.HasApiKey)
 			{
-				apiKey = sm.Profile.ServerApiKey;
+				apiKey = profile.ServerApiKey;
 				client.RemoveDefaultParameter("key");
 				client.AddDefaultParameter("key", apiKey);
 			}

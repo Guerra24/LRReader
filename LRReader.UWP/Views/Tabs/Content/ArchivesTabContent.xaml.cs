@@ -1,5 +1,5 @@
 ﻿using LRReader.Internal;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Main;
 using LRReader.ViewModels;
 using System;
 using System.Collections.Generic;

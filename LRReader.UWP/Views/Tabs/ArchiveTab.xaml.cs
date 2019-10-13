@@ -1,4 +1,5 @@
-﻿using LRReader.Models.Main;
+﻿using LRReader.Internal;
+using LRReader.Shared.Models.Main;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
 namespace LRReader.Views.Tabs
 {
-	public sealed partial class ArchiveTab : TabViewItem
+	public sealed partial class ArchiveTab : TabViewItem, ICustomTab
 	{
 		private Archive archive;
 
@@ -41,7 +42,7 @@ namespace LRReader.Views.Tabs
 			TabContent.LoadArchive(archive);
 		}
 
-		public void UnloadInternal()
+		public void Unload()
 		{
 			TabContent.RemoveEvent();
 		}

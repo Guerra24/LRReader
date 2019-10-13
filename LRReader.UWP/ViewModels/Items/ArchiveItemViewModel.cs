@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
-using LRReader.Models.Api;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Api;
+using LRReader.Shared.Models.Main;
 using LRReader.ViewModels.Base;
 using RestSharp;
 using System;

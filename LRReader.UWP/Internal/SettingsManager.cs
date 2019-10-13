@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Main;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

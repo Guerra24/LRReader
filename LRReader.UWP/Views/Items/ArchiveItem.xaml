@@ -58,9 +58,9 @@
 				Background="{ThemeResource GridOverGridBackground}">
 				<TextBlock Padding="6,2" Text="New!" />
 			</Grid>
-			<ProgressRing
-				Name="Ring" Width="50" Height="50"
-				IsActive="True" />
 		</Grid>
+		<ProgressRing
+			Name="Ring" Grid.RowSpan="2" Width="50"
+			Height="50" IsActive="True" />
 	</Grid>
 </UserControl>

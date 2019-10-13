@@ -1,5 +1,5 @@
 ﻿using LRReader.Internal;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Main;
 using LRReader.ViewModels;
 using LRReader.Views.Dialogs;
 using System;
@@ -64,7 +64,7 @@ namespace LRReader.Views.Tabs.Content
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			Global.LRRApi.RefreshSettings();
+			Global.LRRApi.RefreshSettings(Data.SettingsManager.Profile);
 		}
 	}
 }

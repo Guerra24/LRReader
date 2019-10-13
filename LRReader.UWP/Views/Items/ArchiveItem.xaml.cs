@@ -1,5 +1,5 @@
 ﻿using LRReader.Internal;
-using LRReader.Models.Main;
+using LRReader.Shared.Models.Main;
 using LRReader.ViewModels.Items;
 using LRReader.Views.Tabs;
 using RestSharp;
@@ -51,6 +51,7 @@ namespace LRReader.Views.Items
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
 				Title.Opacity = 0;
+				Thumbnail.Source = null;
 				Thumbnail.Visibility = Visibility.Collapsed;
 				Ring.Visibility = Visibility.Visible;
 				/*StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(Archive.arcid);

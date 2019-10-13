@@ -63,6 +63,7 @@ namespace LRReader.Views
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
+			System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.RoamingStorageQuota);
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -76,7 +77,7 @@ namespace LRReader.Views
 				}
 				else
 				{
-					Global.LRRApi.RefreshSettings();
+					Global.LRRApi.RefreshSettings(Global.SettingsManager.Profile);
 					Global.EventManager.AddTab(new ArchivesTab());
 				}
 			});
@@ -111,8 +112,8 @@ namespace LRReader.Views
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			if (args.Tab is ArchiveTab unTab)
-				unTab.UnloadInternal();
+			if (args.Tab is ICustomTab tab)
+				tab.Unload();
 			TabViewControl.TabItems.Remove(args.Tab);
 		}
 
