@@ -289,7 +289,12 @@
       <Version>2.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj">
+      <Project>{cb0af1c0-a296-4e1d-85b9-a564868b7c0e}</Project>
+      <Name>LRReader.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\ThemeDictionary.xaml">
       <SubType>Designer</SubType>
