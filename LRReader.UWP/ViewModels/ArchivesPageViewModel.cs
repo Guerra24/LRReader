@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
 using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using LRReader.Views.Tabs;
 using RestSharp;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using static LRReader.Shared.Providers.Providers;
+using static LRReader.Internal.Global;
 
 namespace LRReader.ViewModels
 {
@@ -81,91 +82,51 @@ namespace LRReader.ViewModels
 			if (_internalLoadingArchives)
 				return;
 			_internalLoadingArchives = true;
-			ArchiveList.Clear();
+			RefreshOnErrorButton = false;
 			if (animate)
 				LoadingArchives = true;
-			RefreshOnErrorButton = false;
-
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/archivelist");
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<List<Archive>>(r);
-
+			ArchiveList.Clear();
+			var result = await ArchivesProvider.LoadArchives();
 			if (animate)
 				LoadingArchives = false;
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			if (result)
 			{
+				foreach (var b in SettingsManager.Profile.Bookmarks)
+				{
+					var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
+					if (archive != null)
+						EventManager.CloseTabWithHeader(archive.title);
+				}
+				await Task.Run(async () =>
+				{
+					foreach (var a in ArchivesProvider.Archives)
+						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
+				});
+				foreach (var b in SettingsManager.Profile.Bookmarks)
+				{
+					var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
+					if (archive != null)
+						EventManager.AddTab(new ArchiveTab(archive), false);
+					else
+						EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+				}
+			}
+			else
 				RefreshOnErrorButton = true;
-				_internalLoadingArchives = false;
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					foreach (var b in Global.SettingsManager.Profile.Bookmarks)
-					{
-						var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
-						if (archive != null)
-							Global.EventManager.CloseTabWithHeader(archive.title);
-					}
-					await Task.Run(async () =>
-					{
-						foreach (var a in result.Data.OrderBy(a => a.title))
-							await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
-
-					});
-					foreach (var b in Global.SettingsManager.Profile.Bookmarks)
-					{
-						var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
-						if (archive != null)
-							Global.EventManager.AddTab(new ArchiveTab(archive), false);
-						else
-							Global.EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
-					}
-					break;
-				case HttpStatusCode.Unauthorized:
-					RefreshOnErrorButton = true;
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
-			}
 			_internalLoadingArchives = false;
 		}
 
 		public async Task LoadTagStats()
 		{
 			TagStats.Clear();
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/tagstats");
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<List<TagStats>>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			var result = await ArchivesProvider.LoadTagStats();
+			if (result)
 			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					await Task.Run(() =>
-					{
-						foreach (var a in result.Data.OrderByDescending(a => a.weight))
-						{
-							TagStats.Add(a);
-						}
-					});
-					break;
-				case HttpStatusCode.Unauthorized:
-					RefreshOnErrorButton = true;
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
+				await Task.Run(() =>
+				{
+					foreach (var t in ArchivesProvider.TagStats)
+						TagStats.Add(t);
+				});
 			}
 		}
 	}

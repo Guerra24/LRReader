@@ -63,7 +63,6 @@ namespace LRReader.Views
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
-			System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.RoamingStorageQuota);
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
