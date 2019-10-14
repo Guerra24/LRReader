@@ -140,11 +140,9 @@
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
-    <Compile Include="ViewModels\ReaderPageViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\ArchivesPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\StatisticsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\Dialogs\ServerProfileDialog.xaml.cs">
       <DependentUpon>ServerProfileDialog.xaml</DependentUpon>
@@ -166,9 +164,6 @@
     </Compile>
     <Compile Include="Views\Main\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\StatisticsPage.xaml.cs">
-      <DependentUpon>StatisticsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\ArchivesTab.xaml.cs">
       <DependentUpon>ArchivesTab.xaml</DependentUpon>
@@ -319,10 +314,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Main\LoadingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\StatisticsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

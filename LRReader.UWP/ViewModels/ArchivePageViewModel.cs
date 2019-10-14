@@ -15,6 +15,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using System.Net;
 using LRReader.ViewModels.Base;
+using static LRReader.Shared.Providers.Providers;
 
 namespace LRReader.ViewModels
 {
@@ -84,74 +85,29 @@ namespace LRReader.ViewModels
 			if (_internalLoadingImages)
 				return;
 			_internalLoadingImages = true;
+			RefreshOnErrorButton = false;
 			if (animate)
 				LoadingImages = true;
-			RefreshOnErrorButton = false;
 			ArchiveImages.Clear();
-
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/extract");
-
-			rq.AddParameter("id", Archive.arcid);
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<ArchiveImages>(r);
-
+			var result = await ImagesProvider.LoadImages(Archive);
 			if (animate)
 				LoadingImages = false;
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			if (result != null)
 			{
+				await Task.Run(async () =>
+				{
+					foreach (var s in result)
+						await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
+				});
+			}
+			else
 				RefreshOnErrorButton = true;
-				_internalLoadingImages = false;
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					await Task.Run(async () =>
-					{
-						foreach (var s in result.Data.pages)
-						{
-							await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
-						}
-					});
-					break;
-				case HttpStatusCode.Unauthorized:
-					RefreshOnErrorButton = true;
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
-			}
 			_internalLoadingImages = false;
 		}
 
 		public async void ClearNew()
 		{
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/clear_new");
-
-			rq.AddParameter("id", Archive.arcid);
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<ApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					break;
-				case HttpStatusCode.Unauthorized:
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
-			}
+			await Archive.ClearNew();
 		}
 
 		public async void CreateImageSets()
