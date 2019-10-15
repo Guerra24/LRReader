@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using LRReader.Internal;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,12 +20,17 @@ using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
 namespace LRReader.Views.Tabs
 {
-	public sealed partial class SettingsTab : TabViewItem
+	public sealed partial class SettingsTab : TabViewItem, ICustomTab
 	{
 		public SettingsTab()
 		{
 			this.InitializeComponent();
 			IconSource = new SymbolIconSource() { Symbol = Symbol.Setting };
+		}
+
+		public void Unload()
+		{
+			TabContent.RemoveTimer();
 		}
 	}
 }

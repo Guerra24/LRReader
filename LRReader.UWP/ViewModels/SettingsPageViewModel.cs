@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Api;
 using RestSharp;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static LRReader.Shared.Providers.Providers;
 
 namespace LRReader.ViewModels
 {
@@ -55,6 +57,11 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("ProgressCache");
 			}
 		}
+		private ShinobuStatus _shinobuStatus = new ShinobuStatus();
+		public bool ShinobuRunning => _shinobuStatus.is_alive == 1 && !ShinobuUnknown;
+		public bool ShinobuStopped => _shinobuStatus.is_alive == 0 && !ShinobuUnknown;
+		public bool ShinobuUnknown => !SettingsManager.Profile.HasApiKey || _shinobuStatus.pid == 0;
+		public int ShinobuPID => _shinobuStatus.pid;
 		public async Task UpdateCacheSize()
 		{
 			if (ProgressCache)
@@ -73,103 +80,38 @@ namespace LRReader.ViewModels
 		}
 		public async void RestartWorker()
 		{
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/restart_shinobu");
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<ApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					break;
-				case HttpStatusCode.Unauthorized:
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
-			}
+			await ServerProvider.RestartWorker();
 		}
 		public async void StopWorker()
 		{
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/stop_shinobu");
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<ApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					break;
-				case HttpStatusCode.Unauthorized:
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
-			}
+			await ServerProvider.StopWorker();
 		}
 		public async Task<DownloadPayload> DownloadDB()
 		{
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/backup");
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					var download = new DownloadPayload();
-
-					download.Data = r.RawBytes;
-					download.Name = "database_backup.json";
-					download.Type = ".json";
-					return download;
-				case HttpStatusCode.Unauthorized:
-					Global.EventManager.ShowError("API Error", LRRApi.GetError(r).error);
-					break;
-			}
-			return null;
+			return await ServerProvider.DownloadDB();
 		}
 		public async void ClearAllNew()
 		{
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/clear_new_all");
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			var result = LRRApi.GetResult<ApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
+			await ServerProvider.ClearAllNew();
+		}
+		public async void UpdateShinobuStatus()
+		{
+			if (!SettingsManager.Profile.HasApiKey)
 				return;
-			}
-			switch (r.StatusCode)
+			var result = await ServerProvider.GetShinobuStatus();
+			if (result != null)
 			{
-				case HttpStatusCode.OK:
-					break;
-				case HttpStatusCode.Unauthorized:
-					Global.EventManager.ShowError("API Error", result.Error.error);
-					break;
+				_shinobuStatus = result;
 			}
+			else
+			{
+				_shinobuStatus.pid = 0;
+				_shinobuStatus.is_alive = 0;
+			}
+			RaisePropertyChanged("ShinobuRunning");
+			RaisePropertyChanged("ShinobuStopped");
+			RaisePropertyChanged("ShinobuUnknown");
+			RaisePropertyChanged("ShinobuPID");
 		}
 	}
 }

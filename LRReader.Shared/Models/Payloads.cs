@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LRReader.Internal
+namespace LRReader.Shared.Models
 {
 	public class DownloadPayload
 	{

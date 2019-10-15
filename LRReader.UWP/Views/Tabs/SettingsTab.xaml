@@ -12,5 +12,5 @@
 	Header="Settings"
 	mc:Ignorable="d">
 
-	<content:SettingsTabContent />
+	<content:SettingsTabContent x:Name="TabContent" />
 </controls:TabViewItem>

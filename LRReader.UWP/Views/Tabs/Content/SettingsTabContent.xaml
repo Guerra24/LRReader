@@ -6,7 +6,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="1000"
+	d:DesignHeight="1200"
 	d:DesignWidth="1200"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
@@ -93,6 +93,20 @@
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Server" />
 			<TextBlock Margin="0,0,0,5" Text="API Key required to use server options" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+				<TextBlock Text="Status:" />
+				<TextBlock Foreground="#1AA51A" Visibility="{x:Bind Data.ShinobuRunning, Mode=OneWay}">
+					<Run />
+					Running (PID:
+					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
+				</TextBlock>
+				<TextBlock Foreground="#CF2525" Visibility="{x:Bind Data.ShinobuStopped, Mode=OneWay}">
+					<Run />
+					Stopped (PID:
+					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
+				</TextBlock>
+				<TextBlock Text=" Unknown" Visibility="{x:Bind Data.ShinobuUnknown, Mode=OneWay}" />
+			</StackPanel>
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<Button
 					Margin="0,0,10,0" Click="RestartWorkerButton_Click" Content="Restart"

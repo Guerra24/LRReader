@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using System;
@@ -85,33 +86,7 @@ namespace LRReader.ViewModels.Base
 
 		public async Task<DownloadPayload> DownloadArchive()
 		{
-			var client = Global.LRRApi.GetClient();
-
-			var rq = new RestRequest("api/servefile");
-
-			rq.AddParameter("id", Archive.arcid);
-
-			var r = await client.ExecuteGetTaskAsync(rq);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				Global.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (r.StatusCode == HttpStatusCode.OK)
-			{
-				var download = new DownloadPayload();
-				var header = r.Headers.First(h => h.Name.Equals("Content-Disposition")).Value as string;
-				var parms = header.Split(";").Select(s => s.Trim());
-				var natr = parms.First(s => s.StartsWith("filename"));
-				var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
-
-				download.Data = r.RawBytes;
-				download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
-				download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
-				return download;
-			}
-			return null;
+			return await Archive.DownloadArchive();
 		}
 	}
 }

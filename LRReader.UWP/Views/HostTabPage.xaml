@@ -7,7 +7,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views"
-	xmlns:main="using:LRReader.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding HostTabPageInstace, Source={StaticResource Locator}}"

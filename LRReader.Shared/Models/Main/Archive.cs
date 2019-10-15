@@ -39,7 +39,7 @@ namespace LRReader.Shared.Models.Main
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<ApiResult>(r);
+			var result = LRRApi.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -55,6 +55,36 @@ namespace LRReader.Shared.Models.Main
 					return false;
 			}
 			return false;
+		}
+		public async Task<DownloadPayload> DownloadArchive()
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/servefile");
+
+			rq.AddParameter("id", arcid);
+
+			var r = await client.ExecuteGetTaskAsync(rq);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			if (r.StatusCode == HttpStatusCode.OK)
+			{
+				var download = new DownloadPayload();
+				var header = r.Headers.First(h => h.Name.Equals("Content-Disposition")).Value as string;
+				var parms = header.Split(';').Select(s => s.Trim());
+				var natr = parms.First(s => s.StartsWith("filename"));
+				var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
+
+				download.Data = r.RawBytes;
+				download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
+				download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
+				return download;
+			}
+			return null;
 		}
 	}
 

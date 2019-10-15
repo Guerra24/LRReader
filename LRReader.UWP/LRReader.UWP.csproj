@@ -133,7 +133,6 @@
     <Compile Include="Internal\Global.cs" />
     <Compile Include="Internal\Tabs.cs" />
     <Compile Include="Internal\ImageManager.cs" />
-    <Compile Include="Internal\Payloads.cs" />
     <Compile Include="Internal\SettingsManager.cs" />
     <Compile Include="Internal\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

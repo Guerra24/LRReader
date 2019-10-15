@@ -10,10 +10,12 @@ namespace LRReader.Shared.Providers
 		{
 			ArchivesProvider = new ArchivesProvider();
 			ImagesProvider = new ImagesProvider();
+			ServerProvider = new ServerProvider();
 		}
 
 		public static ArchivesProvider ArchivesProvider { get; set; }
 		public static ImagesProvider ImagesProvider { get; set; }
+		public static ServerProvider ServerProvider { get; set; }
 
 	}
 }

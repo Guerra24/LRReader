@@ -44,44 +44,28 @@ namespace LRReader.Shared.Models.Api
 			return client;
 		}
 
-		public static ApiResponse<T> GetResult<T>(IRestResponse restResponse)
+		public static GenericApiResponse<T> GetResult<T>(IRestResponse restResponse)
 		{
-			var apiResponse = new ApiResponse<T>();
+			var apiResponse = new GenericApiResponse<T>();
 			if (restResponse.StatusCode == HttpStatusCode.OK)
 			{
 				apiResponse.Data = JsonConvert.DeserializeObject<T>(restResponse.Content);
 			}
 			else
 			{
-				apiResponse.Error = JsonConvert.DeserializeObject<ApiError>(restResponse.Content);
+				apiResponse.Error = JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content);
 			}
 			return apiResponse;
 		}
 
-		public static ApiError GetError(IRestResponse restResponse)
+		public static GenericApiError GetError(IRestResponse restResponse)
 		{
 			if (restResponse.StatusCode != HttpStatusCode.OK)
 			{
-				return JsonConvert.DeserializeObject<ApiError>(restResponse.Content);
+				return JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content);
 			}
 			return null;
 		}
-	}
-	public class ApiResponse<T>
-	{
-		public T Data { get; set; }
-		public ApiError Error { get; set; }
-	}
-
-	public class ApiError
-	{
-		public string error { get; set; }
-	}
-
-	public class ApiResult
-	{
-		public string operation { get; set; }
-		public int success { get; set; }
 	}
 
 	public class JsonNetSerializer : IRestSerializer
