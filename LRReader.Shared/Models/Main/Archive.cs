@@ -98,4 +98,12 @@ namespace LRReader.Shared.Models.Main
 		public string LeftImage;
 		public string RightImage;
 	}
+
+	public class ArchiveSearch
+	{
+		public List<Archive> data { get; set; }
+		public int draw { get; set; }
+		public int recordsFiltered { get; set; }
+		public int recordsTotal { get; set; }
+	}
 }

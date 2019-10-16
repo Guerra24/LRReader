@@ -15,6 +15,7 @@
 
 	<UserControl.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVis" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -26,6 +27,7 @@
 				<GridView.Header>
 					<Grid Margin="0,10,0,10">
 						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
@@ -48,8 +50,37 @@
 								Content="Random archive"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 						</StackPanel>
+						<StackPanel
+							Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
+							Orientation="Horizontal"
+							Visibility="{x:Bind Data.SearchMode, Mode=OneWay, Converter={StaticResource NegateBoolToVis}}">
+							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
+								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
+							</Button>
+							<TextBlock
+								Margin="10,0" VerticalAlignment="Center" FontSize="22"
+								Text="{x:Bind Data.DisplayPage, Mode=OneWay}" />
+							<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
+								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72A;" />
+							</Button>
+						</StackPanel>
 					</Grid>
 				</GridView.Header>
+				<GridView.Footer>
+					<StackPanel
+						Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal"
+						Visibility="{x:Bind Data.SearchMode, Mode=OneWay, Converter={StaticResource NegateBoolToVis}}">
+						<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
+							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
+						</Button>
+						<TextBlock
+							Margin="10,0" VerticalAlignment="Center" FontSize="22"
+							Text="{x:Bind Data.DisplayPage, Mode=OneWay}" />
+						<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
+							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72A;" />
+						</Button>
+					</StackPanel>
+				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>

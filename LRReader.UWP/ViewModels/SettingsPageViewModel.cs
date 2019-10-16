@@ -96,22 +96,23 @@ namespace LRReader.ViewModels
 		}
 		public async void UpdateShinobuStatus()
 		{
-			if (!SettingsManager.Profile.HasApiKey)
-				return;
-			var result = await ServerProvider.GetShinobuStatus();
-			if (result != null)
+			if (SettingsManager.Profile.HasApiKey)
 			{
-				_shinobuStatus = result;
-			}
-			else
-			{
-				_shinobuStatus.pid = 0;
-				_shinobuStatus.is_alive = 0;
+				var result = await ServerProvider.GetShinobuStatus();
+				if (result != null)
+				{
+					_shinobuStatus = result;
+					RaisePropertyChanged("ShinobuPID");
+				}
+				else
+				{
+					_shinobuStatus.pid = 0;
+					_shinobuStatus.is_alive = 0;
+				}
 			}
 			RaisePropertyChanged("ShinobuRunning");
 			RaisePropertyChanged("ShinobuStopped");
 			RaisePropertyChanged("ShinobuUnknown");
-			RaisePropertyChanged("ShinobuPID");
 		}
 	}
 }

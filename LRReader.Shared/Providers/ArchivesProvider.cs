@@ -75,5 +75,33 @@ namespace LRReader.Shared.Providers
 			return false;
 		}
 
+		public async Task<ArchiveSearch> GetArchivesForPage(int page)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/search");
+
+			rq.AddParameter("start", 100 * page); // TODO: Page Size
+
+			var r = await client.ExecuteGetTaskAsync(rq);
+
+			var result = LRRApi.GetResult<ArchiveSearch>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					return result.Data;
+				case HttpStatusCode.Unauthorized:
+					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
+					return null;
+			}
+			return null;
+		}
+
 	}
 }

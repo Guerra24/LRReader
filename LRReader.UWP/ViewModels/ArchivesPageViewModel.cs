@@ -16,6 +16,9 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using static LRReader.Shared.Providers.Providers;
 using static LRReader.Internal.Global;
+using Microsoft.Toolkit.Collections;
+using System.Threading;
+using Microsoft.Toolkit.Uwp;
 
 namespace LRReader.ViewModels
 {
@@ -40,6 +43,8 @@ namespace LRReader.ViewModels
 				_loadingArchives = value;
 				RaisePropertyChanged("LoadingArchives");
 				RaisePropertyChanged("ControlsEnabled");
+				RaisePropertyChanged("HasNextPage");
+				RaisePropertyChanged("HasPrevPage");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -51,9 +56,53 @@ namespace LRReader.ViewModels
 				_refreshOnErrorButton = value;
 				RaisePropertyChanged("RefreshOnErrorButton");
 				RaisePropertyChanged("ControlsEnabled");
+				RaisePropertyChanged("HasNextPage");
+				RaisePropertyChanged("HasPrevPage");
 			}
 		}
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
+		private int _page = 0;
+		public int Page
+		{
+			get => _page;
+			set
+			{
+				if (value != _page)
+				{
+					_page = value;
+					RaisePropertyChanged("Page");
+					RaisePropertyChanged("DisplayPage");
+					RaisePropertyChanged("HasNextPage");
+					RaisePropertyChanged("HasPrevPage");
+				}
+			}
+		}
+		public int DisplayPage => Page + 1;
+		private int _totalArchives;
+		public int TotalArchives
+		{
+			get => _totalArchives;
+			set
+			{
+				if (value != _totalArchives)
+				{
+					_totalArchives = value;
+					RaisePropertyChanged("TotalArchives");
+				}
+			}
+		}
+		public bool HasNextPage => Page < TotalArchives / 100 && ControlsEnabled; // TODO: Page Size
+		public bool HasPrevPage => Page > 0 && ControlsEnabled;
+		private bool _searchMode;
+		public bool SearchMode
+		{
+			get => _searchMode;
+			set
+			{
+				_searchMode = value;
+				RaisePropertyChanged("SearchMode");
+			}
+		}
 		private bool _newOnly;
 		public bool NewOnly
 		{
@@ -83,36 +132,39 @@ namespace LRReader.ViewModels
 				return;
 			_internalLoadingArchives = true;
 			RefreshOnErrorButton = false;
+			ArchiveList.Clear();
 			if (animate)
 				LoadingArchives = true;
-			ArchiveList.Clear();
-			var result = await ArchivesProvider.LoadArchives();
-			if (animate)
-				LoadingArchives = false;
-			if (result)
+			foreach (var b in SettingsManager.Profile.Bookmarks)
 			{
-				foreach (var b in SettingsManager.Profile.Bookmarks)
-				{
-					var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
-					if (archive != null)
-						EventManager.CloseTabWithHeader(archive.title);
-				}
+				var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
+				if (archive != null)
+					EventManager.CloseTabWithHeader(archive.title);
+			}
+			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0);
+			if (resultPage != null)
+			{
 				await Task.Run(async () =>
 				{
-					foreach (var a in ArchivesProvider.Archives)
+					foreach (var a in resultPage.data)
 						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
 				});
+				TotalArchives = resultPage.recordsFiltered;
+			}
+			var result = await ArchivesProvider.LoadArchives();
+			if (result)
 				foreach (var b in SettingsManager.Profile.Bookmarks)
 				{
-					var archive = ArchiveList.FirstOrDefault(a => a.arcid == b.archiveID);
+					var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 					if (archive != null)
 						EventManager.AddTab(new ArchiveTab(archive), false);
 					else
 						EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 				}
-			}
 			else
 				RefreshOnErrorButton = true;
+			if (animate)
+				LoadingArchives = false;
 			_internalLoadingArchives = false;
 		}
 
@@ -128,6 +180,43 @@ namespace LRReader.ViewModels
 						TagStats.Add(t);
 				});
 			}
+		}
+
+		public async void NextPage()
+		{
+			if (HasNextPage)
+				await LoadPage(Page + 1);
+		}
+
+		public async void PrevPage()
+		{
+			if (HasPrevPage)
+				await LoadPage(Page - 1);
+		}
+
+		public async Task LoadPage(int page)
+		{
+			if (_internalLoadingArchives)
+				return;
+			_internalLoadingArchives = true;
+			RefreshOnErrorButton = false;
+			LoadingArchives = true;
+			ArchiveList.Clear();
+			Page = page;
+			var resultPage = await ArchivesProvider.GetArchivesForPage(page);
+			if (resultPage != null)
+			{
+				await Task.Run(async () =>
+				{
+					foreach (var a in resultPage.data)
+						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
+				});
+				TotalArchives = resultPage.recordsFiltered;
+			}
+			else
+				RefreshOnErrorButton = true;
+			LoadingArchives = false;
+			_internalLoadingArchives = false;
 		}
 	}
 }

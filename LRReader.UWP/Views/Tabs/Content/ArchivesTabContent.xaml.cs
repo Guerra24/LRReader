@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -102,30 +104,39 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private void HandleSearch()
+		private async void HandleSearch()
 		{
 			if (!string.IsNullOrEmpty(query))
 			{
-				IEnumerable<Archive> listSearch = Data.ArchiveList;
-				if (Data.NewOnly)
+				Data.SearchMode = true;
+				IEnumerable<Archive> listSearch = Providers.ArchivesProvider.Archives;
+				await Task.Run(() =>
 				{
-					listSearch = listSearch.Where(a => a.IsNewArchive());
-				}
-				var text = query.ToUpper();
-				foreach (var s in text.Split(" "))
-				{
-					listSearch = listSearch.Where(a => a.title.ToUpper().Contains(s) || a.tags.ToUpper().Contains(s));
-				}
+					if (Data.NewOnly)
+					{
+						listSearch = listSearch.Where(a => a.IsNewArchive());
+					}
+					var text = query.ToUpper();
+					foreach (var s in text.Split(" "))
+					{
+						listSearch = listSearch.Where(a => a.title.ToUpper().Contains(s) || a.tags.ToUpper().Contains(s));
+					}
+					listSearch = listSearch.Take(100); // TODO: Page Size
+				});
 				ArchivesGrid.ItemsSource = listSearch;
 			}
 			else
 			{
 				if (Data.NewOnly)
 				{
-					ArchivesGrid.ItemsSource = Data.ArchiveList.Where(a => a.IsNewArchive());
+					Data.SearchMode = true;
+					IEnumerable<Archive> listSearch = Providers.ArchivesProvider.Archives;
+					await Task.Run(() => listSearch = listSearch.Where(a => a.IsNewArchive()));
+					ArchivesGrid.ItemsSource = listSearch;
 				}
 				else
 				{
+					Data.SearchMode = false;
 					ArchivesGrid.ItemsSource = Data.ArchiveList;
 				}
 			}
@@ -159,6 +170,16 @@ namespace LRReader.Views.Tabs.Content
 			await Data.Refresh();
 			await Data.LoadTagStats();
 			HandleSearch();
+		}
+
+		private void PrevButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.PrevPage();
+		}
+
+		private void NextButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.NextPage();
 		}
 	}
 }
