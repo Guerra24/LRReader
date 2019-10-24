@@ -50,8 +50,11 @@ namespace LRReader.ViewModels
 			get => _showReader;
 			set
 			{
-				_showReader = value;
-				RaisePropertyChanged("ShowReader");
+				if (_showReader != value)
+				{
+					_showReader = value;
+					RaisePropertyChanged("ShowReader");
+				}
 			}
 		}
 		private bool _internalLoadingImages;

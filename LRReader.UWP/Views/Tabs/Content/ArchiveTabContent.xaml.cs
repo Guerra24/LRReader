@@ -35,6 +35,8 @@ namespace LRReader.Views.Tabs.Content
 			this.InitializeComponent();
 			Data = new ArchivePageViewModel();
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
+			FadeInReader.Completed += FadeInReader_Completed;
+			FadeOutReader.Completed += FadeOutReader_Completed;
 		}
 
 		public void LoadArchive(Archive archive)
@@ -45,7 +47,8 @@ namespace LRReader.Views.Tabs.Content
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			Data.ShowReader = true;
+			FadeOutContent.Begin();
+			FadeInReader.Begin();
 			int i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
 			int count = Data.ArchiveImages.Count;
 			if (Global.SettingsManager.TwoPages)
@@ -107,7 +110,18 @@ namespace LRReader.Views.Tabs.Content
 		private void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (Data.ShowReader)
-				Data.ShowReader = false;
+				FadeOutReader.Begin();
+		}
+
+		private void FadeInReader_Completed(object sender, object e)
+		{
+			Data.ShowReader = true;
+		}
+
+		private void FadeOutReader_Completed(object sender, object e)
+		{
+			Data.ShowReader = false;
+			FadeInContent.Begin();
 		}
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
