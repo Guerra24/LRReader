@@ -34,8 +34,11 @@ namespace LRReader.Views.Items
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
-			LeftImage.Source = null;
-			RightImage.Source = null;
+			await DispatcherHelper.RunAsync(() =>
+			{
+				LeftImage.Source = null;
+				RightImage.Source = null;
+			});
 			if (args.NewValue == null)
 				return;
 			ArchiveImageSet n = args.NewValue as ArchiveImageSet;

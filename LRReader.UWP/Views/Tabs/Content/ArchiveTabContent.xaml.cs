@@ -58,17 +58,17 @@ namespace LRReader.Views.Tabs.Content
 				{
 					int preDiv = count;
 					--count; count /= 2; ++count;
-					FlipView.SelectedIndex = count - i - (preDiv % 2);
+					FlipViewControl.SelectedIndex = count - i - (preDiv % 2);
 				}
 				else
-					FlipView.SelectedIndex = i;
+					FlipViewControl.SelectedIndex = i;
 			}
 			else
 			{
 				if (Global.SettingsManager.ReadRTL)
-					FlipView.SelectedIndex = count - i - 1;
+					FlipViewControl.SelectedIndex = count - i - 1;
 				else
-					FlipView.SelectedIndex = i;
+					FlipViewControl.SelectedIndex = i;
 			}
 
 			if (Data.Archive.IsNewArchive())
@@ -80,9 +80,9 @@ namespace LRReader.Views.Tabs.Content
 
 		private void FlipView_Loaded(object sender, RoutedEventArgs e)
 		{
-			FlipView.Focus(FocusState.Programmatic);
+			FlipViewControl.Focus(FocusState.Programmatic);
 			// Let's remove the buttons
-			var grid = (Grid)VisualTreeHelper.GetChild(FlipView, 0);
+			var grid = (Grid)VisualTreeHelper.GetChild(FlipViewControl, 0);
 			for (int i = grid.Children.Count - 1; i >= 0; i--)
 				if (grid.Children[i] is Button)
 					grid.Children.RemoveAt(i);
@@ -90,17 +90,17 @@ namespace LRReader.Views.Tabs.Content
 
 		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			var point = e.GetPosition(FlipView);
-			double distance = FlipView.ActualWidth / 6.0;
+			var point = e.GetPosition(FlipViewControl);
+			double distance = FlipViewControl.ActualWidth / 6.0;
 			if (point.X < distance)
 			{
-				if (FlipView.SelectedIndex > 0)
-					--FlipView.SelectedIndex;
+				if (FlipViewControl.SelectedIndex > 0)
+					--FlipViewControl.SelectedIndex;
 			}
-			else if (point.X > FlipView.ActualWidth - distance)
+			else if (point.X > FlipViewControl.ActualWidth - distance)
 			{
-				if (FlipView.SelectedIndex < FlipView.Items.Count - 1)
-					++FlipView.SelectedIndex;
+				if (FlipViewControl.SelectedIndex < FlipViewControl.Items.Count - 1)
+					++FlipViewControl.SelectedIndex;
 			}
 		}
 

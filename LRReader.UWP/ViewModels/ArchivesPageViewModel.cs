@@ -93,16 +93,6 @@ namespace LRReader.ViewModels
 		}
 		public bool HasNextPage => Page < TotalArchives / 100 && ControlsEnabled; // TODO: Page Size
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
-		private bool _searchMode;
-		public bool SearchMode
-		{
-			get => _searchMode;
-			set
-			{
-				_searchMode = value;
-				RaisePropertyChanged("SearchMode");
-			}
-		}
 		private bool _newOnly;
 		public bool NewOnly
 		{
@@ -113,6 +103,7 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("NewOnly");
 			}
 		}
+		public string Query = "";
 		public bool ControlsEnabled
 		{
 			get => !LoadingArchives && !RefreshOnErrorButton;
@@ -141,7 +132,7 @@ namespace LRReader.ViewModels
 				if (archive != null)
 					EventManager.CloseTabWithHeader(archive.title);
 			}
-			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0, "", false);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>
@@ -157,7 +148,7 @@ namespace LRReader.ViewModels
 				{
 					var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 					if (archive != null)
-						EventManager.AddTab(new ArchiveTab(archive), false);
+						EventManager.AddTab(new ArchiveTab(archive), NewOnly);
 					else
 						EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 				}
@@ -194,6 +185,11 @@ namespace LRReader.ViewModels
 				await LoadPage(Page - 1);
 		}
 
+		public async void ReloadSearch()
+		{
+			await LoadPage(0);
+		}
+
 		public async Task LoadPage(int page)
 		{
 			if (_internalLoadingArchives)
@@ -203,7 +199,7 @@ namespace LRReader.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await ArchivesProvider.GetArchivesForPage(page);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(page, Query, NewOnly);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

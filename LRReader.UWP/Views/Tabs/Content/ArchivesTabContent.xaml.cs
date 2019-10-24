@@ -76,7 +76,7 @@ namespace LRReader.Views.Tabs.Content
 					{
 						text = sQuery.Split(" ").Last();
 						query = sender.Text.Substring(0, Math.Max(0, sQuery.LastIndexOf(" ")));
-					};
+					}
 					foreach (var t in Data.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
 					{
 						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
@@ -104,42 +104,10 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private async void HandleSearch()
+		private void HandleSearch()
 		{
-			if (!string.IsNullOrEmpty(query))
-			{
-				Data.SearchMode = true;
-				IEnumerable<Archive> listSearch = Providers.ArchivesProvider.Archives;
-				await Task.Run(() =>
-				{
-					if (Data.NewOnly)
-					{
-						listSearch = listSearch.Where(a => a.IsNewArchive());
-					}
-					var text = query.ToUpper();
-					foreach (var s in text.Split(" "))
-					{
-						listSearch = listSearch.Where(a => a.title.ToUpper().Contains(s) || a.tags.ToUpper().Contains(s));
-					}
-					listSearch = listSearch.Take(100); // TODO: Page Size
-				});
-				ArchivesGrid.ItemsSource = listSearch;
-			}
-			else
-			{
-				if (Data.NewOnly)
-				{
-					Data.SearchMode = true;
-					IEnumerable<Archive> listSearch = Providers.ArchivesProvider.Archives;
-					await Task.Run(() => listSearch = listSearch.Where(a => a.IsNewArchive()));
-					ArchivesGrid.ItemsSource = listSearch;
-				}
-				else
-				{
-					Data.SearchMode = false;
-					ArchivesGrid.ItemsSource = Data.ArchiveList;
-				}
-			}
+			Data.Query = query;
+			Data.ReloadSearch();
 		}
 
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
@@ -152,7 +120,7 @@ namespace LRReader.Views.Tabs.Content
 
 		private void NewOnlyButton_Click(object sender, RoutedEventArgs e)
 		{
-			HandleSearch();
+			Data.ReloadSearch();
 		}
 
 		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)

@@ -75,13 +75,15 @@ namespace LRReader.Shared.Providers
 			return false;
 		}
 
-		public async Task<ArchiveSearch> GetArchivesForPage(int page)
+		public async Task<ArchiveSearch> GetArchivesForPage(int page, string query, bool isnew)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
 			var rq = new RestRequest("api/search");
 
 			rq.AddParameter("start", 100 * page); // TODO: Page Size
+			rq.AddParameter("newonly", isnew.ToString().ToLower());
+			rq.AddParameter("filter", query);
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 

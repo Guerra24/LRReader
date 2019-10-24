@@ -52,8 +52,7 @@
 						</StackPanel>
 						<StackPanel
 							Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
-							Orientation="Horizontal"
-							Visibility="{x:Bind Data.SearchMode, Mode=OneWay, Converter={StaticResource NegateBoolToVis}}">
+							Orientation="Horizontal">
 							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
 							</Button>
@@ -67,9 +66,7 @@
 					</Grid>
 				</GridView.Header>
 				<GridView.Footer>
-					<StackPanel
-						Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal"
-						Visibility="{x:Bind Data.SearchMode, Mode=OneWay, Converter={StaticResource NegateBoolToVis}}">
+					<StackPanel Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
 						<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
 							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
 						</Button>

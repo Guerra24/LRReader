@@ -98,7 +98,7 @@
 			Retry
 		</Button>
 		<FlipView
-			Name="FlipView" Grid.RowSpan="2" d:IsHidden="True"
+			x:Name="FlipViewControl" Grid.RowSpan="2" d:IsHidden="True"
 			x:Load="{x:Bind Data.ShowReader, Mode=OneWay}"
 			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 			FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
