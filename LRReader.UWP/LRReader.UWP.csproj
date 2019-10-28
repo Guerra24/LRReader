@@ -128,6 +128,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomFlipView.cs" />
     <Compile Include="Internal\Converters.cs" />
     <Compile Include="Internal\EventManager.cs" />
     <Compile Include="Internal\Global.cs" />

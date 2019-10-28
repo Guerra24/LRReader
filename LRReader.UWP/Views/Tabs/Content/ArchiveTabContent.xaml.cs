@@ -17,6 +17,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -30,26 +31,21 @@ namespace LRReader.Views.Tabs.Content
 	{
 		public ArchivePageViewModel Data;
 
+		private int i;
+
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
 			Data = new ArchivePageViewModel();
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
-			FadeInReader.Completed += FadeInReader_Completed;
+			FadeOutReader.Begin(); // Hack to fade in correctly
 			FadeOutReader.Completed += FadeOutReader_Completed;
+			FadeOutContent.Completed += FadeOutContent_Completed;
 		}
 
-		public void LoadArchive(Archive archive)
+		private void FadeOutContent_Completed(object sender, object e)
 		{
-			Data.Archive = archive;
-			Data.Reload(true);
-		}
-
-		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			FadeOutContent.Begin();
 			FadeInReader.Begin();
-			int i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
 			int count = Data.ArchiveImages.Count;
 			if (Global.SettingsManager.TwoPages)
 			{
@@ -79,16 +75,26 @@ namespace LRReader.Views.Tabs.Content
 				Data.ClearNew();
 				Data.Archive.isnew = "false";
 			}
+			FlipViewControl.Focus(FocusState.Programmatic);
 		}
 
-		private void FlipView_Loaded(object sender, RoutedEventArgs e)
+		private void FadeOutReader_Completed(object sender, object e)
 		{
-			FlipViewControl.Focus(FocusState.Programmatic);
-			// Let's remove the buttons
-			var grid = (Grid)VisualTreeHelper.GetChild(FlipViewControl, 0);
-			for (int i = grid.Children.Count - 1; i >= 0; i--)
-				if (grid.Children[i] is Button)
-					grid.Children.RemoveAt(i);
+			Data.ShowReader = false;
+			FadeInContent.Begin();
+		}
+
+		public void LoadArchive(Archive archive)
+		{
+			Data.Archive = archive;
+			Data.Reload(true);
+		}
+
+		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			FadeOutContent.Begin();
+			Data.ShowReader = true;
+			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
 		}
 
 		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
@@ -111,17 +117,6 @@ namespace LRReader.Views.Tabs.Content
 		{
 			if (Data.ShowReader)
 				FadeOutReader.Begin();
-		}
-
-		private void FadeInReader_Completed(object sender, object e)
-		{
-			Data.ShowReader = true;
-		}
-
-		private void FadeOutReader_Completed(object sender, object e)
-		{
-			Data.ShowReader = false;
-			FadeInContent.Begin();
 		}
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
