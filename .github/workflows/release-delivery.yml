@@ -16,10 +16,12 @@ jobs:
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Cert.pfx.gpg
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
+      shell: cmd
     - name: Zip Bundle for Release
       run: |
         mkdir Artifacts
         "C:\Program Files\7-Zip\7z.exe" a -r -tzip -mm=LZMA -mmt=on -mx=7 Artifacts/LRReader.zip ./LRReader.UWP/AppPackages/*
+      shell: cmd
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
