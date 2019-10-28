@@ -48,6 +48,7 @@ namespace LRReader.Views.Items
 			{
 				LeftImage.Source = lImage;
 				RightImage.Source = rImage;
+				FitImages(true);
 			});
 		}
 
