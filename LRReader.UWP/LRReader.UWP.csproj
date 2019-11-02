@@ -268,12 +268,6 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.2.190917002</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="RestSharp">
-      <Version>106.6.10</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj">
