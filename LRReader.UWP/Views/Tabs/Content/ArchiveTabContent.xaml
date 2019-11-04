@@ -39,7 +39,7 @@
 				<GridView.Header>
 					<StackPanel Padding="50,5,50,5">
 						<TextBlock
-							Margin="0,0,0,8" FontSize="24"
+							Margin="0,0,0,8" FontSize="24" IsTextSelectionEnabled="True"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
 						<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
@@ -66,9 +66,13 @@
 						</GridView>
 						<StackPanel Orientation="Horizontal">
 							<ToggleButton Content="Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" Style="{ThemeResource ToggleButtonRevealStyle}" />
-							<Button Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}" Margin="1,0,0,0" Click="Continue_Click" Style="{ThemeResource ButtonRevealStyle}">
+							<Button
+								Margin="1,0,0,0" Click="Continue_Click"
+								Style="{ThemeResource ButtonRevealStyle}"
+								Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}">
 								<TextBlock>
-									Continue where left (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)</TextBlock>
+									Continue where left (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)
+								</TextBlock>
 							</Button>
 							<Button
 								Margin="1,0,0,0" Click="EditButton_Click" Content="Edit"
