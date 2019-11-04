@@ -56,7 +56,7 @@ namespace LRReader.Views.Tabs.Content.Settings
 			}
 		}
 
-		private async void ButtonRemove_Click(object sender, RoutedEventArgs e)
+		private void ButtonRemove_Click(object sender, RoutedEventArgs e)
 		{
 			var sm = Data.SettingsManager;
 			sm.Profiles.Remove(sm.Profile);
