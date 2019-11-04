@@ -58,15 +58,10 @@ namespace LRReader.Views.Tabs.Content.Settings
 
 		private async void ButtonRemove_Click(object sender, RoutedEventArgs e)
 		{
-			ContentDialog dialog = new ContentDialog { Title = "Remove Profile?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				var sm = Data.SettingsManager;
-				sm.Profiles.Remove(sm.Profile);
-				sm.Profile = null;
-				sm.Profile = sm.Profiles.First();
-			}
+			var sm = Data.SettingsManager;
+			sm.Profiles.Remove(sm.Profile);
+			sm.Profile = null;
+			sm.Profile = sm.Profiles.First();
 		}
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
