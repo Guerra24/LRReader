@@ -32,6 +32,7 @@ namespace LRReader.Views.Tabs.Content
 		public ArchivePageViewModel Data;
 
 		private int i;
+		private bool _wasNew;
 
 		public ArchiveTabContent()
 		{
@@ -74,6 +75,7 @@ namespace LRReader.Views.Tabs.Content
 			{
 				Data.ClearNew();
 				Data.Archive.isnew = "false";
+				_wasNew = true;
 			}
 			FlipViewControl.Focus(FocusState.Programmatic);
 		}
@@ -120,33 +122,52 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private void CloseButton_Click(object sender, RoutedEventArgs e)
+		private async void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (Data.ShowReader)
 				FadeOutReader.Begin();
-			if (Data.Bookmarked)
+			int conv = FlipViewControl.SelectedIndex;
+			int count = Data.Pages;
+			if (Global.SettingsManager.TwoPages)
 			{
-				int conv = FlipViewControl.SelectedIndex;
-				int count = Data.Pages;
-				if (Global.SettingsManager.TwoPages)
+				if (conv != 0)
 				{
-					if (conv != 0)
-					{
-						conv *= 2;
-					}
-					if (Global.SettingsManager.ReadRTL)
-					{
-						conv = count - conv - (count % 2);
-					}
+					conv *= 2;
 				}
-				else
+				if (Global.SettingsManager.ReadRTL)
 				{
-					if (Global.SettingsManager.ReadRTL)
-						conv = count - conv - 1;
+					conv = count - conv - (count % 2);
 				}
-				conv = Math.Clamp(conv, 0, count - 1);
-				Data.BookmarkProgress = conv;
 			}
+			else
+			{
+				if (Global.SettingsManager.ReadRTL)
+					conv = count - conv - 1;
+			}
+			conv = Math.Clamp(conv, 0, count - 1);
+			if (conv >= count - 1)
+			{
+				if (Data.Bookmarked && Global.SettingsManager.RemoveBookmark)
+				{
+					var dialog = new ContentDialog { Title = "Remove bookmark?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
+					var result = await dialog.ShowAsync();
+					if (result == ContentDialogResult.Primary)
+						Data.Bookmarked = false;
+				}
+			}
+			else
+			{
+				if (_wasNew && Global.SettingsManager.BookmarkReminder)
+				{
+					var dialog = new ContentDialog { Title = "Bookmark archive?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
+					var result = await dialog.ShowAsync();
+					if (result == ContentDialogResult.Primary)
+						Data.Bookmarked = true;
+					_wasNew = false;
+				}
+			}
+			if (Data.Bookmarked)
+				Data.BookmarkProgress = conv;
 		}
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)

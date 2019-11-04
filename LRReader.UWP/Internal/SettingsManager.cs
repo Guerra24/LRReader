@@ -132,6 +132,32 @@ namespace LRReader.Internal
 				RaisePropertyChanged("SwitchTabArchive");
 			}
 		}
+		public bool BookmarkReminder
+		{
+			get
+			{
+				var val = roamedSettings.Values["BookmarkReminder"];
+				return val != null ? (bool)val : true;
+			}
+			set
+			{
+				roamedSettings.Values["BookmarkReminder"] = value;
+				RaisePropertyChanged("BookmarkReminder");
+			}
+		}
+		public bool RemoveBookmark
+		{
+			get
+			{
+				var val = roamedSettings.Values["RemoveBookmark"];
+				return val != null ? (bool)val : true;
+			}
+			set
+			{
+				roamedSettings.Values["RemoveBookmark"] = value;
+				RaisePropertyChanged("RemoveBookmark");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = roamedSettings.Values["Profiles"];
