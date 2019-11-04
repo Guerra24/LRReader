@@ -40,6 +40,7 @@ namespace LRReader.ViewModels.Base
 					if (!_archive.arcid.Equals(value.arcid))
 					{
 						_archive = value;
+						BookmarkedArchive = Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
 						RaisePropertyChanged("Archive");
 						RaisePropertyChanged("IsNew");
 					}
@@ -60,21 +61,75 @@ namespace LRReader.ViewModels.Base
 				RaisePropertyChanged("Downloading");
 			}
 		}
+		private BookmarkedArchive _bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+		public BookmarkedArchive BookmarkedArchive
+		{
+			get => _bookmarkedArchive;
+			set
+			{
+				if (value != null)
+				{
+					_bookmarkedArchive = value;
+					RaisePropertyChanged("Bookmarked");
+					RaisePropertyChanged("Pages");
+					RaisePropertyChanged("BookmarkedArchive");
+				}
+			}
+		}
 		public bool Bookmarked
 		{
 			get
 			{
-				return Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid)) != null;
+				return BookmarkedArchive.totalPages > 0;
 			}
 			set
 			{
 				if (value)
-					Global.SettingsManager.Profile.Bookmarks.Add(new BookmarkedArchive() { archiveID = Archive.arcid });
+					Global.SettingsManager.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
 				else
+				{
 					Global.SettingsManager.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
+					BookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+				}
 				Global.SettingsManager.SaveProfiles();
-				RaisePropertyChanged("Bookmarked");
 				RaisePropertyChanged("Icon");
+			}
+		}
+		private int _pages;
+		public int Pages
+		{
+			get
+			{
+				if (Bookmarked)
+					return BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
+				return _pages;
+			}
+			set
+			{
+				if (value != _pages)
+				{
+					_pages = value;
+					RaisePropertyChanged("Pages");
+				}
+			}
+		}
+		public int BookmarkProgress
+		{
+			get
+			{
+				if (Bookmarked)
+					return BookmarkedArchive.page;
+				return 0;
+			}
+			set
+			{
+				if (Bookmarked)
+				{
+					BookmarkedArchive.page = value;
+					BookmarkedArchive.totalPages = Pages;
+					BookmarkedArchive.Update();
+					Global.SettingsManager.SaveProfiles();
+				}
 			}
 		}
 

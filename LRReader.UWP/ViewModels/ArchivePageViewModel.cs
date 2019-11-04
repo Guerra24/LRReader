@@ -64,7 +64,6 @@ namespace LRReader.ViewModels
 			LoadTags();
 			await LoadImages(animate);
 			CreateImageSets();
-			RaisePropertyChanged("Bookmarked");
 			RaisePropertyChanged("Icon");
 		}
 
@@ -102,6 +101,7 @@ namespace LRReader.ViewModels
 					foreach (var s in result)
 						await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
 				});
+				Pages = ArchiveImages.Count;
 			}
 			else
 				RefreshOnErrorButton = true;

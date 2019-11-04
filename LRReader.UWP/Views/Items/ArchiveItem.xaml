@@ -53,6 +53,14 @@
 				<ProgressBar Background="Transparent" IsIndeterminate="True" />
 			</Grid>
 			<Grid
+				x:Name="ProgressGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+				x:Load="{x:Bind ViewModel.Bookmarked, Mode=OneWay}"
+				Background="{ThemeResource GridOverGridBackground}">
+				<TextBlock Padding="6,2">
+					<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.Pages, Mode=OneWay}" />
+				</TextBlock>
+			</Grid>
+			<Grid
 				x:Name="IsNewGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.IsNew, Mode=OneWay}"
 				Background="{ThemeResource GridOverGridBackground}">

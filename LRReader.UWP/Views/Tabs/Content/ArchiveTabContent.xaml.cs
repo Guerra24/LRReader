@@ -46,7 +46,7 @@ namespace LRReader.Views.Tabs.Content
 		private void FadeOutContent_Completed(object sender, object e)
 		{
 			FadeInReader.Begin();
-			int count = Data.ArchiveImages.Count;
+			int count = Data.Pages;
 			if (Global.SettingsManager.TwoPages)
 			{
 				if (i != 0)
@@ -97,6 +97,13 @@ namespace LRReader.Views.Tabs.Content
 			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
 		}
 
+		private void Continue_Click(object sender, RoutedEventArgs e)
+		{
+			FadeOutContent.Begin();
+			Data.ShowReader = true;
+			i = Data.BookmarkProgress;
+		}
+
 		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			var point = e.GetPosition(FlipViewControl);
@@ -117,6 +124,29 @@ namespace LRReader.Views.Tabs.Content
 		{
 			if (Data.ShowReader)
 				FadeOutReader.Begin();
+			if (Data.Bookmarked)
+			{
+				int conv = FlipViewControl.SelectedIndex;
+				int count = Data.Pages;
+				if (Global.SettingsManager.TwoPages)
+				{
+					if (conv != 0)
+					{
+						conv *= 2;
+					}
+					if (Global.SettingsManager.ReadRTL)
+					{
+						conv = count - conv - (count % 2);
+					}
+				}
+				else
+				{
+					if (Global.SettingsManager.ReadRTL)
+						conv = count - conv - 1;
+				}
+				conv = Math.Clamp(conv, 0, count - 1);
+				Data.BookmarkProgress = conv;
+			}
 		}
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
@@ -179,5 +209,6 @@ namespace LRReader.Views.Tabs.Content
 		{
 			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
+
 	}
 }

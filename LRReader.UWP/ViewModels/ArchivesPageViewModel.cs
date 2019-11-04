@@ -132,16 +132,6 @@ namespace LRReader.ViewModels
 				if (archive != null)
 					EventManager.CloseTabWithHeader(archive.title);
 			}
-			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0, "", false);
-			if (resultPage != null)
-			{
-				await Task.Run(async () =>
-				{
-					foreach (var a in resultPage.data)
-						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
-				});
-				TotalArchives = resultPage.recordsFiltered;
-			}
 			var result = await ArchivesProvider.LoadArchives();
 			if (result)
 				foreach (var b in SettingsManager.Profile.Bookmarks)
@@ -152,6 +142,16 @@ namespace LRReader.ViewModels
 					else
 						EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 				}
+			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0, "", false);
+			if (resultPage != null)
+			{
+				await Task.Run(async () =>
+				{
+					foreach (var a in resultPage.data)
+						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
+				});
+				TotalArchives = resultPage.recordsFiltered;
+			}
 			else
 				RefreshOnErrorButton = true;
 			if (animate)

@@ -39,7 +39,7 @@
 				<GridView.Header>
 					<StackPanel Padding="50,5,50,5">
 						<TextBlock
-							Margin="0,0,0,10" FontSize="24"
+							Margin="0,0,0,8" FontSize="24"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
 						<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
@@ -58,18 +58,25 @@
 							<GridView.ItemContainerStyle>
 								<Style TargetType="GridViewItem">
 									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="1" />
+									<Setter Property="Margin" Value="0.5" />
 									<Setter Property="MinWidth" Value="0" />
 									<Setter Property="MinHeight" Value="0" />
 								</Style>
 							</GridView.ItemContainerStyle>
 						</GridView>
 						<StackPanel Orientation="Horizontal">
-							<Button Click="EditButton_Click" Content="Edit (Opens in Browser)" />
-							<ToggleButton Margin="10,0,0,0" Content="Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" />
+							<ToggleButton Content="Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" Style="{ThemeResource ToggleButtonRevealStyle}" />
+							<Button Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}" Margin="1,0,0,0" Click="Continue_Click" Style="{ThemeResource ButtonRevealStyle}">
+								<TextBlock>
+									Continue where left (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)</TextBlock>
+							</Button>
 							<Button
-								Margin="10,0,0,0" Click="DonwloadButton_Click" Content="Download"
-								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
+								Margin="1,0,0,0" Click="EditButton_Click" Content="Edit"
+								Style="{ThemeResource ButtonRevealStyle}" />
+							<Button
+								Margin="1,0,0,0" Click="DonwloadButton_Click" Content="Download"
+								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"
+								Style="{ThemeResource ButtonRevealStyle}" />
 						</StackPanel>
 					</StackPanel>
 				</GridView.Header>

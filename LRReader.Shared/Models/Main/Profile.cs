@@ -38,8 +38,18 @@ namespace LRReader.Shared.Models.Main
 		}
 	}
 
-	public class BookmarkedArchive
+	public class BookmarkedArchive : ObservableObject
 	{
-		public string archiveID;
+		public string archiveID { get; set; }
+		public int page { get; set; }
+		public int totalPages { get; set; }
+
+		public void Update()
+		{
+			RaisePropertyChanged(string.Empty);
+		}
+
+		[JsonIgnore]
+		public int BookmarkProgressDisplay => page + 1;
 	}
 }
