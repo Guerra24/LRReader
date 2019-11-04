@@ -1,0 +1,65 @@
+﻿<PivotItem
+	x:Class="LRReader.Views.Tabs.Content.Settings.ServerPivot"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
+	xmlns:local="using:LRReader.Views.Tabs.Content.Settings"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DesignHeight="1000"
+	d:DesignWidth="1200"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
+	Header="Server"
+	mc:Ignorable="d">
+
+	<PivotItem.Resources>
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
+	</PivotItem.Resources>
+
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<StackPanel Padding="30,20" HorizontalAlignment="Left">
+			<TextBlock Margin="0,0,0,5" Text="API Key required to use server options" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+				<TextBlock Text="Status:" />
+				<TextBlock Foreground="#1AA51A" Visibility="{x:Bind Data.ShinobuRunning, Mode=OneWay}">
+					<Run />
+					Running (PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />
+					)</TextBlock>
+				<TextBlock Foreground="#CF2525" Visibility="{x:Bind Data.ShinobuStopped, Mode=OneWay}">
+					<Run />
+					Stopped (PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />
+					)</TextBlock>
+				<TextBlock Text=" Unknown" Visibility="{x:Bind Data.ShinobuUnknown, Mode=OneWay}" />
+			</StackPanel>
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+				<Button
+					Margin="0,0,10,0" Click="RestartWorkerButton_Click" Content="Restart"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+					ToolTipService.ToolTip="(Re)Starts the Shinobu Background Worker" />
+				<Button
+					Click="StopWorkerButton_Click" Content="Stop"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+					ToolTipService.ToolTip="Stops the Shinobu Background Worker" />
+			</StackPanel>
+			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Database" />
+			<Button
+				Margin="0,0,0,10" Content="Clear all new"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+				ToolTipService.ToolTip="Clears the 'New!' flag on all archives">
+				<Button.Flyout>
+					<Flyout>
+						<StackPanel>
+							<TextBlock Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" Text="All archive's 'New!' flag will be cleared. Do you want to continue?" />
+							<Button HorizontalAlignment="Center" Click="ClearAllNewButton_Click" Content="Yes, clear all new" />
+						</StackPanel>
+					</Flyout>
+				</Button.Flyout>
+			</Button>
+			<Button
+				Click="DownloadDBButton_Click" Content="Download database"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+				ToolTipService.ToolTip="Returns a backup in JSON form. This backup can be reimported manually" />
+		</StackPanel>
+	</ScrollViewer>
+</PivotItem>

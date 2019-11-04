@@ -58,7 +58,7 @@
 							<GridView.ItemContainerStyle>
 								<Style TargetType="GridViewItem">
 									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="0.5" />
+									<Setter Property="Margin" Value="1" />
 									<Setter Property="MinWidth" Value="0" />
 									<Setter Property="MinHeight" Value="0" />
 								</Style>
@@ -67,7 +67,7 @@
 						<StackPanel Orientation="Horizontal">
 							<ToggleButton Content="Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" Style="{ThemeResource ToggleButtonRevealStyle}" />
 							<Button
-								Margin="1,0,0,0" Click="Continue_Click"
+								Margin="2,0,0,0" Click="Continue_Click"
 								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}">
 								<TextBlock>
@@ -75,10 +75,10 @@
 								</TextBlock>
 							</Button>
 							<Button
-								Margin="1,0,0,0" Click="EditButton_Click" Content="Edit"
+								Margin="2,0,0,0" Click="EditButton_Click" Content="Edit"
 								Style="{ThemeResource ButtonRevealStyle}" />
 							<Button
-								Margin="1,0,0,0" Click="DonwloadButton_Click" Content="Download"
+								Margin="2,0,0,0" Click="DonwloadButton_Click" Content="Download"
 								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"
 								Style="{ThemeResource ButtonRevealStyle}" />
 						</StackPanel>

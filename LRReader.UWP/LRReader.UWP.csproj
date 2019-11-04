@@ -183,6 +183,18 @@
     <Compile Include="Views\Tabs\Content\SettingsTabContent.xaml.cs">
       <DependentUpon>SettingsTabContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\Content\Settings\AboutPivot.xaml.cs">
+      <DependentUpon>AboutPivot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\Settings\ReaderPivot.xaml.cs">
+      <DependentUpon>ReaderPivot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\Settings\GeneralPivot.xaml.cs">
+      <DependentUpon>GeneralPivot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\Settings\ServerPivot.xaml.cs">
+      <DependentUpon>ServerPivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\FirstRunTab.xaml.cs">
       <DependentUpon>FirstRunTab.xaml</DependentUpon>
     </Compile>
@@ -332,6 +344,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Tabs\Content\Settings\AboutPivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\Settings\ReaderPivot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\Content\Settings\GeneralPivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\Settings\ServerPivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tabs\FirstRunTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -341,6 +369,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

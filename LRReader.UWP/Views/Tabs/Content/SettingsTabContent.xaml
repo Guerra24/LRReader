@@ -3,135 +3,20 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="1200"
+	xmlns:settings="using:LRReader.Views.Tabs.Content.Settings"
+	d:DesignHeight="1000"
 	d:DesignWidth="1200"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	Loaded="UserControl_Loaded"
-	mc:Ignorable="d">
+	mc:Ignorable="d" Loaded="UserControl_Loaded">
 
-	<UserControl.Resources>
-		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
-		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
-		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-	</UserControl.Resources>
-
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
-		<StackPanel Padding="30,20" HorizontalAlignment="Left">
-			<TextBlock Margin="0,0,0,5" FontSize="24" Text="Connection" />
-			<ComboBox
-				Name="ProfileSelection" MinWidth="200" Margin="0,0,0,10"
-				IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
-				ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-				PlaceholderText="Select Profile"
-				SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}"
-				SelectionChanged="ComboBox_SelectionChanged" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add Profile" />
-				<Button
-					Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-				<Button Click="ButtonRemove_Click" Content="Remove" IsEnabled="{x:Bind Data.SettingsManager.AtLeastOneProfile, Mode=OneWay}" />
-			</StackPanel>
-			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Reader" />
-			<Grid Width="350">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="40" />
-				</Grid.ColumnDefinitions>
-				<Slider
-					Margin="0,0,0,10" Header="Base Zoom" Maximum="5"
-					Minimum="1" StepFrequency="0.25" TickFrequency="0.5"
-					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used by default"
-					Value="{x:Bind Data.SettingsManager.BaseZoom, Mode=TwoWay}" />
-				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Text="{x:Bind Data.SettingsManager.BaseZoom, Mode=OneWay}" />
-			</Grid>
-			<Grid Width="350">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="40" />
-				</Grid.ColumnDefinitions>
-				<Slider
-					Margin="0,0,0,10" Header="Zoomed Factor" Maximum="10"
-					Minimum="1" StepFrequency="0.25" TickFrequency="0.5"
-					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used when double-tapped"
-					Value="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=TwoWay}" />
-				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Text="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=OneWay}" />
-			</Grid>
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Read right-to-left"
-				IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}"
-				ToolTipService.ToolTip="Reverses the pages read direction" />
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Show two pages"
-				IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}"
-				ToolTipService.ToolTip="Two pages will be displayed at once" />
-			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Tabs" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Switch to opened archive tab" IsOn="{x:Bind Data.SettingsManager.SwitchTabArchive, Mode=TwoWay}" />
-			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Images" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Cache Images to Disk" IsOn="{x:Bind Data.SettingsManager.ImageCaching, Mode=TwoWay}" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button
-					Margin="0,0,10,0" Click="ButtonClearCache_Click" Content="Clear Cache"
-					IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
-				<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
-					<Run>Size</Run>
-					<Run Text="{x:Bind Data.CacheSizeInMB, Mode=OneWay}" />
-				</TextBlock>
-				<ProgressRing
-					Width="30" Height="30" VerticalAlignment="Center"
-					IsActive="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-			</StackPanel>
-			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Server" />
-			<TextBlock Margin="0,0,0,5" Text="API Key required to use server options" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<TextBlock Text="Status:" />
-				<TextBlock Foreground="#1AA51A" Visibility="{x:Bind Data.ShinobuRunning, Mode=OneWay}">
-					<Run />
-					Running (PID:
-					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
-				</TextBlock>
-				<TextBlock Foreground="#CF2525" Visibility="{x:Bind Data.ShinobuStopped, Mode=OneWay}">
-					<Run />
-					Stopped (PID:
-					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
-				</TextBlock>
-				<TextBlock Text=" Unknown" Visibility="{x:Bind Data.ShinobuUnknown, Mode=OneWay}" />
-			</StackPanel>
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button
-					Margin="0,0,10,0" Click="RestartWorkerButton_Click" Content="Restart"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
-					ToolTipService.ToolTip="(Re)Starts the Shinobu Background Worker" />
-				<Button
-					Click="StopWorkerButton_Click" Content="Stop"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
-					ToolTipService.ToolTip="Stops the Shinobu Background Worker" />
-			</StackPanel>
-			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Database" />
-			<Button
-				Margin="0,0,0,10" Click="ClearAllNewButton_Click" Content="Clear all new"
-				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
-				ToolTipService.ToolTip="Clears the 'New!' flag on all archives" />
-			<Button
-				Click="DownloadDBButton_Click" Content="Download database"
-				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
-				ToolTipService.ToolTip="Returns a backup in JSON form. This backup can be reimported manually" />
-			<TextBlock Margin="0,10,0,5" FontSize="24" Text="About" />
-			<TextBlock Margin="0,0,0,10">
-				<Run>LRReader version</Run>
-				<Run Text="{x:Bind Data.Version}" />
-			</TextBlock>
-			<HyperlinkButton Content="Open on Github" NavigateUri="https://github.com/Guerra24/LRReader" />
-		</StackPanel>
-	</ScrollViewer>
+	<Grid Padding="20,10">
+		<Pivot>
+			<settings:GeneralPivot />
+			<settings:ReaderPivot />
+			<settings:ServerPivot />
+			<settings:AboutPivot />
+		</Pivot>
+	</Grid>
 </UserControl>

@@ -16,36 +16,16 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Tabs.Content
+namespace LRReader.Views.Tabs.Content.Settings
 {
-	public sealed partial class SettingsTabContent : UserControl
+	public sealed partial class AboutPivot : PivotItem
 	{
 		private SettingsPageViewModel Data;
-		private DispatcherTimer DispatcherTimer;
 
-		public SettingsTabContent()
+		public AboutPivot()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
-			DispatcherTimer = new DispatcherTimer();
-			DispatcherTimer.Tick += DispatcherTimer_Tick;
-			DispatcherTimer.Interval = new TimeSpan(0, 0, 5);
-			DispatcherTimer.Start();
-		}
-
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
-		{
-			Data.UpdateShinobuStatus();
-		}
-
-		private void DispatcherTimer_Tick(object sender, object e)
-		{
-			Data.UpdateShinobuStatus();
-		}
-
-		public void RemoveTimer()
-		{
-			DispatcherTimer.Stop();
 		}
 	}
 }
