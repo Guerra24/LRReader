@@ -171,11 +171,17 @@
     <Compile Include="Views\Tabs\ArchiveTab.xaml.cs">
       <DependentUpon>ArchiveTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\BookmarksTab.xaml.cs">
+      <DependentUpon>BookmarksTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\Content\ArchivesTabContent.xaml.cs">
       <DependentUpon>ArchivesTabContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\Content\ArchiveTabContent.xaml.cs">
       <DependentUpon>ArchiveTabContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\BookmarksTabContent.xaml.cs">
+      <DependentUpon>BookmarksTabContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\Content\FirstRunTabContent.xaml.cs">
       <DependentUpon>FirstRunTabContent.xaml</DependentUpon>
@@ -328,11 +334,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Tabs\BookmarksTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tabs\Content\ArchivesTabContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\Content\ArchiveTabContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\BookmarksTabContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

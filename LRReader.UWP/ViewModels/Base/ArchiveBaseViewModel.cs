@@ -132,8 +132,6 @@ namespace LRReader.ViewModels.Base
 				}
 			}
 		}
-
-		private SymbolIconSource _symbolIcon = new SymbolIconSource() { Symbol = Symbol.Pictures };
 		public SymbolIconSource Icon
 		{
 			get => new SymbolIconSource() { Symbol = Bookmarked ? Symbol.Favorite : Symbol.Pictures };

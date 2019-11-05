@@ -173,19 +173,19 @@ namespace LRReader.ViewModels
 			}
 		}
 
-		public async void NextPage()
+		public async Task NextPage()
 		{
 			if (HasNextPage)
 				await LoadPage(Page + 1);
 		}
 
-		public async void PrevPage()
+		public async Task PrevPage()
 		{
 			if (HasPrevPage)
 				await LoadPage(Page - 1);
 		}
 
-		public async void ReloadSearch()
+		public async Task ReloadSearch()
 		{
 			await LoadPage(0);
 		}

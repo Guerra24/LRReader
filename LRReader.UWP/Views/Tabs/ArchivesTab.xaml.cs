@@ -18,7 +18,6 @@ namespace LRReader.Views.Tabs
 		public ArchivesTab()
 		{
 			this.InitializeComponent();
-			IconSource = new SymbolIconSource() { Symbol = Symbol.Library };
 		}
 	}
 }

@@ -7,11 +7,14 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="1000"
-	d:DesignWidth="1200"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
 	Header="First Run"
 	IsClosable="False"
 	mc:Ignorable="d">
+	<controls:TabViewItem.IconSource>
+		<controls:SymbolIconSource Symbol="MapDrive" />
+	</controls:TabViewItem.IconSource>
 
 	<content:FirstRunTabContent />
 </controls:TabViewItem>

@@ -48,7 +48,7 @@
 				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 				ToolTipService.ToolTip="Clears the 'New!' flag on all archives">
 				<Button.Flyout>
-					<Flyout>
+					<Flyout x:Name="ClearNewFlyout">
 						<StackPanel>
 							<TextBlock Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" Text="All archive's 'New!' flag will be cleared. Do you want to continue?" />
 							<Button HorizontalAlignment="Center" Click="ClearAllNewButton_Click" Content="Yes, clear all new" />

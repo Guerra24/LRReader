@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,11 +15,11 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Tabs
+namespace LRReader.Views.Tabs.Content
 {
-	public sealed partial class FirstRunTab : TabViewItem
+	public sealed partial class BookmarksTabContent : UserControl
 	{
-		public FirstRunTab()
+		public BookmarksTabContent()
 		{
 			this.InitializeComponent();
 		}

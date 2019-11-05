@@ -77,6 +77,7 @@ namespace LRReader.Views.Tabs.Content.Settings
 		private void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.ClearAllNew();
+			ClearNewFlyout.Hide();
 		}
 	}
 }

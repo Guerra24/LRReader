@@ -31,24 +31,36 @@
 			<controls:TabView.TabStripFooter>
 				<Grid>
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
-					<Grid Name="TitleBar" Background="Transparent" />
+					<Grid.Resources>
+						<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button">
+							<Setter Property="Background" Value="Transparent" />
+							<Setter Property="Width" Value="46" />
+							<Setter Property="Height" Value="32" />
+						</Style>
+					</Grid.Resources>
+					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+						<Button Background="Transparent" Click="Bookmarks_Click" ToolTipService.ToolTip="Bookmarks">
+							<Viewbox MaxWidth="16" MaxHeight="16">
+								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
+							</Viewbox>
+						</Button>
+					</StackPanel>
+					<Grid Name="TitleBar" Grid.Column="1" Background="Transparent" />
 					<StackPanel
-						Name="TabViewEndHeader" Grid.Column="1" HorizontalAlignment="Right"
-						VerticalAlignment="Bottom" Orientation="Horizontal">
+						Name="TabViewEndHeader" Grid.Column="2" VerticalAlignment="Bottom"
+						Orientation="Horizontal">
 						<Button
-							Name="EnterFullScreen" Width="46" Height="32"
-							Background="Transparent" Click="EnterFullScreen_Click" ToolTipService.ToolTip="Enter Full Screen"
+							Name="EnterFullScreen" Click="EnterFullScreen_Click" ToolTipService.ToolTip="Enter Full Screen"
 							Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<SymbolIcon Symbol="FullScreen" />
 							</Viewbox>
 						</Button>
-						<Button
-							Name="SettingsButton" Width="46" Height="32"
-							Background="Transparent" Click="SettingsButton_Click" ToolTipService.ToolTip="Settings">
+						<Button Name="SettingsButton" Click="SettingsButton_Click" ToolTipService.ToolTip="Settings">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<SymbolIcon Symbol="Setting" />
 							</Viewbox>

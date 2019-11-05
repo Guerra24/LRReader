@@ -104,10 +104,10 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private void HandleSearch()
+		private async void HandleSearch()
 		{
 			Data.Query = query;
-			Data.ReloadSearch();
+			await Data.ReloadSearch();
 		}
 
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
@@ -118,9 +118,9 @@ namespace LRReader.Views.Tabs.Content
 			Global.EventManager.AddTab(new ArchiveTab(item));
 		}
 
-		private void NewOnlyButton_Click(object sender, RoutedEventArgs e)
+		private async void NewOnlyButton_Click(object sender, RoutedEventArgs e)
 		{
-			Data.ReloadSearch();
+			await Data.ReloadSearch();
 		}
 
 		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
@@ -133,21 +133,25 @@ namespace LRReader.Views.Tabs.Content
 			HandleSearch();
 		}
 
-		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			await Data.Refresh();
-			await Data.LoadTagStats();
 			HandleSearch();
 		}
 
-		private void PrevButton_Click(object sender, RoutedEventArgs e)
+		private async void RefreshFull_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			Data.PrevPage();
+			await Data.Refresh();
+			await Data.LoadTagStats();
 		}
 
-		private void NextButton_Click(object sender, RoutedEventArgs e)
+		private async void PrevButton_Click(object sender, RoutedEventArgs e)
 		{
-			Data.NextPage();
+			await Data.PrevPage();
+		}
+
+		private async void NextButton_Click(object sender, RoutedEventArgs e)
+		{
+			await Data.NextPage();
 		}
 	}
 }

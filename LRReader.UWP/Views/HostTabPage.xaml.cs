@@ -104,6 +104,11 @@ namespace LRReader.Views
 			AppView.TryEnterFullScreenMode();
 		}
 
+		private void Bookmarks_Click(object sender, RoutedEventArgs e)
+		{
+			Global.EventManager.AddTab(new BookmarksTab(), true);
+		}
+
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args)
 		{
 			Data.FullScreen = AppView.IsFullScreenMode;
@@ -147,5 +152,6 @@ namespace LRReader.Views
 		}
 
 		private TabViewItem GetTabFromHeader(object header) => TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(header)) as TabViewItem;
+
 	}
 }

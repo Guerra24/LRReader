@@ -80,6 +80,7 @@
 				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+					<KeyboardAccelerator Key="F5" Invoked="RefreshFull_Invoked" Modifiers="Control" />
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>

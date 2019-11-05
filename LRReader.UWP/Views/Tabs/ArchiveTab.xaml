@@ -5,20 +5,14 @@
 	xmlns:content="using:LRReader.Views.Tabs.Content"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	Header=""
 	IconSource="{x:Bind TabContent.Data.Icon, Mode=OneWay}"
-	IsClosable="{x:Bind TabContent.Data.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
 	Loaded="TabViewItem_Loaded"
 	mc:Ignorable="d">
-
-	<controls:TabViewItem.Resources>
-		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
-	</controls:TabViewItem.Resources>
 
 	<controls:TabViewItem.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">

@@ -62,6 +62,7 @@ namespace LRReader.Views.Tabs.Content.Settings
 			sm.Profiles.Remove(sm.Profile);
 			sm.Profile = null;
 			sm.Profile = sm.Profiles.First();
+			RemoveFlyout.Hide();
 		}
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
