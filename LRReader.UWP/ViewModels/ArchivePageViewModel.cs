@@ -31,16 +31,6 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("LoadingImages");
 			}
 		}
-		private bool _refreshOnErrorButton = false;
-		public bool RefreshOnErrorButton
-		{
-			get => _refreshOnErrorButton;
-			set
-			{
-				_refreshOnErrorButton = value;
-				RaisePropertyChanged("RefreshOnErrorButton");
-			}
-		}
 		public ObservableCollection<string> ArchiveImages = new ObservableCollection<string>();
 		public ObservableCollection<ArchiveImageSet> ArchiveImagesReader = new ObservableCollection<ArchiveImageSet>();
 		public ObservableCollection<string> Tags = new ObservableCollection<string>();
@@ -57,14 +47,25 @@ namespace LRReader.ViewModels
 				}
 			}
 		}
+		public override bool Downloading
+		{
+			get => _downloading || !ControlsEnabled;
+			set
+			{
+				_downloading = value;
+				RaisePropertyChanged("Downloading");
+			}
+		}
 		private bool _internalLoadingImages;
 
 		public async void Reload(bool animate)
 		{
+			ControlsEnabled = false;
 			LoadTags();
 			await LoadImages(animate);
 			CreateImageSets();
 			RaisePropertyChanged("Icon");
+			ControlsEnabled = true;
 		}
 
 		public void LoadTags()

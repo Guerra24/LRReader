@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LRReader.Internal;
+using Archive = LRReader.Shared.Models.Main.Archive;
+using LRReader.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using LRReader.Views.Items;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -19,9 +23,52 @@ namespace LRReader.Views.Tabs.Content
 {
 	public sealed partial class BookmarksTabContent : UserControl
 	{
+		private BookmarksTabViewModel Data;
+
+		private bool loaded;
+
 		public BookmarksTabContent()
 		{
 			this.InitializeComponent();
+			Data = DataContext as BookmarksTabViewModel;
+		}
+
+		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (loaded)
+				return;
+			loaded = true;
+			await Data.Refresh();
+		}
+
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
+		}
+
+		private async void Button_Click(object sender, RoutedEventArgs e)
+		{
+			await Data.Refresh();
+		}
+
+		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		{
+			using (var deferral = args.GetDeferral())
+			{
+				await Data.Refresh(false);
+			}
+		}
+
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			await Data.Refresh();
+		}
+
+		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			var item = args.ItemContainer.ContentTemplateRoot as BookmarkedArchive;
+			if (item.Parallax.Source == null)
+				item.Parallax.Source = ArchivesGrid;
 		}
 	}
 }

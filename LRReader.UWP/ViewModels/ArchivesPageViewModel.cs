@@ -104,9 +104,15 @@ namespace LRReader.ViewModels
 			}
 		}
 		public string Query = "";
+		private bool _controlsEnabled;
 		public bool ControlsEnabled
 		{
-			get => !LoadingArchives && !RefreshOnErrorButton;
+			get => _controlsEnabled && !RefreshOnErrorButton;
+			set
+			{
+				_controlsEnabled = value;
+				RaisePropertyChanged("ControlsEnabled");
+			}
 		}
 		private bool _internalLoadingArchives;
 		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
@@ -121,6 +127,7 @@ namespace LRReader.ViewModels
 		{
 			if (_internalLoadingArchives)
 				return;
+			ControlsEnabled = false;
 			_internalLoadingArchives = true;
 			RefreshOnErrorButton = false;
 			ArchiveList.Clear();
@@ -133,15 +140,16 @@ namespace LRReader.ViewModels
 					EventManager.CloseTabWithHeader(archive.title);
 			}
 			var result = await ArchivesProvider.LoadArchives();
-			if (result)
-				foreach (var b in SettingsManager.Profile.Bookmarks)
-				{
-					var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
-					if (archive != null)
-						EventManager.AddTab(new ArchiveTab(archive), NewOnly);
-					else
-						EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
-				}
+			if (SettingsManager.OpenBookmarksStart)
+				if (result)
+					foreach (var b in SettingsManager.Profile.Bookmarks)
+					{
+						var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
+						if (archive != null)
+							EventManager.AddTab(new ArchiveTab(archive), false);
+						else
+							EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+					}
 			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0, "", false);
 			if (resultPage != null)
 			{
@@ -157,6 +165,7 @@ namespace LRReader.ViewModels
 			if (animate)
 				LoadingArchives = false;
 			_internalLoadingArchives = false;
+			ControlsEnabled = true;
 		}
 
 		public async Task LoadTagStats()
@@ -194,6 +203,7 @@ namespace LRReader.ViewModels
 		{
 			if (_internalLoadingArchives)
 				return;
+			ControlsEnabled = false;
 			_internalLoadingArchives = true;
 			RefreshOnErrorButton = false;
 			LoadingArchives = true;
@@ -213,6 +223,7 @@ namespace LRReader.ViewModels
 				RefreshOnErrorButton = true;
 			LoadingArchives = false;
 			_internalLoadingArchives = false;
+			ControlsEnabled = true;
 		}
 	}
 }

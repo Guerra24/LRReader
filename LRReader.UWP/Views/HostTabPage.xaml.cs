@@ -54,7 +54,6 @@ namespace LRReader.Views
 			ApplicationViewTitleBar titleBar = AppView.TitleBar;
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-			titleBar.ButtonForegroundColor = (Color)this.Resources["SystemBaseHighColor"];
 			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
 
 			Window.Current.SetTitleBar(TitleBar);
@@ -78,6 +77,8 @@ namespace LRReader.Views
 				{
 					Global.LRRApi.RefreshSettings(Global.SettingsManager.Profile);
 					Global.EventManager.AddTab(new ArchivesTab());
+					if (Global.SettingsManager.OpenBookmarksTab)
+						Global.EventManager.AddTab(new BookmarksTab(), false);
 				}
 			});
 		}

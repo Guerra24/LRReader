@@ -123,14 +123,12 @@ namespace LRReader.Views.Tabs.Content
 			await Data.ReloadSearch();
 		}
 
-		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		private void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				await Data.Refresh(false);
-				await Data.LoadTagStats();
+				HandleSearch();
 			}
-			HandleSearch();
 		}
 
 		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)

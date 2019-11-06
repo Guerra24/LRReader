@@ -158,6 +158,32 @@ namespace LRReader.Internal
 				RaisePropertyChanged("RemoveBookmark");
 			}
 		}
+		public bool OpenBookmarksTab
+		{
+			get
+			{
+				var val = roamedSettings.Values["OpenBookmarksTab"];
+				return val != null ? (bool)val : true;
+			}
+			set
+			{
+				roamedSettings.Values["OpenBookmarksTab"] = value;
+				RaisePropertyChanged("OpenBookmarksTab");
+			}
+		}
+		public bool OpenBookmarksStart
+		{
+			get
+			{
+				var val = roamedSettings.Values["OpenBookmarksStart"];
+				return val != null ? (bool)val : false;
+			}
+			set
+			{
+				roamedSettings.Values["OpenBookmarksStart"] = value;
+				RaisePropertyChanged("OpenBookmarksStart");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = roamedSettings.Values["Profiles"];

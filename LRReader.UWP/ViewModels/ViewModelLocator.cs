@@ -21,6 +21,7 @@ namespace LRReader.ViewModels
 			SimpleIoc.Default.Register<ArchivesPageViewModel>();
 			SimpleIoc.Default.Register<SettingsPageViewModel>();
 			SimpleIoc.Default.Register<HostTabPageViewModel>();
+			SimpleIoc.Default.Register<BookmarksTabViewModel>();
 		}
 
 		public ArchivesPageViewModel ArchivesPageInstance
@@ -34,6 +35,10 @@ namespace LRReader.ViewModels
 		public HostTabPageViewModel HostTabPageInstace
 		{
 			get => SimpleIoc.Default.GetInstance<HostTabPageViewModel>();
+		}
+		public BookmarksTabViewModel BookmarksTabInstance
+		{
+			get => SimpleIoc.Default.GetInstance<BookmarksTabViewModel>();
 		}
 	}
 }

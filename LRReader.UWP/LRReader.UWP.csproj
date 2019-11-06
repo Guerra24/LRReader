@@ -138,6 +138,7 @@
     <Compile Include="Internal\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
+    <Compile Include="ViewModels\BookmarksTabViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
@@ -155,6 +156,9 @@
     </Compile>
     <Compile Include="Views\Items\ArchiveItem.xaml.cs">
       <DependentUpon>ArchiveItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Items\BookmarkedArchive.xaml.cs">
+      <DependentUpon>BookmarkedArchive.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Items\NotificationItem.xaml.cs">
       <DependentUpon>NotificationItem.xaml</DependentUpon>
@@ -311,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Items\ArchiveItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Items\BookmarkedArchive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

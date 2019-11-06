@@ -31,15 +31,11 @@ namespace LRReader.Views.Tabs.Content.Settings
 			Data = DataContext as SettingsPageViewModel;
 		}
 
-		private void RestartWorkerButton_Click(object sender, RoutedEventArgs e)
-		{
-			Data.RestartWorker();
-		}
+		private async void RestartWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.RestartWorker();
 
-		private void StopWorkerButton_Click(object sender, RoutedEventArgs e)
-		{
-			Data.StopWorker();
-		}
+
+		private async void StopWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.StopWorker();
+
 
 		private async void DownloadDBButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -74,9 +70,9 @@ namespace LRReader.Views.Tabs.Content.Settings
 			}
 		}
 
-		private void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
+		private async void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
 		{
-			Data.ClearAllNew();
+			await Data.ClearAllNew();
 			ClearNewFlyout.Hide();
 		}
 	}

@@ -26,7 +26,7 @@
 				</Grid.ColumnDefinitions>
 				<Slider
 					Margin="0,0,0,10" Header="Base Zoom" Maximum="5"
-					Minimum="1" StepFrequency="0.25" TickFrequency="0.5"
+					Minimum="1" StepFrequency="0.05" TickFrequency="0.5"
 					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used by default"
 					Value="{x:Bind Data.SettingsManager.BaseZoom, Mode=TwoWay}" />
 				<TextBlock
@@ -40,8 +40,8 @@
 					<ColumnDefinition Width="40" />
 				</Grid.ColumnDefinitions>
 				<Slider
-					Margin="0,0,0,10" Header="Zoomed Factor" Maximum="10"
-					Minimum="1" StepFrequency="0.25" TickFrequency="0.5"
+					Margin="0,0,0,10" Header="Zoomed Factor" Maximum="5"
+					Minimum="1" StepFrequency="0.05" TickFrequency="0.5"
 					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used when double-tapped"
 					Value="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=TwoWay}" />
 				<TextBlock

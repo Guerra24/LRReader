@@ -78,11 +78,11 @@ namespace LRReader.ViewModels
 			await Global.ImageManager.ClearCache();
 			ProgressCache = false;
 		}
-		public async void RestartWorker()
+		public async Task RestartWorker()
 		{
 			await ServerProvider.RestartWorker();
 		}
-		public async void StopWorker()
+		public async Task StopWorker()
 		{
 			await ServerProvider.StopWorker();
 		}
@@ -90,11 +90,11 @@ namespace LRReader.ViewModels
 		{
 			return await ServerProvider.DownloadDB();
 		}
-		public async void ClearAllNew()
+		public async Task ClearAllNew()
 		{
 			await ServerProvider.ClearAllNew();
 		}
-		public async void UpdateShinobuStatus()
+		public async Task UpdateShinobuStatus()
 		{
 			if (SettingsManager.Profile.HasApiKey)
 			{

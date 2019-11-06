@@ -58,7 +58,7 @@ namespace LRReader.Views.Items
 			var ttv = ImagesRoot.TransformToVisual(this);
 			var center = ttv.TransformPoint(new Point(0, 0));
 			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ImagesRoot.ActualWidth, ScrollViewer.ViewportHeight / ImagesRoot.ActualHeight);
-			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.20)
+			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.01)
 				ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom);
 			else
 				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y, zoomFactor * Global.SettingsManager.ZoomedFactor);

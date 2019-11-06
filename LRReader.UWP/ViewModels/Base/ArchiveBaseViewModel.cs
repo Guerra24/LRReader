@@ -29,6 +29,27 @@ namespace LRReader.ViewModels.Base
 				RaisePropertyChanged("IsLoading");
 			}
 		}
+		private bool _refreshOnErrorButton = false;
+		public bool RefreshOnErrorButton
+		{
+			get => _refreshOnErrorButton;
+			set
+			{
+				_refreshOnErrorButton = value;
+				RaisePropertyChanged("RefreshOnErrorButton");
+			}
+		}
+		private bool _controlsEnabled;
+		public bool ControlsEnabled
+		{
+			get => _controlsEnabled && !RefreshOnErrorButton;
+			set
+			{
+				_controlsEnabled = value;
+				RaisePropertyChanged("ControlsEnabled");
+				RaisePropertyChanged("Downloading");
+			}
+		}
 		private Archive _archive = new Archive() { arcid = "", isnew = "" };
 		public Archive Archive
 		{
@@ -51,8 +72,8 @@ namespace LRReader.ViewModels.Base
 		{
 			get => _archive != null ? _archive.IsNewArchive() : false;
 		}
-		private bool _downloading;
-		public bool Downloading
+		protected bool _downloading;
+		public virtual bool Downloading
 		{
 			get => _downloading;
 			set
@@ -84,15 +105,18 @@ namespace LRReader.ViewModels.Base
 			}
 			set
 			{
-				if (value)
-					Global.SettingsManager.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
-				else
+				if (value != BookmarkedArchive.totalPages > 0)
 				{
-					Global.SettingsManager.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
-					BookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+					if (value)
+						Global.SettingsManager.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
+					else
+					{
+						Global.SettingsManager.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
+						BookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+					}
+					Global.SettingsManager.SaveProfiles();
+					RaisePropertyChanged("Icon");
 				}
-				Global.SettingsManager.SaveProfiles();
-				RaisePropertyChanged("Icon");
 			}
 		}
 		private int _pages;

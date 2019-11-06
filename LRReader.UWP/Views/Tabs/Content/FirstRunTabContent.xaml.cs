@@ -60,6 +60,8 @@ namespace LRReader.Views.Tabs.Content
 		{
 			Global.EventManager.CloseAllTabs();
 			Global.EventManager.AddTab(new ArchivesTab());
+			if (Global.SettingsManager.OpenBookmarksTab)
+				Global.EventManager.AddTab(new BookmarksTab(), false);
 		}
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
