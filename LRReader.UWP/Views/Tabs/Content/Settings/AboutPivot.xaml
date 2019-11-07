@@ -5,8 +5,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="1000"
-	d:DesignWidth="1200"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Header="About"
 	mc:Ignorable="d">

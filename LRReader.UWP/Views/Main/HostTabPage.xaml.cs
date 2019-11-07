@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace LRReader.Views
+namespace LRReader.Views.Main
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
@@ -45,16 +45,15 @@ namespace LRReader.Views
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
+		}
 
-			CoreApplicationViewTitleBar coreTitleBar = CoreView.TitleBar;
-			coreTitleBar.ExtendViewIntoTitleBar = true;
-			//TitleBar.Height = coreTitleBar.Height;
-			coreTitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
-
-			ApplicationViewTitleBar titleBar = AppView.TitleBar;
-			titleBar.ButtonBackgroundColor = Colors.Transparent;
-			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			CoreView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
 			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
+
+			TabViewEndHeader.Margin = new Thickness(0, 0, CoreView.TitleBar.SystemOverlayRightInset, 0);
 
 			Window.Current.SetTitleBar(TitleBar);
 
@@ -62,25 +61,26 @@ namespace LRReader.Views
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
-		}
-
-		private async void Page_Loaded(object sender, RoutedEventArgs e)
-		{
 			await DispatcherHelper.RunAsync(() =>
 			{
-				bool firstRun = Global.SettingsManager.Profile == null;
-				if (firstRun)
-				{
-					Global.EventManager.AddTab(new FirstRunTab());
-				}
-				else
-				{
-					Global.LRRApi.RefreshSettings(Global.SettingsManager.Profile);
-					Global.EventManager.AddTab(new ArchivesTab());
-					if (Global.SettingsManager.OpenBookmarksTab)
-						Global.EventManager.AddTab(new BookmarksTab(), false);
-				}
+				Global.LRRApi.RefreshSettings(Global.SettingsManager.Profile);
+				Global.EventManager.AddTab(new ArchivesTab());
+				if (Global.SettingsManager.OpenBookmarksTab)
+					Global.EventManager.AddTab(new BookmarksTab(), false);
 			});
+		}
+
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+		{
+			base.OnNavigatingFrom(e);
+			CoreView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
+			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
+
+			Window.Current.SetTitleBar(null);
+			Global.EventManager.ShowErrorEvent -= ShowError;
+			Global.EventManager.AddTabEvent -= AddTab;
+			Global.EventManager.CloseAllTabsEvent -= CloseAllTabs;
+			Global.EventManager.CloseTabWithHeaderEvent -= CloseTabWithHeader;
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
@@ -90,30 +90,15 @@ namespace LRReader.Views
 			TabViewEndHeader.Margin = new Thickness(0, 0, coreTitleBar.SystemOverlayRightInset, 0);
 		}
 
-		private void ShowError(string title, string content)
-		{
-			Notifications.Show(new NotificationItem(title, content), 5000);
-		}
+		private void ShowError(string title, string content) => Notifications.Show(new NotificationItem(title, content), 5000);
 
-		private void SettingsButton_Click(object sender, RoutedEventArgs e)
-		{
-			Global.EventManager.AddTab(new SettingsTab());
-		}
+		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new SettingsTab());
 
-		private void EnterFullScreen_Click(object sender, RoutedEventArgs e)
-		{
-			AppView.TryEnterFullScreenMode();
-		}
+		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
 
-		private void Bookmarks_Click(object sender, RoutedEventArgs e)
-		{
-			Global.EventManager.AddTab(new BookmarksTab(), true);
-		}
+		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new BookmarksTab(), true);
 
-		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args)
-		{
-			Data.FullScreen = AppView.IsFullScreenMode;
-		}
+		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.FullScreen = AppView.IsFullScreenMode;
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
@@ -138,10 +123,7 @@ namespace LRReader.Views
 			}
 		}
 
-		public void CloseAllTabs()
-		{
-			TabViewControl.TabItems.Clear();
-		}
+		public void CloseAllTabs() => TabViewControl.TabItems.Clear();
 
 		public void CloseTabWithHeader(string header)
 		{

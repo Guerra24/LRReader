@@ -7,8 +7,6 @@
 	xmlns:items="using:LRReader.Views.Items"
 	xmlns:local="using:LRReader.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="1000"
-	d:DesignWidth="1300"
 	DataContext="{Binding ArchivesPageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">

@@ -12,13 +12,17 @@
 			<SolidColorBrush x:Key="BrushHamburgerBackground" Color="#eaeaea" />
 			<Color x:Key="ColorHamburgerBackground">#eaeaea</Color>
 			<AcrylicBrush
-				x:Key="GridOverGridBackground" BackgroundSource="Backdrop"
-				FallbackColor="#E5E5E5"
+				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#E5E5E5"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#F2F2F2</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#E5E5E5" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#CCCCCC" />
+			<AcrylicBrush
+				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
+				FallbackColor="{ThemeResource ColorNavTop}"
+				TintColor="{ThemeResource SystemChromeMediumColor}"
+				TintOpacity=".5" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -30,13 +34,17 @@
 			<SolidColorBrush x:Key="BrushHamburgerBackground" Color="#1f1f1f" />
 			<Color x:Key="ColorHamburgerBackground">#1f1f1f</Color>
 			<AcrylicBrush
-				x:Key="GridOverGridBackground" BackgroundSource="Backdrop"
-				FallbackColor="#1f1f1f"
+				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#1f1f1f"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#171717</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#1f1f1f" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#333333" />
+			<AcrylicBrush
+				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
+				FallbackColor="{ThemeResource ColorNavTop}"
+				TintColor="{ThemeResource SystemChromeMediumColor}"
+				TintOpacity=".5" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

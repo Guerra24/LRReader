@@ -139,6 +139,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
     <Compile Include="ViewModels\BookmarksTabViewModel.cs" />
+    <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
@@ -148,7 +149,7 @@
     <Compile Include="Views\Dialogs\ServerProfileDialog.xaml.cs">
       <DependentUpon>ServerProfileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HostTabPage.xaml.cs">
+    <Compile Include="Views\Main\HostTabPage.xaml.cs">
       <DependentUpon>HostTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Items\ArchiveImage.xaml.cs">
@@ -166,8 +167,8 @@
     <Compile Include="Views\Items\ReaderImage.xaml.cs">
       <DependentUpon>ReaderImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\LoadingPage.xaml.cs">
-      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    <Compile Include="Views\Main\FirstRunPage.xaml.cs">
+      <DependentUpon>FirstRunPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\ArchivesTab.xaml.cs">
       <DependentUpon>ArchivesTab.xaml</DependentUpon>
@@ -187,8 +188,11 @@
     <Compile Include="Views\Tabs\Content\BookmarksTabContent.xaml.cs">
       <DependentUpon>BookmarksTabContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\Content\FirstRunTabContent.xaml.cs">
-      <DependentUpon>FirstRunTabContent.xaml</DependentUpon>
+    <Compile Include="Views\Main\FirstRun\SetupUserPivot.xaml.cs">
+      <DependentUpon>SetupUserPivot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\FirstRun\WelcomePivot.xaml.cs">
+      <DependentUpon>WelcomePivot.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\Content\SettingsTabContent.xaml.cs">
       <DependentUpon>SettingsTabContent.xaml</DependentUpon>
@@ -204,9 +208,6 @@
     </Compile>
     <Compile Include="Views\Tabs\Content\Settings\ServerPivot.xaml.cs">
       <DependentUpon>ServerPivot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tabs\FirstRunTab.xaml.cs">
-      <DependentUpon>FirstRunTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\SettingsTab.xaml.cs">
       <DependentUpon>SettingsTab.xaml</DependentUpon>
@@ -306,7 +307,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HostTabPage.xaml">
+    <Page Include="Views\Main\HostTabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -330,7 +331,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\LoadingPage.xaml">
+    <Page Include="Views\Main\FirstRunPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -358,7 +359,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Tabs\Content\FirstRunTabContent.xaml">
+    <Page Include="Views\Main\FirstRun\SetupUserPivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\FirstRun\WelcomePivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -379,10 +384,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\Content\Settings\ServerPivot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Tabs\FirstRunTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

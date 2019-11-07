@@ -6,8 +6,6 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DesignHeight="1000"
-	d:DesignWidth="1200"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Header="Server"
 	mc:Ignorable="d">
