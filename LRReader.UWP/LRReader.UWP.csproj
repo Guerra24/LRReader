@@ -188,12 +188,6 @@
     <Compile Include="Views\Tabs\Content\BookmarksTabContent.xaml.cs">
       <DependentUpon>BookmarksTabContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\FirstRun\SetupUserPivot.xaml.cs">
-      <DependentUpon>SetupUserPivot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\FirstRun\WelcomePivot.xaml.cs">
-      <DependentUpon>WelcomePivot.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Tabs\Content\SettingsTabContent.xaml.cs">
       <DependentUpon>SettingsTabContent.xaml</DependentUpon>
     </Compile>
@@ -356,14 +350,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\Content\BookmarksTabContent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\FirstRun\SetupUserPivot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\FirstRun\WelcomePivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
