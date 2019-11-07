@@ -36,6 +36,10 @@ For nightly check the [Actions page](https://github.com/Guerra24/LRReader/action
 Unzip and right click `Install.ps1` > Run with powershell<br>
 This will add the self-signed certificate and install the app.
 
+If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
+`CheckNetIsolation loopbackexempt -a -n=Guerra24.LRReader_3fr0p4qst6948`<br>
+To allow localhost access.
+
 ### Upgrade
 Unzip and run the `LRReader.UWP_<version>_x86_x64_arm_arm64.appxbundle` file, the app installer should pop-up.
 
