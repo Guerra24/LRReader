@@ -33,11 +33,11 @@ For stable check the [Releases page](https://github.com/Guerra24/LRReader/releas
 For nightly check the [Actions page](https://github.com/Guerra24/LRReader/actions?workflow=Continuous+Delivery)
 
 ### First time
-Unzip and right click `Add-AppDevPackage.ps1` > Run with powershell<br>
+Unzip and right click `Install.ps1` > Run with powershell<br>
 This will add the self-signed certificate and install the app.
 
 ### Upgrade
-Unzip and run the `LRReader_<version>_x86_x64_arm_arm64.appxbundle` file, the app installer should pop-up.
+Unzip and run the `LRReader.UWP_<version>_x86_x64_arm_arm64.appxbundle` file, the app installer should pop-up.
 
 ## Screenshots
 
