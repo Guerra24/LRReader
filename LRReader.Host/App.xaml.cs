@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LRReader.Host.Impl;
+using LRReader.Shared.Internal;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,14 @@ namespace LRReader.Host
 	/// </summary>
 	public partial class App : Application
 	{
+		public App()
+		{
+			Init.InitObjects();
+		}
+
+		private void Application_Exit(object sender, ExitEventArgs e)
+		{
+			(SharedGlobal.SettingsStorage as SettingsStorage).Save();
+		}
 	}
 }

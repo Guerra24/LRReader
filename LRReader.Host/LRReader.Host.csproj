@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
     <ProjectReference Include="..\LRReader.UWP.Core\LRReader.UWP.Core.csproj" />
     <ProjectReference Include="..\LRReader.UWP.Island\LRReader.UWP.Island.csproj" />
   </ItemGroup>
