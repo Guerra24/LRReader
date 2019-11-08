@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LRReader.Internal;
+using LRReader.Views.Main;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +24,19 @@ namespace LRReader.UWP.Core
 		public Island()
 		{
 			this.InitializeComponent();
+		}
+
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		{
+			/*bool firstRun = Global.SettingsManager.Profile == null;
+			if (firstRun)
+			{
+				Root.Navigate(typeof(FirstRunPage));
+			}
+			else
+			{
+				Root.Navigate(typeof(HostTabPage));
+			}*/
 		}
 	}
 }

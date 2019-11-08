@@ -51,6 +51,8 @@ namespace LRReader.Host.Impl
 
 		public T GetObjectLocal<T>(string key, T def)
 		{
+			if (!localSettings.ContainsKey(key))
+				return def;
 			var val = localSettings[key];
 			return val != null ? (T)val : def;
 		}
@@ -59,6 +61,8 @@ namespace LRReader.Host.Impl
 
 		public T GetObjectRoamed<T>(string key, T def)
 		{
+			if (!roamedSettings.ContainsKey(key))
+				return def;
 			var val = roamedSettings[key];
 			return val != null ? (T)val : def;
 		}
