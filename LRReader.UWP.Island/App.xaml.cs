@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Island
 {
-	sealed partial class App : XamlApplication
+	public sealed partial class App : XamlApplication
 	{
 		public App()
 		{

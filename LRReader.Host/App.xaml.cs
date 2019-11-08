@@ -15,7 +15,8 @@ namespace LRReader.Host
 	/// </summary>
 	public partial class App : Application
 	{
-		public App()
+
+		private void Application_Startup(object sender, StartupEventArgs e)
 		{
 			Init.InitObjects();
 		}
@@ -24,5 +25,6 @@ namespace LRReader.Host
 		{
 			(SharedGlobal.SettingsStorage as SettingsStorage).Save();
 		}
+
 	}
 }
