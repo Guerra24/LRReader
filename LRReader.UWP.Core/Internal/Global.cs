@@ -12,7 +12,6 @@ namespace LRReader.Internal
 	{
 
 		public static ImageManager ImageManager { get; set; }
-		public static SettingsManager SettingsManager { get; set; }
 		public new static EventManager EventManager { get; set; }
 
 		public static void Init()

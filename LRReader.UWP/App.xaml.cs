@@ -34,6 +34,7 @@ namespace LRReader.UWP
 		/// </summary>
 		public App()
 		{
+			Init.InitObjects();
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
 		}
@@ -46,6 +47,7 @@ namespace LRReader.UWP
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			DispatcherHelper.Initialize();
+
 			Frame rootFrame = Window.Current.Content as Frame;
 
 			// Do not repeat app initialization when the Window already has content,

@@ -9,5 +9,7 @@ namespace LRReader.Shared.Internal
 	{
 		public static LRRApi LRRApi { get; set; }
 		public static SharedEventManager EventManager { get; set; }
+		public static ISettingsStorage SettingsStorage { get; set; }
+		public static SettingsManager SettingsManager { get; set; }
 	}
 }

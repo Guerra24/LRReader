@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static LRReader.Shared.Providers.Providers;
-using static LRReader.Internal.Global;
+using static LRReader.Shared.Internal.SharedGlobal;
 using LRReader.Views.Tabs;
 using GalaSoft.MvvmLight.Threading;
 
