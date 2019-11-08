@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.UWP.Core", "LRRead
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.UWP", "LRReader.UWP\LRReader.UWP.csproj", "{29C83437-DE8D-4B9B-BE53-8262F9B59D50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.Host", "LRReader.Host\LRReader.Host.csproj", "{0D10D401-8F36-43C3-A34D-5CF0D0ED718D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRReader.Host", "LRReader.Host\LRReader.Host.csproj", "{0D10D401-8F36-43C3-A34D-5CF0D0ED718D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.UWP.Island", "LRReader.UWP.Island\LRReader.UWP.Island.csproj", "{487CCC8F-720E-4936-A07F-011075E73C46}"
 EndProject

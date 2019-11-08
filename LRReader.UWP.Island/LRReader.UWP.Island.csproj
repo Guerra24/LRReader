@@ -150,7 +150,7 @@
       <Version>6.0.0-rc1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.3.191107001-prerelease</Version>
+      <Version>2.2.190917002</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
