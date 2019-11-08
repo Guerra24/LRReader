@@ -11,7 +11,10 @@
 	mc:Ignorable="d">
 
 	<Grid Width="200" Height="282" Background="{ThemeResource BrushItemGridBackground}">
-		<Image Name="Image" ImageOpened="Image_ImageOpened" />
+		<Image Name="Image" ImageFailed="Image_ImageFailed" />
+		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
+			<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
+		</Grid>
 		<ProgressRing
 			Name="Ring" Width="50" Height="50"
 			IsActive="True" />

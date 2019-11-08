@@ -27,15 +27,15 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return false;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					return true;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return false;
+				return true;
 			}
-			return false;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
 		}
 		public async Task<bool> StopWorker()
 		{
@@ -52,15 +52,15 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return false;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					return true;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return false;
+				return true;
 			}
-			return false;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
 		}
 		public async Task<DownloadPayload> DownloadDB()
 		{
@@ -79,16 +79,15 @@ namespace LRReader.Shared.Providers
 			{
 				case HttpStatusCode.OK:
 					var download = new DownloadPayload();
-
 					download.Data = r.RawBytes;
 					download.Name = "database_backup.json";
 					download.Type = ".json";
 					return download;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", LRRApi.GetError(r).error);
+				default:
+					var error = LRRApi.GetError(r);
+					SharedGlobal.EventManager.ShowError(error.title, error.error);
 					return null;
 			}
-			return null;
 		}
 		public async Task<bool> ClearAllNew()
 		{
@@ -105,15 +104,15 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return false;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					return true;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return false;
+				return true;
 			}
-			return false;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
 		}
 		public async Task<ShinobuStatus> GetShinobuStatus()
 		{
@@ -126,18 +125,9 @@ namespace LRReader.Shared.Providers
 			var result = LRRApi.GetResult<ShinobuStatus>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				//SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return null;
-			}
-			switch (r.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					return result.Data;
-				case HttpStatusCode.Unauthorized:
-					//SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return null;
-			}
+			if (result.OK)
+				return result.Data;
 			return null;
 		}
 	}

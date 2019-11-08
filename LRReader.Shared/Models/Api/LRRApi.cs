@@ -47,24 +47,30 @@ namespace LRReader.Shared.Models.Api
 		public static GenericApiResponse<T> GetResult<T>(IRestResponse restResponse)
 		{
 			var apiResponse = new GenericApiResponse<T>();
-			if (restResponse.StatusCode == HttpStatusCode.OK)
+			switch (restResponse.StatusCode)
 			{
-				apiResponse.Data = JsonConvert.DeserializeObject<T>(restResponse.Content);
-			}
-			else
-			{
-				apiResponse.Error = JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content);
+				case HttpStatusCode.OK:
+					apiResponse.Data = JsonConvert.DeserializeObject<T>(restResponse.Content);
+					apiResponse.OK = true;
+					break;
+				default:
+					apiResponse.Error = GetError(restResponse);
+					break;
 			}
 			return apiResponse;
 		}
 
 		public static GenericApiError GetError(IRestResponse restResponse)
 		{
-			if (restResponse.StatusCode != HttpStatusCode.OK)
+			switch (restResponse.StatusCode)
 			{
-				return JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content);
+				case HttpStatusCode.Unauthorized:
+					var error = JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content);
+					error.title = "Unauthorized";
+					return error;
+				default:
+					return new GenericApiError() { title = $"Error code: {(int)restResponse.StatusCode} {restResponse.StatusDescription}", error = $"{restResponse.ResponseUri}" };
 			}
-			return null;
 		}
 	}
 

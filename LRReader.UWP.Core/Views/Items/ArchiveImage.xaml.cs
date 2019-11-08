@@ -1,4 +1,5 @@
-﻿using LRReader.Internal;
+﻿using GalaSoft.MvvmLight;
+using LRReader.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +26,7 @@ namespace LRReader.Views.Items
 	public sealed partial class ArchiveImage : UserControl
 	{
 		private string _oldUrl = "";
+		private Container Data = new Container();
 
 		public ArchiveImage()
 		{
@@ -40,29 +42,41 @@ namespace LRReader.Views.Items
 			{
 				Image.Visibility = Visibility.Collapsed;
 				Ring.Visibility = Visibility.Visible;
-				if (Global.SettingsManager.ImageCaching)
+				Data.MissingImage = false;
+				var image = await Global.ImageManager.DownloadImage(n);
+				if (image != null)
 				{
-					var image = await Global.ImageManager.DownloadImageCache(n);
 					image.DecodePixelWidth = 200;
 					Image.Source = image;
-					Image.Visibility = Visibility.Visible;
-					Ring.Visibility = Visibility.Collapsed;
-				}
-				else
+				} else
 				{
-					var image = new BitmapImage();
-					image.DecodePixelWidth = 200;
-					image.UriSource = new Uri(Global.SettingsManager.Profile.ServerAddress + "/" + n);
-					Image.Source = image;
+					Image.Source = null;
+					Data.MissingImage = true;
 				}
+				Image.Visibility = Visibility.Visible;
+				Ring.Visibility = Visibility.Collapsed;
 				_oldUrl = n;
 			}
 		}
 
-		private void Image_ImageOpened(object sender, RoutedEventArgs e)
+		private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
 		{
-			Image.Visibility = Visibility.Visible;
-			Ring.Visibility = Visibility.Collapsed;
+			Data.MissingImage = true;
+		}
+
+		private class Container : ObservableObject
+		{
+			private bool _missingImage;
+			public bool MissingImage
+			{
+				get => _missingImage;
+				set
+				{
+					_missingImage = value;
+					RaisePropertyChanged("MissingImage");
+				}
+			}
 		}
 	}
+
 }

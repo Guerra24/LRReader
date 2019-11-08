@@ -41,12 +41,14 @@ namespace LRReader.Internal
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			if (r.StatusCode == HttpStatusCode.OK)
+			switch (r.StatusCode)
 			{
-				await FileIO.WriteBytesAsync(thumbnail, r.RawBytes);
-				return thumbnail;
+				case HttpStatusCode.OK:
+					await FileIO.WriteBytesAsync(thumbnail, r.RawBytes);
+					return thumbnail;
+				default:
+					return null;
 			}
-			return null;
 		}
 
 		public async Task<byte[]> DownloadThumbnailRuntime(string id)
@@ -59,11 +61,13 @@ namespace LRReader.Internal
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			if (r.StatusCode == HttpStatusCode.OK)
+			switch (r.StatusCode)
 			{
-				return r.RawBytes;
+				case HttpStatusCode.OK:
+					return r.RawBytes;
+				default:
+					return null;
 			}
-			return null;
 		}
 
 		public async Task<BitmapImage> DownloadImage(string path)
@@ -77,14 +81,14 @@ namespace LRReader.Internal
 			else
 			{
 				var image = new BitmapImage();
-				image.UriSource = new Uri(Global.SettingsManager.Profile.ServerAddress + "/" + path);
+				image.UriSource = new Uri(Global.SettingsManager.Profile.ServerAddressBrowser + "/" + path);
 				return image;
 			}
 		}
 
 		public async Task<BitmapImage> DownloadImageCache(string path)
 		{
-			return await ImageCache.Instance.GetFromCacheAsync(new Uri(Global.SettingsManager.Profile.ServerAddress + "/" + path));
+			return await ImageCache.Instance.GetFromCacheAsync(new Uri(Global.SettingsManager.Profile.ServerAddressBrowser + "/" + path));
 		}
 
 		public async Task ClearCache()
@@ -95,7 +99,7 @@ namespace LRReader.Internal
 		public async Task<string> GetCacheSizeMB()
 		{
 			var imageCache = await localCache.GetFolderAsync("ImageCache");
-			var folders = imageCache.CreateFileQuery(CommonFileQuery.OrderByName);
+			var folders = imageCache.CreateFileQuery(CommonFileQuery.DefaultQuery);
 
 			var fileSizeTasks = (await folders.GetFilesAsync()).Select(async file => (await file.GetBasicPropertiesAsync()).Size);
 

@@ -46,15 +46,15 @@ namespace LRReader.Shared.Models.Main
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return false;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					return true;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return false;
+				return true;
 			}
-			return false;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
 		}
 		public async Task<DownloadPayload> DownloadArchive()
 		{
@@ -71,20 +71,24 @@ namespace LRReader.Shared.Models.Main
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return null;
 			}
-			if (r.StatusCode == HttpStatusCode.OK)
+			switch (r.StatusCode)
 			{
-				var download = new DownloadPayload();
-				var header = r.Headers.First(h => h.Name.Equals("Content-Disposition")).Value as string;
-				var parms = header.Split(';').Select(s => s.Trim());
-				var natr = parms.First(s => s.StartsWith("filename"));
-				var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
+				case HttpStatusCode.OK:
+					var download = new DownloadPayload();
+					var header = r.Headers.First(h => h.Name.Equals("Content-Disposition")).Value as string;
+					var parms = header.Split(';').Select(s => s.Trim());
+					var natr = parms.First(s => s.StartsWith("filename"));
+					var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
 
-				download.Data = r.RawBytes;
-				download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
-				download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
-				return download;
+					download.Data = r.RawBytes;
+					download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
+					download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
+					return download;
+				default:
+					var error = LRRApi.GetError(r);
+					SharedGlobal.EventManager.ShowError(error.title, error.error);
+					return null;
 			}
-			return null;
 		}
 	}
 

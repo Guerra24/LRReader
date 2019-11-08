@@ -14,7 +14,11 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<TextBlock Text="{x:Bind title}" />
-		<TextBlock Grid.Row="1" Text="{x:Bind content}" Visibility="{x:Bind showContent}" />
+		<TextBlock Text="{x:Bind title}" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" />
+		<TextBlock
+			Grid.Row="1"
+			Text="{x:Bind content}"
+			TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords"
+			Visibility="{x:Bind showContent}" />
 	</Grid>
 </UserControl>

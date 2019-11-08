@@ -20,6 +20,9 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public bool HasApiKey { get => !string.IsNullOrEmpty(ServerApiKey); }
 
+		[JsonIgnore]
+		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');
+
 		public ServerProfile()
 		{
 			UID = Guid.NewGuid().ToString();

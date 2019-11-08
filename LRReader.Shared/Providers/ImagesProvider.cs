@@ -29,15 +29,15 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return null;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					return result.Data.pages;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return null;
+				return result.Data.pages;
 			}
-			return null;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
+			}
 		}
 	}
 }

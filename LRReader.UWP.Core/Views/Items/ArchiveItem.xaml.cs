@@ -54,6 +54,7 @@ namespace LRReader.Views.Items
 				Thumbnail.Source = null;
 				Thumbnail.Visibility = Visibility.Collapsed;
 				Ring.Visibility = Visibility.Visible;
+				ViewModel.MissingImage = false;
 				/*StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(Archive.arcid);
 
 				using (var ras = await file.OpenAsync(FileAccessMode.Read))
@@ -71,17 +72,24 @@ namespace LRReader.Views.Items
 				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
 				{
 					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Archive.arcid);
-					await stream.WriteAsync(bytes.AsBuffer());
-					stream.Seek(0);
-					var image = new BitmapImage();
-					image.DecodePixelWidth = 200;
-					await image.SetSourceAsync(stream);
-					if (image.PixelHeight != 0 && image.PixelWidth != 0)
-						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-							Thumbnail.Stretch = Stretch.Uniform;
-					Thumbnail.Source = image;
+					if (bytes != null)
+					{
+						await stream.WriteAsync(bytes.AsBuffer());
+						stream.Seek(0);
+						var image = new BitmapImage();
+						image.DecodePixelWidth = 200;
+						await image.SetSourceAsync(stream);
+						if (image.PixelHeight != 0 && image.PixelWidth != 0)
+							if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+								Thumbnail.Stretch = Stretch.Uniform;
+						Thumbnail.Source = image;
+						Thumbnail.Visibility = Visibility.Visible;
+					}
+					else
+					{
+						ViewModel.MissingImage = true;
+					}
 				}
-				Thumbnail.Visibility = Visibility.Visible;
 				Ring.Visibility = Visibility.Collapsed;
 				Title.Opacity = 1;
 				_oldID = ViewModel.Archive.arcid;
@@ -95,13 +103,18 @@ namespace LRReader.Views.Items
 
 		private async void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddress + "/edit?id=" + ViewModel.Archive.arcid));
+			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + ViewModel.Archive.arcid));
 		}
 
 		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.Downloading = true;
 			var download = await ViewModel.DownloadArchive();
+			if (download == null)
+			{
+				ViewModel.Downloading = false;
+				return;
+			}
 
 			var savePicker = new FileSavePicker();
 			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;

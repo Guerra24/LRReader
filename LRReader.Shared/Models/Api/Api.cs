@@ -2,6 +2,7 @@
 {
 	public class GenericApiError
 	{
+		public string title { get; set; }
 		public string error { get; set; }
 	}
 
@@ -15,6 +16,7 @@
 	{
 		public T Data { get; set; }
 		public GenericApiError Error { get; set; }
+		public bool OK { get; set; }
 	}
 
 	public class ShinobuStatus

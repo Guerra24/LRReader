@@ -32,16 +32,16 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return false;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					await Task.Run(() => Archives.AddRange(result.Data.OrderBy(a => a.title)));
-					return true;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return false;
+				await Task.Run(() => Archives.AddRange(result.Data.OrderBy(a => a.title)));
+				return true;
 			}
-			return false;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
 		}
 
 		public async Task<bool> LoadTagStats()
@@ -60,19 +60,20 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return false;
 			}
-			switch (r.StatusCode)
+
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					await Task.Run(() =>
-					{
-						TagStats.AddRange(result.Data.OrderByDescending(a => a.weight));
-					});
-					return true;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return false;
+				await Task.Run(() =>
+				{
+					TagStats.AddRange(result.Data.OrderByDescending(a => a.weight));
+				});
+				return true;
 			}
-			return false;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
 		}
 
 		public async Task<ArchiveSearch> GetArchivesForPage(int page, string query, bool isnew)
@@ -94,15 +95,15 @@ namespace LRReader.Shared.Providers
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return null;
 			}
-			switch (r.StatusCode)
+			if (result.OK)
 			{
-				case HttpStatusCode.OK:
-					return result.Data;
-				case HttpStatusCode.Unauthorized:
-					SharedGlobal.EventManager.ShowError("API Error", result.Error.error);
-					return null;
+				return result.Data;
 			}
-			return null;
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
+			}
 		}
 
 	}

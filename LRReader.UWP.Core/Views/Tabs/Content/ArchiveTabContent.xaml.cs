@@ -172,13 +172,18 @@ namespace LRReader.Views.Tabs.Content
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
 		{
-			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddress + "/edit?id=" + Data.Archive.arcid));
+			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + Data.Archive.arcid));
 		}
 
 		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.Downloading = true;
 			var download = await Data.DownloadArchive();
+			if (download == null)
+			{
+				Data.Downloading = false;
+				return;
+			}
 
 			var savePicker = new FileSavePicker();
 			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
