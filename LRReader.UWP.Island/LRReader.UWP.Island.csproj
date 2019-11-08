@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{CAA91D62-AD1E-4212-9329-C0197281A29A}</ProjectGuid>
+    <ProjectGuid>{487CCC8F-720E-4936-A07F-011075E73C46}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LRReader.UWP.Island</RootNamespace>
@@ -150,7 +150,7 @@
       <Version>6.0.0-rc1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.2.190917002</Version>
+      <Version>2.3.191107001-prerelease</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +163,13 @@
       <Name>LRReader.UWP.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="..\LRReader.UWP.Core\Resources\ThemeDictionary.xaml">
+      <Link>Resources\ThemeDictionary.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

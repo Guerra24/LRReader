@@ -16,9 +16,9 @@
 			<Image Name="Thumbnail" Stretch="UniformToFill" />
 		</ParallaxView>
 		<Grid>
-			<Grid.Background>
+			<!--<Grid.Background>
 				<media:BackdropBlurBrush Amount="4.0" />
-			</Grid.Background>
+			</Grid.Background>-->
 			<Grid.RowDefinitions>
 				<RowDefinition Height="2.5*" />
 				<RowDefinition Height="1*" />

@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="867ef087-6af9-4d37-9444-52beae132a8e"
+    Name="22e048aa-239d-4a4c-955d-e4eb35ebc572"
     Publisher="CN=pablo"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="867ef087-6af9-4d37-9444-52beae132a8e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="22e048aa-239d-4a4c-955d-e4eb35ebc572" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>LRReader.UWP.Island</DisplayName>

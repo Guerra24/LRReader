@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid>
-
-    </Grid>
+		<TextBlock Text="Hello"/>
+	</Grid>
 </UserControl>
