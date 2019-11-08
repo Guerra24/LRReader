@@ -19,6 +19,7 @@ using static LRReader.Internal.Global;
 using Microsoft.Toolkit.Collections;
 using System.Threading;
 using Microsoft.Toolkit.Uwp;
+using LRReader.Shared.Internal;
 
 namespace LRReader.ViewModels
 {
@@ -112,6 +113,8 @@ namespace LRReader.ViewModels
 			{
 				_controlsEnabled = value;
 				RaisePropertyChanged("ControlsEnabled");
+				RaisePropertyChanged("HasNextPage");
+				RaisePropertyChanged("HasPrevPage");
 			}
 		}
 		private bool _internalLoadingArchives;
@@ -133,16 +136,16 @@ namespace LRReader.ViewModels
 			ArchiveList.Clear();
 			if (animate)
 				LoadingArchives = true;
-			foreach (var b in SettingsManager.Profile.Bookmarks)
+			foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
 			{
 				var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 				if (archive != null)
 					EventManager.CloseTabWithHeader(archive.title);
 			}
 			var result = await ArchivesProvider.LoadArchives();
-			if (SettingsManager.OpenBookmarksStart)
+			if (SharedGlobal.SettingsManager.OpenBookmarksStart)
 				if (result)
-					foreach (var b in SettingsManager.Profile.Bookmarks)
+					foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
 					{
 						var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 						if (archive != null)

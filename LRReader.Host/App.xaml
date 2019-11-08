@@ -1,0 +1,10 @@
+﻿<Application
+	x:Class="LRReader.Host.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:LRReader.Host"
+	Exit="Application_Exit"
+	Startup="Application_Startup"
+	StartupUri="MainWindow.xaml">
+	<Application.Resources />
+</Application>

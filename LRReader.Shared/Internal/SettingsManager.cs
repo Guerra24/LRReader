@@ -6,18 +6,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
+using static LRReader.Shared.Internal.SharedGlobal;
 
-namespace LRReader.Internal
+namespace LRReader.Shared.Internal
 {
 	public class SettingsManager : ViewModelBase
 	{
-		private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-		private ApplicationDataContainer roamedSettings = ApplicationData.Current.RoamingSettings;
 
 		private ObservableCollection<ServerProfile> _profiles;
 		public ObservableCollection<ServerProfile> Profiles
@@ -36,7 +33,7 @@ namespace LRReader.Internal
 			set
 			{
 				if (value != null)
-					localSettings.Values["ProfileUID"] = value.UID;
+					SettingsStorage.StoreObjectLocal("ProfileUID", value.UID);
 				if (_profile != value)
 				{
 					_profile = value;
@@ -54,139 +51,99 @@ namespace LRReader.Internal
 		}
 		public float BaseZoom
 		{
-			get
-			{
-				var val = localSettings.Values["BaseZoom"];
-				return val != null ? (float)val : 1.0f;
-			}
+			get => SettingsStorage.GetObjectLocal("BaseZoom", 1.0f);
 			set
 			{
-				localSettings.Values["BaseZoom"] = value;
+				SettingsStorage.StoreObjectLocal("BaseZoom", value);
 				RaisePropertyChanged("BaseZoom");
 			}
 		}
 		public float ZoomedFactor
 		{
-			get
-			{
-				var val = localSettings.Values["ZoomedFactor"];
-				return val != null ? (float)val : 2.0f;
-			}
+			get => SettingsStorage.GetObjectLocal("ZoomedFactor", 2.0f);
 			set
 			{
-				localSettings.Values["ZoomedFactor"] = value;
+				SettingsStorage.StoreObjectLocal("ZoomedFactor", value);
 				RaisePropertyChanged("ZoomedFactor");
 			}
 		}
 		public bool ImageCaching
 		{
-			get
-			{
-				var val = localSettings.Values["ImageCaching"];
-				return val != null ? (bool)val : false;
-			}
+			get => SettingsStorage.GetObjectLocal("ImageCaching", false);
 			set
 			{
-				localSettings.Values["ImageCaching"] = value;
+				SettingsStorage.StoreObjectLocal("ImageCaching", value);
 				RaisePropertyChanged("ImageCaching");
 			}
 		}
 		public bool ReadRTL
 		{
-			get
-			{
-				var val = localSettings.Values["ReadRTL"];
-				return val != null ? (bool)val : false;
-			}
+			get => SettingsStorage.GetObjectLocal("ReadRTL", false);
 			set
 			{
-				localSettings.Values["ReadRTL"] = value;
+				SettingsStorage.StoreObjectLocal("ReadRTL", value);
 				RaisePropertyChanged("ReadRTL");
-				Global.EventManager.RebuildReaderImagesSet();
+				EventManager.RebuildReaderImagesSet();
 			}
 		}
 		public bool TwoPages
 		{
-			get
-			{
-				var val = localSettings.Values["TwoPages"];
-				return val != null ? (bool)val : false;
-			}
+			get => SettingsStorage.GetObjectLocal("TwoPages", false);
 			set
 			{
-				localSettings.Values["TwoPages"] = value;
+				SettingsStorage.StoreObjectLocal("TwoPages", value);
 				RaisePropertyChanged("TwoPages");
-				Global.EventManager.RebuildReaderImagesSet();
+				EventManager.RebuildReaderImagesSet();
 			}
 		}
 		public bool SwitchTabArchive
 		{
-			get
-			{
-				var val = localSettings.Values["SwitchTabArchive"];
-				return val != null ? (bool)val : true;
-			}
+			get => SettingsStorage.GetObjectLocal("SwitchTabArchive", true);
 			set
 			{
-				localSettings.Values["SwitchTabArchive"] = value;
+				SettingsStorage.StoreObjectLocal("SwitchTabArchive", value);
 				RaisePropertyChanged("SwitchTabArchive");
 			}
 		}
 		public bool BookmarkReminder
 		{
-			get
-			{
-				var val = roamedSettings.Values["BookmarkReminder"];
-				return val != null ? (bool)val : true;
-			}
+			get => SettingsStorage.GetObjectRoamed("BookmarkReminder", true);
 			set
 			{
-				roamedSettings.Values["BookmarkReminder"] = value;
+				SettingsStorage.StoreObjectRoamed("BookmarkReminder", value);
 				RaisePropertyChanged("BookmarkReminder");
 			}
 		}
 		public bool RemoveBookmark
 		{
-			get
-			{
-				var val = roamedSettings.Values["RemoveBookmark"];
-				return val != null ? (bool)val : true;
-			}
+			get => SettingsStorage.GetObjectRoamed("RemoveBookmark", true);
 			set
 			{
-				roamedSettings.Values["RemoveBookmark"] = value;
+				SettingsStorage.StoreObjectRoamed("RemoveBookmark", value);
 				RaisePropertyChanged("RemoveBookmark");
 			}
 		}
 		public bool OpenBookmarksTab
 		{
-			get
-			{
-				var val = roamedSettings.Values["OpenBookmarksTab"];
-				return val != null ? (bool)val : true;
-			}
+			get => SettingsStorage.GetObjectRoamed("OpenBookmarksTab", true);
 			set
 			{
-				roamedSettings.Values["OpenBookmarksTab"] = value;
+				SettingsStorage.StoreObjectRoamed("OpenBookmarksTab", value);
 				RaisePropertyChanged("OpenBookmarksTab");
 			}
 		}
 		public bool OpenBookmarksStart
 		{
-			get
-			{
-				var val = roamedSettings.Values["OpenBookmarksStart"];
-				return val != null ? (bool)val : false;
-			}
+			get => SettingsStorage.GetObjectRoamed("OpenBookmarksStart", false);
 			set
 			{
-				roamedSettings.Values["OpenBookmarksStart"] = value;
+				SettingsStorage.StoreObjectRoamed("OpenBookmarksStart", value);
 				RaisePropertyChanged("OpenBookmarksStart");
 			}
 		}
 		public SettingsManager()
 		{
-			var profiles = roamedSettings.Values["Profiles"];
+			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
 			if (profiles != null)
 			{
 				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles as string);
@@ -202,7 +159,7 @@ namespace LRReader.Internal
 
 			Profiles.CollectionChanged += ProfilesChanges;
 
-			var profile = localSettings.Values["ProfileUID"];
+			var profile = SettingsStorage.GetObjectLocal<string>("ProfileUID");
 			if (profile != null)
 			{
 				Profile = Profiles.FirstOrDefault(p => p.UID.Equals(profile as string));
@@ -252,7 +209,7 @@ namespace LRReader.Internal
 
 		public void SaveProfiles()
 		{
-			roamedSettings.Values["Profiles"] = JsonConvert.SerializeObject(Profiles);
+			SettingsStorage.StoreObjectRoamed("Profiles", JsonConvert.SerializeObject(Profiles));
 		}
 	}
 }

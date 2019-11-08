@@ -21,7 +21,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI;
 using LRReader.Internal;
 
-namespace LRReader
+namespace LRReader.UWP
 {
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.
@@ -34,6 +34,7 @@ namespace LRReader
 		/// </summary>
 		public App()
 		{
+			Init.InitObjects();
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
 		}
@@ -46,6 +47,7 @@ namespace LRReader
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			DispatcherHelper.Initialize();
+
 			Frame rootFrame = Window.Current.Content as Frame;
 
 			// Do not repeat app initialization when the Window already has content,
