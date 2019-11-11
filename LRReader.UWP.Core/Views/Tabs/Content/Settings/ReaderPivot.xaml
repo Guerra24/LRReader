@@ -13,6 +13,7 @@
 
 	<PivotItem.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
+		<internal:EnumConverter x:Key="EnumConverter" />
 	</PivotItem.Resources>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -47,6 +48,7 @@
 					VerticalAlignment="Center"
 					Text="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=OneWay}" />
 			</Grid>
+			<ToggleSwitch Margin="0,0,0,10" Header="Open Reader automatically" IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 			<ToggleSwitch
 				Margin="0,0,0,10" Header="Read right-to-left"
 				IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}"
@@ -56,13 +58,17 @@
 				IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}"
 				ToolTipService.ToolTip="Two pages will be displayed at once" />
 			<ToggleSwitch
-				Margin="0,0,0,10" Header="Bookmark reminder for 'New!' archives"
+				Margin="0,0,0,10" Header="Bookmark reminder"
 				IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}"
-				ToolTipService.ToolTip="Ask to bookmark a 'New!' archive if closed half way through." />
+				ToolTipService.ToolTip="Ask to bookmark archive if closed half way through" />
+			<StackPanel Margin="16,0,0,10" Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
+				<RadioButton Content="'New!' archives only" GroupName="BookmarkReminder" IsChecked="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumConverter}, ConverterParameter=New}" />
+				<RadioButton Content="All archives" GroupName="BookmarkReminder" IsChecked="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumConverter}, ConverterParameter=All}" />
+			</StackPanel>
 			<ToggleSwitch
 				Margin="0,0,0,10" Header="Remove bookmark reminder on last page"
 				IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}"
-				ToolTipService.ToolTip="Ask to remove bookmark when closed on last page." />
+				ToolTipService.ToolTip="Ask to remove bookmark when closed on last page" />
 			<ToggleSwitch Margin="0,0,0,10" Header="Cache Images to Disk" IsOn="{x:Bind Data.SettingsManager.ImageCaching, Mode=TwoWay}" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<Button

@@ -16,13 +16,15 @@
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#F2F2F2</Color>
-			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#E5E5E5" />
+			<Color x:Key="BrushItemGridBackgroundColor">#E5E5E5</Color>
+			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#CCCCCC" />
 			<AcrylicBrush
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
 				TintColor="{ThemeResource SystemChromeMediumColor}"
 				TintOpacity=".5" />
+			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -38,13 +40,15 @@
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#171717</Color>
-			<SolidColorBrush x:Key="BrushItemGridBackground" Color="#1f1f1f" />
+			<Color x:Key="BrushItemGridBackgroundColor">#1f1f1f</Color>
+			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#333333" />
 			<AcrylicBrush
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
 				TintColor="{ThemeResource SystemChromeMediumColor}"
 				TintOpacity=".5" />
+			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

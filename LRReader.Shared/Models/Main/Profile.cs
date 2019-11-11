@@ -18,7 +18,8 @@ namespace LRReader.Shared.Models.Main
 		public List<BookmarkedArchive> Bookmarks { get; set; }
 
 		[JsonIgnore]
-		public bool HasApiKey { get => !string.IsNullOrEmpty(ServerApiKey); }
+		public bool HasApiKey => true;
+		//public bool HasApiKey { get => !string.IsNullOrEmpty(ServerApiKey); }
 
 		[JsonIgnore]
 		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');
@@ -54,5 +55,7 @@ namespace LRReader.Shared.Models.Main
 
 		[JsonIgnore]
 		public int BookmarkProgressDisplay => page + 1;
+		[JsonIgnore]
+		public bool Bookmarked => totalPages >= 0;
 	}
 }

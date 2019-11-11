@@ -1,7 +1,9 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.ViewModels;
 using LRReader.Views.Items;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,20 +35,39 @@ namespace LRReader.Views.Tabs.Content
 
 		private int i;
 		private bool _wasNew;
+		private bool _opened;
 
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
 			Data = new ArchivePageViewModel();
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
-			FadeOutReader.Begin(); // Hack to fade in correctly
-			FadeOutReader.Completed += FadeOutReader_Completed;
-			FadeOutContent.Completed += FadeOutContent_Completed;
 		}
 
-		private void FadeOutContent_Completed(object sender, object e)
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			FadeInReader.Begin();
+			Data.ReloadBookmarkedObject();
+		}
+
+		public async void LoadArchive(Archive archive)
+		{
+			Data.Archive = archive;
+			await Data.Reload(true);
+			if (!_opened)
+			{
+				if (Global.SettingsManager.OpenReader)
+				{
+					if (Data.Bookmarked)
+						i = Data.BookmarkProgress;
+					OpenReader();
+				}
+				_opened = true;
+			}
+		}
+
+		private async void OpenReader()
+		{
+			Data.ShowReader = true;
 			int count = Data.Pages;
 			if (Global.SettingsManager.TwoPages)
 			{
@@ -73,59 +94,20 @@ namespace LRReader.Views.Tabs.Content
 
 			if (Data.Archive.IsNewArchive())
 			{
-				Data.ClearNew();
+				await Data.ClearNew();
 				Data.Archive.isnew = "false";
 				_wasNew = true;
 			}
+			await ImagesGrid.Fade(value: 0.0f, duration: 250).StartAsync();
+			await FlipViewControl.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).StartAsync();
 			FlipViewControl.Focus(FocusState.Programmatic);
 		}
 
-		private void FadeOutReader_Completed(object sender, object e)
+		public async void CloseReader()
 		{
+			await FlipViewControl.Fade(value: 0.0f, duration: 250).StartAsync();
 			Data.ShowReader = false;
-			FadeInContent.Begin();
-		}
-
-		public void LoadArchive(Archive archive)
-		{
-			Data.Archive = archive;
-			Data.Reload(true);
-		}
-
-		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			FadeOutContent.Begin();
-			Data.ShowReader = true;
-			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
-		}
-
-		private void Continue_Click(object sender, RoutedEventArgs e)
-		{
-			FadeOutContent.Begin();
-			Data.ShowReader = true;
-			i = Data.BookmarkProgress;
-		}
-
-		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
-		{
-			var point = e.GetPosition(FlipViewControl);
-			double distance = FlipViewControl.ActualWidth / 6.0;
-			if (point.X < distance)
-			{
-				if (FlipViewControl.SelectedIndex > 0)
-					--FlipViewControl.SelectedIndex;
-			}
-			else if (point.X > FlipViewControl.ActualWidth - distance)
-			{
-				if (FlipViewControl.SelectedIndex < FlipViewControl.Items.Count - 1)
-					++FlipViewControl.SelectedIndex;
-			}
-		}
-
-		private async void CloseButton_Click(object sender, RoutedEventArgs e)
-		{
-			if (Data.ShowReader)
-				FadeOutReader.Begin();
+			await ImagesGrid.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).StartAsync();
 			int conv = FlipViewControl.SelectedIndex;
 			int count = Data.Pages;
 			if (Global.SettingsManager.TwoPages)
@@ -155,9 +137,11 @@ namespace LRReader.Views.Tabs.Content
 						Data.Bookmarked = false;
 				}
 			}
-			else
+			else if (!Data.Bookmarked)
 			{
-				if (_wasNew && Global.SettingsManager.BookmarkReminder)
+				var mode = Global.SettingsManager.BookmarkReminderMode;
+				if (Global.SettingsManager.BookmarkReminder &&
+					((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
 				{
 					var dialog = new ContentDialog { Title = "Bookmark archive?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
 					var result = await dialog.ShowAsync();
@@ -168,6 +152,39 @@ namespace LRReader.Views.Tabs.Content
 			}
 			if (Data.Bookmarked)
 				Data.BookmarkProgress = conv;
+		}
+
+		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
+			OpenReader();
+		}
+
+		private void Continue_Click(object sender, RoutedEventArgs e)
+		{
+			i = Data.BookmarkProgress;
+			OpenReader();
+		}
+
+		private void CloseButton_Click(object sender, RoutedEventArgs e)
+		{
+			CloseReader();
+		}
+
+		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			var point = e.GetPosition(FlipViewControl);
+			double distance = FlipViewControl.ActualWidth / 6.0;
+			if (point.X < distance)
+			{
+				if (FlipViewControl.SelectedIndex > 0)
+					--FlipViewControl.SelectedIndex;
+			}
+			else if (point.X > FlipViewControl.ActualWidth - distance)
+			{
+				if (FlipViewControl.SelectedIndex < FlipViewControl.Items.Count - 1)
+					++FlipViewControl.SelectedIndex;
+			}
 		}
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
@@ -213,22 +230,23 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				Data.Reload(false);
+				await Data.Reload(false);
 			}
 		}
 
-		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			Data.Reload(true);
+			await Data.Reload(true);
+			args.Handled = true;
 		}
 
-		private void RefreshButton_Click(object sender, RoutedEventArgs e)
+		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
-			Data.Reload(true);
+			await Data.Reload(true);
 		}
 
 		public void RemoveEvent()

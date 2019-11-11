@@ -2,6 +2,7 @@
 using LRReader.Shared.Models.Main;
 using LRReader.ViewModels.Items;
 using LRReader.Views.Tabs;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -47,28 +49,15 @@ namespace LRReader.Views.Items
 			if (args.NewValue == null)
 				return;
 			ViewModel.Archive = args.NewValue as Archive;
+			ViewModel.LoadTags();
 
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
+				Overlay.Opacity = 0;
 				Title.Opacity = 0;
 				Thumbnail.Source = null;
-				Thumbnail.Visibility = Visibility.Collapsed;
-				Ring.Visibility = Visibility.Visible;
+				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
-				/*StorageFile file = await Global.ImageManager.DownloadThumbnailAsync(Archive.arcid);
-
-				using (var ras = await file.OpenAsync(FileAccessMode.Read))
-				{
-					var image = new BitmapImage();
-					await image.SetSourceAsync(ras);
-					if (image.PixelHeight != 0 && image.PixelWidth != 0)
-						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-							Thumbnail.Stretch = Stretch.Uniform;
-					Thumbnail.Source = image;
-					Thumbnail.Visibility = Visibility.Visible;
-					Ring.Visibility = Visibility.Collapsed;
-					Title.Opacity = 1;
-				}*/
 				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
 				{
 					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Archive.arcid);
@@ -83,15 +72,15 @@ namespace LRReader.Views.Items
 							if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
 								Thumbnail.Stretch = Stretch.Uniform;
 						Thumbnail.Source = image;
-						Thumbnail.Visibility = Visibility.Visible;
 					}
 					else
 					{
 						ViewModel.MissingImage = true;
 					}
 				}
-				Ring.Visibility = Visibility.Collapsed;
-				Title.Opacity = 1;
+				Ring.IsActive = false;
+				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}
@@ -144,5 +133,14 @@ namespace LRReader.Views.Items
 			}
 		}
 
+		private void Add_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.Bookmarked = true;
+		}
+
+		private void Remove_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.Bookmarked = false;
+		}
 	}
 }

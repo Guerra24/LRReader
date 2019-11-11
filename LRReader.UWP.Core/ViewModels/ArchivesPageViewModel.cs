@@ -218,7 +218,10 @@ namespace LRReader.ViewModels
 				await Task.Run(async () =>
 				{
 					foreach (var a in resultPage.data)
-						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
+					{
+						var archive = ArchivesProvider.Archives.FirstOrDefault(b => b.arcid == a.arcid);
+						await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
+					}
 				});
 				TotalArchives = resultPage.recordsFiltered;
 			}

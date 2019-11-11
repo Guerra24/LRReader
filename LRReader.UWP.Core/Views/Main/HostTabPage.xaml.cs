@@ -123,7 +123,15 @@ namespace LRReader.Views.Main
 			}
 		}
 
-		public void CloseAllTabs() => TabViewControl.TabItems.Clear();
+		public void CloseAllTabs()
+		{
+			foreach (var t in TabViewControl.TabItems)
+			{
+				if (t is ICustomTab tab)
+					tab.Unload();
+			}
+			TabViewControl.TabItems.Clear();
+		}
 
 		public void CloseTabWithHeader(string header)
 		{
@@ -136,5 +144,15 @@ namespace LRReader.Views.Main
 
 		private TabViewItem GetTabFromHeader(object header) => TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(header)) as TabViewItem;
 
+		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			args.Handled = true;
+			var t = Data.CurrentTab;
+			if (!t.IsClosable)
+				return;
+			if (t is ICustomTab tab)
+				tab.Unload();
+			TabViewControl.TabItems.Remove(t);
+		}
 	}
 }

@@ -7,6 +7,7 @@
 	xmlns:local="using:LRReader.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	Width="200"
 	d:DesignHeight="303"
 	d:DesignWidth="200"
@@ -15,11 +16,19 @@
 
 	<UserControl.Resources>
 		<convrt:NegateBoolConverter x:Key="NegateBool" />
+		<convrt:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
 	</UserControl.Resources>
 
 	<UserControl.ContextFlyout>
 		<MenuFlyout>
 			<MenuFlyoutItem Click="MenuFlyoutItem_Click" Icon="Add" Text="Open in new tab" />
+			<MenuFlyoutItem
+				Click="Add_Click" Icon="Favorite" Text="Bookmark"
+				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolVis}}" />
+			<MenuFlyoutItem
+				Background="{ThemeResource SystemAccentColorDark3}"
+				Click="Remove_Click" Icon="Unfavorite" Text="Unbookmark"
+				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 			<MenuFlyoutItem Click="EditMenuItem_Click" Icon="Edit" Text="Edit" />
 			<MenuFlyoutItem
 				Click="DownloadMenuItem_Click" Icon="Download"
@@ -39,8 +48,36 @@
 			Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
 			TextTrimming="CharacterEllipsis"
 			ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
-		<Grid Grid.Row="1" Height="282" BorderBrush="{ThemeResource SystemAccentColor}">
-			<Image Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />
+		<Grid
+			x:Name="Overlay" Grid.Row="1" Height="282"
+			BorderBrush="{ThemeResource SystemAccentColor}" ToolTipService.Placement="Mouse">
+			<!--<ToolTipService.ToolTip>
+				<ToolTip>
+					<GridView ItemsSource="{x:Bind ViewModel.Tags}" SelectionMode="None">
+						<GridView.ItemTemplate>
+							<DataTemplate x:DataType="x:String">
+								<Grid Padding="4,3" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
+									<TextBlock Text="{x:Bind}" />
+								</Grid>
+							</DataTemplate>
+						</GridView.ItemTemplate>
+						<GridView.ItemsPanel>
+							<ItemsPanelTemplate>
+								<controls:WrapPanel />
+							</ItemsPanelTemplate>
+						</GridView.ItemsPanel>
+						<GridView.ItemContainerStyle>
+							<Style TargetType="GridViewItem">
+								<Setter Property="Padding" Value="0" />
+								<Setter Property="Margin" Value="1" />
+								<Setter Property="MinWidth" Value="0" />
+								<Setter Property="MinHeight" Value="0" />
+							</Style>
+						</GridView.ItemContainerStyle>
+					</GridView>
+				</ToolTip>
+			</ToolTipService.ToolTip>-->
+			<Image x:Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />
 			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
 				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>
@@ -60,7 +97,7 @@
 				x:Load="{x:Bind ViewModel.Bookmarked, Mode=OneWay}"
 				Background="{ThemeResource GridOverGridBackground}">
 				<TextBlock Padding="6,2">
-					<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.Pages, Mode=OneWay}" />
+					<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
 				</TextBlock>
 			</Grid>
 			<Grid

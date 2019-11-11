@@ -9,7 +9,12 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding HostTabPageInstace, Source={StaticResource Locator}}"
+	KeyboardAcceleratorPlacementMode="Hidden"
 	mc:Ignorable="d">
+
+	<Page.KeyboardAccelerators>
+		<KeyboardAccelerator Key="W" Invoked="CloseTab_Invoked" Modifiers="Control" />
+	</Page.KeyboardAccelerators>
 
 	<Grid>
 		<Grid Height="40" VerticalAlignment="Top" Background="{ThemeResource TitlebarBackground}" />

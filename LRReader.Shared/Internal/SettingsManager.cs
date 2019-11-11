@@ -114,6 +114,14 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("BookmarkReminder");
 			}
 		}
+		public BookmarkReminderMode BookmarkReminderMode
+		{
+			get => (BookmarkReminderMode) SettingsStorage.GetObjectRoamed("BookmarkReminderMode", (int) BookmarkReminderMode.New);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("BookmarkReminderMode", (int) value);
+			}
+		}
 		public bool RemoveBookmark
 		{
 			get => SettingsStorage.GetObjectRoamed("RemoveBookmark", true);
@@ -139,6 +147,15 @@ namespace LRReader.Shared.Internal
 			{
 				SettingsStorage.StoreObjectRoamed("OpenBookmarksStart", value);
 				RaisePropertyChanged("OpenBookmarksStart");
+			}
+		}
+		public bool OpenReader
+		{
+			get => SettingsStorage.GetObjectRoamed("OpenReader", false);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("OpenReader", value);
+				RaisePropertyChanged("OpenReader");
 			}
 		}
 		public SettingsManager()
@@ -211,5 +228,9 @@ namespace LRReader.Shared.Internal
 		{
 			SettingsStorage.StoreObjectRoamed("Profiles", JsonConvert.SerializeObject(Profiles));
 		}
+	}
+	public enum BookmarkReminderMode
+	{
+		All, New
 	}
 }

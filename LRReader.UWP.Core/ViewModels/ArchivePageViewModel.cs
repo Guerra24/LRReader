@@ -33,7 +33,6 @@ namespace LRReader.ViewModels
 		}
 		public ObservableCollection<string> ArchiveImages = new ObservableCollection<string>();
 		public ObservableCollection<ArchiveImageSet> ArchiveImagesReader = new ObservableCollection<ArchiveImageSet>();
-		public ObservableCollection<string> Tags = new ObservableCollection<string>();
 		private bool _showReader = false;
 		public bool ShowReader
 		{
@@ -58,7 +57,7 @@ namespace LRReader.ViewModels
 		}
 		private bool _internalLoadingImages;
 
-		public async void Reload(bool animate)
+		public async Task Reload(bool animate)
 		{
 			ControlsEnabled = false;
 			LoadTags();
@@ -68,14 +67,10 @@ namespace LRReader.ViewModels
 			ControlsEnabled = true;
 		}
 
-		public void LoadTags()
+		public void ReloadBookmarkedObject()
 		{
-			Tags.Clear();
-
-			foreach (var s in Archive.tags.Split(","))
-			{
-				Tags.Add(s.Trim());
-			}
+			BookmarkedArchive = Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+			RaisePropertyChanged("Icon");
 		}
 
 		public async Task LoadImages()
@@ -109,56 +104,53 @@ namespace LRReader.ViewModels
 			_internalLoadingImages = false;
 		}
 
-		public async void ClearNew()
+		public async Task ClearNew()
 		{
 			await Archive.ClearNew();
 		}
 
-		public async void CreateImageSets()
+		public void CreateImageSets()
 		{
 			ArchiveImagesReader.Clear();
 			List<ArchiveImageSet> tmp = new List<ArchiveImageSet>();
-			await Task.Run(() =>
+			for (int k = 0; k < ArchiveImages.Count; k++)
 			{
-				for (int k = 0; k < ArchiveImages.Count; k++)
+				var i = new ArchiveImageSet();
+				if (Global.SettingsManager.TwoPages)
 				{
-					var i = new ArchiveImageSet();
-					if (Global.SettingsManager.TwoPages)
+					if (Global.SettingsManager.ReadRTL)
 					{
-						if (Global.SettingsManager.ReadRTL)
-						{
-							if (k == 0)
-								i.RightImage = ArchiveImages.ElementAt(k);
-							else if (k == ArchiveImages.Count - 1)
-								i.LeftImage = ArchiveImages.ElementAt(k);
-							else
-							{
-								i.RightImage = ArchiveImages.ElementAt(k);
-								i.LeftImage = ArchiveImages.ElementAt(++k);
-							}
-						}
+						if (k == 0)
+							i.RightImage = ArchiveImages.ElementAt(k);
+						else if (k == ArchiveImages.Count - 1)
+							i.LeftImage = ArchiveImages.ElementAt(k);
 						else
 						{
-							if (k == 0)
-								i.LeftImage = ArchiveImages.ElementAt(k);
-							else if (k == ArchiveImages.Count - 1)
-								i.RightImage = ArchiveImages.ElementAt(k);
-							else
-							{
-								i.LeftImage = ArchiveImages.ElementAt(k);
-								i.RightImage = ArchiveImages.ElementAt(++k);
-							}
+							i.RightImage = ArchiveImages.ElementAt(k);
+							i.LeftImage = ArchiveImages.ElementAt(++k);
 						}
 					}
 					else
 					{
-						i.LeftImage = ArchiveImages.ElementAt(k);
+						if (k == 0)
+							i.LeftImage = ArchiveImages.ElementAt(k);
+						else if (k == ArchiveImages.Count - 1)
+							i.RightImage = ArchiveImages.ElementAt(k);
+						else
+						{
+							i.LeftImage = ArchiveImages.ElementAt(k);
+							i.RightImage = ArchiveImages.ElementAt(++k);
+						}
 					}
-					tmp.Add(i);
 				}
-				if (Global.SettingsManager.ReadRTL)
-					tmp.Reverse();
-			});
+				else
+				{
+					i.LeftImage = ArchiveImages.ElementAt(k);
+				}
+				tmp.Add(i);
+			}
+			if (Global.SettingsManager.ReadRTL)
+				tmp.Reverse();
 			foreach (var i in tmp)
 			{
 				ArchiveImagesReader.Add(i);

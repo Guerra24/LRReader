@@ -134,12 +134,14 @@ namespace LRReader.Views.Tabs.Content
 		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			HandleSearch();
+			args.Handled = true;
 		}
 
 		private async void RefreshFull_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			await Data.Refresh();
 			await Data.LoadTagStats();
+			args.Handled = true;
 		}
 
 		private async void PrevButton_Click(object sender, RoutedEventArgs e)

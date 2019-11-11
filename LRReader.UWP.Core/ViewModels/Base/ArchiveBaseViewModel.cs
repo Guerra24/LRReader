@@ -5,6 +5,7 @@ using LRReader.Shared.Models.Main;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -91,24 +92,38 @@ namespace LRReader.ViewModels.Base
 				if (value != null)
 				{
 					_bookmarkedArchive = value;
-					RaisePropertyChanged("Bookmarked");
-					RaisePropertyChanged("Pages");
-					RaisePropertyChanged("BookmarkedArchive");
 				}
+				else
+				{
+					_bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+				}
+				RaisePropertyChanged("Bookmarked");
+				RaisePropertyChanged("Pages");
+				RaisePropertyChanged("BookmarkedArchive");
 			}
 		}
 		public bool Bookmarked
 		{
 			get
 			{
-				return BookmarkedArchive.totalPages > 0;
+				return BookmarkedArchive.Bookmarked;
 			}
 			set
 			{
-				if (value != BookmarkedArchive.totalPages > 0)
+				if (value != BookmarkedArchive.Bookmarked)
 				{
 					if (value)
-						Global.SettingsManager.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
+					{
+						var exist = Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+						if (exist != null)
+						{
+							BookmarkedArchive = exist;
+						}
+						else
+						{
+							Global.SettingsManager.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
+						}
+					}
 					else
 					{
 						Global.SettingsManager.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
@@ -159,6 +174,17 @@ namespace LRReader.ViewModels.Base
 		public SymbolIconSource Icon
 		{
 			get => new SymbolIconSource() { Symbol = Bookmarked ? Symbol.Favorite : Symbol.Pictures };
+		}
+		public ObservableCollection<string> Tags = new ObservableCollection<string>();
+
+		public void LoadTags()
+		{
+			Tags.Clear();
+
+			foreach (var s in Archive.tags.Split(","))
+			{
+				Tags.Add(s.Trim());
+			}
 		}
 
 		public async Task<DownloadPayload> DownloadArchive()

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -40,21 +42,25 @@ namespace LRReader.Views.Items
 			string n = args.NewValue as string;
 			if (!_oldUrl.Equals(n))
 			{
-				Image.Visibility = Visibility.Collapsed;
-				Ring.Visibility = Visibility.Visible;
+				Image.Opacity = 0;
+				Ring.IsActive = true;
 				Data.MissingImage = false;
 				var image = await Global.ImageManager.DownloadImage(n);
 				if (image != null)
 				{
 					image.DecodePixelWidth = 200;
 					Image.Source = image;
-				} else
+					if (image.UriSource == null)
+					{
+						Ring.IsActive = false;
+						Image.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+					}
+				}
+				else
 				{
 					Image.Source = null;
 					Data.MissingImage = true;
 				}
-				Image.Visibility = Visibility.Visible;
-				Ring.Visibility = Visibility.Collapsed;
 				_oldUrl = n;
 			}
 		}
@@ -62,6 +68,12 @@ namespace LRReader.Views.Items
 		private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
 		{
 			Data.MissingImage = true;
+		}
+
+		private void Image_ImageOpened(object sender, RoutedEventArgs e)
+		{
+			Ring.IsActive = false;
+			Image.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 		}
 
 		private class Container : ObservableObject
@@ -77,6 +89,7 @@ namespace LRReader.Views.Items
 				}
 			}
 		}
+
 	}
 
 }
