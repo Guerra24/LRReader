@@ -68,6 +68,7 @@ namespace LRReader.Views.Items
 		private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
 		{
 			Data.MissingImage = true;
+			Ring.IsActive = false;
 		}
 
 		private void Image_ImageOpened(object sender, RoutedEventArgs e)
