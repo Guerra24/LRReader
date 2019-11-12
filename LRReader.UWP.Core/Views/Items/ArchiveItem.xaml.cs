@@ -142,5 +142,21 @@ namespace LRReader.Views.Items
 		{
 			ViewModel.Bookmarked = false;
 		}
+
+		private void Overlay_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			TagsPopup.IsOpen = true;
+			ShowPopup.Begin();
+		}
+
+		private void Overlay_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			HidePopup.Begin();
+		}
+
+		private void HidePopup_Completed(object sender, object e)
+		{
+			TagsPopup.IsOpen = false;
+		}
 	}
 }
