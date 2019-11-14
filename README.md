@@ -5,13 +5,12 @@
 
 ## Features
 - Archives list.
-- Search by name and/or tag.
+- Search, the same one used in the webview.
 - Show new archives only.
 - Download archives.
-- Archive overview (with tags) & reader.
+- Archive overview (with tags) and reader.
 - Configurable reader's base zoom and zoomed factor.
-- Right-to-Left mode.
-- Two pages mode.
+- Right-to-Left and Two pages modes.
 - Bookmarks.
 - Optional image caching.
 - Multiple servers.
@@ -47,6 +46,7 @@ Unzip and run the `LRReader.UWP_<version>_x86_x64_arm_arm64.appxbundle` file, th
 
 ![Main View](.github/screenshots/01.png)<br>
 ![Search](.github/screenshots/02.png)<br>
+![Bookmarks](.github/screenshots/01_1.png)<br>
 ![Archive View](.github/screenshots/03.png)<br>
 ![Reader](.github/screenshots/04.png)<br>
 ![Reader two pages](.github/screenshots/04_1.png)<br>
