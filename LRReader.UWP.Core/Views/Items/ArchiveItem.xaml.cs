@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -38,6 +39,8 @@ namespace LRReader.Views.Items
 
 		private string _oldID = "";
 
+		private bool _open;
+
 		public ArchiveItem()
 		{
 			this.InitializeComponent();
@@ -55,6 +58,7 @@ namespace LRReader.Views.Items
 			{
 				Overlay.Opacity = 0;
 				Title.Opacity = 0;
+				TagsGrid.Opacity = 0;
 				Thumbnail.Source = null;
 				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
@@ -81,6 +85,7 @@ namespace LRReader.Views.Items
 				Ring.IsActive = false;
 				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				TagsGrid.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}
@@ -143,20 +148,33 @@ namespace LRReader.Views.Items
 			ViewModel.Bookmarked = false;
 		}
 
-		private void Overlay_PointerEntered(object sender, PointerRoutedEventArgs e)
+		private async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
-			TagsPopup.IsOpen = true;
-			ShowPopup.Begin();
+			_open = true;
+			await Task.Delay(TimeSpan.FromMilliseconds(300));
+			if (_open)
+			{
+				_open = false;
+				TagsPopup.IsOpen = true;
+				ShowPopup.Begin();
+			}
 		}
 
-		private void Overlay_PointerExited(object sender, PointerRoutedEventArgs e)
+		private void TagsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
 		{
-			HidePopup.Begin();
+			if (_open)
+			{
+				_open = false;
+				TagsPopup.IsOpen = false;
+			}
+			if (TagsPopup.IsOpen)
+				HidePopup.Begin();
 		}
 
 		private void HidePopup_Completed(object sender, object e)
 		{
 			TagsPopup.IsOpen = false;
 		}
+
 	}
 }

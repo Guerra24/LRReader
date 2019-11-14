@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,16 @@ namespace LRReader.Shared.Models.Main
 		public string isnew { get; set; }
 		public string tags { get; set; }
 		public string title { get; set; }
+		public string tagsClean { get; set; }
+
+		[OnDeserialized]
+		internal void OnDeserializedMethod(StreamingContext context)
+		{
+			foreach (var s in tags.Split(','))
+			{
+				tagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
+			}
+		}
 
 		public bool IsNewArchive()
 		{
@@ -39,7 +50,7 @@ namespace LRReader.Shared.Models.Main
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<GenericApiResult>(r);
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -85,7 +96,7 @@ namespace LRReader.Shared.Models.Main
 					download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
 					return download;
 				default:
-					var error = LRRApi.GetError(r);
+					var error = await LRRApi.GetError(r);
 					SharedGlobal.EventManager.ShowError(error.title, error.error);
 					return null;
 			}

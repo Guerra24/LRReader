@@ -10,7 +10,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
 	Width="200"
-	d:DesignHeight="303"
+	d:DesignHeight="323"
 	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
@@ -48,16 +48,15 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock
-			Name="Title" Grid.Row="0" Padding="5,0"
+			x:Name="Title" Grid.Row="0" Padding="5,0"
 			HorizontalAlignment="Center" FontSize="16"
 			Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
 			TextTrimming="CharacterEllipsis"
 			ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
-		<Grid
-			x:Name="Overlay" Grid.Row="1" Height="282"
-			PointerEntered="Overlay_PointerEntered" PointerExited="Overlay_PointerExited">
+		<Grid x:Name="Overlay" Grid.Row="1" Height="282">
 			<Popup x:Name="TagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
 				<Grid
 					Padding="2" Windows10version1903:Translation="0,0,32"
@@ -68,12 +67,12 @@
 						<Windows10version1903:ThemeShadow />
 					</Windows10version1903:Grid.Shadow>
 					<GridView
-						MaxWidth="300" IsHitTestVisible="False"
+						Width="300" IsHitTestVisible="False"
 						ItemsSource="{x:Bind ViewModel.Tags}"
 						SelectionMode="None">
 						<GridView.ItemTemplate>
 							<DataTemplate x:DataType="x:String">
-								<Grid Padding="4,3" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
+								<Grid Padding="3,1" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
 									<TextBlock Text="{x:Bind}" />
 								</Grid>
 							</DataTemplate>
@@ -124,8 +123,16 @@
 				<TextBlock Padding="6,2" Text="New!" />
 			</Grid>
 		</Grid>
+		<Grid
+			x:Name="TagsGrid" Grid.Row="2" PointerEntered="TagsGrid_PointerEntered"
+			PointerExited="TagsGrid_PointerExited">
+			<TextBlock
+				Grid.Row="2" Padding="2,0"
+				Text="{x:Bind ViewModel.Archive.tagsClean, Mode=OneWay}"
+				TextTrimming="CharacterEllipsis" />
+		</Grid>
 		<ProgressRing
-			Name="Ring" Grid.RowSpan="2" Width="50"
+			x:Name="Ring" Grid.RowSpan="3" Width="50"
 			Height="50" IsActive="True" />
 	</Grid>
 </UserControl>

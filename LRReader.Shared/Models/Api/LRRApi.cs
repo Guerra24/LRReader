@@ -44,28 +44,28 @@ namespace LRReader.Shared.Models.Api
 			return client;
 		}
 
-		public static GenericApiResponse<T> GetResult<T>(IRestResponse restResponse)
+		public static async Task<GenericApiResponse<T>> GetResult<T>(IRestResponse restResponse)
 		{
 			var apiResponse = new GenericApiResponse<T>();
 			switch (restResponse.StatusCode)
 			{
 				case HttpStatusCode.OK:
-					apiResponse.Data = JsonConvert.DeserializeObject<T>(restResponse.Content);
+					apiResponse.Data = await Task.Run(() => JsonConvert.DeserializeObject<T>(restResponse.Content));
 					apiResponse.OK = true;
 					break;
 				default:
-					apiResponse.Error = GetError(restResponse);
+					apiResponse.Error = await GetError(restResponse);
 					break;
 			}
 			return apiResponse;
 		}
 
-		public static GenericApiError GetError(IRestResponse restResponse)
+		public static async Task<GenericApiError> GetError(IRestResponse restResponse)
 		{
 			switch (restResponse.StatusCode)
 			{
 				case HttpStatusCode.Unauthorized:
-					var error = JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content);
+					var error = await Task.Run(() => JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content));
 					error.title = "Unauthorized";
 					return error;
 				default:

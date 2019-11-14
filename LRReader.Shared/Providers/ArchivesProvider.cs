@@ -25,7 +25,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<List<Archive>>(r);
+			var result = await LRRApi.GetResult<List<Archive>>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -53,7 +53,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<List<TagStats>>(r);
+			var result = await LRRApi.GetResult<List<TagStats>>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -88,7 +88,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<ArchiveSearch>(r);
+			var result = await LRRApi.GetResult<ArchiveSearch>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

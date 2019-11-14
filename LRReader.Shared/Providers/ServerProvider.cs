@@ -20,7 +20,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<GenericApiResult>(r);
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -45,7 +45,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<GenericApiResult>(r);
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -84,7 +84,7 @@ namespace LRReader.Shared.Providers
 					download.Type = ".json";
 					return download;
 				default:
-					var error = LRRApi.GetError(r);
+					var error = await LRRApi.GetError(r);
 					SharedGlobal.EventManager.ShowError(error.title, error.error);
 					return null;
 			}
@@ -97,7 +97,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<GenericApiResult>(r);
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -122,7 +122,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<ShinobuStatus>(r);
+			var result = await LRRApi.GetResult<ShinobuStatus>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 				return null;

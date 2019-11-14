@@ -22,7 +22,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetTaskAsync(rq);
 
-			var result = LRRApi.GetResult<ArchiveImages>(r);
+			var result = await LRRApi.GetResult<ArchiveImages>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
