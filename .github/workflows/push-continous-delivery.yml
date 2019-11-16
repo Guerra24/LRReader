@@ -5,8 +5,6 @@ jobs:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
     - name: Build AppxBundle
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
