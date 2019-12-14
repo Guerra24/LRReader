@@ -17,8 +17,4 @@
     <ProjectReference Include="..\LRReader.UWP.Island\LRReader.UWP.Island.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.VCRTForwarders.140" Version="1.0.4" />
-  </ItemGroup>
-
 </Project>
