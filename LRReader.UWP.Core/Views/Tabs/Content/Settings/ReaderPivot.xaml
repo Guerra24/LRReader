@@ -6,6 +6,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Header="Reader"
 	Loaded="UserControl_Loaded"
@@ -14,6 +15,7 @@
 	<PivotItem.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:EnumConverter x:Key="EnumConverter" />
+		<internal:EnumToInt x:Key="EnumToInt" />
 	</PivotItem.Resources>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -61,10 +63,10 @@
 				Margin="0,0,0,10" Header="Bookmark reminder"
 				IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}"
 				ToolTipService.ToolTip="Ask to bookmark archive if closed half way through" />
-			<StackPanel Margin="16,0,0,10" Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
-				<RadioButton Content="'New!' archives only" GroupName="BookmarkReminder" IsChecked="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumConverter}, ConverterParameter=New}" />
-				<RadioButton Content="All archives" GroupName="BookmarkReminder" IsChecked="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumConverter}, ConverterParameter=All}" />
-			</StackPanel>
+			<muxc:RadioButtons Margin="16,0,0,10" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
+				<x:String>All archives</x:String>
+				<x:String>'New!' archives only</x:String>
+			</muxc:RadioButtons>
 			<ToggleSwitch
 				Margin="0,0,0,10" Header="Remove bookmark reminder on last page"
 				IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}"

@@ -9,6 +9,7 @@
 	xmlns:local="using:LRReader.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	Width="200"
 	d:DesignHeight="323"
 	d:DesignWidth="200"
@@ -106,7 +107,7 @@
 						<SolidColorBrush Opacity="0.4" Color="{ThemeResource BrushDeepBackgroundColor}" />
 					</Rectangle.Fill>
 				</Rectangle>
-				<ProgressBar Background="Transparent" IsIndeterminate="True" />
+				<muxc:ProgressBar Background="Transparent" IsIndeterminate="True" />
 			</Grid>
 			<Grid
 				x:Name="ProgressGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
