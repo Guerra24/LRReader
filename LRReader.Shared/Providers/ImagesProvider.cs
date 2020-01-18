@@ -20,7 +20,7 @@ namespace LRReader.Shared.Providers
 
 			rq.AddParameter("id", archive.arcid);
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<ArchiveImages>(r);
 

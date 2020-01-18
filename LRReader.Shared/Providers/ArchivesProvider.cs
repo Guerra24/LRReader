@@ -23,7 +23,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/archivelist");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<List<Archive>>(r);
 
@@ -51,7 +51,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/tagstats");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<List<TagStats>>(r);
 
@@ -86,7 +86,7 @@ namespace LRReader.Shared.Providers
 			rq.AddParameter("newonly", isnew.ToString().ToLower());
 			rq.AddParameter("filter", query);
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<ArchiveSearch>(r);
 

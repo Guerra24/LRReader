@@ -48,7 +48,7 @@ namespace LRReader.Shared.Models.Main
 
 			rq.AddParameter("id", arcid);
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -75,7 +75,7 @@ namespace LRReader.Shared.Models.Main
 
 			rq.AddParameter("id", arcid);
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

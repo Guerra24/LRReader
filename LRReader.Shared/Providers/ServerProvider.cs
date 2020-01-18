@@ -18,7 +18,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/restart_shinobu");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -43,7 +43,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/stop_shinobu");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -68,7 +68,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/backup");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -95,7 +95,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/clear_new_all");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -120,7 +120,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/shinobu_status");
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			var result = await LRRApi.GetResult<ShinobuStatus>(r);
 

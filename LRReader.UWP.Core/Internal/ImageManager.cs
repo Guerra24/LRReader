@@ -39,7 +39,7 @@ namespace LRReader.Internal
 
 			rq.AddParameter("id", id);
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			switch (r.StatusCode)
 			{
@@ -59,7 +59,7 @@ namespace LRReader.Internal
 
 			rq.AddParameter("id", id);
 
-			var r = await client.ExecuteGetTaskAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			switch (r.StatusCode)
 			{
