@@ -22,12 +22,12 @@
 				<TextBlock Text="Status:" />
 				<TextBlock Foreground="#1AA51A" Visibility="{x:Bind Data.ShinobuRunning, Mode=OneWay}">
 					<Run />
-					Running (PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />
-					)</TextBlock>
+					Running (PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
+				</TextBlock>
 				<TextBlock Foreground="#CF2525" Visibility="{x:Bind Data.ShinobuStopped, Mode=OneWay}">
 					<Run />
-					Stopped (PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />
-					)</TextBlock>
+					Stopped (PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
+				</TextBlock>
 				<TextBlock Text=" Unknown" Visibility="{x:Bind Data.ShinobuUnknown, Mode=OneWay}" />
 			</StackPanel>
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">

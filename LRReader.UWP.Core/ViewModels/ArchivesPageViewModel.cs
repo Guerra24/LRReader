@@ -92,7 +92,7 @@ namespace LRReader.ViewModels
 				}
 			}
 		}
-		public bool HasNextPage => Page < TotalArchives / 100 && ControlsEnabled; // TODO: Page Size
+		public bool HasNextPage => Page < TotalArchives / SharedGlobal.SettingsManager.ArchivesPerPage && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
 		private bool _newOnly;
 		public bool NewOnly
@@ -102,6 +102,16 @@ namespace LRReader.ViewModels
 			{
 				_newOnly = value;
 				RaisePropertyChanged("NewOnly");
+			}
+		}
+		private bool _untaggedOnly;
+		public bool UntaggedOnly
+		{
+			get => _untaggedOnly;
+			set
+			{
+				_untaggedOnly = value;
+				RaisePropertyChanged("UntaggedOnly");
 			}
 		}
 		public string Query = "";
@@ -153,7 +163,7 @@ namespace LRReader.ViewModels
 						else
 							EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
-			var resultPage = await ArchivesProvider.GetArchivesForPage(Page = 0, "", false);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.SettingsManager.ArchivesPerPage, Page = 0, "", false, false);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>
@@ -212,7 +222,7 @@ namespace LRReader.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await ArchivesProvider.GetArchivesForPage(page, Query, NewOnly);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.SettingsManager.ArchivesPerPage, page, Query, NewOnly, UntaggedOnly);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

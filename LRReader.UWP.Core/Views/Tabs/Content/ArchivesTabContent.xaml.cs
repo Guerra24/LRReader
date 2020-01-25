@@ -118,7 +118,7 @@ namespace LRReader.Views.Tabs.Content
 			Global.EventManager.AddTab(new ArchiveTab(item));
 		}
 
-		private async void NewOnlyButton_Click(object sender, RoutedEventArgs e)
+		private async void FilterToggle_Click(object sender, RoutedEventArgs e)
 		{
 			await Data.ReloadSearch();
 		}

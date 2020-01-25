@@ -158,6 +158,15 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("OpenReader");
 			}
 		}
+		public int ArchivesPerPage
+		{
+			get => SettingsStorage.GetObjectLocal("ArchivesPerPage", 100);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("ArchivesPerPage", value);
+				RaisePropertyChanged("ArchivesPerPage");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
