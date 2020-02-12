@@ -79,17 +79,17 @@ namespace LRReader.Views.Tabs.Content
 				{
 					int preDiv = count;
 					--count; count /= 2; ++count;
-					FlipViewControl.SelectedIndex = count - i - (preDiv % 2);
+					Data.ReaderIndex = count - i - (preDiv % 2);
 				}
 				else
-					FlipViewControl.SelectedIndex = i;
+					Data.ReaderIndex = i;
 			}
 			else
 			{
 				if (Global.SettingsManager.ReadRTL)
-					FlipViewControl.SelectedIndex = count - i - 1;
+					Data.ReaderIndex = count - i - 1;
 				else
-					FlipViewControl.SelectedIndex = i;
+					Data.ReaderIndex = i;
 			}
 
 			if (Data.Archive.IsNewArchive())
@@ -98,17 +98,17 @@ namespace LRReader.Views.Tabs.Content
 				Data.Archive.isnew = "false";
 				_wasNew = true;
 			}
-			await ImagesGrid.Fade(value: 0.0f, duration: 250).StartAsync();
-			await FlipViewControl.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).StartAsync();
-			FlipViewControl.Focus(FocusState.Programmatic);
+			await ImagesGrid.Fade(value: 0.0f, duration: 200).StartAsync();
+			await ReaderControl.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
+			//FlipViewControl.Focus(FocusState.Programmatic);
 		}
 
 		public async void CloseReader()
 		{
-			await FlipViewControl.Fade(value: 0.0f, duration: 250).StartAsync();
+			await ReaderControl.Fade(value: 0.0f, duration: 200).StartAsync();
 			Data.ShowReader = false;
-			await ImagesGrid.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).StartAsync();
-			int conv = FlipViewControl.SelectedIndex;
+			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
+			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
 			if (Global.SettingsManager.TwoPages)
 			{
@@ -171,19 +171,19 @@ namespace LRReader.Views.Tabs.Content
 			CloseReader();
 		}
 
-		private void FlipView_Tapped(object sender, TappedRoutedEventArgs e)
+		private void ReaderControl_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			var point = e.GetPosition(FlipViewControl);
-			double distance = FlipViewControl.ActualWidth / 6.0;
+			var point = e.GetPosition(ReaderControl);
+			double distance = ReaderControl.ActualWidth / 6.0;
 			if (point.X < distance)
 			{
-				if (FlipViewControl.SelectedIndex > 0)
-					--FlipViewControl.SelectedIndex;
+				if (Data.ReaderIndex > 0)
+					--Data.ReaderIndex;
 			}
-			else if (point.X > FlipViewControl.ActualWidth - distance)
+			else if (point.X > ReaderControl.ActualWidth - distance)
 			{
-				if (FlipViewControl.SelectedIndex < FlipViewControl.Items.Count - 1)
-					++FlipViewControl.SelectedIndex;
+				if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
+					++Data.ReaderIndex;
 			}
 		}
 

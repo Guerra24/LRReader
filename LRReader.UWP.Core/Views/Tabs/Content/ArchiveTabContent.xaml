@@ -9,6 +9,7 @@
 	xmlns:items="using:LRReader.Views.Items"
 	xmlns:local="using:LRReader.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
@@ -114,18 +115,21 @@
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
 			Retry
 		</Button>
-		<controls1:CustomFlipView
-			x:Name="FlipViewControl" Grid.RowSpan="2" d:IsHidden="True"
-			Background="Transparent" FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
-			ItemsSource="{x:Bind Data.ArchiveImagesReader, Mode=OneWay}"
-			Opacity="0" Tapped="FlipView_Tapped" UseTouchAnimationsForAllNavigation="True"
-			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
-			<FlipView.ItemTemplate>
+		<ContentControl
+			x:Name="ReaderControl" Grid.RowSpan="2" Background="Transparent"
+			Opacity="0" Tapped="ReaderControl_Tapped" Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+			<ContentControl.ContentTransitions>
+				<TransitionCollection>
+					<ContentThemeTransition VerticalOffset="0"/>
+				</TransitionCollection>
+			</ContentControl.ContentTransitions>
+			<ContentControl.ContentTemplate>
 				<DataTemplate>
 					<items:ReaderImage />
 				</DataTemplate>
-			</FlipView.ItemTemplate>
-		</controls1:CustomFlipView>
+			</ContentControl.ContentTemplate>
+		</ContentControl>
 		<Button
 			Grid.RowSpan="2" Width="38" Height="38"
 			HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent"

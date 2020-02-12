@@ -34,22 +34,28 @@ namespace LRReader.Views.Items
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
-			await DispatcherHelper.RunAsync(() =>
-			{
-				LeftImage.Source = null;
-				RightImage.Source = null;
-			});
+#if DEBUG
+			if (DispatcherHelper.UIDispatcher != null)
+#endif
+				await DispatcherHelper.RunAsync(() =>
+				{
+					LeftImage.Source = null;
+					RightImage.Source = null;
+				});
 			if (args.NewValue == null)
 				return;
 			ArchiveImageSet n = args.NewValue as ArchiveImageSet;
 			var lImage = await Global.ImageManager.DownloadImage(n.LeftImage);
 			var rImage = await Global.ImageManager.DownloadImage(n.RightImage);
-			await DispatcherHelper.RunAsync(() =>
-			{
-				LeftImage.Source = lImage;
-				RightImage.Source = rImage;
-				FitImages(true);
-			});
+#if DEBUG
+			if (DispatcherHelper.UIDispatcher != null)
+#endif
+				await DispatcherHelper.RunAsync(() =>
+				{
+					LeftImage.Source = lImage;
+					RightImage.Source = rImage;
+					FitImages(true);
+				});
 		}
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -76,7 +82,7 @@ namespace LRReader.Views.Items
 
 		private void FitImages(bool disableAnim)
 		{
-			if (ImagesRoot.ActualWidth == 0 && ImagesRoot.ActualHeight == 0)
+			if (ImagesRoot.ActualWidth == 0 || ImagesRoot.ActualHeight == 0)
 				return;
 			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ImagesRoot.ActualWidth, ScrollViewer.ViewportHeight / ImagesRoot.ActualHeight);
 			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);

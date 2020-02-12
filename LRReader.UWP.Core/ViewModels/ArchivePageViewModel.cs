@@ -56,6 +56,26 @@ namespace LRReader.ViewModels
 			}
 		}
 		private bool _internalLoadingImages;
+		private Object _readerContent;
+		public Object ReaderContent
+		{
+			get => _readerContent;
+			set
+			{
+				_readerContent = value;
+				RaisePropertyChanged("ReaderContent");
+			}
+		}
+		private int _readerIndex;
+		public int ReaderIndex
+		{
+			get => _readerIndex;
+			set
+			{
+				ReaderContent = ArchiveImagesReader.ElementAt(value);
+				_readerIndex = value;
+			}
+		}
 
 		public async Task Reload(bool animate)
 		{
