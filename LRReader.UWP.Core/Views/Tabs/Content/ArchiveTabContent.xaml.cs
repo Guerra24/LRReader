@@ -15,6 +15,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,6 +37,7 @@ namespace LRReader.Views.Tabs.Content
 		private int i;
 		private bool _wasNew;
 		private bool _opened;
+		private bool _focus = true;
 
 		public ArchiveTabContent()
 		{
@@ -47,6 +49,7 @@ namespace LRReader.Views.Tabs.Content
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			Data.ReloadBookmarkedObject();
+			FocusReader();
 		}
 
 		public async void LoadArchive(Archive archive)
@@ -100,11 +103,13 @@ namespace LRReader.Views.Tabs.Content
 			}
 			await ImagesGrid.Fade(value: 0.0f, duration: 200).StartAsync();
 			await ReaderControl.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
-			//FlipViewControl.Focus(FocusState.Programmatic);
+			ReaderControl.Focus(FocusState.Programmatic);
+			_focus = true;
 		}
 
 		public async void CloseReader()
 		{
+			_focus = false;
 			await ReaderControl.Fade(value: 0.0f, duration: 200).StartAsync();
 			Data.ShowReader = false;
 			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
@@ -171,6 +176,12 @@ namespace LRReader.Views.Tabs.Content
 			CloseReader();
 		}
 
+		private void Escape_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			CloseReader();
+			Focus(FocusState.Programmatic);
+		}
+
 		private void ReaderControl_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			var point = e.GetPosition(ReaderControl);
@@ -184,6 +195,46 @@ namespace LRReader.Views.Tabs.Content
 			{
 				if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
 					++Data.ReaderIndex;
+			}
+		}
+
+		private void ReaderControl_KeyUp(object sender, KeyRoutedEventArgs e)
+		{
+			if (!Data.ShowReader)
+				return;
+			if (e.Key == VirtualKey.Right)
+			{
+				if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
+					++Data.ReaderIndex;
+			}
+			else if (e.Key == VirtualKey.Left)
+			{
+				if (Data.ReaderIndex > 0)
+					--Data.ReaderIndex;
+			}
+		}
+
+		private void ReaderControl_LostFocus(object sender, RoutedEventArgs e)
+		{
+			FocusReader();
+		}
+
+		private void CloseButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			_focus = false;
+		}
+
+		private void CloseButton_Pointer_Exited(object sender, PointerRoutedEventArgs e)
+		{
+			_focus = true;
+			FocusReader();
+		}
+
+		private void FocusReader()
+		{
+			if (Data.ShowReader && _focus)
+			{
+				ReaderControl.Focus(FocusState.Programmatic);
 			}
 		}
 

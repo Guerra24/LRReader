@@ -116,12 +116,17 @@
 			Retry
 		</Button>
 		<ContentControl
-			x:Name="ReaderControl" Grid.RowSpan="2" Background="Transparent"
-			Opacity="0" Tapped="ReaderControl_Tapped" Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
-			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+			x:Name="ReaderControl" Grid.RowSpan="2" HorizontalContentAlignment="Stretch"
+			Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
+			KeyUp="ReaderControl_KeyUp" KeyboardAcceleratorPlacementMode="Hidden" LostFocus="ReaderControl_LostFocus"
+			Opacity="0" Tapped="ReaderControl_Tapped"
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
+			<ContentControl.KeyboardAccelerators>
+				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
+			</ContentControl.KeyboardAccelerators>
 			<ContentControl.ContentTransitions>
 				<TransitionCollection>
-					<ContentThemeTransition VerticalOffset="0"/>
+					<ContentThemeTransition VerticalOffset="0" />
 				</TransitionCollection>
 			</ContentControl.ContentTransitions>
 			<ContentControl.ContentTemplate>
@@ -133,7 +138,8 @@
 		<Button
 			Grid.RowSpan="2" Width="38" Height="38"
 			HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent"
-			BorderThickness="0" Click="CloseButton_Click"
+			BorderThickness="0" Click="CloseButton_Click" PointerEntered="CloseButton_PointerEntered"
+			PointerExited="CloseButton_Pointer_Exited"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Cancel" />

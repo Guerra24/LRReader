@@ -167,6 +167,15 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("ArchivesPerPage");
 			}
 		}
+		public int SpacebarScroll
+		{
+			get => SettingsStorage.GetObjectLocal("SpacebarScroll", 200);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("SpacebarScroll", value);
+				RaisePropertyChanged("SpacebarScroll");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");

@@ -50,6 +50,10 @@
 					VerticalAlignment="Center"
 					Text="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=OneWay}" />
 			</Grid>
+			<muxc:NumberBox
+				Margin="0,0,0,10" Header="Spacebar scrolling distance" Minimum="1"
+				SmallChange="20" SpinButtonPlacementMode="Inline" ToolTipService.ToolTip="Scrolling distance, in pixel, when the spacebar is pressed"
+				Value="{x:Bind Data.SettingsManager.SpacebarScroll, Mode=TwoWay}" />
 			<ToggleSwitch Margin="0,0,0,10" Header="Open Reader automatically" IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 			<ToggleSwitch
 				Margin="0,0,0,10" Header="Read right-to-left"
