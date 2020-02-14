@@ -261,6 +261,13 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
+		private void ReaderControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+		{
+			double vertical = ScrollViewer.VerticalOffset;
+			double horizontal = ScrollViewer.HorizontalOffset;
+			ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
+		}
+
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
 		{
 			var point = e.GetPosition(ScrollViewer);
@@ -268,9 +275,9 @@ namespace LRReader.Views.Tabs.Content
 			var center = ttv.TransformPoint(new Point(0, 0));
 			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.01)
-				ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom);
+				ScrollViewer.ChangeView(null, null, zoomFactor * Global.SettingsManager.BaseZoom);
 			else
-				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y, zoomFactor * Global.SettingsManager.ZoomedFactor);
+				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y - center.Y * 2.0, zoomFactor * Global.SettingsManager.ZoomedFactor);
 		}
 
 		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -357,5 +364,7 @@ namespace LRReader.Views.Tabs.Content
 		{
 			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
+
+
 	}
 }

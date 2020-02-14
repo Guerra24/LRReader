@@ -127,8 +127,8 @@
 			<ContentControl
 				x:Name="ReaderControl" HorizontalAlignment="Center"
 				Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
-				KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp" ManipulationMode="TranslateY,TranslateX"
-				SizeChanged="ReaderControl_SizeChanged">
+				KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp" ManipulationDelta="ReaderControl_ManipulationDelta"
+				ManipulationMode="TranslateY,TranslateX,System" SizeChanged="ReaderControl_SizeChanged">
 				<ContentControl.ContentTransitions>
 					<TransitionCollection>
 						<ContentThemeTransition VerticalOffset="0" />
