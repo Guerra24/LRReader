@@ -102,15 +102,15 @@ namespace LRReader.Views.Tabs.Content
 				_wasNew = true;
 			}
 			await ImagesGrid.Fade(value: 0.0f, duration: 200).StartAsync();
-			await ReaderControl.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
-			ReaderControl.Focus(FocusState.Programmatic);
+			await ScrollViewer.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
 			_focus = true;
+			FocusReader();
 		}
 
 		public async void CloseReader()
 		{
 			_focus = false;
-			await ReaderControl.Fade(value: 0.0f, duration: 200).StartAsync();
+			await ScrollViewer.Fade(value: 0.0f, duration: 200).StartAsync();
 			Data.ShowReader = false;
 			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
 			int conv = Data.ReaderIndex;
@@ -179,55 +179,46 @@ namespace LRReader.Views.Tabs.Content
 		private void Escape_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			CloseReader();
-			Focus(FocusState.Programmatic);
-		}
-
-		private void ReaderControl_Tapped(object sender, TappedRoutedEventArgs e)
-		{
-			var point = e.GetPosition(ReaderControl);
-			double distance = ReaderControl.ActualWidth / 6.0;
-			if (point.X < distance)
-			{
-				if (Data.ReaderIndex > 0)
-					--Data.ReaderIndex;
-			}
-			else if (point.X > ReaderControl.ActualWidth - distance)
-			{
-				if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
-					++Data.ReaderIndex;
-			}
 		}
 
 		private void ReaderControl_KeyUp(object sender, KeyRoutedEventArgs e)
 		{
 			if (!Data.ShowReader)
 				return;
-			if (e.Key == VirtualKey.Right)
+			switch (e.Key)
 			{
-				if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
-					++Data.ReaderIndex;
+				case VirtualKey.Right:
+					NextPage();
+					e.Handled = true;
+					break;
+				case VirtualKey.Left:
+					PrevPage();
+					e.Handled = true;
+					break;
+				case VirtualKey.Space:
+					double offset = ScrollViewer.VerticalOffset;
+					if (offset >= ScrollViewer.ScrollableHeight)
+					{
+						if (Global.SettingsManager.ReadRTL)
+							PrevPage();
+						else
+							NextPage();
+					}
+					else
+					{
+						ScrollViewer.ChangeView(null, offset + Global.SettingsManager.SpacebarScroll, null, false);
+					}
+					e.Handled = true;
+					break;
 			}
-			else if (e.Key == VirtualKey.Left)
+		}
+
+		private void ReaderControl_KeyDown(object sender, KeyRoutedEventArgs e)
+		{
+			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right)
 			{
-				if (Data.ReaderIndex > 0)
-					--Data.ReaderIndex;
+				e.Handled = true;
 			}
-		}
-
-		private void ReaderControl_LostFocus(object sender, RoutedEventArgs e)
-		{
-			FocusReader();
-		}
-
-		private void CloseButton_PointerEntered(object sender, PointerRoutedEventArgs e)
-		{
-			_focus = false;
-		}
-
-		private void CloseButton_Pointer_Exited(object sender, PointerRoutedEventArgs e)
-		{
-			_focus = true;
-			FocusReader();
 		}
 
 		private void FocusReader()
@@ -236,6 +227,68 @@ namespace LRReader.Views.Tabs.Content
 			{
 				ReaderControl.Focus(FocusState.Programmatic);
 			}
+		}
+
+		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			var point = e.GetPosition(ScrollViewer);
+			double distance = ScrollViewer.ActualWidth / 6.0;
+			if (point.X < distance)
+			{
+				PrevPage();
+			}
+			else if (point.X > ScrollViewer.ActualWidth - distance)
+			{
+				NextPage();
+			}
+		}
+
+		private void NextPage()
+		{
+			if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
+			{
+				++Data.ReaderIndex;
+				ScrollViewer.ChangeView(null, 0, null, true);
+			}
+		}
+
+		private void PrevPage()
+		{
+			if (Data.ReaderIndex > 0)
+			{
+				--Data.ReaderIndex;
+				ScrollViewer.ChangeView(null, 0, null, true);
+			}
+		}
+
+		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+		{
+			var point = e.GetPosition(ScrollViewer);
+			var ttv = ReaderControl.TransformToVisual(this);
+			var center = ttv.TransformPoint(new Point(0, 0));
+			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
+			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.01)
+				ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom);
+			else
+				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y, zoomFactor * Global.SettingsManager.ZoomedFactor);
+		}
+
+		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			FitImages(false);
+		}
+
+		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			FitImages(true);
+		}
+
+		private void FitImages(bool disableAnim)
+		{
+			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
+				return;
+			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
+			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);
 		}
 
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
@@ -304,6 +357,5 @@ namespace LRReader.Views.Tabs.Content
 		{
 			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
-
 	}
 }

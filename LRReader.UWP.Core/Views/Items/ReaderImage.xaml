@@ -10,14 +10,9 @@
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
-	<ScrollViewer
-		Name="ScrollViewer" DoubleTapped="ScrollViewer_DoubleTapped" HorizontalScrollBarVisibility="Auto"
-		SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto" ZoomMode="Enabled">
-		<StackPanel
-			x:Name="ImagesRoot" HorizontalAlignment="Center" Orientation="Horizontal"
-			SizeChanged="ImagesRoot_SizeChanged">
-			<Image Name="LeftImage" />
-			<Image Name="RightImage" />
-		</StackPanel>
-	</ScrollViewer>
+	<StackPanel
+		x:Name="ImagesRoot" Orientation="Horizontal">
+		<Image Name="LeftImage" />
+		<Image Name="RightImage" />
+	</StackPanel>
 </UserControl>

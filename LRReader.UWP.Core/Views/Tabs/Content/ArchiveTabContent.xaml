@@ -115,31 +115,36 @@
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
 			Retry
 		</Button>
-		<ContentControl
-			x:Name="ReaderControl" Grid.RowSpan="2" HorizontalContentAlignment="Stretch"
-			Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
-			KeyUp="ReaderControl_KeyUp" KeyboardAcceleratorPlacementMode="Hidden" LostFocus="ReaderControl_LostFocus"
-			Opacity="0" Tapped="ReaderControl_Tapped"
-			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
-			<ContentControl.KeyboardAccelerators>
+		<ScrollViewer
+			Name="ScrollViewer" Grid.RowSpan="2" DoubleTapped="ScrollViewer_DoubleTapped"
+			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" Opacity="0"
+			SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped" VerticalScrollBarVisibility="Auto"
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}"
+			ZoomMode="Enabled">
+			<ScrollViewer.KeyboardAccelerators>
 				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
-			</ContentControl.KeyboardAccelerators>
-			<ContentControl.ContentTransitions>
-				<TransitionCollection>
-					<ContentThemeTransition VerticalOffset="0" />
-				</TransitionCollection>
-			</ContentControl.ContentTransitions>
-			<ContentControl.ContentTemplate>
-				<DataTemplate>
-					<items:ReaderImage />
-				</DataTemplate>
-			</ContentControl.ContentTemplate>
-		</ContentControl>
+			</ScrollViewer.KeyboardAccelerators>
+			<ContentControl
+				x:Name="ReaderControl" HorizontalAlignment="Center"
+				Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
+				KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp" ManipulationMode="TranslateY,TranslateX"
+				SizeChanged="ReaderControl_SizeChanged">
+				<ContentControl.ContentTransitions>
+					<TransitionCollection>
+						<ContentThemeTransition VerticalOffset="0" />
+					</TransitionCollection>
+				</ContentControl.ContentTransitions>
+				<ContentControl.ContentTemplate>
+					<DataTemplate>
+						<items:ReaderImage />
+					</DataTemplate>
+				</ContentControl.ContentTemplate>
+			</ContentControl>
+		</ScrollViewer>
 		<Button
 			Grid.RowSpan="2" Width="38" Height="38"
 			HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent"
-			BorderThickness="0" Click="CloseButton_Click" PointerEntered="CloseButton_PointerEntered"
-			PointerExited="CloseButton_Pointer_Exited"
+			BorderThickness="0" Click="CloseButton_Click"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Cancel" />

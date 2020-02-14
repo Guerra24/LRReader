@@ -34,58 +34,16 @@ namespace LRReader.Views.Items
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
-#if DEBUG
-			if (DispatcherHelper.UIDispatcher != null)
-#endif
-				await DispatcherHelper.RunAsync(() =>
-				{
-					LeftImage.Source = null;
-					RightImage.Source = null;
-				});
+			LeftImage.Source = null;
+			RightImage.Source = null;
 			if (args.NewValue == null)
 				return;
 			ArchiveImageSet n = args.NewValue as ArchiveImageSet;
 			var lImage = await Global.ImageManager.DownloadImage(n.LeftImage);
 			var rImage = await Global.ImageManager.DownloadImage(n.RightImage);
-#if DEBUG
-			if (DispatcherHelper.UIDispatcher != null)
-#endif
-				await DispatcherHelper.RunAsync(() =>
-				{
-					LeftImage.Source = lImage;
-					RightImage.Source = rImage;
-					FitImages(true);
-				});
+			LeftImage.Source = lImage;
+			RightImage.Source = rImage;
 		}
 
-		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-		{
-			var point = e.GetPosition(ScrollViewer);
-			var ttv = ImagesRoot.TransformToVisual(this);
-			var center = ttv.TransformPoint(new Point(0, 0));
-			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ImagesRoot.ActualWidth, ScrollViewer.ViewportHeight / ImagesRoot.ActualHeight);
-			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.01)
-				ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom);
-			else
-				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y, zoomFactor * Global.SettingsManager.ZoomedFactor);
-		}
-
-		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			FitImages(false);
-		}
-
-		private void ImagesRoot_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			FitImages(true);
-		}
-
-		private void FitImages(bool disableAnim)
-		{
-			if (ImagesRoot.ActualWidth == 0 || ImagesRoot.ActualHeight == 0)
-				return;
-			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ImagesRoot.ActualWidth, ScrollViewer.ViewportHeight / ImagesRoot.ActualHeight);
-			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);
-		}
 	}
 }
