@@ -10,12 +10,18 @@
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
-	<Grid Padding="20,10">
+	<Grid>
 		<Pivot>
-			<settings:GeneralPivot />
-			<settings:ReaderPivot />
-			<settings:ServerPivot />
-			<settings:AboutPivot />
+			<Pivot.LeftHeader>
+				<Grid Padding="5,0"/>
+			</Pivot.LeftHeader>
+			<Pivot.RightHeader>
+				<Grid Padding="5,0"/>
+			</Pivot.RightHeader>
+			<settings:GeneralPivot Margin="0" />
+			<settings:ReaderPivot Margin="0" />
+			<settings:ServerPivot Margin="0" />
+			<settings:AboutPivot Margin="0" />
 		</Pivot>
 	</Grid>
 </UserControl>

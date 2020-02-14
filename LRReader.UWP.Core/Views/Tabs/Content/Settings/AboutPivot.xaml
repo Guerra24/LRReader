@@ -9,7 +9,7 @@
 	Header="About"
 	mc:Ignorable="d">
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,10">
 				<Run>LRReader version</Run>

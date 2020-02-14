@@ -14,7 +14,7 @@
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</PivotItem.Resources>
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,5" Text="API Key required to use server options" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />

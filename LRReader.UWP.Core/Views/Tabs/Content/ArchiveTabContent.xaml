@@ -125,7 +125,7 @@
 				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
 			</ScrollViewer.KeyboardAccelerators>
 			<ContentControl
-				x:Name="ReaderControl" HorizontalAlignment="Center"
+				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
 				Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
 				KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp" ManipulationDelta="ReaderControl_ManipulationDelta"
 				ManipulationMode="TranslateY,TranslateX,System" SizeChanged="ReaderControl_SizeChanged">

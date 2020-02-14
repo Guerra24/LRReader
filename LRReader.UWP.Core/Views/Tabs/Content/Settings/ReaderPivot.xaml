@@ -18,7 +18,7 @@
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</PivotItem.Resources>
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
 			<Grid Width="350">
 				<Grid.ColumnDefinitions>

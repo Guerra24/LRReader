@@ -270,6 +270,8 @@ namespace LRReader.Views.Tabs.Content
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
 		{
+			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
+				return;
 			var point = e.GetPosition(ScrollViewer);
 			var ttv = ReaderControl.TransformToVisual(this);
 			var center = ttv.TransformPoint(new Point(0, 0));

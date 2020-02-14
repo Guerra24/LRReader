@@ -15,7 +15,7 @@
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 	</PivotItem.Resources>
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,5" FontSize="24" Text="Connection" />
 			<ComboBox
