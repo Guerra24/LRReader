@@ -42,13 +42,13 @@ To allow localhost access.
 
 The reader can be used with the keyboard and/or mouse.
 
-Use the UP/DOWN keys to scroll vertically and RIGHT/LEFT to switch pages.
-Use SPACE to scroll by a distance and if at the bottom, changes to the next page.
-Use ESC to close the reader.
+Use the UP/DOWN keys to scroll vertically and RIGHT/LEFT to switch pages.<br>
+Use SPACE to scroll by a distance and if at the bottom, changes to the next page.<br>
+Use ESC to close the reader.<br>
 
-Click on the left/right of the window to change pages.
-Scroll by clicking and dragging the page.
-In non-fit mode double click in the page to zoom.
+Click on the left/right of the window to change pages.<br>
+Scroll by clicking and dragging the page.<br>
+In non-fit mode double click in the page to zoom.<br>
 
 ## Screenshots
 
