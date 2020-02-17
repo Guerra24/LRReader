@@ -305,7 +305,6 @@ namespace LRReader.Views.Tabs.Content
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
-			System.Diagnostics.Debug.WriteLine(zoomFactor);
 			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);
 		}
 
