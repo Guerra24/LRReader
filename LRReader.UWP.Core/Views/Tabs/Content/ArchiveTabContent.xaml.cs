@@ -277,7 +277,7 @@ namespace LRReader.Views.Tabs.Content
 			var center = ttv.TransformPoint(new Point(0, 0));
 			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.01)
-				ScrollViewer.ChangeView(null, null, zoomFactor * Global.SettingsManager.BaseZoom);
+				FitImages(false);
 			else
 				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y - center.Y * 2.0, zoomFactor * Global.SettingsManager.ZoomedFactor);
 		}
@@ -296,7 +296,16 @@ namespace LRReader.Views.Tabs.Content
 		{
 			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 				return;
-			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
+			float zoomFactor;
+			if (Global.SettingsManager.FitToWidth)
+			{
+				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Global.SettingsManager.FitScaleLimit * 0.01);
+			}
+			else
+			{
+				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
+			}
+			System.Diagnostics.Debug.WriteLine(zoomFactor);
 			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);
 		}
 

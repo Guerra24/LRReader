@@ -176,6 +176,24 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("SpacebarScroll");
 			}
 		}
+		public bool FitToWidth
+		{
+			get => SettingsStorage.GetObjectRoamed("FitToWidth", true);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("FitToWidth", value);
+				RaisePropertyChanged("FitToWidth");
+			}
+		}
+		public int FitScaleLimit
+		{
+			get => SettingsStorage.GetObjectLocal("FitScaleLimit", 100);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("FitScaleLimit", value);
+				RaisePropertyChanged("FitScaleLimit");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");

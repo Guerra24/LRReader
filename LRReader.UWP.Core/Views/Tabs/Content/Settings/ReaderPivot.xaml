@@ -60,6 +60,26 @@
 				IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}"
 				ToolTipService.ToolTip="Reverses the pages read direction" />
 			<ToggleSwitch
+				Margin="0,0,0,10" Header="Fit pages to width"
+				IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}"
+				ToolTipService.ToolTip="Scales pages into the full width of the window" />
+			<Grid Width="350" Visibility="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="40" />
+				</Grid.ColumnDefinitions>
+				<Slider
+					Margin="0,0,0,10" Header="Fit page scale limit" Maximum="400"
+					Minimum="100" StepFrequency="5" TickFrequency="25.0"
+					TickPlacement="BottomRight" ToolTipService.ToolTip="Maximum scaling that can be applied to a page"
+					Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
+				<TextBlock
+					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
+					VerticalAlignment="Center">
+					<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
+				</TextBlock>
+			</Grid>
+			<ToggleSwitch
 				Margin="0,0,0,10" Header="Show two pages"
 				IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}"
 				ToolTipService.ToolTip="Two pages will be displayed at once" />
