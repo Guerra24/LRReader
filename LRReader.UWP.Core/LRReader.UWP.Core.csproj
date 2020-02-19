@@ -140,6 +140,7 @@
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\WebTabViewModel.cs" />
     <Compile Include="Views\Dialogs\ServerProfileDialog.xaml.cs">
       <DependentUpon>ServerProfileDialog.xaml</DependentUpon>
     </Compile>
@@ -197,8 +198,14 @@
     <Compile Include="Views\Tabs\Content\Settings\ServerPivot.xaml.cs">
       <DependentUpon>ServerPivot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\Content\WebTabContent.xaml.cs">
+      <DependentUpon>WebTabContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\SettingsTab.xaml.cs">
       <DependentUpon>SettingsTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\WebTab.xaml.cs">
+      <DependentUpon>WebTab.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\LRReader.UWP.Core.rd.xml" />
   </ItemGroup>
@@ -307,9 +314,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Tabs\Content\WebTabContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tabs\SettingsTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\WebTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

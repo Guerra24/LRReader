@@ -27,7 +27,7 @@
 				<TextBlock
 					Margin="0,0,0,10" HorizontalAlignment="Center" FontSize="28"
 					Text="Welcome" />
-				<TextBlock Margin="0,0,0,10" Text="First we need to setup a profle." Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+				<TextBlock Margin="0,0,0,10" Text="First we need to setup a profile." Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 				<ComboBox
 					Margin="0,0,0,10" HorizontalAlignment="Stretch"
 					IsEnabled="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay}"

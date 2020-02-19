@@ -1,4 +1,6 @@
-﻿using LRReader.ViewModels;
+﻿using LRReader.Internal;
+using LRReader.UWP.Core.Views.Tabs;
+using LRReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +31,16 @@ namespace LRReader.Views.Tabs.Content.Settings
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
+		}
+
+		private void EditSettings_Click(object sender, RoutedEventArgs e)
+		{
+			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddress + "/config"));
+		}
+
+		private void EditPlugins_Click(object sender, RoutedEventArgs e)
+		{
+			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddress + "/config/plugins"));
 		}
 
 		private async void RestartWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.RestartWorker();
@@ -75,5 +87,6 @@ namespace LRReader.Views.Tabs.Content.Settings
 			await Data.ClearAllNew();
 			ClearNewFlyout.Hide();
 		}
+
 	}
 }

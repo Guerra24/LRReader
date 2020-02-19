@@ -1,6 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.UWP.Core.Views.Tabs;
 using LRReader.ViewModels;
 using LRReader.Views.Items;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -308,9 +309,9 @@ namespace LRReader.Views.Tabs.Content
 			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);
 		}
 
-		private async void EditButton_Click(object sender, RoutedEventArgs e)
+		private void EditButton_Click(object sender, RoutedEventArgs e)
 		{
-			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + Data.Archive.arcid));
+			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + Data.Archive.arcid));
 		}
 
 		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)
