@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using LRReader.Internal;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,17 +14,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using FontIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LRReader.Views.Tabs
 {
-	public sealed partial class BookmarksTab : TabViewItem
+	public sealed partial class BookmarksTab : CustomTab
 	{
 		public BookmarksTab()
 		{
 			this.InitializeComponent();
+		}
+
+		private void RefreshButton_Click(object sender, RoutedEventArgs e)
+		{
+			TabContent.Refresh();
 		}
 	}
 }

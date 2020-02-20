@@ -123,10 +123,12 @@ namespace LRReader.Views.Tabs.Content
 			await Data.ReloadSearch();
 		}
 
-		private void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
+				await Data.Refresh();
+				await Data.LoadTagStats();
 				HandleSearch();
 			}
 		}
@@ -141,6 +143,7 @@ namespace LRReader.Views.Tabs.Content
 		{
 			await Data.Refresh();
 			await Data.LoadTagStats();
+			HandleSearch();
 			args.Handled = true;
 		}
 
@@ -152,6 +155,13 @@ namespace LRReader.Views.Tabs.Content
 		private async void NextButton_Click(object sender, RoutedEventArgs e)
 		{
 			await Data.NextPage();
+		}
+
+		public async void Refresh()
+		{
+			await Data.Refresh();
+			await Data.LoadTagStats();
+			HandleSearch();
 		}
 	}
 }

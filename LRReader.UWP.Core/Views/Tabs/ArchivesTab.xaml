@@ -1,10 +1,11 @@
-﻿<controls:TabViewItem
+﻿<internal:CustomTab
 	x:Class="LRReader.Views.Tabs.ArchivesTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.Views.Tabs.Content"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
@@ -15,6 +16,13 @@
 	<controls:TabViewItem.IconSource>
 		<controls:SymbolIconSource Symbol="Library" />
 	</controls:TabViewItem.IconSource>
+	<internal:CustomTab.CustomTabControl>
+		<Button Click="RefreshButton_Click" ToolTipService.ToolTip="Refresh">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<SymbolIcon Symbol="Refresh" />
+			</Viewbox>
+		</Button>
+	</internal:CustomTab.CustomTabControl>
 
-	<content:ArchivesTabContent />
-</controls:TabViewItem>
+	<content:ArchivesTabContent x:Name="TabContent" />
+</internal:CustomTab>

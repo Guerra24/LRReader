@@ -34,6 +34,11 @@ namespace LRReader.UWP.Core.Views.Tabs.Content
 			WebContent.Navigate(ViewModel.Page = new Uri(page));
 		}
 
+		public void RefreshPage()
+		{
+			WebContent.Refresh();
+		}
+
 		private void WebContent_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
 		{
 			ViewModel.NavigationStarting(sender, args);

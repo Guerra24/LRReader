@@ -44,6 +44,7 @@ namespace LRReader.Views.Tabs.Content
 		{
 			this.InitializeComponent();
 			Data = new ArchivePageViewModel();
+			Data.ZoomChangedEvent += FitImages;
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
 		}
 
@@ -198,7 +199,7 @@ namespace LRReader.Views.Tabs.Content
 					break;
 				case VirtualKey.Space:
 					double offset = ScrollViewer.VerticalOffset;
-					if (offset >= ScrollViewer.ScrollableHeight)
+					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
 					{
 						if (Global.SettingsManager.ReadRTL)
 							PrevPage();
@@ -283,15 +284,11 @@ namespace LRReader.Views.Tabs.Content
 				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y - center.Y * 2.0, zoomFactor * Global.SettingsManager.ZoomedFactor);
 		}
 
-		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			FitImages(false);
-		}
+		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(false);
 
-		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			FitImages(true);
-		}
+		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(true);
+
+		private void FitImages() => FitImages(false);
 
 		private void FitImages(bool disableAnim)
 		{
@@ -306,7 +303,7 @@ namespace LRReader.Views.Tabs.Content
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
-			ScrollViewer.ChangeView(0, 0, zoomFactor * Global.SettingsManager.BaseZoom, disableAnim);
+			ScrollViewer.ChangeView(0, 0, zoomFactor * (Data.ZoomValue * 0.01f) * Global.SettingsManager.BaseZoom, disableAnim);
 		}
 
 		private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -366,16 +363,15 @@ namespace LRReader.Views.Tabs.Content
 			args.Handled = true;
 		}
 
-		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.Reload(true);
-		}
+		private async void RefreshButton_Click(object sender, RoutedEventArgs e) => await Data.Reload(true);
+
+		public async void Refresh() => await Data.Reload(true);
 
 		public void RemoveEvent()
 		{
+			Data.ZoomChangedEvent -= FitImages;
 			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
-
 
 	}
 }

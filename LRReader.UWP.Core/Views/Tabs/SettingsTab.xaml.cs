@@ -15,19 +15,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace LRReader.Views.Tabs
 {
-	public sealed partial class SettingsTab : TabViewItem, ICustomTab
+	public sealed partial class SettingsTab : CustomTab
 	{
 		public SettingsTab()
 		{
 			this.InitializeComponent();
 		}
 
-		public void Unload()
+		public override void Unload()
 		{
+			base.Unload();
 			TabContent.RemoveTimer();
 		}
 	}

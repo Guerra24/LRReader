@@ -41,15 +41,9 @@ namespace LRReader.Views.Tabs.Content
 			await Data.Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
-		}
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
 
-		private async void Button_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.Refresh();
-		}
+		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 
 		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
@@ -59,10 +53,7 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-		{
-			await Data.Refresh();
-		}
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => await Data.Refresh();
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
@@ -70,5 +61,7 @@ namespace LRReader.Views.Tabs.Content
 			if (item.Parallax.Source == null)
 				item.Parallax.Source = ArchivesGrid;
 		}
+
+		public async void Refresh() => await Data.Refresh();
 	}
 }

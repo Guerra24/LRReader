@@ -19,6 +19,9 @@ using static LRReader.Shared.Providers.Providers;
 
 namespace LRReader.ViewModels
 {
+
+	public delegate void ZoomChanged();
+
 	public class ArchivePageViewModel : ArchiveBaseViewModel
 	{
 		private bool _loadingImages = false;
@@ -76,6 +79,21 @@ namespace LRReader.ViewModels
 				_readerIndex = value;
 			}
 		}
+		private int _zoomValue = 100;
+		public int ZoomValue
+		{
+			get => _zoomValue;
+			set
+			{
+				if (value != _zoomValue)
+				{
+					_zoomValue = value;
+					RaisePropertyChanged("ZoomValue");
+					ZoomChangedEvent?.Invoke();
+				}
+			}
+		}
+		public event ZoomChanged ZoomChangedEvent;
 
 		public async Task Reload(bool animate)
 		{

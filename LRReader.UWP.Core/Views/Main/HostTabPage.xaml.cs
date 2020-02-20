@@ -22,13 +22,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace LRReader.Views.Main
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class HostTabPage : Page
 	{
 
@@ -102,12 +97,12 @@ namespace LRReader.Views.Main
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			if (args.Tab is ICustomTab tab)
+			if (args.Tab is CustomTab tab)
 				tab.Unload();
 			TabViewControl.TabItems.Remove(args.Tab);
 		}
 
-		public async void AddTab(TabViewItem tab, bool switchToTab)
+		public async void AddTab(CustomTab tab, bool switchToTab)
 		{
 			var current = GetTabFromHeader(tab.Header);
 			if (current != null)
@@ -127,7 +122,7 @@ namespace LRReader.Views.Main
 		{
 			foreach (var t in TabViewControl.TabItems)
 			{
-				if (t is ICustomTab tab)
+				if (t is CustomTab tab)
 					tab.Unload();
 			}
 			TabViewControl.TabItems.Clear();
@@ -142,7 +137,7 @@ namespace LRReader.Views.Main
 			}
 		}
 
-		private TabViewItem GetTabFromHeader(object header) => TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(header)) as TabViewItem;
+		private CustomTab GetTabFromHeader(object header) => TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(header)) as CustomTab;
 
 		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
@@ -150,7 +145,7 @@ namespace LRReader.Views.Main
 			var t = Data.CurrentTab;
 			if (!t.IsClosable)
 				return;
-			if (t is ICustomTab tab)
+			if (t is CustomTab tab)
 				tab.Unload();
 			TabViewControl.TabItems.Remove(t);
 		}

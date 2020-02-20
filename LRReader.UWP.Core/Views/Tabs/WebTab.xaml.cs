@@ -15,11 +15,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace LRReader.UWP.Core.Views.Tabs
 {
-	public sealed partial class WebTab : TabViewItem
+	public sealed partial class WebTab : CustomTab
 	{
 
 		private string page;
@@ -40,5 +38,6 @@ namespace LRReader.UWP.Core.Views.Tabs
 			TabContent.LoadPage(page);
 		}
 
+		private void RefreshButton_Click(object sender, RoutedEventArgs e) => TabContent.RefreshPage();
 	}
 }

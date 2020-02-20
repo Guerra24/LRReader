@@ -24,8 +24,8 @@ namespace LRReader.ViewModels
 			}
 		}
 
-		private TabViewItem _currentTab;
-		public TabViewItem CurrentTab
+		private CustomTab _currentTab;
+		public CustomTab CurrentTab
 		{
 			get => _currentTab;
 			set

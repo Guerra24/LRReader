@@ -1,10 +1,11 @@
-﻿<controls:TabViewItem
+﻿<internal:CustomTab
 	x:Class="LRReader.Views.Tabs.ArchiveTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.Views.Tabs.Content"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
@@ -13,12 +14,42 @@
 	IconSource="{x:Bind TabContent.Data.Icon, Mode=OneWay}"
 	Loaded="TabViewItem_Loaded"
 	mc:Ignorable="d">
-
 	<controls:TabViewItem.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
 			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
 		</DataTemplate>
 	</controls:TabViewItem.HeaderTemplate>
+	<internal:CustomTab.CustomTabControl>
+		<StackPanel Orientation="Horizontal">
+			<Button ToolTipService.ToolTip="Zoom">
+				<Button.Flyout>
+					<Flyout>
+						<Grid Width="250">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="40" />
+							</Grid.ColumnDefinitions>
+							<Slider
+								IsThumbToolTipEnabled="False" Maximum="200" Minimum="0"
+								TickFrequency="20" TickPlacement="BottomRight"
+								Value="{x:Bind TabContent.Data.ZoomValue, Mode=TwoWay}" />
+							<TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+								<Run Text="{x:Bind TabContent.Data.ZoomValue, Mode=OneWay}" />%
+							</TextBlock>
+						</Grid>
+					</Flyout>
+				</Button.Flyout>
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<SymbolIcon Symbol="Zoom" />
+				</Viewbox>
+			</Button>
+			<Button Click="RefreshButton_Click" ToolTipService.ToolTip="Refresh">
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<SymbolIcon Symbol="Refresh" />
+				</Viewbox>
+			</Button>
+		</StackPanel>
+	</internal:CustomTab.CustomTabControl>
 
 	<content:ArchiveTabContent x:Name="TabContent" />
-</controls:TabViewItem>
+</internal:CustomTab>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LRReader.Internal
 {
-	public delegate void AddTab(TabViewItem tab, bool switchToTab);
+	public delegate void AddTab(CustomTab tab, bool switchToTab);
 	public delegate void CloseAllTabs();
 	public delegate void CloseTabWithHeader(string header);
 
@@ -18,11 +18,11 @@ namespace LRReader.Internal
 		public event CloseAllTabs CloseAllTabsEvent;
 		public event CloseTabWithHeader CloseTabWithHeaderEvent;
 
-		public void AddTab(TabViewItem tab)
+		public void AddTab(CustomTab tab)
 		{
 			AddTabEvent?.Invoke(tab, true);
 		}
-		public void AddTab(TabViewItem tab, bool switchToTab)
+		public void AddTab(CustomTab tab, bool switchToTab)
 		{
 			AddTabEvent?.Invoke(tab, switchToTab);
 		}
