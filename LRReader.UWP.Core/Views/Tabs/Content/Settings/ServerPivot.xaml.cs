@@ -33,21 +33,19 @@ namespace LRReader.Views.Tabs.Content.Settings
 			Data = DataContext as SettingsPageViewModel;
 		}
 
-		private void EditSettings_Click(object sender, RoutedEventArgs e)
-		{
-			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/config"));
-		}
+		private void UploadArchive_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/upload"));
 
-		private void EditPlugins_Click(object sender, RoutedEventArgs e)
-		{
-			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/config/plugins"));
-		}
+		private void BatchTagging_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/batch"));
+
+		private void EditSettings_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/config"));
+
+		private void EditPlugins_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/config/plugins"));
+
+		private void Logs_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/logs"));
 
 		private async void RestartWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.RestartWorker();
 
-
 		private async void StopWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.StopWorker();
-
 
 		private async void DownloadDBButton_Click(object sender, RoutedEventArgs e)
 		{
