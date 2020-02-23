@@ -35,12 +35,12 @@ namespace LRReader.Views.Tabs.Content.Settings
 
 		private void EditSettings_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddress + "/config"));
+			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/config"));
 		}
 
 		private void EditPlugins_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddress + "/config/plugins"));
+			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/config/plugins"));
 		}
 
 		private async void RestartWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.RestartWorker();
