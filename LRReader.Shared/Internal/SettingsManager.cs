@@ -49,22 +49,13 @@ namespace LRReader.Shared.Internal
 		{
 			get => Profiles.Count > 1;
 		}
-		public float BaseZoom
+		public int DefaultZoom
 		{
-			get => SettingsStorage.GetObjectLocal("BaseZoom", 1.0f);
+			get => SettingsStorage.GetObjectLocal("DefaultZoom", 100);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("BaseZoom", value);
-				RaisePropertyChanged("BaseZoom");
-			}
-		}
-		public float ZoomedFactor
-		{
-			get => SettingsStorage.GetObjectLocal("ZoomedFactor", 2.0f);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("ZoomedFactor", value);
-				RaisePropertyChanged("ZoomedFactor");
+				SettingsStorage.StoreObjectLocal("DefaultZoom", value);
+				RaisePropertyChanged("DefaultZoom");
 			}
 		}
 		public bool ImageCaching

@@ -27,6 +27,7 @@ namespace LRReader.Shared.Models.Main
 			{
 				tagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
 			}
+			tagsClean.TrimEnd(',');
 		}
 
 		public bool IsNewArchive()

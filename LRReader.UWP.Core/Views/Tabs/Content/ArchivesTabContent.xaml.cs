@@ -113,8 +113,8 @@ namespace LRReader.Views.Tabs.Content
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
 		{
 			var random = new Random();
-			var list = ArchivesGrid.ItemsSource as IEnumerable<Archive>;
-			var item = list.ElementAt(random.Next(list.Count()));
+			var list = Providers.ArchivesProvider.Archives;
+			var item = list.ElementAt(random.Next(list.Count() - 1));
 			Global.EventManager.AddTab(new ArchiveTab(item));
 		}
 

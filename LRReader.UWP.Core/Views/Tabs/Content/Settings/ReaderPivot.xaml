@@ -20,35 +20,21 @@
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
-			<Grid Width="350">
+			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="320" />
 					<ColumnDefinition Width="40" />
 				</Grid.ColumnDefinitions>
 				<Slider
-					Margin="0,0,0,10" Header="Base Zoom" Maximum="5"
-					Minimum="1" StepFrequency="0.05" TickFrequency="0.5"
-					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used by default"
-					Value="{x:Bind Data.SettingsManager.BaseZoom, Mode=TwoWay}" />
+					Margin="0,0,0,10" Header="Default Zoom" IsThumbToolTipEnabled="False"
+					Maximum="400" Minimum="100" TickFrequency="40"
+					TickPlacement="BottomRight"
+					Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
 				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Text="{x:Bind Data.SettingsManager.BaseZoom, Mode=OneWay}" />
-			</Grid>
-			<Grid Width="350">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="40" />
-				</Grid.ColumnDefinitions>
-				<Slider
-					Margin="0,0,0,10" Header="Zoomed Factor" Maximum="5"
-					Minimum="1" StepFrequency="0.05" TickFrequency="0.5"
-					TickPlacement="BottomRight" ToolTipService.ToolTip="Zoom used when double-tapped"
-					Value="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=TwoWay}" />
-				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Text="{x:Bind Data.SettingsManager.ZoomedFactor, Mode=OneWay}" />
+					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Right"
+					VerticalAlignment="Center">
+					<Run Text="{x:Bind Data.SettingsManager.DefaultZoom, Mode=OneWay}" />%
+				</TextBlock>
 			</Grid>
 			<muxc:NumberBox
 				Margin="0,0,0,10" Header="Spacebar scrolling distance" Minimum="1"
@@ -63,9 +49,9 @@
 				Margin="0,0,0,10" Header="Fit pages to width"
 				IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}"
 				ToolTipService.ToolTip="Scales pages into the full width of the window" />
-			<Grid Width="350" Visibility="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+			<Grid Visibility="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="320" />
 					<ColumnDefinition Width="40" />
 				</Grid.ColumnDefinitions>
 				<Slider
@@ -74,7 +60,7 @@
 					TickFrequency="25.0" TickPlacement="BottomRight" ToolTipService.ToolTip="Maximum scaling that can be applied to a page"
 					Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
 				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Center"
+					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Right"
 					VerticalAlignment="Center">
 					<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
 				</TextBlock>

@@ -270,20 +270,6 @@ namespace LRReader.Views.Tabs.Content
 			ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
 		}
 
-		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-		{
-			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
-				return;
-			var point = e.GetPosition(ScrollViewer);
-			var ttv = ReaderControl.TransformToVisual(this);
-			var center = ttv.TransformPoint(new Point(0, 0));
-			var zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
-			if (Math.Abs(ScrollViewer.ZoomFactor - zoomFactor * Global.SettingsManager.BaseZoom) > 0.01)
-				FitImages(false);
-			else
-				ScrollViewer.ChangeView(point.X - center.X * 2.0, point.Y - center.Y * 2.0, zoomFactor * Global.SettingsManager.ZoomedFactor);
-		}
-
 		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(false);
 
 		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(true);
@@ -303,7 +289,7 @@ namespace LRReader.Views.Tabs.Content
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
-			ScrollViewer.ChangeView(0, 0, zoomFactor * (Data.ZoomValue * 0.01f) * Global.SettingsManager.BaseZoom, disableAnim);
+			ScrollViewer.ChangeView(0, 0, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim);
 		}
 
 		private void EditButton_Click(object sender, RoutedEventArgs e)

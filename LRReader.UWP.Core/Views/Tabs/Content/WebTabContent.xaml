@@ -10,7 +10,7 @@
 	mc:Ignorable="d">
 
 	<Grid>
-		<WebView x:Name="WebContent" NavigationCompleted="WebContent_NavigationCompleted" NavigationStarting="WebContent_NavigationStarting" />
+		<WebView x:Name="WebContent" NavigationCompleted="WebContent_NavigationCompleted" NavigationStarting="WebContent_NavigationStarting"  DefaultBackgroundColor="#34353B"/>
 		<TextBlock
 			HorizontalAlignment="Center" VerticalAlignment="Center"
 			Text="{x:Bind ViewModel.Error, Mode=OneWay}"

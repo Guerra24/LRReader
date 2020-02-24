@@ -29,6 +29,7 @@ namespace LRReader.Views.Tabs
 			this.InitializeComponent();
 			this.archive = archive;
 			Header = archive.title;
+			this.CustomTabId = "Archive_" + archive.title;
 		}
 
 		private void TabViewItem_Loaded(object sender, RoutedEventArgs e)

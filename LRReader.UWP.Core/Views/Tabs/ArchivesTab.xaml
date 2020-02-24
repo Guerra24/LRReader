@@ -10,6 +10,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	CustomTabId="Archives"
 	Header="Archives"
 	IsClosable="False"
 	mc:Ignorable="d">

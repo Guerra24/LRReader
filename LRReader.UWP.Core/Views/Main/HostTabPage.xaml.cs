@@ -104,7 +104,7 @@ namespace LRReader.Views.Main
 
 		public async void AddTab(CustomTab tab, bool switchToTab)
 		{
-			var current = GetTabFromHeader(tab.Header);
+			var current = GetTabFromId(tab.CustomTabId);
 			if (current != null)
 			{
 				if (switchToTab)
@@ -128,16 +128,16 @@ namespace LRReader.Views.Main
 			TabViewControl.TabItems.Clear();
 		}
 
-		public void CloseTabWithHeader(string header)
+		public void CloseTabWithHeader(string id)
 		{
-			var tab = GetTabFromHeader(header);
+			var tab = GetTabFromId(id);
 			if (tab != null)
 			{
 				TabViewControl.TabItems.Remove(tab);
 			}
 		}
 
-		private CustomTab GetTabFromHeader(object header) => TabViewControl.TabItems.FirstOrDefault(t => (t as TabViewItem).Header.Equals(header)) as CustomTab;
+		private CustomTab GetTabFromId(string id) => TabViewControl.TabItems.FirstOrDefault(t => (t as CustomTab).CustomTabId.Equals(id)) as CustomTab;
 
 		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{

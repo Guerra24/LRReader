@@ -5,19 +5,11 @@
 
 ## Features
 - Archives list.
-- Search, the same one used in the webview.
-- Show new archives only.
-- Download archives.
-- Archive overview (with tags) and reader.
-- Configurable reader's base zoom and zoomed factor.
-- Right-to-Left and Two pages modes.
+- Search.
+- Archive overview and reader.
 - Bookmarks.
-- Optional image caching.
-- Multiple servers.
-- Restart server's background worker.
-- Clear "All New" flags.
-- Download database.
-- Fullscreen.
+- Multiple servers/profiles.
+- Manage your server from within the app.
 
 ## Requirements
 
@@ -31,7 +23,7 @@ For stable check the [Releases page](https://github.com/Guerra24/LRReader/releas
 
 For nightly check the [Actions page](https://github.com/Guerra24/LRReader/actions?query=workflow:"Continuous+Delivery")
 
-Unzip and right click `Install.ps1` > Run with powershell<br>
+Unzip and right click `Install App.ps1` > Run with powershell<br>
 This will add the self-signed certificate and install the app.
 
 If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
@@ -48,7 +40,6 @@ Use ESC to close the reader.<br>
 
 Click on the left/right of the window to change pages.<br>
 Scroll by clicking and dragging the page.<br>
-In non-fit mode double click in the page to zoom.<br>
 
 ## Screenshots
 

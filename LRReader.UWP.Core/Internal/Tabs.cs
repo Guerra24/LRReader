@@ -16,9 +16,10 @@ namespace LRReader.Internal
 			set => SetValue(CustomTabControlProperty, value);
 		}
 
-		public CustomTab()
+		public string CustomTabId
 		{
-			CustomTabControl = null;
+			get => GetValue(CustomTabIdProperty) as string;
+			set => SetValue(CustomTabIdProperty, value);
 		}
 
 		public virtual void Unload()
@@ -26,5 +27,6 @@ namespace LRReader.Internal
 		}
 
 		public static readonly DependencyProperty CustomTabControlProperty = DependencyProperty.RegisterAttached("CustomTabControl", typeof(object), typeof(CustomTab), new PropertyMetadata(null));
+		public static readonly DependencyProperty CustomTabIdProperty = DependencyProperty.RegisterAttached("CustomTabId", typeof(object), typeof(CustomTab), new PropertyMetadata(""));
 	}
 }

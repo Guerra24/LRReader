@@ -28,6 +28,7 @@ namespace LRReader.UWP.Core.Views.Tabs
 		{
 			this.InitializeComponent();
 			this.page = page;
+			this.CustomTabId = "Web_" + page;
 		}
 
 		private void TabViewItem_Loaded(object sender, RoutedEventArgs e)

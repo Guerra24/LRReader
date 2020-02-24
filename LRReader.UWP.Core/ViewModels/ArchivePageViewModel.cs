@@ -79,7 +79,7 @@ namespace LRReader.ViewModels
 				_readerIndex = value;
 			}
 		}
-		private int _zoomValue = 100;
+		private int _zoomValue = Global.SettingsManager.DefaultZoom;
 		public int ZoomValue
 		{
 			get => _zoomValue;
