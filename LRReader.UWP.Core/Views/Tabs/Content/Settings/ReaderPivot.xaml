@@ -16,6 +16,7 @@
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:EnumConverter x:Key="EnumConverter" />
 		<internal:EnumToInt x:Key="EnumToInt" />
+		<Style TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}"/>
 	</PivotItem.Resources>
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">

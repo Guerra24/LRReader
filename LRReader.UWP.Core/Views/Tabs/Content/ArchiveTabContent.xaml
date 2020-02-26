@@ -117,8 +117,8 @@
 		</Button>
 		<ScrollViewer
 			Name="ScrollViewer" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto"
-			KeyboardAcceleratorPlacementMode="Hidden" Opacity="0" SizeChanged="ScrollViewer_SizeChanged"
-			Tapped="ScrollViewer_Tapped" VerticalScrollBarVisibility="Auto"
+			KeyboardAcceleratorPlacementMode="Hidden" Opacity="0" PointerPressed="ScrollViewer_PointerPressed"
+			SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}"
 			ZoomMode="Enabled">
 			<ScrollViewer.KeyboardAccelerators>

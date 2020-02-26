@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -163,6 +164,8 @@ namespace LRReader.Views.Tabs.Content
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
+			if (!Data.ControlsEnabled)
+				return;
 			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
 			OpenReader();
 		}
@@ -180,6 +183,8 @@ namespace LRReader.Views.Tabs.Content
 
 		private void Escape_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
+			if (!Data.ShowReader)
+				return;
 			CloseReader();
 		}
 
@@ -231,9 +236,23 @@ namespace LRReader.Views.Tabs.Content
 			}
 		}
 
-		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
+		private void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
-			var point = e.GetPosition(ScrollViewer);
+			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsXButton1Pressed)
+				{
+					PrevPage();
+					return;
+				}
+				else if (pointerPoint.Properties.IsXButton2Pressed)
+				{
+					NextPage();
+					return;
+				}
+			}
+			var point = pointerPoint.Position;
 			double distance = ScrollViewer.ActualWidth / 6.0;
 			if (point.X < distance)
 			{

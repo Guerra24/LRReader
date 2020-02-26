@@ -13,6 +13,7 @@
 
 	<PivotItem.Resources>
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
+		<Style TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}"/>
 	</PivotItem.Resources>
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
