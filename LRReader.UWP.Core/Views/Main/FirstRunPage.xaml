@@ -13,11 +13,7 @@
 	<Page.Resources>
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button">
-			<Setter Property="Background" Value="Transparent" />
-			<Setter Property="Width" Value="46" />
-			<Setter Property="Height" Value="32" />
-		</Style>
+		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button"/>
 	</Page.Resources>
 
 	<Grid>
