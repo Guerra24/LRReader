@@ -40,6 +40,7 @@ namespace LRReader.Views.Tabs.Content
 		private bool _wasNew;
 		private bool _opened;
 		private bool _focus = true;
+		private bool _fixDoubleCloseCall;
 
 		public ArchiveTabContent()
 		{
@@ -73,6 +74,7 @@ namespace LRReader.Views.Tabs.Content
 
 		private async void OpenReader()
 		{
+			_fixDoubleCloseCall = true;
 			Data.ShowReader = true;
 			int count = Data.Pages;
 			if (Global.SettingsManager.TwoPages)
@@ -112,6 +114,9 @@ namespace LRReader.Views.Tabs.Content
 
 		public async void CloseReader()
 		{
+			if (!_fixDoubleCloseCall)
+				return;
+			_fixDoubleCloseCall = false;
 			_focus = false;
 			await ScrollViewer.Fade(value: 0.0f, duration: 200).StartAsync();
 			Data.ShowReader = false;
@@ -172,12 +177,16 @@ namespace LRReader.Views.Tabs.Content
 
 		private void Continue_Click(object sender, RoutedEventArgs e)
 		{
+			if (!Data.ControlsEnabled)
+				return;
 			i = Data.BookmarkProgress;
 			OpenReader();
 		}
 
 		private void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
+			if (!Data.ShowReader)
+				return;
 			CloseReader();
 		}
 
