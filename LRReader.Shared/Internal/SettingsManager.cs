@@ -169,7 +169,7 @@ namespace LRReader.Shared.Internal
 		}
 		public bool FitToWidth
 		{
-			get => SettingsStorage.GetObjectRoamed("FitToWidth", true);
+			get => SettingsStorage.GetObjectRoamed("FitToWidth", false);
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("FitToWidth", value);
