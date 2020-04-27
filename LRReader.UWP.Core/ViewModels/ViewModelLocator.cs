@@ -16,12 +16,6 @@ namespace LRReader.ViewModels
 	{
 		public ViewModelLocator()
 		{
-#if DEBUG
-			if (ViewModelBase.IsInDesignModeStatic)
-			{
-				Global.SettingsStorage = new StubSettingsStorage();
-			}
-#endif
 			Global.Init(); // Init global static data
 
 			SimpleIoc.Default.Register<ArchivesPageViewModel>();

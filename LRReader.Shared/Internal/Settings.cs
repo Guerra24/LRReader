@@ -17,6 +17,10 @@ namespace LRReader.Shared.Internal
 		T GetObjectRoamed<T>(string key);
 
 		T GetObjectRoamed<T>(string key, T def);
+
+		void DeleteObjectLocal(string key);
+
+		void DeleteObjectRoamed(string key);
 	}
 
 	public class StubSettingsStorage : ISettingsStorage
@@ -34,6 +38,14 @@ namespace LRReader.Shared.Internal
 		}
 
 		public void StoreObjectRoamed(string key, object obj)
+		{
+		}
+
+		public void DeleteObjectLocal(string key)
+		{
+		}
+
+		public void DeleteObjectRoamed(string key)
 		{
 		}
 	}

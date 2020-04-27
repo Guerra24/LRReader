@@ -107,10 +107,10 @@ namespace LRReader.Shared.Internal
 		}
 		public BookmarkReminderMode BookmarkReminderMode
 		{
-			get => (BookmarkReminderMode) SettingsStorage.GetObjectRoamed("BookmarkReminderMode", (int) BookmarkReminderMode.New);
+			get => (BookmarkReminderMode)SettingsStorage.GetObjectRoamed("BookmarkReminderMode", (int)BookmarkReminderMode.New);
 			set
 			{
-				SettingsStorage.StoreObjectRoamed("BookmarkReminderMode", (int) value);
+				SettingsStorage.StoreObjectRoamed("BookmarkReminderMode", (int)value);
 			}
 		}
 		public bool RemoveBookmark
@@ -158,13 +158,13 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("ArchivesPerPage");
 			}
 		}
-		public int SpacebarScroll
+		public int KeyboardScroll
 		{
-			get => SettingsStorage.GetObjectLocal("SpacebarScroll", 200);
+			get => SettingsStorage.GetObjectLocal("KeyboardScroll", 200);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("SpacebarScroll", value);
-				RaisePropertyChanged("SpacebarScroll");
+				SettingsStorage.StoreObjectLocal("KeyboardScroll", value);
+				RaisePropertyChanged("KeyboardScroll");
 			}
 		}
 		public bool FitToWidth
@@ -185,6 +185,26 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("FitScaleLimit");
 			}
 		}
+		public static readonly int CurrentLocalVersion = 1;
+		public int SettingsVersionLocal
+		{
+			get => SettingsStorage.GetObjectLocal<int>("SettingsVersion");
+			set
+			{
+				SettingsStorage.StoreObjectLocal("SettingsVersion", value);
+				RaisePropertyChanged("SettingsVersion");
+			}
+		}
+		public static readonly int CurrentRoamedVersion = 1;
+		public int SettingsVersionRoamed
+		{
+			get => SettingsStorage.GetObjectRoamed<int>("SettingsVersion");
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
+				RaisePropertyChanged("SettingsVersion");
+			}
+		}
 		public SettingsManager()
 		{
 			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
@@ -200,6 +220,8 @@ namespace LRReader.Shared.Internal
 			UpgradeProfiles();
 
 			SaveProfiles();
+
+			UpgradeSettings();
 
 			Profiles.CollectionChanged += ProfilesChanges;
 
@@ -222,6 +244,38 @@ namespace LRReader.Shared.Internal
 						break;
 				}
 			}
+		}
+
+		private void UpgradeSettings()
+		{
+			int localVersion = SettingsVersionLocal;
+			int roamedVersion = SettingsVersionRoamed;
+			while (true)
+			{
+				switch (localVersion)
+				{
+					case 0:
+						KeyboardScroll = SettingsStorage.GetObjectLocal("SpacebarScroll", 200);
+						SettingsStorage.DeleteObjectLocal("SpacebarScroll");
+						break;
+				}
+				if (localVersion >= CurrentLocalVersion - 1)
+					break;
+				localVersion++;
+			}
+			SettingsVersionLocal = CurrentLocalVersion;
+			while (true)
+			{
+				switch (roamedVersion)
+				{
+					case 0:
+						break;
+				}
+				if (roamedVersion >= CurrentRoamedVersion - 1)
+					break;
+				roamedVersion++;
+			}
+			SettingsVersionRoamed = CurrentRoamedVersion;
 		}
 
 		private void ProfilesChanges(object sender, NotifyCollectionChangedEventArgs e)

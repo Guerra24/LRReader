@@ -201,6 +201,7 @@ namespace LRReader.Views.Tabs.Content
 		{
 			if (!Data.ShowReader)
 				return;
+			double offset = ScrollViewer.VerticalOffset;
 			switch (e.Key)
 			{
 				case VirtualKey.Right:
@@ -211,8 +212,12 @@ namespace LRReader.Views.Tabs.Content
 					PrevPage();
 					e.Handled = true;
 					break;
+				case VirtualKey.Up:
+					ScrollViewer.ChangeView(null, offset - Global.SettingsManager.KeyboardScroll, null, false);
+					e.Handled = true;
+					break;
+				case VirtualKey.Down:
 				case VirtualKey.Space:
-					double offset = ScrollViewer.VerticalOffset;
 					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
 					{
 						if (Global.SettingsManager.ReadRTL)
@@ -222,7 +227,7 @@ namespace LRReader.Views.Tabs.Content
 					}
 					else
 					{
-						ScrollViewer.ChangeView(null, offset + Global.SettingsManager.SpacebarScroll, null, false);
+						ScrollViewer.ChangeView(null, offset + Global.SettingsManager.KeyboardScroll, null, false);
 					}
 					e.Handled = true;
 					break;
@@ -231,7 +236,7 @@ namespace LRReader.Views.Tabs.Content
 
 		private void ReaderControl_KeyDown(object sender, KeyRoutedEventArgs e)
 		{
-			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right)
+			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down)
 			{
 				e.Handled = true;
 			}
@@ -242,6 +247,31 @@ namespace LRReader.Views.Tabs.Content
 			if (Data.ShowReader && _focus)
 			{
 				ReaderControl.Focus(FocusState.Programmatic);
+			}
+		}
+
+		private void ReaderControl_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				var delta = pointerPoint.Properties.MouseWheelDelta;
+				if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
+				{
+					if (Global.SettingsManager.ReadRTL)
+						PrevPage();
+					else
+						NextPage();
+					e.Handled = true;
+				}
+				/*else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
+				{
+					if (Global.SettingsManager.ReadRTL)
+						NextPage();
+					else
+						PrevPage();
+					e.Handled = true;
+				}*/
 			}
 		}
 

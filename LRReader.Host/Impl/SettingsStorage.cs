@@ -70,5 +70,13 @@ namespace LRReader.Host.Impl
 		public void StoreObjectLocal(string key, object obj) => localSettings[key] = obj;
 
 		public void StoreObjectRoamed(string key, object obj) => roamedSettings[key] = obj;
+
+		public void DeleteObjectLocal(string key)
+		{
+		}
+
+		public void DeleteObjectRoamed(string key)
+		{
+		}
 	}
 }

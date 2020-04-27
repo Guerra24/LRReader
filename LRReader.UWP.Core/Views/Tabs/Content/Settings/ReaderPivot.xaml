@@ -16,7 +16,7 @@
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:EnumConverter x:Key="EnumConverter" />
 		<internal:EnumToInt x:Key="EnumToInt" />
-		<Style TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}"/>
+		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
 	</PivotItem.Resources>
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
@@ -38,9 +38,9 @@
 				</TextBlock>
 			</Grid>
 			<muxc:NumberBox
-				Margin="0,0,0,10" Header="Spacebar scrolling distance" Minimum="1"
-				SmallChange="20" SpinButtonPlacementMode="Inline" ToolTipService.ToolTip="Scrolling distance, in pixel, when the spacebar is pressed"
-				Value="{x:Bind Data.SettingsManager.SpacebarScroll, Mode=TwoWay}" />
+				Margin="0,0,0,10" Header="Keyboard scrolling distance" Minimum="1"
+				SmallChange="20" SpinButtonPlacementMode="Inline" ToolTipService.ToolTip="Scrolling distance, in pixels, when keyboard is used"
+				Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 			<ToggleSwitch Margin="0,0,0,10" Header="Open Reader automatically" IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 			<ToggleSwitch
 				Margin="0,0,0,10" Header="Read right-to-left"
