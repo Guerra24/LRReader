@@ -13,12 +13,9 @@ namespace LRReader.Shared.Providers
 {
 	public class ArchivesProvider
 	{
-		public List<Archive> Archives = new List<Archive>();
-		public List<TagStats> TagStats = new List<TagStats>();
 
-		public async Task<bool> LoadArchives()
+		public async Task<List<Archive>> LoadArchives()
 		{
-			Archives.Clear();
 			var client = SharedGlobal.LRRApi.GetClient();
 
 			var rq = new RestRequest("api/archivelist");
@@ -30,23 +27,21 @@ namespace LRReader.Shared.Providers
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
+				return null;
 			}
 			if (result.OK)
 			{
-				await Task.Run(() => Archives.AddRange(result.Data.OrderBy(a => a.title)));
-				return true;
+				return result.Data;
 			}
 			else
 			{
 				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
+				return null;
 			}
 		}
 
-		public async Task<bool> LoadTagStats()
+		public async Task<List<TagStats>> LoadTagStats()
 		{
-			TagStats.Clear();
 			var client = SharedGlobal.LRRApi.GetClient();
 
 			var rq = new RestRequest("api/tagstats");
@@ -58,21 +53,17 @@ namespace LRReader.Shared.Providers
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
+				return null;
 			}
 
 			if (result.OK)
 			{
-				await Task.Run(() =>
-				{
-					TagStats.AddRange(result.Data.OrderByDescending(a => a.weight));
-				});
-				return true;
+				return result.Data;
 			}
 			else
 			{
 				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
+				return null;
 			}
 		}
 

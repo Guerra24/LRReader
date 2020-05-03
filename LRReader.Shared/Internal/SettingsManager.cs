@@ -192,7 +192,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectLocal("SettingsVersion", value);
-				RaisePropertyChanged("SettingsVersion");
+				RaisePropertyChanged("SettingsVersionLocal");
 			}
 		}
 		public static readonly int CurrentRoamedVersion = 1;
@@ -202,7 +202,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
-				RaisePropertyChanged("SettingsVersion");
+				RaisePropertyChanged("SettingsVersionRoamed");
 			}
 		}
 		public SettingsManager()

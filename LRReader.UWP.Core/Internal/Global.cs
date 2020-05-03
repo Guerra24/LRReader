@@ -21,6 +21,7 @@ namespace LRReader.Internal
 			ImageManager.Init();
 			SharedGlobal.EventManager = EventManager = new EventManager();
 			SettingsManager = new SettingsManager();
+			ArchivesManager = new ArchivesManager();
 		}
 
 	}

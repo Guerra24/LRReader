@@ -35,7 +35,7 @@ namespace LRReader.ViewModels
 				RaisePropertyChanged("IsLoading");
 			}
 		}
-		private bool _loadingArchives = false;
+		private bool _loadingArchives = true;
 		public bool LoadingArchives
 		{
 			get => _loadingArchives;
@@ -133,63 +133,43 @@ namespace LRReader.ViewModels
 
 		public async Task Refresh()
 		{
-			await Refresh(true);
-		}
-
-		public async Task Refresh(bool animate)
-		{
 			if (_internalLoadingArchives)
 				return;
-			ControlsEnabled = false;
 			_internalLoadingArchives = true;
 			RefreshOnErrorButton = false;
 			ArchiveList.Clear();
-			if (animate)
-				LoadingArchives = true;
+			LoadingArchives = true;
 			foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
 			{
-				var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
+				var archive = SharedGlobal.ArchivesManager.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 				if (archive != null)
 					EventManager.CloseTabWithHeader(archive.title);
 			}
-			var result = await ArchivesProvider.LoadArchives();
+			await SharedGlobal.ArchivesManager.ReloadArchives();
 			if (SharedGlobal.SettingsManager.OpenBookmarksStart)
-				if (result)
+				if (SharedGlobal.ArchivesManager.Archives.Count > 0)
 					foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
 					{
-						var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
+						var archive = SharedGlobal.ArchivesManager.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 						if (archive != null)
 							EventManager.AddTab(new ArchiveTab(archive), false);
 						else
 							EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
-			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.SettingsManager.ArchivesPerPage, Page = 0, "", false, false);
-			if (resultPage != null)
-			{
-				await Task.Run(async () =>
-				{
-					foreach (var a in resultPage.data)
-						await DispatcherHelper.RunAsync(() => ArchiveList.Add(a));
-				});
-				TotalArchives = resultPage.recordsFiltered;
-			}
-			else
-				RefreshOnErrorButton = true;
-			if (animate)
-				LoadingArchives = false;
+			Page = 0;
+			LoadingArchives = false;
 			_internalLoadingArchives = false;
-			ControlsEnabled = true;
 		}
 
 		public async Task LoadTagStats()
 		{
 			TagStats.Clear();
 			var result = await ArchivesProvider.LoadTagStats();
-			if (result)
+			if (result != null)
 			{
 				await Task.Run(() =>
 				{
-					foreach (var t in ArchivesProvider.TagStats)
+					foreach (var t in result)
 						TagStats.Add(t);
 				});
 			}
@@ -229,7 +209,7 @@ namespace LRReader.ViewModels
 				{
 					foreach (var a in resultPage.data)
 					{
-						var archive = ArchivesProvider.Archives.FirstOrDefault(b => b.arcid == a.arcid);
+						var archive = SharedGlobal.ArchivesManager.Archives.FirstOrDefault(b => b.arcid == a.arcid);
 						await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});

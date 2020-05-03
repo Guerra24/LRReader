@@ -112,9 +112,9 @@
 				</GridView.ItemContainerTransitions>
 			</GridView>
 		</RefreshContainer>
-		<ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
 		<Button
 			HorizontalAlignment="Center" Click="Button_Click" Content="Retry"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+		<ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
 	</Grid>
 </UserControl>

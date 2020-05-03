@@ -38,13 +38,12 @@ namespace LRReader.Views.Tabs.Content
 			Data = DataContext as ArchivesPageViewModel;
 		}
 
-		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			if (loaded)
 				return;
 			loaded = true;
-			await Data.Refresh();
-			await Data.LoadTagStats();
+			Refresh();
 		}
 
 		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -52,14 +51,9 @@ namespace LRReader.Views.Tabs.Content
 			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
 		}
 
-		private async void Button_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.Refresh();
-			await Data.LoadTagStats();
-			HandleSearch();
-		}
+		private void Button_Click(object sender, RoutedEventArgs e) => Refresh();
 
-		public void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+		public async void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
 			{
@@ -85,83 +79,72 @@ namespace LRReader.Views.Tabs.Content
 				else
 				{
 					query = "";
-					HandleSearch();
+					await HandleSearch();
 				}
 			}
 		}
 
-		public void SearchQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+		public async void SearchQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
 			if (args.ChosenSuggestion != null)
 			{
 				query = args.ChosenSuggestion as string;
-				HandleSearch();
+				await HandleSearch();
 			}
 			else
 			{
 				query = args.QueryText;
-				HandleSearch();
+				await HandleSearch();
 			}
-		}
-
-		private async void HandleSearch()
-		{
-			Data.Query = query;
-			await Data.ReloadSearch();
 		}
 
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
 		{
 			var random = new Random();
-			var list = Providers.ArchivesProvider.Archives;
+			var list = Global.ArchivesManager.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
 			Global.EventManager.AddTab(new ArchiveTab(item));
 		}
 
-		private async void FilterToggle_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.ReloadSearch();
-		}
+		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();
 
-		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		private void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				await Data.Refresh();
-				await Data.LoadTagStats();
-				HandleSearch();
+				Refresh();
 			}
 		}
 
-		private void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			HandleSearch();
+			await HandleSearch();
 			args.Handled = true;
 		}
 
-		private async void RefreshFull_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private void RefreshFull_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			await Data.Refresh();
-			await Data.LoadTagStats();
-			HandleSearch();
+			Refresh();
 			args.Handled = true;
 		}
 
-		private async void PrevButton_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.PrevPage();
-		}
+		private async void PrevButton_Click(object sender, RoutedEventArgs e) => await Data.PrevPage();
 
-		private async void NextButton_Click(object sender, RoutedEventArgs e)
+		private async void NextButton_Click(object sender, RoutedEventArgs e) => await Data.NextPage();
+
+		private async Task HandleSearch()
 		{
-			await Data.NextPage();
+			Data.Query = query;
+			await Data.ReloadSearch();
 		}
 
 		public async void Refresh()
 		{
+			Data.ControlsEnabled = false;
 			await Data.Refresh();
 			await Data.LoadTagStats();
-			HandleSearch();
+			await HandleSearch();
+			Data.ControlsEnabled = true;
 		}
 	}
 }

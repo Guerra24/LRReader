@@ -63,12 +63,12 @@ namespace LRReader.ViewModels
 			ArchiveList.Clear();
 			if (animate)
 				LoadingArchives = true;
-			if (ArchivesProvider.Archives.Count > 0)
+			if (ArchivesManager.Archives.Count > 0)
 				await Task.Run(async () =>
 				{
 					foreach (var b in SettingsManager.Profile.Bookmarks)
 					{
-						var archive = ArchivesProvider.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
+						var archive = ArchivesManager.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
 						if (archive != null)
 							await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}
