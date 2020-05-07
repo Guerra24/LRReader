@@ -417,5 +417,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
 
+		private void Tags_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			Global.EventManager.AddTab(new SearchResultsTab(e.ClickedItem as string));
+		}
 	}
 }

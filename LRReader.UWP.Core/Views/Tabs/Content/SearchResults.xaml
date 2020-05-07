@@ -31,7 +31,7 @@
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
-						<AutoSuggestBox
+						<AutoSuggestBox x:Name="SearchBox"
 							MinWidth="300" HorizontalAlignment="Center"
 							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 							ItemsSource="{x:Bind Data.Suggestions, Mode=OneWay}"

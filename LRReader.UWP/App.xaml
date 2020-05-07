@@ -3,7 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="using:LRReader.UWP"
-	xmlns:vm="using:LRReader.ViewModels">
+	xmlns:vm="using:LRReader.UWP.ViewModels">
 	<Application.Resources>
 		<ResourceDictionary>
 			<vm:ViewModelLocator x:Key="Locator" />

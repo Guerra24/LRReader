@@ -29,7 +29,7 @@
 							Margin="0,0,0,8" FontSize="24" IsTextSelectionEnabled="True"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
-						<GridView IsItemClickEnabled="True" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
+						<GridView IsItemClickEnabled="True" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
 							<GridView.ItemTemplate>
 								<DataTemplate x:DataType="x:String">
 									<Grid Padding="4,3" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">

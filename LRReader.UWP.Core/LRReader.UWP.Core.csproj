@@ -165,6 +165,9 @@
     <Compile Include="Views\Main\HostTabPage.xaml.cs">
       <DependentUpon>HostTabPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\SearchResultsTab.xaml.cs">
+      <DependentUpon>SearchResultsTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\ArchivesTab.xaml.cs">
       <DependentUpon>ArchivesTab.xaml</DependentUpon>
     </Compile>
@@ -270,6 +273,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Main\HostTabPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\SearchResultsTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
