@@ -21,19 +21,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {
-	public sealed partial class ArchivesTabContent : UserControl
+	public sealed partial class SearchResults : UserControl
 	{
 
-		private ArchivesPageViewModel Data;
+		private SearchResultsViewModel Data;
 
 		private bool loaded;
 
 		private string query = "";
 
-		public ArchivesTabContent()
+		public SearchResults()
 		{
 			this.InitializeComponent();
-			Data = DataContext as ArchivesPageViewModel;
+			Data = new SearchResultsViewModel();
 		}
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -139,7 +139,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public async void Refresh()
 		{
 			Data.ControlsEnabled = false;
-			await Data.Refresh();
 			await HandleSearch();
 			Data.ControlsEnabled = true;
 		}

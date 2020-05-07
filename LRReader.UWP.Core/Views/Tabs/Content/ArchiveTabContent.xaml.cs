@@ -1,9 +1,9 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.UWP.Core.Views.Tabs;
-using LRReader.ViewModels;
-using LRReader.Views.Items;
+using LRReader.UWP.Views.Tabs;
+using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Items;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Tabs.Content
+namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class ArchiveTabContent : UserControl
 	{

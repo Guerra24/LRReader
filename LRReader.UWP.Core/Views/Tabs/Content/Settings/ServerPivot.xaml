@@ -1,11 +1,11 @@
 ﻿<PivotItem
-	x:Class="LRReader.Views.Tabs.Content.Settings.ServerPivot"
+	x:Class="LRReader.UWP.Views.Tabs.Content.Settings.ServerPivot"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
-	xmlns:local="using:LRReader.Views.Tabs.Content.Settings"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Header="Server"
@@ -13,7 +13,7 @@
 
 	<PivotItem.Resources>
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-		<Style TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}"/>
+		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
 	</PivotItem.Resources>
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">

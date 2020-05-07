@@ -1,7 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.ViewModels;
-using LRReader.Views.Dialogs;
+using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Tabs.Content.Settings
+namespace LRReader.UWP.Views.Tabs.Content.Settings
 {
 	public sealed partial class GeneralPivot : PivotItem
 	{

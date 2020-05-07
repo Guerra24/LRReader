@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static LRReader.Shared.Providers.Providers;
 
-namespace LRReader.ViewModels
+namespace LRReader.UWP.ViewModels
 {
 	public class SettingsPageViewModel : ViewModelBase
 	{

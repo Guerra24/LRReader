@@ -1,7 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.ViewModels.Items;
-using LRReader.Views.Tabs;
+using LRReader.UWP.ViewModels.Items;
+using LRReader.UWP.Views.Tabs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Items
+namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class BookmarkedArchive : UserControl
 	{

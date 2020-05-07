@@ -1,5 +1,5 @@
 ﻿using LRReader.Internal;
-using LRReader.Views.Main;
+using LRReader.UWP.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
-using LRReader.ViewModels;
-using LRReader.Views.Items;
-using LRReader.Views.Tabs;
+using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Items;
+using LRReader.UWP.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace LRReader.Views.Main
+namespace LRReader.UWP.Views.Main
 {
 	public sealed partial class HostTabPage : Page
 	{

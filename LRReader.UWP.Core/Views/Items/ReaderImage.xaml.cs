@@ -22,7 +22,7 @@ using GalaSoft.MvvmLight.Threading;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.Views.Items
+namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ReaderImage : UserControl
 	{

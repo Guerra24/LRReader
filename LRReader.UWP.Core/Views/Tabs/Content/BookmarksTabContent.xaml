@@ -1,11 +1,12 @@
 ﻿<UserControl
-	x:Class="LRReader.Views.Tabs.Content.BookmarksTabContent"
+	x:Class="LRReader.UWP.Views.Tabs.Content.BookmarksTabContent"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:items="using:LRReader.Views.Items"
-	xmlns:local="using:LRReader.Views.Tabs.Content"
+	xmlns:items="using:LRReader.UWP.Views.Items"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding BookmarksTabInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
@@ -45,9 +46,9 @@
 				</GridView.ItemContainerTransitions>
 			</GridView>
 		</RefreshContainer>
-		<ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
 		<Button
 			HorizontalAlignment="Center" Click="Button_Click" Content="Retry"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
 	</Grid>
 </UserControl>

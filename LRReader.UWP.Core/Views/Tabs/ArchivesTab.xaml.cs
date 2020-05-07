@@ -9,7 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Controls;
 
-namespace LRReader.Views.Tabs
+namespace LRReader.UWP.Views.Tabs
 {
 	public sealed partial class ArchivesTab : CustomTab
 	{

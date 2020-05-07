@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace LRReader.Views.Tabs
+namespace LRReader.UWP.Views.Tabs
 {
 	public sealed partial class ArchiveTab : CustomTab
 	{

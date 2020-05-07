@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
-namespace LRReader.ViewModels.Base
+namespace LRReader.UWP.ViewModels.Base
 {
 	public class ArchiveBaseViewModel : ViewModelBase
 	{

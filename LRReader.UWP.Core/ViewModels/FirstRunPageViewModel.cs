@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LRReader.ViewModels
+namespace LRReader.UWP.ViewModels
 {
 	public class FirstRunPageViewModel : ViewModelBase
 	{

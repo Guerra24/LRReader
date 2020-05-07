@@ -1,4 +1,4 @@
-﻿using LRReader.UWP.Core.ViewModels;
+﻿using LRReader.UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace LRReader.UWP.Core.Views.Tabs.Content
+namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class WebTabContent : UserControl
 	{

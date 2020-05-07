@@ -10,7 +10,7 @@ using LRReader.Internal;
 using LRReader.Shared.Internal;
 using Windows.Storage;
 
-namespace LRReader.ViewModels
+namespace LRReader.UWP.ViewModels
 {
 	public class ViewModelLocator
 	{

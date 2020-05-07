@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using System.Net;
-using LRReader.ViewModels.Base;
+using LRReader.UWP.ViewModels.Base;
 using static LRReader.Shared.Providers.Providers;
 
-namespace LRReader.ViewModels
+namespace LRReader.UWP.ViewModels
 {
 
 	public delegate void ZoomChanged();

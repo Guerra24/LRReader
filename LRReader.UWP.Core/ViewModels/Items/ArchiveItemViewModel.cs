@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
 using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
-using LRReader.ViewModels.Base;
+using LRReader.UWP.ViewModels.Base;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LRReader.ViewModels.Items
+namespace LRReader.UWP.ViewModels.Items
 {
 	public class ArchiveItemViewModel : ArchiveBaseViewModel
 	{

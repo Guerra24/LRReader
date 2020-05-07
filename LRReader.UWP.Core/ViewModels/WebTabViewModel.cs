@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace LRReader.UWP.Core.ViewModels
+namespace LRReader.UWP.ViewModels
 {
 	public class WebTabViewModel : ViewModelBase
 	{
