@@ -118,8 +118,7 @@
 			Name="ScrollViewer" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto"
 			KeyboardAcceleratorPlacementMode="Hidden" Opacity="0" PointerPressed="ScrollViewer_PointerPressed"
 			SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto"
-			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}"
-			ZoomMode="Enabled">
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" >
 			<ScrollViewer.KeyboardAccelerators>
 				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
 			</ScrollViewer.KeyboardAccelerators>
@@ -128,11 +127,6 @@
 				Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
 				KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp" ManipulationDelta="ReaderControl_ManipulationDelta"
 				ManipulationMode="TranslateY,TranslateX,System" PointerWheelChanged="ReaderControl_PointerWheelChanged" SizeChanged="ReaderControl_SizeChanged">
-				<ContentControl.ContentTransitions>
-					<TransitionCollection>
-						<ContentThemeTransition VerticalOffset="0" />
-					</TransitionCollection>
-				</ContentControl.ContentTransitions>
 				<ContentControl.ContentTemplate>
 					<DataTemplate>
 						<items:ReaderImage />

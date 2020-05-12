@@ -81,9 +81,9 @@ namespace LRReader.UWP.Views.Items
 			Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
 		}
 
-		private async void EditMenuItem_Click(object sender, RoutedEventArgs e)
+		private void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			await Util.OpenInBrowser(new Uri(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + ViewModel.Archive.arcid));
+			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + ViewModel.Archive.arcid));
 		}
 
 		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)

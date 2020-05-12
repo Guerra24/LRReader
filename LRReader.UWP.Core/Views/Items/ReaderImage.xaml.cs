@@ -1,10 +1,10 @@
 ﻿using LRReader.Internal;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -34,15 +34,20 @@ namespace LRReader.UWP.Views.Items
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
-			LeftImage.Source = null;
-			RightImage.Source = null;
 			if (args.NewValue == null)
+			{
+				LeftImage.Source = null;
+				RightImage.Source = null;
 				return;
-			ArchiveImageSet n = args.NewValue as ArchiveImageSet;
-			var lImage = await Global.ImageManager.DownloadImage(n.LeftImage);
-			var rImage = await Global.ImageManager.DownloadImage(n.RightImage);
-			LeftImage.Source = lImage;
-			RightImage.Source = rImage;
+			}
+			var animTask = ImagesRoot.Fade(value: 0.0f, duration: 80, easingMode: EasingMode.EaseOut).StartAsync();
+			var n = args.NewValue as ArchiveImageSet;
+			var lImage = Global.ImageManager.DownloadImage(n.LeftImage);
+			var rImage = Global.ImageManager.DownloadImage(n.RightImage);
+			await animTask;
+			LeftImage.Source = await lImage;
+			RightImage.Source = await rImage;
+			ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
 		}
 
 	}
