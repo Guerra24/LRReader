@@ -44,7 +44,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/tagstats");
+			var rq = new RestRequest("api/database/stats");
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -67,7 +67,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<ArchiveSearch> GetArchivesForPage(int archivesPerPage, int page, string query, bool isnew, bool untagged)
+		public async Task<ArchiveSearch> GetArchivesForPage(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -77,6 +77,8 @@ namespace LRReader.Shared.Providers
 			rq.AddParameter("newonly", isnew.ToString().ToLower());
 			rq.AddParameter("untaggedonly", untagged.ToString().ToLower());
 			rq.AddParameter("filter", query);
+			rq.AddParameter("category", category);
+			rq.AddParameter("order", "asc");
 
 			var r = await client.ExecuteGetAsync(rq);
 

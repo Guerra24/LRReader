@@ -16,9 +16,9 @@ namespace LRReader.Shared.Providers
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/restart_shinobu");
+			var rq = new RestRequest("api/shinobu/restart");
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecutePostAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -41,9 +41,9 @@ namespace LRReader.Shared.Providers
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/stop_shinobu");
+			var rq = new RestRequest("api/shinobu/stop");
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecutePostAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -66,7 +66,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/backup");
+			var rq = new RestRequest("api/database/backup");
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -93,9 +93,9 @@ namespace LRReader.Shared.Providers
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/clear_new_all");
+			var rq = new RestRequest("api/database/isnew", Method.DELETE);
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteAsync(rq);
 
 			var result = await LRRApi.GetResult<GenericApiResult>(r);
 
@@ -118,7 +118,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/shinobu_status");
+			var rq = new RestRequest("api/shinobu");
 
 			var r = await client.ExecuteGetAsync(rq);
 

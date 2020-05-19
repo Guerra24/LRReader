@@ -118,7 +118,7 @@ namespace LRReader.UWP.ViewModels
 				RaisePropertyChanged("HasPrevPage");
 			}
 		}
-		private bool _internalLoadingArchives;
+		protected bool _internalLoadingArchives;
 		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
 
 		public async Task NextPage()
@@ -148,7 +148,7 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.SettingsManager.ArchivesPerPage, page, Query, NewOnly, UntaggedOnly);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.SettingsManager.ArchivesPerPage, page, Query, "", NewOnly, UntaggedOnly);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

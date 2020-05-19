@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serialization;
+using RestSharp.Serializers.NewtonsoftJson;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,28 +15,21 @@ namespace LRReader.Shared.Models.Api
 {
 	public class LRRApi
 	{
-		private string apiKey;
-
 		private RestClient client;
 
 		public LRRApi()
 		{
-			client = new RestClient();
-			client.UseSerializer(() => new JsonNetSerializer());
 		}
 
 		public void RefreshSettings(ServerProfile profile)
 		{
+			client = new RestClient();
+			client.UseNewtonsoftJson();
 			client.BaseUrl = new Uri(profile.ServerAddress);
 			if (profile.HasApiKey)
 			{
-				apiKey = profile.ServerApiKey;
-				client.RemoveDefaultParameter("key");
-				client.AddDefaultParameter("key", apiKey);
-			}
-			else
-			{
-				apiKey = "";
+				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
+				client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
 			}
 		}
 
@@ -74,24 +68,4 @@ namespace LRReader.Shared.Models.Api
 		}
 	}
 
-	public class JsonNetSerializer : IRestSerializer
-	{
-		public string Serialize(object obj) =>
-			JsonConvert.SerializeObject(obj);
-
-		public string Serialize(Parameter parameter) =>
-			JsonConvert.SerializeObject(parameter.Value);
-
-		public T Deserialize<T>(IRestResponse response) =>
-			JsonConvert.DeserializeObject<T>(response.Content);
-
-		public string[] SupportedContentTypes { get; } =
-		{
-			"application/json", "text/json", "text/x-json", "text/javascript", "*+json"
-		};
-
-		public string ContentType { get; set; } = "application/json";
-
-		public DataFormat DataFormat { get; } = DataFormat.Json;
-	}
 }
