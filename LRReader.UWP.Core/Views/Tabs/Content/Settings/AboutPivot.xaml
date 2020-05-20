@@ -3,11 +3,16 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Header="About"
 	mc:Ignorable="d">
+
+	<PivotItem.Resources>
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
+	</PivotItem.Resources>
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
@@ -15,7 +20,18 @@
 				<Run>LRReader version</Run>
 				<Run Text="{x:Bind Data.Version}" />
 			</TextBlock>
-			<HyperlinkButton Content="Open on Github" NavigateUri="https://github.com/Guerra24/LRReader" />
+
+			<HyperlinkButton Margin="0,0,0,10" Content="Open on Github" NavigateUri="https://github.com/Guerra24/LRReader" />
+			<Button Margin="0,0,0,10" Click="CheckUpdatesButton_Click" Content="Check for updates" />
+			<TextBlock
+				Margin="0,5,0,10" FontSize="20" Text="No updates found"
+				Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+			<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
+				<TextBlock Margin="0,5,0,10" FontSize="20" Text="New update available!" />
+				<TextBlock Margin="0,0,0,10" FontSize="18" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
+				<TextBlock Margin="0,0,0,10" Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
+				<HyperlinkButton Content="Download" NavigateUri="https://github.com/Guerra24/LRReader/releases/latest" />
+			</StackPanel>
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

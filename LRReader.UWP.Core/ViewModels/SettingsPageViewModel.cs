@@ -63,6 +63,12 @@ namespace LRReader.UWP.ViewModels
 		public bool ShinobuStopped => _shinobuStatus.is_alive == 0 && !ShinobuUnknown;
 		public bool ShinobuUnknown => !SettingsManager.Profile.HasApiKey || _shinobuStatus.pid == 0;
 		public int ShinobuPID => _shinobuStatus.pid;
+
+		public SettingsPageViewModel()
+		{
+			UpdateReleaseData();
+		}
+
 		public async Task UpdateCacheSize()
 		{
 			if (ProgressCache)
@@ -114,6 +120,35 @@ namespace LRReader.UWP.ViewModels
 			RaisePropertyChanged("ShinobuRunning");
 			RaisePropertyChanged("ShinobuStopped");
 			RaisePropertyChanged("ShinobuUnknown");
+		}
+
+		public ReleaseInfo ReleaseInfo;
+		private bool _showReleaseInfo;
+		public bool ShowReleaseInfo
+		{
+			get => _showReleaseInfo;
+			set
+			{
+				_showReleaseInfo = value;
+				RaisePropertyChanged("ShowReleaseInfo");
+			}
+		}
+
+		public async void UpdateReleaseData()
+		{
+			var info = await SharedGlobal.UpdatesManager.CheckUpdates(new Version(Util.GetAppVersion()));
+			if (info != null)
+			{
+				ReleaseInfo = info;
+				RaisePropertyChanged("ReleaseInfo");
+				ShowReleaseInfo = true;
+			}
+			else
+			{
+				ShowReleaseInfo = false;
+				ReleaseInfo = null;
+				RaisePropertyChanged("ReleaseInfo");
+			}
 		}
 	}
 }

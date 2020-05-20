@@ -48,6 +48,7 @@ namespace LRReader.UWP.Views.Main
 			CoreView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
 			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
 
+			TabViewStartHeader.Margin = new Thickness(CoreView.TitleBar.SystemOverlayLeftInset, 0, 0, 0);
 			TabViewEndHeader.Margin = new Thickness(0, 0, CoreView.TitleBar.SystemOverlayRightInset, 0);
 
 			Window.Current.SetTitleBar(TitleBar);
@@ -63,6 +64,9 @@ namespace LRReader.UWP.Views.Main
 				if (Global.SettingsManager.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
 			});
+			var info = await Global.UpdatesManager.CheckUpdates(new Version(Util.GetAppVersion()));
+			if (info != null)
+				ShowError("New update available! - " + info.name, "Check Settings -> About for more info");
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

@@ -27,5 +27,10 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
 		}
+
+		private void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.UpdateReleaseData();
+		}
 	}
 }

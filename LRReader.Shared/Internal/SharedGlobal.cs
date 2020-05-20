@@ -12,5 +12,6 @@ namespace LRReader.Shared.Internal
 		public static ISettingsStorage SettingsStorage { get; set; } = new StubSettingsStorage();
 		public static SettingsManager SettingsManager { get; set; }
 		public static ArchivesManager ArchivesManager { get; set; }
+		public static UpdatesManager UpdatesManager { get; } = new UpdatesManager();
 	}
 }
