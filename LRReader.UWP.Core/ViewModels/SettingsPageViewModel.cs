@@ -17,19 +17,6 @@ namespace LRReader.UWP.ViewModels
 {
 	public class SettingsPageViewModel : ViewModelBase
 	{
-		private bool _isLoading = false;
-		public bool IsLoading
-		{
-			get
-			{
-				return _isLoading;
-			}
-			set
-			{
-				_isLoading = value;
-				RaisePropertyChanged("IsLoading");
-			}
-		}
 		public SettingsManager SettingsManager
 		{
 			get => Global.SettingsManager;

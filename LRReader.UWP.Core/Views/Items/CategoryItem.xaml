@@ -1,0 +1,39 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Items.CategoryItem"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.UWP.Views.Items"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	d:DesignHeight="260"
+	d:DesignWidth="500"
+	DataContextChanged="UserControl_DataContextChanged"
+	mc:Ignorable="d">
+
+	<Grid Width="450" Height="282" Background="{ThemeResource BrushItemGridBackground}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid x:Name="Overlay" Width="200">
+			<Image x:Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />
+			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
+				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
+			</Grid>
+		</Grid>
+		<muxc:ProgressRing
+			x:Name="Ring" Grid.RowSpan="3" Width="50"
+			Height="50" IsActive="True" />
+		<Grid Grid.Column="1">
+			<StackPanel Padding="7,2">
+				<TextBlock
+					x:Name="Title" VerticalAlignment="Top"
+					FontSize="16"
+					Text="{x:Bind ViewModel.Category.name, Mode=OneWay}"
+					TextTrimming="CharacterEllipsis"
+					ToolTipService.ToolTip="{x:Bind ViewModel.Category.name, Mode=OneWay}" />
+			</StackPanel>
+		</Grid>
+	</Grid>
+</UserControl>

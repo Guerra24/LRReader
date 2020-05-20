@@ -17,19 +17,6 @@ namespace LRReader.UWP.ViewModels.Base
 {
 	public class ArchiveBaseViewModel : ViewModelBase
 	{
-		private bool _isLoading = false;
-		public bool IsLoading
-		{
-			get
-			{
-				return _isLoading;
-			}
-			set
-			{
-				_isLoading = value;
-				RaisePropertyChanged("IsLoading");
-			}
-		}
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
 		{

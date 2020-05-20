@@ -133,7 +133,9 @@
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\ArchivesPageViewModel.cs" />
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
+    <Compile Include="ViewModels\Base\CategoryBaseViewModel.cs" />
     <Compile Include="ViewModels\BookmarksTabViewModel.cs" />
+    <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
@@ -153,6 +155,9 @@
     <Compile Include="Views\Items\BookmarkedArchive.xaml.cs">
       <DependentUpon>BookmarkedArchive.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Items\CategoryItem.xaml.cs">
+      <DependentUpon>CategoryItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\NotificationItem.xaml.cs">
       <DependentUpon>NotificationItem.xaml</DependentUpon>
     </Compile>
@@ -164,6 +169,12 @@
     </Compile>
     <Compile Include="Views\Main\HostTabPage.xaml.cs">
       <DependentUpon>HostTabPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\CategoriesTab.xaml.cs">
+      <DependentUpon>CategoriesTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\Categories.xaml.cs">
+      <DependentUpon>Categories.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\SearchResultsTab.xaml.cs">
       <DependentUpon>SearchResultsTab.xaml</DependentUpon>
@@ -260,6 +271,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Items\CategoryItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Items\NotificationItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -275,6 +290,14 @@
     <Page Include="Views\Main\HostTabPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\CategoriesTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\Categories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\SearchResultsTab.xaml">
       <Generator>MSBuild:Compile</Generator>

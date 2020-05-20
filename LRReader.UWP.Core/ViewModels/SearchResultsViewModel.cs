@@ -16,16 +16,6 @@ namespace LRReader.UWP.ViewModels
 {
 	public class SearchResultsViewModel : ViewModelBase
 	{
-		private bool _isLoading = false;
-		public bool IsLoading
-		{
-			get => _isLoading;
-			set
-			{
-				_isLoading = value;
-				RaisePropertyChanged("IsLoading");
-			}
-		}
 		private bool _loadingArchives = true;
 		public bool LoadingArchives
 		{

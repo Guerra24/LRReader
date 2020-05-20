@@ -23,27 +23,14 @@ namespace LRReader.UWP.ViewModels
 			SimpleIoc.Default.Register<HostTabPageViewModel>();
 			SimpleIoc.Default.Register<BookmarksTabViewModel>();
 			SimpleIoc.Default.Register<FirstRunPageViewModel>();
+			SimpleIoc.Default.Register<CategoriesViewModel>();
 		}
 
-		public ArchivesPageViewModel ArchivesPageInstance
-		{
-			get => SimpleIoc.Default.GetInstance<ArchivesPageViewModel>();
-		}
-		public SettingsPageViewModel SettingsPageInstance
-		{
-			get => SimpleIoc.Default.GetInstance<SettingsPageViewModel>();
-		}
-		public HostTabPageViewModel HostTabPageInstace
-		{
-			get => SimpleIoc.Default.GetInstance<HostTabPageViewModel>();
-		}
-		public BookmarksTabViewModel BookmarksTabInstance
-		{
-			get => SimpleIoc.Default.GetInstance<BookmarksTabViewModel>();
-		}
-		public FirstRunPageViewModel FirstRunPageInstance
-		{
-			get => SimpleIoc.Default.GetInstance<FirstRunPageViewModel>();
-		}
+		public ArchivesPageViewModel ArchivesPageInstance => SimpleIoc.Default.GetInstance<ArchivesPageViewModel>();
+		public SettingsPageViewModel SettingsPageInstance => SimpleIoc.Default.GetInstance<SettingsPageViewModel>();
+		public HostTabPageViewModel HostTabPageInstace => SimpleIoc.Default.GetInstance<HostTabPageViewModel>();
+		public BookmarksTabViewModel BookmarksTabInstance => SimpleIoc.Default.GetInstance<BookmarksTabViewModel>();
+		public FirstRunPageViewModel FirstRunPageInstance => SimpleIoc.Default.GetInstance<FirstRunPageViewModel>();
+		public CategoriesViewModel CategoriesTabInstance => SimpleIoc.Default.GetInstance<CategoriesViewModel>();
 	}
 }

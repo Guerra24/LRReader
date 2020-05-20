@@ -1,0 +1,55 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Tabs.Content.Categories"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:items="using:LRReader.UWP.Views.Items"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	DataContext="{Binding CategoriesTabInstance, Source={StaticResource Locator}}"
+	Loaded="UserControl_Loaded"
+	mc:Ignorable="d">
+
+	<Grid Padding="0,10">
+		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+			<GridView
+				Name="CategoriesGrid" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick"
+				ItemsSource="{x:Bind Data.CategoriesList, Mode=OneWay}"
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				<GridView.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+				</GridView.KeyboardAccelerators>
+				<GridView.ItemTemplate>
+					<DataTemplate>
+						<items:CategoryItem />
+					</DataTemplate>
+				</GridView.ItemTemplate>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemContainerStyle>
+					<Style TargetType="GridViewItem">
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Margin" Value="5" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemContainerTransitions>
+					<TransitionCollection>
+						<PopupThemeTransition FromVerticalOffset="200" />
+						<ReorderThemeTransition />
+						<RepositionThemeTransition />
+					</TransitionCollection>
+				</GridView.ItemContainerTransitions>
+			</GridView>
+		</RefreshContainer>
+		<Button
+			HorizontalAlignment="Center" Click="Button_Click" Content="Retry"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingCategories, Mode=OneWay}" />
+	</Grid>
+</UserControl>

@@ -15,16 +15,6 @@ namespace LRReader.UWP.ViewModels
 {
 	public class BookmarksTabViewModel : ViewModelBase
 	{
-		private bool _isLoading = false;
-		public bool IsLoading
-		{
-			get => _isLoading;
-			set
-			{
-				_isLoading = value;
-				RaisePropertyChanged("IsLoading");
-			}
-		}
 		private bool _loadingArchives = false;
 		public bool LoadingArchives
 		{
