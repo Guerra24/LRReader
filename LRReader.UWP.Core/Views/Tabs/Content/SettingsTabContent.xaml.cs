@@ -33,10 +33,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 			DispatcherTimer.Start();
 		}
 
-		private async void UserControl_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateShinobuStatus();
+		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+		{
+			await Data.UpdateShinobuStatus();
+			await Data.UpdateServerInfo();
+		}
 
-
-		private async void DispatcherTimer_Tick(object sender, object e) => await Data.UpdateShinobuStatus();
+		private async void DispatcherTimer_Tick(object sender, object e)
+		{
+			await Data.UpdateShinobuStatus();
+			await Data.UpdateServerInfo();
+		}
 
 		public void RemoveTimer() => DispatcherTimer.Stop();
 	}

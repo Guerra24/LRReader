@@ -6,34 +6,33 @@
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	d:DesignHeight="260"
-	d:DesignWidth="500"
+	d:DesignHeight="300"
+	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
-	<Grid Width="450" Height="282" Background="{ThemeResource BrushItemGridBackground}">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
-		<Grid x:Name="Overlay" Width="200">
+	<Grid Width="200" Background="{ThemeResource BrushItemGridBackground}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<TextBlock
+			x:Name="Title" Padding="5,0" HorizontalAlignment="Center"
+			FontSize="16"
+			Text="{x:Bind ViewModel.Category.name, Mode=OneWay}"
+			TextTrimming="CharacterEllipsis"
+			ToolTipService.ToolTip="{x:Bind ViewModel.Category.name, Mode=OneWay}" />
+		<Grid x:Name="Overlay" Grid.Row="1" Height="282">
 			<Image x:Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />
 			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
 				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>
+			<Grid x:Name="SearchImage" x:Load="{x:Bind ViewModel.SearchImage, Mode=OneWay}">
+				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="24" Glyph="&#xE721;"/>
+			</Grid>
 		</Grid>
 		<muxc:ProgressRing
-			x:Name="Ring" Grid.RowSpan="3" Width="50"
+			x:Name="Ring" Grid.Row="1" Width="50"
 			Height="50" IsActive="True" />
-		<Grid Grid.Column="1">
-			<StackPanel Padding="7,2">
-				<TextBlock
-					x:Name="Title" VerticalAlignment="Top"
-					FontSize="16"
-					Text="{x:Bind ViewModel.Category.name, Mode=OneWay}"
-					TextTrimming="CharacterEllipsis"
-					ToolTipService.ToolTip="{x:Bind ViewModel.Category.name, Mode=OneWay}" />
-			</StackPanel>
-		</Grid>
 	</Grid>
 </UserControl>

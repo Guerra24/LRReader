@@ -38,7 +38,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<bool> CreateCategory(string name, string search = "", bool pinned = false)
+		public async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -49,21 +49,21 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await LRRApi.GetResult<CategoryCreatedApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
+				return null;
 			}
 			if (result.OK)
 			{
-				return true;
+				return new Category() { id = result.Data.category_id, name = name, search = search, pinned = pinned, archives = new List<string>() };
 			}
 			else
 			{
 				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
+				return null;
 			}
 		}
 
@@ -180,5 +180,10 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
+	}
+
+	public class CategoryCreatedApiResult : GenericApiResult
+	{
+		public string category_id { get; set; }
 	}
 }

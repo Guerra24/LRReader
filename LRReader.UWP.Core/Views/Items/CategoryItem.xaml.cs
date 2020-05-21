@@ -68,7 +68,7 @@ namespace LRReader.UWP.Views.Items
 				}
 				else
 				{
-					ViewModel.MissingImage = true;
+					ViewModel.SearchImage = true;
 				}
 			}
 			Ring.IsActive = false;

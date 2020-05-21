@@ -3,6 +3,7 @@ using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Api;
+using LRReader.Shared.Models.Main;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,27 @@ namespace LRReader.UWP.ViewModels
 		public bool ShinobuStopped => _shinobuStatus.is_alive == 0 && !ShinobuUnknown;
 		public bool ShinobuUnknown => !SettingsManager.Profile.HasApiKey || _shinobuStatus.pid == 0;
 		public int ShinobuPID => _shinobuStatus.pid;
+		public ReleaseInfo ReleaseInfo;
+		private bool _showReleaseInfo;
+		public bool ShowReleaseInfo
+		{
+			get => _showReleaseInfo;
+			set
+			{
+				_showReleaseInfo = value;
+				RaisePropertyChanged("ShowReleaseInfo");
+			}
+		}
+		private ServerInfo _serverInfo;
+		public ServerInfo ServerInfo
+		{
+			get => _serverInfo;
+			set
+			{
+				_serverInfo = value;
+				RaisePropertyChanged("ServerInfo");
+			}
+		}
 
 		public SettingsPageViewModel()
 		{
@@ -64,6 +86,7 @@ namespace LRReader.UWP.ViewModels
 			CacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
 			ProgressCache = false;
 		}
+
 		public async Task ClearCache()
 		{
 			if (ProgressCache)
@@ -72,22 +95,27 @@ namespace LRReader.UWP.ViewModels
 			await Global.ImageManager.ClearCache();
 			ProgressCache = false;
 		}
+
 		public async Task RestartWorker()
 		{
 			await ServerProvider.RestartWorker();
 		}
+
 		public async Task StopWorker()
 		{
 			await ServerProvider.StopWorker();
 		}
+
 		public async Task<DownloadPayload> DownloadDB()
 		{
 			return await ServerProvider.DownloadDB();
 		}
+
 		public async Task ClearAllNew()
 		{
 			await ServerProvider.ClearAllNew();
 		}
+
 		public async Task UpdateShinobuStatus()
 		{
 			if (SettingsManager.Profile.HasApiKey)
@@ -109,18 +137,6 @@ namespace LRReader.UWP.ViewModels
 			RaisePropertyChanged("ShinobuUnknown");
 		}
 
-		public ReleaseInfo ReleaseInfo;
-		private bool _showReleaseInfo;
-		public bool ShowReleaseInfo
-		{
-			get => _showReleaseInfo;
-			set
-			{
-				_showReleaseInfo = value;
-				RaisePropertyChanged("ShowReleaseInfo");
-			}
-		}
-
 		public async void UpdateReleaseData()
 		{
 			var info = await SharedGlobal.UpdatesManager.CheckUpdates(new Version(Util.GetAppVersion()));
@@ -135,6 +151,15 @@ namespace LRReader.UWP.ViewModels
 				ShowReleaseInfo = false;
 				ReleaseInfo = null;
 				RaisePropertyChanged("ReleaseInfo");
+			}
+		}
+
+		public async Task UpdateServerInfo()
+		{
+			var info = await ServerProvider.GetServerInfo();
+			if (info != null)
+			{
+				ServerInfo = info;
 			}
 		}
 	}

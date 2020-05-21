@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using LRReader.Shared.Models.Main;
 
 namespace LRReader.Shared.Providers
 {
@@ -37,6 +38,7 @@ namespace LRReader.Shared.Providers
 				return false;
 			}
 		}
+
 		public async Task<bool> StopWorker()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
@@ -62,6 +64,7 @@ namespace LRReader.Shared.Providers
 				return false;
 			}
 		}
+
 		public async Task<DownloadPayload> DownloadDB()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
@@ -89,6 +92,7 @@ namespace LRReader.Shared.Providers
 					return null;
 			}
 		}
+
 		public async Task<bool> ClearAllNew()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
@@ -114,6 +118,7 @@ namespace LRReader.Shared.Providers
 				return false;
 			}
 		}
+
 		public async Task<ShinobuStatus> GetShinobuStatus()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
@@ -129,6 +134,32 @@ namespace LRReader.Shared.Providers
 			if (result.OK)
 				return result.Data;
 			return null;
+		}
+
+		public async Task<ServerInfo> GetServerInfo()
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/info");
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			var result = await LRRApi.GetResult<ServerInfo>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				//SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			if (result.OK)
+			{
+				return result.Data;
+			}
+			else
+			{
+				//SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
+			}
 		}
 	}
 }

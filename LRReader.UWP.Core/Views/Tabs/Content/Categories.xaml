@@ -5,28 +5,34 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	d:DesignHeight="300"
-	d:DesignWidth="400"
 	DataContext="{Binding CategoriesTabInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
-	<Grid Padding="0,10">
+	<UserControl.Resources>
+		<DataTemplate x:Key="StaticCategoryTemplate" x:DataType="main:Category">
+			<items:CategoryItem />
+		</DataTemplate>
+		<DataTemplate x:Key="AddNewCategoryTemplate" x:DataType="main:AddNewCategory">
+			<Grid Width="200" Height="304" Background="{ThemeResource BrushItemGridBackground}" >
+				<SymbolIcon Symbol="Add"/>
+			</Grid>
+		</DataTemplate>
+		<local:CategoryTemplateSelector x:Key="CategoryTemplateSelector" AddNewTemplate="{StaticResource AddNewCategoryTemplate}" StaticTemplate="{StaticResource StaticCategoryTemplate}" />
+	</UserControl.Resources>
+
+	<Grid>
 		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				Name="CategoriesGrid" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.CategoriesList, Mode=OneWay}"
-				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None" ItemTemplateSelector="{StaticResource CategoryTemplateSelector}">
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
-				<GridView.ItemTemplate>
-					<DataTemplate>
-						<items:CategoryItem />
-					</DataTemplate>
-				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>
 					<ItemsPanelTemplate>
 						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />

@@ -1,0 +1,26 @@
+﻿<ContentDialog
+	x:Class="LRReader.UWP.Views.Dialogs.CreateCategory"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.UWP.Views.Dialogs"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title="Create Category"
+	IsPrimaryButtonEnabled="False"
+	PrimaryButtonText="Add"
+	SecondaryButtonText="Cancel"
+	mc:Ignorable="d">
+
+	<StackPanel>
+		<TextBox
+			x:Name="CategoryName" Margin="0,0,0,10" x:FieldModifier="public"
+			PlaceholderText="Category Name" TextChanging="CategoryName_TextChanging" />
+		<TextBox
+			x:Name="SearchQuery" Margin="0,0,0,10" x:FieldModifier="public"
+			PlaceholderText="Search Query" />
+		<ToggleSwitch
+			x:Name="Pinned" Margin="0,0,0,10" x:FieldModifier="public"
+			Header="Pinned" />
+		<TextBlock Name="CategoryError" Foreground="#FF4141" />
+	</StackPanel>
+</ContentDialog>

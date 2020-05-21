@@ -1,4 +1,6 @@
 ﻿using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Dialogs;
+using static LRReader.Shared.Providers.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using LRReader.Shared.Models.Main;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -37,9 +40,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 			loaded = true;
 			await Data.Refresh();
 		}
-		private void CategoriesGrid_ItemClick(object sender, ItemClickEventArgs e)
+		private async void CategoriesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
-
+			if (e.ClickedItem is AddNewCategory)
+			{
+				CreateCategory dialog = new CreateCategory(false);
+				var result = await dialog.ShowAsync();
+				if (result == ContentDialogResult.Primary)
+				{
+					await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
+				}
+			}
 		}
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
@@ -55,5 +66,26 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => await Data.Refresh();
 
 		public async void Refresh() => await Data.Refresh();
+
 	}
+
+	public class CategoryTemplateSelector : DataTemplateSelector
+	{
+		public DataTemplate StaticTemplate { get; set; }
+		public DataTemplate DynamicTemplate { get; set; }
+		public DataTemplate AddNewTemplate { get; set; }
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (item is AddNewCategory)
+				return AddNewTemplate;
+			if (item is Category)
+				return StaticTemplate;
+			return base.SelectTemplateCore(item);
+		}
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		{
+			return SelectTemplateCore(item);
+		}
+	}
+
 }

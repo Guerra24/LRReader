@@ -51,6 +51,15 @@ namespace LRReader.UWP.ViewModels
 		}
 		protected bool _internalLoadingCategories;
 
+		public async Task CreateCategory(string name, string search = "", bool pinned = false)
+		{
+			var resultCreate = await CategoriesProvider.CreateCategory(name, search, pinned);
+			if (resultCreate != null)
+			{
+				CategoriesList.Add(resultCreate);
+			}
+		}
+
 		public async Task Refresh()
 		{
 			if (_internalLoadingCategories)
@@ -60,6 +69,7 @@ namespace LRReader.UWP.ViewModels
 			RefreshOnErrorButton = false;
 			LoadingCategories = true;
 			CategoriesList.Clear();
+			CategoriesList.Add(new AddNewCategory());
 			var result = await CategoriesProvider.GetCategories();
 			if (result != null)
 			{

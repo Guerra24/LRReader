@@ -15,4 +15,9 @@ namespace LRReader.Shared.Models.Main
 		public bool pinned { get; set; }
 		public string search { get; set; }
 	}
+
+	public class AddNewCategory : Category
+	{
+
+	}
 }

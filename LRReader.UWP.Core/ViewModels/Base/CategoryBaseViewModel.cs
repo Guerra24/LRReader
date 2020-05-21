@@ -31,5 +31,15 @@ namespace LRReader.UWP.ViewModels.Base
 				RaisePropertyChanged("MissingImage");
 			}
 		}
+		private bool _searchImage = false;
+		public bool SearchImage
+		{
+			get => _searchImage;
+			set
+			{
+				_searchImage = value;
+				RaisePropertyChanged("SearchImage");
+			}
+		}
 	}
 }

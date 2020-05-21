@@ -28,6 +28,32 @@
 				<Button Click="Logs_Click" Content="Logs" />
 			</controls:WrapPanel>
 			<TextBlock Margin="0,0,0,5" Text="API Key required to use server options" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+			<TextBlock Margin="0,0,0,5" FontSize="18">
+				<Run Text="{x:Bind Data.ServerInfo.name, Mode=OneWay}"/>
+				<Run Text="-"/>
+				<Run Text="{x:Bind Data.ServerInfo.motd, Mode=OneWay}"/>
+			</TextBlock>
+			<TextBlock Margin="0,0,0,5" >
+				<Run Text="{x:Bind Data.ServerInfo.version, Mode=OneWay}"/>
+				<Run Text="-"/>
+				<Run Text="{x:Bind Data.ServerInfo.version_name, Mode=OneWay}"/>
+			</TextBlock>
+			<CheckBox
+				Content="Resized Images"
+				IsChecked="{x:Bind Data.ServerInfo.server_resizes_images, Mode=OneWay}"
+				IsHitTestVisible="False" IsTabStop="False" />
+			<CheckBox
+				Content="Requires password"
+				IsChecked="{x:Bind Data.ServerInfo.has_password, Mode=OneWay}"
+				IsHitTestVisible="False" IsTabStop="False" />
+			<CheckBox
+				Content="No-Fun Mode"
+				IsChecked="{x:Bind Data.ServerInfo.nofun_mode, Mode=OneWay}"
+				IsHitTestVisible="False" IsTabStop="False" />
+			<CheckBox Margin="0,0,0,10"
+				Content="Debug mode!"
+				IsChecked="{x:Bind Data.ServerInfo.debug_mode, Mode=OneWay}"
+				IsHitTestVisible="False" IsTabStop="False" />
 			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Background Worker" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<TextBlock Text="Status:" />
