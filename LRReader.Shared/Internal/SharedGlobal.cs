@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Models.Api;
+using LRReader.Shared.Models.Main;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,6 @@ namespace LRReader.Shared.Internal
 		public static SettingsManager SettingsManager { get; set; }
 		public static ArchivesManager ArchivesManager { get; set; }
 		public static UpdatesManager UpdatesManager { get; } = new UpdatesManager();
+		public static ServerInfo ServerInfo { get; set; }
 	}
 }

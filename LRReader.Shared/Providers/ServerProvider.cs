@@ -13,6 +13,7 @@ namespace LRReader.Shared.Providers
 {
 	public class ServerProvider
 	{
+
 		public async Task<bool> RestartWorker()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();

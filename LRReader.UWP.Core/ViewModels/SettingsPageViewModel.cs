@@ -18,14 +18,10 @@ namespace LRReader.UWP.ViewModels
 {
 	public class SettingsPageViewModel : ViewModelBase
 	{
-		public SettingsManager SettingsManager
-		{
-			get => Global.SettingsManager;
-		}
-		public string Version
-		{
-			get => Util.GetAppVersion();
-		}
+		public SettingsManager SettingsManager => SharedGlobal.SettingsManager;
+		public Version Version => Util.GetAppVersion();
+		public Version MinVersion => UpdatesManager.MIN_VERSION;
+		public Version MaxVersion => UpdatesManager.MAX_VERSION;
 		private string _cacheSizeInMB;
 		public string CacheSizeInMB
 		{
@@ -139,7 +135,7 @@ namespace LRReader.UWP.ViewModels
 
 		public async void UpdateReleaseData()
 		{
-			var info = await SharedGlobal.UpdatesManager.CheckUpdates(new Version(Util.GetAppVersion()));
+			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
 			{
 				ReleaseInfo = info;

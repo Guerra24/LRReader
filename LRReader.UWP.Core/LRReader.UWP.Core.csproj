@@ -139,6 +139,7 @@
     <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
+    <Compile Include="ViewModels\LoadingPageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -172,6 +173,9 @@
     </Compile>
     <Compile Include="Views\Main\HostTabPage.xaml.cs">
       <DependentUpon>HostTabPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\CategoriesTab.xaml.cs">
       <DependentUpon>CategoriesTab.xaml</DependentUpon>
@@ -298,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Main\LoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tabs\CategoriesTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -376,6 +384,9 @@
       <Project>{cb0af1c0-a296-4e1d-85b9-a564868b7c0e}</Project>
       <Name>LRReader.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\SplashScreen.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

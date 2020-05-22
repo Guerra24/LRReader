@@ -73,7 +73,7 @@ namespace LRReader.UWP.ViewModels
 				}
 			}
 		}
-		public bool HasNextPage => Page < TotalArchives / SharedGlobal.SettingsManager.ArchivesPerPage && ControlsEnabled;
+		public bool HasNextPage => Page < TotalArchives / SharedGlobal.ServerInfo.archives_per_page && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
 		private bool _newOnly;
 		public bool NewOnly
@@ -138,7 +138,7 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.SettingsManager.ArchivesPerPage, page, Query, "", NewOnly, UntaggedOnly);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.ServerInfo.archives_per_page, page, Query, "", NewOnly, UntaggedOnly);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

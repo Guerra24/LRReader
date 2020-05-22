@@ -2,11 +2,13 @@
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
+using LRReader.UWP.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -15,6 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -65,10 +68,28 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			RemoveFlyout.Hide();
 		}
 
-		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (Data.SettingsManager.Profile != null)
-				Global.LRRApi.RefreshSettings(Data.SettingsManager.Profile);
+			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
+			if (profile == Data.SettingsManager.Profile)
+				return;
+			var dialog = new ContentDialog()
+			{
+				Title = "Change profile",
+				Content = "Are you sure you want to change profile?\nReload is required",
+				PrimaryButtonText = "Yes",
+				CloseButtonText = "No"
+			};
+			var result = await dialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
+			{
+				Data.SettingsManager.Profile = profile;
+				Global.EventManager.CloseAllTabs();
+				(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
+			} else
+			{
+				ProfileSelection.SelectedItem = Data.SettingsManager.Profile;
+			}
 		}
 	}
 }

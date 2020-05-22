@@ -20,6 +20,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI;
 using LRReader.Internal;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP
 {
@@ -91,7 +92,7 @@ namespace LRReader.UWP
 					}
 					else
 					{
-						rootFrame.Navigate(typeof(HostTabPage), e.Arguments);
+						rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
 					}
 				}
 				// Ensure the current window is active

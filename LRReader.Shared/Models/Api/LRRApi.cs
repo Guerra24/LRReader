@@ -26,6 +26,7 @@ namespace LRReader.Shared.Models.Api
 			client = new RestClient();
 			client.UseNewtonsoftJson();
 			client.BaseUrl = new Uri(profile.ServerAddress);
+			client.UserAgent = "LRReader";
 			if (profile.HasApiKey)
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));

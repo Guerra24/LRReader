@@ -149,15 +149,6 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("OpenReader");
 			}
 		}
-		public int ArchivesPerPage
-		{
-			get => SettingsStorage.GetObjectLocal("ArchivesPerPage", 100);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("ArchivesPerPage", value);
-				RaisePropertyChanged("ArchivesPerPage");
-			}
-		}
 		public int KeyboardScroll
 		{
 			get => SettingsStorage.GetObjectLocal("KeyboardScroll", 200);
@@ -185,7 +176,7 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("FitScaleLimit");
 			}
 		}
-		public static readonly int CurrentLocalVersion = 1;
+		public static readonly int CurrentLocalVersion = 2;
 		public int SettingsVersionLocal
 		{
 			get => SettingsStorage.GetObjectLocal<int>("SettingsVersion");
@@ -257,6 +248,9 @@ namespace LRReader.Shared.Internal
 					case 0:
 						KeyboardScroll = SettingsStorage.GetObjectLocal("SpacebarScroll", 200);
 						SettingsStorage.DeleteObjectLocal("SpacebarScroll");
+						break;
+					case 1:
+						SettingsStorage.DeleteObjectLocal("ArchivesPerPage");
 						break;
 				}
 				if (localVersion >= CurrentLocalVersion - 1)

@@ -36,12 +36,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data = DataContext as ArchivesPageViewModel;
 		}
 
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			if (loaded)
 				return;
 			loaded = true;
-			Refresh();
+			Data.ControlsEnabled = false;
+			Data.LoadBookmarks();
+			await HandleSearch();
+			Data.ControlsEnabled = true;
 		}
 
 		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)

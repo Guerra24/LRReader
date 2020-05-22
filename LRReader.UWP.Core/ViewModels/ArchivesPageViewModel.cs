@@ -40,6 +40,14 @@ namespace LRReader.UWP.ViewModels
 					EventManager.CloseTabWithHeader(archive.title);
 			}
 			await SharedGlobal.ArchivesManager.ReloadArchives();
+			LoadBookmarks();
+			Page = 0;
+			LoadingArchives = false;
+			_internalLoadingArchives = false;
+		}
+
+		public void LoadBookmarks()
+		{
 			if (SharedGlobal.SettingsManager.OpenBookmarksStart)
 				if (SharedGlobal.ArchivesManager.Archives.Count > 0)
 					foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
@@ -50,9 +58,6 @@ namespace LRReader.UWP.ViewModels
 						else
 							EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
-			Page = 0;
-			LoadingArchives = false;
-			_internalLoadingArchives = false;
 		}
 
 	}

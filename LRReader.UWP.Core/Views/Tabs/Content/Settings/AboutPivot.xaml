@@ -20,6 +20,12 @@
 				<Run>LRReader version</Run>
 				<Run Text="{x:Bind Data.Version}" />
 			</TextBlock>
+			<TextBlock Margin="0,0,0,10">
+				<Run>LANraragi supported versions</Run>
+				<Run Text="{x:Bind Data.MinVersion}" />
+				<Run Text="-" />
+				<Run Text="{x:Bind Data.MaxVersion}" />
+			</TextBlock>
 
 			<HyperlinkButton Margin="0,0,0,10" Content="Open on Github" NavigateUri="https://github.com/Guerra24/LRReader" />
 			<Button Margin="0,0,0,10" Click="CheckUpdatesButton_Click" Content="Check for updates" />

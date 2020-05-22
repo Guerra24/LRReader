@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -36,7 +37,7 @@ namespace LRReader.UWP.Views.Main
 		{
 			this.InitializeComponent();
 
-			Data = DataContext as HostTabPageViewModel;
+			Data = new HostTabPageViewModel();
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
@@ -45,6 +46,7 @@ namespace LRReader.UWP.Views.Main
 		protected override async void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+
 			CoreView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
 			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
 
@@ -59,13 +61,12 @@ namespace LRReader.UWP.Views.Main
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
 			await DispatcherHelper.RunAsync(() =>
 			{
-				Global.LRRApi.RefreshSettings(Global.SettingsManager.Profile);
 				Global.EventManager.AddTab(new ArchivesTab());
 				if (Global.SettingsManager.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
 				Global.EventManager.AddTab(new CategoriesTab(), false);
 			});
-			var info = await Global.UpdatesManager.CheckUpdates(new Version(Util.GetAppVersion()));
+			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
 				ShowError("New update available! - " + info.name, "Check Settings -> About for more info");
 		}
@@ -73,6 +74,7 @@ namespace LRReader.UWP.Views.Main
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 			base.OnNavigatingFrom(e);
+
 			CoreView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
 			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
 
