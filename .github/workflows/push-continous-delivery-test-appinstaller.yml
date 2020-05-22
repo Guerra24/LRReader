@@ -1,12 +1,12 @@
-name: Continuous Delivery
-on: push
+name: Release Delivery
+on:
+  release:
+    types: [published]
 jobs:
   buildAppxBundle:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Build AppxBundle
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -14,7 +14,7 @@ jobs:
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Util\Cert.pfx.gpg
         "powershell" "& .\Util\Version.ps1"
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Debug;AppxBundlePlatforms="x86|x64";AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%";GenerateAppInstallerFile=True;AppInstallerUri="https://s3.guerra24.net/projects/lrr/deploy/updates"
       shell: cmd
     - name: Copy scripts
       run: copy "Util\Install App.ps1" "LRReader.UWP\AppPackages\"

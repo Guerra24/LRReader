@@ -13,7 +13,7 @@ jobs:
         CERT_GPG: ${{ secrets.CERT_GPG }}
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Util\Cert.pfx.gpg
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%";AppxLogTelemetryFromSideloadingScript=false
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%"
       shell: cmd
     - name: Copy scripts
       run: copy "Util\Install App.ps1" "LRReader.UWP\AppPackages\"
