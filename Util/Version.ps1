@@ -2,9 +2,12 @@
 [xml]$xmlDoc = Get-Content $xmlFileName
 
 $count = & "C:\Program Files\Git\mingw64\bin\git.exe" rev-list --count HEAD
-$version = $xmlDoc.Package.Identity.Version;
-$substr = "."
-$xmlDoc.Package.Identity.Version = $version.Remove(($lastIndex = $version.LastIndexOf($substr) + 1)).Insert($lastIndex,$count)
+$version = [System.Version]::Parse($xmlDoc.Package.Identity.Version);
+
+$Field = $version.GetType().GetField('_Build','static,nonpublic,instance')
+$Field.SetValue($version,$count -as [int])
+
+$xmlDoc.Package.Identity.Version = $version.ToString();
 
 echo "Version:" $xmlDoc.Package.Identity.Version
 
