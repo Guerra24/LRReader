@@ -51,7 +51,7 @@ namespace LRReader.Shared.Internal
 			if (UpdatedRange)
 				return;
 			UpdatedRange = true;
-			var rq = new RestRequest("projects/lrr/deploy/supported/{version}.json");
+			var rq = new RestRequest("projects/lrr/supported/{version}.json");
 			rq.AddParameter("version", current.ToString(), ParameterType.UrlSegment);
 
 			var r = await client.ExecuteGetAsync(rq);
