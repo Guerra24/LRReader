@@ -1,13 +1,14 @@
 name: Release Delivery
-on:
-  release:
-    types: [published]
+on: 
+  push:
+    branches:
+    - develop
 jobs:
   buildAppxBundle:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
-    - name: Build AppxBundle
+    - name: Build AppInstaller
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
