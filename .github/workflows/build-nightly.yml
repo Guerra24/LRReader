@@ -17,13 +17,32 @@ jobs:
       run: |
         "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Util\Cert.pfx.gpg
         "powershell" "& .\Util\Version.ps1"
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%";GenerateAppInstallerFile=True;AppInstallerUri="https://s3.guerra24.net/projects/lrr/deploy/updates"
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%";GenerateAppInstallerFile=True;AppInstallerUri="https://s3.guerra24.net/projects/lrr/deploy/updates/nightly"
       shell: cmd
     - name: Copy scripts
       run: copy "Util\Install App.ps1" "LRReader.UWP\AppPackages\"
       shell: cmd
     - name: Upload artifacts
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
+  uploadToS3:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: LRReader
+          path: AppPackages
+      - name: Upload to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "us-east-1"
+          SOURCE_DIR: "AppPackages"
+          DEST_DIR: "/projects/lrr/deploy/updates/nightly"

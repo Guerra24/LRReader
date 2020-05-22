@@ -20,7 +20,7 @@ jobs:
       run: copy "Util\Install App.ps1" "LRReader.UWP\AppPackages\"
       shell: cmd
     - name: Upload artifacts
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages

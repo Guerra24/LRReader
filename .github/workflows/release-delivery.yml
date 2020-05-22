@@ -25,7 +25,7 @@ jobs:
         "C:\Program Files\7-Zip\7z.exe" a -r -tzip -mm=LZMA -mmt=on -mx=7 Artifacts/LRReader.zip ./LRReader.UWP/AppPackages/*
       shell: cmd
     - name: Upload artifacts
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
