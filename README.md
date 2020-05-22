@@ -1,7 +1,7 @@
 ![Logo](https://s3.guerra24.net/projects/lrr/logo.png)
 
-[<img src="https://github.com/Guerra24/LRReader/workflows/Continuous%20Delivery/badge.svg">](https://github.com/Guerra24/LRReader/actions?workflow=Continuous+Delivery)
-[<img src="https://github.com/Guerra24/LRReader/workflows/Release%20Delivery/badge.svg">](https://github.com/Guerra24/LRReader/actions?workflow=Release+Delivery)
+[<img src="https://github.com/Guerra24/LRReader/workflows/Nightly/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:Nightly)
+[<img src="https://github.com/Guerra24/LRReader/workflows/Release%20Delivery/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:"Release+Delivery")
 
 ## Features
 - Archives list.
@@ -21,10 +21,13 @@ Sideload only for now.
 
 For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases)
 
-For nightly check the [Actions page](https://github.com/Guerra24/LRReader/actions?query=workflow:"Continuous+Delivery")
-
 Unzip and right click `Install App.ps1` > Run with powershell<br>
 This will add the self-signed certificate and install the app.
+
+For nightly check the [Nightly page](https://s3.guerra24.net/projects/lrr/nightly/index.html)
+
+Nightly is testing the AppInstaller format and uses auto-updates, if testing goes right it will replace the Install script.
+You will need to install the cert first, [instructions here](https://github.com/Guerra24/LRReader/wiki/Certificate).
 
 If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
 `CheckNetIsolation loopbackexempt -a -n=Guerra24.LRReader_3fr0p4qst6948`<br>

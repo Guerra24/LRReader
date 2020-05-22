@@ -49,3 +49,9 @@ jobs:
           AWS_REGION: "us-east-1"
           SOURCE_DIR: "AppPackages"
           DEST_DIR: "projects/lrr/nightly"
+      - name: Purge cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+          PURGE_URLS: '["https://s3.guerra24.net/projects/lrr/nightly/index.html", "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller"]'
