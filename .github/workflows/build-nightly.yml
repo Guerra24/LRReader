@@ -5,6 +5,7 @@ on:
     - develop
 jobs:
   buildAppxBundle:
+    name: Build AppInstaller and Bundle
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
@@ -28,6 +29,8 @@ jobs:
         name: LRReader
         path: LRReader.UWP/AppPackages
   uploadToS3:
+    name: Upload Nightly
+    needs: buildAppxBundle
     runs-on: ubuntu-18.04
     steps:
       - name: Download artifacts

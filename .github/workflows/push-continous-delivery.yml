@@ -2,6 +2,7 @@ name: Continuous Delivery
 on: push
 jobs:
   buildAppxBundle:
+    name: Build AppxBundle
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
