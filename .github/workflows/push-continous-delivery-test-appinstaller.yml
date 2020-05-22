@@ -1,4 +1,4 @@
-name: Release Delivery
+name: Nightly
 on: 
   push:
     branches:
