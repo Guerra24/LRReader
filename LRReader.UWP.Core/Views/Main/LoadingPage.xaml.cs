@@ -84,6 +84,12 @@ namespace LRReader.UWP.Views.Main
 				await Reload();
 				return;
 			}
+			if (serverInfo.nofun_mode && !SharedGlobal.SettingsManager.Profile.HasApiKey)
+			{
+				ViewModel.Status = "Running in No-Fun mode, API key required";
+				await Reload();
+				return;
+			}
 			await SharedGlobal.ArchivesManager.ReloadArchives();
 			ViewModel.Active = false;
 			(Window.Current.Content as Frame).Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());

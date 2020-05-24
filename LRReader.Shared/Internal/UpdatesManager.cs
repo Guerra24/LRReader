@@ -31,17 +31,23 @@ namespace LRReader.Shared.Internal
 
 		public async Task<ReleaseInfo> CheckUpdates(Version current)
 		{
-			var release = await githubClient.Repository.Release.GetLatest(201592446);
-			if (!release.TagName.StartsWith("v"))
-				return null;
-			var newer = new Version(release.TagName.Substring(1));
-			if (newer > current)
+			try
 			{
-				var info = new ReleaseInfo();
-				info.name = release.Name;
-				info.body = release.Body;
-				info.version = newer.ToString();
-				return info;
+				var release = await githubClient.Repository.Release.GetLatest(201592446);
+				if (!release.TagName.StartsWith("v"))
+					return null;
+				var newer = new Version(release.TagName.Substring(1));
+				if (newer > current)
+				{
+					var info = new ReleaseInfo();
+					info.name = release.Name;
+					info.body = release.Body;
+					info.version = newer.ToString();
+					return info;
+				}
+			}
+			catch (Exception)
+			{
 			}
 			return null;
 		}

@@ -63,14 +63,20 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		{
 			var sm = Data.SettingsManager;
 			sm.Profiles.Remove(sm.Profile);
-			sm.Profile = null;
-			sm.Profile = sm.Profiles.First();
+			sm.Profile = sm.Profiles.FirstOrDefault();
+			ProfileSelection.SelectedItem = sm.Profile;
 			RemoveFlyout.Hide();
 		}
 
 		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
+			if (profile == null)
+			{
+				Global.EventManager.CloseAllTabs();
+				(Window.Current.Content as Frame).Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+				return;
+			}
 			if (profile == Data.SettingsManager.Profile)
 				return;
 			var dialog = new ContentDialog()
@@ -86,7 +92,8 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 				Data.SettingsManager.Profile = profile;
 				Global.EventManager.CloseAllTabs();
 				(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
-			} else
+			}
+			else
 			{
 				ProfileSelection.SelectedItem = Data.SettingsManager.Profile;
 			}

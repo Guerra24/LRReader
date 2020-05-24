@@ -21,13 +21,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace LRReader.UWP.Views.Main
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
+
 	public sealed partial class FirstRunPage : Page
 	{
 		private CoreApplicationView CoreView;
@@ -87,14 +83,17 @@ namespace LRReader.UWP.Views.Main
 			}
 		}
 
+		private void ButtonRemove_Click(object sender, RoutedEventArgs e)
+		{
+			var sm = ViewModel.SettingsManager;
+			sm.Profiles.Remove(sm.Profile);
+			sm.Profile = sm.Profiles.FirstOrDefault();
+			RemoveFlyout.Hide();
+		}
+
 		private void ButtonContinue_Click(object sender, RoutedEventArgs e)
 		{
 			(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
-		}
-
-		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			Global.LRRApi.RefreshSettings(ViewModel.SettingsManager.Profile);
 		}
 	}
 }

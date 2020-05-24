@@ -33,13 +33,22 @@
 					IsEnabled="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 					ItemsSource="{x:Bind ViewModel.SettingsManager.Profiles, Mode=OneWay}"
 					PlaceholderText="Select Profile"
-					SelectedItem="{x:Bind ViewModel.SettingsManager.Profile, Mode=TwoWay}"
-					SelectionChanged="ComboBox_SelectionChanged" />
+					SelectedItem="{x:Bind ViewModel.SettingsManager.Profile, Mode=TwoWay}" />
 				<StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
-					<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add Profile" />
+					<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add" />
 					<Button
 						Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit"
 						IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+					<Button Margin="0,0,10,0" Content="Remove" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}">
+						<Button.Flyout>
+							<Flyout x:Name="RemoveFlyout">
+								<StackPanel>
+									<TextBlock Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" Text="Selected profile will be removed. Do you want to continue?" />
+									<Button HorizontalAlignment="Center" Click="ButtonRemove_Click" Content="Yes, remove select profile" />
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
 					<Button Click="ButtonContinue_Click" Content="Continue" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 				</StackPanel>
 			</StackPanel>

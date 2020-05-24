@@ -31,7 +31,7 @@
 				<Button
 					Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-				<Button Content="Remove" IsEnabled="{x:Bind Data.SettingsManager.AtLeastOneProfile, Mode=OneWay}">
+				<Button Content="Remove">
 					<Button.Flyout>
 						<Flyout x:Name="RemoveFlyout">
 							<StackPanel>
