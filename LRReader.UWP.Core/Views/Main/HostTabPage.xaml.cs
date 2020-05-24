@@ -64,7 +64,7 @@ namespace LRReader.UWP.Views.Main
 				Global.EventManager.AddTab(new ArchivesTab());
 				if (Global.SettingsManager.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
-				Global.EventManager.AddTab(new CategoriesTab(), false);
+				//Global.EventManager.AddTab(new CategoriesTab(), false);
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
