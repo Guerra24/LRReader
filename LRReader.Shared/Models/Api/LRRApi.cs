@@ -27,7 +27,7 @@ namespace LRReader.Shared.Models.Api
 			client.UseNewtonsoftJson();
 			client.BaseUrl = new Uri(profile.ServerAddress);
 			client.UserAgent = "LRReader";
-			if (profile.HasApiKey)
+			if (!string.IsNullOrEmpty(profile.ServerApiKey))
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
 				client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
@@ -52,6 +52,7 @@ namespace LRReader.Shared.Models.Api
 					apiResponse.Error = await GetError(restResponse);
 					break;
 			}
+			apiResponse.Code = restResponse.StatusCode;
 			return apiResponse;
 		}
 

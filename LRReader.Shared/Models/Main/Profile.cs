@@ -19,7 +19,10 @@ namespace LRReader.Shared.Models.Main
 		public List<BookmarkedArchive> Bookmarks { get; set; }
 
 		[JsonIgnore]
-		public bool HasApiKey { get => !string.IsNullOrEmpty(ServerApiKey) || !SharedGlobal.ServerInfo.has_password; }
+		public bool HasApiKey
+		{
+			get => !string.IsNullOrEmpty(ServerApiKey) || !SharedGlobal.ServerInfo.has_password;
+		}
 
 		[JsonIgnore]
 		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');

@@ -70,6 +70,12 @@ namespace LRReader.UWP.Views.Main
 				await Reload();
 				return;
 			}
+			else if (serverInfo._unauthorized)
+			{
+				ViewModel.Status = "Invalid or missing API key";
+				await Reload();
+				return;
+			}
 			SharedGlobal.ServerInfo = serverInfo;
 			if (serverInfo.version < UpdatesManager.MIN_VERSION)
 			{

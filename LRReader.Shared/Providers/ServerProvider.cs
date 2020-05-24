@@ -152,14 +152,14 @@ namespace LRReader.Shared.Providers
 				//SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return null;
 			}
-			if (result.OK)
+			switch (result.Code)
 			{
-				return result.Data;
-			}
-			else
-			{
-				//SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
+				case HttpStatusCode.OK:
+					return result.Data;
+				case HttpStatusCode.Unauthorized:
+					return new ServerInfo() { _unauthorized = true };
+				default:
+					return null;
 			}
 		}
 	}

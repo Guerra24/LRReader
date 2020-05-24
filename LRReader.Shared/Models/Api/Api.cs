@@ -1,4 +1,6 @@
-﻿namespace LRReader.Shared.Models.Api
+﻿using System.Net;
+
+namespace LRReader.Shared.Models.Api
 {
 	public class GenericApiError
 	{
@@ -17,6 +19,7 @@
 		public T Data { get; set; }
 		public GenericApiError Error { get; set; }
 		public bool OK { get; set; }
+		public HttpStatusCode Code;
 	}
 
 	public class ShinobuStatus
