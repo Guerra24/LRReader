@@ -26,6 +26,8 @@ namespace LRReader.UWP.Views.Items
 	{
 		private CategoryBaseViewModel ViewModel;
 
+		private string _oldID = "";
+
 		public CategoryItem()
 		{
 			this.InitializeComponent();
@@ -37,43 +39,48 @@ namespace LRReader.UWP.Views.Items
 			if (args.NewValue == null)
 				return;
 			ViewModel.Category = args.NewValue as Category;
-			Overlay.Opacity = 0;
-			Title.Opacity = 0;
-			Thumbnail.Source = null;
-			Ring.IsActive = true;
-			ViewModel.MissingImage = false;
-			using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
-			{
-				var first = ViewModel.Category.archives.FirstOrDefault();
-				if (first != null)
-				{
 
-					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Category.archives.FirstOrDefault());
-					if (bytes != null)
+			if (!_oldID.Equals(ViewModel.Category.id))
+			{
+				Overlay.Opacity = 0;
+				Title.Opacity = 0;
+				Thumbnail.Source = null;
+				Ring.IsActive = true;
+				ViewModel.MissingImage = false;
+				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+				{
+					var first = ViewModel.Category.archives.FirstOrDefault();
+					if (first != null)
 					{
-						await stream.WriteAsync(bytes.AsBuffer());
-						stream.Seek(0);
-						var image = new BitmapImage();
-						image.DecodePixelWidth = 200;
-						await image.SetSourceAsync(stream);
-						if (image.PixelHeight != 0 && image.PixelWidth != 0)
-							if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-								Thumbnail.Stretch = Stretch.Uniform;
-						Thumbnail.Source = image;
+
+						byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Category.archives.FirstOrDefault());
+						if (bytes != null)
+						{
+							await stream.WriteAsync(bytes.AsBuffer());
+							stream.Seek(0);
+							var image = new BitmapImage();
+							image.DecodePixelWidth = 200;
+							await image.SetSourceAsync(stream);
+							if (image.PixelHeight != 0 && image.PixelWidth != 0)
+								if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+									Thumbnail.Stretch = Stretch.Uniform;
+							Thumbnail.Source = image;
+						}
+						else
+						{
+							ViewModel.MissingImage = true;
+						}
 					}
 					else
 					{
-						ViewModel.MissingImage = true;
+						ViewModel.SearchImage = true;
 					}
 				}
-				else
-				{
-					ViewModel.SearchImage = true;
-				}
+				Ring.IsActive = false;
+				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				_oldID = ViewModel.Category.id;
 			}
-			Ring.IsActive = false;
-			Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-			Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 		}
 	}
 }
