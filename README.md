@@ -14,7 +14,7 @@
 ## Requirements
 
 - Windows 10 1803 (x86, x64, ARM or ARM64)
-- LANraragi v0.6.8+
+- LANraragi v0.7.0
 
 ## Installing
 Sideload only for now. 
