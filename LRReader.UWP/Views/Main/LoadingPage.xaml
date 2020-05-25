@@ -25,7 +25,7 @@
 				Grid.Row="1" Width="620" Height="300"
 				Margin="0,0,0,1" HorizontalAlignment="Center" VerticalAlignment="Center"
 				Foreground="{ThemeResource SystemAccentColor}"
-				UriSource="/LRReader.UWP.Core/Assets/SplashScreen.png" />
+				UriSource="/Assets/SplashScreen.scale-100.png" />
 			<Grid Grid.Row="2">
 				<muxc:ProgressRing
 					Width="40" Height="40" HorizontalAlignment="Center"
