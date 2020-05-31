@@ -176,6 +176,14 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("FitScaleLimit");
 			}
 		}
+		public AppTheme Theme
+		{
+			get => (AppTheme)SettingsStorage.GetObjectLocal("Theme", (int)AppTheme.System);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("Theme", (int)value);
+			}
+		}
 		public static readonly int CurrentLocalVersion = 2;
 		public int SettingsVersionLocal
 		{
@@ -307,5 +315,9 @@ namespace LRReader.Shared.Internal
 	public enum BookmarkReminderMode
 	{
 		All, New
+	}
+	public enum AppTheme
+	{
+		System, Dark, Light
 	}
 }

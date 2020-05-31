@@ -16,8 +16,6 @@ namespace LRReader.UWP.ViewModels
 	{
 		public ViewModelLocator()
 		{
-			Global.Init(); // Init global static data
-
 			SimpleIoc.Default.Register<ArchivesPageViewModel>();
 			SimpleIoc.Default.Register<SettingsPageViewModel>();
 			SimpleIoc.Default.Register<BookmarksTabViewModel>();

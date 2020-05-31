@@ -23,7 +23,8 @@ namespace LRReader.Shared.Models.Main
 		[OnDeserialized]
 		internal void OnDeserializedMethod(StreamingContext context)
 		{
-			foreach (var s in tags.Split(','))
+			tagsClean = "";
+			foreach (var s in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
 			{
 				tagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
 			}

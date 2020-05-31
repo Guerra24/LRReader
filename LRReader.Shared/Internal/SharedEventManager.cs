@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.Internal
 {
-	public delegate void ShowError(string title, string content);
+	public delegate void ShowNotification(string title, string content, int duration);
 	public delegate void RebuildReaderImagesSet();
 
 	public class SharedEventManager
 	{
-		public event ShowError ShowErrorEvent;
+		public event ShowNotification ShowNotificationEvent;
 		public event RebuildReaderImagesSet RebuildReaderImagesSetEvent;
 
-		public void ShowError(string title, string content)
+		public void ShowError(string title, string content, int duration = 5000)
 		{
-			ShowErrorEvent?.Invoke(title, content);
+			ShowNotificationEvent?.Invoke(title, content, duration);
+		}
+
+		public void ShowNotification(string title, string content, int duration = 5000)
+		{
+			ShowNotificationEvent?.Invoke(title, content, duration);
 		}
 
 		public void RebuildReaderImagesSet()

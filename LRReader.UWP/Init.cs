@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.UWP.Impl;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace LRReader.UWP
 		public static void InitObjects()
 		{
 			SharedGlobal.SettingsStorage = new SettingsStorage();
+			Global.Init(); // Init global static data
 		}
 	}
 }

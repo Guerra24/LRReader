@@ -16,7 +16,7 @@
 	</Page.KeyboardAccelerators>
 
 	<Grid>
-		<Grid Height="40" VerticalAlignment="Top" Background="{ThemeResource TitlebarBackground}" />
+		<Grid x:Name="TitleBarBackground" Height="40" VerticalAlignment="Top" Background="{ThemeResource TitlebarBackground}" />
 		<controls:TabView
 			x:Name="TabViewControl" VerticalAlignment="Stretch" Background="Transparent"
 			IsAddTabButtonVisible="False"
@@ -43,6 +43,16 @@
 						<Button Background="Transparent" Click="Bookmarks_Click" ToolTipService.ToolTip="Bookmarks">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
+							</Viewbox>
+						</Button>
+						<Button Background="Transparent" Click="Categories_Click" ToolTipService.ToolTip="Categories">
+							<Viewbox MaxWidth="16" MaxHeight="16">
+								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
+							</Viewbox>
+						</Button>
+						<Button Background="Transparent" Click="Search_Click" ToolTipService.ToolTip="Search">
+							<Viewbox MaxWidth="16" MaxHeight="16">
+								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;" />
 							</Viewbox>
 						</Button>
 					</StackPanel>

@@ -9,8 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -146,5 +148,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await HandleSearch();
 			Data.ControlsEnabled = true;
 		}
+
+		private async void ArchivesGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(ArchivesGrid);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsXButton1Pressed)
+				{
+					await Data.PrevPage();
+				}
+				else if (pointerPoint.Properties.IsXButton2Pressed)
+				{
+					await Data.NextPage();
+				}
+			}
+		}
+
 	}
 }

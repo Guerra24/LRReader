@@ -21,6 +21,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI;
 using LRReader.Internal;
 using Windows.UI.Xaml.Media.Animation;
+using LRReader.Shared.Internal;
 
 namespace LRReader.UWP
 {
@@ -36,6 +37,17 @@ namespace LRReader.UWP
 		public App()
 		{
 			Init.InitObjects();
+			switch (Global.SettingsManager.Theme)
+			{
+				case AppTheme.Dark:
+					this.RequestedTheme = ApplicationTheme.Dark;
+					break;
+				case AppTheme.Light:
+					this.RequestedTheme = ApplicationTheme.Light;
+					break;
+				case AppTheme.System:
+					break;
+			}
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
 		}
@@ -84,6 +96,15 @@ namespace LRReader.UWP
 					ApplicationViewTitleBar titleBar = AppView.TitleBar;
 					titleBar.ButtonBackgroundColor = Colors.Transparent;
 					titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+					switch (RequestedTheme)
+					{
+						case ApplicationTheme.Light:
+							titleBar.ButtonForegroundColor = Colors.Black;
+							break;
+						case ApplicationTheme.Dark:
+							titleBar.ButtonForegroundColor = Colors.White;
+							break;
+					}
 
 					bool firstRun = Global.SettingsManager.Profile == null;
 					if (firstRun)

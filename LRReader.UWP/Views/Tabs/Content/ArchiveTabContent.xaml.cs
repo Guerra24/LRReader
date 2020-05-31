@@ -211,7 +211,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 					e.Handled = true;
 					break;
 				case VirtualKey.Up:
-					ScrollViewer.ChangeView(null, offset - Global.SettingsManager.KeyboardScroll, null, false);
+					if (Math.Floor(offset) <= 0)
+					{
+						if (Global.SettingsManager.ReadRTL)
+							NextPage();
+						else
+							PrevPage();
+					}
+					else
+					{
+						ScrollViewer.ChangeView(null, offset - Global.SettingsManager.KeyboardScroll, null, false);
+					}
 					e.Handled = true;
 					break;
 				case VirtualKey.Down:
@@ -262,14 +272,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 						NextPage();
 					e.Handled = true;
 				}
-				/*else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
+				else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
 				{
 					if (Global.SettingsManager.ReadRTL)
 						NextPage();
 					else
 						PrevPage();
 					e.Handled = true;
-				}*/
+				}
 			}
 		}
 

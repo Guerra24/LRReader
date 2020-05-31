@@ -48,6 +48,7 @@ namespace LRReader.UWP.Views.Main
 			base.OnNavigatedTo(e);
 
 			CoreView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
+			CoreView.TitleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
 			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
 
 			TabViewStartHeader.Margin = new Thickness(CoreView.TitleBar.SystemOverlayLeftInset, 0, 0, 0);
@@ -55,7 +56,7 @@ namespace LRReader.UWP.Views.Main
 
 			Window.Current.SetTitleBar(TitleBar);
 
-			Global.EventManager.ShowErrorEvent += ShowError;
+			Global.EventManager.ShowNotificationEvent += ShowNotification;
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
@@ -64,11 +65,11 @@ namespace LRReader.UWP.Views.Main
 				Global.EventManager.AddTab(new ArchivesTab());
 				if (Global.SettingsManager.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
-				//Global.EventManager.AddTab(new CategoriesTab(), false);
+				Global.EventManager.AddTab(new CategoriesTab(), false);
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
-				ShowError("New update available! - " + info.name, "Check Settings -> About for more info");
+				ShowNotification("New update available! - " + info.name, "Check Settings -> About for more info", 0);
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -76,10 +77,11 @@ namespace LRReader.UWP.Views.Main
 			base.OnNavigatingFrom(e);
 
 			CoreView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
+			CoreView.TitleBar.IsVisibleChanged -= TitleBar_IsVisibleChanged;
 			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
 
 			Window.Current.SetTitleBar(null);
-			Global.EventManager.ShowErrorEvent -= ShowError;
+			Global.EventManager.ShowNotificationEvent -= ShowNotification;
 			Global.EventManager.AddTabEvent -= AddTab;
 			Global.EventManager.CloseAllTabsEvent -= CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent -= CloseTabWithHeader;
@@ -92,13 +94,31 @@ namespace LRReader.UWP.Views.Main
 			TabViewEndHeader.Margin = new Thickness(0, 0, coreTitleBar.SystemOverlayRightInset, 0);
 		}
 
-		private void ShowError(string title, string content) => Notifications.Show(new NotificationItem(title, content), 5000);
+		private void TitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+		{
+			if (sender.IsVisible)
+			{
+				TabViewControl.Margin = new Thickness(0, 0, 0, 0);
+				TitleBarBackground.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				TabViewControl.Margin = new Thickness(0, -40, 0, 0);
+				TitleBarBackground.Visibility = Visibility.Collapsed;
+			}
+		}
+
+		private void ShowNotification(string title, string content, int duration = 5000) => Notifications.Show(new NotificationItem(title, content), duration);
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new SettingsTab());
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
 
 		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new BookmarksTab(), true);
+
+		private void Categories_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new CategoriesTab(), true);
+
+		private void Search_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new SearchResultsTab(), true);
 
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.FullScreen = AppView.IsFullScreenMode;
 
@@ -156,5 +176,6 @@ namespace LRReader.UWP.Views.Main
 				tab.Unload();
 			TabViewControl.TabItems.Remove(t);
 		}
+
 	}
 }

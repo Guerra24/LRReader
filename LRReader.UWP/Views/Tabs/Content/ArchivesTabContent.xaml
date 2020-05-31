@@ -24,7 +24,7 @@
 			<GridView
 				Name="ArchivesGrid" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
-				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>
 					<Grid Margin="0,10,0,10">
 						<Grid.RowDefinitions>

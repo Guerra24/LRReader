@@ -168,7 +168,7 @@ namespace LRReader.UWP.ViewModels.Base
 		{
 			Tags.Clear();
 
-			foreach (var s in Archive.tags.Split(","))
+			foreach (var s in Archive.tags.Split(",", StringSplitOptions.RemoveEmptyEntries))
 			{
 				Tags.Add(s.Trim());
 			}
