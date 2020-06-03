@@ -162,8 +162,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public void Search(string query)
 		{
-			this.query = query;
-			SearchBox.Text = query;
+			SearchBox.Text = this.query = query;
+		}
+
+		public void Search(Category category)
+		{
+			SearchBox.Text = this.query = category.search;
+			Data.Category = category;
 		}
 	}
 }

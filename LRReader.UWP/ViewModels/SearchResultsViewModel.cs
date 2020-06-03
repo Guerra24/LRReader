@@ -96,6 +96,7 @@ namespace LRReader.UWP.ViewModels
 			}
 		}
 		public string Query = "";
+		public Category Category = new Category() { id = "", search = "" };
 		private bool _controlsEnabled;
 		public bool ControlsEnabled
 		{
@@ -138,7 +139,7 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.ServerInfo.archives_per_page, page, Query, "", NewOnly, UntaggedOnly);
+			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

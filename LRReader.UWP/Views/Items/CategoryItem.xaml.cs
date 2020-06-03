@@ -1,12 +1,14 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels.Base;
+using LRReader.UWP.Views.Tabs;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
@@ -80,6 +82,44 @@ namespace LRReader.UWP.Views.Items
 				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				_oldID = ViewModel.Category.id;
+			}
+		}
+
+		private void Add_Click(object sender, RoutedEventArgs e)
+		{
+			Global.EventManager.AddTab(new SearchResultsTab(ViewModel.Category), false);
+		}
+
+		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(this);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsMiddleButtonPressed)
+				{
+					Global.EventManager.AddTab(new SearchResultsTab(ViewModel.Category), false);
+				}
+			}
+		}
+
+		private void Edit_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private async void Remove_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new ContentDialog()
+			{
+				Title = "Remove Category: " + ViewModel.Category.name,
+				Content = "Are you sure you want to remove it?",
+				PrimaryButtonText = "Yes",
+				CloseButtonText = "No"
+			};
+			var result = await dialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
+			{
+				await ViewModel.Category.DeleteCategory?.Invoke(ViewModel.Category);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Models.Main;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,14 @@ namespace LRReader.UWP.Views.Tabs
 			this.InitializeComponent();
 			CustomTabId = "Search_" + new Random().Next();
 			TabContent.Search(query);
+		}
+
+		public SearchResultsTab(Category category)
+		{
+			this.InitializeComponent();
+			CustomTabId = "Search_" + category.id;
+			Header = category.name;
+			TabContent.Search(category);
 		}
 
 		private void RefreshButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

@@ -11,6 +11,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Internal;
 using LRReader.UWP.Views.Tabs;
 using GalaSoft.MvvmLight.Threading;
+using GalaSoft.MvvmLight.Command;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -56,7 +57,17 @@ namespace LRReader.UWP.ViewModels
 			var resultCreate = await CategoriesProvider.CreateCategory(name, search, pinned);
 			if (resultCreate != null)
 			{
+				resultCreate.DeleteCategory += DeleteCategory;
 				CategoriesList.Add(resultCreate);
+			}
+		}
+
+		public async Task DeleteCategory(Category category)
+		{
+			var result = await CategoriesProvider.DeleteCategory(category.id);
+			if (result)
+			{
+				CategoriesList.Remove(category);
 			}
 		}
 
@@ -76,8 +87,9 @@ namespace LRReader.UWP.ViewModels
 			{
 				await Task.Run(async () =>
 				{
-					foreach (var a in result)
+					foreach (var a in result.OrderBy(c => !c.pinned))
 					{
+						a.DeleteCategory += DeleteCategory;
 						await DispatcherHelper.RunAsync(() => CategoriesList.Add(a));
 					}
 				});

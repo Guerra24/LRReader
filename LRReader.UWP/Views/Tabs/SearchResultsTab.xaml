@@ -13,6 +13,11 @@
 	CustomTabId="Search"
 	Header="Search"
 	mc:Ignorable="d">
+	<controls:TabViewItem.HeaderTemplate>
+		<DataTemplate x:DataType="x:String">
+			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
+		</DataTemplate>
+	</controls:TabViewItem.HeaderTemplate>
 	<controls:TabViewItem.IconSource>
 		<controls:SymbolIconSource Symbol="Find" />
 	</controls:TabViewItem.IconSource>

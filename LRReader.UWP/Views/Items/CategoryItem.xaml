@@ -6,10 +6,19 @@
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	d:DesignHeight="300"
+	d:DesignHeight="303"
 	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
+	PointerPressed="UserControl_PointerPressed"
 	mc:Ignorable="d">
+
+	<UserControl.ContextFlyout>
+		<MenuFlyout>
+			<MenuFlyoutItem Click="Add_Click" Icon="Add" Text="Open in new tab" />
+			<MenuFlyoutItem Click="Edit_Click" Icon="Edit" Text="Edit" />
+			<MenuFlyoutItem Click="Remove_Click" Icon="Delete" Text="Delete" />
+		</MenuFlyout>
+	</UserControl.ContextFlyout>
 
 	<Grid Width="200" Background="{ThemeResource BrushItemGridBackground}">
 		<Grid.RowDefinitions>
@@ -28,7 +37,14 @@
 				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>
 			<Grid x:Name="SearchImage" x:Load="{x:Bind ViewModel.SearchImage, Mode=OneWay}">
-				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="24" Glyph="&#xE721;"/>
+				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="24" Glyph="&#xE721;" />
+			</Grid>
+			<Grid
+				x:Name="PinnedGrid" Padding="4" HorizontalAlignment="Left"
+				VerticalAlignment="Bottom"
+				x:Load="{x:Bind ViewModel.Category.pinned, Mode=OneWay}"
+				Background="{ThemeResource GridOverGridBackground}">
+				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="26" Glyph="&#xE735;" />
 			</Grid>
 		</Grid>
 		<muxc:ProgressRing

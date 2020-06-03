@@ -17,8 +17,8 @@
 			<items:CategoryItem />
 		</DataTemplate>
 		<DataTemplate x:Key="AddNewCategoryTemplate" x:DataType="main:AddNewCategory">
-			<Grid Width="200" Height="304" Background="{ThemeResource BrushItemGridBackground}" >
-				<SymbolIcon Symbol="Add"/>
+			<Grid Width="200" Height="304" Background="{ThemeResource BrushItemGridBackground}">
+				<SymbolIcon Symbol="Add" />
 			</Grid>
 		</DataTemplate>
 		<local:CategoryTemplateSelector x:Key="CategoryTemplateSelector" AddNewTemplate="{StaticResource AddNewCategoryTemplate}" StaticTemplate="{StaticResource StaticCategoryTemplate}" />
@@ -28,8 +28,9 @@
 		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				Name="CategoriesGrid" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick"
+				ItemTemplateSelector="{StaticResource CategoryTemplateSelector}"
 				ItemsSource="{x:Bind Data.CategoriesList, Mode=OneWay}"
-				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None" ItemTemplateSelector="{StaticResource CategoryTemplateSelector}">
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
@@ -49,6 +50,7 @@
 						<PopupThemeTransition FromVerticalOffset="200" />
 						<ReorderThemeTransition />
 						<RepositionThemeTransition />
+						<AddDeleteThemeTransition />
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>

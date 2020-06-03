@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Models.Main
 {
+
+	public delegate Task DeleteCategory(Category category);
+
 	public class Category
 	{
 		public List<string> archives { get; set; }
@@ -14,10 +18,14 @@ namespace LRReader.Shared.Models.Main
 		[JsonConverter(typeof(BoolConverter))]
 		public bool pinned { get; set; }
 		public string search { get; set; }
+
+		[JsonIgnore]
+		public DeleteCategory DeleteCategory;
 	}
 
 	public class AddNewCategory : Category
 	{
 
 	}
+
 }

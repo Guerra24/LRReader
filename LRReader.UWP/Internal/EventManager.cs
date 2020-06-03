@@ -18,11 +18,7 @@ namespace LRReader.Internal
 		public event CloseAllTabs CloseAllTabsEvent;
 		public event CloseTabWithHeader CloseTabWithHeaderEvent;
 
-		public void AddTab(CustomTab tab)
-		{
-			AddTabEvent?.Invoke(tab, true);
-		}
-		public void AddTab(CustomTab tab, bool switchToTab)
+		public void AddTab(CustomTab tab, bool switchToTab = true)
 		{
 			AddTabEvent?.Invoke(tab, switchToTab);
 		}

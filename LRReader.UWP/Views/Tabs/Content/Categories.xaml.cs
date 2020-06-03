@@ -16,8 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using LRReader.Shared.Models.Main;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using LRReader.Internal;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {
@@ -50,6 +49,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 				{
 					await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
 				}
+			}
+			else
+			{
+				Global.EventManager.AddTab(new SearchResultsTab(e.ClickedItem as Category));
 			}
 		}
 
