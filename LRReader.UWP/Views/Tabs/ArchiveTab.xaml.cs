@@ -28,7 +28,6 @@ namespace LRReader.UWP.Views.Tabs
 		{
 			this.InitializeComponent();
 			this.archive = archive;
-			Header = archive.title;
 			this.CustomTabId = "Archive_" + archive.title;
 		}
 

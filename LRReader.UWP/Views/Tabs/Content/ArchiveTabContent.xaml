@@ -143,5 +143,10 @@
 				<SymbolIcon Symbol="Cancel" />
 			</Viewbox>
 		</Button>
+		<Grid Padding="5" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
+			<TextBlock>
+				<Run Text="{x:Bind Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />
+			</TextBlock>
+		</Grid>
 	</Grid>
 </UserControl>

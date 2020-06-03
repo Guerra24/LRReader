@@ -6,19 +6,21 @@
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
-	xmlns:local="using:LRReader.Views.Tabs"
+	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	Header=""
 	IconSource="{x:Bind TabContent.Data.Icon, Mode=OneWay}"
 	Loaded="TabViewItem_Loaded"
 	mc:Ignorable="d">
-	<controls:TabViewItem.HeaderTemplate>
-		<DataTemplate x:DataType="x:String">
-			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
-		</DataTemplate>
-	</controls:TabViewItem.HeaderTemplate>
+	<controls:TabViewItem.Header>
+		<StackPanel Orientation="Horizontal">
+			<TextBlock MaxWidth="200" Text="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}" TextTrimming="WordEllipsis" />
+			<TextBlock Visibility="{x:Bind TabContent.Data.ShowReader, Mode=OneWay}">
+				<Run Text=" "/>(<Run Text="{x:Bind TabContent.Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind TabContent.Data.Pages, Mode=OneWay}" />)
+			</TextBlock>
+		</StackPanel>
+	</controls:TabViewItem.Header>
 	<internal:CustomTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal">
 			<Button ToolTipService.ToolTip="Zoom">
@@ -34,8 +36,8 @@
 								TickFrequency="40" TickPlacement="BottomRight"
 								Value="{x:Bind TabContent.Data.ZoomValue, Mode=TwoWay}" />
 							<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
-								<Run Text="{x:Bind TabContent.Data.ZoomValue, Mode=OneWay}" />%
-							</TextBlock>
+								<Run Text="{x:Bind TabContent.Data.ZoomValue, Mode=OneWay}" />
+								%</TextBlock>
 						</Grid>
 					</Flyout>
 				</Button.Flyout>

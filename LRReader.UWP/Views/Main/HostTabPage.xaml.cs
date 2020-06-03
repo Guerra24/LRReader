@@ -65,11 +65,12 @@ namespace LRReader.UWP.Views.Main
 				Global.EventManager.AddTab(new ArchivesTab());
 				if (Global.SettingsManager.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
-				Global.EventManager.AddTab(new CategoriesTab(), false);
+				if (Global.SettingsManager.OpenCategoriesTab)
+					Global.EventManager.AddTab(new CategoriesTab(), false);
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
-				ShowNotification("New update available! - " + info.name, "Check Settings -> About for more info", 0);
+				ShowNotification("New update available! " + info.name, "Check Settings -> About for more info", 0);
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

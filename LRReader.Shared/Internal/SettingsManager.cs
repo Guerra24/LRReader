@@ -87,15 +87,6 @@ namespace LRReader.Shared.Internal
 				EventManager.RebuildReaderImagesSet();
 			}
 		}
-		public bool SwitchTabArchive
-		{
-			get => SettingsStorage.GetObjectLocal("SwitchTabArchive", true);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("SwitchTabArchive", value);
-				RaisePropertyChanged("SwitchTabArchive");
-			}
-		}
 		public bool BookmarkReminder
 		{
 			get => SettingsStorage.GetObjectRoamed("BookmarkReminder", true);
@@ -184,7 +175,23 @@ namespace LRReader.Shared.Internal
 				SettingsStorage.StoreObjectLocal("Theme", (int)value);
 			}
 		}
-		public static readonly int CurrentLocalVersion = 2;
+		public bool CompactBookmarks
+		{
+			get => SettingsStorage.GetObjectRoamed("CompactBookmarks", true);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("CompactBookmarks", value);
+			}
+		}
+		public bool OpenCategoriesTab
+		{
+			get => SettingsStorage.GetObjectRoamed("OpenCategoriesTab", true);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);
+			}
+		}
+		public static readonly int CurrentLocalVersion = 3;
 		public int SettingsVersionLocal
 		{
 			get => SettingsStorage.GetObjectLocal<int>("SettingsVersion");
@@ -259,6 +266,9 @@ namespace LRReader.Shared.Internal
 						break;
 					case 1:
 						SettingsStorage.DeleteObjectLocal("ArchivesPerPage");
+						break;
+					case 2:
+						SettingsStorage.DeleteObjectLocal("SwitchTabArchive");
 						break;
 				}
 				if (localVersion >= CurrentLocalVersion - 1)

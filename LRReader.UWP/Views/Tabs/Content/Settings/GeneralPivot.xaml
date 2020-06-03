@@ -44,9 +44,10 @@
 				</Button>
 			</StackPanel>
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="Tabs" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Switch to opened archive tab" IsOn="{x:Bind Data.SettingsManager.SwitchTabArchive, Mode=TwoWay}" />
+			<ToggleSwitch Margin="0,0,0,10" Header="Open categories tab on start" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
 			<ToggleSwitch Margin="0,0,0,10" Header="Open bookmarks tab on start" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
 			<ToggleSwitch Margin="0,0,0,10" Header="Open bookmarked archives on start" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
+			<ToggleSwitch Margin="0,0,0,10" Header="Use compact bookmarks" IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
 			<TextBlock Margin="0,10,0,5" FontSize="24" Text="App" />
 			<ComboBox
 				Margin="0,0,0,10" Header="Theme" PlaceholderText="Theme"

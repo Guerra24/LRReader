@@ -39,7 +39,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Data.Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 
@@ -55,11 +55,29 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			var item = args.ItemContainer.ContentTemplateRoot as BookmarkedArchive;
-			if (item.Parallax.Source == null)
-				item.Parallax.Source = ArchivesGrid;
+			if (args.ItemContainer.ContentTemplateRoot is BookmarkedArchive item)
+				if (item.Parallax.Source == null)
+					item.Parallax.Source = ArchivesGrid;
 		}
 
 		public async void Refresh() => await Data.Refresh();
+	}
+
+	public class BookmarkTemplateSelector : DataTemplateSelector
+	{
+		public DataTemplate CompactTemplate { get; set; }
+		public DataTemplate FullTemplate { get; set; }
+
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (Global.SettingsManager.CompactBookmarks)
+				return CompactTemplate;
+			else
+				return FullTemplate;
+		}
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		{
+			return SelectTemplateCore(item);
+		}
 	}
 }

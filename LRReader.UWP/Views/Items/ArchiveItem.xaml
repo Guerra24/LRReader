@@ -14,6 +14,7 @@
 	d:DesignHeight="323"
 	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
+	PointerPressed="UserControl_PointerPressed"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>

@@ -77,8 +77,10 @@ namespace LRReader.UWP.ViewModels
 			{
 				ReaderContent = ArchiveImagesReader.ElementAt(value);
 				_readerIndex = value;
+				RaisePropertyChanged("ReaderProgress");
 			}
 		}
+		public int ReaderProgress => ReaderIndex + 1;
 		private int _zoomValue = Global.SettingsManager.DefaultZoom;
 		public int ZoomValue
 		{

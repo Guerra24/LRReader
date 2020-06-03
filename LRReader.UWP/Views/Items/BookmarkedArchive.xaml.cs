@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -21,8 +22,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LRReader.UWP.Views.Items
 {
@@ -132,6 +131,18 @@ namespace LRReader.UWP.Views.Items
 		private void Remove_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.Bookmarked = false;
+		}
+
+		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(this);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsMiddleButtonPressed)
+				{
+					Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
+				}
+			}
 		}
 	}
 }

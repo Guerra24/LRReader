@@ -49,10 +49,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.ControlsEnabled = true;
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), Global.SettingsManager.SwitchTabArchive);
-		}
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
 
 		private void Button_Click(object sender, RoutedEventArgs e) => Refresh();
 

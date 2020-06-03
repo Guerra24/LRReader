@@ -27,8 +27,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using Windows.Devices.Input;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -176,5 +175,16 @@ namespace LRReader.UWP.Views.Items
 			TagsPopup.IsOpen = false;
 		}
 
+		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(this);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsMiddleButtonPressed)
+				{
+					Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
+				}
+			}
+		}
 	}
 }

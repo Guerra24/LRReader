@@ -5,11 +5,22 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding BookmarksTabInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<DataTemplate x:Key="CompactBookmarkItem" x:DataType="main:Archive">
+			<items:BookmarkedArchive />
+		</DataTemplate>
+		<DataTemplate x:Key="FullBookmarkItem" x:DataType="main:Archive">
+			<items:ArchiveItem />
+		</DataTemplate>
+		<local:BookmarkTemplateSelector x:Key="BookmarkTemplateSelector" CompactTemplate="{StaticResource CompactBookmarkItem}" FullTemplate="{StaticResource FullBookmarkItem}" />
+	</UserControl.Resources>
 
 	<Grid Padding="0,10">
 		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
@@ -17,15 +28,10 @@
 				Name="ArchivesGrid" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
 				ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
-				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None" ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}">
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
-				<GridView.ItemTemplate>
-					<DataTemplate>
-						<items:BookmarkedArchive />
-					</DataTemplate>
-				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>
 					<ItemsPanelTemplate>
 						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
