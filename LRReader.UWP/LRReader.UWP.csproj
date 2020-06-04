@@ -221,6 +221,9 @@
     <Compile Include="Views\Tabs\Content\Settings\GeneralPivot.xaml.cs">
       <DependentUpon>GeneralPivot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\Content\Settings\HelpPivot.xaml.cs">
+      <DependentUpon>HelpPivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\Content\Settings\ReaderPivot.xaml.cs">
       <DependentUpon>ReaderPivot.xaml</DependentUpon>
     </Compile>
@@ -424,6 +427,10 @@
     <Page Include="Views\Tabs\Content\Settings\GeneralPivot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\Content\Settings\HelpPivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\Content\Settings\ReaderPivot.xaml">
       <Generator>MSBuild:Compile</Generator>

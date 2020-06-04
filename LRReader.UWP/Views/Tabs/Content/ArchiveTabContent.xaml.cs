@@ -264,21 +264,31 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
 			{
 				var delta = pointerPoint.Properties.MouseWheelDelta;
-				if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
+				switch (e.KeyModifiers)
 				{
-					if (Global.SettingsManager.ReadRTL)
-						PrevPage();
-					else
-						NextPage();
-					e.Handled = true;
-				}
-				else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
-				{
-					if (Global.SettingsManager.ReadRTL)
-						NextPage();
-					else
-						PrevPage();
-					e.Handled = true;
+					case VirtualKeyModifiers.None:
+						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
+						{
+							if (Global.SettingsManager.ReadRTL)
+								PrevPage();
+							else
+								NextPage();
+							e.Handled = true;
+						}
+						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
+						{
+							if (Global.SettingsManager.ReadRTL)
+								NextPage();
+							else
+								PrevPage();
+							e.Handled = true;
+						}
+						break;
+					case VirtualKeyModifiers.Control:
+						Data.ZoomValue += (int)(delta * 0.1);
+						FitImages();
+						e.Handled = true;
+						break;
 				}
 			}
 		}
@@ -342,7 +352,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void FitImages() => FitImages(false);
 
-		private void FitImages(bool disableAnim)
+		private void FitImages(bool disableAnim = false)
 		{
 			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 				return;
@@ -355,7 +365,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
-			ScrollViewer.ChangeView(0, 0, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim);
+			ScrollViewer.ChangeView(null, null, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim);
 		}
 
 		private void EditButton_Click(object sender, RoutedEventArgs e)
