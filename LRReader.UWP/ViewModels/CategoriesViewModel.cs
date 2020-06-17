@@ -80,8 +80,8 @@ namespace LRReader.UWP.ViewModels
 			RefreshOnErrorButton = false;
 			LoadingCategories = true;
 			CategoriesList.Clear();
-			if (SharedGlobal.SettingsManager.Profile.HasApiKey)
-				CategoriesList.Add(new AddNewCategory());
+			//if (SharedGlobal.SettingsManager.Profile.HasApiKey)
+				//CategoriesList.Add(new AddNewCategory());
 			var result = await CategoriesProvider.GetCategories();
 			if (result != null)
 			{
