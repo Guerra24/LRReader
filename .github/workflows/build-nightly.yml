@@ -16,10 +16,11 @@ jobs:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
       run: |
-        "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="%CERT_GPG%" --output Cert.pfx Util\Cert.pfx.gpg
-        "powershell" "& .\Util\Version.ps1"
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="%CERT_PASSWORD%";GenerateAppInstallerFile=True;AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
-      shell: cmd
+        Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; 
+        Enter-VsDevShell -VsInstallPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" -SkipAutomaticLocation
+        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Util\Cert.pfx.gpg
+        Invoke-Expression ".\Util\Version.ps1"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal -p:Configuration=Release;AppxPackageSigningEnabled=true;PackageCertificateThumbprint="";PackageCertificateKeyFile="..\Cert.pfx";PackageCertificatePassword="${env:CERT_PASSWORD}";GenerateAppInstallerFile=True;AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
     - name: Copy scripts
       run: copy "Util\Install App.ps1" "LRReader.UWP\AppPackages\"
       shell: cmd
