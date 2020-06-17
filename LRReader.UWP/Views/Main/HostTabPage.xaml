@@ -13,10 +13,13 @@
 
 	<Page.KeyboardAccelerators>
 		<KeyboardAccelerator Key="W" Invoked="CloseTab_Invoked" Modifiers="Control" />
+		<KeyboardAccelerator Key="F11" Invoked="FullScreen_Invoked" />
 	</Page.KeyboardAccelerators>
 
 	<Grid>
-		<Grid x:Name="TitleBarBackground" Height="40" VerticalAlignment="Top" Background="{ThemeResource TitlebarBackground}" />
+		<Grid
+			x:Name="TitleBarBackground" Height="40" VerticalAlignment="Top"
+			Background="{ThemeResource TitlebarBackground}" />
 		<controls:TabView
 			x:Name="TabViewControl" VerticalAlignment="Stretch" Background="Transparent"
 			IsAddTabButtonVisible="False"

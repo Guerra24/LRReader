@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Internal;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;

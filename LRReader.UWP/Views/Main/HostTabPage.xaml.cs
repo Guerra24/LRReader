@@ -54,6 +54,8 @@ namespace LRReader.UWP.Views.Main
 			TabViewStartHeader.Margin = new Thickness(CoreView.TitleBar.SystemOverlayLeftInset, 0, 0, 0);
 			TabViewEndHeader.Margin = new Thickness(0, 0, CoreView.TitleBar.SystemOverlayRightInset, 0);
 
+			Data.FullScreen = AppView.IsFullScreenMode;
+
 			Window.Current.SetTitleBar(TitleBar);
 
 			Global.EventManager.ShowNotificationEvent += ShowNotification;
@@ -178,5 +180,17 @@ namespace LRReader.UWP.Views.Main
 			TabViewControl.TabItems.Remove(t);
 		}
 
+		private void FullScreen_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			args.Handled = true;
+			if (AppView.IsFullScreenMode)
+			{
+				AppView.ExitFullScreenMode();
+			}
+			else
+			{
+				AppView.TryEnterFullScreenMode();
+			}
+		}
 	}
 }

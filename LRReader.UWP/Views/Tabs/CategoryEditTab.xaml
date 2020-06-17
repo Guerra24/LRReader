@@ -1,0 +1,25 @@
+﻿<internal:CustomTab
+	x:Class="LRReader.UWP.Views.Tabs.CategoryEditTab"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
+	xmlns:local="using:LRReader.UWP.Views.Tabs"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	Loaded="TabViewItem_Loaded"
+	mc:Ignorable="d">
+	<controls:TabViewItem.IconSource>
+		<controls:SymbolIconSource Symbol="Edit" />
+	</controls:TabViewItem.IconSource>
+	<controls:TabViewItem.HeaderTemplate>
+		<DataTemplate x:DataType="x:String">
+			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
+		</DataTemplate>
+	</controls:TabViewItem.HeaderTemplate>
+
+	<content:CategoryEdit x:Name="TabContent" />
+</internal:CustomTab>

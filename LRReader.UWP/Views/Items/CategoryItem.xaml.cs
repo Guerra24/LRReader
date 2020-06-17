@@ -104,7 +104,7 @@ namespace LRReader.UWP.Views.Items
 
 		private void Edit_Click(object sender, RoutedEventArgs e)
 		{
-
+			Global.EventManager.AddTab(new CategoryEditTab(ViewModel.Category));
 		}
 
 		private async void Remove_Click(object sender, RoutedEventArgs e)

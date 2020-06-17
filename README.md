@@ -33,16 +33,36 @@ If you're using a local-hosted instance (e.g. LANraragi on Windows), you will ne
 `CheckNetIsolation loopbackexempt -a -n=Guerra24.LRReader_3fr0p4qst6948`<br>
 To allow localhost access.
 
-## Reader
+## Usage
 
-The reader can be used with the keyboard and/or mouse.
+### Tabs
 
-Use the UP/DOWN keys to scroll vertically and RIGHT/LEFT to switch pages.<br>
-Use SPACE to scroll by a distance and if at the bottom, changes to the next page.<br>
-Use ESC to close the reader.<br>
+`Ctrl` + `W` or `Ctrl` + `F4` close Tab<br>
+`Ctrl` + `Tab` change to next tab.<br>
+`Ctrl` + `Shift` + `Tab` change to prev tab.<br>
+
+`F11` enter fullscreen.
+
+### List
+
+Back/Forward mouse buttons to change page.<br>
+Middle Click to open in new tab.<br>
+
+
+### Reader
+
+Scrolling at top/bottom changes page accordingly, prev/next.<br>
+
+
+`Up`/`Down` keys to scroll vertically<br>
+`Right`/`Left` to change page.<br>
+`Space` to scroll down.<br>
+`Esc` to close the reader.<br>
+
 
 Click on the left/right of the window to change pages.<br>
-Scroll by clicking and dragging the page.<br>
+Back/Forward buttons to change page.<br>
+Scroll by clicking and dragging the page or with wheel.<br>
 
 ## Screenshots
 

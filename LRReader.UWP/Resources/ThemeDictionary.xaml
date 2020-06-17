@@ -15,7 +15,7 @@
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#E5E5E5"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
-			<Color x:Key="ColorNavTop">#F2F2F2</Color>
+			<Color x:Key="ColorNavTop">#DADADA</Color>
 			<Color x:Key="BrushItemGridBackgroundColor">#E5E5E5</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#CCCCCC" />
