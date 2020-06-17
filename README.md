@@ -17,17 +17,15 @@
 - LANraragi v0.7.0
 
 ## Installing
-Sideload only for now. 
+Sideload only for now.
+
+You will need to install the cert first, [instructions here](https://github.com/Guerra24/LRReader/wiki/Certificate).
 
 For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases)
 
-Unzip and right click `Install App.ps1` > Run with powershell<br>
-This will add the self-signed certificate and install the app.
-
 For nightly check the [Nightly page](https://s3.guerra24.net/projects/lrr/nightly/index.html)
 
-Nightly is testing the AppInstaller format and uses auto-updates, if testing goes right it will replace the Install script.
-You will need to install the cert first, [instructions here](https://github.com/Guerra24/LRReader/wiki/Certificate).
+Download the `LRReader.appinstaller` file, run it and follow instructions.
 
 If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
 `CheckNetIsolation loopbackexempt -a -n=Guerra24.LRReader_3fr0p4qst6948`<br>

@@ -2,15 +2,13 @@ name: Release Delivery
 on:
   release:
     types: [published]
-  push:
-    branches:
-    - develop
 jobs:
   buildAppxBundle:
+    name: Build AppInstaller and Bundle
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
-    - name: Build AppxBundle
+    - name: Build AppInstaller
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
@@ -32,6 +30,12 @@ jobs:
       with:
         name: Version
         path: version.txt
+    - name: Upload to Release
+      uses: Shopify/upload-to-release@master
+      with:
+        name: LRReader.appinstaller
+        path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
   uploadToS3:
     name: Upload Release
     needs: buildAppxBundle
