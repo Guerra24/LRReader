@@ -1,33 +1,39 @@
-name: Nightly
-on: 
+name: Release Delivery
+on:
+  release:
+    types: [published]
   push:
     branches:
     - develop
 jobs:
   buildAppxBundle:
-    name: Build AppInstaller and Bundle
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Build AppInstaller
+    - name: Build AppxBundle
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
       run: |
         Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
         Enter-VsDevShell -VsInstallPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" -SkipAutomaticLocation
+        $xmlFileName = "LRReader.UWP\Package.appxmanifest"
+        [xml]$xmlDoc = Get-Content $xmlFileName
+        Set-Content -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Util\Cert.pfx.gpg
-        Invoke-Expression ".\Util\Version.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
+    - name: Upload Version
+      uses: actions/upload-artifact@v2
+      with:
+        name: Version
+        path: version.txt
   uploadToS3:
-    name: Upload Nightly
+    name: Upload Release
     needs: buildAppxBundle
     runs-on: ubuntu-18.04
     steps:
@@ -36,20 +42,19 @@ jobs:
         with:
           name: LRReader
           path: AppPackages
+      - name: Download Version
+        uses: actions/download-artifact@v2
+        with:
+          name: Version
+      - name: Setup Envs
+        run: echo "::set-env name=DEST_DIR::projects/lrr/$(cat version.txt)"
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --follow-symlinks --delete
+          args: --acl public-read --follow-symlinks
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "us-east-1"
           SOURCE_DIR: "AppPackages"
-          DEST_DIR: "projects/lrr/nightly"
-      - name: Purge cache
-        uses: jakejarvis/cloudflare-purge-action@master
-        env:
-          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
-          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-          PURGE_URLS: '["https://s3.guerra24.net/projects/lrr/nightly/index.html", "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller"]'
