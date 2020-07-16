@@ -82,7 +82,7 @@ namespace LRReader.UWP.Views.Items
 
 		private void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + ViewModel.Archive.arcid));
+			Global.EventManager.AddTab(new ArchiveEditTab(ViewModel.Archive));
 		}
 
 		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)

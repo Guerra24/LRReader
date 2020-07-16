@@ -23,12 +23,7 @@ namespace LRReader.Shared.Models.Main
 		[OnDeserialized]
 		internal void OnDeserializedMethod(StreamingContext context)
 		{
-			tagsClean = "";
-			foreach (var s in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-			{
-				tagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
-			}
-			tagsClean.TrimEnd(',');
+			UpdateTags();
 		}
 
 		public bool IsNewArchive()
@@ -40,6 +35,16 @@ namespace LRReader.Shared.Models.Main
 			if (isnew.Equals("block"))
 				return true;
 			return bool.Parse(isnew);
+		}
+
+		public void UpdateTags()
+		{
+			tagsClean = "";
+			foreach (var s in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+			{
+				tagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
+			}
+			tagsClean.TrimEnd(',');
 		}
 	}
 

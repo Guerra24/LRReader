@@ -1,0 +1,53 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Tabs.Content.ArchiveEdit"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
+	</UserControl.Resources>
+
+	<ScrollViewer>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="3*" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.Resources>
+				<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
+			</Grid.Resources>
+			<StackPanel Grid.Column="1" Margin="0,20,0,0">
+				<TextBox
+					Margin="0,0,0,10" Header="Archive ID" IsReadOnly="True"
+					Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
+				<TextBox
+					Margin="0,0,0,10" Header="Title"
+					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					Text="{x:Bind Data.Title, Mode=TwoWay}" />
+				<TextBox
+					MinHeight="140" Margin="0,0,0,10" Header="Tags"
+					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					Text="{x:Bind Data.Tags, Mode=TwoWay}"
+					TextWrapping="Wrap" />
+				<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+					<ComboBox Margin="0,0,20,0" Header="Plugin" IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+					<Button VerticalAlignment="Bottom" Content="Run plugin" IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+				</StackPanel>
+				<TextBox Margin="0,0,0,10" Header="Parameter" IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+				<Button
+					HorizontalAlignment="Center" Click="SaveButton_Click" Content="Save Archive"
+					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+			</StackPanel>
+			<muxc:ProgressRing
+				Grid.Column="1" Width="60" Height="60"
+				IsActive="{x:Bind Data.Saving, Mode=OneWay}" />
+		</Grid>
+	</ScrollViewer>
+</UserControl>

@@ -14,24 +14,9 @@ namespace LRReader.UWP.ViewModels
 	{
 		public Category Category;
 
-		private string _name;
-		public string Name
-		{
-			get => _name;
-			set => _name = value;
-		}
-		private string _search;
-		public string Search
-		{
-			get => _search;
-			set => _search = value;
-		}
-		private bool _pinned;
-		public bool Pinned
-		{
-			get => _pinned;
-			set => _pinned = value;
-		}
+		public string Name { get; set; }
+		public string Search { get; set; }
+		public bool Pinned { get; set; }
 
 		private bool _canSave;
 		public bool CanSave

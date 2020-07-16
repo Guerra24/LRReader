@@ -100,8 +100,9 @@ namespace LRReader.UWP.ViewModels
 		public async Task Reload(bool animate)
 		{
 			ControlsEnabled = false;
-			LoadTags();
+			await LoadArchive();
 			await LoadImages(animate);
+			LoadTags();
 			CreateImageSets();
 			RaisePropertyChanged("Icon");
 			ControlsEnabled = true;
@@ -142,6 +143,18 @@ namespace LRReader.UWP.ViewModels
 			else
 				RefreshOnErrorButton = true;
 			_internalLoadingImages = false;
+		}
+
+		public async Task LoadArchive()
+		{
+			var result = await ArchivesProvider.GetArchive(Archive.arcid);
+			if (result != null)
+			{
+				Archive.title = result.title;
+				Archive.tags = result.tags;
+				Archive.UpdateTags();
+				RaisePropertyChanged("Archive");
+			}
 		}
 
 		public async Task ClearNew()

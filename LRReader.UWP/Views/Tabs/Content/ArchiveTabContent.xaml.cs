@@ -366,7 +366,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void EditButton_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new WebTab(Global.SettingsManager.Profile.ServerAddressBrowser + "/edit?id=" + Data.Archive.arcid));
+			Global.EventManager.AddTab(new ArchiveEditTab(Data.Archive));
 		}
 
 		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)

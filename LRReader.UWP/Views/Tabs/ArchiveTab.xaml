@@ -12,6 +12,7 @@
 	d:DesignWidth="400"
 	IconSource="{x:Bind TabContent.Data.Icon, Mode=OneWay}"
 	Loaded="TabViewItem_Loaded"
+	ToolTipService.ToolTip="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
 	mc:Ignorable="d">
 	<controls:TabViewItem.Header>
 		<StackPanel Orientation="Horizontal">

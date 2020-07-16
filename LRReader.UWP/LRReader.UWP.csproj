@@ -138,6 +138,7 @@
     <Compile Include="Internal\Tabs.cs" />
     <Compile Include="Internal\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ArchiveEditViewModel.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\ArchivesPageViewModel.cs" />
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
@@ -186,6 +187,9 @@
     <Compile Include="Views\Main\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\ArchiveEditTab.xaml.cs">
+      <DependentUpon>ArchiveEditTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\ArchivesTab.xaml.cs">
       <DependentUpon>ArchivesTab.xaml</DependentUpon>
     </Compile>
@@ -200,6 +204,9 @@
     </Compile>
     <Compile Include="Views\Tabs\CategoryEditTab.xaml.cs">
       <DependentUpon>CategoryEditTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\ArchiveEdit.xaml.cs">
+      <DependentUpon>ArchiveEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\Content\ArchivesTabContent.xaml.cs">
       <DependentUpon>ArchivesTabContent.xaml</DependentUpon>
@@ -387,6 +394,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Tabs\ArchiveEditTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tabs\ArchivesTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -404,6 +415,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Tabs\CategoryEditTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\ArchiveEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
