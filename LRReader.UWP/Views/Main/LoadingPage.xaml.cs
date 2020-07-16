@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Internal;
-using static LRReader.Shared.Providers.Providers;
 using LRReader.UWP.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 using LRReader.Internal;
+using LRReader.Shared.Providers;
 
 namespace LRReader.UWP.Views.Main
 {

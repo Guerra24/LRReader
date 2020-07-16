@@ -4,6 +4,7 @@ using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using static LRReader.Shared.Providers.Providers;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -94,29 +94,29 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task RestartWorker()
 		{
-			await ServerProvider.RestartWorker();
+			await ShinobuProvider.RestartWorker();
 		}
 
 		public async Task StopWorker()
 		{
-			await ServerProvider.StopWorker();
+			await ShinobuProvider.StopWorker();
 		}
 
 		public async Task<DownloadPayload> DownloadDB()
 		{
-			return await ServerProvider.DownloadDB();
+			return await DatabaseProvider.BackupJSON();
 		}
 
 		public async Task ClearAllNew()
 		{
-			await ServerProvider.ClearAllNew();
+			await DatabaseProvider.ClearAllNew();
 		}
 
 		public async Task UpdateShinobuStatus()
 		{
 			if (SettingsManager.Profile.HasApiKey)
 			{
-				var result = await ServerProvider.GetShinobuStatus();
+				var result = await ShinobuProvider.GetShinobuStatus();
 				if (result != null)
 				{
 					_shinobuStatus = result;

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
 
 namespace LRReader.Shared.Models.Api
 {
@@ -11,7 +12,8 @@ namespace LRReader.Shared.Models.Api
 	public class GenericApiResult
 	{
 		public string operation { get; set; }
-		public int success { get; set; }
+		[JsonConverter(typeof(BoolConverter))]
+		public bool success { get; set; }
 	}
 
 	public class GenericApiResponse<T>
@@ -22,10 +24,4 @@ namespace LRReader.Shared.Models.Api
 		public HttpStatusCode Code;
 	}
 
-	public class ShinobuStatus
-	{
-		public int is_alive { get; set; }
-		public string operation { get; set; }
-		public int pid { get; set; }
-	}
 }

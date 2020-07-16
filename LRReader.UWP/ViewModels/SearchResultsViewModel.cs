@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using static LRReader.Shared.Providers.Providers;
 using static LRReader.Internal.Global;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Internal;
 using LRReader.UWP.Views.Tabs;
 using GalaSoft.MvvmLight.Threading;
+using LRReader.Shared.Providers;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -139,7 +139,7 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await ArchivesProvider.GetArchivesForPage(SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly);
+			var resultPage = await SearchProvider.Search(SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

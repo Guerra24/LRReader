@@ -1,6 +1,5 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Api;
-using static LRReader.Shared.Providers.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

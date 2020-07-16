@@ -1,6 +1,5 @@
 ﻿using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
-using static LRReader.Shared.Providers.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.Providers
 {
-	public class CategoriesProvider
+	public static class CategoriesProvider
 	{
 
-		public async Task<List<Category>> GetCategories()
+		public static async Task<List<Category>> GetCategories()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -38,7 +38,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
+		public static async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -67,7 +67,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<bool> UpdateCategory(string id, string name = "", string search = "", bool pinned = false)
+		public static async Task<bool> UpdateCategory(string id, string name = "", string search = "", bool pinned = false)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -97,7 +97,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<bool> DeleteCategory(string id)
+		public static async Task<bool> DeleteCategory(string id)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -124,7 +124,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<bool> AddArchiveToCategory(string id, string archive)
+		public static async Task<bool> AddArchiveToCategory(string id, string archive)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -152,7 +152,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<bool> RemoveArchiveFromCategory(string id, string archive)
+		public static async Task<bool> RemoveArchiveFromCategory(string id, string archive)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 

@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static LRReader.Shared.Providers.Providers;
 using static LRReader.Shared.Internal.SharedGlobal;
 using LRReader.UWP.Views.Tabs;
 using GalaSoft.MvvmLight.Threading;

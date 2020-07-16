@@ -15,7 +15,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using System.Net;
 using LRReader.UWP.ViewModels.Base;
-using static LRReader.Shared.Providers.Providers;
+using LRReader.Shared.Providers;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -127,7 +127,7 @@ namespace LRReader.UWP.ViewModels
 			if (animate)
 				LoadingImages = true;
 			ArchiveImages.Clear();
-			var result = await ImagesProvider.LoadImages(Archive);
+			var result = await ArchivesProvider.ExtractArchive(Archive.arcid);
 			if (animate)
 				LoadingImages = false;
 			if (result != null)
@@ -146,7 +146,7 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task ClearNew()
 		{
-			await Archive.ClearNew();
+			await ArchivesProvider.ClearNewArchive(Archive.arcid);
 		}
 
 		public void CreateImageSets()

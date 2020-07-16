@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using static LRReader.Shared.Providers.Providers;
 using static LRReader.Internal.Global;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using LRReader.Shared.Internal;
 using LRReader.UWP.Views.Tabs;
 using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Command;
+using LRReader.Shared.Providers;
 
 namespace LRReader.UWP.ViewModels
 {

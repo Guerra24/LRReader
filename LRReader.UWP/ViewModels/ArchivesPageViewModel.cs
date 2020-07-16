@@ -14,7 +14,6 @@ using LRReader.UWP.Views.Tabs;
 using RestSharp;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
-using static LRReader.Shared.Providers.Providers;
 using static LRReader.Internal.Global;
 using Microsoft.Toolkit.Collections;
 using System.Threading;

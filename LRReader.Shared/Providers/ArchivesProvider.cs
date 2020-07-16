@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Internal;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using RestSharp;
@@ -11,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.Providers
 {
-	public class ArchivesProvider
+	public static class ArchivesProvider
 	{
 
-		public async Task<List<Archive>> LoadArchives()
+		public static async Task<List<Archive>> GetArchives()
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/archivelist");
+			var rq = new RestRequest("api/archives");
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -40,22 +41,22 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<List<TagStats>> LoadTagStats()
+		public static async Task<Archive> GetArchive(string id)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/database/stats");
+			var rq = new RestRequest("api/archives/{id}/metadata");
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<List<TagStats>>(r);
+			var result = await LRRApi.GetResult<Archive>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
 				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
 				return null;
 			}
-
 			if (result.OK)
 			{
 				return result.Data;
@@ -67,22 +68,34 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public async Task<ArchiveSearch> GetArchivesForPage(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged)
+		public static async Task<byte[]> GetThumbnail(string id)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
-			var rq = new RestRequest("api/search");
-
-			rq.AddParameter("start", archivesPerPage * page);
-			rq.AddParameter("newonly", isnew.ToString().ToLower());
-			rq.AddParameter("untaggedonly", untagged.ToString().ToLower());
-			rq.AddParameter("filter", query);
-			rq.AddParameter("category", category);
-			rq.AddParameter("order", "asc");
+			var rq = new RestRequest("api/archives/{id}/thumbnail");
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<ArchiveSearch>(r);
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					return r.RawBytes;
+				default:
+					return null;
+			}
+		}
+
+		public static async Task<List<string>> ExtractArchive(string id)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}/extract");
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+
+			var r = await client.ExecutePostAsync(rq);
+
+			var result = await LRRApi.GetResult<ArchiveImages>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -91,12 +104,102 @@ namespace LRReader.Shared.Providers
 			}
 			if (result.OK)
 			{
-				return result.Data;
+				return result.Data.pages;
 			}
 			else
 			{
 				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
 				return null;
+			}
+		}
+
+		public static async Task<DownloadPayload> DownloadArchive(string id)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}/download");
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					var download = new DownloadPayload();
+					var header = r.Headers.First(h => h.Name.Equals("Content-Disposition")).Value as string;
+					var parms = header.Split(';').Select(s => s.Trim());
+					var natr = parms.First(s => s.StartsWith("filename"));
+					var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
+
+					download.Data = r.RawBytes;
+					download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
+					download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
+					return download;
+				default:
+					var error = await LRRApi.GetError(r);
+					SharedGlobal.EventManager.ShowError(error.title, error.error);
+					return null;
+			}
+		}
+
+		public static async Task<bool> ClearNewArchive(string id)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}/isnew", Method.DELETE);
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteAsync(rq);
+
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return false;
+			}
+			if (result.OK)
+			{
+				return result.Data.success;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
+		}
+
+		public static async Task<bool> UpdateArchive(string id, string title = "", string tags = "")
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}/metadata", Method.PUT);
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddQueryParameter("title", title);
+			rq.AddQueryParameter("tags", tags);
+
+			var r = await client.ExecuteAsync(rq);
+
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return false;
+			}
+			if (result.OK)
+			{
+				return result.Data.success;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
 			}
 		}
 

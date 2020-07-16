@@ -1,9 +1,9 @@
-﻿using static LRReader.Shared.Providers.Providers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 
 namespace LRReader.Shared.Internal
 {
@@ -15,11 +15,11 @@ namespace LRReader.Shared.Internal
 		public async Task ReloadArchives()
 		{
 			Archives.Clear();
-			var resultA = await ArchivesProvider.LoadArchives();
+			var resultA = await ArchivesProvider.GetArchives();
 			if (resultA != null)
 				Archives = resultA;
 			TagStats.Clear();
-			var resultT = await ArchivesProvider.LoadTagStats();
+			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
 			{
 				await Task.Run(() =>

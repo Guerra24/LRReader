@@ -13,11 +13,10 @@
 
 ## Requirements
 
-- Windows 10 1803 (x86, x64, ARM or ARM64)
+- Windows 10 1803 (x86, x64 or ARM64)
 - LANraragi v0.7.0
 
 ## Installing
-Sideload only for now.
 
 You will need to install the cert first, [instructions here](https://github.com/Guerra24/LRReader/wiki/Certificate).
 

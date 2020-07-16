@@ -2,6 +2,7 @@
 using LRReader.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -176,7 +177,7 @@ namespace LRReader.UWP.ViewModels.Base
 
 		public async Task<DownloadPayload> DownloadArchive()
 		{
-			return await Archive.DownloadArchive();
+			return await ArchivesProvider.DownloadArchive(Archive.arcid);
 		}
 	}
 }
