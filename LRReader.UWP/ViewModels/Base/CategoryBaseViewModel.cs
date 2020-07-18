@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.Views.Items;
 using System;
@@ -41,5 +42,6 @@ namespace LRReader.UWP.ViewModels.Base
 				RaisePropertyChanged("SearchImage");
 			}
 		}
+		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
 	}
 }

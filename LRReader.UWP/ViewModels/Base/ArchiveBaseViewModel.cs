@@ -175,6 +175,8 @@ namespace LRReader.UWP.ViewModels.Base
 			}
 		}
 
+		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
+
 		public async Task<DownloadPayload> DownloadArchive()
 		{
 			return await ArchivesProvider.DownloadArchive(Archive.arcid);

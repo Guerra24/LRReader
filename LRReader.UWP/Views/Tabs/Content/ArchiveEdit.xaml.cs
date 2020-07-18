@@ -28,16 +28,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data = new ArchiveEditViewModel();
 		}
 
-		public void LoadArchive(Archive archive)
-		{
-			Data.LoadArchive(archive);
-		}
+		public async void LoadArchive(Archive archive) => await Data.LoadArchive(archive);
 
 		public async void Refresh() => await Data.ReloadArchive();
 
-		private async void SaveButton_Click(object sender, RoutedEventArgs e)
-		{
-			await Data.SaveArchive();
-		}
+		private async void SaveButton_Click(object sender, RoutedEventArgs e) => await Data.SaveArchive();
+
+		private async void PluginButton_Click(object sender, RoutedEventArgs e) => await Data.UsePlugin();
 	}
 }

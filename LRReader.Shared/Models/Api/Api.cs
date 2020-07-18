@@ -14,6 +14,7 @@ namespace LRReader.Shared.Models.Api
 		public string operation { get; set; }
 		[JsonConverter(typeof(BoolConverter))]
 		public bool success { get; set; }
+		public string error { get; set; }
 	}
 
 	public class GenericApiResponse<T>

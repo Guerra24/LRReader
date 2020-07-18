@@ -23,24 +23,39 @@
 			<Grid.Resources>
 				<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
 			</Grid.Resources>
-			<StackPanel Grid.Column="1" Margin="0,20,0,0">
+			<StackPanel Grid.Column="1" Margin="0,20,0,20">
 				<TextBox
 					Margin="0,0,0,10" Header="Archive ID" IsReadOnly="True"
 					Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
 				<TextBox
 					Margin="0,0,0,10" Header="Title"
 					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Title, Mode=TwoWay}" />
 				<TextBox
 					MinHeight="140" Margin="0,0,0,10" Header="Tags"
 					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Tags, Mode=TwoWay}"
 					TextWrapping="Wrap" />
 				<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-					<ComboBox Margin="0,0,20,0" Header="Plugin" IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
-					<Button VerticalAlignment="Bottom" Content="Run plugin" IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+					<ComboBox
+						Margin="0,0,20,0" Header="Plugin"
+						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+						ItemsSource="{x:Bind Data.Plugins}"
+						PlaceholderText="Plugin..."
+						SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
+					<Button
+						VerticalAlignment="Bottom" Click="PluginButton_Click" Content="Run plugin"
+						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
 				</StackPanel>
-				<TextBox Margin="0,0,0,10" Header="Parameter" IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+				<TextBox
+					Margin="0,0,0,10"
+					Header="{x:Bind Data.CurrentPlugin.oneshot_arg, Mode=OneWay}"
+					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					IsSpellCheckEnabled="False"
+					Text="{x:Bind Data.Arg, Mode=TwoWay}"
+					Visibility="{x:Bind Data.CurrentPlugin.HasArg, Mode=OneWay}" />
 				<Button
 					HorizontalAlignment="Center" Click="SaveButton_Click" Content="Save Archive"
 					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />

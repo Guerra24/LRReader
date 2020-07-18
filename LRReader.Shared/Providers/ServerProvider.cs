@@ -1,13 +1,10 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Api;
-using LRReader.Shared.Models;
+using LRReader.Shared.Models.Main;
 using RestSharp;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using LRReader.Shared.Models.Main;
 
 namespace LRReader.Shared.Providers
 {
@@ -37,6 +34,62 @@ namespace LRReader.Shared.Providers
 					return new ServerInfo() { _unauthorized = true };
 				default:
 					return null;
+			}
+		}
+
+		public static async Task<List<Plugin>> GetPlugins(PluginType type)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/plugins/{type}");
+			rq.AddParameter("type", type.ToString().ToLower(), ParameterType.UrlSegment);
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			var result = await LRRApi.GetResult<List<Plugin>>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			if (result.OK)
+			{
+				return result.Data;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
+			}
+		}
+
+		public static async Task<UsePluginResult> UsePlugin(string plugin, string arcid = "", string arg = "")
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/plugins/use");
+			rq.AddQueryParameter("plugin", plugin);
+			rq.AddQueryParameter("id", arcid);
+			rq.AddQueryParameter("arg", arg);
+
+			var r = await client.ExecutePostAsync(rq);
+
+			var result = await LRRApi.GetResult<UsePluginResult>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			if (result.OK)
+			{
+				return result.Data;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
 			}
 		}
 	}
