@@ -28,6 +28,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Input;
+using LRReader.Shared.Providers;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -63,7 +64,7 @@ namespace LRReader.UWP.Views.Items
 				ViewModel.MissingImage = false;
 				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
 				{
-					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Archive.arcid);
+					byte[] bytes = await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid);
 					if (bytes != null)
 					{
 						await stream.WriteAsync(bytes.AsBuffer());

@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -55,7 +56,7 @@ namespace LRReader.UWP.Views.Items
 					if (first != null)
 					{
 
-						byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Category.archives.FirstOrDefault());
+						byte[] bytes = await ArchivesProvider.GetThumbnail(first);
 						if (bytes != null)
 						{
 							await stream.WriteAsync(bytes.AsBuffer());

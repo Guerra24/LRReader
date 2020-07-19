@@ -22,26 +22,6 @@ namespace LRReader.UWP.ViewModels
 		public Version Version => Util.GetAppVersion();
 		public Version MinVersion => UpdatesManager.MIN_VERSION;
 		public Version MaxVersion => UpdatesManager.MAX_VERSION;
-		private string _cacheSizeInMB;
-		public string CacheSizeInMB
-		{
-			get => _cacheSizeInMB;
-			set
-			{
-				_cacheSizeInMB = value;
-				RaisePropertyChanged("CacheSizeInMB");
-			}
-		}
-		private bool _progressCache;
-		public bool ProgressCache
-		{
-			get => _progressCache;
-			set
-			{
-				_progressCache = value;
-				RaisePropertyChanged("ProgressCache");
-			}
-		}
 		private ShinobuStatus _shinobuStatus = new ShinobuStatus();
 		public bool ShinobuRunning => _shinobuStatus.is_alive == 1 && !ShinobuUnknown;
 		public bool ShinobuStopped => _shinobuStatus.is_alive == 0 && !ShinobuUnknown;
@@ -72,24 +52,6 @@ namespace LRReader.UWP.ViewModels
 		public SettingsPageViewModel()
 		{
 			UpdateReleaseData();
-		}
-
-		public async Task UpdateCacheSize()
-		{
-			if (ProgressCache)
-				return;
-			ProgressCache = true;
-			CacheSizeInMB = await Global.ImageManager.GetCacheSizeMB();
-			ProgressCache = false;
-		}
-
-		public async Task ClearCache()
-		{
-			if (ProgressCache)
-				return;
-			ProgressCache = true;
-			await Global.ImageManager.ClearCache();
-			ProgressCache = false;
 		}
 
 		public async Task RestartWorker()

@@ -30,7 +30,7 @@
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 			<MenuFlyoutItem
 				Click="EditMenuItem_Click" Icon="Edit" Text="Edit"
-				Visibility="{x:Bind ViewModel.CanEdit, Mode=OneWay}" />
+				Visibility="{x:Bind ViewModel.CanEdit}" />
 			<MenuFlyoutItem
 				Click="DownloadMenuItem_Click" Icon="Download"
 				IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"

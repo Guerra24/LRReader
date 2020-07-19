@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Tabs;
 using System;
@@ -51,7 +52,7 @@ namespace LRReader.UWP.Views.Items
 				ViewModel.MissingImage = false;
 				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
 				{
-					byte[] bytes = await Global.ImageManager.DownloadThumbnailRuntime(ViewModel.Archive.arcid);
+					byte[] bytes = await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid);
 					if (bytes != null)
 					{
 						await stream.WriteAsync(bytes.AsBuffer());

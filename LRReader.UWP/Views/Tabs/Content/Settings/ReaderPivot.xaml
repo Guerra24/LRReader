@@ -9,7 +9,6 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Header="Reader"
-	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
@@ -78,23 +77,6 @@
 				<x:String>All archives</x:String>
 				<x:String>'New!' archives only</x:String>
 			</muxc:RadioButtons>
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Remove bookmark reminder on last page"
-				IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}"
-				ToolTipService.ToolTip="Ask to remove bookmark when closed on last page" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Cache Images to Disk" IsOn="{x:Bind Data.SettingsManager.ImageCaching, Mode=TwoWay}" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button
-					Margin="0,0,10,0" Click="ButtonClearCache_Click" Content="Clear Cache"
-					IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
-				<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
-					<Run>Size</Run>
-					<Run Text="{x:Bind Data.CacheSizeInMB, Mode=OneWay}" />
-				</TextBlock>
-				<muxc:ProgressRing
-					Width="30" Height="30" VerticalAlignment="Center"
-					IsActive="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-			</StackPanel>
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

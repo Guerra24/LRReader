@@ -11,14 +11,11 @@ namespace LRReader.Internal
 	public class Global : SharedGlobal
 	{
 
-		public static ImageManager ImageManager { get; set; }
 		public new static EventManager EventManager { get; set; }
 
 		public static void Init()
 		{
 			LRRApi = new LRRApi();
-			ImageManager = new ImageManager();
-			ImageManager.Init();
 			SharedGlobal.EventManager = EventManager = new EventManager();
 			SettingsManager = new SettingsManager();
 			ArchivesManager = new ArchivesManager();

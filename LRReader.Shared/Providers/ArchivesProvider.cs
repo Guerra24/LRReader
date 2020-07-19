@@ -201,5 +201,24 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
+		public static async Task<byte[]> GetImage(string path)
+		{
+			if (string.IsNullOrEmpty(path))
+				return null;
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest(path);
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			switch (r.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					return r.RawBytes;
+				default:
+					return null;
+			}
+		}
+
 	}
 }
