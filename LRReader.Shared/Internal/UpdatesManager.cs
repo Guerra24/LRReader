@@ -13,9 +13,8 @@ namespace LRReader.Shared.Internal
 {
 	public class UpdatesManager
 	{
-		public static Version MIN_VERSION = new Version(0, 7, 0);
-		public static Version MAX_VERSION = new Version(0, 7, 0);
-		private static bool UpdatedRange = false;
+		public static Version MIN_VERSION = new Version(0, 7, 1);
+		public static Version MAX_VERSION = new Version(0, 7, 1);
 
 		private GitHubClient githubClient;
 		private RestClient client;
@@ -52,11 +51,11 @@ namespace LRReader.Shared.Internal
 			return null;
 		}
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 		public async Task UpdateSupportedRange(Version current)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		{
-			if (UpdatedRange)
-				return;
-			UpdatedRange = true;
+#if !DEBUG
 			var rq = new RestRequest("projects/lrr/supported/{version}.json");
 			rq.AddParameter("version", current.ToString(), ParameterType.UrlSegment);
 
@@ -74,6 +73,7 @@ namespace LRReader.Shared.Internal
 				MIN_VERSION = range.minSupported;
 				MAX_VERSION = range.maxSupported;
 			}
+#endif
 		}
 	}
 

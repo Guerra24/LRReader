@@ -15,12 +15,12 @@
 	<UserControl.ContextFlyout>
 		<MenuFlyout>
 			<MenuFlyoutItem Click="Add_Click" Icon="Add" Text="Open in new tab" />
-			<MenuFlyoutItem
+			<!--<MenuFlyoutItem
 				Click="Edit_Click" Icon="Edit" Text="Edit"
 				Visibility="{x:Bind ViewModel.CanEdit}" />
 			<MenuFlyoutItem
 				Click="Remove_Click" Icon="Delete" Text="Delete"
-				Visibility="{x:Bind ViewModel.CanEdit}" />
+				Visibility="{x:Bind ViewModel.CanEdit}" />-->
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
