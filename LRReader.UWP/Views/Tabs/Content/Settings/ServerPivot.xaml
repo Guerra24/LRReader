@@ -79,6 +79,10 @@
 			</StackPanel>
 			<TextBlock Margin="0,0,0,5" FontSize="18" Text="Database" />
 			<Button
+				Margin="0,0,0,10" Content="Reset search cache"
+				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+				ToolTipService.ToolTip="Searches are stored to improve performance. If there are issues with that use this." Click="ResetSearchButton_Click" />
+			<Button
 				Margin="0,0,0,10" Content="Clear all new"
 				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 				ToolTipService.ToolTip="Clears the 'New!' flag on all archives">
@@ -92,7 +96,7 @@
 				</Button.Flyout>
 			</Button>
 			<Button
-				Click="DownloadDBButton_Click" Content="Download database"
+				Click="DownloadDBButton_Click" Content="Backup database"
 				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 				ToolTipService.ToolTip="Returns a backup in JSON form. This backup can be reimported manually" />
 		</StackPanel>

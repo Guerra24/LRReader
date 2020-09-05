@@ -120,5 +120,10 @@ namespace LRReader.UWP.ViewModels
 				ServerInfo = info;
 			}
 		}
+
+		public async Task ResetSearch()
+		{
+			await SearchProvider.DiscardCache();
+		}
 	}
 }

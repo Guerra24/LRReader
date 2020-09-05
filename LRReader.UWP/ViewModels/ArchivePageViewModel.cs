@@ -100,9 +100,9 @@ namespace LRReader.UWP.ViewModels
 		public async Task Reload(bool animate)
 		{
 			ControlsEnabled = false;
+			LoadTags();
 			await LoadArchive();
 			await LoadImages(animate);
-			LoadTags();
 			CreateImageSets();
 			RaisePropertyChanged("Icon");
 			ControlsEnabled = true;

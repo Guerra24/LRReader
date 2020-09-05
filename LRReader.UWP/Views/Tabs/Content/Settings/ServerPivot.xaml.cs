@@ -86,5 +86,12 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			ClearNewFlyout.Hide();
 		}
 
+		private async void ResetSearchButton_Click(object sender, RoutedEventArgs e)
+		{
+			var btn = sender as Button;
+			btn.IsEnabled = false;
+			await Data.ResetSearch();
+			btn.IsEnabled = true;
+		}
 	}
 }

@@ -55,7 +55,7 @@ namespace LRReader.Shared.Internal
 		public async Task UpdateSupportedRange(Version current)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		{
-#if !DEBUG
+			#if !DEBUG
 			var rq = new RestRequest("projects/lrr/supported/{version}.json");
 			rq.AddParameter("version", current.ToString(), ParameterType.UrlSegment);
 
@@ -65,6 +65,7 @@ namespace LRReader.Shared.Internal
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
+				ReadVersion();
 				return;
 			}
 			if (result.OK)
@@ -72,8 +73,20 @@ namespace LRReader.Shared.Internal
 				var range = result.Data;
 				MIN_VERSION = range.minSupported;
 				MAX_VERSION = range.maxSupported;
+				SharedGlobal.SettingsStorage.StoreObjectLocal("MinVersion", MIN_VERSION.ToString());
+				SharedGlobal.SettingsStorage.StoreObjectLocal("MaxVersion", MAX_VERSION.ToString());
 			}
-#endif
+			else
+			{
+				ReadVersion();
+			}
+			#endif
+		}
+
+		private void ReadVersion()
+		{
+			MIN_VERSION = Version.Parse(SharedGlobal.SettingsStorage.GetObjectLocal("MinVersion", MIN_VERSION.ToString()));
+			MAX_VERSION = Version.Parse(SharedGlobal.SettingsStorage.GetObjectLocal("MaxVersion", MAX_VERSION.ToString()));
 		}
 	}
 

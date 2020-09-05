@@ -29,10 +29,21 @@
 							Margin="0,0,0,8" FontSize="24" IsTextSelectionEnabled="True"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
-						<GridView IsItemClickEnabled="True" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Tags, Mode=OneWay}" SelectionMode="None">
+						<GridView
+							IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
+							ItemsSource="{x:Bind Data.Tags, Mode=OneWay}"
+							SelectionMode="None">
 							<GridView.ItemTemplate>
 								<DataTemplate x:DataType="x:String">
 									<Grid Padding="4,3" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
+										<Grid.ContextFlyout>
+											<MenuFlyout>
+												<MenuFlyoutItem
+													Click="Tags_CopyTag" Icon="Copy"
+													Tag="{x:Bind}"
+													Text="Copy Tag" />
+											</MenuFlyout>
+										</Grid.ContextFlyout>
 										<TextBlock Text="{x:Bind}" />
 									</Grid>
 								</DataTemplate>
@@ -119,7 +130,7 @@
 			Name="ScrollViewer" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto"
 			KeyboardAcceleratorPlacementMode="Hidden" Opacity="0" PointerPressed="ScrollViewer_PointerPressed"
 			SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto"
-			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" >
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<ScrollViewer.KeyboardAccelerators>
 				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
 			</ScrollViewer.KeyboardAccelerators>

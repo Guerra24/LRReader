@@ -1,7 +1,7 @@
 ![Logo](https://s3.guerra24.net/projects/lrr/logo.png)
 
 [<img src="https://github.com/Guerra24/LRReader/workflows/Nightly/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:Nightly)
-[<img src="https://github.com/Guerra24/LRReader/workflows/Release%20Delivery/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:"Release+Delivery")
+[<img src="https://github.com/Guerra24/LRReader/workflows/Release/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:Release)
 
 ## Features
 - Archives list.
@@ -66,6 +66,7 @@ Scroll by clicking and dragging the page or with wheel.<br>
 ![Main View](https://s3.guerra24.net/projects/lrr/screenshots/01.png)<br>
 ![Search](https://s3.guerra24.net/projects/lrr/screenshots/02.png)<br>
 ![Bookmarks](https://s3.guerra24.net/projects/lrr/screenshots/01_1.png)<br>
+![Categories](https://s3.guerra24.net/projects/lrr/screenshots/01_2.png)<br>
 ![Archive View](https://s3.guerra24.net/projects/lrr/screenshots/03.png)<br>
 ![Reader](https://s3.guerra24.net/projects/lrr/screenshots/04.png)<br>
 ![Reader two pages](https://s3.guerra24.net/projects/lrr/screenshots/04_1.png)<br>

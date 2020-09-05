@@ -27,6 +27,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {
@@ -98,8 +99,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			if (Data.Archive.IsNewArchive())
 			{
-				await Data.ClearNew();
-				Data.Archive.isnew = "false";
 				_wasNew = true;
 			}
 			await ImagesGrid.Fade(value: 0.0f, duration: 200).StartAsync();
@@ -133,8 +132,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 					conv = count - conv - 1;
 			}
 			conv = Math.Clamp(conv, 0, count - 1);
-			if (conv >= count - 1)
+			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
+				if (Data.Archive.IsNewArchive())
+				{
+					await Data.ClearNew();
+					Data.Archive.isnew = "false";
+				}
 				if (Data.Bookmarked && Global.SettingsManager.RemoveBookmark)
 				{
 					var dialog = new ContentDialog { Title = "Remove bookmark?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
@@ -434,6 +438,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private void Tags_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			Global.EventManager.AddTab(new SearchResultsTab(e.ClickedItem as string));
+		}
+
+		private void Tags_CopyTag(object sender, RoutedEventArgs e)
+		{
+			var dataPackage = new DataPackage();
+			dataPackage.RequestedOperation = DataPackageOperation.Copy;
+			dataPackage.SetText((sender as MenuFlyoutItem).Tag as string);
+			Clipboard.SetContent(dataPackage);
 		}
 	}
 }

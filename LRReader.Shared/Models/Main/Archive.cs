@@ -1,14 +1,6 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Api;
-using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -44,7 +36,8 @@ namespace LRReader.Shared.Models.Main
 			{
 				tagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
 			}
-			tagsClean.TrimEnd(',');
+			tagsClean = tagsClean.Trim();
+			tagsClean = tagsClean.TrimEnd(',');
 		}
 	}
 

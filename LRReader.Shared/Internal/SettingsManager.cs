@@ -58,15 +58,6 @@ namespace LRReader.Shared.Internal
 				RaisePropertyChanged("DefaultZoom");
 			}
 		}
-		public bool ImageCaching
-		{
-			get => SettingsStorage.GetObjectLocal("ImageCaching", false);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("ImageCaching", value);
-				RaisePropertyChanged("ImageCaching");
-			}
-		}
 		public bool ReadRTL
 		{
 			get => SettingsStorage.GetObjectLocal("ReadRTL", false);
@@ -191,7 +182,7 @@ namespace LRReader.Shared.Internal
 				SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);
 			}
 		}
-		public static readonly int CurrentLocalVersion = 3;
+		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{
 			get => SettingsStorage.GetObjectLocal<int>("SettingsVersion");
@@ -269,6 +260,9 @@ namespace LRReader.Shared.Internal
 						break;
 					case 2:
 						SettingsStorage.DeleteObjectLocal("SwitchTabArchive");
+						break;
+					case 3:
+						SettingsStorage.DeleteObjectLocal("ImageCaching");
 						break;
 				}
 				if (localVersion >= CurrentLocalVersion - 1)
