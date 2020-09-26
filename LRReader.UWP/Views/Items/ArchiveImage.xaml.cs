@@ -22,8 +22,6 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ArchiveImage : UserControl
@@ -49,7 +47,7 @@ namespace LRReader.UWP.Views.Items
 				var image = await Util.ByteToBitmap(await ArchivesProvider.GetImage(n));
 				if (image != null)
 				{
-					image.DecodePixelWidth = 200;
+					image.DecodePixelHeight = 275;
 					Image.Source = image;
 					if (image.UriSource == null)
 					{

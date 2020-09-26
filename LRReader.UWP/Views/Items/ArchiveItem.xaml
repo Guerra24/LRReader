@@ -10,8 +10,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Width="200"
-	d:DesignHeight="323"
+	Width="196"
+	d:DesignHeight="318"
 	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
 	PointerPressed="UserControl_PointerPressed"
@@ -60,7 +60,7 @@
 			Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
 			TextTrimming="CharacterEllipsis"
 			ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
-		<Grid x:Name="Overlay" Grid.Row="1" Height="282">
+		<Grid x:Name="Overlay" Grid.Row="1">
 			<Popup x:Name="TagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
 				<Grid
 					Padding="2" Windows10version1903:Translation="0,0,32"
@@ -97,7 +97,9 @@
 					</GridView>
 				</Grid>
 			</Popup>
-			<Image x:Name="Thumbnail" VerticalAlignment="Center" Stretch="UniformToFill" />
+			<Image
+				x:Name="Thumbnail" Width="200" Height="275"
+				HorizontalAlignment="Center" />
 			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
 				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>

@@ -6,12 +6,12 @@
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	d:DesignHeight="282"
-	d:DesignWidth="200"
+	Width="200"
+	Height="275"
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
-	<Grid Width="200" Height="282" Background="{ThemeResource BrushItemGridBackground}">
+	<Grid Background="{ThemeResource BrushItemGridBackground}">
 		<Image Name="Image" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" />
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
 			<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />

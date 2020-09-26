@@ -70,7 +70,7 @@ namespace LRReader.UWP.Views.Items
 						await stream.WriteAsync(bytes.AsBuffer());
 						stream.Seek(0);
 						var image = new BitmapImage();
-						image.DecodePixelWidth = 200;
+						image.DecodePixelHeight = 275;
 						await image.SetSourceAsync(stream);
 						if (image.PixelHeight != 0 && image.PixelWidth != 0)
 							if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
