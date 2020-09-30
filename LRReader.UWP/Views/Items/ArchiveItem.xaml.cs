@@ -65,7 +65,7 @@ namespace LRReader.UWP.Views.Items
 				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
 				{
 					byte[] bytes = await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid);
-					if (bytes != null)
+					if (bytes?.Length > 0)
 					{
 						await stream.WriteAsync(bytes.AsBuffer());
 						stream.Seek(0);
