@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace LRReader.UWP.Views.Dialogs
 {
 	public sealed partial class ServerProfileDialog : ContentDialog
 	{
+		private ResourceLoader lang;
+
 		public ServerProfileDialog(bool edit)
 		{
 			this.InitializeComponent();
+			lang = ResourceLoader.GetForCurrentView("Dialogs");
 			if (edit)
-				PrimaryButtonText = "Save";
+				PrimaryButtonText = ResourceLoader.GetForCurrentView("Generic").GetString("Save");
 		}
 
 		private void ProfileName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -32,7 +22,7 @@ namespace LRReader.UWP.Views.Dialogs
 			ProfileError.Text = "";
 			if (string.IsNullOrEmpty(ProfileName.Text))
 			{
-				ProfileError.Text = "Empty Profile Name";
+				ProfileError.Text = lang.GetString("ServerProfile/ErrorNoName");
 				allow = false;
 			}
 			IsPrimaryButtonEnabled = allow && ValidateServerAddress();
@@ -44,12 +34,12 @@ namespace LRReader.UWP.Views.Dialogs
 			ProfileError.Text = "";
 			if (string.IsNullOrEmpty(ProfileServerAddress.Text))
 			{
-				ProfileError.Text = "Empty Server Address";
+				ProfileError.Text = lang.GetString("ServerProfile/ErrorNoAddress");
 				allow = false;
 			}
 			if (!Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute))
 			{
-				ProfileError.Text = "Invalid Server Address";
+				ProfileError.Text = lang.GetString("ServerProfile/ErrorInvalidAddress");
 				allow = false;
 			}
 			IsPrimaryButtonEnabled = allow && ValidateProfileName();

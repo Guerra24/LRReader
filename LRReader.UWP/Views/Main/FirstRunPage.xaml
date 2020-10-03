@@ -23,33 +23,34 @@
 		</Grid.RowDefinitions>
 		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource TitlebarBackground}" />
 		<Grid Grid.Row="1">
-			<StackPanel Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 				<TextBlock
-					Margin="0,0,0,10" HorizontalAlignment="Center" FontSize="28"
-					Text="Welcome" />
-				<TextBlock Margin="0,0,0,10" Text="First we need to setup a profile." Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+					x:Uid="/Pages/FirstRunPage/Welcome" Margin="0,0,0,10" HorizontalAlignment="Center"
+					FontSize="28" />
+				<TextBlock
+					x:Uid="/Pages/FirstRunPage/Setup" Margin="0,0,0,10" HorizontalAlignment="Center"
+					Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 				<ComboBox
-					Margin="0,0,0,10" HorizontalAlignment="Stretch"
+					x:Uid="/Pages/FirstRunPage/ProfileSelect" Margin="0,0,0,10" HorizontalAlignment="Stretch"
 					IsEnabled="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 					ItemsSource="{x:Bind ViewModel.SettingsManager.Profiles, Mode=OneWay}"
-					PlaceholderText="Select Profile"
 					SelectedItem="{x:Bind ViewModel.SettingsManager.Profile, Mode=TwoWay}" />
 				<StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
-					<Button Margin="0,0,10,0" Click="ButtonAdd_Click" Content="Add" />
+					<Button x:Uid="/Pages/FirstRunPage/Add" Margin="0,0,10,0" Click="ButtonAdd_Click" />
 					<Button
-						Margin="0,0,10,0" Click="ButtonEdit_Click" Content="Edit"
+						x:Uid="/Pages/FirstRunPage/Edit" Margin="0,0,10,0" Click="ButtonEdit_Click"
 						IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-					<Button Margin="0,0,10,0" Content="Remove" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}">
+					<Button x:Uid="/Pages/FirstRunPage/Remove" Margin="0,0,10,0" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}">
 						<Button.Flyout>
 							<Flyout x:Name="RemoveFlyout">
 								<StackPanel>
-									<TextBlock Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" Text="Selected profile will be removed. Do you want to continue?" />
-									<Button HorizontalAlignment="Center" Click="ButtonRemove_Click" Content="Yes, remove select profile" />
+									<TextBlock x:Uid="/Pages/FirstRunPage/RemoveConfirm" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+									<Button x:Uid="/Pages/FirstRunPage/RemoveYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
 								</StackPanel>
 							</Flyout>
 						</Button.Flyout>
 					</Button>
-					<Button Click="ButtonContinue_Click" Content="Continue" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+					<Button x:Uid="/Pages/FirstRunPage/Continue" Click="ButtonContinue_Click" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 				</StackPanel>
 			</StackPanel>
 		</Grid>

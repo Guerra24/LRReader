@@ -484,22 +484,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\en\Resources.resw" />
+    <PRIResource Include="Strings\en\Dialogs.resw" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\es\Resources.resw" />
+    <PRIResource Include="Strings\en\Pages.resw" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\en\HostTabPage.resw" />
+    <PRIResource Include="Strings\es\Pages.resw" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\es\HostTabPage.resw" />
+    <PRIResource Include="Strings\es\Dialogs.resw" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\en\LoadingPage.resw" />
+    <PRIResource Include="Strings\en\Generic.resw" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\es\LoadingPage.resw" />
+    <PRIResource Include="Strings\es\Generic.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

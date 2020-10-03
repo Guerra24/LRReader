@@ -33,12 +33,15 @@ namespace LRReader.UWP.Views.Main
 
 		private LoadingPageViewModel ViewModel;
 
+		private ResourceLoader lang;
+
 		public LoadingPage()
 		{
 			this.InitializeComponent();
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
 			ViewModel = DataContext as LoadingPageViewModel;
+			lang = ResourceLoader.GetForCurrentView("Pages");
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -63,39 +66,38 @@ namespace LRReader.UWP.Views.Main
 		{
 			ViewModel.Active = true;
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
-			var resw = ResourceLoader.GetForCurrentView("LoadingPage");
 
 			SharedGlobal.LRRApi.RefreshSettings(SharedGlobal.SettingsManager.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
-				ViewModel.Status = resw.GetString("NoConnection");
+				ViewModel.Status = lang.GetString("LoadingPage/NoConnection");
 				await Reload();
 				return;
 			}
 			else if (serverInfo._unauthorized)
 			{
-				ViewModel.Status = resw.GetString("InvalidKey");
+				ViewModel.Status = lang.GetString("LoadingPage/InvalidKey");
 				await Reload();
 				return;
 			}
 			SharedGlobal.ServerInfo = serverInfo;
 			if (serverInfo.version < UpdatesManager.MIN_VERSION)
 			{
-				ViewModel.Status = resw.GetString("InstanceNotSupported").AsFormat(serverInfo.version, UpdatesManager.MIN_VERSION);
+				ViewModel.Status = lang.GetString("LoadingPage/InstanceNotSupported").AsFormat(serverInfo.version, UpdatesManager.MIN_VERSION);
 				await Reload();
 				return;
 			}
 			else if (serverInfo.version > UpdatesManager.MAX_VERSION)
 			{
-				ViewModel.Status = resw.GetString("ClientNotSupported").AsFormat(serverInfo.version);
-				ViewModel.StatusSub = resw.GetString("ClientRange").AsFormat(UpdatesManager.MIN_VERSION, UpdatesManager.MAX_VERSION);
+				ViewModel.Status = lang.GetString("LoadingPage/ClientNotSupported").AsFormat(serverInfo.version);
+				ViewModel.StatusSub = lang.GetString("LoadingPage/ClientRange").AsFormat(UpdatesManager.MIN_VERSION, UpdatesManager.MAX_VERSION);
 				await Reload();
 				return;
 			}
 			if (serverInfo.nofun_mode && !SharedGlobal.SettingsManager.Profile.HasApiKey)
 			{
-				ViewModel.Status = resw.GetString("MissingKey");
+				ViewModel.Status = lang.GetString("LoadingPage/MissingKey");
 				await Reload();
 				return;
 			}

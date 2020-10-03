@@ -117,22 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClientNotSupported" xml:space="preserve">
-    <value>Version {0} no soportada. Actualiza la app a la version mas reciente</value>
+  <data name="ServerProfile.Dialog.CloseButtonText" xml:space="preserve">
+    <value>Cancelar</value>
   </data>
-  <data name="ClientRange" xml:space="preserve">
-    <value>Versiones de LANraragi soportadas {0} - {1}</value>
+  <data name="ServerProfile.Dialog.PrimaryButtonText" xml:space="preserve">
+    <value>Crear</value>
   </data>
-  <data name="InstanceNotSupported" xml:space="preserve">
-    <value>Version {0} no soportada. Actualiza tu instancia de LANraragi a {1}</value>
+  <data name="ServerProfile.Dialog.Title" xml:space="preserve">
+    <value>Perfil de Servidor</value>
   </data>
-  <data name="InvalidKey" xml:space="preserve">
-    <value>Falta la clave de API o no es válida</value>
+  <data name="ServerProfile.ErrorInvalidAddress" xml:space="preserve">
+    <value>Direccion Invalida</value>
   </data>
-  <data name="MissingKey" xml:space="preserve">
-    <value>Ejecutando en modo No-Fun, clave de API requerida</value>
+  <data name="ServerProfile.ErrorNoAddress" xml:space="preserve">
+    <value>Direccion en blanco</value>
   </data>
-  <data name="NoConnection" xml:space="preserve">
-    <value>No se pudo conectar... Selecciona otro perfil</value>
+  <data name="ServerProfile.ErrorNoName" xml:space="preserve">
+    <value>Nombre en blanco</value>
+  </data>
+  <data name="ServerProfile.ProfileAddress.PlaceholderText" xml:space="preserve">
+    <value>Direccion</value>
+  </data>
+  <data name="ServerProfile.ProfileApiKey.PlaceholderText" xml:space="preserve">
+    <value>Clave</value>
+  </data>
+  <data name="ServerProfile.ProfileName.PlaceholderText" xml:space="preserve">
+    <value>Nombre</value>
   </data>
 </root>

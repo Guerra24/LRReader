@@ -117,19 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bookmarks.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="FirstRunPage.Add.Content" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="FirstRunPage.Continue.Content" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="FirstRunPage.Edit.Content" xml:space="preserve">
+    <value>Modificar</value>
+  </data>
+  <data name="FirstRunPage.ProfileSelect.PlaceholderText" xml:space="preserve">
+    <value>Seleccionar Perfil</value>
+  </data>
+  <data name="FirstRunPage.Remove.Content" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="FirstRunPage.RemoveConfirm.Text" xml:space="preserve">
+    <value>Se eliminará el perfil seleccionado. ¿Quieres continuar?</value>
+  </data>
+  <data name="FirstRunPage.RemoveYes.Content" xml:space="preserve">
+    <value>Sí, eliminar</value>
+  </data>
+  <data name="FirstRunPage.Setup.Text" xml:space="preserve">
+    <value>Primero debemos crear un perfil</value>
+  </data>
+  <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="HostTabPage.Bookmarks.ToolTipService.ToolTip" xml:space="preserve">
     <value>Marcadores</value>
   </data>
-  <data name="Categories.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="HostTabPage.Categories.ToolTipService.ToolTip" xml:space="preserve">
     <value>Categorías</value>
   </data>
-  <data name="EnterFullScreen.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="HostTabPage.EnterFullScreen.ToolTipService.ToolTip" xml:space="preserve">
     <value>Modo Pantalla Completa</value>
   </data>
-  <data name="Search.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="HostTabPage.Search.ToolTipService.ToolTip" xml:space="preserve">
     <value>Buscar</value>
   </data>
-  <data name="Settings.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="HostTabPage.Settings.ToolTipService.ToolTip" xml:space="preserve">
     <value>Ajustes</value>
+  </data>
+  <data name="LoadingPage.ClientNotSupported" xml:space="preserve">
+    <value>Version {0} no soportada. Actualiza la app a la version mas reciente</value>
+  </data>
+  <data name="LoadingPage.ClientRange" xml:space="preserve">
+    <value>Versiones de LANraragi soportadas {0} - {1}</value>
+  </data>
+  <data name="LoadingPage.InstanceNotSupported" xml:space="preserve">
+    <value>Version {0} no soportada. Actualiza tu instancia de LANraragi a {1}</value>
+  </data>
+  <data name="LoadingPage.InvalidKey" xml:space="preserve">
+    <value>Falta la clave o no es válida</value>
+  </data>
+  <data name="LoadingPage.MissingKey" xml:space="preserve">
+    <value>Ejecutando en modo No-Fun, clave requerida</value>
+  </data>
+  <data name="LoadingPage.NoConnection" xml:space="preserve">
+    <value>No se pudo conectar... Selecciona otro perfil</value>
   </data>
 </root>
