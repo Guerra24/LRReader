@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Media.Animation;
 using LRReader.Shared.Models.Main;
 using GalaSoft.MvvmLight.Threading;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Internal;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -43,8 +44,8 @@ namespace LRReader.UWP.Views.Items
 			}
 			var animTask = ImagesRoot.Fade(value: 0.0f, duration: 80, easingMode: EasingMode.EaseOut).StartAsync();
 			var n = args.NewValue as ArchiveImageSet;
-			var lImage = ArchivesProvider.GetImage(n.LeftImage);
-			var rImage = ArchivesProvider.GetImage(n.RightImage);
+			var lImage = SharedGlobal.ImagesManager.GetImageCached(n.LeftImage);
+			var rImage = SharedGlobal.ImagesManager.GetImageCached(n.RightImage);
 			await animTask;
 			LeftImage.Source = await Util.ByteToBitmap(await lImage);
 			RightImage.Source = await Util.ByteToBitmap(await rImage);

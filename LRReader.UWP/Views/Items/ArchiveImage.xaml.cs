@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -44,7 +45,7 @@ namespace LRReader.UWP.Views.Items
 				Image.Opacity = 0;
 				Ring.IsActive = true;
 				Data.MissingImage = false;
-				var image = await Util.ByteToBitmap(await ArchivesProvider.GetImage(n));
+				var image = await Util.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n));
 				if (image != null)
 				{
 					image.DecodePixelHeight = 275;
