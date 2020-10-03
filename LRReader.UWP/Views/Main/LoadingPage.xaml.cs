@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 using LRReader.Internal;
 using LRReader.Shared.Providers;
+using Windows.ApplicationModel.Resources;
+using Microsoft.Toolkit.Extensions;
 
 namespace LRReader.UWP.Views.Main
 {
@@ -61,38 +63,39 @@ namespace LRReader.UWP.Views.Main
 		{
 			ViewModel.Active = true;
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
+			var resw = ResourceLoader.GetForCurrentView("LoadingPage");
 
 			SharedGlobal.LRRApi.RefreshSettings(SharedGlobal.SettingsManager.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
-				ViewModel.Status = "Unable to connect... Please select another profile";
+				ViewModel.Status = resw.GetString("NoConnection");
 				await Reload();
 				return;
 			}
 			else if (serverInfo._unauthorized)
 			{
-				ViewModel.Status = "Invalid or missing API key";
+				ViewModel.Status = resw.GetString("InvalidKey");
 				await Reload();
 				return;
 			}
 			SharedGlobal.ServerInfo = serverInfo;
 			if (serverInfo.version < UpdatesManager.MIN_VERSION)
 			{
-				ViewModel.Status = $"Version {serverInfo.version} not supported. Please update your LANraragi instance to {UpdatesManager.MIN_VERSION}";
+				ViewModel.Status = resw.GetString("InstanceNotSupported").AsFormat(serverInfo.version, UpdatesManager.MIN_VERSION);
 				await Reload();
 				return;
 			}
 			else if (serverInfo.version > UpdatesManager.MAX_VERSION)
 			{
-				ViewModel.Status = $"Version {serverInfo.version} not supported. Please update the app to a newer version";
-				ViewModel.StatusSub = $"LANraragi supported range {UpdatesManager.MIN_VERSION} - {UpdatesManager.MAX_VERSION}";
+				ViewModel.Status = resw.GetString("ClientNotSupported").AsFormat(serverInfo.version);
+				ViewModel.StatusSub = resw.GetString("ClientRange").AsFormat(UpdatesManager.MIN_VERSION, UpdatesManager.MAX_VERSION);
 				await Reload();
 				return;
 			}
 			if (serverInfo.nofun_mode && !SharedGlobal.SettingsManager.Profile.HasApiKey)
 			{
-				ViewModel.Status = "Running in No-Fun mode, API key required";
+				ViewModel.Status = resw.GetString("MissingKey");
 				await Reload();
 				return;
 			}

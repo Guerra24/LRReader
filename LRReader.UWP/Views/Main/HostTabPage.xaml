@@ -43,25 +43,25 @@
 						</Style>
 					</Grid.Resources>
 					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
-						<Button Background="Transparent" Click="Bookmarks_Click" ToolTipService.ToolTip="Bookmarks">
+						<Button x:Uid="/HostTabPage/Bookmarks" Background="Transparent" Click="Bookmarks_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
 							</Viewbox>
 						</Button>
-						<Button Background="Transparent" Click="Categories_Click" ToolTipService.ToolTip="Categories">
+						<Button x:Uid="/HostTabPage/Categories" Background="Transparent" Click="Categories_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
 							</Viewbox>
 						</Button>
-						<Button Background="Transparent" Click="Search_Click" ToolTipService.ToolTip="Search">
+						<Button x:Uid="/HostTabPage/Search" Background="Transparent" Click="Search_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;" />
 							</Viewbox>
 						</Button>
 					</StackPanel>
-					<Grid Name="TitleBar" Grid.Column="1" Background="Transparent" />
+					<Grid x:Name="TitleBar" Grid.Column="1" Background="Transparent" />
 					<StackPanel
-						Name="TabViewEndHeader" Grid.Column="2" VerticalAlignment="Bottom"
+						x:Name="TabViewEndHeader" Grid.Column="2" VerticalAlignment="Bottom"
 						Orientation="Horizontal">
 						<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}">
 							<ContentControl.ContentTransitions>
@@ -71,13 +71,13 @@
 							</ContentControl.ContentTransitions>
 						</ContentControl>
 						<Button
-							Name="EnterFullScreen" Click="EnterFullScreen_Click" ToolTipService.ToolTip="Enter Full Screen"
+							x:Name="EnterFullScreen" x:Uid="/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
 							Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<SymbolIcon Symbol="FullScreen" />
 							</Viewbox>
 						</Button>
-						<Button Name="SettingsButton" Click="SettingsButton_Click" ToolTipService.ToolTip="Settings">
+						<Button x:Name="SettingsButton" x:Uid="/HostTabPage/Settings" Click="SettingsButton_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<SymbolIcon Symbol="Setting" />
 							</Viewbox>
