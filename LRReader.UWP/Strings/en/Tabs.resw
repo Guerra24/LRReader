@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+  <data name="ArchivesTab.New.Content" xml:space="preserve">
+    <value>New only</value>
   </data>
-  <data name="RefreshTT.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Refresh</value>
+  <data name="ArchivesTab.Random.Content" xml:space="preserve">
+    <value>Random archive</value>
   </data>
-  <data name="Retry" xml:space="preserve">
-    <value>Retry</value>
+  <data name="ArchivesTab.Search.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
   </data>
-  <data name="RetryBtn.Content" xml:space="preserve">
-    <value>Retry</value>
+  <data name="ArchivesTab.Tab.Header" xml:space="preserve">
+    <value>Archives</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
+  <data name="ArchivesTab.Untagged.Content" xml:space="preserve">
+    <value>Untagged only</value>
+  </data>
+  <data name="SearchResultsTab.Tab.Header" xml:space="preserve">
+    <value>Search</value>
   </data>
 </root>

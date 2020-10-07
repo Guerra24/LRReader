@@ -8,10 +8,10 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Uid="/Tabs/SearchResultsTab/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Search"
-	Header="Search"
 	mc:Ignorable="d">
 	<controls:TabViewItem.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
@@ -22,7 +22,7 @@
 		<controls:SymbolIconSource Symbol="Find" />
 	</controls:TabViewItem.IconSource>
 	<internal:CustomTab.CustomTabControl>
-		<Button Click="RefreshButton_Click" ToolTipService.ToolTip="Refresh">
+		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Refresh" />
 			</Viewbox>
