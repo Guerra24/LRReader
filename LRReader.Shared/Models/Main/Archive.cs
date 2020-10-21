@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -10,6 +11,7 @@ namespace LRReader.Shared.Models.Main
 		public string isnew { get; set; }
 		public string tags { get; set; }
 		public string title { get; set; }
+		[JsonIgnore]
 		public string tagsClean { get; set; }
 
 		[OnDeserialized]

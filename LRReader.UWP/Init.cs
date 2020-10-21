@@ -1,11 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.UWP.Impl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace LRReader.UWP
 {
@@ -14,6 +10,8 @@ namespace LRReader.UWP
 		public static void InitObjects()
 		{
 			SharedGlobal.SettingsStorage = new SettingsStorage();
+			SharedGlobal.FilesStorage = new FilesStorage();
+			ArchivesManager.TemporaryFolder = ApplicationData.Current.TemporaryFolder.Path;
 			Global.Init(); // Init global static data
 		}
 	}

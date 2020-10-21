@@ -129,6 +129,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Impl\FilesStorage.cs" />
     <Compile Include="Impl\SettingsStorage.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="Internal\Converters.cs" />
