@@ -32,7 +32,7 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<AutoSuggestBox
-							x:Name="SearchBox" x:Uid="/Tabs/ArchivesTab/Search" MinWidth="300"
+							x:Name="SearchBox" x:Uid="/Tabs/Archives/Search" MinWidth="300"
 							HorizontalAlignment="Center"
 							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 							ItemsSource="{x:Bind Data.Suggestions, Mode=OneWay}"
@@ -41,17 +41,17 @@
 							Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">
 							<ToggleButton
-								x:Uid="/Tabs/ArchivesTab/Untagged" Width="150" Margin="0,0,5,0"
+								x:Uid="/Tabs/Archives/Untagged" Width="150" Margin="0,0,5,0"
 								Click="FilterToggle_Click"
 								IsChecked="{x:Bind Data.UntaggedOnly, Mode=TwoWay}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<ToggleButton
-								x:Uid="/Tabs/ArchivesTab/New" Width="150" Margin="5,0,5,0"
+								x:Uid="/Tabs/Archives/New" Width="150" Margin="5,0,5,0"
 								Click="FilterToggle_Click"
 								IsChecked="{x:Bind Data.NewOnly, Mode=TwoWay}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<Button
-								x:Uid="/Tabs/ArchivesTab/Random" Width="150" Margin="5,0,0,0"
+								x:Uid="/Tabs/Archives/Random" Width="150" Margin="5,0,0,0"
 								Click="RandomButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 						</StackPanel>

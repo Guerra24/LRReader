@@ -1,4 +1,6 @@
-﻿using LRReader.UWP.ViewModels;
+﻿using LRReader.Internal;
+using LRReader.UWP.ViewModels;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,8 +15,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LRReader.UWP.Views.Tabs.Content.Settings
 {
@@ -31,6 +31,14 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		private void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.UpdateReleaseData();
+		}
+
+		private async void MarkdownText_LinkClicked(object sender, LinkClickedEventArgs e)
+		{
+			if (Uri.TryCreate(e.Link, UriKind.Absolute, out Uri link))
+			{
+				await Util.OpenInBrowser(link);
+			}
 		}
 	}
 }

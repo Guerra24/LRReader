@@ -25,10 +25,11 @@
 	<Grid Padding="0,10">
 		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				Name="ArchivesGrid" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
+				x:Name="ArchivesGrid" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
 				ItemClick="ArchivesGrid_ItemClick"
+				ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
-				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None" ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}">
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
@@ -53,7 +54,7 @@
 			</GridView>
 		</RefreshContainer>
 		<Button
-			HorizontalAlignment="Center" Click="Button_Click" Content="Retry"
+			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
 		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
 	</Grid>

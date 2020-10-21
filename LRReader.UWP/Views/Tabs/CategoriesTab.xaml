@@ -17,7 +17,7 @@
 		<controls:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
 	</controls:TabViewItem.IconSource>
 	<internal:CustomTab.CustomTabControl>
-		<Button Click="RefreshButton_Click" ToolTipService.ToolTip="Refresh">
+		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Refresh" />
 			</Viewbox>

@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ArchivesTab.New.Content" xml:space="preserve">
+  <data name="Archives.New.Content" xml:space="preserve">
     <value>New only</value>
   </data>
-  <data name="ArchivesTab.Random.Content" xml:space="preserve">
+  <data name="Archives.Random.Content" xml:space="preserve">
     <value>Random archive</value>
   </data>
-  <data name="ArchivesTab.Search.PlaceholderText" xml:space="preserve">
+  <data name="Archives.Search.PlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="ArchivesTab.Tab.Header" xml:space="preserve">
+  <data name="Archives.Tab.Header" xml:space="preserve">
     <value>Archives</value>
   </data>
-  <data name="ArchivesTab.Untagged.Content" xml:space="preserve">
+  <data name="Archives.Untagged.Content" xml:space="preserve">
     <value>Untagged only</value>
   </data>
-  <data name="SearchResultsTab.Tab.Header" xml:space="preserve">
+  <data name="Bookmarks.Tab.Header" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="SearchResults.Tab.Header" xml:space="preserve">
     <value>Search</value>
   </data>
 </root>

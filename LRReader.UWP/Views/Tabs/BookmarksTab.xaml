@@ -8,16 +8,16 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Uid="/Tabs/Bookmarks/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Bookmarks"
-	Header="Bookmarks"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>
 		<controls:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
 	</controls:TabViewItem.IconSource>
 	<internal:CustomTab.CustomTabControl>
-		<Button Click="RefreshButton_Click" ToolTipService.ToolTip="Refresh">
+		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Refresh" />
 			</Viewbox>

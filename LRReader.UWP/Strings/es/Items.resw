@@ -117,25 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Archives.New.Content" xml:space="preserve">
-    <value>Sólo nuevos</value>
+  <data name="Archive.Bookmark.Text" xml:space="preserve">
+    <value>Marcar</value>
   </data>
-  <data name="Archives.Random.Content" xml:space="preserve">
-    <value>Archivo aleatorio</value>
+  <data name="Archive.Download.Text" xml:space="preserve">
+    <value>Descargar</value>
   </data>
-  <data name="Archives.Search.PlaceholderText" xml:space="preserve">
-    <value>Buscar</value>
+  <data name="Archive.Edit.Text" xml:space="preserve">
+    <value>Editar</value>
   </data>
-  <data name="Archives.Tab.Header" xml:space="preserve">
-    <value>Archivos</value>
+  <data name="Archive.New.Text" xml:space="preserve">
+    <value>Nuevo!</value>
   </data>
-  <data name="Archives.Untagged.Content" xml:space="preserve">
-    <value>Sólo sin etiquetas</value>
+  <data name="Archive.OpenTab.Text" xml:space="preserve">
+    <value>Abrir en nueva pestaña</value>
   </data>
-  <data name="Bookmarks.Tab.Header" xml:space="preserve">
-    <value>Marcadores</value>
+  <data name="Archive.Unbookmark.Text" xml:space="preserve">
+    <value>Desmarcar</value>
   </data>
-  <data name="SearchResults.Tab.Header" xml:space="preserve">
-    <value>Buscar</value>
+  <data name="Category.Delete.Text" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="Category.Edit.Text" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Category.OpenTab.Text" xml:space="preserve">
+    <value>Abrir en nueva pestaña</value>
   </data>
 </root>

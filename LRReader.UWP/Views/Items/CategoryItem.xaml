@@ -14,12 +14,12 @@
 
 	<UserControl.ContextFlyout>
 		<MenuFlyout>
-			<MenuFlyoutItem Click="Add_Click" Icon="Add" Text="Open in new tab" />
+			<MenuFlyoutItem x:Uid="/Items/Category/OpenTab" Click="Add_Click" Icon="Add" />
 			<!--<MenuFlyoutItem
-				Click="Edit_Click" Icon="Edit" Text="Edit"
+				x:Uid="/Items/Category/Edit" Click="Edit_Click" Icon="Edit"
 				Visibility="{x:Bind ViewModel.CanEdit}" />
 			<MenuFlyoutItem
-				Click="Remove_Click" Icon="Delete" Text="Delete"
+				x:Uid="/Items/Category/Delete" Click="Remove_Click" Icon="Delete"
 				Visibility="{x:Bind ViewModel.CanEdit}" />-->
 		</MenuFlyout>
 	</UserControl.ContextFlyout>

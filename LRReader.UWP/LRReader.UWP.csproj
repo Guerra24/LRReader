@@ -507,6 +507,13 @@
   <ItemGroup>
     <PRIResource Include="Strings\es\Tabs.resw" />
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en\Items.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <PRIResource Include="Strings\es\Items.resw" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

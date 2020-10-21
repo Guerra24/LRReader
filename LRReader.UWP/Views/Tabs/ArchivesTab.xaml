@@ -8,7 +8,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	x:Uid="/Tabs/ArchivesTab/Tab"
+	x:Uid="/Tabs/Archives/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Archives"

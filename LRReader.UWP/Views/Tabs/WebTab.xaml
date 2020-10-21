@@ -14,7 +14,7 @@
 	Loaded="TabViewItem_Loaded"
 	mc:Ignorable="d">
 	<internal:CustomTab.CustomTabControl>
-		<Button Click="RefreshButton_Click" ToolTipService.ToolTip="Refresh page">
+		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Refresh" />
 			</Viewbox>

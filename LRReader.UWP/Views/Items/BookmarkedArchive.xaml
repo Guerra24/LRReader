@@ -20,21 +20,21 @@
 
 	<UserControl.ContextFlyout>
 		<MenuFlyout>
-			<MenuFlyoutItem Click="MenuFlyoutItem_Click" Icon="Add" Text="Open in new tab" />
+			<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add" />
 			<MenuFlyoutItem
-				Click="Add_Click" Icon="Favorite" Text="Bookmark"
+				x:Uid="/Items/Archive/Bookmark" Click="Add_Click" Icon="Favorite"
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolVis}}" />
 			<MenuFlyoutItem
+				x:Uid="/Items/Archive/Unbookmark"
 				Background="{ThemeResource SystemAccentColorDark3}"
-				Click="Remove_Click" Icon="Unfavorite" Text="Unbookmark"
+				Click="Remove_Click" Icon="Unfavorite"
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 			<MenuFlyoutItem
-				Click="EditMenuItem_Click" Icon="Edit" Text="Edit"
+				x:Uid="/Items/Archive/Edit" Click="EditMenuItem_Click" Icon="Edit"
 				Visibility="{x:Bind ViewModel.CanEdit}" />
 			<MenuFlyoutItem
-				Click="DownloadMenuItem_Click" Icon="Download"
-				IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"
-				Text="Download archive" />
+				x:Uid="/Items/Archive/Download" Click="DownloadMenuItem_Click" Icon="Download"
+				IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
