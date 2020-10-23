@@ -21,32 +21,46 @@ namespace LRReader.Shared.Internal
 			TagStats.Clear();
 
 			var serverInfo = await ServerProvider.GetServerInfo();
-			var currentTimestamp = SharedGlobal.SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
 
-			if (currentTimestamp != serverInfo.cache_last_cleared)
+			if (serverInfo.version >= new Version(0, 7, 3))
 			{
-				SharedGlobal.SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
-				var resultA = await ArchivesProvider.GetArchives();
-				if (resultA != null)
+				var currentTimestamp = SharedGlobal.SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
+
+				if (currentTimestamp != serverInfo.cache_last_cleared)
 				{
-					await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Index.json", JsonConvert.SerializeObject(resultA));
-					Archives = resultA;
+					SharedGlobal.SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
+					await Update();
 				}
-				var resultT = await DatabaseProvider.GetTagStats();
-				if (resultT != null)
+				else
 				{
-					await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Tags.json", JsonConvert.SerializeObject(resultT));
-					foreach (var t in resultT)
-						TagStats.Add(t);
+					var index = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Index.json");
+					var tags = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
+					Archives = JsonConvert.DeserializeObject<List<Archive>>(await index);
+					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 				}
 			}
 			else
 			{
-				var index = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Index.json");
-				var tags = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
-				Archives = JsonConvert.DeserializeObject<List<Archive>>(await index);
-				TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
+				await Update();
 			}
 		}
+
+		private async Task Update()
+		{
+			var resultA = await ArchivesProvider.GetArchives();
+			if (resultA != null)
+			{
+				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Index.json", JsonConvert.SerializeObject(resultA));
+				Archives = resultA;
+			}
+			var resultT = await DatabaseProvider.GetTagStats();
+			if (resultT != null)
+			{
+				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Tags.json", JsonConvert.SerializeObject(resultT));
+				foreach (var t in resultT)
+					TagStats.Add(t);
+			}
+		}
+
 	}
 }
