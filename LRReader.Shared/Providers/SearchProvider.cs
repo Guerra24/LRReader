@@ -8,7 +8,7 @@ namespace LRReader.Shared.Providers
 {
 	public static class SearchProvider
 	{
-		public static async Task<ArchiveSearch> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged)
+		public static async Task<ArchiveSearch> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged, string sortby = "title", string order = "asc")
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -19,7 +19,8 @@ namespace LRReader.Shared.Providers
 			rq.AddParameter("untaggedonly", untagged.ToString().ToLower());
 			rq.AddParameter("filter", query);
 			rq.AddParameter("category", category);
-			rq.AddParameter("order", "asc");
+			rq.AddParameter("sortby", sortby);
+			rq.AddParameter("order", order);
 
 			var r = await client.ExecuteGetAsync(rq);
 

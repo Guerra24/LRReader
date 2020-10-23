@@ -1,14 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
-using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Tabs
 {
@@ -29,9 +21,9 @@ namespace LRReader.UWP.Views.Tabs
 			TabContent.Search(category);
 		}
 
-		private void RefreshButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		private async void RefreshButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
-			TabContent.Refresh();
+			await TabContent.Refresh();
 		}
 	}
 }

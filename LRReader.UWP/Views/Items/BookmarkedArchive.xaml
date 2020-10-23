@@ -7,6 +7,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	d:DesignHeight="150"
 	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
@@ -39,9 +40,9 @@
 	</UserControl.ContextFlyout>
 
 	<Grid Width="200" Height="150" Background="{ThemeResource BrushItemGridBackground}">
-		<ParallaxView x:Name="Parallax" x:FieldModifier="public" VerticalShift="100">
+		<muxc:ParallaxView x:Name="Parallax" x:FieldModifier="public" VerticalShift="100">
 			<Image Name="Thumbnail" Stretch="UniformToFill" />
-		</ParallaxView>
+		</muxc:ParallaxView>
 		<Grid>
 			<Grid.Background>
 				<media:BackdropBlurBrush Amount="4.0" />

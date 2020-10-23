@@ -18,7 +18,7 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				Name="ImagesGrid" IsItemClickEnabled="True" ItemClick="ImagesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
@@ -117,7 +117,7 @@
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>
-		</RefreshContainer>
+		</muxc:RefreshContainer>
 		<Button
 			Grid.Row="1" HorizontalAlignment="Center" Click="RefreshButton_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">

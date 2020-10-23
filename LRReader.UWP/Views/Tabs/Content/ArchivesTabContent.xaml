@@ -20,7 +20,7 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				Name="ArchivesGrid" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
@@ -31,9 +31,11 @@
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<AutoSuggestBox
-							x:Uid="/Tabs/Archives/Search" MinWidth="300" HorizontalAlignment="Center"
+							x:Name="SearchBox" x:Uid="/Tabs/Archives/Search" MinWidth="300"
+							HorizontalAlignment="Center"
 							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 							ItemsSource="{x:Bind Data.Suggestions, Mode=OneWay}"
 							QueryIcon="Find" QuerySubmitted="SearchQuerySubmitted" TextChanged="SearchTextChanged" />
@@ -57,6 +59,37 @@
 						</StackPanel>
 						<StackPanel
 							Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
+							Orientation="Horizontal">
+							<Button
+								x:Uid="/Tabs/Archives/Order" Margin="0,0,10,0" Padding="8"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								Style="{ThemeResource ButtonRevealStyle}">
+								<Button.Flyout>
+									<MenuFlyout>
+										<muxc:RadioMenuFlyoutItem
+											x:Uid="/Tabs/Archives/OrderAsc" Click="OrderBy_Click" IsChecked="True"
+											Tag="asc" />
+										<muxc:RadioMenuFlyoutItem x:Uid="/Tabs/Archives/OrderDesc" Click="OrderBy_Click" Tag="desc" />
+									</MenuFlyout>
+								</Button.Flyout>
+								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE8CB;" />
+							</Button>
+							<ComboBox
+								x:Uid="/Tabs/Archives/SortBy" MinWidth="150" HorizontalAlignment="Stretch"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
+								SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}"
+								SelectionChanged="SortBy_SelectionChanged" />
+							<Button
+								x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
+								Click="ClearButton_Click"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								Style="{ThemeResource ButtonRevealStyle}">
+								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE894;" />
+							</Button>
+						</StackPanel>
+						<StackPanel
+							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">
 							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
@@ -84,8 +117,7 @@
 					</StackPanel>
 				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
-					<KeyboardAccelerator Key="F5" Invoked="RefreshFull_Invoked" />
-					<!--<KeyboardAccelerator Key="F5" Invoked="RefreshFull_Invoked" Modifiers="Control" />-->
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>
@@ -111,7 +143,7 @@
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>
-		</RefreshContainer>
+		</muxc:RefreshContainer>
 		<Button
 			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />

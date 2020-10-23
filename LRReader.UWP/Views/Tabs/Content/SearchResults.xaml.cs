@@ -1,24 +1,16 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels;
+using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
+using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {
@@ -37,20 +29,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data = new SearchResultsViewModel();
 		}
 
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			if (loaded)
 				return;
 			loaded = true;
-			Refresh();
+			await Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
-		}
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
 
-		private void Button_Click(object sender, RoutedEventArgs e) => Refresh();
+		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
 		public async void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
@@ -107,23 +96,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();
 
-		private void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				Refresh();
+				await Refresh();
 			}
 		}
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			await HandleSearch();
-			args.Handled = true;
-		}
-
-		private void RefreshFull_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-		{
-			Refresh();
+			await Refresh();
 			args.Handled = true;
 		}
 
@@ -137,7 +120,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Data.ReloadSearch();
 		}
 
-		public async void Refresh()
+		public async Task Refresh()
 		{
 			Data.ControlsEnabled = false;
 			await HandleSearch();
@@ -169,6 +152,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			SearchBox.Text = this.query = category.search;
 			Data.Category = category;
+		}
+
+		private void ClearButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.SortByIndex = -1;
+		}
+
+		private async void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			await HandleSearch();
+		}
+
+		private async void OrderBy_Click(object sender, RoutedEventArgs e)
+		{
+			Data.Order = (sender as RadioMenuFlyoutItem).Tag as string;
+			await HandleSearch();
 		}
 	}
 }

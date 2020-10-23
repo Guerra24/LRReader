@@ -1,33 +1,23 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.UWP.Views.Tabs;
 using LRReader.UWP.ViewModels;
-using LRReader.UWP.Views.Items;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using Windows.ApplicationModel.DataTransfer;
+using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
+using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {

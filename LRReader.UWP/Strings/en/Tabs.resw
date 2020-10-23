@@ -117,14 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Archives.Clear.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="Archives.New.Content" xml:space="preserve">
     <value>New only</value>
+  </data>
+  <data name="Archives.Order.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Archives.OrderAsc.Text" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="Archives.OrderDesc.Text" xml:space="preserve">
+    <value>Descending</value>
   </data>
   <data name="Archives.Random.Content" xml:space="preserve">
     <value>Random archive</value>
   </data>
   <data name="Archives.Search.PlaceholderText" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Archives.SortBy.PlaceholderText" xml:space="preserve">
+    <value>Sort by...</value>
   </data>
   <data name="Archives.Tab.Header" xml:space="preserve">
     <value>Archives</value>

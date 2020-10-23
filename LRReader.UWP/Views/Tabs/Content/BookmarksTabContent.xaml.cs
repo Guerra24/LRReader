@@ -1,21 +1,12 @@
 ﻿using LRReader.Internal;
-using Archive = LRReader.Shared.Models.Main.Archive;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Items;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using LRReader.UWP.Views.Items;
-using LRReader.UWP.ViewModels;
+using Archive = LRReader.Shared.Models.Main.Archive;
+using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
+using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {

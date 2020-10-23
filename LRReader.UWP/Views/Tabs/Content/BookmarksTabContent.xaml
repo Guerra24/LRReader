@@ -23,7 +23,7 @@
 	</UserControl.Resources>
 
 	<Grid Padding="0,10">
-		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				x:Name="ArchivesGrid" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
 				ItemClick="ArchivesGrid_ItemClick"
@@ -52,7 +52,7 @@
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>
-		</RefreshContainer>
+		</muxc:RefreshContainer>
 		<Button
 			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />

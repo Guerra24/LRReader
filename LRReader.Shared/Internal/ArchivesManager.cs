@@ -12,6 +12,7 @@ namespace LRReader.Shared.Internal
 	{
 		public List<Archive> Archives = new List<Archive>();
 		public List<TagStats> TagStats = new List<TagStats>();
+		public List<string> Namespaces = new List<string>();
 
 		public static string TemporaryFolder;
 
@@ -19,6 +20,7 @@ namespace LRReader.Shared.Internal
 		{
 			Archives.Clear();
 			TagStats.Clear();
+			Namespaces.Clear();
 
 			var serverInfo = await ServerProvider.GetServerInfo();
 
@@ -35,8 +37,10 @@ namespace LRReader.Shared.Internal
 				{
 					var index = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Index.json");
 					var tags = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
+					var namespaces = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Namespaces.json");
 					Archives = JsonConvert.DeserializeObject<List<Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
+					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
 				}
 			}
 			else
@@ -58,7 +62,12 @@ namespace LRReader.Shared.Internal
 			{
 				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Tags.json", JsonConvert.SerializeObject(resultT));
 				foreach (var t in resultT)
+				{
+					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
+						Namespaces.Add(t.@namespace);
 					TagStats.Add(t);
+				}
+				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Namespaces.json", JsonConvert.SerializeObject(Namespaces));
 			}
 		}
 

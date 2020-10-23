@@ -25,7 +25,7 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				Name="CategoriesGrid" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick"
 				ItemTemplateSelector="{StaticResource CategoryTemplateSelector}"
@@ -54,7 +54,7 @@
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>
-		</RefreshContainer>
+		</muxc:RefreshContainer>
 		<Button
 			HorizontalAlignment="Center" Click="Button_Click" Content="Retry"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />

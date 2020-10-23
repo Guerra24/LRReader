@@ -1,13 +1,5 @@
 ﻿using LRReader.Internal;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs
 {
@@ -18,9 +10,9 @@ namespace LRReader.UWP.Views.Tabs
 			this.InitializeComponent();
 		}
 
-		private void RefreshButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
-			TabContent.Refresh();
+			await TabContent.Refresh();
 		}
 	}
 }

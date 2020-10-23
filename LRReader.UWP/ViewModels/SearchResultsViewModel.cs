@@ -111,6 +111,28 @@ namespace LRReader.UWP.ViewModels
 		}
 		protected bool _internalLoadingArchives;
 		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
+		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
+		private int _sortByIndex = -1;
+		public int SortByIndex
+		{
+			get => _sortByIndex;
+			set
+			{
+				if (value != _sortByIndex)
+				{
+					_sortByIndex = value;
+					RaisePropertyChanged("SortByIndex");
+					RaisePropertyChanged("ShowClear");
+				}
+			}
+		}
+		public string Order = "asc";
+
+		public SearchResultsViewModel()
+		{
+			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
+				SortBy.Add(n);
+		}
 
 		public async Task NextPage()
 		{
@@ -139,7 +161,13 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = true;
 			ArchiveList.Clear();
 			Page = page;
-			var resultPage = await SearchProvider.Search(SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly);
+			string sortby;
+			if (SortByIndex == -1)
+				sortby = "title";
+			else
+				sortby = SortBy.ElementAt(SortByIndex);
+			var resultPage = await SearchProvider.Search(
+				SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, Order);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>
