@@ -117,6 +117,60 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Archive.AddBookmark.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Archive.AddBookmark.PrimaryButtonText" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="Archive.AddBookmark.Title" xml:space="preserve">
+    <value>Marcar Archivo?</value>
+  </data>
+  <data name="Archive.Bookmark.Content" xml:space="preserve">
+    <value>Marcar</value>
+  </data>
+  <data name="Archive.Continue.Text" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="Archive.CopyTag.Text" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="Archive.Download.Content" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="Archive.Edit.Content" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Archive.RemoveBookmark.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Archive.RemoveBookmark.PrimaryButtonText" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
+    <value>Eliminar Marcador?</value>
+  </data>
+  <data name="ArchiveEdit.ID.Header" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="ArchiveEdit.Plugin.Header" xml:space="preserve">
+    <value>Plugin</value>
+  </data>
+  <data name="ArchiveEdit.Plugin.PlaceholderText" xml:space="preserve">
+    <value>Plugin...</value>
+  </data>
+  <data name="ArchiveEdit.RunPlugin.Content" xml:space="preserve">
+    <value>Ejecutar Plugin</value>
+  </data>
+  <data name="ArchiveEdit.Save.Content" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ArchiveEdit.Tags.Header" xml:space="preserve">
+    <value>Etiquetas</value>
+  </data>
+  <data name="ArchiveEdit.Title.Header" xml:space="preserve">
+    <value>Titulo</value>
+  </data>
   <data name="Archives.Clear.ToolTipService.ToolTip" xml:space="preserve">
     <value>Limpiar</value>
   </data>

@@ -4,33 +4,31 @@ using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LRReader.UWP.Views.Tabs.Content.Settings
 {
 	public sealed partial class GeneralPivot : PivotItem
 	{
 		private SettingsPageViewModel Data;
+
 		public GeneralPivot()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
+			var lang = ResourceLoader.GetForCurrentView("Settings");
+			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/System"));
+			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Dark"));
+			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Light"));
+			/*
+				<x:String>System</x:String>
+				<x:String>Dark</x:String>
+				<x:String>Light</x:String>
+			 */
 		}
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)

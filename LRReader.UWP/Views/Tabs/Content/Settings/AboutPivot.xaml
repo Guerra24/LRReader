@@ -8,7 +8,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	Header="About"
+	x:Uid="/Settings/AboutPivot"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
@@ -18,28 +18,27 @@
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
 			<TextBlock Margin="0,0,0,10">
-				<Run>LRReader version</Run>
+				<Run>LRReader</Run>
 				<Run Text="{x:Bind Data.Version}" />
 			</TextBlock>
 			<TextBlock Margin="0,0,0,10">
-				<Run>LANraragi supported versions</Run>
+				<Run x:Uid="/Settings/About/Supported" />
 				<Run Text="{x:Bind Data.MinVersion}" />
 				<Run Text="-" />
 				<Run Text="{x:Bind Data.MaxVersion}" />
 			</TextBlock>
-
-			<HyperlinkButton Margin="0,0,0,10" Content="Open on Github" NavigateUri="https://github.com/Guerra24/LRReader" />
-			<Button Margin="0,0,0,10" Click="CheckUpdatesButton_Click" Content="Check for updates" />
+			<HyperlinkButton x:Uid="/Settings/About/Github" Margin="0,0,0,10" NavigateUri="https://github.com/Guerra24/LRReader" />
+			<Button x:Uid="/Settings/About/Check" Margin="0,0,0,10" Click="CheckUpdatesButton_Click" />
 			<TextBlock
-				Margin="0,5,0,10" FontSize="20" Text="No updates found"
+				x:Uid="/Settings/About/NotFound" Margin="0,5,0,10" FontSize="20"
 				Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 			<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
-				<TextBlock Margin="0,5,0,10" FontSize="20" Text="New update available!" />
+				<TextBlock x:Uid="/Settings/About/Found" Margin="0,5,0,10" FontSize="20" />
 				<TextBlock Margin="0,0,0,10" FontSize="20" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
 				<controls:MarkdownTextBlock
 					Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"
 					Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-				<HyperlinkButton Content="Download" NavigateUri="https://github.com/Guerra24/LRReader/releases/latest" />
+				<HyperlinkButton x:Uid="/Settings/About/Download" NavigateUri="https://github.com/Guerra24/LRReader/releases/latest" />
 			</StackPanel>
 		</StackPanel>
 	</ScrollViewer>

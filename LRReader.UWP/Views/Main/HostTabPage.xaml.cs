@@ -5,22 +5,13 @@ using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Main
@@ -33,6 +24,8 @@ namespace LRReader.UWP.Views.Main
 		private CoreApplicationView CoreView;
 		private ApplicationView AppView;
 
+		private ResourceLoader lang;
+
 		public HostTabPage()
 		{
 			this.InitializeComponent();
@@ -41,6 +34,7 @@ namespace LRReader.UWP.Views.Main
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
+			lang = ResourceLoader.GetForCurrentView("Pages");
 		}
 
 		protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -72,7 +66,7 @@ namespace LRReader.UWP.Views.Main
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
-				ShowNotification("New update available! " + info.name, "Check Settings -> About for more info", 0);
+				ShowNotification(lang.GetString("HostTab/Update1") + " " + info.name, lang.GetString("HostTab/Update2"), 0);
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

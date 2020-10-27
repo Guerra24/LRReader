@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -29,6 +30,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _wasNew;
 		private bool _opened;
 		private bool _focus = true;
+
+		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
 
 		public ArchiveTabContent()
 		{
@@ -131,7 +134,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 				if (Data.Bookmarked && Global.SettingsManager.RemoveBookmark)
 				{
-					var dialog = new ContentDialog { Title = "Remove bookmark?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
+					var dialog = new ContentDialog {
+						Title = lang.GetString("Archive/RemoveBookmark/Title"),
+						PrimaryButtonText = lang.GetString("Archive/RemoveBookmark/PrimaryButtonText"),
+						CloseButtonText = lang.GetString("Archive/RemoveBookmark/CloseButtonText")
+					};
 					var result = await dialog.ShowAsync();
 					if (result == ContentDialogResult.Primary)
 						Data.Bookmarked = false;
@@ -143,7 +150,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (Global.SettingsManager.BookmarkReminder &&
 					((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
 				{
-					var dialog = new ContentDialog { Title = "Bookmark archive?", PrimaryButtonText = "Yes", CloseButtonText = "No" };
+					var dialog = new ContentDialog
+					{
+						Title = lang.GetString("Archive/AddBookmark/Title"),
+						PrimaryButtonText = lang.GetString("Archive/AddBookmark/PrimaryButtonText"),
+						CloseButtonText = lang.GetString("Archive/AddBookmark/CloseButtonText")
+					};
 					var result = await dialog.ShowAsync();
 					if (result == ContentDialogResult.Primary)
 						Data.Bookmarked = true;

@@ -513,6 +513,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <PRIResource Include="Strings\es\Settings.resw" />
+    <PRIResource Include="Strings\en\Settings.resw" />
     <PRIResource Include="Strings\es\Items.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

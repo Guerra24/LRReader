@@ -144,6 +144,12 @@
   <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
     <value>Welcome</value>
   </data>
+  <data name="HostTab.Update1" xml:space="preserve">
+    <value>New update available!</value>
+  </data>
+  <data name="HostTab.Update2" xml:space="preserve">
+    <value>Check Settings -&gt; About for more info</value>
+  </data>
   <data name="HostTabPage.Bookmarks.ToolTipService.ToolTip" xml:space="preserve">
     <value>Bookmarks</value>
   </data>

@@ -25,28 +25,27 @@
 			</Grid.Resources>
 			<StackPanel Grid.Column="1" Margin="0,20,0,20">
 				<TextBox
-					Margin="0,0,0,10" Header="Archive ID" IsReadOnly="True"
+					x:Uid="/Tabs/ArchiveEdit/ID" Margin="0,0,0,10" IsReadOnly="True"
 					Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
 				<TextBox
-					Margin="0,0,0,10" Header="Title"
+					x:Uid="/Tabs/ArchiveEdit/Title" Margin="0,0,0,10"
 					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
 					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Title, Mode=TwoWay}" />
 				<TextBox
-					MinHeight="140" Margin="0,0,0,10" Header="Tags"
+					x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="140" Margin="0,0,0,10"
 					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
 					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Tags, Mode=TwoWay}"
 					TextWrapping="Wrap" />
 				<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 					<ComboBox
-						Margin="0,0,20,0" Header="Plugin"
+						x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,20,0"
 						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
 						ItemsSource="{x:Bind Data.Plugins}"
-						PlaceholderText="Plugin..."
 						SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
 					<Button
-						VerticalAlignment="Bottom" Click="PluginButton_Click" Content="Run plugin"
+						x:Uid="/Tabs/ArchiveEdit/RunPlugin" VerticalAlignment="Bottom" Click="PluginButton_Click"
 						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
 				</StackPanel>
 				<TextBox
@@ -57,7 +56,7 @@
 					Text="{x:Bind Data.Arg, Mode=TwoWay}"
 					Visibility="{x:Bind Data.CurrentPlugin.HasArg, Mode=OneWay}" />
 				<Button
-					HorizontalAlignment="Center" Click="SaveButton_Click" Content="Save Archive"
+					x:Uid="/Tabs/ArchiveEdit/Save" HorizontalAlignment="Center" Click="SaveButton_Click"
 					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
 			</StackPanel>
 			<muxc:ProgressRing

@@ -8,7 +8,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	Header="Reader"
+	x:Uid="/Settings/ReaderPivot"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
@@ -26,7 +26,7 @@
 					<ColumnDefinition Width="40" />
 				</Grid.ColumnDefinitions>
 				<Slider
-					Margin="0,0,0,10" Header="Default Zoom" IsThumbToolTipEnabled="False"
+					x:Uid="/Settings/Reader/Zoom" Margin="0,0,0,10" IsThumbToolTipEnabled="False"
 					Maximum="400" Minimum="100" TickFrequency="40"
 					TickPlacement="BottomRight"
 					Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
@@ -37,27 +37,21 @@
 				</TextBlock>
 			</Grid>
 			<muxc:NumberBox
-				Margin="0,0,0,10" Header="Keyboard scrolling distance" Minimum="1"
-				SmallChange="20" SpinButtonPlacementMode="Inline" ToolTipService.ToolTip="Scrolling distance, in pixels, when keyboard is used"
+				x:Uid="/Settings/Reader/Keyboard" Margin="0,0,0,10" Minimum="1"
+				SmallChange="20" SpinButtonPlacementMode="Inline"
 				Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Open Reader automatically" IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Read right-to-left"
-				IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}"
-				ToolTipService.ToolTip="Reverses the pages read direction" />
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Fit pages to width"
-				IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}"
-				ToolTipService.ToolTip="Scales pages into the full width of the window" />
+			<ToggleSwitch x:Uid="/Settings/Reader/AutoOpen" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/Reader/RTL" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/Reader/FitWidth" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
 			<Grid Visibility="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="320" />
 					<ColumnDefinition Width="40" />
 				</Grid.ColumnDefinitions>
 				<Slider
-					Margin="0,0,0,10" Header="Fit page scale limit" IsThumbToolTipEnabled="False"
+					x:Uid="/Settings/Reader/FitLimit" Margin="0,0,0,10" IsThumbToolTipEnabled="False"
 					Maximum="400" Minimum="100" StepFrequency="5"
-					TickFrequency="25.0" TickPlacement="BottomRight" ToolTipService.ToolTip="Maximum scaling that can be applied to a page"
+					TickFrequency="25.0" TickPlacement="BottomRight"
 					Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
 				<TextBlock
 					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Right"
@@ -65,18 +59,13 @@
 					<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
 				</TextBlock>
 			</Grid>
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Show two pages"
-				IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}"
-				ToolTipService.ToolTip="Two pages will be displayed at once" />
-			<ToggleSwitch
-				Margin="0,0,0,10" Header="Bookmark reminder"
-				IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}"
-				ToolTipService.ToolTip="Ask to bookmark archive if closed half way through" />
-			<muxc:RadioButtons Margin="16,0,0,10" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
-				<x:String>All archives</x:String>
-				<x:String>'New!' archives only</x:String>
-			</muxc:RadioButtons>
+			<ToggleSwitch x:Uid="/Settings/Reader/TwoPages" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/Reader/Reminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
+			<muxc:RadioButtons
+				x:Name="ReminderModeRadio" Margin="16,0,0,10"
+				SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}"
+				Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}" />
+
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

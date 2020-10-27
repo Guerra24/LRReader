@@ -106,7 +106,7 @@ namespace LRReader.Shared.Internal
 		}
 		public bool OpenBookmarksTab
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenBookmarksTab", true);
+			get => SettingsStorage.GetObjectRoamed("OpenBookmarksTab", false);
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("OpenBookmarksTab", value);
@@ -176,7 +176,7 @@ namespace LRReader.Shared.Internal
 		}
 		public bool OpenCategoriesTab
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenCategoriesTab", true);
+			get => SettingsStorage.GetObjectRoamed("OpenCategoriesTab", false);
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);

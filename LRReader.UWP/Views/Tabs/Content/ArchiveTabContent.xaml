@@ -39,9 +39,8 @@
 										<Grid.ContextFlyout>
 											<MenuFlyout>
 												<MenuFlyoutItem
-													Click="Tags_CopyTag" Icon="Copy"
-													Tag="{x:Bind}"
-													Text="Copy Tag" />
+													x:Uid="/Tabs/Archive/CopyTag" Click="Tags_CopyTag" Icon="Copy"
+													Tag="{x:Bind}" />
 											</MenuFlyout>
 										</Grid.ContextFlyout>
 										<TextBlock Text="{x:Bind}" />
@@ -64,7 +63,7 @@
 						</GridView>
 						<StackPanel Orientation="Horizontal">
 							<ToggleButton
-								Content="Bookmark"
+								x:Uid="/Tabs/Archive/Bookmark"
 								IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Style="{ThemeResource ToggleButtonRevealStyle}" />
@@ -74,16 +73,16 @@
 								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}">
 								<TextBlock>
-									Continue (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)
+									<Run x:Uid="/Tabs/Archive/Continue"/> (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)
 								</TextBlock>
 							</Button>
 							<Button
-								Margin="2,0,0,0" Click="EditButton_Click" Content="Edit"
+								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0" Click="EditButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind Data.CanEdit}" />
 							<Button
-								Margin="2,0,0,0" Click="DonwloadButton_Click" Content="Download"
+								x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DonwloadButton_Click"
 								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"
 								Style="{ThemeResource ButtonRevealStyle}" />
 						</StackPanel>

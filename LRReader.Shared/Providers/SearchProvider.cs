@@ -8,7 +8,7 @@ namespace LRReader.Shared.Providers
 {
 	public static class SearchProvider
 	{
-		public static async Task<ArchiveSearch> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged, string sortby = "title", string order = "asc")
+		public static async Task<ArchiveSearch> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged, string sortby = "title", Order order = Order.Ascending)
 		{
 			var client = SharedGlobal.LRRApi.GetClient();
 
@@ -20,7 +20,7 @@ namespace LRReader.Shared.Providers
 			rq.AddParameter("filter", query);
 			rq.AddParameter("category", category);
 			rq.AddParameter("sortby", sortby);
-			rq.AddParameter("order", order);
+			rq.AddParameter("order", order.String());
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -65,6 +65,27 @@ namespace LRReader.Shared.Providers
 			{
 				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
 				return false;
+			}
+		}
+	}
+
+	public enum Order
+	{
+		Ascending, Descending
+	}
+
+	public static class OrderExtensions
+	{
+		public static string String(this Order order)
+		{
+			switch (order)
+			{
+				case Order.Ascending:
+					return "asc";
+				case Order.Descending:
+					return "desc";
+				default:
+					return "";
 			}
 		}
 	}

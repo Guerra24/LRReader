@@ -122,11 +122,10 @@ namespace LRReader.UWP.ViewModels
 				{
 					_sortByIndex = value;
 					RaisePropertyChanged("SortByIndex");
-					RaisePropertyChanged("ShowClear");
 				}
 			}
 		}
-		public string Order = "asc";
+		public Order OrderBy = Order.Ascending;
 
 		public SearchResultsViewModel()
 		{
@@ -167,7 +166,7 @@ namespace LRReader.UWP.ViewModels
 			else
 				sortby = SortBy.ElementAt(SortByIndex);
 			var resultPage = await SearchProvider.Search(
-				SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, Order);
+				SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, OrderBy);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

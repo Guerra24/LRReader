@@ -47,6 +47,9 @@ namespace LRReader.UWP.ViewModels
 
 		public void LoadBookmarks()
 		{
+			SortBy.Clear();
+			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
+				SortBy.Add(n);
 			if (SharedGlobal.SettingsManager.OpenBookmarksStart)
 				if (SharedGlobal.ArchivesManager.Archives.Count > 0)
 					foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)

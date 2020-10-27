@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -159,7 +160,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
-			Data.Order = (sender as RadioMenuFlyoutItem).Tag as string;
+			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (sender as RadioMenuFlyoutItem).Tag as string);
 			await HandleSearch();
 		}
 
