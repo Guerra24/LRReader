@@ -55,14 +55,13 @@ namespace LRReader.UWP.Views.Items
 					var first = ViewModel.Category.archives.FirstOrDefault();
 					if (first != null)
 					{
-
 						byte[] bytes = await ArchivesProvider.GetThumbnail(first);
 						if (bytes != null)
 						{
 							await stream.WriteAsync(bytes.AsBuffer());
 							stream.Seek(0);
 							var image = new BitmapImage();
-							image.DecodePixelWidth = 200;
+							image.DecodePixelHeight = 275;
 							await image.SetSourceAsync(stream);
 							if (image.PixelHeight != 0 && image.PixelWidth != 0)
 								if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
