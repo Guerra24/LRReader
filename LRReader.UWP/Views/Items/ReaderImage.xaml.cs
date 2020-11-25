@@ -1,33 +1,18 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
+using LRReader.Shared.Models.Main;
 using Microsoft.Toolkit.Uwp.UI.Animations;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
-using LRReader.Shared.Models.Main;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.Shared.Providers;
-using LRReader.Shared.Internal;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ReaderImage : UserControl
 	{
+
+		private bool _fixLayout = true;
 
 		public ReaderImage()
 		{
@@ -49,7 +34,24 @@ namespace LRReader.UWP.Views.Items
 			await animTask;
 			LeftImage.Source = await Util.ByteToBitmap(await lImage);
 			RightImage.Source = await Util.ByteToBitmap(await rImage);
-			ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
+			var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
+			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
+			if (openLeft != null || openRight != null)
+			{
+				ImagesRoot.Opacity = 1;
+				// UWP Image.Source is async, right now the layout hasn't updated yet
+				// which causes animation fade to go black.
+				// Wait around 100ms to update layout.
+				if (_fixLayout)
+				{
+					await Task.Delay(100);
+					_fixLayout = false;
+				}
+			}
+			else
+				ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
+			openLeft?.TryStart(LeftImage);
+			openRight?.TryStart(RightImage);
 		}
 
 	}

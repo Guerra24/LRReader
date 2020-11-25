@@ -27,14 +27,11 @@ namespace LRReader.Internal
 			return await Launcher.LaunchUriAsync(uri);
 		}
 
-
 		public static async Task<BitmapImage> ByteToBitmap(byte[] bytes)
 		{
 			if (bytes == null)
-			{
 				return null;
-			}
-			using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+			using (var stream = new InMemoryRandomAccessStream())
 			{
 				await stream.WriteAsync(bytes.AsBuffer());
 				stream.Seek(0);

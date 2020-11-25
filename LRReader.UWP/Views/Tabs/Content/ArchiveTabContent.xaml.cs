@@ -3,6 +3,7 @@ using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,10 +103,23 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public async void CloseReader()
 		{
+			var left = ReaderControl.FindDescendantByName("LeftImage");
+			var right = ReaderControl.FindDescendantByName("RightImage");
+			ConnectedAnimation animLeft = null, animRight = null;
+			if (Data.ReaderContent.LeftImage != null)
+			{
+				animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
+				animLeft.Configuration = new BasicConnectedAnimationConfiguration();
+			}
+			if (Data.ReaderContent.RightImage != null)
+			{
+				animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
+				animRight.Configuration = new BasicConnectedAnimationConfiguration();
+			}
+
 			_focus = false;
 			await ScrollViewer.Fade(value: 0.0f, duration: 200).StartAsync();
 			Data.ShowReader = false;
-			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
 			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
 			if (Global.SettingsManager.TwoPages)
@@ -125,6 +139,31 @@ namespace LRReader.UWP.Views.Tabs.Content
 					conv = count - conv - 1;
 			}
 			conv = Math.Clamp(conv, 0, count - 1);
+
+			int leftTarget = conv;
+			if (Global.SettingsManager.TwoPages)
+				leftTarget = Math.Max(conv - 1, 0);
+			int rightTarget = conv;
+
+			if (Global.SettingsManager.ReadRTL)
+			{
+				int tmp = leftTarget;
+				leftTarget = rightTarget;
+				rightTarget = tmp;
+			}
+			else
+			{
+				if (conv == Data.Pages - 1 && Data.Pages % 2 == 0)
+					leftTarget++;
+			}
+
+			if (Data.ReaderContent.LeftImage != null)
+				await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
+			if (Data.ReaderContent.RightImage != null)
+				await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
+
+			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
+
 			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
 				if (Data.Archive.IsNewArchive())
@@ -134,7 +173,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 				if (Data.Bookmarked && Global.SettingsManager.RemoveBookmark)
 				{
-					var dialog = new ContentDialog {
+					var dialog = new ContentDialog
+					{
 						Title = lang.GetString("Archive/RemoveBookmark/Title"),
 						PrimaryButtonText = lang.GetString("Archive/RemoveBookmark/PrimaryButtonText"),
 						CloseButtonText = lang.GetString("Archive/RemoveBookmark/CloseButtonText")
@@ -171,6 +211,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!Data.ControlsEnabled)
 				return;
 			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
+			var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
+			anim.Configuration = new BasicConnectedAnimationConfiguration();
 			OpenReader();
 		}
 
@@ -179,6 +221,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!Data.ControlsEnabled)
 				return;
 			i = Data.BookmarkProgress;
+			var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), Data.ArchiveImages.ElementAt(i), "Image");
+			anim.Configuration = new BasicConnectedAnimationConfiguration();
 			OpenReader();
 		}
 
@@ -448,6 +492,25 @@ namespace LRReader.UWP.Views.Tabs.Content
 			dataPackage.RequestedOperation = DataPackageOperation.Copy;
 			dataPackage.SetText((sender as MenuFlyoutItem).Tag as string);
 			Clipboard.SetContent(dataPackage);
+		}
+
+		private string GetOpenTarget()
+		{
+			var target = "openL";
+			if (Global.SettingsManager.TwoPages)
+			{
+				if (Global.SettingsManager.ReadRTL)
+				{
+					target = i % 2 == 0 ? "openL" : "openR";
+					if (i == Data.Pages - 1)
+						target = "openL";
+					else if (i == 0)
+						target = "openR";
+				}
+				else
+					target = i % 2 == 0 ? "openR" : "openL";
+			}
+			return target;
 		}
 	}
 }

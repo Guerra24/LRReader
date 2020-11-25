@@ -59,8 +59,8 @@ namespace LRReader.UWP.ViewModels
 			}
 		}
 		private bool _internalLoadingImages;
-		private Object _readerContent;
-		public Object ReaderContent
+		private ArchiveImageSet _readerContent;
+		public ArchiveImageSet ReaderContent
 		{
 			get => _readerContent;
 			set
@@ -186,9 +186,9 @@ namespace LRReader.UWP.ViewModels
 					else
 					{
 						if (k == 0)
-							i.LeftImage = ArchiveImages.ElementAt(k);
-						else if (k == ArchiveImages.Count - 1)
 							i.RightImage = ArchiveImages.ElementAt(k);
+						else if (k == ArchiveImages.Count - 1)
+							i.LeftImage = ArchiveImages.ElementAt(k);
 						else
 						{
 							i.LeftImage = ArchiveImages.ElementAt(k);

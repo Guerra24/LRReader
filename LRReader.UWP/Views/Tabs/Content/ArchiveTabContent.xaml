@@ -126,7 +126,7 @@
 			Grid.Row="1" Width="80" Height="80"
 			IsActive="{x:Bind Data.LoadingImages, Mode=OneWay}" />
 		<ScrollViewer
-			Name="ScrollViewer" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto"
+			x:Name="ScrollViewer" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto"
 			KeyboardAcceleratorPlacementMode="Hidden" Opacity="0" PointerPressed="ScrollViewer_PointerPressed"
 			SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
