@@ -142,7 +142,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			int leftTarget = conv;
 			if (Global.SettingsManager.TwoPages)
+			{
 				leftTarget = Math.Max(conv - 1, 0);
+				if (conv == Data.Pages - 1 && Data.Pages % 2 == 0)
+					leftTarget++;
+			}
 			int rightTarget = conv;
 
 			if (Global.SettingsManager.ReadRTL)
@@ -150,11 +154,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				int tmp = leftTarget;
 				leftTarget = rightTarget;
 				rightTarget = tmp;
-			}
-			else
-			{
-				if (conv == Data.Pages - 1 && Data.Pages % 2 == 0)
-					leftTarget++;
 			}
 
 			if (Data.ReaderContent.LeftImage != null)
