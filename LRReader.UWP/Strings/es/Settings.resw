@@ -171,6 +171,9 @@
   <data name="General.EditProfile.Content" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="General.OrderBy.Header" xml:space="preserve">
+    <value>Ordenar por</value>
+  </data>
   <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
     <value>Seleccionar perfil</value>
   </data>
@@ -182,6 +185,15 @@
   </data>
   <data name="General.RemoveProfileYes.Content" xml:space="preserve">
     <value>Sí, eliminar el perfil seleccionado</value>
+  </data>
+  <data name="General.Search.Text" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="General.SortBy.Header" xml:space="preserve">
+    <value>Agrupar por</value>
+  </data>
+  <data name="General.SortBy.PlaceholderText" xml:space="preserve">
+    <value>Titulo</value>
   </data>
   <data name="General.Tabs.Text" xml:space="preserve">
     <value>Pestañas</value>

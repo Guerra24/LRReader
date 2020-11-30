@@ -59,11 +59,13 @@
 				<TextBlock x:Uid="/Settings/Server/WorkerStatus" />
 				<TextBlock Foreground="#1AA51A" Visibility="{x:Bind Data.ShinobuRunning, Mode=OneWay}">
 					<Run x:Uid="/Settings/Server/WorkerRunning" />
-					(PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
+					(PID:
+					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
 				</TextBlock>
 				<TextBlock Foreground="#CF2525" Visibility="{x:Bind Data.ShinobuStopped, Mode=OneWay}">
 					<Run x:Uid="/Settings/Server/WorkerStopped" />
-					(PID:<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
+					(PID:
+					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
 				</TextBlock>
 				<TextBlock x:Uid="/Settings/Server/WorkerUnknown" Visibility="{x:Bind Data.ShinobuUnknown, Mode=OneWay}" />
 			</StackPanel>

@@ -7,8 +7,8 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	x:Uid="/Settings/GeneralPivot"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
@@ -19,40 +19,55 @@
 
 	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Padding="30,20" HorizontalAlignment="Left">
-			<TextBlock Margin="0,0,0,5" FontSize="24" x:Uid="/Settings/General/Connection" />
+			<TextBlock x:Uid="/Settings/General/Connection" Margin="0,0,0,5" FontSize="24" />
 			<ComboBox
-				x:Name="ProfileSelection" MinWidth="300" Margin="0,0,0,10"
+				x:Name="ProfileSelection" x:Uid="/Settings/General/ProfileSelection" MinWidth="300"
+				Margin="0,0,0,10"
 				IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 				ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-				x:Uid="/Settings/General/ProfileSelection"
 				SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
 				SelectionChanged="ComboBox_SelectionChanged" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button Margin="0,0,10,0" Click="ButtonAdd_Click" x:Uid="/Settings/General/AddProfile" />
+				<Button x:Uid="/Settings/General/AddProfile" Margin="0,0,10,0" Click="ButtonAdd_Click" />
 				<Button
-					Margin="0,0,10,0" Click="ButtonEdit_Click" x:Uid="/Settings/General/EditProfile"
+					x:Uid="/Settings/General/EditProfile" Margin="0,0,10,0" Click="ButtonEdit_Click"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 				<Button x:Uid="/Settings/General/RemoveProfile">
 					<Button.Flyout>
 						<Flyout x:Name="RemoveFlyout">
 							<StackPanel>
-								<TextBlock Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}"
-										   x:Uid="/Settings/General/RemoveProfileNotice" />
-								<Button HorizontalAlignment="Center" Click="ButtonRemove_Click" x:Uid="/Settings/General/RemoveProfileYes" />
+								<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<Button x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
 							</StackPanel>
 						</Flyout>
 					</Button.Flyout>
 				</Button>
 			</StackPanel>
-			<TextBlock Margin="0,10,0,5" FontSize="24" x:Uid="/Settings/General/Tabs"/>
-			<ToggleSwitch Margin="0,0,0,10" x:Uid="/Settings/General/Categories" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
-			<ToggleSwitch Margin="0,0,0,10" x:Uid="/Settings/General/Bookmarks" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
-			<ToggleSwitch Margin="0,0,0,10" x:Uid="/Settings/General/Bookmarked" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
-			<ToggleSwitch Margin="0,0,0,10" x:Uid="/Settings/General/CompactMarks" IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
-			<TextBlock Margin="0,10,0,5" FontSize="24" x:Uid="/Settings/General/App" />
-			<ComboBox x:Name="ThemeComboBox"
-				Margin="0,0,0,10" x:Uid="/Settings/General/Theme"
-				SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}"/>
+			<TextBlock x:Uid="/Settings/General/Tabs" Margin="0,10,0,5" FontSize="24" />
+			<ToggleSwitch x:Uid="/Settings/General/Categories" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/General/Bookmarks" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/General/Bookmarked" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/General/CompactMarks" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
+			<TextBlock x:Uid="/Settings/General/Search" Margin="0,10,0,5" FontSize="24" />
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+				<ComboBox
+					x:Uid="/Settings/General/SortBy" MinWidth="150" HorizontalAlignment="Stretch"
+					ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
+					SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}" />
+				<Button
+					x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
+					VerticalAlignment="Bottom" Click="ClearButton_Click"
+					Style="{ThemeResource ButtonRevealStyle}">
+					<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE894;" />
+				</Button>
+			</StackPanel>
+			<ComboBox
+				x:Name="OrderByComboBox" x:Uid="/Settings/General/OrderBy" Margin="0,0,0,10"
+				SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+			<TextBlock x:Uid="/Settings/General/App" Margin="0,10,0,5" FontSize="24" />
+			<ComboBox
+				x:Name="ThemeComboBox" x:Uid="/Settings/General/Theme" Margin="0,0,0,10"
+				SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

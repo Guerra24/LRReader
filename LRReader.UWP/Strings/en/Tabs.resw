@@ -178,7 +178,7 @@
     <value>New only</value>
   </data>
   <data name="Archives.Order.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Order</value>
+    <value>Order by</value>
   </data>
   <data name="Archives.OrderAsc.Text" xml:space="preserve">
     <value>Ascending</value>

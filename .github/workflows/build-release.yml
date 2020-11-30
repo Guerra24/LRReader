@@ -51,7 +51,7 @@ jobs:
         with:
           name: Version
       - name: Setup Envs
-        run: echo "::set-env name=DEST_DIR::projects/lrr/$(cat version.txt)"
+        run: echo "DEST_DIR=projects/lrr/$(cat version.txt)" >> $GITHUB_ENV
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:

@@ -67,9 +67,11 @@
 								<Button.Flyout>
 									<MenuFlyout>
 										<muxc:RadioMenuFlyoutItem
-											x:Uid="/Tabs/Archives/OrderAsc" Click="OrderBy_Click" IsChecked="True"
+											x:Name="AscFlyoutItem" x:Uid="/Tabs/Archives/OrderAsc" Click="OrderBy_Click"
 											Tag="Ascending" />
-										<muxc:RadioMenuFlyoutItem x:Uid="/Tabs/Archives/OrderDesc" Click="OrderBy_Click" Tag="Descending" />
+										<muxc:RadioMenuFlyoutItem
+											x:Name="DesFlyoutItem" x:Uid="/Tabs/Archives/OrderDesc" Click="OrderBy_Click"
+											Tag="Descending" />
 									</MenuFlyout>
 								</Button.Flyout>
 								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE8CB;" />

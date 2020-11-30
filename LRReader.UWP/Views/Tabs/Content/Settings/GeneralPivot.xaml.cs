@@ -29,6 +29,9 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 				<x:String>Dark</x:String>
 				<x:String>Light</x:String>
 			 */
+			var langb = ResourceLoader.GetForCurrentView("Tabs");
+			OrderByComboBox.Items.Add(langb.GetString("Archives/OrderAsc/Text"));
+			OrderByComboBox.Items.Add(langb.GetString("Archives/OrderDesc/Text"));
 		}
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -95,6 +98,11 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			{
 				ProfileSelection.SelectedItem = Data.SettingsManager.Profile;
 			}
+		}
+
+		private void ClearButton_Click(object sender, RoutedEventArgs e)
+		{
+			Data.SortByIndex = -1;
 		}
 	}
 }

@@ -1,14 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static LRReader.Shared.Internal.SharedGlobal;
 
 namespace LRReader.Shared.Internal
@@ -148,18 +145,16 @@ namespace LRReader.Shared.Internal
 			get => SettingsStorage.GetObjectRoamed("OpenCategoriesTab", false);
 			set => SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);
 		}
-		/*public int SortByDefault
+		public string SortByDefault
 		{
-			get => SettingsStorage.GetObjectRoamed("SortByDefault", -1);
-			set
-			{
-				if (value != _sortByIndex)
-				{
-					_sortByIndex = value;
-					RaisePropertyChanged("SortByIndex");
-				}
-			}
-		}*/
+			get => SettingsStorage.GetObjectRoamed("SortByDefault", "title");
+			set => SettingsStorage.StoreObjectRoamed("SortByDefault", value);
+		}
+		public Order OrderByDefault
+		{
+			get => (Order)SettingsStorage.GetObjectRoamed("OrderByDefault", (int)Order.Ascending);
+			set => SettingsStorage.StoreObjectRoamed("OrderByDefault", (int)value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal

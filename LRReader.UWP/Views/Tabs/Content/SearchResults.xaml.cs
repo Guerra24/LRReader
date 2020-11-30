@@ -35,6 +35,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (loaded)
 				return;
 			loaded = true;
+			AscFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Ascending;
+			DesFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Descending;
 			await Refresh();
 		}
 
@@ -162,7 +164,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			await HandleSearch();
+			if (loaded)
+				await HandleSearch();
 		}
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)

@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using static LRReader.Internal.Global;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -131,6 +130,8 @@ namespace LRReader.UWP.ViewModels
 		{
 			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
 				SortBy.Add(n);
+			SortByIndex = _sortByIndex = SortBy.IndexOf(SharedGlobal.SettingsManager.SortByDefault);
+			OrderBy = SharedGlobal.SettingsManager.OrderByDefault;
 		}
 
 		public async Task NextPage()

@@ -20,7 +20,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private ArchivesPageViewModel Data;
 
-		private bool loaded;
+		private bool loaded, reloading;
 
 		private string query = "";
 
@@ -35,10 +35,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (loaded)
 				return;
 			loaded = true;
+			reloading = true;
+			AscFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Ascending;
+			DesFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Descending;
 			Data.ControlsEnabled = false; // THIS ---------------
 			Data.LoadBookmarks();
 			await HandleSearch();
 			Data.ControlsEnabled = true;
+			reloading = false;
 		}
 
 		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
@@ -126,10 +130,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public async Task Refresh()
 		{
+			reloading = true;
 			Data.ControlsEnabled = false;
 			await Data.Refresh();// THIS ---------------
+			AscFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Ascending;
+			DesFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Descending;
 			await HandleSearch();
 			Data.ControlsEnabled = true;
+			reloading = false;
 		}
 
 		private async void ArchivesGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -155,7 +163,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			await HandleSearch();
+			if (loaded && !reloading)
+				await HandleSearch();
 		}
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)

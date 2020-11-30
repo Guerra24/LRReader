@@ -8,6 +8,7 @@ using LRReader.Shared.Providers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -48,10 +49,31 @@ namespace LRReader.UWP.ViewModels
 				RaisePropertyChanged("ServerInfo");
 			}
 		}
+		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
+		private int _sortByIndex = -1;
+		public int SortByIndex
+		{
+			get => SortBy.IndexOf(SettingsManager.SortByDefault);
+			set
+			{
+				if (value != _sortByIndex)
+				{
+					_sortByIndex = value;
+					if (value == -1)
+						SettingsManager.SortByDefault = "title";
+					else
+						SettingsManager.SortByDefault = SortBy.ElementAt(value);
+					RaisePropertyChanged("SortByIndex");
+				}
+			}
+		}
 
 		public SettingsPageViewModel()
 		{
 			UpdateReleaseData();
+			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
+				SortBy.Add(n);
+			_sortByIndex = SortBy.IndexOf(SettingsManager.SortByDefault);
 		}
 
 		public async Task RestartWorker()
