@@ -65,7 +65,7 @@
 				x:Name="ReminderModeRadio" Margin="16,0,0,10"
 				SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}"
 				Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}" />
-
+			<ToggleSwitch x:Uid="/Settings/Reader/RemoveBookmarkReminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

@@ -64,7 +64,6 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectLocal("ReadRTL", value);
-				RaisePropertyChanged("ReadRTL");
 				EventManager.RebuildReaderImagesSet();
 			}
 		}
@@ -74,7 +73,6 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectLocal("TwoPages", value);
-				RaisePropertyChanged("TwoPages");
 				EventManager.RebuildReaderImagesSet();
 			}
 		}
@@ -90,55 +88,32 @@ namespace LRReader.Shared.Internal
 		public BookmarkReminderMode BookmarkReminderMode
 		{
 			get => (BookmarkReminderMode)SettingsStorage.GetObjectRoamed("BookmarkReminderMode", (int)BookmarkReminderMode.New);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("BookmarkReminderMode", (int)value);
-			}
+			set => SettingsStorage.StoreObjectRoamed("BookmarkReminderMode", (int)value);
 		}
 		public bool RemoveBookmark
 		{
 			get => SettingsStorage.GetObjectRoamed("RemoveBookmark", true);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("RemoveBookmark", value);
-				RaisePropertyChanged("RemoveBookmark");
-			}
+			set => SettingsStorage.StoreObjectRoamed("RemoveBookmark", value);
 		}
 		public bool OpenBookmarksTab
 		{
 			get => SettingsStorage.GetObjectRoamed("OpenBookmarksTab", false);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("OpenBookmarksTab", value);
-				RaisePropertyChanged("OpenBookmarksTab");
-			}
+			set => SettingsStorage.StoreObjectRoamed("OpenBookmarksTab", value);
 		}
 		public bool OpenBookmarksStart
 		{
 			get => SettingsStorage.GetObjectRoamed("OpenBookmarksStart", false);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("OpenBookmarksStart", value);
-				RaisePropertyChanged("OpenBookmarksStart");
-			}
+			set => SettingsStorage.StoreObjectRoamed("OpenBookmarksStart", value);
 		}
 		public bool OpenReader
 		{
 			get => SettingsStorage.GetObjectRoamed("OpenReader", false);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("OpenReader", value);
-				RaisePropertyChanged("OpenReader");
-			}
+			set => SettingsStorage.StoreObjectRoamed("OpenReader", value);
 		}
 		public int KeyboardScroll
 		{
 			get => SettingsStorage.GetObjectLocal("KeyboardScroll", 200);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("KeyboardScroll", value);
-				RaisePropertyChanged("KeyboardScroll");
-			}
+			set => SettingsStorage.StoreObjectLocal("KeyboardScroll", value);
 		}
 		public bool FitToWidth
 		{
@@ -161,27 +136,31 @@ namespace LRReader.Shared.Internal
 		public AppTheme Theme
 		{
 			get => (AppTheme)SettingsStorage.GetObjectLocal("Theme", (int)AppTheme.System);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("Theme", (int)value);
-			}
+			set => SettingsStorage.StoreObjectLocal("Theme", (int)value);
 		}
 		public bool CompactBookmarks
 		{
 			get => SettingsStorage.GetObjectRoamed("CompactBookmarks", true);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("CompactBookmarks", value);
-			}
+			set => SettingsStorage.StoreObjectRoamed("CompactBookmarks", value);
 		}
 		public bool OpenCategoriesTab
 		{
 			get => SettingsStorage.GetObjectRoamed("OpenCategoriesTab", false);
+			set => SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);
+		}
+		/*public int SortByDefault
+		{
+			get => SettingsStorage.GetObjectRoamed("SortByDefault", -1);
 			set
 			{
-				SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);
+				if (value != _sortByIndex)
+				{
+					_sortByIndex = value;
+					RaisePropertyChanged("SortByIndex");
+				}
 			}
-		}
+		}*/
+
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{

@@ -217,7 +217,7 @@
     <value>Scrolling distance, in pixels, when keyboard is used</value>
   </data>
   <data name="Reader.Reminder.Header" xml:space="preserve">
-    <value>Bookmark Reminder</value>
+    <value>Add Bookmark Reminder</value>
   </data>
   <data name="Reader.Reminder.ToolTipService.ToolTip" xml:space="preserve">
     <value>Ask to bookmark archive if closed half way through</value>
@@ -227,6 +227,12 @@
   </data>
   <data name="Reader.ReminderMode.New" xml:space="preserve">
     <value>Only "New" Archives</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.Header" xml:space="preserve">
+    <value>Remove Bookmark Reminder</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ask to remove bookmark once complete</value>
   </data>
   <data name="Reader.RTL.Header" xml:space="preserve">
     <value>Read right-to-left</value>

@@ -217,7 +217,7 @@
     <value>Distancia de desplazamiento, en píxeles, cuando se usa el teclado</value>
   </data>
   <data name="Reader.Reminder.Header" xml:space="preserve">
-    <value>Recordatorio del marcador</value>
+    <value>Preguntar si se quiere agregar marcador</value>
   </data>
   <data name="Reader.Reminder.ToolTipService.ToolTip" xml:space="preserve">
     <value>Solicite marcar el archivo si se cierra a la mitad</value>
@@ -227,6 +227,12 @@
   </data>
   <data name="Reader.ReminderMode.New" xml:space="preserve">
     <value>Solo archivos "nuevos"</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.Header" xml:space="preserve">
+    <value>Preguntar si se quiere eliminar el marcador</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Solicite desmarcar cuando se completa el archivo</value>
   </data>
   <data name="Reader.RTL.Header" xml:space="preserve">
     <value>Leer de derecha a izquierda</value>
