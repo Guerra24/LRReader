@@ -195,6 +195,18 @@
   <data name="General.SortBy.PlaceholderText" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="General.SwitchProfile.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="General.SwitchProfile.Content" xml:space="preserve">
+    <value>Are you sure you want to change profile?{0}Reload is required</value>
+  </data>
+  <data name="General.SwitchProfile.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="General.SwitchProfile.Title" xml:space="preserve">
+    <value>Change Profile</value>
+  </data>
   <data name="General.Tabs.Text" xml:space="preserve">
     <value>Tabs</value>
   </data>

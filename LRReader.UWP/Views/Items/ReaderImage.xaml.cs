@@ -12,7 +12,8 @@ namespace LRReader.UWP.Views.Items
 	public sealed partial class ReaderImage : UserControl
 	{
 
-		private bool _fixLayout = true;
+		//private bool _fixLayout = true;
+		private string _current = "";
 
 		public ReaderImage()
 		{
@@ -25,16 +26,20 @@ namespace LRReader.UWP.Views.Items
 			{
 				LeftImage.Source = null;
 				RightImage.Source = null;
+				_current = "";
 				return;
 			}
-			var animTask = ImagesRoot.Fade(value: 0.0f, duration: 80, easingMode: EasingMode.EaseOut).StartAsync();
 			var n = args.NewValue as ArchiveImageSet;
+			if (_current.Equals(n.LeftImage + n.RightImage))
+				return;
+			_current = n.LeftImage + n.RightImage;
+			var animTask = ImagesRoot.Fade(value: 0.0f, duration: 80, easingMode: EasingMode.EaseOut).StartAsync();
 			var lImage = SharedGlobal.ImagesManager.GetImageCached(n.LeftImage);
 			var rImage = SharedGlobal.ImagesManager.GetImageCached(n.RightImage);
 			await animTask;
 			LeftImage.Source = await Util.ByteToBitmap(await lImage);
 			RightImage.Source = await Util.ByteToBitmap(await rImage);
-			var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
+			/*var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)
 			{
@@ -48,10 +53,10 @@ namespace LRReader.UWP.Views.Items
 					_fixLayout = false;
 				}
 			}
-			else
-				ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
-			openLeft?.TryStart(LeftImage);
-			openRight?.TryStart(RightImage);
+			else*/
+			ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
+			//openLeft?.TryStart(LeftImage);
+			//openRight?.TryStart(RightImage);
 		}
 
 	}

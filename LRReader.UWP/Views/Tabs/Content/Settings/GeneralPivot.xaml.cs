@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
+using Microsoft.Toolkit.Extensions;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
@@ -16,11 +17,13 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 	{
 		private SettingsPageViewModel Data;
 
+		private ResourceLoader lang;
+
 		public GeneralPivot()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
-			var lang = ResourceLoader.GetForCurrentView("Settings");
+			lang = ResourceLoader.GetForCurrentView("Settings");
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/System"));
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Dark"));
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Light"));
@@ -82,10 +85,10 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 				return;
 			var dialog = new ContentDialog()
 			{
-				Title = "Change profile",
-				Content = "Are you sure you want to change profile?\nReload is required",
-				PrimaryButtonText = "Yes",
-				CloseButtonText = "No"
+				Title = lang.GetString("General/SwitchProfile/Title"),
+				Content = lang.GetString("General/SwitchProfile/Content").AsFormat("\n"),
+				PrimaryButtonText = lang.GetString("General/SwitchProfile/PrimaryButtonText"),
+				CloseButtonText = lang.GetString("General/SwitchProfile/CloseButtonText")
 			};
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)

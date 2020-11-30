@@ -103,7 +103,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public async void CloseReader()
 		{
-			var left = ReaderControl.FindDescendantByName("LeftImage");
+			/*var left = ReaderControl.FindDescendantByName("LeftImage");
 			var right = ReaderControl.FindDescendantByName("RightImage");
 			ConnectedAnimation animLeft = null, animRight = null;
 			if (Data.ReaderContent.LeftImage != null)
@@ -115,7 +115,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
 				animRight.Configuration = new BasicConnectedAnimationConfiguration();
-			}
+			}*/
 
 			_focus = false;
 			await ScrollViewer.Fade(value: 0.0f, duration: 200).StartAsync();
@@ -140,7 +140,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			conv = Math.Clamp(conv, 0, count - 1);
 
-			int leftTarget = conv;
+			/*int leftTarget = conv;
 			if (Global.SettingsManager.TwoPages)
 			{
 				leftTarget = Math.Max(conv - 1, 0);
@@ -159,7 +159,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.ReaderContent.LeftImage != null)
 				await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
 			if (Data.ReaderContent.RightImage != null)
-				await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
+				await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");*/
 
 			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
 
@@ -210,8 +210,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!Data.ControlsEnabled)
 				return;
 			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
-			var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
-			anim.Configuration = new BasicConnectedAnimationConfiguration();
+			/*var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
+			anim.Configuration = new BasicConnectedAnimationConfiguration();*/
 			OpenReader();
 		}
 
@@ -220,8 +220,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!Data.ControlsEnabled)
 				return;
 			i = Data.BookmarkProgress;
-			var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), Data.ArchiveImages.ElementAt(i), "Image");
-			anim.Configuration = new BasicConnectedAnimationConfiguration();
+			/*var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), Data.ArchiveImages.ElementAt(i), "Image");
+			anim.Configuration = new BasicConnectedAnimationConfiguration();*/
 			OpenReader();
 		}
 
