@@ -17,7 +17,7 @@ jobs:
         Enter-VsDevShell -VsInstallPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" -SkipAutomaticLocation
         $xmlFileName = "LRReader.UWP\Package.appxmanifest"
         [xml]$xmlDoc = Get-Content $xmlFileName
-        Set-Content -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
+        Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Util\Cert.pfx.gpg
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
     - name: Upload Artifacts
