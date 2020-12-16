@@ -163,17 +163,6 @@ namespace LRReader.UWP.ViewModels.Base
 		{
 			get => new SymbolIconSource() { Symbol = Bookmarked ? Symbol.Favorite : Symbol.Pictures };
 		}
-		public ObservableCollection<string> Tags = new ObservableCollection<string>();
-
-		public void LoadTags()
-		{
-			Tags.Clear();
-
-			foreach (var s in Archive.tags.Split(",", StringSplitOptions.RemoveEmptyEntries))
-			{
-				Tags.Add(s.Trim());
-			}
-		}
 
 		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
 

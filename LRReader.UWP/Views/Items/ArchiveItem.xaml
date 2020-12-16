@@ -10,9 +10,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:controls1="using:LRReader.UWP.Views.Controls"
 	Width="196"
 	d:DesignHeight="318"
-	d:DesignWidth="200"
+	d:DesignWidth="196"
 	DataContextChanged="UserControl_DataContextChanged"
 	PointerPressed="UserControl_PointerPressed"
 	mc:Ignorable="d">
@@ -70,31 +71,25 @@
 					<Windows10version1903:Grid.Shadow>
 						<Windows10version1903:ThemeShadow />
 					</Windows10version1903:Grid.Shadow>
-					<GridView
-						Width="300" IsHitTestVisible="False"
-						ItemsSource="{x:Bind ViewModel.Tags}"
-						SelectionMode="None">
-						<GridView.ItemTemplate>
-							<DataTemplate x:DataType="x:String">
-								<Grid Padding="3,1" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
-									<TextBlock Text="{x:Bind}" />
-								</Grid>
-							</DataTemplate>
-						</GridView.ItemTemplate>
-						<GridView.ItemsPanel>
-							<ItemsPanelTemplate>
-								<controls:WrapPanel />
-							</ItemsPanelTemplate>
-						</GridView.ItemsPanel>
-						<GridView.ItemContainerStyle>
-							<Style TargetType="GridViewItem">
-								<Setter Property="Padding" Value="0" />
-								<Setter Property="Margin" Value="1" />
-								<Setter Property="MinWidth" Value="0" />
-								<Setter Property="MinHeight" Value="0" />
-							</Style>
-						</GridView.ItemContainerStyle>
-					</GridView>
+					<muxc:ItemsRepeaterScrollHost>
+						<!--
+							For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
+							item display... idk whatever...
+						-->
+						<ScrollViewer>
+							<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}">
+								<controls1:ArchiveTags.Resources>
+									<SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
+									<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+									<SolidColorBrush x:Key="GridViewItemRevealBackgroundPointerOver" Color="Transparent" />
+									<SolidColorBrush x:Key="GridViewItemRevealBackgroundPressed" Color="Transparent" />
+									<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelected" Color="Transparent" />
+									<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPointerOver" Color="Transparent" />
+									<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
+								</controls1:ArchiveTags.Resources>
+							</controls1:ArchiveTags>
+						</ScrollViewer>
+					</muxc:ItemsRepeaterScrollHost>
 				</Grid>
 			</Popup>
 			<Image
@@ -134,7 +129,7 @@
 			PointerExited="TagsGrid_PointerExited">
 			<TextBlock
 				Grid.Row="2" Padding="2,0"
-				Text="{x:Bind ViewModel.Archive.tagsClean, Mode=OneWay}"
+				Text="{x:Bind ViewModel.Archive.TagsClean, Mode=OneWay}"
 				TextTrimming="CharacterEllipsis" />
 		</Grid>
 		<muxc:ProgressRing

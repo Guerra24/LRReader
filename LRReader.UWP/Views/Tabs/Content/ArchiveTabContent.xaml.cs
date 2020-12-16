@@ -482,15 +482,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void Tags_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			Global.EventManager.AddTab(new SearchResultsTab(e.ClickedItem as string));
-		}
-
-		private void Tags_CopyTag(object sender, RoutedEventArgs e)
-		{
-			var dataPackage = new DataPackage();
-			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			dataPackage.SetText((sender as MenuFlyoutItem).Tag as string);
-			Clipboard.SetContent(dataPackage);
+			Global.EventManager.AddTab(new SearchResultsTab((e.ClickedItem as ArchiveTagsGroupTag).FullTag));
 		}
 
 		private string GetOpenTarget()

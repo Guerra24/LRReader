@@ -52,7 +52,6 @@ namespace LRReader.UWP.Views.Items
 			if (args.NewValue == null)
 				return;
 			ViewModel.Archive = args.NewValue as Archive;
-			ViewModel.LoadTags();
 
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{

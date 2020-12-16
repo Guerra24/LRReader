@@ -14,7 +14,7 @@ namespace LRReader.Shared.Internal
 	public class UpdatesManager
 	{
 		public static Version MIN_VERSION = new Version(0, 7, 1);
-		public static Version MAX_VERSION = new Version(0, 7, 4);
+		public static Version MAX_VERSION = new Version(0, 7, 5);
 
 		private GitHubClient githubClient;
 		private RestClient client;

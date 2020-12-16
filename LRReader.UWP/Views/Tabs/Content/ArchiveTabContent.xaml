@@ -9,12 +9,24 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:x1="using:LRReader.Shared.Models.Main" xmlns:controls1="using:LRReader.UWP.Views.Controls"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
 		<convrt:BooleanToVisibilityConverter x:Key="BoolToVis" />
 		<convrt:NegateBoolConverter x:Key="NegateBool" />
+		<Style x:Key="TagStyle" TargetType="Grid">
+			<Setter Property="CornerRadius" Value="2"/>
+			<Setter Property="Padding" Value="4,2"/>
+			<Setter Property="Background" Value="{ThemeResource BrushTagBackground}"/>
+		</Style>
+		<Style x:Key="NamespaceStyle" TargetType="Grid">
+			<Setter Property="CornerRadius" Value="2"/>
+			<Setter Property="Padding" Value="4,2"/>
+			<Setter Property="Background" Value="{ThemeResource BrushTagBackground}"/>
+			<Setter Property="Margin" Value="0,0,4,0"/>
+		</Style>
 	</UserControl.Resources>
 
 	<Grid>
@@ -29,38 +41,7 @@
 							Margin="0,0,0,8" FontSize="24" IsTextSelectionEnabled="True"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
-						<GridView
-							IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
-							ItemsSource="{x:Bind Data.Tags, Mode=OneWay}"
-							SelectionMode="None">
-							<GridView.ItemTemplate>
-								<DataTemplate x:DataType="x:String">
-									<Grid Padding="4,3" Background="{ThemeResource BrushTagBackground}" CornerRadius="2">
-										<Grid.ContextFlyout>
-											<MenuFlyout>
-												<MenuFlyoutItem
-													x:Uid="/Tabs/Archive/CopyTag" Click="Tags_CopyTag" Icon="Copy"
-													Tag="{x:Bind}" />
-											</MenuFlyout>
-										</Grid.ContextFlyout>
-										<TextBlock Text="{x:Bind}" />
-									</Grid>
-								</DataTemplate>
-							</GridView.ItemTemplate>
-							<GridView.ItemsPanel>
-								<ItemsPanelTemplate>
-									<controls:WrapPanel />
-								</ItemsPanelTemplate>
-							</GridView.ItemsPanel>
-							<GridView.ItemContainerStyle>
-								<Style TargetType="GridViewItem">
-									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="1" />
-									<Setter Property="MinWidth" Value="0" />
-									<Setter Property="MinHeight" Value="0" />
-								</Style>
-							</GridView.ItemContainerStyle>
-						</GridView>
+						<controls1:ArchiveTags Margin="0,0,0,8" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
 						<StackPanel Orientation="Horizontal">
 							<ToggleButton
 								x:Uid="/Tabs/Archive/Bookmark"

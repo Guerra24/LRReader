@@ -18,7 +18,8 @@
 			<Color x:Key="ColorNavTop">#DADADA</Color>
 			<Color x:Key="BrushItemGridBackgroundColor">#E5E5E5</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
-			<SolidColorBrush x:Key="BrushTagBackground" Color="#CCCCCC" />
+			<SolidColorBrush x:Key="BrushTagBackground" Color="#B2B2B2" />
+			<SolidColorBrush x:Key="BrushNamespaceBackground" Color="#D2D2D2" />
 			<AcrylicBrush
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
@@ -43,7 +44,8 @@
 			<Color x:Key="ColorNavTop">#171717</Color>
 			<Color x:Key="BrushItemGridBackgroundColor">#1f1f1f</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
-			<SolidColorBrush x:Key="BrushTagBackground" Color="#333333" />
+			<SolidColorBrush x:Key="BrushTagBackground" Color="#4F4F4F" />
+			<SolidColorBrush x:Key="BrushNamespaceBackground" Color="#333333" />
 			<AcrylicBrush
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
