@@ -123,6 +123,12 @@
   <data name="About.Download.Content" xml:space="preserve">
     <value>Descargar</value>
   </data>
+  <data name="About.DownloadNotice.Text" xml:space="preserve">
+    <value>La app se cerrará automáticamente</value>
+  </data>
+  <data name="About.DownloadYes.Content" xml:space="preserve">
+    <value>Cerrar y Actualizar</value>
+  </data>
   <data name="About.Found.Text" xml:space="preserve">
     <value>Nueva actualización disponible</value>
   </data>

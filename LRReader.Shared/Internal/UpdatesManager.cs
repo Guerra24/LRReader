@@ -5,8 +5,6 @@ using Octokit;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Internal
@@ -42,6 +40,7 @@ namespace LRReader.Shared.Internal
 					info.name = release.Name;
 					info.body = release.Body;
 					info.version = newer.ToString();
+					info.link = $"ms-appinstaller:?source=https://s3.guerra24.net/projects/lrr/{info.version}/LRReader.UWP.appinstaller";
 					return info;
 				}
 			}
@@ -55,7 +54,7 @@ namespace LRReader.Shared.Internal
 		public async Task UpdateSupportedRange(Version current)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		{
-			#if !DEBUG
+#if !DEBUG
 			var rq = new RestRequest("projects/lrr/supported/{version}.json");
 			rq.AddParameter("version", current.ToString(), ParameterType.UrlSegment);
 
@@ -80,7 +79,7 @@ namespace LRReader.Shared.Internal
 			{
 				ReadVersion();
 			}
-			#endif
+#endif
 		}
 
 		private void ReadVersion()
@@ -95,6 +94,7 @@ namespace LRReader.Shared.Internal
 		public string name { get; set; }
 		public string body { get; set; }
 		public string version { get; set; }
+		public string link { get; set; }
 	}
 
 	public class VersionSupportedRange

@@ -2,6 +2,7 @@
 using LRReader.UWP.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -28,6 +29,12 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			{
 				await Util.OpenInBrowser(link);
 			}
+		}
+
+		private async void ButtonDownload_Click(object sender, RoutedEventArgs e)
+		{
+			await Util.OpenInBrowser(new Uri(Data.ReleaseInfo.link));
+			await ApplicationView.GetForCurrentView().TryConsolidateAsync();
 		}
 	}
 }
