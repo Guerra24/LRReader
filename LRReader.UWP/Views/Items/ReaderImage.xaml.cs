@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -14,6 +15,7 @@ namespace LRReader.UWP.Views.Items
 
 		//private bool _fixLayout = true;
 		private string _current = "";
+		private int _height;
 
 		public ReaderImage()
 		{
@@ -37,8 +39,13 @@ namespace LRReader.UWP.Views.Items
 			var lImage = SharedGlobal.ImagesManager.GetImageCached(n.LeftImage);
 			var rImage = SharedGlobal.ImagesManager.GetImageCached(n.RightImage);
 			await animTask;
-			LeftImage.Source = await Util.ByteToBitmap(await lImage);
-			RightImage.Source = await Util.ByteToBitmap(await rImage);
+			var imageL = new BitmapImage();
+			var imageR = new BitmapImage();
+			imageR.DecodePixelType = imageL.DecodePixelType = DecodePixelType.Logical;
+			if (_height != 0)
+				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
+			LeftImage.Source = await Util.ByteToBitmap(await lImage, imageL);
+			RightImage.Source = await Util.ByteToBitmap(await rImage, imageR);
 			/*var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)
@@ -57,6 +64,17 @@ namespace LRReader.UWP.Views.Items
 			ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
 			//openLeft?.TryStart(LeftImage);
 			//openRight?.TryStart(RightImage);
+		}
+
+		public void UpdateDecodedResolution(int height)
+		{
+			if (_height == height)
+				return;
+			_height = height;
+			if (LeftImage.Source != null)
+				(LeftImage.Source as BitmapImage).DecodePixelHeight = height;
+			if (RightImage.Source != null)
+				(RightImage.Source as BitmapImage).DecodePixelHeight = height;
 		}
 
 	}

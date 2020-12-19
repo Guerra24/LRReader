@@ -109,7 +109,7 @@
 		<ScrollViewer
 			x:Name="ScrollViewer" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto"
 			KeyboardAcceleratorPlacementMode="Hidden" Opacity="0" PointerPressed="ScrollViewer_PointerPressed"
-			SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto"
+			SizeChanged="ScrollViewer_SizeChanged" VerticalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<ScrollViewer.KeyboardAccelerators>
 				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />

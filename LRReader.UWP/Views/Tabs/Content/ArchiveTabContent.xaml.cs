@@ -1,13 +1,15 @@
-﻿using LRReader.Internal;
+﻿using GalaSoft.MvvmLight.Threading;
+using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Items;
 using Microsoft.Toolkit.Uwp.UI.Animations;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.ApplicationModel.DataTransfer;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Storage;
@@ -34,12 +36,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
 
+		private Subject<double> resizePixel = new Subject<double>();
+
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
 			Data = new ArchivePageViewModel();
 			Data.ZoomChangedEvent += FitImages;
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
+
+			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
+				.Subscribe(async (height) =>
+				await DispatcherHelper.RunAsync(() =>
+				(ReaderControl.ContentTemplateRoot as ReaderImage).UpdateDecodedResolution((int)Math.Round(height))));
 		}
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -413,10 +422,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ScrollViewer.ChangeView(null, null, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim);
 		}
 
-		private void EditButton_Click(object sender, RoutedEventArgs e)
-		{
-			Global.EventManager.AddTab(new ArchiveEditTab(Data.Archive));
-		}
+		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e) => resizePixel.OnNext(ScrollViewer.ExtentHeight);
+
+		private void EditButton_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new ArchiveEditTab(Data.Archive));
 
 		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -480,10 +488,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
 
-		private void Tags_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			Global.EventManager.AddTab(new SearchResultsTab((e.ClickedItem as ArchiveTagsGroupTag).FullTag));
-		}
+		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new SearchResultsTab((e.ClickedItem as ArchiveTagsGroupTag).FullTag));
 
 		private string GetOpenTarget()
 		{
