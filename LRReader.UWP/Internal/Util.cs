@@ -27,7 +27,7 @@ namespace LRReader.Internal
 			return await Launcher.LaunchUriAsync(uri);
 		}
 
-		public static async Task<BitmapImage> ByteToBitmap(byte[] bytes)
+		public static async Task<BitmapImage> ByteToBitmap(byte[] bytes, BitmapImage image = null)
 		{
 			if (bytes == null)
 				return null;
@@ -35,7 +35,8 @@ namespace LRReader.Internal
 			{
 				await stream.WriteAsync(bytes.AsBuffer());
 				stream.Seek(0);
-				var image = new BitmapImage();
+				if (image == null)
+					image = new BitmapImage();
 				await image.SetSourceAsync(stream);
 				return image;
 			}

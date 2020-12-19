@@ -12,7 +12,7 @@
 	mc:Ignorable="d">
 
 	<Grid Background="{ThemeResource BrushItemGridBackground}">
-		<Image x:Name="Image" ImageFailed="Image_ImageFailed" ImageOpened="Image_ImageOpened" />
+		<Image x:Name="Image" />
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
 			<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
 		</Grid>
