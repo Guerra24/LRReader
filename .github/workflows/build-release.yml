@@ -7,19 +7,23 @@ jobs:
     name: Build AppInstaller and Bundle
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.0.2
     - name: Build AppInstaller
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
+        CERT_BASE64: ${{ secrets.CERT_BASE64 }}
       run: |
-        Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-        Enter-VsDevShell -VsInstallPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" -SkipAutomaticLocation
-        $xmlFileName = "LRReader.UWP\Package.appxmanifest"
-        [xml]$xmlDoc = Get-Content $xmlFileName
+        [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
-        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Util\Cert.pfx.gpg
+        [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
+        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
+        Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
+    -
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
