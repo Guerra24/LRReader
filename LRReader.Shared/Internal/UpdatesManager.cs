@@ -22,7 +22,7 @@ namespace LRReader.Shared.Internal
 			githubClient = new GitHubClient(new ProductHeaderValue("LRReader"));
 			client = new RestClient();
 			client.UseNewtonsoftJson();
-			client.BaseUrl = new Uri("https://s3.guerra24.net/");
+			client.BaseUrl = new Uri("https://api.guerra24.net/");
 			client.UserAgent = "LRReader";
 		}
 
@@ -50,13 +50,10 @@ namespace LRReader.Shared.Internal
 			return null;
 		}
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 		public async Task UpdateSupportedRange(Version current)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		{
-#if !DEBUG
-			var rq = new RestRequest("projects/lrr/supported/{version}.json");
-			rq.AddParameter("version", current.ToString(), ParameterType.UrlSegment);
+			var rq = new RestRequest("lrr/compat");
+			rq.AddParameter("version", current.ToString());
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -79,7 +76,6 @@ namespace LRReader.Shared.Internal
 			{
 				ReadVersion();
 			}
-#endif
 		}
 
 		private void ReadVersion()
