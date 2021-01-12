@@ -11,6 +11,15 @@ jobs:
       uses: actions/checkout@v2
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.0.2
+    - name: Cache Packages
+      uses: actions/cache@v2
+      with:
+        path: ~\.nuget\packages
+        key: nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          nuget-
+    - name: Restore Packages
+      run: MSBuild LRReader.UWP\LRReader.UWP.csproj -t:restore -nologo -v:minimal
     - name: Build AppInstaller
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -24,7 +33,7 @@ jobs:
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
         Invoke-Expression "./Util/CleanInstaller.ps1"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
-    - name: Cleanup before upload
+    - name: Remove unused dependencies
       run: |
         Set-Location "./LRReader.UWP/AppPackages/"
         Set-Location $(Get-ChildItem *LRReader* -Directory)

@@ -14,7 +14,7 @@ namespace LRReader.UWP.Views.Tabs
 		{
 			this.InitializeComponent();
 			this.archive = archive;
-			this.CustomTabId = "Edit_" + archive.title;
+			this.CustomTabId = "Edit_" + archive.arcid;
 		}
 
 		private void TabViewItem_Loaded(object sender, RoutedEventArgs e)

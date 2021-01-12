@@ -1,7 +1,6 @@
 ﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Api;
 using Newtonsoft.Json;
-using Octokit;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
@@ -14,12 +13,10 @@ namespace LRReader.Shared.Internal
 		public static Version MIN_VERSION = new Version(0, 7, 1);
 		public static Version MAX_VERSION = new Version(0, 7, 5);
 
-		private GitHubClient githubClient;
 		private RestClient client;
 
 		public UpdatesManager()
 		{
-			githubClient = new GitHubClient(new ProductHeaderValue("LRReader"));
 			client = new RestClient();
 			client.UseNewtonsoftJson();
 			client.BaseUrl = new Uri("https://api.guerra24.net/");
@@ -28,24 +25,25 @@ namespace LRReader.Shared.Internal
 
 		public async Task<ReleaseInfo> CheckUpdates(Version current)
 		{
-			try
+			var rq = new RestRequest("lrr/upgrade/latest");
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			var result = await LRRApi.GetResult<ReleaseInfo>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				var release = await githubClient.Repository.Release.GetLatest(201592446);
-				if (!release.TagName.StartsWith("v"))
-					return null;
-				var newer = new Version(release.TagName.Substring(1));
-				if (newer > current)
+				return null;
+			}
+			if (result.OK)
+			{
+				var info = result.Data;
+				if (info.version > current)
 				{
-					var info = new ReleaseInfo();
-					info.name = release.Name;
-					info.body = release.Body;
-					info.version = newer.ToString();
 					info.link = $"ms-appinstaller:?source=https://s3.guerra24.net/projects/lrr/{info.version}/LRReader.UWP.appinstaller";
+					System.Diagnostics.Debug.WriteLine(info.link);
 					return info;
 				}
-			}
-			catch (Exception)
-			{
 			}
 			return null;
 		}
@@ -89,7 +87,8 @@ namespace LRReader.Shared.Internal
 	{
 		public string name { get; set; }
 		public string body { get; set; }
-		public string version { get; set; }
+		[JsonConverter(typeof(VersionConverter))]
+		public Version version { get; set; }
 		public string link { get; set; }
 	}
 
