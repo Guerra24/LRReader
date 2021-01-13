@@ -15,6 +15,7 @@ jobs:
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Cache Packages
+      id: nuget-cache
       uses: actions/cache@v2
       with:
         path: ~\.nuget\packages
@@ -22,6 +23,7 @@ jobs:
         restore-keys: |
           nuget-
     - name: Restore Packages
+      if: steps.nuget-cache.outputs.cache-hit != 'true'
       run: MSBuild LRReader.UWP\LRReader.UWP.csproj -t:restore -nologo -v:minimal
     - name: Build AppInstaller
       env:
