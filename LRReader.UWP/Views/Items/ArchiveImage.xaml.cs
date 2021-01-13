@@ -33,10 +33,10 @@ namespace LRReader.UWP.Views.Items
 				image.DecodePixelType = DecodePixelType.Logical;
 				image.DecodePixelHeight = 275;
 				image = await Util.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n), image);
+				Ring.IsActive = false;
 				if (image != null)
 				{
 					Image.Source = image;
-					Ring.IsActive = false;
 					Image.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				}
 				else

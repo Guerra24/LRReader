@@ -31,6 +31,8 @@ namespace LRReader.Internal
 		{
 			if (bytes == null)
 				return null;
+			if(bytes.Length == 0)
+				return null;
 			using (var stream = new InMemoryRandomAccessStream())
 			{
 				await stream.WriteAsync(bytes.AsBuffer());

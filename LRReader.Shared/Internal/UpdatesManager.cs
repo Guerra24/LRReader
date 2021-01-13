@@ -41,7 +41,6 @@ namespace LRReader.Shared.Internal
 				if (info.version > current)
 				{
 					info.link = $"ms-appinstaller:?source=https://s3.guerra24.net/projects/lrr/{info.version}/LRReader.UWP.appinstaller";
-					System.Diagnostics.Debug.WriteLine(info.link);
 					return info;
 				}
 			}
