@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LRReader.Shared.Internal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,19 +41,17 @@ namespace LRReader.Shared.Models.Main
 		public void UpdateTags()
 		{
 			TagsClean = "";
-			foreach (var s in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-			{
+			var separatedTags = tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var s in separatedTags)
 				TagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
-			}
 			TagsClean = TagsClean.Trim().TrimEnd(',');
 			TagsList.Clear();
-			foreach (var s in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-			{
+			foreach (var s in separatedTags)
 				TagsList.Add(s.Trim());
-			}
+
 			TagsGroups.Clear();
 			var tmp = new List<ArchiveTagsGroup>();
-			foreach (var s in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+			foreach (var s in separatedTags)
 			{
 				var parts = s.Trim().Split(new char[] { ':' }, 2);
 				ArchiveTagsGroup group = null;
@@ -60,10 +59,23 @@ namespace LRReader.Shared.Models.Main
 				group = tmp.FirstOrDefault(tg => tg.Namespace.Equals(@namespace));
 				if (group == null)
 					group = AddTagsGroup(tmp, @namespace);
-				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = parts[parts.Length - 1] });
+				var tag = parts[parts.Length - 1];
+				if (parts[0].Equals("date_added"))
+					if (long.TryParse(parts[1], out long unixTime))
+						tag = Util.UnixTimeToDateTime(unixTime).ToString();
+				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag });
 			}
 			tmp.Sort((a, b) => string.Compare(a.Namespace, b.Namespace));
-			tmp.ForEach(e => TagsGroups.Add(e));
+			var c = tmp.Find(g => g.Namespace.Equals("other"));
+			if (c != null)
+			{
+				tmp.Remove(c);
+				tmp.Add(c);
+			}
+			tmp.ForEach(g => {
+				g.Namespace = g.Namespace.UpperFirstLetter().Replace('_', ' ');
+				TagsGroups.Add(g);
+			});
 		}
 
 		private ArchiveTagsGroup AddTagsGroup(List<ArchiveTagsGroup> list, string @namespace)

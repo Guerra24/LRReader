@@ -18,10 +18,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
-using LRReader.Internal;
 using LRReader.Shared.Providers;
 using Windows.ApplicationModel.Resources;
 using Microsoft.Toolkit.Extensions;
+using LRReader.UWP.Internal;
 
 namespace LRReader.UWP.Views.Main
 {

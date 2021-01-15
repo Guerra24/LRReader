@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LRReader.Internal
+namespace LRReader.UWP.Internal
 {
 	public static class Util
 	{
@@ -31,7 +28,7 @@ namespace LRReader.Internal
 		{
 			if (bytes == null)
 				return null;
-			if(bytes.Length == 0)
+			if (bytes.Length == 0)
 				return null;
 			using (var stream = new InMemoryRandomAccessStream())
 			{

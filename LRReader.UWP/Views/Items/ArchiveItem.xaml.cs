@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.UWP.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Items;

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
+using LRReader.UWP.Internal;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Tabs;

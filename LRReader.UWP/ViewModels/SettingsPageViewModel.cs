@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using LRReader.Internal;
+using LRReader.UWP.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;

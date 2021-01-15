@@ -1,4 +1,4 @@
-﻿using LRReader.Internal;
+﻿using LRReader.UWP.Internal;
 using LRReader.UWP.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
