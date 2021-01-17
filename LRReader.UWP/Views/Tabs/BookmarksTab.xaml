@@ -17,12 +17,29 @@
 		<controls:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
 	</controls:TabViewItem.IconSource>
 	<internal:CustomTab.CustomTabControl>
-		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
-			<Viewbox MaxWidth="16" MaxHeight="16">
-				<SymbolIcon Symbol="Refresh" />
-			</Viewbox>
-		</Button>
+		<StackPanel Orientation="Horizontal">
+			<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<SymbolIcon Symbol="Refresh" />
+				</Viewbox>
+			</Button>
+			<Button>
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<SymbolIcon Symbol="More" />
+				</Viewbox>
+				<Button.Flyout>
+					<MenuFlyout Placement="Bottom">
+						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Export" Click="ExportButton_Click">
+							<MenuFlyoutItem.Icon>
+								<FontIcon Glyph="&#xEDE1;" />
+							</MenuFlyoutItem.Icon>
+						</MenuFlyoutItem>
+						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Import" Click="ImportButton_Click" Icon="Import" />
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
+		</StackPanel>
 	</internal:CustomTab.CustomTabControl>
 
-	<content:BookmarksTabContent x:Name="TabContent" />
+	<content:Bookmarks x:Name="TabContent" />
 </internal:CustomTab>

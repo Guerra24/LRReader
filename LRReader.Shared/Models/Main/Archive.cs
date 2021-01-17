@@ -61,7 +61,7 @@ namespace LRReader.Shared.Models.Main
 					group = AddTagsGroup(tmp, @namespace);
 				var tag = parts[parts.Length - 1];
 				if (parts[0].Equals("date_added"))
-					if (long.TryParse(parts[1], out long unixTime))
+					if (long.TryParse(tag, out long unixTime))
 						tag = Util.UnixTimeToDateTime(unixTime).ToString();
 				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag });
 			}

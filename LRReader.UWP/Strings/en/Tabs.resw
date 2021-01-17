@@ -201,6 +201,36 @@
   <data name="Archives.Untagged.Content" xml:space="preserve">
     <value>Untagged only</value>
   </data>
+  <data name="Bookmarks.Export.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Bookmarks.ExportComplete" xml:space="preserve">
+    <value>Export completed successfully</value>
+  </data>
+  <data name="Bookmarks.ExportCompleteFile" xml:space="preserve">
+    <value>Saved to {0}</value>
+  </data>
+  <data name="Bookmarks.ExportError" xml:space="preserve">
+    <value>An error ocurred</value>
+  </data>
+  <data name="Bookmarks.ExportErrorFile" xml:space="preserve">
+    <value>Unable to save {0}</value>
+  </data>
+  <data name="Bookmarks.Import.Text" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.Content" xml:space="preserve">
+    <value>Current bookmarks will be replaced, do you want to continue?{0}The app will reload.</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Import and reload</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.Title" xml:space="preserve">
+    <value>Import Bookmarks</value>
+  </data>
   <data name="Bookmarks.Tab.Header" xml:space="preserve">
     <value>Bookmarks</value>
   </data>

@@ -201,6 +201,36 @@
   <data name="Archives.Untagged.Content" xml:space="preserve">
     <value>Sólo sin etiquetas</value>
   </data>
+  <data name="Bookmarks.Export.Text" xml:space="preserve">
+    <value>Exportar</value>
+  </data>
+  <data name="Bookmarks.ExportComplete" xml:space="preserve">
+    <value>Se ha exportado correctamente</value>
+  </data>
+  <data name="Bookmarks.ExportCompleteFile" xml:space="preserve">
+    <value>Se guardó en {0}</value>
+  </data>
+  <data name="Bookmarks.ExportError" xml:space="preserve">
+    <value>Un error ha ocurrido</value>
+  </data>
+  <data name="Bookmarks.ExportErrorFile" xml:space="preserve">
+    <value>No se pudo guardar {0}</value>
+  </data>
+  <data name="Bookmarks.Import.Text" xml:space="preserve">
+    <value>Importar</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.Content" xml:space="preserve">
+    <value>Los marcadores existentes serán reemplazados, desea continuar?{0}La app se recargara</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Importar y recargar</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.Title" xml:space="preserve">
+    <value>Importar Marcadores</value>
+  </data>
   <data name="Bookmarks.Tab.Header" xml:space="preserve">
     <value>Marcadores</value>
   </data>

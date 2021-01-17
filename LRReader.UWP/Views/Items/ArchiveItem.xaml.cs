@@ -105,8 +105,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				CachedFileManager.DeferUpdates(file);
 				await FileIO.WriteBytesAsync(file, download.Data);
-				FileUpdateStatus status =
-					await CachedFileManager.CompleteUpdatesAsync(file);
+				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
 				if (status == FileUpdateStatus.Complete)
 				{
 					//save

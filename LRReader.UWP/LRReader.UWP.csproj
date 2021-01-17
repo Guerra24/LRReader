@@ -216,8 +216,8 @@
     <Compile Include="Views\Tabs\Content\ArchiveTabContent.xaml.cs">
       <DependentUpon>ArchiveTabContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\Content\BookmarksTabContent.xaml.cs">
-      <DependentUpon>BookmarksTabContent.xaml</DependentUpon>
+    <Compile Include="Views\Tabs\Content\Bookmarks.xaml.cs">
+      <DependentUpon>Bookmarks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\Content\Categories.xaml.cs">
       <DependentUpon>Categories.xaml</DependentUpon>
@@ -433,7 +433,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Tabs\Content\BookmarksTabContent.xaml">
+    <Page Include="Views\Tabs\Content\Bookmarks.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

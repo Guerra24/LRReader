@@ -41,7 +41,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 				return;
 
 			var savePicker = new FileSavePicker();
-			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
 			savePicker.FileTypeChoices.Add(download.Type + " File", new List<string>() { download.Type });
 			savePicker.SuggestedFileName = download.Name;
 
