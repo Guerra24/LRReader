@@ -7,6 +7,8 @@ using Microsoft.Toolkit.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -71,7 +73,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var savePicker = new FileSavePicker();
 			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
 			savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".json" });
-			savePicker.SuggestedFileName = "bookmarks";
+			var fileName = "bookmarks " + SharedGlobal.SettingsManager.Profile.Name;
+			var validate = new Regex(string.Format("[{0}]", Regex.Escape(new string(Path.GetInvalidFileNameChars()))));
+			savePicker.SuggestedFileName = validate.Replace(fileName, "");
 
 			StorageFile file = await savePicker.PickSaveFileAsync();
 			if (file != null)

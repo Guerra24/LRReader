@@ -61,6 +61,10 @@ namespace LRReader.UWP.ViewModels
 				}
 			}
 		}
+		public ControlFlags ControlFlags
+		{
+			get => SharedGlobal.ControlFlags;
+		}
 
 		public SettingsPageViewModel()
 		{

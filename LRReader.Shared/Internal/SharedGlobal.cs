@@ -17,5 +17,18 @@ namespace LRReader.Shared.Internal
 		public static UpdatesManager UpdatesManager { get; } = new UpdatesManager();
 		public static ServerInfo ServerInfo { get; set; }
 		public static ImagesManager ImagesManager { get; set; } = new ImagesManager();
+		public static ControlFlags ControlFlags { get; set; } = new ControlFlags();
+	}
+
+	public class ControlFlags
+	{
+		public bool CategoriesEnabled = true;
+
+		public void Check(ServerInfo serverInfo)
+		{
+			// Disable categories due to bug in API
+			if (serverInfo.version == new Version(0, 7, 5))
+				CategoriesEnabled = false;
+		}
 	}
 }

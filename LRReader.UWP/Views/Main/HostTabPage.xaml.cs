@@ -62,8 +62,9 @@ namespace LRReader.UWP.Views.Main
 				Global.EventManager.AddTab(new ArchivesTab());
 				if (Global.SettingsManager.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
-				if (Global.SettingsManager.OpenCategoriesTab)
-					Global.EventManager.AddTab(new CategoriesTab(), false);
+				if (Global.ControlFlags.CategoriesEnabled)
+					if (Global.SettingsManager.OpenCategoriesTab)
+						Global.EventManager.AddTab(new CategoriesTab(), false);
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
@@ -95,15 +96,9 @@ namespace LRReader.UWP.Views.Main
 		private void TitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
 		{
 			if (sender.IsVisible)
-			{
 				TabViewControl.Margin = new Thickness(0, 0, 0, 0);
-				TitleBarBackground.Visibility = Visibility.Visible;
-			}
 			else
-			{
 				TabViewControl.Margin = new Thickness(0, -40, 0, 0);
-				TitleBarBackground.Visibility = Visibility.Collapsed;
-			}
 		}
 
 		private void ShowNotification(string title, string content, int duration = 5000) => Notifications.Show(new NotificationItem(title, content), duration);
@@ -187,5 +182,6 @@ namespace LRReader.UWP.Views.Main
 				AppView.TryEnterFullScreenMode();
 			}
 		}
+
 	}
 }

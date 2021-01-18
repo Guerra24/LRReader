@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
 using LRReader.Internal;
+using LRReader.Shared.Internal;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,10 @@ namespace LRReader.UWP.ViewModels
 		public bool Windowed
 		{
 			get => !_fullscreen;
+		}
+		public ControlFlags ControlFlags
+		{
+			get => SharedGlobal.ControlFlags;
 		}
 
 	}

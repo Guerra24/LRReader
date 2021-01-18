@@ -44,7 +44,7 @@
 				</Button>
 			</StackPanel>
 			<TextBlock x:Uid="/Settings/General/Tabs" Margin="0,10,0,5" FontSize="24" />
-			<ToggleSwitch x:Uid="/Settings/General/Categories" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
+			<ToggleSwitch x:Uid="/Settings/General/Categories" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}" />
 			<ToggleSwitch x:Uid="/Settings/General/Bookmarks" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
 			<ToggleSwitch x:Uid="/Settings/General/Bookmarked" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
 			<ToggleSwitch x:Uid="/Settings/General/CompactMarks" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />

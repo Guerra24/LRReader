@@ -102,6 +102,7 @@ namespace LRReader.UWP.Views.Main
 				return;
 			}
 			await SharedGlobal.ArchivesManager.ReloadArchives();
+			SharedGlobal.ControlFlags.Check(serverInfo);
 			ViewModel.Active = false;
 			(Window.Current.Content as Frame).Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());
 		}

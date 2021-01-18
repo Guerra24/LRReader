@@ -5,6 +5,7 @@
 	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -16,15 +17,22 @@
 		<KeyboardAccelerator Key="F11" Invoked="FullScreen_Invoked" />
 	</Page.KeyboardAccelerators>
 
+	<Page.Resources>
+		<internal:BooleanToVisibilityConverter x:Name="BoolToVisibility" />
+	</Page.Resources>
+
 	<Grid>
-		<Grid
-			x:Name="TitleBarBackground" Height="40" VerticalAlignment="Top"
-			Background="{ThemeResource TitlebarBackground}" />
 		<controls:TabView
-			x:Name="TabViewControl" VerticalAlignment="Stretch" Background="Transparent"
+			x:Name="TabViewControl" VerticalAlignment="Stretch"
+			Background="{ThemeResource TitlebarBackground}"
 			IsAddTabButtonVisible="False"
 			SelectedItem="{x:Bind Data.CurrentTab, Mode=TwoWay}"
 			TabCloseRequested="TabView_TabCloseRequested" TabWidthMode="SizeToContent">
+			<controls:TabView.Transitions>
+				<TransitionCollection>
+					<RepositionThemeTransition />
+				</TransitionCollection>
+			</controls:TabView.Transitions>
 			<controls:TabView.TabStripHeader>
 				<Grid x:Name="TabViewStartHeader" />
 			</controls:TabView.TabStripHeader>
@@ -38,22 +46,22 @@
 					<Grid.Resources>
 						<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button">
 							<Setter Property="Background" Value="Transparent" />
-							<Setter Property="Width" Value="46" />
+							<Setter Property="Width" Value="34" />
 							<Setter Property="Height" Value="32" />
 						</Style>
 					</Grid.Resources>
 					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
-						<Button x:Uid="/Pages/HostTabPage/Bookmarks" Background="Transparent" Click="Bookmarks_Click">
+						<Button x:Uid="/Pages/HostTabPage/Bookmarks" Click="Bookmarks_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
 							</Viewbox>
 						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Categories" Background="Transparent" Click="Categories_Click">
+						<Button x:Uid="/Pages/HostTabPage/Categories" Click="Categories_Click" Visibility="{x:Bind Data.ControlFlags.CategoriesEnabled, Converter={StaticResource BoolToVisibility}}">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
 							</Viewbox>
 						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Search" Background="Transparent" Click="Search_Click">
+						<Button x:Uid="/Pages/HostTabPage/Search" Click="Search_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;" />
 							</Viewbox>
