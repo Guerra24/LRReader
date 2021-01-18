@@ -35,14 +35,8 @@ jobs:
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
         Invoke-Expression "./Util/CleanInstaller.ps1"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
-    - name: Remove unused dependencies
-      run: |
-        Set-Location "./LRReader.UWP/AppPackages/"
-        Set-Location $(Get-ChildItem *LRReader* -Directory)
-        Remove-Item -Path "./Install.ps1","./Add-AppDevPackage.ps1"
-        Remove-Item -Path "./Add-AppDevPackage.resources" –recurse
-        Set-Location "./Dependencies/"
-        Remove-Item -Path "./arm","./Win32" –recurse
+    - name: Prepare for upload
+      run: ./Util/PrepareForUpload.ps1
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
