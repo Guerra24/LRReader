@@ -107,7 +107,16 @@ namespace LRReader.UWP.Views.Tabs.Content
 			StorageFile file = await openPicker.PickSingleFileAsync();
 			if (file != null)
 			{
-				List<Shared.Models.Main.BookmarkedArchive> bookmarks = JsonConvert.DeserializeObject<List<Shared.Models.Main.BookmarkedArchive>>(await FileIO.ReadTextAsync(file));
+				List<Shared.Models.Main.BookmarkedArchive> bookmarks = null;
+				try
+				{
+					bookmarks = JsonConvert.DeserializeObject<List<Shared.Models.Main.BookmarkedArchive>>(await FileIO.ReadTextAsync(file));
+				}
+				catch (Exception e)
+				{
+					Global.EventManager.ShowError(lang.GetString("Bookmarks/ImportError"), e.Message, 0);
+					return;
+				}
 				var dialog = new ContentDialog()
 				{
 					Title = lang.GetString("Bookmarks/ImportDialog/Title"),

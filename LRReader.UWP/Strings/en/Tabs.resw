@@ -231,6 +231,9 @@
   <data name="Bookmarks.ImportDialog.Title" xml:space="preserve">
     <value>Import Bookmarks</value>
   </data>
+  <data name="Bookmarks.ImportError" xml:space="preserve">
+    <value>An error occurred while importing bookmarks</value>
+  </data>
   <data name="Bookmarks.Tab.Header" xml:space="preserve">
     <value>Bookmarks</value>
   </data>
