@@ -13,10 +13,23 @@
 
 ## Requirements
 
-- Windows 10 1803 (x86, x64 or ARM64)
+- Windows 10 1809 (x86, x64 or ARM64)
 - LANraragi v0.7.1
 
 ## Installing
+
+### Store
+
+<a href='//www.microsoft.com/store/apps/9MZ6BWWVSWJH?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width="142" height="52"/></a>
+
+If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
+`CheckNetIsolation loopbackexempt -a -n=63705Guerra24.LRReader_pd6jswmanqqw0`<br>
+To allow localhost access.
+
+### Sideload
+
+If you don't want to deal with the store this option is and will be supported.
+
 
 You will need to install the cert first, [instructions here](https://github.com/Guerra24/LRReader/wiki/Certificate).
 
