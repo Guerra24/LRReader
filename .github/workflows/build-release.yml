@@ -28,6 +28,7 @@ jobs:
         CERT_GPG: ${{ secrets.CERT_GPG }}
         CERT_BASE64: ${{ secrets.CERT_BASE64 }}
       run: |
+        Move-Item -Path "./Util/Package.appxmanifest" -Destination "$(Get-Location)/LRReader.UWP/Package.appxmanifest" -Force
         [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))

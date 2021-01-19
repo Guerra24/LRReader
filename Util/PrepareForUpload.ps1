@@ -1,6 +1,4 @@
-﻿Move-Item -Path "./Util/Package.appxmanifest" -Destination "$(Get-Location)/LRReader.UWP/Package.appxmanifest" -Force
-
-[xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
+﻿[xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
 
 Set-Location "./LRReader.UWP/AppPackages/"
 Rename-Item $(Get-ChildItem *LRReader* -Directory) "$(Get-Location)/LRReader.UWP"

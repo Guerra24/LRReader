@@ -31,6 +31,7 @@ jobs:
         CERT_GPG: ${{ secrets.CERT_GPG }}
         CERT_BASE64: ${{ secrets.CERT_BASE64 }}
       run: |
+        Move-Item -Path "./Util/Package.appxmanifest" -Destination "$(Get-Location)/LRReader.UWP/Package.appxmanifest" -Force
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         Invoke-Expression "./Util/Version.ps1"
