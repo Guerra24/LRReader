@@ -32,7 +32,7 @@ jobs:
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:DefineConstants="TRACE;NETFX_CORE;WINDOWS_UWP;SIDELOAD" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:DefineConstants="TRACE;NETFX_CORE;WINDOWS_UWP;SIDELOAD" /p:AppxSymbolPackageEnabled=false /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
