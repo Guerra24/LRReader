@@ -28,28 +28,30 @@
 				<Run Text="{x:Bind Data.MaxVersion}" />
 			</TextBlock>
 			<HyperlinkButton x:Uid="/Settings/About/Github" Margin="0,0,0,10" NavigateUri="https://github.com/Guerra24/LRReader" />
-			<Button
-				x:Uid="/Settings/About/Check" Margin="0,0,0,10" Click="CheckUpdatesButton_Click"
-				Style="{ThemeResource ButtonRevealStyle}" />
-			<TextBlock
-				x:Uid="/Settings/About/NotFound" Margin="0,5,0,10" FontSize="20"
-				Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-			<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
-				<TextBlock x:Uid="/Settings/About/Found" Margin="0,5,0,10" FontSize="20" />
-				<TextBlock Margin="0,0,0,10" FontSize="20" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
-				<controls:MarkdownTextBlock
-					Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"
-					Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-				<Button x:Uid="/Settings/About/Download" Style="{ThemeResource ButtonRevealStyle}">
-					<Button.Flyout>
-						<Flyout x:Name="DownloadFlyout">
-							<StackPanel>
-								<TextBlock x:Uid="/Settings/About/DownloadNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-								<Button x:Uid="/Settings/About/DownloadYes" HorizontalAlignment="Center" Click="ButtonDownload_Click" />
-							</StackPanel>
-						</Flyout>
-					</Button.Flyout>
-				</Button>
+			<StackPanel x:Name="UpdateInfo" Orientation="Vertical" Visibility="Collapsed">
+				<Button
+					x:Uid="/Settings/About/Check" Margin="0,0,0,10" Click="CheckUpdatesButton_Click"
+					Style="{ThemeResource ButtonRevealStyle}" />
+				<TextBlock
+					x:Uid="/Settings/About/NotFound" Margin="0,5,0,10" FontSize="20"
+					Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+				<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
+					<TextBlock x:Uid="/Settings/About/Found" Margin="0,5,0,10" FontSize="20" />
+					<TextBlock Margin="0,0,0,10" FontSize="20" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
+					<controls:MarkdownTextBlock
+						Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"
+						Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
+					<Button x:Uid="/Settings/About/Download" Style="{ThemeResource ButtonRevealStyle}">
+						<Button.Flyout>
+							<Flyout x:Name="DownloadFlyout">
+								<StackPanel>
+									<TextBlock x:Uid="/Settings/About/DownloadNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+									<Button x:Uid="/Settings/About/DownloadYes" HorizontalAlignment="Center" Click="ButtonDownload_Click" />
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</StackPanel>
 			</StackPanel>
 		</StackPanel>
 	</ScrollViewer>

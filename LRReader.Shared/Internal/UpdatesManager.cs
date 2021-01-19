@@ -23,8 +23,11 @@ namespace LRReader.Shared.Internal
 			client.UserAgent = "LRReader";
 		}
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 		public async Task<ReleaseInfo> CheckUpdates(Version current)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		{
+#if SIDELOAD
 			var rq = new RestRequest("lrr/upgrade/latest");
 
 			var r = await client.ExecuteGetAsync(rq);
@@ -44,6 +47,7 @@ namespace LRReader.Shared.Internal
 					return info;
 				}
 			}
+#endif
 			return null;
 		}
 

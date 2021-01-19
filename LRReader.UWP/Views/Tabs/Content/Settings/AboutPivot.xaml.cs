@@ -16,6 +16,9 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
+#if SIDELOAD
+			UpdateInfo.Visibility = Visibility.Visible;
+#endif
 		}
 
 		private void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)

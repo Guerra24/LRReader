@@ -34,7 +34,7 @@ jobs:
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         Invoke-Expression "./Util/Version.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:AppxPackageSigningEnabled=true /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:DefineConstants="TRACE;NETFX_CORE;WINDOWS_UWP;SIDELOAD" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
