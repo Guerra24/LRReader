@@ -22,7 +22,8 @@
 
 <a href='//www.microsoft.com/store/apps/9MZ6BWWVSWJH?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width="213" height="78"/></a>
 
-If you have troubles accessing the store page. Open this link in your browser: `ms-windows-store://pdp/?productid=9MZ6BWWVSWJH`
+If you have troubles accessing the store page. Open this link in your browser:<br>
+`ms-windows-store://pdp/?productid=9MZ6BWWVSWJH`
 
 If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
 `CheckNetIsolation loopbackexempt -a -n=63705Guerra24.LRReader_pd6jswmanqqw0`<br>
