@@ -166,13 +166,13 @@
     <value>Ajustes</value>
   </data>
   <data name="LoadingPage.ClientNotSupported" xml:space="preserve">
-    <value>Version {0} no soportada. Actualiza la app a la version mas reciente</value>
+    <value>Versión {0} no soportada. Actualice la aplicación a la última versión</value>
   </data>
   <data name="LoadingPage.ClientRange" xml:space="preserve">
     <value>Versiones de LANraragi soportadas {0} - {1}</value>
   </data>
   <data name="LoadingPage.InstanceNotSupported" xml:space="preserve">
-    <value>Version {0} no soportada. Actualiza tu instancia de LANraragi a {1}</value>
+    <value>Versión {0} no soportada. Actualice su instancia de LANraragi a {1}</value>
   </data>
   <data name="LoadingPage.InvalidKey" xml:space="preserve">
     <value>Falta la clave o no es válida</value>

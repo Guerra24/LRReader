@@ -9,12 +9,12 @@
   <Identity
     Name="Guerra24.LRReader"
     Publisher="CN=Guerra24, O=Guerra24, C=GT"
-    Version="1.5.4.0" />
+    Version="1.5.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="97639259-a9d5-4784-8ec1-a88609560ca7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>LRReader</DisplayName>
+    <DisplayName>LRReader Sideload</DisplayName>
     <PublisherDisplayName>Guerra24</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="LRReader.UWP.App">
       <uap:VisualElements
-        DisplayName="LRReader"
+        DisplayName="LRReader Sideload"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="UWP Client for LANraragi"
