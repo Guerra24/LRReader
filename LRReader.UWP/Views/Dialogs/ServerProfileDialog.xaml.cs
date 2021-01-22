@@ -1,5 +1,9 @@
-﻿using System;
+﻿using LRReader.UWP.Internal;
+using Microsoft.Toolkit.Extensions;
+using System;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
@@ -19,6 +23,7 @@ namespace LRReader.UWP.Views.Dialogs
 		private void ProfileName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
 		{
 			bool allow = true;
+			Command.Visibility = Visibility.Collapsed;
 			ProfileError.Text = "";
 			if (string.IsNullOrEmpty(ProfileName.Text))
 			{
@@ -31,6 +36,7 @@ namespace LRReader.UWP.Views.Dialogs
 		private void ProfileServerAddress_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
 		{
 			bool allow = true;
+			Command.Visibility = Visibility.Collapsed;
 			ProfileError.Text = "";
 			if (string.IsNullOrEmpty(ProfileServerAddress.Text))
 			{
@@ -41,6 +47,12 @@ namespace LRReader.UWP.Views.Dialogs
 			{
 				ProfileError.Text = lang.GetString("ServerProfile/ErrorInvalidAddress");
 				allow = false;
+			}
+			else if (ProfileServerAddress.Text.Contains("127.0.0.") || ProfileServerAddress.Text.Contains("localhost"))
+			{
+				ProfileError.Text = lang.GetString("ServerProfile/ErrorLocalHost").AsFormat("\n");
+				Command.Visibility = Visibility.Visible;
+				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}";
 			}
 			IsPrimaryButtonEnabled = allow && ValidateProfileName();
 		}
@@ -53,6 +65,14 @@ namespace LRReader.UWP.Views.Dialogs
 		private bool ValidateServerAddress()
 		{
 			return !string.IsNullOrEmpty(ProfileServerAddress.Text) && Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute);
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			var dataPackage = new DataPackage();
+			dataPackage.RequestedOperation = DataPackageOperation.Copy;
+			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}");
+			Clipboard.SetContent(dataPackage);
 		}
 	}
 }

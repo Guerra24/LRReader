@@ -19,6 +19,11 @@ namespace LRReader.UWP.Internal
 			return new Version(version.Major, version.Minor, version.Build, version.Revision);
 		}
 
+		public static string GetPackageFamilyName()
+		{
+			return AppInfo.Current.PackageFamilyName;
+		}
+
 		public static async Task<bool> OpenInBrowser(Uri uri)
 		{
 			return await Launcher.LaunchUriAsync(uri);

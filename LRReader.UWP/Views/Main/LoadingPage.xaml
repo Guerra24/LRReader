@@ -31,6 +31,11 @@
 					Width="40" Height="40" HorizontalAlignment="Center"
 					VerticalAlignment="Top"
 					IsActive="{x:Bind ViewModel.Active, Mode=OneWay}" />
+				<muxc:ProgressBar
+					Width="200" Margin="0,18,0,0" VerticalAlignment="Top"
+					Maximum="1"
+					Visibility="{x:Bind ViewModel.Updating, Mode=OneWay}"
+					Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
 				<StackPanel VerticalAlignment="Top">
 					<TextBlock
 						Margin="0,30,0,0" HorizontalAlignment="Center" FontSize="18"

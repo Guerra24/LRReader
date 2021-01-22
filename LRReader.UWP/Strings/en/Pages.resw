@@ -183,4 +183,10 @@
   <data name="LoadingPage.NoConnection" xml:space="preserve">
     <value>Unable to connect... Please select another profile</value>
   </data>
+  <data name="LoadingPage.NoConnectionLocalHost" xml:space="preserve">
+    <value>Unable to connect... Make sure the app has localhost access</value>
+  </data>
+  <data name="LoadingPage.NoConnectionLocalHostSub" xml:space="preserve">
+    <value>Check Profile-&gt;Edit for more information</value>
+  </data>
 </root>

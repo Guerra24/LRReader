@@ -1,9 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -37,6 +32,26 @@ namespace LRReader.UWP.ViewModels
 			{
 				_active = value;
 				RaisePropertyChanged("Active");
+			}
+		}
+		private bool _updating;
+		public bool Updating
+		{
+			get => _updating;
+			set
+			{
+				_updating = value;
+				RaisePropertyChanged("Updating");
+			}
+		}
+		private double _progress;
+		public double Progress
+		{
+			get => _progress;
+			set
+			{
+				_progress = value;
+				RaisePropertyChanged("Progress");
 			}
 		}
 	}

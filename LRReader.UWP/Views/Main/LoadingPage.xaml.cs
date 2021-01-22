@@ -22,6 +22,8 @@ using LRReader.Shared.Providers;
 using Windows.ApplicationModel.Resources;
 using Microsoft.Toolkit.Extensions;
 using LRReader.UWP.Internal;
+using Windows.Services.Store;
+using GalaSoft.MvvmLight.Threading;
 
 namespace LRReader.UWP.Views.Main
 {
@@ -64,6 +66,9 @@ namespace LRReader.UWP.Views.Main
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+#if !SIDELOAD
+			await DownloadUpdate();
+#endif
 			ViewModel.Active = true;
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
 
@@ -71,7 +76,14 @@ namespace LRReader.UWP.Views.Main
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
-				ViewModel.Status = lang.GetString("LoadingPage/NoConnection");
+				var address = SharedGlobal.SettingsManager.Profile.ServerAddress;
+				if (address.Contains("127.0.0.") || address.Contains("localhost"))
+				{
+					ViewModel.Status = lang.GetString("LoadingPage/NoConnectionLocalHost");
+					ViewModel.StatusSub = lang.GetString("LoadingPage/NoConnectionLocalHostSub");
+				}
+				else
+					ViewModel.Status = lang.GetString("LoadingPage/NoConnection");
 				await Reload();
 				return;
 			}
@@ -114,6 +126,60 @@ namespace LRReader.UWP.Views.Main
 			ViewModel.Status = "";
 			ViewModel.StatusSub = "";
 			(Window.Current.Content as Frame).Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+		}
+
+		private async Task DownloadUpdate()
+		{
+			ViewModel.Active = true;
+			var context = StoreContext.GetDefault();
+
+			var packageUpdates = await context.GetAppAndOptionalStorePackageUpdatesAsync();
+			if (packageUpdates.Count == 0)
+				return;
+
+			if (!context.CanSilentlyDownloadStorePackageUpdates)
+				return;
+			ViewModel.Active = false;
+			await Task.Delay(TimeSpan.FromMilliseconds(500));
+			ViewModel.Updating = true;
+
+			var downloadTask = context.TrySilentDownloadStorePackageUpdatesAsync(packageUpdates);
+
+			downloadTask.Progress = async (info, progress) =>
+			{
+				await DispatcherHelper.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
+			};
+
+			var result = await downloadTask.AsTask();
+
+			ViewModel.Updating = false;
+
+			await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+			switch (result.OverallState)
+			{
+				case StorePackageUpdateState.Completed:
+					await InstallUpdate(packageUpdates, context);
+					break;
+				default:
+					break;
+			}
+		}
+
+		private async Task InstallUpdate(IReadOnlyList<StorePackageUpdate> packages, StoreContext context)
+		{
+			ViewModel.Progress = 0;
+			ViewModel.Updating = true;
+
+			var installTask = context.TrySilentDownloadAndInstallStorePackageUpdatesAsync(packages);
+
+			installTask.Progress = async (info, progress) =>
+			{
+				await DispatcherHelper.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
+			};
+
+			var result = await installTask.AsTask();
+			ViewModel.Updating = false;
 		}
 	}
 }

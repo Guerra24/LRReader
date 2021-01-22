@@ -19,6 +19,16 @@
 		<PasswordBox
 			x:Name="ProfileServerApiKey" x:Uid="/Dialogs/ServerProfile/ProfileApiKey" Margin="0,0,0,10"
 			x:FieldModifier="public" />
-		<TextBlock Name="ProfileError" Foreground="#FF4141" />
+		<TextBlock x:Name="ProfileError" Foreground="#FF4141" IsTextSelectionEnabled="True" />
+		<StackPanel
+			x:Name="Command" Margin="0,10,0,0" Orientation="Horizontal"
+			Visibility="Collapsed">
+			<TextBox
+				x:Name="CommandBox" MaxWidth="350" Margin="0,0,10,0"
+				IsReadOnly="True" />
+			<Button x:Uid="/Dialogs/ServerProfile/Copy" Click="Button_Click">
+				<SymbolIcon Symbol="Copy" />
+			</Button>
+		</StackPanel>
 	</StackPanel>
 </ContentDialog>
