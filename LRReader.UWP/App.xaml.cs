@@ -1,39 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using GalaSoft.MvvmLight.Threading;
+using LRReader.Internal;
+using LRReader.Shared.Internal;
+using LRReader.UWP.Views.Main;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.UWP.Views.Main;
-using Windows.ApplicationModel.Core;
-using Windows.UI.ViewManagement;
-using Windows.UI;
-using LRReader.Internal;
 using Windows.UI.Xaml.Media.Animation;
-using LRReader.Shared.Internal;
+using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP
 {
-	/// <summary>
-	/// Provides application-specific behavior to supplement the default Application class.
-	/// </summary>
+
 	sealed partial class App : Application
 	{
-		/// <summary>
-		/// Initializes the singleton application object.  This is the first line of authored code
-		/// executed, and as such is the logical equivalent of main() or WinMain().
-		/// </summary>
+
 		public App()
 		{
 			Init.InitObjects();
@@ -63,21 +48,15 @@ namespace LRReader.UWP
 
 			Frame rootFrame = Window.Current.Content as Frame;
 
-			// Do not repeat app initialization when the Window already has content,
-			// just ensure that the window is active
 			if (rootFrame == null)
 			{
-				// Create a Frame to act as the navigation context and navigate to the first page
 				rootFrame = new Frame();
-
 				rootFrame.NavigationFailed += OnNavigationFailed;
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
 					//TODO: Load state from previously suspended application
 				}
-
-				// Place the frame in the current Window
 				Window.Current.Content = rootFrame;
 			}
 
@@ -85,9 +64,6 @@ namespace LRReader.UWP
 			{
 				if (rootFrame.Content == null)
 				{
-					// When the navigation stack isn't restored navigate to the first page,
-					// configuring the new page by passing required information as a navigation
-					// parameter
 					var CoreView = CoreApplication.GetCurrentView();
 					var AppView = ApplicationView.GetForCurrentView();
 					CoreApplicationViewTitleBar coreTitleBar = CoreView.TitleBar;
@@ -105,18 +81,8 @@ namespace LRReader.UWP
 							titleBar.ButtonForegroundColor = Colors.White;
 							break;
 					}
-
-					bool firstRun = Global.SettingsManager.Profile == null;
-					if (firstRun)
-					{
-						rootFrame.Navigate(typeof(FirstRunPage), e.Arguments);
-					}
-					else
-					{
-						rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
-					}
+					rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
 				}
-				// Ensure the current window is active
 				Window.Current.Activate();
 			}
 		}
