@@ -20,14 +20,10 @@
 
 ### Store
 
-<a href='//www.microsoft.com/store/apps/9MZ6BWWVSWJH?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width="213" height="78"/></a>
+<a href='//www.microsoft.com/store/productId/9MZ6BWWVSWJH'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width="213" height="78"/></a>
 
 If you have troubles accessing the store page. Open this link in your browser:<br>
 `ms-windows-store://pdp/?productid=9MZ6BWWVSWJH`
-
-If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
-`CheckNetIsolation loopbackexempt -a -n=63705Guerra24.LRReader_pd6jswmanqqw0`<br>
-To allow localhost access.
 
 ### Sideload
 
@@ -41,10 +37,6 @@ For stable check the [Releases page](https://github.com/Guerra24/LRReader/releas
 For nightly check the [Nightly page](https://s3.guerra24.net/projects/lrr/nightly/index.html)
 
 Download the `LRReader.appinstaller` file, run it and follow instructions.
-
-If you're using a local-hosted instance (e.g. LANraragi on Windows), you will need to run this command:<br>
-`CheckNetIsolation loopbackexempt -a -n=Guerra24.LRReader_3fr0p4qst6948`<br>
-To allow localhost access.
 
 ## Usage
 
