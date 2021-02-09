@@ -1,8 +1,6 @@
 ﻿using Caching;
+using KeyedSemaphores;
 using LRReader.Shared.Providers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Internal
@@ -21,14 +19,17 @@ namespace LRReader.Shared.Internal
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
+			var key = await KeyedSemaphore.LockAsync(path);
 			byte[] data;
 			if (cache.TryGet(path, out data))
 			{
+				key.Dispose();
 				return data;
 			}
 			else
 			{
 				cache.AddReplace(path, data = await ArchivesProvider.GetImage(path));
+				key.Dispose();
 				return data;
 			}
 		}

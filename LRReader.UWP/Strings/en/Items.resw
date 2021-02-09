@@ -135,6 +135,9 @@
   <data name="Archive.Unbookmark.Text" xml:space="preserve">
     <value>Unbookmark</value>
   </data>
+  <data name="ArchiveImage.Reload.Text" xml:space="preserve">
+    <value>Reload</value>
+  </data>
   <data name="Category.Delete.Text" xml:space="preserve">
     <value>Delete</value>
   </data>

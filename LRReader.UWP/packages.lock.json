@@ -67,6 +67,11 @@
           "ColorCode.Core": "2.0.6"
         }
       },
+      "KeyedSemaphores": {
+        "type": "Transitive",
+        "resolved": "2.0.0",
+        "contentHash": "UHhdWfZ0M0by6swZ+kMdNtv7JZUbPMptDDgHLDKqcyZmqtoW16fYlzJMjy9+yMV8Cy9fskieP+Fx5gu2paIPOA=="
+      },
       "Microsoft.CSharp": {
         "type": "Transitive",
         "resolved": "4.7.0",
@@ -298,6 +303,7 @@
         "type": "Project",
         "dependencies": {
           "Caching.dll": "1.3.5.1",
+          "KeyedSemaphores": "2.0.0",
           "MvvmLightStd10": "5.4.1.2",
           "Newtonsoft.Json": "12.0.3",
           "RestSharp": "106.11.7",

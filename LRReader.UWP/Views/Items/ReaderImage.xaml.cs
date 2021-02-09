@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using LRReader.Internal;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -44,8 +45,8 @@ namespace LRReader.UWP.Views.Items
 			imageR.DecodePixelType = imageL.DecodePixelType = DecodePixelType.Logical;
 			if (_height != 0)
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
-			LeftImage.Source = await Util.ByteToBitmap(await lImage, imageL);
-			RightImage.Source = await Util.ByteToBitmap(await rImage, imageR);
+			LeftImage.Source = await Global.ImageProcessing.ByteToBitmap(await lImage, imageL);
+			RightImage.Source = await Global.ImageProcessing.ByteToBitmap(await rImage, imageR);
 			/*var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)

@@ -136,6 +136,7 @@
     <Compile Include="Internal\Converters.cs" />
     <Compile Include="Internal\EventManager.cs" />
     <Compile Include="Internal\Global.cs" />
+    <Compile Include="Internal\ImageProcessing.cs" />
     <Compile Include="Internal\Tabs.cs" />
     <Compile Include="Internal\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

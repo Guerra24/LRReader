@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Tabs;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -47,30 +49,23 @@ namespace LRReader.UWP.Views.Items
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
 				Title.Opacity = 0;
+				Thumbnail.Opacity = 0;
 				Thumbnail.Source = null;
-				Thumbnail.Visibility = Visibility.Collapsed;
 				ViewModel.MissingImage = false;
-				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
-				{
-					byte[] bytes = await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid);
-					if (bytes != null)
-					{
-						await stream.WriteAsync(bytes.AsBuffer());
-						stream.Seek(0);
-						var image = new BitmapImage();
-						image.DecodePixelWidth = 200;
-						await image.SetSourceAsync(stream);
-						if (image.PixelHeight != 0 && image.PixelWidth != 0)
-							if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-								Thumbnail.Stretch = Stretch.Uniform;
-						Thumbnail.Source = image;
-						Thumbnail.Visibility = Visibility.Visible;
-					}
-					else
-					{
-						ViewModel.MissingImage = true;
-					}
-				}
+
+				var image = new BitmapImage();
+				image.DecodePixelType = DecodePixelType.Logical;
+				image.DecodePixelWidth = 200;
+				image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid), image);
+				if (image.PixelHeight != 0 && image.PixelWidth != 0)
+					if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+						Thumbnail.Stretch = Stretch.Uniform;
+				Thumbnail.Source = image;
+
+				if (image != null)
+					Thumbnail.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				else
+					ViewModel.MissingImage = true;
 				Title.Opacity = 1;
 				_oldID = ViewModel.Archive.arcid;
 			}

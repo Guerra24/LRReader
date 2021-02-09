@@ -33,7 +33,7 @@
 					IsActive="{x:Bind ViewModel.Active, Mode=OneWay}" />
 				<muxc:ProgressBar
 					Width="200" Margin="0,18,0,0" VerticalAlignment="Top"
-					Maximum="1"
+					Maximum="0.8"
 					Visibility="{x:Bind ViewModel.Updating, Mode=OneWay}"
 					Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
 				<StackPanel VerticalAlignment="Top">

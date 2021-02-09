@@ -11,6 +11,12 @@
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
+	<UserControl.ContextFlyout>
+		<MenuFlyout>
+			<MenuFlyoutItem x:Uid="/Items/ArchiveImage/Reload" Click="Reload_Click" Icon="Refresh" />
+		</MenuFlyout>
+	</UserControl.ContextFlyout>
+
 	<Grid Background="{ThemeResource BrushItemGridBackground}">
 		<Image x:Name="Image" />
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">

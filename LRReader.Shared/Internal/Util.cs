@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LRReader.Shared.Internal
 {
@@ -22,5 +20,7 @@ namespace LRReader.Shared.Internal
 			else
 				return char.ToUpper(str[0]) + str.Substring(1);
 		}
+
 	}
+
 }

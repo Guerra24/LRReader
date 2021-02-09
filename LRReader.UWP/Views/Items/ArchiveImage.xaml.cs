@@ -6,6 +6,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Threading.Tasks;
+using LRReader.Internal;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -13,6 +15,7 @@ namespace LRReader.UWP.Views.Items
 	{
 		private string _oldUrl = "";
 		private Container Data = new Container();
+		private bool _loading;
 
 		public ArchiveImage()
 		{
@@ -26,26 +29,35 @@ namespace LRReader.UWP.Views.Items
 			string n = args.NewValue as string;
 			if (!_oldUrl.Equals(n))
 			{
-				Image.Opacity = 0;
-				Ring.IsActive = true;
-				Data.MissingImage = false;
-				var image = new BitmapImage();
-				image.DecodePixelType = DecodePixelType.Logical;
-				image.DecodePixelHeight = 275;
-				image = await Util.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n), image);
-				Ring.IsActive = false;
-				if (image != null)
-				{
-					Image.Source = image;
-					Image.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-				}
-				else
-				{
-					Image.Source = null;
-					Data.MissingImage = true;
-				}
+				await ReloadImage(n);
 				_oldUrl = n;
 			}
+		}
+
+		private async void Reload_Click(object sender, RoutedEventArgs e) => await ReloadImage(_oldUrl);
+
+		private async Task ReloadImage(string n)
+		{
+			if (_loading)
+				return;
+			_loading = true;
+			Image.Opacity = 0;
+			Image.Source = null;
+			Ring.IsActive = true;
+			Data.MissingImage = false;
+
+			var image = new BitmapImage();
+			image.DecodePixelType = DecodePixelType.Logical;
+			image.DecodePixelHeight = 275;
+			image = await Global.ImageProcessing.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n), image, n.EndsWith("avif"));
+			Ring.IsActive = false;
+			Image.Source = image;
+
+			if (image != null)
+				Image.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+			else
+				Data.MissingImage = true;
+			_loading = false;
 		}
 
 		private class Container : ObservableObject

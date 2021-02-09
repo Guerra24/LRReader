@@ -51,21 +51,18 @@ namespace LRReader.UWP.Views.Items
 				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
 
-				byte[] bytes = await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid);
-				if (bytes?.Length > 0)
-				{
-					var image = await Util.ByteToBitmap(bytes);
-					image.DecodePixelType = DecodePixelType.Logical;
-					image.DecodePixelHeight = 275;
-					if (image.PixelHeight != 0 && image.PixelWidth != 0)
-						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-							Thumbnail.Stretch = Stretch.Uniform;
-					Thumbnail.Source = image;
-				}
-				else
-				{
+				var image = new BitmapImage();
+				image.DecodePixelType = DecodePixelType.Logical;
+				image.DecodePixelHeight = 275;
+				image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid), image);
+				if (image.PixelHeight != 0 && image.PixelWidth != 0)
+					if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+						Thumbnail.Stretch = Stretch.Uniform;
+				Thumbnail.Source = image;
+
+				if (image == null)
 					ViewModel.MissingImage = true;
-				}
+
 				Ring.IsActive = false;
 				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();

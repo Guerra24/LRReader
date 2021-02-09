@@ -11,6 +11,12 @@
           "Microsoft.CSharp": "4.7.0"
         }
       },
+      "KeyedSemaphores": {
+        "type": "Direct",
+        "requested": "[2.0.0, )",
+        "resolved": "2.0.0",
+        "contentHash": "UHhdWfZ0M0by6swZ+kMdNtv7JZUbPMptDDgHLDKqcyZmqtoW16fYlzJMjy9+yMV8Cy9fskieP+Fx5gu2paIPOA=="
+      },
       "MvvmLightStd10": {
         "type": "Direct",
         "requested": "[5.4.1.2, )",

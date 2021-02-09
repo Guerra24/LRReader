@@ -50,34 +50,26 @@ namespace LRReader.UWP.Views.Items
 				Thumbnail.Source = null;
 				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
-				using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+
+				var first = ViewModel.Category.archives.FirstOrDefault();
+				if (first != null)
 				{
-					var first = ViewModel.Category.archives.FirstOrDefault();
-					if (first != null)
-					{
-						byte[] bytes = await ArchivesProvider.GetThumbnail(first);
-						if (bytes != null)
-						{
-							await stream.WriteAsync(bytes.AsBuffer());
-							stream.Seek(0);
-							var image = new BitmapImage();
-							image.DecodePixelHeight = 275;
-							await image.SetSourceAsync(stream);
-							if (image.PixelHeight != 0 && image.PixelWidth != 0)
-								if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-									Thumbnail.Stretch = Stretch.Uniform;
-							Thumbnail.Source = image;
-						}
-						else
-						{
-							ViewModel.MissingImage = true;
-						}
-					}
-					else
-					{
-						ViewModel.SearchImage = true;
-					}
+					var image = new BitmapImage();
+					image.DecodePixelHeight = 275;
+					image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(first), image);
+					if (image.PixelHeight != 0 && image.PixelWidth != 0)
+						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+							Thumbnail.Stretch = Stretch.Uniform;
+					Thumbnail.Source = image;
+
+					if (image == null)
+						ViewModel.MissingImage = true;
 				}
+				else
+				{
+					ViewModel.SearchImage = true;
+				}
+
 				Ring.IsActive = false;
 				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
 				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml.Media.Imaging;
@@ -29,21 +30,5 @@ namespace LRReader.UWP.Internal
 			return await Launcher.LaunchUriAsync(uri);
 		}
 
-		public static async Task<BitmapImage> ByteToBitmap(byte[] bytes, BitmapImage image = null)
-		{
-			if (bytes == null)
-				return null;
-			if (bytes.Length == 0)
-				return null;
-			using (var stream = new InMemoryRandomAccessStream())
-			{
-				await stream.WriteAsync(bytes.AsBuffer());
-				stream.Seek(0);
-				if (image == null)
-					image = new BitmapImage();
-				await image.SetSourceAsync(stream);
-				return image;
-			}
-		}
 	}
 }
