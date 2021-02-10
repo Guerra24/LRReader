@@ -55,6 +55,7 @@ namespace LRReader.UWP.Views.Items
 				if (first != null)
 				{
 					var image = new BitmapImage();
+					image.DecodePixelType = DecodePixelType.Logical;
 					image.DecodePixelHeight = 275;
 					image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(first), image);
 					if (image.PixelHeight != 0 && image.PixelWidth != 0)

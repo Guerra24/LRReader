@@ -165,6 +165,9 @@
     <Compile Include="Views\Dialogs\ServerProfileDialog.xaml.cs">
       <DependentUpon>ServerProfileDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\MarkdownDialog.xaml.cs">
+      <DependentUpon>MarkdownDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\ArchiveImage.xaml.cs">
       <DependentUpon>ArchiveImage.xaml</DependentUpon>
     </Compile>
@@ -364,6 +367,10 @@
     <Page Include="Views\Dialogs\ServerProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\MarkdownDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Items\ArchiveImage.xaml">
       <Generator>MSBuild:Compile</Generator>

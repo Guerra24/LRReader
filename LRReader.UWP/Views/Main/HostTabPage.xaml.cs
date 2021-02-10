@@ -2,11 +2,13 @@
 using LRReader.Internal;
 using LRReader.UWP.Internal;
 using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.ViewManagement;
@@ -69,6 +71,9 @@ namespace LRReader.UWP.Views.Main
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
 				ShowNotification(lang.GetString("HostTab/Update1") + " " + info.name, lang.GetString("HostTab/Update2"), 0);
+#if !SIDELOAD
+			await ShowWhatsNew();
+#endif
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -181,6 +186,19 @@ namespace LRReader.UWP.Views.Main
 			{
 				AppView.TryEnterFullScreenMode();
 			}
+		}
+
+		private async Task ShowWhatsNew()
+		{
+			var version = Version.Parse(Global.SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
+			if (version >= Util.GetAppVersion())
+				return;
+			var result = await Global.UpdatesManager.GetChangelog(Util.GetAppVersion());
+			if (result == null)
+				return;
+			Global.SettingsStorage.StoreObjectLocal("_version", Util.GetAppVersion().ToString());
+			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), result);
+			await dialog.ShowAsync();
 		}
 
 	}

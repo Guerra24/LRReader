@@ -51,6 +51,27 @@ namespace LRReader.Shared.Internal
 			return null;
 		}
 
+		public async Task<string> GetChangelog(Version current)
+		{
+			var rq = new RestRequest("lrr/upgrade/latest");
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			var result = await LRRApi.GetResult<ReleaseInfo>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				return null;
+			}
+			if (result.OK)
+			{
+				var info = result.Data;
+				if (info.version == current)
+					return result.Data.body;
+			}
+			return null;
+		}
+
 		public async Task UpdateSupportedRange(Version current)
 		{
 			var rq = new RestRequest("lrr/compat");

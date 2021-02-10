@@ -144,6 +144,9 @@
   <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
     <value>Bienvenido</value>
   </data>
+  <data name="HostTab.ChangelogTitle" xml:space="preserve">
+    <value>Notas de versión</value>
+  </data>
   <data name="HostTab.Update1" xml:space="preserve">
     <value>¡Nueva actualización disponible!</value>
   </data>
