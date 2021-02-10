@@ -80,11 +80,11 @@ namespace LRReader.UWP.ViewModels
 			RefreshOnErrorButton = false;
 			LoadingCategories = true;
 			CategoriesList.Clear();
-			if (SharedGlobal.SettingsManager.Profile.HasApiKey)
-				CategoriesList.Add(new AddNewCategory());
 			var result = await CategoriesProvider.GetCategories();
 			if (result != null)
 			{
+				if (SharedGlobal.SettingsManager.Profile.HasApiKey)
+					CategoriesList.Add(new AddNewCategory());
 				await Task.Run(async () =>
 				{
 					foreach (var a in result.OrderBy(c => !c.pinned))

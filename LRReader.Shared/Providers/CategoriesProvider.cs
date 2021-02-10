@@ -43,7 +43,7 @@ namespace LRReader.Shared.Providers
 			var rq = new RestRequest("api/categories", Method.PUT);
 			rq.AddQueryParameter("name", name);
 			rq.AddQueryParameter("search", search);
-			rq.AddQueryParameter("pinned", pinned.ToString().ToLower());
+			rq.AddQueryParameter("pinned", (pinned ? 1 : 0).ToString());
 
 			var r = await client.ExecuteAsync(rq);
 

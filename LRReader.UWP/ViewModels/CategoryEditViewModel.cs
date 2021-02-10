@@ -42,7 +42,7 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task SaveCategory()
 		{
-			var result = await CategoriesProvider.UpdateCategory(Category.id, Category.name, Category.search, Category.pinned);
+			var result = await CategoriesProvider.UpdateCategory(Category.id, Name, Search, Pinned);
 			if (result)
 			{
 				Category.name = Name;
