@@ -10,6 +10,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	Header="{x:Bind TabContent.ViewModel.Name, Mode=OneWay}"
 	Loaded="TabViewItem_Loaded"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>

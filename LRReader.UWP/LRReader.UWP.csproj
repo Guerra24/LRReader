@@ -147,6 +147,7 @@
     <Compile Include="ViewModels\Base\CategoryBaseViewModel.cs" />
     <Compile Include="ViewModels\BookmarksTabViewModel.cs" />
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
+    <Compile Include="ViewModels\CategoryArchiveViewModel.cs" />
     <Compile Include="ViewModels\CategoryEditViewModel.cs" />
     <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
     <Compile Include="ViewModels\HostTabPageViewModel.cs" />
@@ -158,6 +159,9 @@
     <Compile Include="ViewModels\WebTabViewModel.cs" />
     <Compile Include="Views\Controls\ArchiveTags.xaml.cs">
       <DependentUpon>ArchiveTags.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
+      <DependentUpon>CategoryArchive.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CreateCategory.xaml.cs">
       <DependentUpon>CreateCategory.xaml</DependentUpon>
@@ -324,6 +328,7 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <None Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -333,7 +338,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.11</Version>
+      <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>6.1.1</Version>
@@ -357,6 +362,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\ArchiveTags.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\CategoryArchive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,31 @@
+﻿<ContentDialog
+	x:Class="LRReader.UWP.Views.Dialogs.CategoryArchive"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.UWP.Views.Dialogs"
+	xmlns:main="using:LRReader.Shared.Models.Main"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title="Categories"
+	Loaded="ContentDialog_Loaded"
+	PrimaryButtonText="Done"
+	mc:Ignorable="d">
+
+	<StackPanel>
+		<AutoSuggestBox
+			Margin="0,0,0,5" PlaceholderText="Search..." QueryIcon="Find"
+			TextChanged="AutoSuggestBox_TextChanged" />
+		<ScrollViewer>
+			<ListView
+				x:Name="CategoriesList"
+				ItemsSource="{x:Bind Data.Categories}"
+				SelectionChanged="CategoriesList_SelectionChanged" SelectionMode="Multiple">
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="main:Category">
+						<TextBlock Text="{x:Bind name}" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</ScrollViewer>
+	</StackPanel>
+</ContentDialog>

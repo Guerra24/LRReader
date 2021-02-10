@@ -3,6 +3,7 @@ using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -426,6 +427,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void EditButton_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new ArchiveEditTab(Data.Archive));
 
+		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new CategoryArchive(Data.Archive.arcid);
+			await dialog.ShowAsync();
+		}
+
 		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.Downloading = true;
@@ -508,5 +515,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			return target;
 		}
+
 	}
 }

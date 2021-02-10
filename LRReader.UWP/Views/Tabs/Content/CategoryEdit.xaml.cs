@@ -20,7 +20,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 	public sealed partial class CategoryEdit : UserControl
 	{
 
-		private CategoryEditViewModel ViewModel;
+		public CategoryEditViewModel ViewModel;
 
 		public CategoryEdit()
 		{

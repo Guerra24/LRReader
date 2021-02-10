@@ -48,6 +48,7 @@ namespace LRReader.UWP.ViewModels
 				Category.name = Name;
 				Category.search = Search;
 				Category.pinned = Pinned;
+				RaisePropertyChanged("Name");
 			}
 		}
 	}
