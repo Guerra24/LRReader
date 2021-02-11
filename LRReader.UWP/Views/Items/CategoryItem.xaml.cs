@@ -58,13 +58,15 @@ namespace LRReader.UWP.Views.Items
 					image.DecodePixelType = DecodePixelType.Logical;
 					image.DecodePixelHeight = 275;
 					image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(first), image);
-					if (image.PixelHeight != 0 && image.PixelWidth != 0)
-						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-							Thumbnail.Stretch = Stretch.Uniform;
-					Thumbnail.Source = image;
-
 					if (image == null)
 						ViewModel.MissingImage = true;
+					else
+					{
+						if (image.PixelHeight != 0 && image.PixelWidth != 0)
+							if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+								Thumbnail.Stretch = Stretch.Uniform;
+						Thumbnail.Source = image;
+					}
 				}
 				else
 				{

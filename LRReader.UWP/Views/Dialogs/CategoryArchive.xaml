@@ -6,7 +6,6 @@
 	xmlns:local="using:LRReader.UWP.Views.Dialogs"
 	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Title="Categories"
 	Loaded="ContentDialog_Loaded"
 	PrimaryButtonText="Done"
 	mc:Ignorable="d">

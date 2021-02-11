@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using LRReader.UWP.Views.Dialogs;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -55,13 +56,16 @@ namespace LRReader.UWP.Views.Items
 				image.DecodePixelType = DecodePixelType.Logical;
 				image.DecodePixelHeight = 275;
 				image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid), image);
-				if (image.PixelHeight != 0 && image.PixelWidth != 0)
-					if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-						Thumbnail.Stretch = Stretch.Uniform;
-				Thumbnail.Source = image;
 
 				if (image == null)
 					ViewModel.MissingImage = true;
+				else
+				{
+					if (image.PixelHeight != 0 && image.PixelWidth != 0)
+						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+							Thumbnail.Stretch = Stretch.Uniform;
+					Thumbnail.Source = image;
+				}
 
 				Ring.IsActive = false;
 				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
@@ -166,6 +170,12 @@ namespace LRReader.UWP.Views.Items
 					Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
 				}
 			}
+		}
+
+		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new CategoryArchive(ViewModel.Archive.arcid, ViewModel.Archive.title);
+			await dialog.ShowAsync();
 		}
 	}
 }

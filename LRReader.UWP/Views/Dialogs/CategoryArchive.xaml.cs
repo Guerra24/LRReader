@@ -23,9 +23,10 @@ namespace LRReader.UWP.Views.Dialogs
 		private CategoryArchiveViewModel Data;
 		private bool _searching;
 
-		public CategoryArchive(string archiveID)
+		public CategoryArchive(string archiveID, string title)
 		{
 			this.InitializeComponent();
+			Title = title;
 			Data = new CategoryArchiveViewModel(archiveID);
 			Data.SelectedCategories = CategoriesList.SelectedItems;
 		}

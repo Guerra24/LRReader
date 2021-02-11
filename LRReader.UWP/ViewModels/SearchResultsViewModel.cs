@@ -174,6 +174,8 @@ namespace LRReader.UWP.ViewModels
 				{
 					foreach (var a in resultPage.data)
 					{
+						if (!CustomArchiveCheck(a))
+							continue;
 						var archive = SharedGlobal.ArchivesManager.Archives.FirstOrDefault(b => b.arcid == a.arcid);
 						await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}
@@ -186,5 +188,7 @@ namespace LRReader.UWP.ViewModels
 			_internalLoadingArchives = false;
 			ControlsEnabled = true;
 		}
+
+		protected virtual bool CustomArchiveCheck(Archive archive) => true;
 	}
 }

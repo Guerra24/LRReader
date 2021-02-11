@@ -429,7 +429,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
 		{
-			var dialog = new CategoryArchive(Data.Archive.arcid);
+			var dialog = new CategoryArchive(Data.Archive.arcid, "Categories");
 			await dialog.ShowAsync();
 		}
 
