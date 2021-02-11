@@ -26,7 +26,6 @@
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxLogTelemetryFromSideloadingScript>False</AppxLogTelemetryFromSideloadingScript>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <PackageCertificateThumbprint>3C5876C281F89798F0E7F012CF2FA9642104DB74</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
@@ -159,6 +158,9 @@
     <Compile Include="ViewModels\WebTabViewModel.cs" />
     <Compile Include="Views\Controls\ArchiveTags.xaml.cs">
       <DependentUpon>ArchiveTags.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ArchiveList.xaml.cs">
+      <DependentUpon>ArchiveList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
@@ -367,6 +369,10 @@
     <Page Include="Views\Controls\ArchiveTags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ArchiveList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\CategoryArchive.xaml">
       <SubType>Designer</SubType>
