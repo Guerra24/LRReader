@@ -206,9 +206,9 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(SelectionModeProperty, value);
 		}
 
-		public event DragItemsStartingEventHandler DragItemsStarting;
-		public new event DragEventHandler DragOver;
-		public new event DragEventHandler Drop;
+		public event DragItemsStartingEventHandler DragItemsStarting = new DragItemsStartingEventHandler((a, b) => { });
+		public new event DragEventHandler DragOver = new DragEventHandler((a, b) => { });
+		public new event DragEventHandler Drop = new DragEventHandler((a, b) => { });
 
 		public DragItemsStartingEventHandler DragItemsStartingI => DragItemsStarting;
 		public DragEventHandler DragOverI => DragOver;
@@ -220,16 +220,10 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ItemDataTemplateProperty, value);
 		}
 
-		public static readonly DependencyProperty RandomVisibleProperty = DependencyProperty.RegisterAttached("RandomVisible", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
-		public static new readonly DependencyProperty AllowDropProperty = DependencyProperty.RegisterAttached("AllowDrop", typeof(bool), typeof(ArchiveList), new PropertyMetadata(false));
-		public static readonly DependencyProperty CanDragItemsProperty = DependencyProperty.RegisterAttached("CanDragItems", typeof(bool), typeof(ArchiveList), new PropertyMetadata(false));
-		public static readonly DependencyProperty ItemClickEnabledProperty = DependencyProperty.RegisterAttached("ItemClickEnabled", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
-		public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.RegisterAttached("SelectionMode", typeof(ListViewSelectionMode), typeof(ArchiveList), new PropertyMetadata(ListViewSelectionMode.None));
-		public static readonly DependencyProperty DragItemsStartingProperty = DependencyProperty.RegisterAttached("DragItemsStarting", typeof(DragItemsStartingEventHandler), typeof(ArchiveList), new PropertyMetadata(null));
-
-		public static readonly DependencyProperty DragOverProperty = DependencyProperty.RegisterAttached("DragOver", typeof(DragEventHandler), typeof(ArchiveList), new PropertyMetadata(null));
-		public static readonly DependencyProperty DropProperty = DependencyProperty.RegisterAttached("Drop", typeof(DragEventHandler), typeof(ArchiveList), new PropertyMetadata(null));
-
-		public static readonly DependencyProperty ItemDataTemplateProperty = DependencyProperty.RegisterAttached("ItemDataTemplate", typeof(DataTemplate), typeof(ArchiveList), new PropertyMetadata(null));
+		public static readonly DependencyProperty RandomVisibleProperty = DependencyProperty.Register("RandomVisible", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
+		public static readonly DependencyProperty CanDragItemsProperty = DependencyProperty.Register("CanDragItems", typeof(bool), typeof(ArchiveList), new PropertyMetadata(false));
+		public static readonly DependencyProperty ItemClickEnabledProperty = DependencyProperty.Register("ItemClickEnabled", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
+		public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(ListViewSelectionMode), typeof(ArchiveList), new PropertyMetadata(ListViewSelectionMode.None));
+		public static readonly DependencyProperty ItemDataTemplateProperty = DependencyProperty.Register("ItemDataTemplate", typeof(DataTemplate), typeof(ArchiveList), new PropertyMetadata(null));
 	}
 }

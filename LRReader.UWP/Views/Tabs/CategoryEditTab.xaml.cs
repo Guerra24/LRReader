@@ -15,6 +15,7 @@ namespace LRReader.UWP.Views.Tabs
 			this.InitializeComponent();
 			this.category = category;
 			CustomTabId = "Edit_" + category.id;
+			TabContent.SetCategoryInternal(category);
 		}
 
 		private void TabViewItem_Loaded(object sender, RoutedEventArgs e)

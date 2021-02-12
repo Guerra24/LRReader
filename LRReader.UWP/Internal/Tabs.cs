@@ -26,7 +26,7 @@ namespace LRReader.Internal
 		{
 		}
 
-		public static readonly DependencyProperty CustomTabControlProperty = DependencyProperty.RegisterAttached("CustomTabControl", typeof(object), typeof(CustomTab), new PropertyMetadata(null));
-		public static readonly DependencyProperty CustomTabIdProperty = DependencyProperty.RegisterAttached("CustomTabId", typeof(string), typeof(CustomTab), new PropertyMetadata(""));
+		public static readonly DependencyProperty CustomTabControlProperty = DependencyProperty.Register("CustomTabControl", typeof(object), typeof(CustomTab), new PropertyMetadata(null));
+		public static readonly DependencyProperty CustomTabIdProperty = DependencyProperty.Register("CustomTabId", typeof(string), typeof(CustomTab), new PropertyMetadata(""));
 	}
 }

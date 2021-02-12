@@ -25,7 +25,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		protected override bool CustomArchiveCheck(Archive archive)
 		{
-			return !category.archives.Contains(archive.arcid);
+			if (category != null)
+				return !category.archives.Contains(archive.arcid);
+			else
+				return true;
 		}
 	}
 
@@ -41,6 +44,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ViewModel = new CategoryEditViewModel();
 			ArchiveList.Data = Data = new CustomSearchViewModel();
 		}
+
+		internal void SetCategoryInternal(Category category) => Data.category = category;
 
 		public async void LoadCategory(Category category)
 		{

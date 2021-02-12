@@ -31,8 +31,7 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ItemsSourceProperty, value);
 		}
 
-		public static readonly DependencyProperty ItemClickProperty = DependencyProperty.RegisterAttached("ItemClick", typeof(ItemClickEventHandler), typeof(ArchiveTags), new PropertyMetadata(null));
-		public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.RegisterAttached("ItemsSource", typeof(ICollection<ArchiveTagsGroup>), typeof(ArchiveTags), new PropertyMetadata(new List<ArchiveTagsGroup>()));
+		public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<ArchiveTagsGroup>), typeof(ArchiveTags), new PropertyMetadata(new List<ArchiveTagsGroup>()));
 
 	}
 }
