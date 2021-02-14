@@ -23,6 +23,9 @@
 			<ColumnDefinition Width="220" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
+		<Grid.KeyboardAccelerators>
+			<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+		</Grid.KeyboardAccelerators>
 		<StackPanel Padding="10">
 			<TextBox
 				Margin="0,0,0,10" PlaceholderText="Category Name"
@@ -82,8 +85,8 @@
 			<controls1:ArchiveList
 				x:Name="ArchiveList" Grid.Column="2" AllowDrop="True"
 				CanDragItems="True" DragItemsStarting="ArchivesGrid_DragItemsStarting" DragOver="ArchivesGrid_DragOver"
-				Drop="ArchivesGrid_Drop" ItemClickEnabled="False" RandomVisible="False"
-				SelectionMode="Extended">
+				Drop="ArchivesGrid_Drop" HandleF5="False" ItemClickEnabled="False"
+				RandomVisible="False" SelectionMode="Extended">
 				<controls1:ArchiveList.ItemDataTemplate>
 					<DataTemplate>
 						<items:CategoryEditArchive />

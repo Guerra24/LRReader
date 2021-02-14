@@ -95,7 +95,7 @@ namespace LRReader.UWP.Views.Controls
 			var random = new Random();
 			var list = Global.ArchivesManager.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
-			Global.EventManager.AddTab(new ArchiveTab(item));
+			Global.EventManager.AddTab(new ArchiveTab(item.Value));
 		}
 
 		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();
@@ -220,10 +220,17 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ItemDataTemplateProperty, value);
 		}
 
+		public bool HandleF5
+		{
+			get => (bool)GetValue(HandleF5Property);
+			set => SetValue(HandleF5Property, value);
+		}
+
 		public static readonly DependencyProperty RandomVisibleProperty = DependencyProperty.Register("RandomVisible", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
 		public static readonly DependencyProperty CanDragItemsProperty = DependencyProperty.Register("CanDragItems", typeof(bool), typeof(ArchiveList), new PropertyMetadata(false));
 		public static readonly DependencyProperty ItemClickEnabledProperty = DependencyProperty.Register("ItemClickEnabled", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
 		public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(ListViewSelectionMode), typeof(ArchiveList), new PropertyMetadata(ListViewSelectionMode.None));
 		public static readonly DependencyProperty ItemDataTemplateProperty = DependencyProperty.Register("ItemDataTemplate", typeof(DataTemplate), typeof(ArchiveList), new PropertyMetadata(null));
+		public static readonly DependencyProperty HandleF5Property = DependencyProperty.Register("HandleF5", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
 	}
 }

@@ -22,6 +22,8 @@ namespace LRReader.Shared.Models.Main
 		[JsonConverter(typeof(BoolConverter))]
 		public bool server_resizes_images { get; set; }
 		public int cache_last_cleared { get; set; }
+		public string version_desc { get; set; }
+		public int total_pages_read { get; set; }
 
 		[JsonIgnore]
 		public bool _unauthorized;

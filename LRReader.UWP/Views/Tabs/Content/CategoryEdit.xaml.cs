@@ -47,10 +47,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		internal void SetCategoryInternal(Category category) => Data.category = category;
 
-		public async void LoadCategory(Category category)
+		public void LoadCategory(Category category)
 		{
-			await ViewModel.LoadCategory(category.id);
-			Data.category = ViewModel.Category;
+			ViewModel.LoadCategory(category);
+			Data.category = ViewModel.category;
+		}
+
+		public async Task Refesh() => await ViewModel.Refresh();
+
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			await ViewModel.Refresh();
+			await Data.ReloadSearch();
+			args.Handled = true;
 		}
 
 		private void CategoryName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -121,5 +130,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (e.Items.Any())
 				e.Data.Properties.Add("archivesRemove", JsonConvert.SerializeObject(e.Items.ToList()));
 		}
+
 	}
 }

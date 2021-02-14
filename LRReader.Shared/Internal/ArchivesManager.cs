@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
@@ -10,7 +10,7 @@ namespace LRReader.Shared.Internal
 {
 	public class ArchivesManager
 	{
-		public List<Archive> Archives = new List<Archive>();
+		public Dictionary<string, Archive> Archives = new Dictionary<string, Archive>();
 		public List<TagStats> TagStats = new List<TagStats>();
 		public List<string> Namespaces = new List<string>();
 
@@ -22,53 +22,60 @@ namespace LRReader.Shared.Internal
 			TagStats.Clear();
 			Namespaces.Clear();
 
+			{
+				var index = TemporaryFolder + "/Index.json";
+				if (FilesStorage.ExistFile(index))
+					FilesStorage.DeleteFile(index);
+			}
+
 			var serverInfo = await ServerProvider.GetServerInfo();
 
-			if (serverInfo.version >= new Version(0, 7, 3))
-			{
-				var currentTimestamp = SharedGlobal.SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
+			var currentTimestamp = SharedGlobal.SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
 
-				if (currentTimestamp != serverInfo.cache_last_cleared)
-				{
-					SharedGlobal.SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
-					await Update();
-				}
-				else
-				{
-					var index = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Index.json");
-					var tags = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
-					var namespaces = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Namespaces.json");
-					Archives = JsonConvert.DeserializeObject<List<Archive>>(await index);
-					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
-					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
-				}
+			if (currentTimestamp != serverInfo.cache_last_cleared)
+			{
+				SharedGlobal.SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
+				await Update();
 			}
 			else
 			{
-				await Update();
+				var index = FilesStorage.GetFile(TemporaryFolder + "/Index-v2.json");
+				var tags = FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
+				var namespaces = FilesStorage.GetFile(TemporaryFolder + "/Namespaces.json");
+				Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
+				TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
+				Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
 			}
+
 		}
 
 		private async Task Update()
 		{
-			var resultA = await ArchivesProvider.GetArchives();
+			var resultA = (await ArchivesProvider.GetArchives()).ToDictionary(c => c.arcid, c => c);
 			if (resultA != null)
 			{
-				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Index.json", JsonConvert.SerializeObject(resultA));
+				await FilesStorage.StoreFile(TemporaryFolder + "/Index-v2.json", JsonConvert.SerializeObject(resultA));
 				Archives = resultA;
 			}
 			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
 			{
-				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Tags.json", JsonConvert.SerializeObject(resultT));
+				await FilesStorage.StoreFile(TemporaryFolder + "/Tags.json", JsonConvert.SerializeObject(resultT));
 				foreach (var t in resultT)
 				{
 					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 						Namespaces.Add(t.@namespace);
 					TagStats.Add(t);
 				}
-				await SharedGlobal.FilesStorage.StoreFile(TemporaryFolder + "/Namespaces.json", JsonConvert.SerializeObject(Namespaces));
+				await FilesStorage.StoreFile(TemporaryFolder + "/Namespaces.json", JsonConvert.SerializeObject(Namespaces));
 			}
+		}
+
+		public Archive GetArchive(string id)
+		{
+			if (Archives.TryGetValue(id, out Archive archive))
+				return archive;
+			return null;
 		}
 
 	}

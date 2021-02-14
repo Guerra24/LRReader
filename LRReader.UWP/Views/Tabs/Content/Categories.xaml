@@ -17,7 +17,7 @@
 			<items:CategoryItem />
 		</DataTemplate>
 		<DataTemplate x:Key="AddNewCategoryTemplate" x:DataType="main:AddNewCategory">
-			<Grid Width="200" Height="304" Background="{ThemeResource BrushItemGridBackground}">
+			<Grid Width="196" Height="297" Background="{ThemeResource BrushItemGridBackground}">
 				<SymbolIcon Symbol="Add" />
 			</Grid>
 		</DataTemplate>

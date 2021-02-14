@@ -1,15 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
+using LRReader.Shared.Internal;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Internal;
-using LRReader.UWP.Views.Tabs;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.Shared.Providers;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -176,7 +173,7 @@ namespace LRReader.UWP.ViewModels
 					{
 						if (!CustomArchiveCheck(a))
 							continue;
-						var archive = SharedGlobal.ArchivesManager.Archives.FirstOrDefault(b => b.arcid == a.arcid);
+						var archive = SharedGlobal.ArchivesManager.GetArchive(a.arcid);
 						await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});

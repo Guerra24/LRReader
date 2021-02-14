@@ -1,14 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Threading;
 using LRReader.Shared.Models.Main;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static LRReader.Shared.Internal.SharedGlobal;
-using LRReader.UWP.Views.Tabs;
-using GalaSoft.MvvmLight.Threading;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -57,7 +53,7 @@ namespace LRReader.UWP.ViewModels
 				{
 					foreach (var b in SettingsManager.Profile.Bookmarks)
 					{
-						var archive = ArchivesManager.Archives.FirstOrDefault(a => a.arcid == b.archiveID);
+						var archive = ArchivesManager.GetArchive(b.archiveID);
 						if (archive != null)
 							await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}

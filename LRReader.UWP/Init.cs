@@ -10,7 +10,7 @@ namespace LRReader.UWP
 		public static void InitObjects()
 		{
 			SharedGlobal.SettingsStorage = new SettingsStorage();
-			SharedGlobal.FilesStorage = new FilesStorage();
+			FilesStorage.SetProvider(new UWPFilesStorage());
 			ArchivesManager.TemporaryFolder = ApplicationData.Current.TemporaryFolder.Path;
 			Global.Init(); // Init global static data
 		}

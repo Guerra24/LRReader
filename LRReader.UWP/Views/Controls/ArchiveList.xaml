@@ -128,7 +128,7 @@
 					</StackPanel>
 				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
-					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind HandleF5, Mode=OneWay}" />
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemsPanel>
 					<ItemsPanelTemplate>

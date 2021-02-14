@@ -178,6 +178,33 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
+		public static async Task<Category> GetCategory(string id)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/categories/{id}");
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			var result = await LRRApi.GetResult<Category>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return null;
+			}
+			if (result.OK)
+			{
+				return result.Data;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
+			}
+		}
+
 	}
 
 	public class CategoryCreatedApiResult : GenericApiResult

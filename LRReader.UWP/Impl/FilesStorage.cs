@@ -4,16 +4,16 @@ using System.Threading.Tasks;
 
 namespace LRReader.UWP.Impl
 {
-	public class FilesStorage : IFilesStorage
+	public class UWPFilesStorage : IFilesStorage
 	{
-		public Task<string> GetFile(string path)
-		{
-			return File.ReadAllTextAsync(path);
-		}
 
-		public Task StoreFile(string path, string content)
-		{
-			return File.WriteAllTextAsync(path, content);
-		}
+		public Task<string> GetFile(string path) => File.ReadAllTextAsync(path);
+
+		public Task StoreFile(string path, string content) => File.WriteAllTextAsync(path, content);
+
+		public void DeleteFile(string path) => File.Delete(path);
+
+		public bool ExistFile(string path) => File.Exists(path);
+
 	}
 }

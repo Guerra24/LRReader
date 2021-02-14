@@ -5,6 +5,7 @@ using LRReader.UWP.Internal;
 using LRReader.UWP.ViewModels;
 using Microsoft.Toolkit.Extensions;
 using System;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
@@ -69,8 +70,9 @@ namespace LRReader.UWP.Views.Main
 			}
 
 			ViewModel.Active = true;
+#if !DEBUG
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
-
+#endif
 			SharedGlobal.LRRApi.RefreshSettings(SharedGlobal.SettingsManager.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
@@ -129,6 +131,9 @@ namespace LRReader.UWP.Views.Main
 
 		private async Task DownloadUpdateStore()
 		{
+			if (!NetworkInterface.GetIsNetworkAvailable())
+				return;
+
 			var context = StoreContext.GetDefault();
 
 			var packageUpdates = await context.GetAppAndOptionalStorePackageUpdatesAsync();

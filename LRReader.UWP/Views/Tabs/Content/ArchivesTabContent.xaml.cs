@@ -99,7 +99,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var random = new Random();
 			var list = Global.ArchivesManager.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
-			Global.EventManager.AddTab(new ArchiveTab(item));
+			Global.EventManager.AddTab(new ArchiveTab(item.Value));
 		}
 
 		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();

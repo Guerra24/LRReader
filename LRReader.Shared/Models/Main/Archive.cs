@@ -14,6 +14,8 @@ namespace LRReader.Shared.Models.Main
 		public string isnew { get; set; }
 		public string tags { get; set; }
 		public string title { get; set; }
+		public int pagecount { get; set; }
+		public int progress { get; set; }
 		[JsonIgnore]
 		public string TagsClean { get; set; }
 		[JsonIgnore]
