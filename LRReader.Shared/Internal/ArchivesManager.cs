@@ -35,12 +35,19 @@ namespace LRReader.Shared.Internal
 				}
 				else
 				{
-					var index = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Index.json");
-					var tags = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
-					var namespaces = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Namespaces.json");
-					Archives = JsonConvert.DeserializeObject<List<Archive>>(await index);
-					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
-					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
+					try
+					{
+						var index = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Index.json");
+						var tags = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
+						var namespaces = SharedGlobal.FilesStorage.GetFile(TemporaryFolder + "/Namespaces.json");
+						Archives = JsonConvert.DeserializeObject<List<Archive>>(await index);
+						TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
+						Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
+					}
+					catch (Exception)
+					{
+						await Update();
+					}
 				}
 			}
 			else
