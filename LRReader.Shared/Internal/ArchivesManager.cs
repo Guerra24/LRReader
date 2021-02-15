@@ -21,11 +21,7 @@ namespace LRReader.Shared.Internal
 			Archives.Clear();
 			TagStats.Clear();
 			Namespaces.Clear();
-			{
-				var index = TemporaryFolder + "/Index.json";
-				if (FilesStorage.ExistFile(index))
-					FilesStorage.DeleteFile(index);
-			}
+
 			var serverInfo = await ServerProvider.GetServerInfo();
 			var currentTimestamp = SharedGlobal.SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
 			if (currentTimestamp != serverInfo.cache_last_cleared)
@@ -38,8 +34,8 @@ namespace LRReader.Shared.Internal
 				try
 				{
 					var index = FilesStorage.GetFile(TemporaryFolder + "/Index-v2.json");
-					var tags = FilesStorage.GetFile(TemporaryFolder + "/Tags.json");
-					var namespaces = FilesStorage.GetFile(TemporaryFolder + "/Namespaces.json");
+					var tags = FilesStorage.GetFile(TemporaryFolder + "/Tags-v1.json");
+					var namespaces = FilesStorage.GetFile(TemporaryFolder + "/Namespaces-v1.json");
 					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
@@ -62,14 +58,14 @@ namespace LRReader.Shared.Internal
 			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
 			{
-				await FilesStorage.StoreFile(TemporaryFolder + "/Tags.json", JsonConvert.SerializeObject(resultT));
+				await FilesStorage.StoreFile(TemporaryFolder + "/Tags-v1.json", JsonConvert.SerializeObject(resultT));
 				foreach (var t in resultT)
 				{
 					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 						Namespaces.Add(t.@namespace);
 					TagStats.Add(t);
 				}
-				await FilesStorage.StoreFile(TemporaryFolder + "/Namespaces.json", JsonConvert.SerializeObject(Namespaces));
+				await FilesStorage.StoreFile(TemporaryFolder + "/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
 			}
 		}
 

@@ -30,6 +30,8 @@ namespace LRReader.UWP.ViewModels
 
 		public ObservableCollection<Archive> CategoryArchives = new ObservableCollection<Archive>();
 
+		private bool _loading;
+
 		public void LoadCategory(Category cat)
 		{
 			category = cat;
@@ -49,6 +51,9 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task Refresh()
 		{
+			if (_loading)
+				return;
+			_loading = true;
 			CategoryArchives.Clear();
 			if (SharedGlobal.ControlFlags.CategoriesV2)
 			{
@@ -85,6 +90,7 @@ namespace LRReader.UWP.ViewModels
 				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
 				CategoryArchives.Add(archive);
 			}
+			_loading = false;
 		}
 
 		public async Task SaveCategory()

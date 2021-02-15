@@ -168,6 +168,9 @@
     <Compile Include="Views\Dialogs\CreateCategory.xaml.cs">
       <DependentUpon>CreateCategory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\ProgressConflict.xaml.cs">
+      <DependentUpon>ProgressConflict.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\ServerProfileDialog.xaml.cs">
       <DependentUpon>ServerProfileDialog.xaml</DependentUpon>
     </Compile>
@@ -381,6 +384,10 @@
     <Page Include="Views\Dialogs\CreateCategory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ProgressConflict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ServerProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

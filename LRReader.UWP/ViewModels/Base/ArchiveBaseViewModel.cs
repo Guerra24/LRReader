@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
@@ -127,8 +128,12 @@ namespace LRReader.UWP.ViewModels.Base
 		{
 			get
 			{
+				int pages = _pages;
 				if (Bookmarked)
-					return BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
+					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
+				if (Global.ControlFlags.ServerSideProgress && pages == 0)
+					pages = Archive.pagecount;
+				_pages = pages;
 				return _pages;
 			}
 			set
@@ -165,6 +170,27 @@ namespace LRReader.UWP.ViewModels.Base
 		}
 
 		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
+
+		public async Task LoadArchive()
+		{
+			var result = await ArchivesProvider.GetArchive(Archive.arcid);
+			if (result != null)
+			{
+				Archive.title = result.title;
+				Archive.tags = result.tags;
+				Archive.pagecount = result.pagecount;
+				Archive.progress = result.progress;
+				Archive.UpdateTags();
+				RaisePropertyChanged("Archive");
+			}
+		}
+
+		public async Task SetProgress(int progress)
+		{
+			var result = await ArchivesProvider.UpdateProgress(Archive.arcid, progress);
+			if (result)
+				Archive.progress = progress;
+		}
 
 		public async Task<DownloadPayload> DownloadArchive()
 		{

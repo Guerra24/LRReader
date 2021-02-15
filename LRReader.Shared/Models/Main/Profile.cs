@@ -61,4 +61,9 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public bool Bookmarked => totalPages >= 0;
 	}
+
+	public enum ConflictMode
+	{
+		Local, Remote
+	}
 }

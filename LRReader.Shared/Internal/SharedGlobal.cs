@@ -20,8 +20,8 @@ namespace LRReader.Shared.Internal
 	public class ControlFlags
 	{
 		public bool CategoriesEnabled = true;
-		public bool CategoriesV2 = true;
-		public bool ServerSideProgress = true;
+		public bool CategoriesV2 = false;
+		public bool ServerSideProgress = false;
 
 		public void Check(ServerInfo serverInfo)
 		{

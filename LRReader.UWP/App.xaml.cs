@@ -37,6 +37,21 @@ namespace LRReader.UWP
 			this.Suspending += OnSuspending;
 		}
 
+		private void UpdateButtonsOnThemeChange(ApplicationTheme theme)
+		{
+			var AppView = ApplicationView.GetForCurrentView();
+			var titleBar = AppView.TitleBar;
+			switch (theme)
+			{
+				case ApplicationTheme.Light:
+					titleBar.ButtonForegroundColor = Colors.Black;
+					break;
+				case ApplicationTheme.Dark:
+					titleBar.ButtonForegroundColor = Colors.White;
+					break;
+			}
+		}
+
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points
 		/// will be used such as when the application is launched to open a specific file.
@@ -66,21 +81,15 @@ namespace LRReader.UWP
 				{
 					var CoreView = CoreApplication.GetCurrentView();
 					var AppView = ApplicationView.GetForCurrentView();
-					CoreApplicationViewTitleBar coreTitleBar = CoreView.TitleBar;
+					var coreTitleBar = CoreView.TitleBar;
 					coreTitleBar.ExtendViewIntoTitleBar = true;
 
-					ApplicationViewTitleBar titleBar = AppView.TitleBar;
+					var titleBar = AppView.TitleBar;
 					titleBar.ButtonBackgroundColor = Colors.Transparent;
 					titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-					switch (RequestedTheme)
-					{
-						case ApplicationTheme.Light:
-							titleBar.ButtonForegroundColor = Colors.Black;
-							break;
-						case ApplicationTheme.Dark:
-							titleBar.ButtonForegroundColor = Colors.White;
-							break;
-					}
+
+					rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
+					UpdateButtonsOnThemeChange(RequestedTheme);
 					rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
 				}
 				Window.Current.Activate();

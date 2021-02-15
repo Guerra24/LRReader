@@ -114,8 +114,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			await Refresh();
 			args.Handled = true;
+			await Refresh();
 		}
 
 		private async void PrevButton_Click(object sender, RoutedEventArgs e) => await Data.PrevPage();

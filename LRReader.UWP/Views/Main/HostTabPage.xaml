@@ -42,6 +42,7 @@
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 					<Grid.Resources>
 						<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button">
@@ -68,8 +69,12 @@
 						</Button>
 					</StackPanel>
 					<Grid x:Name="TitleBar" Grid.Column="1" Background="Transparent" />
+					<Border
+						Grid.Column="2" Width="1" Height="16"
+						Margin="3,0,3,8" VerticalAlignment="Bottom"
+						Background="{ThemeResource TabsSeparator}" />
 					<StackPanel
-						x:Name="TabViewEndHeader" Grid.Column="2" VerticalAlignment="Bottom"
+						x:Name="TabViewEndHeader" Grid.Column="3" VerticalAlignment="Bottom"
 						Orientation="Horizontal">
 						<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}">
 							<ContentControl.ContentTransitions>

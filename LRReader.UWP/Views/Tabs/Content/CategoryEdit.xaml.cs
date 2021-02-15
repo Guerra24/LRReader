@@ -57,9 +57,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
+			args.Handled = true;
 			await ViewModel.Refresh();
 			await Data.ReloadSearch();
-			args.Handled = true;
 		}
 
 		private void CategoryName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)

@@ -27,6 +27,7 @@
 				TintOpacity=".5" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushBorderTooltip" Color="#D1D1D1" />
+			<Color x:Key="TabsSeparator">#505050</Color>
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -53,6 +54,7 @@
 				TintOpacity=".5" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushBorderTooltip" Color="#1C1C1C" />
+			<Color x:Key="TabsSeparator">#C0C0C0</Color>
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

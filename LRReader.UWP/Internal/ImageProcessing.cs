@@ -15,7 +15,7 @@ namespace LRReader.UWP.Internal
 
 		public ImageProcessing()
 		{
-			semaphore = new SemaphoreSlim(Environment.ProcessorCount / 2);
+			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
 		}
 
 		public async Task<BitmapImage> ByteToBitmap(byte[] bytes, BitmapImage image = null, bool transcode = false)

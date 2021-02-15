@@ -113,12 +113,7 @@ namespace LRReader.UWP.ViewModels
 			RaisePropertyChanged("Icon");
 		}
 
-		public async Task LoadImages()
-		{
-			await LoadImages(true);
-		}
-
-		public async Task LoadImages(bool animate)
+		public async Task LoadImages(bool animate = true)
 		{
 			if (_internalLoadingImages)
 				return;
@@ -142,18 +137,6 @@ namespace LRReader.UWP.ViewModels
 			else
 				RefreshOnErrorButton = true;
 			_internalLoadingImages = false;
-		}
-
-		public async Task LoadArchive()
-		{
-			var result = await ArchivesProvider.GetArchive(Archive.arcid);
-			if (result != null)
-			{
-				Archive.title = result.title;
-				Archive.tags = result.tags;
-				Archive.UpdateTags();
-				RaisePropertyChanged("Archive");
-			}
 		}
 
 		public async Task ClearNew()

@@ -34,7 +34,10 @@ namespace LRReader.UWP.Views.Items
 			}
 			var n = args.NewValue as ArchiveImageSet;
 			if (_current.Equals(n.LeftImage + n.RightImage))
+			{
+				Animate();
 				return;
+			}
 			_current = n.LeftImage + n.RightImage;
 			var animTask = ImagesRoot.Fade(value: 0.0f, duration: 80, easingMode: EasingMode.EaseOut).StartAsync();
 			var lImage = SharedGlobal.ImagesManager.GetImageCached(n.LeftImage);
@@ -47,6 +50,11 @@ namespace LRReader.UWP.Views.Items
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
 			LeftImage.Source = await Global.ImageProcessing.ByteToBitmap(await lImage, imageL);
 			RightImage.Source = await Global.ImageProcessing.ByteToBitmap(await rImage, imageR);
+			Animate();
+		}
+
+		private void Animate()
+		{
 			/*var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)
@@ -55,14 +63,14 @@ namespace LRReader.UWP.Views.Items
 				// UWP Image.Source is async, right now the layout hasn't updated yet
 				// which causes animation fade to go black.
 				// Wait around 100ms to update layout.
+				await Task.Delay(100);
 				if (_fixLayout)
 				{
-					await Task.Delay(100);
 					_fixLayout = false;
 				}
 			}
 			else*/
-			ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
+				ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
 			//openLeft?.TryStart(LeftImage);
 			//openRight?.TryStart(RightImage);
 		}

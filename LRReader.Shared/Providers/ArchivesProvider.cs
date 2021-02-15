@@ -220,5 +220,33 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
+		public static async Task<bool> UpdateProgress(string id, int progress)
+		{
+			var client = SharedGlobal.LRRApi.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}/progress/{progress}", Method.PUT);
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddParameter("progress", progress, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteAsync(rq);
+
+			var result = await LRRApi.GetResult<GenericApiResult>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				return false;
+			}
+			if (result.OK)
+			{
+				return result.Data.success;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
+		}
+
 	}
 }

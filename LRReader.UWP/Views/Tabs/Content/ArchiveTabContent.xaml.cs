@@ -62,6 +62,21 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			Data.Archive = archive;
 			await Data.Reload(true);
+			if (Global.ControlFlags.ServerSideProgress && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
+			{
+				var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
+				await conflictDialog.ShowAsync();
+				var result = conflictDialog.Mode;
+				switch (result)
+				{
+					case ConflictMode.Local:
+						await Data.SetProgress(Data.BookmarkProgress + 1);
+						break;
+					case ConflictMode.Remote:
+						Data.BookmarkProgress = Data.Archive.progress - 1;
+						break;
+				}
+			}
 			if (!_opened)
 			{
 				if (Global.SettingsManager.OpenReader)
@@ -173,6 +188,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
 
+			if (Global.ControlFlags.ServerSideProgress)
+				await Data.SetProgress(conv + 1);
 			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
 				if (Data.Archive.IsNewArchive())
@@ -258,14 +275,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 			switch (e.Key)
 			{
 				case VirtualKey.Right:
-					NextPage();
 					e.Handled = true;
+					NextPage();
 					break;
 				case VirtualKey.Left:
-					PrevPage();
 					e.Handled = true;
+					PrevPage();
 					break;
 				case VirtualKey.Up:
+					e.Handled = true;
 					if (Math.Floor(offset) <= 0)
 					{
 						if (Global.SettingsManager.ReadRTL)
@@ -277,10 +295,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 					{
 						ScrollViewer.ChangeView(null, offset - Global.SettingsManager.KeyboardScroll, null, false);
 					}
-					e.Handled = true;
 					break;
 				case VirtualKey.Down:
 				case VirtualKey.Space:
+					e.Handled = true;
 					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
 					{
 						if (Global.SettingsManager.ReadRTL)
@@ -292,7 +310,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 					{
 						ScrollViewer.ChangeView(null, offset + Global.SettingsManager.KeyboardScroll, null, false);
 					}
-					e.Handled = true;
 					break;
 			}
 		}
@@ -324,25 +341,25 @@ namespace LRReader.UWP.Views.Tabs.Content
 					case VirtualKeyModifiers.None:
 						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
 						{
+							e.Handled = true;
 							if (Global.SettingsManager.ReadRTL)
 								PrevPage();
 							else
 								NextPage();
-							e.Handled = true;
 						}
 						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
 						{
+							e.Handled = true;
 							if (Global.SettingsManager.ReadRTL)
 								NextPage();
 							else
 								PrevPage();
-							e.Handled = true;
 						}
 						break;
 					case VirtualKeyModifiers.Control:
+						e.Handled = true;
 						Data.ZoomValue += (int)(delta * 0.1);
 						FitImages();
-						e.Handled = true;
 						break;
 				}
 			}

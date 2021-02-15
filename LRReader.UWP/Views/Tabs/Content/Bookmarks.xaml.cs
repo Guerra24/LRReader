@@ -57,7 +57,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => await Data.Refresh();
+		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			args.Handled = true;
+			await Data.Refresh();
+		}
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
