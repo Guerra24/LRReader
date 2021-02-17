@@ -3,8 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Light">
-			<SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
 			<SolidColorBrush x:Key="BrushText" Color="Black" />
+			<SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
 			<SolidColorBrush x:Key="BrushTextInverted" Color="White" />
 			<SolidColorBrush x:Key="BrushDeepBackground" Color="White" />
 			<Color x:Key="BrushDeepBackgroundColor">White</Color>
@@ -28,6 +28,7 @@
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushBorderTooltip" Color="#D1D1D1" />
 			<Color x:Key="TabsSeparator">#505050</Color>
+			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}"/>
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -55,6 +56,7 @@
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
 			<SolidColorBrush x:Key="BrushBorderTooltip" Color="#1C1C1C" />
 			<Color x:Key="TabsSeparator">#C0C0C0</Color>
+			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}"/>
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

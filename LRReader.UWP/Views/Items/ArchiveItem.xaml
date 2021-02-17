@@ -37,7 +37,7 @@
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolVis}}" />
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Unbookmark"
-				Background="{ThemeResource SystemAccentColorDark3}"
+				Background="{ThemeResource UnbookmarkItem}"
 				Click="Remove_Click" Icon="Unfavorite"
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 			<MenuFlyoutItem

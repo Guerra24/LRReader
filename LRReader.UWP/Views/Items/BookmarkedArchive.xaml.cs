@@ -2,29 +2,21 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Items;
+using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -122,15 +114,9 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void Add_Click(object sender, RoutedEventArgs e)
-		{
-			ViewModel.Bookmarked = true;
-		}
+		private void Add_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = true;
 
-		private void Remove_Click(object sender, RoutedEventArgs e)
-		{
-			ViewModel.Bookmarked = false;
-		}
+		private void Remove_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = false;
 
 		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
@@ -142,6 +128,12 @@ namespace LRReader.UWP.Views.Items
 					Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
 				}
 			}
+		}
+
+		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new CategoryArchive(ViewModel.Archive.arcid, ViewModel.Archive.title);
+			await dialog.ShowAsync();
 		}
 	}
 }

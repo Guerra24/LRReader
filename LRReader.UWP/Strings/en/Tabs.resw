@@ -237,6 +237,15 @@
   <data name="Bookmarks.Tab.Header" xml:space="preserve">
     <value>Bookmarks</value>
   </data>
+  <data name="Categories.Tab.Header" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CategoriesEdit.DragAdd" xml:space="preserve">
+    <value>Add to category</value>
+  </data>
+  <data name="CategoriesEdit.DragRemove" xml:space="preserve">
+    <value>Remove from category</value>
+  </data>
   <data name="SearchResults.Tab.Header" xml:space="preserve">
     <value>Search</value>
   </data>

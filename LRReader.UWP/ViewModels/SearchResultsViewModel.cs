@@ -174,7 +174,8 @@ namespace LRReader.UWP.ViewModels
 						if (!CustomArchiveCheck(a))
 							continue;
 						var archive = SharedGlobal.ArchivesManager.GetArchive(a.arcid);
-						await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
+						if (archive != null)
+							await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
 				TotalArchives = resultPage.recordsFiltered;

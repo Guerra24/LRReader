@@ -6,13 +6,13 @@
 	xmlns:local="using:LRReader.UWP.Views.Dialogs"
 	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Uid="/Dialogs/CategoryArchive/Dialog"
 	Loaded="ContentDialog_Loaded"
-	PrimaryButtonText="Done"
 	mc:Ignorable="d">
 
 	<StackPanel>
 		<AutoSuggestBox
-			Margin="0,0,0,5" PlaceholderText="Search..." QueryIcon="Find"
+			x:Uid="/Dialogs/CategoryArchive/Search" Margin="0,0,0,5" QueryIcon="Find"
 			TextChanged="AutoSuggestBox_TextChanged" />
 		<ScrollViewer>
 			<ListView

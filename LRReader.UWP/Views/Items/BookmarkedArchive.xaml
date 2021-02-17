@@ -27,12 +27,17 @@
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolVis}}" />
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Unbookmark"
-				Background="{ThemeResource SystemAccentColorDark3}"
+				Background="{ThemeResource UnbookmarkItem}"
 				Click="Remove_Click" Icon="Unfavorite"
 				Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Edit" Click="EditMenuItem_Click" Icon="Edit"
 				Visibility="{x:Bind ViewModel.CanEdit}" />
+			<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="CategoriesButton_Click" Visibility="{x:Bind ViewModel.CanEdit}">
+				<MenuFlyoutItem.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
+				</MenuFlyoutItem.Icon>
+			</MenuFlyoutItem>
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Download" Click="DownloadMenuItem_Click" Icon="Download"
 				IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />

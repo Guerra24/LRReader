@@ -92,7 +92,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (e.DataView.Properties.ContainsKey("archivesAdd"))
 			{
 				e.AcceptedOperation = DataPackageOperation.Link;
-				e.DragUIOverride.Caption = "Add to category";
+				e.DragUIOverride.Caption = lang.GetString("CategoriesEdit/DragAdd");
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (e.DataView.Properties.ContainsKey("archivesRemove"))
 			{
 				e.AcceptedOperation = DataPackageOperation.Move;
-				e.DragUIOverride.Caption = "Remove from category";
+				e.DragUIOverride.Caption = lang.GetString("CategoriesEdit/DragRemove");
 			}
 		}
 

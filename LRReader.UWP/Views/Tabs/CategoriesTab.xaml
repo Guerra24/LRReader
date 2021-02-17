@@ -11,7 +11,7 @@
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Categories"
-	Header="Categories"
+	x:Uid="/Tabs/Categories/Tab"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>
 		<controls:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />

@@ -1,8 +1,8 @@
 ﻿using LRReader.Internal;
-using LRReader.UWP.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Items;
+using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -18,7 +18,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using LRReader.UWP.Views.Dialogs;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -122,15 +121,9 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void Add_Click(object sender, RoutedEventArgs e)
-		{
-			ViewModel.Bookmarked = true;
-		}
+		private void Add_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = true;
 
-		private void Remove_Click(object sender, RoutedEventArgs e)
-		{
-			ViewModel.Bookmarked = false;
-		}
+		private void Remove_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = false;
 
 		private async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
