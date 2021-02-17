@@ -117,11 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateCategory.CategoryName.PlaceholderText" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="CreateCategory.Dialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CreateCategory.Dialog.PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CreateCategory.Dialog.Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="CreateCategory.ErrorName" xml:space="preserve">
+    <value>Empty category name</value>
+  </data>
+  <data name="CreateCategory.Pinned.Header" xml:space="preserve">
+    <value>Pinned</value>
+  </data>
+  <data name="CreateCategory.SearchQuery.PlaceholderText" xml:space="preserve">
+    <value>Search Query</value>
+  </data>
   <data name="ProgressConflict.Dialog.PrimaryButtonText" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="ProgressConflict.Dialog.Title" xml:space="preserve">
-    <value>Progress conflict</value>
+    <value>Archive progress</value>
   </data>
   <data name="ProgressConflict.Local" xml:space="preserve">
     <value>Use local ({0}/{1})</value>

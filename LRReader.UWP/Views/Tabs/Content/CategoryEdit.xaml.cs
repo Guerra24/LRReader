@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,28 +39,34 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public CategoryEditViewModel ViewModel;
 		private CustomSearchViewModel Data;
 
+		private ResourceLoader lang;
+
 		public CategoryEdit()
 		{
 			this.InitializeComponent();
 			ViewModel = new CategoryEditViewModel();
 			ArchiveList.Data = Data = new CustomSearchViewModel();
+			lang = ResourceLoader.GetForCurrentView("Tabs");
 		}
 
 		internal void SetCategoryInternal(Category category) => Data.category = category;
 
-		public void LoadCategory(Category category)
+		public async void LoadCategory(Category category)
 		{
-			ViewModel.LoadCategory(category);
+			await ViewModel.LoadCategory(category);
 			Data.category = ViewModel.category;
 		}
 
-		public async Task Refesh() => await ViewModel.Refresh();
+		public async Task Refresh()
+		{
+			await ViewModel.Refresh();
+			await Data.ReloadSearch();
+		}
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			args.Handled = true;
-			await ViewModel.Refresh();
-			await Data.ReloadSearch();
+			await Refresh();
 		}
 
 		private void CategoryName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -68,7 +75,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			CategoryError.Text = "";
 			if (string.IsNullOrEmpty(sender.Text))
 			{
-				CategoryError.Text = "Empty Category Name";
+				CategoryError.Text = ResourceLoader.GetForCurrentView("Dialogs").GetString("CreateCategory/ErrorName");
 				allow = false;
 			}
 			ViewModel.CanSave = allow;

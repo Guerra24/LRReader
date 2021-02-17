@@ -132,4 +132,7 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveBtn.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

@@ -5,22 +5,20 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Dialogs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Title="Create Category"
+	x:Uid="/Dialogs/CreateCategory/Dialog"
 	IsPrimaryButtonEnabled="False"
-	PrimaryButtonText="Add"
-	SecondaryButtonText="Cancel"
 	mc:Ignorable="d">
 
 	<StackPanel>
 		<TextBox
-			x:Name="CategoryName" Margin="0,0,0,10" x:FieldModifier="public"
-			PlaceholderText="Category Name" TextChanging="CategoryName_TextChanging" />
+			x:Name="CategoryName" x:Uid="/Dialogs/CreateCategory/CategoryName" Margin="0,0,0,10"
+			x:FieldModifier="public" TextChanging="CategoryName_TextChanging" />
 		<TextBox
-			x:Name="SearchQuery" Margin="0,0,0,10" x:FieldModifier="public"
-			PlaceholderText="Search Query" />
+			x:Name="SearchQuery" x:Uid="/Dialogs/CreateCategory/SearchQuery" Margin="0,0,0,10"
+			x:FieldModifier="public" />
 		<ToggleSwitch
-			x:Name="Pinned" Margin="0,0,0,10" x:FieldModifier="public"
-			Header="Pinned" />
+			x:Name="Pinned" x:Uid="/Dialogs/CreateCategory/Pinned" Margin="0,0,0,10"
+			x:FieldModifier="public" />
 		<TextBlock Name="CategoryError" Foreground="#FF4141" />
 	</StackPanel>
 </ContentDialog>

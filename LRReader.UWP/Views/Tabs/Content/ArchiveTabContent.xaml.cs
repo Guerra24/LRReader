@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Storage;
@@ -52,33 +53,27 @@ namespace LRReader.UWP.Views.Tabs.Content
 				(ReaderControl.ContentTemplateRoot as ReaderImage).UpdateDecodedResolution((int)Math.Round(height))));
 		}
 
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			Data.ReloadBookmarkedObject();
 			FocusReader();
-		}
-
-		public async void LoadArchive(Archive archive)
-		{
-			Data.Archive = archive;
-			await Data.Reload(true);
-			if (Global.ControlFlags.ServerSideProgress && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
-			{
-				var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
-				await conflictDialog.ShowAsync();
-				var result = conflictDialog.Mode;
-				switch (result)
-				{
-					case ConflictMode.Local:
-						await Data.SetProgress(Data.BookmarkProgress + 1);
-						break;
-					case ConflictMode.Remote:
-						Data.BookmarkProgress = Data.Archive.progress - 1;
-						break;
-				}
-			}
 			if (!_opened)
 			{
+				if (Global.ControlFlags.ServerSideProgress && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
+				{
+					var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
+					await conflictDialog.ShowAsync();
+					var result = conflictDialog.Mode;
+					switch (result)
+					{
+						case ConflictMode.Local:
+							await Data.SetProgress(Data.BookmarkProgress + 1);
+							break;
+						case ConflictMode.Remote:
+							Data.BookmarkProgress = Data.Archive.progress - 1;
+							break;
+					}
+				}
 				if (Global.SettingsManager.OpenReader)
 				{
 					if (Data.Bookmarked)
@@ -87,6 +82,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 				_opened = true;
 			}
+		}
+
+		public async void LoadArchive(Archive archive)
+		{
+			Data.Archive = archive;
+			await Data.Reload(true);
 		}
 
 		private async void OpenReader()

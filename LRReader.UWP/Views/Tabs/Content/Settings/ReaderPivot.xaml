@@ -27,7 +27,7 @@
 				</Grid.ColumnDefinitions>
 				<Slider
 					x:Uid="/Settings/Reader/Zoom" Margin="0,0,0,10" IsThumbToolTipEnabled="False"
-					Maximum="400" Minimum="100" TickFrequency="40"
+					Maximum="400" Minimum="100" TickFrequency="30"
 					TickPlacement="BottomRight"
 					Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
 				<TextBlock

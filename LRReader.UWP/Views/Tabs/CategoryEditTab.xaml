@@ -21,6 +21,13 @@
 			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
 		</DataTemplate>
 	</controls:TabViewItem.HeaderTemplate>
+	<internal:CustomTab.CustomTabControl>
+		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<SymbolIcon Symbol="Refresh" />
+			</Viewbox>
+		</Button>
+	</internal:CustomTab.CustomTabControl>
 
 	<content:CategoryEdit x:Name="TabContent" />
 </internal:CustomTab>

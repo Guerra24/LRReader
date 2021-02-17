@@ -8,7 +8,6 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Loaded="TabViewItem_Loaded"
 	ToolTipService.ToolTip="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>

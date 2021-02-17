@@ -25,5 +25,10 @@ namespace LRReader.UWP.Views.Tabs
 			loaded = true;
 			TabContent.LoadCategory(category);
 		}
+
+		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+		{
+			await TabContent.Refresh();
+		}
 	}
 }

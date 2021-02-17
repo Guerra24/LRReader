@@ -6,23 +6,12 @@ namespace LRReader.UWP.Views.Tabs
 {
 	public sealed partial class ArchiveEditTab : CustomTab
 	{
-		private Archive archive;
-
-		private bool loaded;
 
 		public ArchiveEditTab(Archive archive)
 		{
 			this.InitializeComponent();
-			this.archive = archive;
-			this.CustomTabId = "Edit_" + archive.arcid;
-		}
-
-		private void TabViewItem_Loaded(object sender, RoutedEventArgs e)
-		{
-			if (loaded)
-				return;
-			loaded = true;
 			TabContent.LoadArchive(archive);
+			this.CustomTabId = "Edit_" + archive.arcid;
 		}
 
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)

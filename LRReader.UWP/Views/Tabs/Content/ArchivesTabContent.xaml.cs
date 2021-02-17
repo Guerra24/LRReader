@@ -166,6 +166,29 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (loaded && !reloading)
 				await HandleSearch();
 		}
+		/*
+		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			var itemShadow = (args.ItemContainer as GridViewItem).Shadow;
+			if (itemShadow == null)
+			{
+				var shadow = new ThemeShadow();
+				shadow.Receivers.Add(Receiver);
+				(args.ItemContainer as GridViewItem).Shadow = shadow;
+				(args.ItemContainer as GridViewItem).TranslationTransition = new Vector3Transition();
+				(args.ItemContainer as GridViewItem).TranslationTransition.Duration = TimeSpan.FromMilliseconds(100);
+			}
+		}
+
+		private void ArchiveItem_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			(ArchivesGrid.ContainerFromItem((sender as ArchiveItem).DataContext) as GridViewItem).Translation = new Vector3(0,0,32);
+		}
+
+		private void ArchiveItem_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			(ArchivesGrid.ContainerFromItem((sender as ArchiveItem).DataContext) as GridViewItem).Translation = new Vector3(0, 0, 0);
+		}*/
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{

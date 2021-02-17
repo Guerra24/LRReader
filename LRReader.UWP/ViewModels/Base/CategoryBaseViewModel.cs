@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.UWP.Views.Items;
 using System;
 using System.Collections.Generic;
@@ -43,5 +44,17 @@ namespace LRReader.UWP.ViewModels.Base
 			}
 		}
 		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
+
+		public async Task UpdateCategory(string name, string search, bool pinned)
+		{
+			var result = await CategoriesProvider.UpdateCategory(Category.id, name, search, pinned);
+			if (result)
+			{
+				Category.name = name;
+				Category.search = search;
+				Category.pinned = pinned;
+				RaisePropertyChanged("Category");
+			}
+		}
 	}
 }

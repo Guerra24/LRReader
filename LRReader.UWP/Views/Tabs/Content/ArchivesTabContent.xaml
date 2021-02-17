@@ -22,7 +22,7 @@
 	<Grid>
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				Name="ArchivesGrid" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
+				x:Name="ArchivesGrid" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>

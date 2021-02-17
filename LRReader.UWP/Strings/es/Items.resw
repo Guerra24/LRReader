@@ -120,6 +120,9 @@
   <data name="Archive.Bookmark.Text" xml:space="preserve">
     <value>Marcar</value>
   </data>
+  <data name="Archive.Categories.Text" xml:space="preserve">
+    <value>Categorias</value>
+  </data>
   <data name="Archive.Download.Text" xml:space="preserve">
     <value>Descargar</value>
   </data>

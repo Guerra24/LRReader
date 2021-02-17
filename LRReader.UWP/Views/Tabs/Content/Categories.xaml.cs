@@ -34,7 +34,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (e.ClickedItem is AddNewCategory)
 			{
-				CreateCategory dialog = new CreateCategory(false);
+				var dialog = new CreateCategory(false);
 				var result = await dialog.ShowAsync();
 				if (result == ContentDialogResult.Primary)
 				{

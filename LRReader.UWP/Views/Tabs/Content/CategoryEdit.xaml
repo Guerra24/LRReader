@@ -19,30 +19,34 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="220" />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
 		<Grid.KeyboardAccelerators>
 			<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 		</Grid.KeyboardAccelerators>
-		<StackPanel Padding="10">
+		<StackPanel Padding="10" Orientation="Horizontal">
 			<TextBox
-				Margin="0,0,0,10" PlaceholderText="Category Name"
+				x:Uid="/Dialogs/CreateCategory/CategoryName" MinWidth="220" Margin="0,0,10,0"
+				VerticalAlignment="Center"
 				Text="{x:Bind ViewModel.Name, Mode=TwoWay}"
 				TextChanging="CategoryName_TextChanging" />
-			<TextBox Margin="0,0,0,10" PlaceholderText="Search Query" Text="{x:Bind ViewModel.Search, Mode=TwoWay}" />
-			<ToggleSwitch Margin="0,0,0,10" Header="Pinned" IsOn="{x:Bind ViewModel.Pinned, Mode=TwoWay}" />
-			<TextBlock x:Name="CategoryError" Foreground="#FF4141" />
-			<StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
-				<Button Click="SaveButton_Click" Content="Save" IsEnabled="{x:Bind ViewModel.CanSave, Mode=OneWay}" />
-			</StackPanel>
+			<TextBox
+				x:Uid="/Dialogs/CreateCategory/SearchQuery" Margin="0,0,0,10"
+				Text="{x:Bind ViewModel.Search, Mode=TwoWay}"
+				Visibility="Collapsed" />
+			<ToggleSwitch Margin="0,-10,-50,-10" x:Uid="/Dialogs/CreateCategory/Pinned" IsOn="{x:Bind ViewModel.Pinned, Mode=TwoWay}" />
+			<TextBlock
+				x:Name="CategoryError" Margin="0,0,10,0" VerticalAlignment="Center"
+				Foreground="#FF4141" />
+			<Button x:Uid="/Generic/SaveBtn" Click="SaveButton_Click" IsEnabled="{x:Bind ViewModel.CanSave, Mode=OneWay}" />
 		</StackPanel>
-		<Grid Grid.Column="1">
+		<Grid Grid.Row="1">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
+				<ColumnDefinition MinWidth="280" />
 				<ColumnDefinition Width="16" />
-				<ColumnDefinition />
+				<ColumnDefinition MinWidth="340" />
 			</Grid.ColumnDefinitions>
 			<GridView
 				x:Name="CategoryArchives" AllowDrop="True" CanDragItems="True"
@@ -73,12 +77,12 @@
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>
-			<controls:GridSplitter Grid.Column="1" Background="Gray" Foreground="Black">
+			<controls:GridSplitter Grid.Column="1" Background="{ThemeResource SystemControlHighlightListLowRevealBackgroundBrush}" GripperForeground="Red">
 				<controls:GridSplitter.Element>
-					<Grid>
+					<Grid BorderBrush="{ThemeResource SystemControlBackgroundListLowRevealBorderBrush}" BorderThickness="1,1,1,0">
 						<TextBlock
 							HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"
-							IsHitTestVisible="False" Text="&#xE784;" />
+							FontSize="16" IsHitTestVisible="False" Text="&#xE784;" />
 					</Grid>
 				</controls:GridSplitter.Element>
 			</controls:GridSplitter>

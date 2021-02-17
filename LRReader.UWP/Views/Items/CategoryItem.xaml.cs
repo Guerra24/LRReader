@@ -2,6 +2,7 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Base;
+using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -97,9 +98,22 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void Edit_Click(object sender, RoutedEventArgs e)
+		private async void Edit_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new CategoryEditTab(ViewModel.Category));
+			if (string.IsNullOrEmpty(ViewModel.Category.search))
+				Global.EventManager.AddTab(new CategoryEditTab(ViewModel.Category));
+			else
+			{
+				var dialog = new CreateCategory(true);
+				dialog.CategoryName.Text = ViewModel.Category.name;
+				dialog.SearchQuery.Text = ViewModel.Category.search;
+				dialog.Pinned.IsOn = ViewModel.Category.pinned;
+				var result = await dialog.ShowAsync();
+				if (result == ContentDialogResult.Primary)
+				{
+					await ViewModel.UpdateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
+				}
+			}
 		}
 
 		private async void Remove_Click(object sender, RoutedEventArgs e)

@@ -43,7 +43,7 @@
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Edit" Click="EditMenuItem_Click" Icon="Edit"
 				Visibility="{x:Bind ViewModel.CanEdit}" />
-			<MenuFlyoutItem Text="Categories" Click="CategoriesButton_Click" Visibility="{x:Bind ViewModel.CanEdit}">
+			<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="CategoriesButton_Click" Visibility="{x:Bind ViewModel.CanEdit}">
 				<MenuFlyoutItem.Icon>
 					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
 				</MenuFlyoutItem.Icon>

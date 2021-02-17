@@ -3,6 +3,7 @@ using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,8 +33,11 @@ namespace LRReader.UWP.ViewModels
 
 		private bool _loading;
 
-		public void LoadCategory(Category cat)
+		public async Task LoadCategory(Category cat)
 		{
+			if (_loading)
+				return;
+			_loading = true;
 			category = cat;
 			Name = cat.name;
 			Search = cat.search;
@@ -42,11 +46,20 @@ namespace LRReader.UWP.ViewModels
 			RaisePropertyChanged("Search");
 			RaisePropertyChanged("Pinned");
 
-			foreach (var a in cat.archives)
+			var removeMissing = new List<string>();
+			foreach (var a in category.archives)
 			{
 				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
-				CategoryArchives.Add(archive);
+				if (archive != null)
+					CategoryArchives.Add(archive);
+				else
+				{
+					removeMissing.Add(a);
+					await CategoriesProvider.RemoveArchiveFromCategory(category.id, a);
+				}
 			}
+			foreach (var a in removeMissing) category.archives.Remove(a);
+			_loading = false;
 		}
 
 		public async Task Refresh()
