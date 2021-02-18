@@ -4,25 +4,18 @@ using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
+using Microsoft.Toolkit.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -32,10 +25,13 @@ namespace LRReader.UWP.Views.Items
 
 		private string _oldID = "";
 
+		private ResourceLoader lang;
+
 		public CategoryItem()
 		{
 			this.InitializeComponent();
 			ViewModel = new CategoryBaseViewModel();
+			lang = ResourceLoader.GetForCurrentView("Dialogs");
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -100,7 +96,34 @@ namespace LRReader.UWP.Views.Items
 
 		private async void Edit_Click(object sender, RoutedEventArgs e)
 		{
-			if (string.IsNullOrEmpty(ViewModel.Category.search))
+			var listMode = string.IsNullOrEmpty(ViewModel.Category.search);
+
+			if (ViewModel.Category.Unconfigured())
+			{
+				var dialog = new ContentDialog
+				{
+					Title = lang.GetString("ConfigureCategory/Title"),
+					PrimaryButtonText = lang.GetString("ConfigureCategory/PrimaryButtonText"),
+					SecondaryButtonText = lang.GetString("ConfigureCategory/SecondaryButtonText"),
+					CloseButtonText = lang.GetString("ConfigureCategory/CloseButtonText"),
+					Content = lang.GetString("ConfigureCategory/Content").AsFormat("\n")
+				};
+				var result = await dialog.ShowAsync();
+
+				switch (result)
+				{
+					case ContentDialogResult.None:
+						return;
+					case ContentDialogResult.Primary:
+						listMode = true;
+						break;
+					case ContentDialogResult.Secondary:
+						listMode = false;
+						break;
+				}
+			}
+
+			if (listMode)
 				Global.EventManager.AddTab(new CategoryEditTab(ViewModel.Category));
 			else
 			{
@@ -120,10 +143,10 @@ namespace LRReader.UWP.Views.Items
 		{
 			var dialog = new ContentDialog()
 			{
-				Title = "Remove Category: " + ViewModel.Category.name,
-				Content = "Are you sure you want to remove it?",
-				PrimaryButtonText = "Yes",
-				CloseButtonText = "No"
+				Title = lang.GetString("RemoveCategory/Title").AsFormat(ViewModel.Category.name),
+				Content = lang.GetString("RemoveCategory/Content"),
+				PrimaryButtonText = lang.GetString("RemoveCategory/PrimaryButtonText"),
+				CloseButtonText = lang.GetString("RemoveCategory/CloseButtonText")
 			};
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)

@@ -123,6 +123,21 @@
   <data name="CategoryArchive.Search.PlaceholderText" xml:space="preserve">
     <value>Search...</value>
   </data>
+  <data name="ConfigureCategory.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConfigureCategory.Content" xml:space="preserve">
+    <value>Static category uses a fixed list of archives{0}Dynamic category uses search strings to dynamically fill the list</value>
+  </data>
+  <data name="ConfigureCategory.PrimaryButtonText" xml:space="preserve">
+    <value>Static</value>
+  </data>
+  <data name="ConfigureCategory.SecondaryButtonText" xml:space="preserve">
+    <value>Dynamic</value>
+  </data>
+  <data name="ConfigureCategory.Title" xml:space="preserve">
+    <value>Select category mode</value>
+  </data>
   <data name="CreateCategory.CategoryName.PlaceholderText" xml:space="preserve">
     <value>Category Name</value>
   </data>
@@ -155,6 +170,18 @@
   </data>
   <data name="ProgressConflict.Remote" xml:space="preserve">
     <value>Use remote ({0}/{1})</value>
+  </data>
+  <data name="RemoveCategory.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="RemoveCategory.Content" xml:space="preserve">
+    <value>Are you sure you want to remove it?</value>
+  </data>
+  <data name="RemoveCategory.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="RemoveCategory.Title" xml:space="preserve">
+    <value>Remove Category: {0}</value>
   </data>
   <data name="ServerProfile.Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copy</value>

@@ -123,6 +123,21 @@
   <data name="CategoryArchive.Search.PlaceholderText" xml:space="preserve">
     <value>Buscar...</value>
   </data>
+  <data name="ConfigureCategory.CloseButtonText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ConfigureCategory.Content" xml:space="preserve">
+    <value>Una categoría estática utiliza una lista fija de archivos{0}Una categoría dinámica usa palabras claves para llenar la lista</value>
+  </data>
+  <data name="ConfigureCategory.PrimaryButtonText" xml:space="preserve">
+    <value>Estática</value>
+  </data>
+  <data name="ConfigureCategory.SecondaryButtonText" xml:space="preserve">
+    <value>Dinámica</value>
+  </data>
+  <data name="ConfigureCategory.Title" xml:space="preserve">
+    <value>Modo</value>
+  </data>
   <data name="CreateCategory.CategoryName.PlaceholderText" xml:space="preserve">
     <value>Nombre</value>
   </data>
@@ -133,7 +148,7 @@
     <value>Agregar</value>
   </data>
   <data name="CreateCategory.Dialog.Title" xml:space="preserve">
-    <value>Categoria</value>
+    <value>Categoría</value>
   </data>
   <data name="CreateCategory.ErrorName" xml:space="preserve">
     <value>Nombre en blanco</value>
@@ -155,6 +170,18 @@
   </data>
   <data name="ProgressConflict.Remote" xml:space="preserve">
     <value>Usar remoto ({0}/{1})</value>
+  </data>
+  <data name="RemoveCategory.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="RemoveCategory.Content" xml:space="preserve">
+    <value>¿Estás seguro de que quieres eliminarla?</value>
+  </data>
+  <data name="RemoveCategory.PrimaryButtonText" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="RemoveCategory.Title" xml:space="preserve">
+    <value>Eliminar Categoría: {0}</value>
   </data>
   <data name="ServerProfile.Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copiar</value>

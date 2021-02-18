@@ -19,6 +19,11 @@ namespace LRReader.Shared.Models.Main
 		public bool pinned { get; set; }
 		public string search { get; set; }
 
+		public bool Unconfigured()
+		{
+			return string.IsNullOrEmpty(search) && archives.Count == 0;
+		}
+
 		[JsonIgnore]
 		public DeleteCategory DeleteCategory;
 	}
