@@ -49,11 +49,13 @@ namespace LRReader.Shared.Internal
 
 		private async Task Update()
 		{
-			var resultA = (await ArchivesProvider.GetArchives()).ToDictionary(c => c.arcid, c => c);
+
+			var resultA = await ArchivesProvider.GetArchives();
 			if (resultA != null)
 			{
-				await FilesStorage.StoreFile(TemporaryFolder + "/Index-v2.json", JsonConvert.SerializeObject(resultA));
-				Archives = resultA;
+				var temp = resultA.ToDictionary(c => c.arcid, c => c);
+				await FilesStorage.StoreFile(TemporaryFolder + "/Index-v2.json", JsonConvert.SerializeObject(temp));
+				Archives = temp;
 			}
 			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
