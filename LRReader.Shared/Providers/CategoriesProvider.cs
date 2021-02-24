@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Collections.Generic;
@@ -12,13 +11,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<List<Category>> GetCategories()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories");
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<List<Category>>(r);
+			var result = await ApiConnection.GetResult<List<Category>>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -38,7 +37,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories", Method.PUT);
 			rq.AddQueryParameter("name", name);
@@ -47,7 +46,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<CategoryCreatedApiResult>(r);
+			var result = await ApiConnection.GetResult<CategoryCreatedApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -67,7 +66,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> UpdateCategory(string id, string name = "", string search = "", bool pinned = false)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}", Method.PUT);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -77,7 +76,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -97,14 +96,14 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> DeleteCategory(string id)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}", Method.DELETE);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -124,7 +123,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> AddArchiveToCategory(string id, string archive)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}/{archive}", Method.PUT);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -132,7 +131,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -152,7 +151,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> RemoveArchiveFromCategory(string id, string archive)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}/{archive}", Method.DELETE);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -160,7 +159,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -180,14 +179,14 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<Category> GetCategory(string id)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<Category>(r);
+			var result = await ApiConnection.GetResult<Category>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

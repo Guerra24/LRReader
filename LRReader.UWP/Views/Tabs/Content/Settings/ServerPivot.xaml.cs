@@ -69,8 +69,8 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 
 		private async void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
 		{
-			await Data.ClearAllNew();
 			ClearNewFlyout.Hide();
+			await Data.ClearAllNew();
 		}
 
 		private async void ResetSearchButton_Click(object sender, RoutedEventArgs e)
@@ -79,6 +79,12 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			btn.IsEnabled = false;
 			await Data.ResetSearch();
 			btn.IsEnabled = true;
+		}
+
+		private async void RegenThumb_Click(object sender, RoutedEventArgs e)
+		{
+			RegenThumbsFlyout.Hide();
+			await Data.RegenThumbnails((bool)RegenThumbForced.IsChecked);
 		}
 	}
 }

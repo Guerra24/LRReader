@@ -21,6 +21,7 @@
 			<settings:GeneralPivot Margin="0" />
 			<settings:ReaderPivot Margin="0" />
 			<settings:ServerPivot Margin="0" />
+			<settings:LocalDataPivot Margin="0" />
 			<settings:AboutPivot Margin="0" />
 			<!--<settings:HelpPivot Margin="0" />-->
 		</Pivot>

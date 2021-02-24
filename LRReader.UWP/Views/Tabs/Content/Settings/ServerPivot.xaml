@@ -7,8 +7,8 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	x:Uid="/Settings/ServerPivot"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
@@ -54,6 +54,19 @@
 				x:Uid="/Settings/Server/Debug" Margin="0,0,0,10"
 				IsChecked="{x:Bind Data.ServerInfo.debug_mode, Mode=OneWay}"
 				IsHitTestVisible="False" IsTabStop="False" />
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal" Visibility="{x:Bind Data.ControlFlags.V077}">
+				<Button x:Uid="/Settings/Server/RegenThumb" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+					<Button.Flyout>
+						<Flyout x:Name="RegenThumbsFlyout">
+							<StackPanel>
+								<TextBlock x:Uid="/Settings/Server/RegenThumbNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<Button x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center" Click="RegenThumb_Click" />
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<CheckBox x:Name="RegenThumbForced" x:Uid="/Settings/Server/RegenThumbForced" Margin="10,0,0,0" />
+			</StackPanel>
 			<TextBlock x:Uid="/Settings/Server/Worker" Margin="0,0,0,5" FontSize="18" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<TextBlock x:Uid="/Settings/Server/WorkerStatus" />
@@ -74,7 +87,7 @@
 					x:Uid="/Settings/Server/WorkerRestart" Margin="0,0,10,0" Click="RestartWorkerButton_Click"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				<Button
-					x:Uid="/Settings/Server/WorkerStop" Click="StopWorkerButton_Click" Content="Stop"
+					x:Uid="/Settings/Server/WorkerStop" Click="StopWorkerButton_Click"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 			</StackPanel>
 			<TextBlock x:Uid="/Settings/Server/Database" Margin="0,0,0,5" FontSize="18" />

@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Collections.Generic;
@@ -13,13 +12,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<ServerInfo> GetServerInfo()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/info");
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<ServerInfo>(r);
+			var result = await ApiConnection.GetResult<ServerInfo>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -39,14 +38,14 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<List<Plugin>> GetPlugins(PluginType type)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/plugins/{type}");
 			rq.AddParameter("type", type.ToString().ToLower(), ParameterType.UrlSegment);
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<List<Plugin>>(r);
+			var result = await ApiConnection.GetResult<List<Plugin>>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -66,7 +65,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<UsePluginResult> UsePlugin(string plugin, string arcid = "", string arg = "")
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/plugins/use");
 			rq.AddQueryParameter("plugin", plugin);
@@ -75,7 +74,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await LRRApi.GetResult<UsePluginResult>(r);
+			var result = await ApiConnection.GetResult<UsePluginResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -89,6 +88,31 @@ namespace LRReader.Shared.Providers
 			else
 			{
 				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return null;
+			}
+		}
+
+		public static async Task<MinionStatus> GetMinionStatus(int job)
+		{
+			var client = SharedGlobal.ApiConnection.GetClient();
+
+			var rq = new RestRequest("api/minion/{job}");
+			rq.AddParameter("job", job, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			var result = await ApiConnection.GetResult<MinionStatus>(r);
+
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				return null;
+			}
+			if (result.OK)
+			{
+				return result.Data;
+			}
+			else
+			{
 				return null;
 			}
 		}

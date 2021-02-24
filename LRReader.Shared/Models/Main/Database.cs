@@ -1,9 +1,4 @@
-﻿using LRReader.Shared.Models.Api;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LRReader.Shared.Models.Main
+﻿namespace LRReader.Shared.Models.Main
 {
 	public class DatabaseCleanResult : GenericApiResult
 	{

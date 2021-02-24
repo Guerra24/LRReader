@@ -1,25 +1,17 @@
 ﻿using LRReader.Shared.Models.Main;
 using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Serialization;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LRReader.Shared.Models.Api
+namespace LRReader.Shared
 {
-	public class LRRApi
+	public class ApiConnection
 	{
 		private RestClient client;
-
-		public LRRApi()
-		{
-		}
 
 		public void RefreshSettings(ServerProfile profile)
 		{

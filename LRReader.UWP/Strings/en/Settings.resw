@@ -225,6 +225,9 @@
   <data name="GeneralPivot.Header" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="LocalDataPivot.Header" xml:space="preserve">
+    <value>Local data</value>
+  </data>
   <data name="Reader.AutoOpen.Header" xml:space="preserve">
     <value>Open Reader automatically</value>
   </data>
@@ -320,6 +323,21 @@
   </data>
   <data name="Server.PluginSettings.Content" xml:space="preserve">
     <value>Plugin Configuration</value>
+  </data>
+  <data name="Server.RegenThumb.Content" xml:space="preserve">
+    <value>Generate Thumbnails</value>
+  </data>
+  <data name="Server.RegenThumbForced.Content" xml:space="preserve">
+    <value>Force All</value>
+  </data>
+  <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Regenerates all thumbnails</value>
+  </data>
+  <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
+    <value>Generate missing thumbnails, if forced regenerates all</value>
+  </data>
+  <data name="Server.RegenThumbYes.Content" xml:space="preserve">
+    <value>Yes, generate thumbnails</value>
   </data>
   <data name="Server.ResetCache.Content" xml:space="preserve">
     <value>Reset search cache</value>

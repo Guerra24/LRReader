@@ -1,6 +1,5 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
-using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Collections.Generic;
@@ -14,13 +13,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<List<TagStats>> GetTagStats()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/database/stats");
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<List<TagStats>>(r);
+			var result = await ApiConnection.GetResult<List<TagStats>>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -41,13 +40,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<DatabaseCleanResult> CleanDatabase()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/database/clean");
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await LRRApi.GetResult<DatabaseCleanResult>(r);
+			var result = await ApiConnection.GetResult<DatabaseCleanResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -67,13 +66,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> DropDatabase()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/database/drop");
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -93,7 +92,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<DownloadPayload> BackupJSON()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/database/backup");
 
@@ -113,7 +112,7 @@ namespace LRReader.Shared.Providers
 					download.Type = ".json";
 					return download;
 				default:
-					var error = await LRRApi.GetError(r);
+					var error = await ApiConnection.GetError(r);
 					SharedGlobal.EventManager.ShowError(error.title, error.error);
 					return null;
 			}
@@ -121,13 +120,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> ClearAllNew()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/database/isnew", Method.DELETE);
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

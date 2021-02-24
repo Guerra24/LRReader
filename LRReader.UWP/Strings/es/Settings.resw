@@ -225,6 +225,9 @@
   <data name="GeneralPivot.Header" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="LocalDataPivot.Header" xml:space="preserve">
+    <value>Datos locales</value>
+  </data>
   <data name="Reader.AutoOpen.Header" xml:space="preserve">
     <value>Abrir el lector automáticamente</value>
   </data>
@@ -320,6 +323,21 @@
   </data>
   <data name="Server.PluginSettings.Content" xml:space="preserve">
     <value>Configuración de Plugins</value>
+  </data>
+  <data name="Server.RegenThumb.Content" xml:space="preserve">
+    <value>Generar miniaturas</value>
+  </data>
+  <data name="Server.RegenThumbForced.Content" xml:space="preserve">
+    <value>Forzar todo</value>
+  </data>
+  <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Regenera todas las miniaturas</value>
+  </data>
+  <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
+    <value>Generar las miniaturas que faltan, si se fuerza regenera todas</value>
+  </data>
+  <data name="Server.RegenThumbYes.Content" xml:space="preserve">
+    <value>Si, generar miniaturas</value>
   </data>
   <data name="Server.ResetCache.Content" xml:space="preserve">
     <value>Restablecer caché de búsqueda</value>

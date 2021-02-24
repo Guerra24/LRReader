@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Models;
-using LRReader.Shared.Models.Api;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
@@ -57,7 +56,7 @@ namespace LRReader.Shared.Internal
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<ReleaseInfo>(r);
+			var result = await ApiConnection.GetResult<ReleaseInfo>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -79,7 +78,7 @@ namespace LRReader.Shared.Internal
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<VersionSupportedRange>(r);
+			var result = await ApiConnection.GetResult<VersionSupportedRange>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

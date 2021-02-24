@@ -59,7 +59,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			FocusReader();
 			if (!_opened)
 			{
-				if (Global.ControlFlags.ServerSideProgress && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
+				if (Global.ControlFlags.V077 && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
 				{
 					var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
 					await conflictDialog.ShowAsync();
@@ -189,7 +189,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
 
-			if (Global.ControlFlags.ServerSideProgress)
+			if (Global.ControlFlags.V077)
 				await Data.SetProgress(conv + 1);
 			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{

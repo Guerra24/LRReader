@@ -1,11 +1,6 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Api;
+﻿using LRReader.Shared;
+using LRReader.Shared.Internal;
 using LRReader.UWP.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LRReader.Internal
 {
@@ -17,7 +12,7 @@ namespace LRReader.Internal
 
 		public static void Init()
 		{
-			LRRApi = new LRRApi();
+			ApiConnection = new ApiConnection();
 			SharedGlobal.EventManager = EventManager = new EventManager();
 			SettingsManager = new SettingsManager();
 			ArchivesManager = new ArchivesManager();

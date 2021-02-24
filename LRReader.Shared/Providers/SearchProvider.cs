@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace LRReader.Shared.Providers
 	{
 		public static async Task<ArchiveSearch> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged, string sortby = "title", Order order = Order.Ascending)
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/search");
 
@@ -24,7 +23,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<ArchiveSearch>(r);
+			var result = await ApiConnection.GetResult<ArchiveSearch>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -44,13 +43,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> DiscardCache()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/search/cache", Method.DELETE);
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

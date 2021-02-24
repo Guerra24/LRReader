@@ -1,17 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
-using LRReader.Shared.Models.Api;
-using LRReader.Shared.Models.Main;
-using LRReader.UWP.ViewModels.Base;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LRReader.UWP.ViewModels.Base;
 
 namespace LRReader.UWP.ViewModels.Items
 {

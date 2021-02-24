@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Api;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Threading.Tasks;
@@ -11,13 +10,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<ShinobuStatus> GetShinobuStatus()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/shinobu");
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await LRRApi.GetResult<ShinobuStatus>(r);
+			var result = await ApiConnection.GetResult<ShinobuStatus>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 				return null;
@@ -28,13 +27,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> RestartWorker()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/shinobu/restart");
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -54,13 +53,13 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> StopWorker()
 		{
-			var client = SharedGlobal.LRRApi.GetClient();
+			var client = SharedGlobal.ApiConnection.GetClient();
 
 			var rq = new RestRequest("api/shinobu/stop");
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await LRRApi.GetResult<GenericApiResult>(r);
+			var result = await ApiConnection.GetResult<GenericApiResult>(r);
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{

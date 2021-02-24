@@ -30,6 +30,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			await Data.UpdateShinobuStatus();
 			await Data.UpdateServerInfo();
+			await Data.CheckThumbnailJob();
 		}
 
 		public void RemoveTimer() => DispatcherTimer.Stop();

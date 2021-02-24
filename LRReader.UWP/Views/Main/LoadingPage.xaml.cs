@@ -73,7 +73,7 @@ namespace LRReader.UWP.Views.Main
 #if !DEBUG
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
 #endif
-			SharedGlobal.LRRApi.RefreshSettings(SharedGlobal.SettingsManager.Profile);
+			SharedGlobal.ApiConnection.RefreshSettings(SharedGlobal.SettingsManager.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{

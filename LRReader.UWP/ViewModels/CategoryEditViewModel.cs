@@ -68,7 +68,7 @@ namespace LRReader.UWP.ViewModels
 				return;
 			_loading = true;
 			CategoryArchives.Clear();
-			if (SharedGlobal.ControlFlags.CategoriesV2)
+			if (SharedGlobal.ControlFlags.V077)
 			{
 				var result = await CategoriesProvider.GetCategory(category.id);
 				if (result == null)

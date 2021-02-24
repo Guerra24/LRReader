@@ -131,7 +131,7 @@ namespace LRReader.UWP.ViewModels.Base
 				int pages = _pages;
 				if (Bookmarked)
 					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
-				if (Global.ControlFlags.ServerSideProgress && pages == 0)
+				if (Global.ControlFlags.V077 && pages == 0)
 					pages = Archive.pagecount;
 				_pages = pages;
 				return _pages;

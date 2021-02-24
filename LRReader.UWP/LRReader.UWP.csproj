@@ -258,6 +258,9 @@
     <Compile Include="Views\Tabs\Content\Settings\HelpPivot.xaml.cs">
       <DependentUpon>HelpPivot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\Content\Settings\LocalDataPivot.xaml.cs">
+      <DependentUpon>LocalDataPivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\Content\Settings\ReaderPivot.xaml.cs">
       <DependentUpon>ReaderPivot.xaml</DependentUpon>
     </Compile>
@@ -502,6 +505,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Tabs\Content\Settings\HelpPivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\Content\Settings\LocalDataPivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

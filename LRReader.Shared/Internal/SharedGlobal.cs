@@ -1,12 +1,11 @@
-﻿using LRReader.Shared.Models.Api;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using System;
 
 namespace LRReader.Shared.Internal
 {
 	public class SharedGlobal
 	{
-		public static LRRApi LRRApi { get; set; }
+		public static ApiConnection ApiConnection { get; set; }
 		public static SharedEventManager EventManager { get; set; }
 		public static ISettingsStorage SettingsStorage { get; set; } = new StubSettingsStorage();
 		public static SettingsManager SettingsManager { get; set; }
@@ -20,18 +19,13 @@ namespace LRReader.Shared.Internal
 	public class ControlFlags
 	{
 		public bool CategoriesEnabled = true;
-		public bool CategoriesV2 = false;
-		public bool ServerSideProgress = false;
+		public bool V077 = false;
 
 		public void Check(ServerInfo serverInfo)
 		{
 			if (serverInfo.version == new Version(0, 7, 5))
 				CategoriesEnabled = false;
-			if (serverInfo.version >= new Version(0, 7, 7))
-			{
-				CategoriesV2 = true;
-				ServerSideProgress = true;
-			}
+			V077 = serverInfo.version >= new Version(0, 7, 7);
 		}
 	}
 }

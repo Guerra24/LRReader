@@ -59,7 +59,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			if (result == ContentDialogResult.Primary)
 			{
 				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
-				Global.LRRApi.RefreshSettings(Data.SettingsManager.Profile);
+				Global.ApiConnection.RefreshSettings(Data.SettingsManager.Profile);
 			}
 		}
 

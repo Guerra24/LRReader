@@ -61,6 +61,8 @@ namespace LRReader.UWP.ViewModels
 				}
 			}
 		}
+		public MinionJob thumbnailJob;
+
 		public ControlFlags ControlFlags
 		{
 			get => SharedGlobal.ControlFlags;
@@ -144,6 +146,25 @@ namespace LRReader.UWP.ViewModels
 		public async Task ResetSearch()
 		{
 			await SearchProvider.DiscardCache();
+		}
+
+		public async Task RegenThumbnails(bool force)
+		{
+			thumbnailJob = await ArchivesProvider.RegenerateThumbnails(force);
+		}
+
+		public async Task CheckThumbnailJob()
+		{
+			if (thumbnailJob == null)
+				return;
+			var status = await ServerProvider.GetMinionStatus(thumbnailJob.job);
+			System.Diagnostics.Debug.WriteLine(status.state);
+
+			if (status.state.Equals("finished"))
+			{
+				SharedGlobal.EventManager.ShowNotification("Thumbnail generation completed", "");
+				thumbnailJob = null;
+			}
 		}
 	}
 }
