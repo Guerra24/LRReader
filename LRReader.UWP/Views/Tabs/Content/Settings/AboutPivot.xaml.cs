@@ -39,5 +39,10 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			await Util.OpenInBrowser(new Uri(Data.ReleaseInfo.link));
 			await ApplicationView.GetForCurrentView().TryConsolidateAsync();
 		}
+
+		private async void WebButton_Click(object sender, RoutedEventArgs e)
+		{
+			await Util.OpenInBrowser(new Uri((sender as Button).Tag as string));
+		}
 	}
 }

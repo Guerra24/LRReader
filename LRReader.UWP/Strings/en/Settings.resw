@@ -132,9 +132,6 @@
   <data name="About.Found.Text" xml:space="preserve">
     <value>New update available!</value>
   </data>
-  <data name="About.Github.Content" xml:space="preserve">
-    <value>Open on Github</value>
-  </data>
   <data name="About.NotFound.Text" xml:space="preserve">
     <value>No updates found</value>
   </data>

@@ -27,11 +27,22 @@
 				<Run Text="-" />
 				<Run Text="{x:Bind Data.MaxVersion}" />
 			</TextBlock>
-			<HyperlinkButton x:Uid="/Settings/About/Github" Margin="0,0,0,10" NavigateUri="https://github.com/Guerra24/LRReader" />
-			<StackPanel x:Name="UpdateInfo" Orientation="Vertical" Visibility="Collapsed">
+			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 				<Button
-					x:Uid="/Settings/About/Check" Margin="0,0,0,10" Click="CheckUpdatesButton_Click"
-					Style="{ThemeResource ButtonRevealStyle}" />
+					Margin="0,0,10,0" Click="WebButton_Click"
+					Style="{ThemeResource AccentButtonStyle}"
+					Tag="https://github.com/Guerra24/LRReader">
+					<StackPanel Orientation="Horizontal">
+						<Image Height="19" Margin="0,0,4,0" Source="ms-appx:///Assets/Other/GitHub.png" />
+						<TextBlock Text="Github" />
+					</StackPanel>
+				</Button>
+				<Button Click="WebButton_Click" Style="{ThemeResource AccentButtonStyle}" Tag="https://ko-fi.com/guerra24">
+					<Image Height="19" Margin="0,0,8,0" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+				</Button>
+			</StackPanel>
+			<StackPanel x:Name="UpdateInfo" Orientation="Vertical" Visibility="Collapsed">
+				<Button x:Uid="/Settings/About/Check" Margin="0,0,0,10" Click="CheckUpdatesButton_Click" />
 				<TextBlock
 					x:Uid="/Settings/About/NotFound" Margin="0,5,0,10" FontSize="20"
 					Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
@@ -41,7 +52,7 @@
 					<controls:MarkdownTextBlock
 						Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"
 						Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-					<Button x:Uid="/Settings/About/Download" Style="{ThemeResource ButtonRevealStyle}">
+					<Button x:Uid="/Settings/About/Download">
 						<Button.Flyout>
 							<Flyout x:Name="DownloadFlyout">
 								<StackPanel>

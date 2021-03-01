@@ -123,4 +123,9 @@ namespace LRReader.Shared.Models.Main
 		public string FullTag;
 		public string Tag;
 	}
+
+	public class ArchiveCategories : GenericApiResult
+	{
+		List<Category> categories { get; set; }
+	}
 }

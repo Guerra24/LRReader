@@ -35,6 +35,18 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<Archive>();
 		}
 
+		public static async Task<ArchiveCategories> GetArchiveCategories(string id)
+		{
+			var client = SharedGlobal.ApiConnection.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}/categories");
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteGetAsync(rq);
+
+			return await r.GetResult<ArchiveCategories>();
+		}
+
 		public static async Task<byte[]> GetThumbnail(string id)
 		{
 			var client = SharedGlobal.ApiConnection.GetClient();
