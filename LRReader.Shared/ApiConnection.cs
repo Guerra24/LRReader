@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Internal;
+using LRReader.Shared.Models.Main;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
@@ -31,7 +32,73 @@ namespace LRReader.Shared
 			return client;
 		}
 
-		public static async Task<GenericApiResponse<T>> GetResult<T>(IRestResponse restResponse)
+	}
+
+	public static class ApiExtentions
+	{
+
+		public async static Task<bool> GetResult(this IRestResponse request)
+		{
+			var result = await request.GetResultInternal<GenericApiResult>();
+
+			if (!string.IsNullOrEmpty(request.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", request.ErrorMessage);
+				return false;
+			}
+			if (result.OK)
+			{
+				return true;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return false;
+			}
+		}
+		public async static Task<bool> GetResultNoError(this IRestResponse request)
+		{
+			var result = await request.GetResultInternal<GenericApiResult>();
+			if (!string.IsNullOrEmpty(request.ErrorMessage))
+				return false;
+			if (result.OK)
+				return result.Data.success;
+			else
+				return false;
+		}
+
+		public async static Task<T> GetResult<T>(this IRestResponse request)
+		{
+			var result = await request.GetResultInternal<T>();
+
+			if (!string.IsNullOrEmpty(request.ErrorMessage))
+			{
+				SharedGlobal.EventManager.ShowError("Network Error", request.ErrorMessage);
+				return default(T);
+			}
+			if (result.OK)
+			{
+				return result.Data;
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				return default(T);
+			}
+		}
+
+		public async static Task<T> GetResultNoError<T>(this IRestResponse request)
+		{
+			var result = await request.GetResultInternal<T>();
+			if (!string.IsNullOrEmpty(request.ErrorMessage))
+				return default(T);
+			if (result.OK)
+				return result.Data;
+			else
+				return default(T);
+		}
+
+		public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this IRestResponse restResponse)
 		{
 			var apiResponse = new GenericApiResponse<T>();
 			switch (restResponse.StatusCode)
@@ -41,14 +108,14 @@ namespace LRReader.Shared
 					apiResponse.OK = true;
 					break;
 				default:
-					apiResponse.Error = await GetError(restResponse);
+					apiResponse.Error = await restResponse.GetError();
 					break;
 			}
 			apiResponse.Code = restResponse.StatusCode;
 			return apiResponse;
 		}
 
-		public static async Task<GenericApiError> GetError(IRestResponse restResponse)
+		public static async Task<GenericApiError> GetError(this IRestResponse restResponse)
 		{
 			switch (restResponse.StatusCode)
 			{

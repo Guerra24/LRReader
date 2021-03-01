@@ -16,13 +16,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<ShinobuStatus>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-				return null;
-			if (result.OK)
-				return result.Data;
-			return null;
+			return await r.GetResultNoError<ShinobuStatus>();
 		}
 
 		public static async Task<bool> RestartWorker()
@@ -33,22 +27,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<bool> StopWorker()
@@ -59,22 +38,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 	}

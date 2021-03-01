@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LRReader.Shared.Internal
+﻿namespace LRReader.Shared.Internal
 {
 	public interface ISettingsStorage
 	{

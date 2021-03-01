@@ -18,7 +18,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<ServerInfo>(r);
+			var result = await r.GetResultInternal<ServerInfo>();
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -45,22 +45,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<List<Plugin>>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<List<Plugin>>();
 		}
 
 		public static async Task<UsePluginResult> UsePlugin(string plugin, string arcid = "", string arg = "")
@@ -74,22 +59,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<UsePluginResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<UsePluginResult>();
 		}
 
 		public static async Task<MinionStatus> GetMinionStatus(int job)
@@ -101,20 +71,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<MinionStatus>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				return null;
-			}
+			return await r.GetResult<MinionStatus>();
 		}
 	}
 }

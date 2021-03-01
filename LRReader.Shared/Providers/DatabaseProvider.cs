@@ -19,23 +19,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<List<TagStats>>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<List<TagStats>>();
 		}
 
 		public static async Task<DatabaseCleanResult> CleanDatabase()
@@ -46,22 +30,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<DatabaseCleanResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<DatabaseCleanResult>();
 		}
 
 		public static async Task<bool> DropDatabase()
@@ -72,22 +41,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<DownloadPayload> BackupJSON()
@@ -112,7 +66,7 @@ namespace LRReader.Shared.Providers
 					download.Type = ".json";
 					return download;
 				default:
-					var error = await ApiConnection.GetError(r);
+					var error = await r.GetError();
 					SharedGlobal.EventManager.ShowError(error.title, error.error);
 					return null;
 			}
@@ -126,22 +80,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 	}

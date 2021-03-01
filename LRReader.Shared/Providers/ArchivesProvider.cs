@@ -20,22 +20,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<List<Archive>>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<List<Archive>>();
 		}
 
 		public static async Task<Archive> GetArchive(string id)
@@ -47,22 +32,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<Archive>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<Archive>();
 		}
 
 		public static async Task<byte[]> GetThumbnail(string id)
@@ -83,7 +53,7 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public static async Task<List<string>> ExtractArchive(string id)
+		public static async Task<ArchiveImages> ExtractArchive(string id)
 		{
 			var client = SharedGlobal.ApiConnection.GetClient();
 
@@ -92,22 +62,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<ArchiveImages>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data.pages;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<ArchiveImages>();
 		}
 
 		public static async Task<DownloadPayload> DownloadArchive(string id)
@@ -138,7 +93,7 @@ namespace LRReader.Shared.Providers
 					download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
 					return download;
 				default:
-					var error = await ApiConnection.GetError(r);
+					var error = await r.GetError();
 					SharedGlobal.EventManager.ShowError(error.title, error.error);
 					return null;
 			}
@@ -153,22 +108,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<bool> UpdateArchive(string id, string title = "", string tags = "")
@@ -182,22 +122,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<byte[]> GetImage(string path)
@@ -229,22 +154,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return result.Data.success;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<MinionJob> RegenerateThumbnails(bool force)
@@ -256,22 +166,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecutePostAsync(rq);
 
-			var result = await ApiConnection.GetResult<MinionJob>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<MinionJob>();
 		}
 	}
 }

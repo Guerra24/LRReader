@@ -121,7 +121,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				await Task.Run(async () =>
 				{
-					foreach (var s in result)
+					foreach (var s in result.pages)
 						await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
 				});
 				Pages = ArchiveImages.Count;

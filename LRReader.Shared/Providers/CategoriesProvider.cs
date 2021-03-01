@@ -17,22 +17,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<List<Category>>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<List<Category>>();
 		}
 
 		public static async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
@@ -46,7 +31,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<CategoryCreatedApiResult>(r);
+			var result = await r.GetResultInternal<CategoryCreatedApiResult>();
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -76,22 +61,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return true;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<bool> DeleteCategory(string id)
@@ -103,22 +73,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return true;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<bool> AddArchiveToCategory(string id, string archive)
@@ -131,22 +86,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return true;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<bool> RemoveArchiveFromCategory(string id, string archive)
@@ -159,22 +99,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteAsync(rq);
 
-			var result = await ApiConnection.GetResult<GenericApiResult>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return false;
-			}
-			if (result.OK)
-			{
-				return true;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return false;
-			}
+			return await r.GetResult();
 		}
 
 		public static async Task<Category> GetCategory(string id)
@@ -186,22 +111,7 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<Category>(r);
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
-				return null;
-			}
-			if (result.OK)
-			{
-				return result.Data;
-			}
-			else
-			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
-				return null;
-			}
+			return await r.GetResult<Category>();
 		}
 
 	}

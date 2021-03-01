@@ -31,7 +31,7 @@ namespace LRReader.Shared.Internal
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<ReleaseInfo>(r);
+			var result = await r.GetResultInternal<ReleaseInfo>();
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -56,7 +56,7 @@ namespace LRReader.Shared.Internal
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<ReleaseInfo>(r);
+			var result = await r.GetResultInternal<ReleaseInfo>();
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
@@ -78,7 +78,7 @@ namespace LRReader.Shared.Internal
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			var result = await ApiConnection.GetResult<VersionSupportedRange>(r);
+			var result = await r.GetResultInternal<VersionSupportedRange>();
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
