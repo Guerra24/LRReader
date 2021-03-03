@@ -68,12 +68,23 @@ namespace LRReader.UWP.ViewModels
 			get => SharedGlobal.ControlFlags;
 		}
 
+		public bool AvifMissing;
+		public bool HeifMissing;
+
 		public SettingsPageViewModel()
 		{
 			UpdateReleaseData();
 			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
 				SortBy.Add(n);
 			_sortByIndex = SortBy.IndexOf(SettingsManager.SortByDefault);
+		}
+
+		public async Task CheckForPackages()
+		{
+			AvifMissing = !await Util.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe");
+			HeifMissing = !await Util.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe");
+			RaisePropertyChanged("AvifMissing");
+			RaisePropertyChanged("HeifMissing");
 		}
 
 		public async Task RestartWorker()

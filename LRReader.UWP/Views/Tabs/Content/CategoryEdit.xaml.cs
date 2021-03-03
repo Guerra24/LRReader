@@ -1,21 +1,14 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.UWP.ViewModels;
-using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
-using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
-using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {

@@ -36,7 +36,7 @@
 				x:Uid="/Dialogs/CreateCategory/SearchQuery" Margin="0,0,0,10"
 				Text="{x:Bind ViewModel.Search, Mode=TwoWay}"
 				Visibility="Collapsed" />
-			<CheckBox Margin="0,0,-25,0" x:Uid="/Tabs/CategoriesEdit/Pinned" IsChecked="{x:Bind ViewModel.Pinned, Mode=TwoWay}" />
+			<CheckBox x:Uid="/Tabs/CategoriesEdit/Pinned" Margin="0,0,-25,0" IsChecked="{x:Bind ViewModel.Pinned, Mode=TwoWay}" />
 			<TextBlock
 				x:Name="CategoryError" Margin="0,0,10,0" VerticalAlignment="Center"
 				Foreground="#FF4141" />
@@ -77,6 +77,10 @@
 					</TransitionCollection>
 				</GridView.ItemContainerTransitions>
 			</GridView>
+			<TextBlock
+				x:Uid="/Tabs/CategoriesEdit/Empty" HorizontalAlignment="Center" VerticalAlignment="Center"
+				FontSize="22" IsHitTestVisible="False"
+				Visibility="{x:Bind ViewModel.Empty, Mode=OneWay}" />
 			<controls:GridSplitter Grid.Column="1" Background="{ThemeResource SystemControlHighlightListLowRevealBackgroundBrush}" GripperForeground="Red">
 				<controls:GridSplitter.Element>
 					<Grid BorderBrush="{ThemeResource SystemControlBackgroundListLowRevealBorderBrush}" BorderThickness="1,1,1,0">

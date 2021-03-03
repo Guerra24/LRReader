@@ -64,7 +64,9 @@
 						</Flyout>
 					</Button.Flyout>
 				</Button>
-				<CheckBox x:Name="RegenThumbForced" x:Uid="/Settings/Server/RegenThumbForced" Margin="10,0,0,0" />
+				<CheckBox
+					x:Name="RegenThumbForced" x:Uid="/Settings/Server/RegenThumbForced" Margin="10,0,0,0"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 			</StackPanel>
 			<TextBlock x:Uid="/Settings/Server/Worker" Margin="0,0,0,5" FontSize="18" />
 			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">

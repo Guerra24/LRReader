@@ -228,6 +228,9 @@
   <data name="Reader.AutoOpen.Header" xml:space="preserve">
     <value>Abrir el lector automáticamente</value>
   </data>
+  <data name="Reader.AV1Notice.Content" xml:space="preserve">
+    <value>Instale las extensiones de vídeo AV1 para ver contenido en AVIF</value>
+  </data>
   <data name="Reader.FitLimit.Header" xml:space="preserve">
     <value>Ajustar límite de escalado de página</value>
   </data>
@@ -239,6 +242,9 @@
   </data>
   <data name="Reader.FitWidth.ToolTipService.ToolTip" xml:space="preserve">
     <value>Escala las páginas al ancho completo de la ventana</value>
+  </data>
+  <data name="Reader.HEIFNotice.Content" xml:space="preserve">
+    <value>Instale las extensiones de imagen HEIF para ver contenido en HEIF</value>
   </data>
   <data name="Reader.Keyboard.Header" xml:space="preserve">
     <value>Distancia de desplazamiento del teclado</value>

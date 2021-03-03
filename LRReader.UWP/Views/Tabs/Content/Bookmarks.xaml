@@ -53,6 +53,10 @@
 				</GridView.ItemContainerTransitions>
 			</GridView>
 		</muxc:RefreshContainer>
+		<TextBlock
+			x:Uid="/Tabs/Bookmarks/Empty" HorizontalAlignment="Center" VerticalAlignment="Center"
+			FontSize="22"
+			Visibility="{x:Bind Data.Empty, Mode=OneWay}" />
 		<Button
 			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />

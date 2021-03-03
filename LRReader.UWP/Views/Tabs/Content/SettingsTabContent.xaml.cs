@@ -1,5 +1,6 @@
 ﻿using LRReader.UWP.ViewModels;
 using System;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,6 +23,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
+			await Data.CheckForPackages();
 			await Data.UpdateShinobuStatus();
 			await Data.UpdateServerInfo();
 		}

@@ -7,8 +7,8 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	x:Uid="/Settings/ReaderPivot"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
@@ -65,6 +65,8 @@
 				SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}"
 				Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}" />
 			<ToggleSwitch x:Uid="/Settings/Reader/RemoveBookmarkReminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
+			<HyperlinkButton x:Uid="/Settings/Reader/AV1Notice" NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" Visibility="{x:Bind Data.AvifMissing, Mode=OneWay}" />
+			<HyperlinkButton x:Uid="/Settings/Reader/HEIFNotice" NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" Visibility="{x:Bind Data.HeifMissing, Mode=OneWay}" />
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

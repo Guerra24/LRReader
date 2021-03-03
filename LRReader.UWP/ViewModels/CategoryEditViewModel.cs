@@ -31,6 +31,8 @@ namespace LRReader.UWP.ViewModels
 
 		public ObservableCollection<Archive> CategoryArchives = new ObservableCollection<Archive>();
 
+		public bool Empty => CategoryArchives.Count == 0;
+
 		private bool _loading;
 
 		public async Task LoadCategory(Category cat)
@@ -58,6 +60,7 @@ namespace LRReader.UWP.ViewModels
 					await CategoriesProvider.RemoveArchiveFromCategory(category.id, a);
 				}
 			}
+			RaisePropertyChanged("Empty");
 			foreach (var a in removeMissing) category.archives.Remove(a);
 			_loading = false;
 		}
@@ -103,6 +106,7 @@ namespace LRReader.UWP.ViewModels
 				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
 				CategoryArchives.Add(archive);
 			}
+			RaisePropertyChanged("Empty");
 			_loading = false;
 		}
 
@@ -122,23 +126,23 @@ namespace LRReader.UWP.ViewModels
 		{
 			if (category.archives.Contains(archiveID))
 				return;
-			System.Diagnostics.Debug.WriteLine($"Added to {category.id}");
 			var result = await CategoriesProvider.AddArchiveToCategory(category.id, archiveID);
 			if (result)
 			{
 				category.archives.Add(archiveID);
 				CategoryArchives.Add(SharedGlobal.ArchivesManager.GetArchive(archiveID));
+				RaisePropertyChanged("Empty");
 			}
 		}
 
 		public async Task RemoveFromCategory(string archiveID)
 		{
-			System.Diagnostics.Debug.WriteLine($"Removed from {category.id}");
 			var result = await CategoriesProvider.RemoveArchiveFromCategory(category.id, archiveID);
 			if (result)
 			{
 				category.archives.Remove(archiveID);
 				CategoryArchives.Remove(SharedGlobal.ArchivesManager.GetArchive(archiveID));
+				RaisePropertyChanged("Empty");
 			}
 		}
 	}

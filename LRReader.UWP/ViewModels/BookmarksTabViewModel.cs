@@ -34,6 +34,8 @@ namespace LRReader.UWP.ViewModels
 
 		private bool _internalLoadingArchives;
 
+		public bool Empty => ArchiveList.Count == 0;
+
 		public async Task Refresh()
 		{
 			await Refresh(true);
@@ -49,6 +51,7 @@ namespace LRReader.UWP.ViewModels
 			if (animate)
 				LoadingArchives = true;
 			if (ArchivesManager.Archives.Count > 0)
+			{
 				await Task.Run(async () =>
 				{
 					foreach (var b in SettingsManager.Profile.Bookmarks)
@@ -58,6 +61,8 @@ namespace LRReader.UWP.ViewModels
 							await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
+				RaisePropertyChanged("Empty");
+			}
 			else
 				RefreshOnErrorButton = true;
 			if (animate)

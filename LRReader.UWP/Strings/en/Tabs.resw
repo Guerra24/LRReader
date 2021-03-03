@@ -201,6 +201,9 @@
   <data name="Archives.Untagged.Content" xml:space="preserve">
     <value>Untagged only</value>
   </data>
+  <data name="Bookmarks.Empty.Text" xml:space="preserve">
+    <value>Try bookmarking something</value>
+  </data>
   <data name="Bookmarks.Export.Text" xml:space="preserve">
     <value>Export</value>
   </data>
@@ -245,6 +248,9 @@
   </data>
   <data name="CategoriesEdit.DragRemove" xml:space="preserve">
     <value>Remove from category</value>
+  </data>
+  <data name="CategoriesEdit.Empty.Text" xml:space="preserve">
+    <value>Try dragging an archive</value>
   </data>
   <data name="CategoriesEdit.Pinned.Content" xml:space="preserve">
     <value>Pinned</value>
