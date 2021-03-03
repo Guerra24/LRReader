@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
@@ -63,10 +64,41 @@ namespace LRReader.UWP.Internal
 				{
 					if (image == null)
 						image = new BitmapImage();
-					await image.SetSourceAsync(stream);
+					try
+					{
+						await image.SetSourceAsync(stream);
+					}
+					catch (Exception)
+					{
+						return null;
+					}
 				}
 			}
 			return image;
 		}
+
+
+		public async Task<Size> GetImageSize(byte[] bytes)
+		{
+			if (bytes == null)
+				return new Size(0, 0);
+			if (bytes.Length == 0)
+				return new Size(0, 0);
+			using (var stream = new InMemoryRandomAccessStream())
+			{
+				await stream.WriteAsync(bytes.AsBuffer());
+				stream.Seek(0);
+				try
+				{
+					var decoder = await BitmapDecoder.CreateAsync(stream);
+					return new Size(decoder.PixelWidth, decoder.PixelHeight);
+				}
+				catch (Exception)
+				{
+					return new Size(0, 0);
+				}
+			}
+		}
+
 	}
 }

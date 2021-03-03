@@ -50,6 +50,12 @@ namespace LRReader.UWP.Views.Items
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
 			LeftImage.Source = await Global.ImageProcessing.ByteToBitmap(await lImage, imageL);
 			RightImage.Source = await Global.ImageProcessing.ByteToBitmap(await rImage, imageR);
+			var lSize = await Global.ImageProcessing.GetImageSize(await lImage);
+			var rSize = await Global.ImageProcessing.GetImageSize(await rImage);
+			LeftImage.Width = lSize.Width;
+			LeftImage.Height = lSize.Height;
+			RightImage.Width = rSize.Width;
+			RightImage.Height = rSize.Height;
 			Animate();
 		}
 
