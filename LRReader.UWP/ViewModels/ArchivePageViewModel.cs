@@ -26,7 +26,7 @@ namespace LRReader.UWP.ViewModels
 				RaisePropertyChanged("LoadingImages");
 			}
 		}
-		public ObservableCollection<string> ArchiveImages = new ObservableCollection<string>();
+		public ObservableCollection<ImagePageSet> ArchiveImages = new ObservableCollection<ImagePageSet>();
 		public ObservableCollection<ArchiveImageSet> ArchiveImagesReader = new ObservableCollection<ArchiveImageSet>();
 		private bool _showReader = false;
 		public bool ShowReader
@@ -121,8 +121,8 @@ namespace LRReader.UWP.ViewModels
 			{
 				await Task.Run(async () =>
 				{
-					foreach (var s in result.pages)
-						await DispatcherHelper.RunAsync(() => ArchiveImages.Add(s));
+					foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
+						await DispatcherHelper.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)));
 				});
 				Pages = ArchiveImages.Count;
 			}
@@ -148,31 +148,31 @@ namespace LRReader.UWP.ViewModels
 					if (Global.SettingsManager.ReadRTL)
 					{
 						if (k == 0)
-							i.RightImage = ArchiveImages.ElementAt(k);
+							i.RightImage = ArchiveImages.ElementAt(k).Image;
 						else if (k == ArchiveImages.Count - 1)
-							i.LeftImage = ArchiveImages.ElementAt(k);
+							i.LeftImage = ArchiveImages.ElementAt(k).Image;
 						else
 						{
-							i.RightImage = ArchiveImages.ElementAt(k);
-							i.LeftImage = ArchiveImages.ElementAt(++k);
+							i.RightImage = ArchiveImages.ElementAt(k).Image;
+							i.LeftImage = ArchiveImages.ElementAt(++k).Image;
 						}
 					}
 					else
 					{
 						if (k == 0)
-							i.RightImage = ArchiveImages.ElementAt(k);
+							i.RightImage = ArchiveImages.ElementAt(k).Image;
 						else if (k == ArchiveImages.Count - 1)
-							i.LeftImage = ArchiveImages.ElementAt(k);
+							i.LeftImage = ArchiveImages.ElementAt(k).Image;
 						else
 						{
-							i.LeftImage = ArchiveImages.ElementAt(k);
-							i.RightImage = ArchiveImages.ElementAt(++k);
+							i.LeftImage = ArchiveImages.ElementAt(k).Image;
+							i.RightImage = ArchiveImages.ElementAt(++k).Image;
 						}
 					}
 				}
 				else
 				{
-					i.LeftImage = ArchiveImages.ElementAt(k);
+					i.LeftImage = ArchiveImages.ElementAt(k).Image;
 				}
 				tmp.Add(i);
 			}

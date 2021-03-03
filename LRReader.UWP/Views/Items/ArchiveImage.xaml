@@ -9,6 +9,8 @@
 	Width="200"
 	Height="275"
 	DataContextChanged="UserControl_DataContextChanged"
+	PointerEntered="UserControl_PointerEntered"
+	PointerExited="UserControl_PointerExited"
 	mc:Ignorable="d">
 
 	<UserControl.ContextFlyout>
@@ -18,7 +20,22 @@
 	</UserControl.ContextFlyout>
 
 	<Grid Background="{ThemeResource BrushItemGridBackground}">
+		<Grid.Clip>
+			<RectangleGeometry Rect="0,0,200,275" />
+		</Grid.Clip>
 		<Image x:Name="Image" />
+		<Grid
+			x:Name="PageCountGrid" Margin="0,0,0,-26" HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Background="{ThemeResource GridOverGridBackground}"
+			CornerRadius="4,0,0,0">
+			<Grid.Transitions>
+				<TransitionCollection>
+					<RepositionThemeTransition />
+				</TransitionCollection>
+			</Grid.Transitions>
+			<TextBlock x:Name="PageCount" Padding="6,2" FontSize="16" />
+		</Grid>
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
 			<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
 		</Grid>

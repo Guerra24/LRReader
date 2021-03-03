@@ -237,7 +237,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.ControlsEnabled)
 				return;
-			i = Data.ArchiveImages.IndexOf(e.ClickedItem as string);
+			i = Data.ArchiveImages.IndexOf(e.ClickedItem as ImagePageSet);
 			/*var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
 			anim.Configuration = new BasicConnectedAnimationConfiguration();*/
 			OpenReader();

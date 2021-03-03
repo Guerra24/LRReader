@@ -1,19 +1,19 @@
 ﻿using GalaSoft.MvvmLight;
-using LRReader.UWP.Internal;
+using LRReader.Internal;
 using LRReader.Shared.Internal;
+using LRReader.Shared.Models.Main;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using System.Threading.Tasks;
-using LRReader.Internal;
 
 namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ArchiveImage : UserControl
 	{
-		private string _oldUrl = "";
+		private ImagePageSet _oldUrl = new ImagePageSet("", 0);
 		private Container Data = new Container();
 		private bool _loading;
 
@@ -26,7 +26,7 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			string n = args.NewValue as string;
+			var n = args.NewValue as ImagePageSet;
 			if (!_oldUrl.Equals(n))
 			{
 				await ReloadImage(n);
@@ -36,7 +36,7 @@ namespace LRReader.UWP.Views.Items
 
 		private async void Reload_Click(object sender, RoutedEventArgs e) => await ReloadImage(_oldUrl);
 
-		private async Task ReloadImage(string n)
+		private async Task ReloadImage(ImagePageSet n)
 		{
 			if (_loading)
 				return;
@@ -45,11 +45,12 @@ namespace LRReader.UWP.Views.Items
 			Image.Source = null;
 			Ring.IsActive = true;
 			Data.MissingImage = false;
+			PageCount.Text = n.Page.ToString();
 
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
 			image.DecodePixelHeight = 275;
-			image = await Global.ImageProcessing.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n), image, n.EndsWith("avif"));
+			image = await Global.ImageProcessing.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n.Image), image, n.Image.EndsWith("avif"));
 			Ring.IsActive = false;
 			Image.Source = image;
 
@@ -74,6 +75,9 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
+		private void UserControl_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0);
+
+		private void UserControl_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0, 0, 0, -26);
 	}
 
 }

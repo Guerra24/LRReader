@@ -74,7 +74,8 @@ namespace LRReader.Shared.Models.Main
 				tmp.Remove(c);
 				tmp.Add(c);
 			}
-			tmp.ForEach(g => {
+			tmp.ForEach(g =>
+			{
 				g.Namespace = g.Namespace.UpperFirstLetter().Replace('_', ' ');
 				TagsGroups.Add(g);
 			});
@@ -97,6 +98,30 @@ namespace LRReader.Shared.Models.Main
 	{
 		public string LeftImage { get; set; }
 		public string RightImage { get; set; }
+	}
+
+	public class ImagePageSet
+	{
+
+		public string Image { get; set; }
+		public int Page { get; set; }
+
+		public ImagePageSet(string image, int page)
+		{
+			this.Image = image;
+			this.Page = page;
+		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is ImagePageSet set &&
+				   Image.Equals(set.Image);
+		}
+
+		public override int GetHashCode()
+		{
+			return Image.GetHashCode();
+		}
 	}
 
 	public class ArchiveSearch
