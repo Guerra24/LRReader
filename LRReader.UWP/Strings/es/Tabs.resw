@@ -246,6 +246,9 @@
   <data name="CategoriesEdit.DragRemove" xml:space="preserve">
     <value>Eliminar de la categoría</value>
   </data>
+  <data name="CategoriesEdit.Pinned.Content" xml:space="preserve">
+    <value>Anclado</value>
+  </data>
   <data name="SearchResults.Tab.Header" xml:space="preserve">
     <value>Buscar</value>
   </data>

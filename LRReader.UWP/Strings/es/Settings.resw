@@ -129,14 +129,14 @@
   <data name="About.DownloadYes.Content" xml:space="preserve">
     <value>Cerrar y Actualizar</value>
   </data>
-  <data name="About.Found.Text" xml:space="preserve">
-    <value>Nueva actualización disponible</value>
-  </data>
   <data name="About.NotFound.Text" xml:space="preserve">
     <value>No se encontraron actualizaciones</value>
   </data>
   <data name="About.Supported.Text" xml:space="preserve">
     <value>Versiones soportadas de LANraragi</value>
+  </data>
+  <data name="About.Updates.Text" xml:space="preserve">
+    <value>Actualizaciones</value>
   </data>
   <data name="AboutPivot.Header" xml:space="preserve">
     <value>Acerca de</value>

@@ -36,7 +36,7 @@
 				x:Uid="/Dialogs/CreateCategory/SearchQuery" Margin="0,0,0,10"
 				Text="{x:Bind ViewModel.Search, Mode=TwoWay}"
 				Visibility="Collapsed" />
-			<ToggleSwitch Margin="0,-10,-25,-10" x:Uid="/Dialogs/CreateCategory/Pinned" IsOn="{x:Bind ViewModel.Pinned, Mode=TwoWay}" />
+			<CheckBox Margin="0,0,-25,0" x:Uid="/Tabs/CategoriesEdit/Pinned" IsChecked="{x:Bind ViewModel.Pinned, Mode=TwoWay}" />
 			<TextBlock
 				x:Name="CategoryError" Margin="0,0,10,0" VerticalAlignment="Center"
 				Foreground="#FF4141" />

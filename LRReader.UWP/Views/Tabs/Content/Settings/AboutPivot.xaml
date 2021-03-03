@@ -42,12 +42,10 @@
 				</Button>
 			</StackPanel>
 			<StackPanel x:Name="UpdateInfo" Orientation="Vertical" Visibility="Collapsed">
-				<Button x:Uid="/Settings/About/Check" Margin="0,0,0,10" Click="CheckUpdatesButton_Click" />
-				<TextBlock
-					x:Uid="/Settings/About/NotFound" Margin="0,5,0,10" FontSize="20"
-					Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+				<TextBlock x:Uid="/Settings/About/Updates" Margin="0,10,0,5" FontSize="24" />
+				<Button x:Uid="/Settings/About/Check" Margin="0,5,0,10" Click="CheckUpdatesButton_Click" />
+				<TextBlock x:Uid="/Settings/About/NotFound" Margin="0,0,0,10" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 				<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
-					<TextBlock x:Uid="/Settings/About/Found" Margin="0,5,0,10" FontSize="20" />
 					<TextBlock Margin="0,0,0,10" FontSize="20" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
 					<controls:MarkdownTextBlock
 						Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"
