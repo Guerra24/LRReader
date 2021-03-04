@@ -48,9 +48,10 @@
 				<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
 					<TextBlock Margin="0,0,0,10" FontSize="20" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
 					<controls:MarkdownTextBlock
-						Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"
+						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
+						LinkClicked="MarkdownText_LinkClicked"
 						Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-					<Button x:Uid="/Settings/About/Download">
+					<Button x:Uid="/Settings/About/Download" Margin="0,0,0,50">
 						<Button.Flyout>
 							<Flyout x:Name="DownloadFlyout">
 								<StackPanel>
