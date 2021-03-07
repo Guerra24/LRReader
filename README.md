@@ -8,13 +8,14 @@
 - Search.
 - Archive overview and reader.
 - Bookmarks.
+- Easily edit archives and categories.
 - Multiple servers/profiles.
 - Manage your server from within the app.
 
 ## Requirements
 
 - Windows 10 1809 (x86, x64 or ARM64)
-- LANraragi v0.7.1
+- LANraragi v0.7.3
 
 ## Installing
 
