@@ -1,5 +1,5 @@
-﻿using LRReader.UWP.Internal;
-using Microsoft.Toolkit.Extensions;
+﻿using LRReader.UWP.Extensions;
+using LRReader.UWP.Internal;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;

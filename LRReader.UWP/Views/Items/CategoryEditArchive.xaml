@@ -114,8 +114,5 @@
 					Text="Tags..." />
 			</Grid>
 		</Grid>
-		<muxc:ProgressRing
-			x:Name="Ring" Grid.ColumnSpan="3" Width="50"
-			Height="50" IsActive="True" />
 	</Grid>
 </UserControl>

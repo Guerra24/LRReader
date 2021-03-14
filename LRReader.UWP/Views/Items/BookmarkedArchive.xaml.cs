@@ -1,10 +1,10 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using Windows.Devices.Input;
@@ -15,7 +15,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
@@ -40,8 +39,9 @@ namespace LRReader.UWP.Views.Items
 
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
-				Title.Opacity = 0;
-				Thumbnail.Opacity = 0;
+				Title.SetVisualOpacity(0);
+				Progress.SetVisualOpacity(0);
+				Thumbnail.SetVisualOpacity(0);
 				Thumbnail.Source = null;
 				ViewModel.MissingImage = false;
 
@@ -56,12 +56,13 @@ namespace LRReader.UWP.Views.Items
 						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
 							Thumbnail.Stretch = Stretch.Uniform;
 					Thumbnail.Source = image;
-					Thumbnail.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+					Thumbnail.FadeIn();
 				}
 				else
 					ViewModel.MissingImage = true;
 
-				Title.Opacity = 1;
+				Title.FadeIn();
+				Progress.FadeIn();
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}

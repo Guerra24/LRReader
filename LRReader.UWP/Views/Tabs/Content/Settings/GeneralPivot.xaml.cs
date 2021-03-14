@@ -1,9 +1,9 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
-using Microsoft.Toolkit.Extensions;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;

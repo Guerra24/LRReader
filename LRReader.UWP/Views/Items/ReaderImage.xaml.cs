@@ -8,11 +8,15 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using LRReader.Internal;
+using System;
 
 namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ReaderImage : UserControl
 	{
+
+		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseIn);
+		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseOut);
 
 		//private bool _fixLayout = true;
 		private string _current = "";
@@ -39,7 +43,7 @@ namespace LRReader.UWP.Views.Items
 				return;
 			}
 			_current = n.LeftImage + n.RightImage;
-			var animTask = ImagesRoot.Fade(value: 0.0f, duration: 80, easingMode: EasingMode.EaseOut).StartAsync();
+			var animTask = FadeOut.StartAsync(ImagesRoot);
 			var lImage = SharedGlobal.ImagesManager.GetImageCached(n.LeftImage);
 			var rImage = SharedGlobal.ImagesManager.GetImageCached(n.RightImage);
 			await animTask;
@@ -76,7 +80,7 @@ namespace LRReader.UWP.Views.Items
 				}
 			}
 			else*/
-				ImagesRoot.Fade(value: 1.0f, duration: 80, easingMode: EasingMode.EaseIn).Start();
+				FadeIn.Start(ImagesRoot);
 			//openLeft?.TryStart(LeftImage);
 			//openRight?.TryStart(RightImage);
 		}

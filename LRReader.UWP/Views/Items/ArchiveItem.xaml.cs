@@ -1,6 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
@@ -44,11 +45,10 @@ namespace LRReader.UWP.Views.Items
 
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
-				Overlay.Opacity = 0;
-				Title.Opacity = 0;
-				TagsGrid.Opacity = 0;
+				Overlay.SetVisualOpacity(0);
+				Title.SetVisualOpacity(0);
+				TagsGrid.SetVisualOpacity(0);
 				Thumbnail.Source = null;
-				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
 
 				var image = new BitmapImage();
@@ -66,10 +66,9 @@ namespace LRReader.UWP.Views.Items
 					Thumbnail.Source = image;
 				}
 
-				Ring.IsActive = false;
-				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-				TagsGrid.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				Overlay.FadeIn();
+				Title.FadeIn();
+				TagsGrid.FadeIn();
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}

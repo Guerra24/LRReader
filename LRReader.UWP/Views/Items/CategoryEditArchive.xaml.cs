@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using LRReader.UWP.Views.Dialogs;
+using LRReader.UWP.Extensions;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -45,11 +46,10 @@ namespace LRReader.UWP.Views.Items
 
 			if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
-				Overlay.Opacity = 0;
-				Title.Opacity = 0;
-				TagsGrid.Opacity = 0;
+				Overlay.SetVisualOpacity(0);
+				Title.SetVisualOpacity(0);
+				TagsGrid.SetVisualOpacity(0);
 				Thumbnail.Source = null;
-				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
 
 				var image = new BitmapImage();
@@ -62,15 +62,14 @@ namespace LRReader.UWP.Views.Items
 						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
 							Thumbnail.Stretch = Stretch.Uniform;
 					Thumbnail.Source = image;
-					Thumbnail.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+					Thumbnail.FadeIn();
 				}
 				else
 					ViewModel.MissingImage = true;
 
-				Ring.IsActive = false;
-				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-				TagsGrid.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				Overlay.FadeIn();
+				Title.FadeIn();
+				TagsGrid.FadeIn();
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}

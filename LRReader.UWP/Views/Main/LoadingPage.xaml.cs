@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.Internal;
 using LRReader.UWP.ViewModels;
-using Microsoft.Toolkit.Extensions;
 using System;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;

@@ -2,6 +2,7 @@
 using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -41,7 +42,7 @@ namespace LRReader.UWP.Views.Items
 			if (_loading)
 				return;
 			_loading = true;
-			Image.Opacity = 0;
+			Image.SetVisualOpacity(0);
 			Image.Source = null;
 			Ring.IsActive = true;
 			Data.MissingImage = false;
@@ -55,7 +56,7 @@ namespace LRReader.UWP.Views.Items
 			Image.Source = image;
 
 			if (image != null)
-				Image.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				Image.FadeIn();
 			else
 				Data.MissingImage = true;
 			_loading = false;

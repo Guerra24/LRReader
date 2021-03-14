@@ -2,6 +2,7 @@
 using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
@@ -29,6 +30,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class ArchiveTabContent : UserControl
 	{
+		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseIn);
+		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseOut);
+
 		public ArchivePageViewModel Data;
 
 		private int i;
@@ -43,6 +47,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
+			ScrollViewer.SetVisualOpacity(0);
+
 			Data = new ArchivePageViewModel();
 			Data.ZoomChangedEvent += FitImages;
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
@@ -121,8 +127,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				_wasNew = true;
 			}
-			await ImagesGrid.Fade(value: 0.0f, duration: 200).StartAsync();
-			await ScrollViewer.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
+			await FadeOut.StartAsync(ImagesGrid);
+			await FadeIn.StartAsync(ScrollViewer);
 			_focus = true;
 			FocusReader();
 		}
@@ -144,7 +150,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}*/
 
 			_focus = false;
-			await ScrollViewer.Fade(value: 0.0f, duration: 200).StartAsync();
+			await FadeOut.StartAsync(ScrollViewer);
 			Data.ShowReader = false;
 			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
@@ -187,7 +193,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.ReaderContent.RightImage != null)
 				await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");*/
 
-			await ImagesGrid.Fade(value: 1.0f, duration: 200, easingMode: EasingMode.EaseIn).StartAsync();
+			await FadeIn.StartAsync(ImagesGrid);
 
 			if (Global.ControlFlags.V077)
 				await Data.SetProgress(conv + 1);

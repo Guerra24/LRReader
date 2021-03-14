@@ -54,8 +54,5 @@
 				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="26" Glyph="&#xE735;" />
 			</Grid>
 		</Grid>
-		<muxc:ProgressRing
-			x:Name="Ring" Grid.Row="1" Width="50"
-			Height="50" IsActive="True" />
 	</Grid>
 </UserControl>

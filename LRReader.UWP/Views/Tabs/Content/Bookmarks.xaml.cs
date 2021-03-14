@@ -1,9 +1,9 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Main;
-using Microsoft.Toolkit.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

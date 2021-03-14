@@ -1,11 +1,10 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
-using Microsoft.Toolkit.Extensions;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
@@ -42,10 +41,9 @@ namespace LRReader.UWP.Views.Items
 
 			if (!_oldID.Equals(ViewModel.Category.id))
 			{
-				Overlay.Opacity = 0;
-				Title.Opacity = 0;
+				Overlay.SetVisualOpacity(0);
+				Title.SetVisualOpacity(0);
 				Thumbnail.Source = null;
-				Ring.IsActive = true;
 				ViewModel.MissingImage = false;
 
 				var first = ViewModel.Category.archives.FirstOrDefault();
@@ -70,9 +68,8 @@ namespace LRReader.UWP.Views.Items
 					ViewModel.SearchImage = true;
 				}
 
-				Ring.IsActive = false;
-				Overlay.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
-				Title.Fade(value: 1.0f, duration: 250, easingMode: EasingMode.EaseIn).Start();
+				Overlay.FadeIn();
+				Title.FadeIn();
 				_oldID = ViewModel.Category.id;
 			}
 		}
