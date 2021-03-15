@@ -4,6 +4,7 @@ using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
@@ -106,6 +107,16 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.SortByIndex = -1;
+		}
+
+		private async void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
+		{
+			await Crashes.SetEnabledAsync((sender as ToggleSwitch).IsOn);
+		}
+
+		private async void TrackCrashes_Loading(FrameworkElement sender, object args)
+		{
+			(sender as ToggleSwitch).IsOn = await Crashes.IsEnabledAsync();
 		}
 	}
 }

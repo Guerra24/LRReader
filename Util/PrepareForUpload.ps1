@@ -3,8 +3,6 @@
 Set-Location "./LRReader.UWP/AppPackages/"
 Rename-Item $(Get-ChildItem *LRReader* -Directory) "$(Get-Location)/LRReader.UWP"
 
-Remove-Item $(Get-ChildItem *.msixupload -File)
-
 $installer = "$(Get-Location)/LRReader.UWP.appinstaller"
 $html = "$(Get-Location)/index.html"
 $text = "_$($xmlDoc.Package.Identity.Version)_Test"

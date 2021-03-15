@@ -19,15 +19,25 @@ jobs:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
         CERT_BASE64: ${{ secrets.CERT_BASE64 }}
+        APPCENTER_APP_ID: ${{ secrets.APPCENTER_APP_ID }}
       run: |
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "$(Get-Location)/LRReader.UWP/Package.appxmanifest" -Force
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         Invoke-Expression "./Util/Version.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:DefineConstants="TRACE%3BNETFX_CORE%3BWINDOWS_UWP%3BSIDELOAD" /p:AppxSymbolPackageEnabled=false /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
+        Invoke-Expression "./Util/ConfigureAppCenter.ps1"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:DefineConstants="TRACE%3BNETFX_CORE%3BWINDOWS_UWP%3BSIDELOAD" /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
+    - name: Upload Symbols
+      env:
+        APPCENTER_TOKEN: ${{ secrets.APPCENTER_TOKEN }}
+      run: |
+        npm install -g appcenter-cli
+        Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
+        foreach ($file in $(Get-ChildItem *.appxsym -File)) { appcenter crashes upload-symbols --app Guerra24/LRReader --appxsym $file --token ${env:APPCENTER_TOKEN} }
+        Remove-Item $(Get-ChildItem *.appxsym -File)
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:

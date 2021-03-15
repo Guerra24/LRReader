@@ -171,6 +171,9 @@
   <data name="General.Connection.Text" xml:space="preserve">
     <value>Conexión</value>
   </data>
+  <data name="General.CrashReport.Header" xml:space="preserve">
+    <value>Recopilar datos de los errores y fallos</value>
+  </data>
   <data name="General.EditProfile.Content" xml:space="preserve">
     <value>Editar</value>
   </data>

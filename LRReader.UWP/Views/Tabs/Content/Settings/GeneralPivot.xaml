@@ -65,6 +65,9 @@
 			<ComboBox
 				x:Name="ThemeComboBox" x:Uid="/Settings/General/Theme" Margin="0,0,0,10"
 				SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+			<ToggleSwitch
+				x:Uid="/Settings/General/CrashReport" Margin="0,0,0,10" Loading="TrackCrashes_Loading"
+				Toggled="TrackCrashes_Toggled" />
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

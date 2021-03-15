@@ -2,6 +2,8 @@
 using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.UWP.Views.Main;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -21,7 +23,9 @@ namespace LRReader.UWP
 
 		public App()
 		{
-			Init.InitObjects();
+			Init.EarlyInit();
+			AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
+			Global.Init();
 			switch (Global.SettingsManager.Theme)
 			{
 				case AppTheme.Dark:
