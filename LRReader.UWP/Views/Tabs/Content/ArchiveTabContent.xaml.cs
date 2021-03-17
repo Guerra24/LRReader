@@ -46,6 +46,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private Subject<double> resizePixel = new Subject<double>();
 
+		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
+
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
@@ -59,6 +61,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				.Subscribe(async (height) =>
 				await DispatcherHelper.RunAsync(() =>
 				(ReaderControl.ContentTemplateRoot as ReaderImage).UpdateDecodedResolution((int)Math.Round(height))));
+			_loadSemaphore.Wait();
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -67,6 +70,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			FocusReader();
 			if (!_opened)
 			{
+				await _loadSemaphore.WaitAsync();
 				if (Global.ControlFlags.V077 && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
 				{
 					var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
@@ -82,6 +86,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 							break;
 					}
 				}
+				_loadSemaphore.Release();
 				if (Global.SettingsManager.OpenReader)
 				{
 					if (Data.Bookmarked)
@@ -96,6 +101,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			Data.Archive = archive;
 			await Data.Reload(true);
+			_loadSemaphore.Release();
 		}
 
 		private async void OpenReader()
