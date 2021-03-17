@@ -4,10 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
-	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
@@ -21,7 +21,7 @@
 	<Grid>
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				x:Name="ArchivesGrid"
+				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 				AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"
 				CanDragItems="{x:Bind CanDragItems, Mode=OneWay}"
 				DragItemsStarting="{x:Bind DragItemsStartingI, Mode=OneWay}"

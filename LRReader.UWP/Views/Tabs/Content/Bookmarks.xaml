@@ -8,6 +8,7 @@
 	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding BookmarksTabInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
@@ -25,8 +26,8 @@
 	<Grid Padding="0,10">
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				x:Name="ArchivesGrid" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
-				ItemClick="ArchivesGrid_ItemClick"
+				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging"
+				IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
 				ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">

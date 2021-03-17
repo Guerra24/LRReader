@@ -8,6 +8,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding ArchivesPageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
@@ -22,7 +23,8 @@
 	<Grid>
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				x:Name="ArchivesGrid" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
+				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True"
+				ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>

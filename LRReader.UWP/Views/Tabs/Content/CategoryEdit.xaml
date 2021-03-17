@@ -9,6 +9,7 @@
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
@@ -49,8 +50,9 @@
 				<ColumnDefinition MinWidth="340" />
 			</Grid.ColumnDefinitions>
 			<GridView
-				x:Name="CategoryArchives" AllowDrop="True" CanDragItems="True"
-				DragItemsStarting="CategoryArchives_DragItemsStarting" DragOver="CategoryArchives_DragOver" Drop="CategoryArchives_Drop"
+				x:Name="CategoryArchives" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" AllowDrop="True"
+				CanDragItems="True" DragItemsStarting="CategoryArchives_DragItemsStarting" DragOver="CategoryArchives_DragOver"
+				Drop="CategoryArchives_Drop"
 				ItemsSource="{x:Bind ViewModel.CategoryArchives}"
 				SelectionMode="Extended">
 				<GridView.ItemTemplate>

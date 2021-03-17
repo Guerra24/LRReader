@@ -15,6 +15,7 @@ using System.Reactive.Subjects;
 using System.Threading;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -39,6 +40,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _wasNew;
 		private bool _opened;
 		private bool _focus = true;
+		private bool _changePage;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
 
@@ -379,25 +381,47 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				if (pointerPoint.Properties.IsXButton1Pressed)
 				{
+					e.Handled = true;
 					PrevPage();
 					return;
 				}
 				else if (pointerPoint.Properties.IsXButton2Pressed)
 				{
+					e.Handled = true;
 					NextPage();
 					return;
 				}
 			}
-			var point = pointerPoint.Position;
-			double distance = ScrollViewer.ActualWidth / 6.0;
-			if (point.X < distance)
+			_changePage = pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed;
+		}
+
+		private void ScrollViewer_RightTapped(object sender, RightTappedRoutedEventArgs e) => HandleTapped(e.GetPosition(ScrollViewer));
+
+		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e) => HandleTapped(e.GetPosition(ScrollViewer));
+
+		private void HandleTapped(Point point)
+		{
+			if (_changePage)
 			{
-				PrevPage();
+				double distance = ScrollViewer.ActualWidth / 6.0;
+				if (point.X < distance)
+				{
+					PrevPage();
+				}
+				else if (point.X > ScrollViewer.ActualWidth - distance)
+				{
+					NextPage();
+				}
+				_changePage = false;
 			}
-			else if (point.X > ScrollViewer.ActualWidth - distance)
-			{
-				NextPage();
-			}
+		}
+
+		private void ReaderControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+		{
+			e.Handled = true;
+			double vertical = ScrollViewer.VerticalOffset;
+			double horizontal = ScrollViewer.HorizontalOffset;
+			ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
 		}
 
 		private void NextPage()
@@ -416,13 +440,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				--Data.ReaderIndex;
 				ScrollViewer.ChangeView(null, 0, null, true);
 			}
-		}
-
-		private void ReaderControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-		{
-			double vertical = ScrollViewer.VerticalOffset;
-			double horizontal = ScrollViewer.HorizontalOffset;
-			ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
 		}
 
 		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(false);

@@ -115,6 +115,7 @@ namespace LRReader.UWP.Views.Items
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
 					Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
+					e.Handled = true;
 				}
 			}
 		}
