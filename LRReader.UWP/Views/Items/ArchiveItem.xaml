@@ -132,8 +132,8 @@
 			</Grid>
 		</Grid>
 		<Grid
-			x:Name="TagsGrid" Grid.Row="2" PointerEntered="TagsGrid_PointerEntered"
-			PointerExited="TagsGrid_PointerExited">
+			x:Name="TagsGrid" Grid.Row="2" PointerCaptureLost="TagsGrid_PointerCaptureLost"
+			PointerEntered="TagsGrid_PointerEntered" PointerExited="TagsGrid_PointerExited">
 			<TextBlock
 				Grid.Row="2" Padding="2,0"
 				Text="{x:Bind ViewModel.Archive.TagsClean, Mode=OneWay}"

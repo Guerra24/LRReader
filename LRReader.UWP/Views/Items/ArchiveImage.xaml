@@ -9,6 +9,7 @@
 	Width="200"
 	Height="275"
 	DataContextChanged="UserControl_DataContextChanged"
+	PointerCaptureLost="UserControl_PointerCaptureLost"
 	PointerEntered="UserControl_PointerEntered"
 	PointerExited="UserControl_PointerExited"
 	mc:Ignorable="d">

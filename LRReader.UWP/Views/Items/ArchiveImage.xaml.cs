@@ -3,11 +3,10 @@ using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.Extensions;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
@@ -76,9 +75,11 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void UserControl_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0);
+		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0);
 
-		private void UserControl_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0, 0, 0, -26);
+		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0, 0, 0, -26);
+
+		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0, 0, 0, -26);
 	}
 
 }

@@ -50,7 +50,8 @@
 				x:Name="PinnedGrid" Padding="4" HorizontalAlignment="Left"
 				VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.Category.pinned, Mode=OneWay}"
-				Background="{ThemeResource GridOverGridBackground}">
+				Background="{ThemeResource GridOverGridBackground}"
+				CornerRadius="0,4,0,0">
 				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="26" Glyph="&#xE735;" />
 			</Grid>
 		</Grid>

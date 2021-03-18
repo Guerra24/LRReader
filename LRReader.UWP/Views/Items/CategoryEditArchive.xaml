@@ -82,7 +82,8 @@
 			<Grid
 				x:Name="ProgressGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.Bookmarked, Mode=OneWay}"
-				Background="{ThemeResource GridOverGridBackground}">
+				Background="{ThemeResource GridOverGridBackground}"
+				CornerRadius="0,4,0,0">
 				<TextBlock Padding="6,2" FontSize="16">
 					<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
 				</TextBlock>
@@ -90,7 +91,8 @@
 			<Grid
 				x:Name="IsNewGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.IsNew, Mode=OneWay}"
-				Background="{ThemeResource GridOverGridBackground}">
+				Background="{ThemeResource GridOverGridBackground}"
+				CornerRadius="4,0,0,0">
 				<TextBlock x:Uid="/Items/Archive/New" Padding="6,2" FontSize="16" />
 			</Grid>
 		</Grid>

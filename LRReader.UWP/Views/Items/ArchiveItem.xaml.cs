@@ -147,6 +147,17 @@ namespace LRReader.UWP.Views.Items
 				HidePopup.Begin();
 		}
 
+		private void TagsGrid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+		{
+			if (_open)
+			{
+				_open = false;
+				TagsPopup.IsOpen = false;
+			}
+			if (TagsPopup.IsOpen)
+				HidePopup.Begin();
+		}
+
 		private void HidePopup_Completed(object sender, object e)
 		{
 			TagsPopup.IsOpen = false;
@@ -170,5 +181,6 @@ namespace LRReader.UWP.Views.Items
 			var dialog = new CategoryArchive(ViewModel.Archive.arcid, ViewModel.Archive.title);
 			await dialog.ShowAsync();
 		}
+
 	}
 }
