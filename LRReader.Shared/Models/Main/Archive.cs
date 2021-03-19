@@ -43,6 +43,8 @@ namespace LRReader.Shared.Models.Main
 		public void UpdateTags()
 		{
 			TagsClean = "";
+			if (tags == null) // TODO: Apparently tags can be null, what? Follow up
+				return;
 			var separatedTags = tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 			foreach (var s in separatedTags)
 				TagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
