@@ -1,6 +1,6 @@
-﻿namespace LRReader.Shared.Internal
+﻿namespace LRReader.Shared.Services
 {
-	public interface ISettingsStorage
+	public interface ISettingsStorageService
 	{
 		void StoreObjectLocal(string key, object obj);
 
@@ -19,7 +19,7 @@
 		void DeleteObjectRoamed(string key);
 	}
 
-	public class StubSettingsStorage : ISettingsStorage
+	public class StubSettingsStorageService : ISettingsStorageService
 	{
 		public T GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
 

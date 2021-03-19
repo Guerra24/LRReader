@@ -1,18 +1,10 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class HostTabPageViewModel : ViewModelBase
+	public class HostTabPageViewModel : ObservableObject
 	{
 		private CustomTab _currentTab;
 		public CustomTab CurrentTab
@@ -23,7 +15,7 @@ namespace LRReader.UWP.ViewModels
 				if (_currentTab != value)
 				{
 					_currentTab = value;
-					RaisePropertyChanged("CurrentTab");
+					OnPropertyChanged("CurrentTab");
 				}
 			}
 		}
@@ -36,8 +28,8 @@ namespace LRReader.UWP.ViewModels
 				if (_fullscreen != value)
 				{
 					_fullscreen = value;
-					RaisePropertyChanged("FullScreen");
-					RaisePropertyChanged("Windowed");
+					OnPropertyChanged("FullScreen");
+					OnPropertyChanged("Windowed");
 				}
 			}
 		}

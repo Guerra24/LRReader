@@ -11,7 +11,7 @@ namespace LRReader.UWP.ViewModels.Items
 			set
 			{
 				_missingImage = value;
-				RaisePropertyChanged("MissingImage");
+				OnPropertyChanged("MissingImage");
 			}
 		}
 	}

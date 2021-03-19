@@ -1,11 +1,8 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -36,7 +33,7 @@ namespace LRReader.Shared.Models.Main
 
 		public void Update()
 		{
-			RaisePropertyChanged(string.Empty);
+			OnPropertyChanged(string.Empty);
 		}
 
 		public override string ToString()
@@ -53,7 +50,7 @@ namespace LRReader.Shared.Models.Main
 
 		public void Update()
 		{
-			RaisePropertyChanged(string.Empty);
+			OnPropertyChanged(string.Empty);
 		}
 
 		[JsonIgnore]

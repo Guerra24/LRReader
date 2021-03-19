@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
+using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Items;
@@ -77,7 +78,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var savePicker = new FileSavePicker();
 			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
 			savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".json" });
-			var fileName = "bookmarks " + SharedGlobal.SettingsManager.Profile.Name;
+			var fileName = "bookmarks " + Service.Settings.Profile.Name;
 			var validate = new Regex(string.Format("[{0}]", Regex.Escape(new string(Path.GetInvalidFileNameChars()))));
 			savePicker.SuggestedFileName = validate.Replace(fileName, "");
 
@@ -85,7 +86,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (file != null)
 			{
 				CachedFileManager.DeferUpdates(file);
-				await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(SharedGlobal.SettingsManager.Profile.Bookmarks));
+				await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(Service.Settings.Profile.Bookmarks));
 				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
 				if (status == FileUpdateStatus.Complete)
 				{
@@ -131,8 +132,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 				var result = await dialog.ShowAsync();
 				if (result == ContentDialogResult.Primary)
 				{
-					SharedGlobal.SettingsManager.Profile.Bookmarks = bookmarks;
-					SharedGlobal.SettingsManager.SaveProfiles();
+					Service.Settings.Profile.Bookmarks = bookmarks;
+					Service.Settings.SaveProfiles();
 					Global.EventManager.CloseAllTabs();
 					(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
 				}
@@ -147,7 +148,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			if (Global.SettingsManager.CompactBookmarks)
+			if (Service.Settings.CompactBookmarks)
 				return CompactTemplate;
 			else
 				return FullTemplate;

@@ -99,6 +99,10 @@
 				</Grid>
 			</controls:TabView.TabStripFooter>
 		</controls:TabView>
-		<comcontrols:InAppNotification x:Name="Notifications" ShowDismissButton="True" StackMode="QueueBehind" />
+		<comcontrols:InAppNotification
+			x:Name="Notifications"
+			Background="{ThemeResource GridOverGridBackground}"
+			ShowDismissButton="True" StackMode="QueueBehind"
+			Style="{StaticResource CustomNotificationStyle}" />
 	</Grid>
 </Page>

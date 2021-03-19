@@ -2,6 +2,7 @@
 using LRReader.UWP.Views.Tabs;
 using System.Threading.Tasks;
 using static LRReader.Internal.Global;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -15,7 +16,7 @@ namespace LRReader.UWP.ViewModels
 			RefreshOnErrorButton = false;
 			ArchiveList.Clear();
 			LoadingArchives = true;
-			foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
+			foreach (var b in Settings.Profile.Bookmarks)
 			{
 				var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
 				if (archive != null)
@@ -33,11 +34,11 @@ namespace LRReader.UWP.ViewModels
 			SortBy.Clear();
 			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
 				SortBy.Add(n);
-			SortByIndex = SortBy.IndexOf(SharedGlobal.SettingsManager.SortByDefault);
-			OrderBy = SharedGlobal.SettingsManager.OrderByDefault;
-			if (SharedGlobal.SettingsManager.OpenBookmarksStart)
+			SortByIndex = SortBy.IndexOf(Settings.SortByDefault);
+			OrderBy = Settings.OrderByDefault;
+			if (Settings.OpenBookmarksStart)
 				if (SharedGlobal.ArchivesManager.Archives.Count > 0)
-					foreach (var b in SharedGlobal.SettingsManager.Profile.Bookmarks)
+					foreach (var b in Settings.Profile.Bookmarks)
 					{
 						var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
 						if (archive != null)

@@ -1,7 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class CategoryEditViewModel : ViewModelBase
+	public class CategoryEditViewModel : ObservableObject
 	{
 		public Category category;
 
@@ -25,7 +25,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_canSave = value;
-				RaisePropertyChanged("CanSave");
+				OnPropertyChanged("CanSave");
 			}
 		}
 
@@ -44,9 +44,9 @@ namespace LRReader.UWP.ViewModels
 			Name = cat.name;
 			Search = cat.search;
 			Pinned = cat.pinned;
-			RaisePropertyChanged("Name");
-			RaisePropertyChanged("Search");
-			RaisePropertyChanged("Pinned");
+			OnPropertyChanged("Name");
+			OnPropertyChanged("Search");
+			OnPropertyChanged("Pinned");
 
 			var removeMissing = new List<string>();
 			foreach (var a in category.archives)
@@ -60,7 +60,7 @@ namespace LRReader.UWP.ViewModels
 					await CategoriesProvider.RemoveArchiveFromCategory(category.id, a);
 				}
 			}
-			RaisePropertyChanged("Empty");
+			OnPropertyChanged("Empty");
 			foreach (var a in removeMissing) category.archives.Remove(a);
 			_loading = false;
 		}
@@ -97,16 +97,16 @@ namespace LRReader.UWP.ViewModels
 			Name = category.name;
 			Search = category.search;
 			Pinned = category.pinned;
-			RaisePropertyChanged("Name");
-			RaisePropertyChanged("Search");
-			RaisePropertyChanged("Pinned");
+			OnPropertyChanged("Name");
+			OnPropertyChanged("Search");
+			OnPropertyChanged("Pinned");
 
 			foreach (var a in category.archives)
 			{
 				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
 				CategoryArchives.Add(archive);
 			}
-			RaisePropertyChanged("Empty");
+			OnPropertyChanged("Empty");
 			_loading = false;
 		}
 
@@ -118,7 +118,7 @@ namespace LRReader.UWP.ViewModels
 				category.name = Name;
 				category.search = Search;
 				category.pinned = Pinned;
-				RaisePropertyChanged("Name");
+				OnPropertyChanged("Name");
 			}
 		}
 
@@ -131,7 +131,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				category.archives.Add(archiveID);
 				CategoryArchives.Add(SharedGlobal.ArchivesManager.GetArchive(archiveID));
-				RaisePropertyChanged("Empty");
+				OnPropertyChanged("Empty");
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				category.archives.Remove(archiveID);
 				CategoryArchives.Remove(SharedGlobal.ArchivesManager.GetArchive(archiveID));
-				RaisePropertyChanged("Empty");
+				OnPropertyChanged("Empty");
 			}
 		}
 	}

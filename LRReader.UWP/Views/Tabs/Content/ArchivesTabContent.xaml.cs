@@ -1,6 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -36,8 +37,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			loaded = true;
 			reloading = true;
-			AscFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Ascending;
-			DesFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Descending;
+			AscFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Ascending;
+			DesFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Descending;
 			Data.ControlsEnabled = false; // THIS ---------------
 			Data.LoadBookmarks();
 			await HandleSearch();
@@ -133,8 +134,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			reloading = true;
 			Data.ControlsEnabled = false;
 			await Data.Refresh();// THIS ---------------
-			AscFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Ascending;
-			DesFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Descending;
+			AscFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Ascending;
+			DesFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Descending;
 			await HandleSearch();
 			Data.ControlsEnabled = true;
 			reloading = false;

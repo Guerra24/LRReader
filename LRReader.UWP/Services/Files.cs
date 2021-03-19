@@ -1,10 +1,10 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Services;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace LRReader.UWP.Impl
+namespace LRReader.UWP.Services
 {
-	public class UWPFilesStorage : IFilesStorage
+	public class FilesService : IFilesService
 	{
 
 		public Task<string> GetFile(string path) => File.ReadAllTextAsync(path);

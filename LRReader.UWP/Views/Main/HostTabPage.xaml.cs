@@ -1,6 +1,6 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
+﻿using LRReader.Internal;
 using LRReader.UWP.Internal;
+using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
@@ -16,6 +16,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.Views.Main
 {
@@ -59,13 +60,13 @@ namespace LRReader.UWP.Views.Main
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
-			await DispatcherHelper.RunAsync(() =>
+			await DispatcherService.RunAsync(() =>
 			{
 				Global.EventManager.AddTab(new ArchivesTab());
-				if (Global.SettingsManager.OpenBookmarksTab)
+				if (Settings.OpenBookmarksTab)
 					Global.EventManager.AddTab(new BookmarksTab(), false);
 				if (Global.ControlFlags.CategoriesEnabled)
-					if (Global.SettingsManager.OpenCategoriesTab)
+					if (Settings.OpenCategoriesTab)
 						Global.EventManager.AddTab(new CategoriesTab(), false);
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
@@ -139,7 +140,7 @@ namespace LRReader.UWP.Views.Main
 			{
 				TabViewControl.TabItems.Add(tab);
 				if (switchToTab)
-					await DispatcherHelper.RunAsync(() => Data.CurrentTab = tab);
+					await DispatcherService.RunAsync(() => Data.CurrentTab = tab);
 			}
 		}
 
@@ -190,13 +191,13 @@ namespace LRReader.UWP.Views.Main
 
 		private async Task ShowWhatsNew()
 		{
-			var version = Version.Parse(Global.SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
+			var version = Version.Parse(SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
 			if (version >= Util.GetAppVersion())
 				return;
 			var result = await Global.UpdatesManager.GetChangelog(Util.GetAppVersion());
 			if (result == null)
 				return;
-			Global.SettingsStorage.StoreObjectLocal("_version", Util.GetAppVersion().ToString());
+			SettingsStorage.StoreObjectLocal("_version", Util.GetAppVersion().ToString());
 			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), result);
 			await dialog.ShowAsync();
 		}

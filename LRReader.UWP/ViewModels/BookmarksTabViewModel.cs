@@ -1,14 +1,14 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.Shared.Models.Main;
-using System;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.UWP.Services;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using static LRReader.Shared.Internal.SharedGlobal;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class BookmarksTabViewModel : ViewModelBase
+	public class BookmarksTabViewModel : ObservableObject
 	{
 		private bool _loadingArchives = false;
 		public bool LoadingArchives
@@ -17,7 +17,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_loadingArchives = value;
-				RaisePropertyChanged("LoadingArchives");
+				OnPropertyChanged("LoadingArchives");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -27,7 +27,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_refreshOnErrorButton = value;
-				RaisePropertyChanged("RefreshOnErrorButton");
+				OnPropertyChanged("RefreshOnErrorButton");
 			}
 		}
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
@@ -54,14 +54,14 @@ namespace LRReader.UWP.ViewModels
 			{
 				await Task.Run(async () =>
 				{
-					foreach (var b in SettingsManager.Profile.Bookmarks)
+					foreach (var b in Settings.Profile.Bookmarks)
 					{
 						var archive = ArchivesManager.GetArchive(b.archiveID);
 						if (archive != null)
-							await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
+							await DispatcherService.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
-				RaisePropertyChanged("Empty");
+				OnPropertyChanged("Empty");
 			}
 			else
 				RefreshOnErrorButton = true;

@@ -14,7 +14,6 @@ namespace LRReader.Internal
 		{
 			ApiConnection = new ApiConnection();
 			SharedGlobal.EventManager = EventManager = new EventManager();
-			SettingsManager = new SettingsManager();
 			ArchivesManager = new ArchivesManager();
 			ImageProcessing = new ImageProcessing();
 		}

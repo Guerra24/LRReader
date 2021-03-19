@@ -1,16 +1,16 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Threading;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-using System;
+using LRReader.UWP.Services;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class SearchResultsViewModel : ViewModelBase
+	public class SearchResultsViewModel : ObservableObject
 	{
 		private bool _loadingArchives = true;
 		public bool LoadingArchives
@@ -19,10 +19,10 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_loadingArchives = value;
-				RaisePropertyChanged("LoadingArchives");
-				RaisePropertyChanged("ControlsEnabled");
-				RaisePropertyChanged("HasNextPage");
-				RaisePropertyChanged("HasPrevPage");
+				OnPropertyChanged("LoadingArchives");
+				OnPropertyChanged("ControlsEnabled");
+				OnPropertyChanged("HasNextPage");
+				OnPropertyChanged("HasPrevPage");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -32,10 +32,10 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_refreshOnErrorButton = value;
-				RaisePropertyChanged("RefreshOnErrorButton");
-				RaisePropertyChanged("ControlsEnabled");
-				RaisePropertyChanged("HasNextPage");
-				RaisePropertyChanged("HasPrevPage");
+				OnPropertyChanged("RefreshOnErrorButton");
+				OnPropertyChanged("ControlsEnabled");
+				OnPropertyChanged("HasNextPage");
+				OnPropertyChanged("HasPrevPage");
 			}
 		}
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
@@ -48,10 +48,10 @@ namespace LRReader.UWP.ViewModels
 				if (value != _page)
 				{
 					_page = value;
-					RaisePropertyChanged("Page");
-					RaisePropertyChanged("DisplayPage");
-					RaisePropertyChanged("HasNextPage");
-					RaisePropertyChanged("HasPrevPage");
+					OnPropertyChanged("Page");
+					OnPropertyChanged("DisplayPage");
+					OnPropertyChanged("HasNextPage");
+					OnPropertyChanged("HasPrevPage");
 				}
 			}
 		}
@@ -65,7 +65,7 @@ namespace LRReader.UWP.ViewModels
 				if (value != _totalArchives)
 				{
 					_totalArchives = value;
-					RaisePropertyChanged("TotalArchives");
+					OnPropertyChanged("TotalArchives");
 				}
 			}
 		}
@@ -78,7 +78,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_newOnly = value;
-				RaisePropertyChanged("NewOnly");
+				OnPropertyChanged("NewOnly");
 			}
 		}
 		private bool _untaggedOnly;
@@ -88,7 +88,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_untaggedOnly = value;
-				RaisePropertyChanged("UntaggedOnly");
+				OnPropertyChanged("UntaggedOnly");
 			}
 		}
 		public string Query = "";
@@ -100,9 +100,9 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_controlsEnabled = value;
-				RaisePropertyChanged("ControlsEnabled");
-				RaisePropertyChanged("HasNextPage");
-				RaisePropertyChanged("HasPrevPage");
+				OnPropertyChanged("ControlsEnabled");
+				OnPropertyChanged("HasNextPage");
+				OnPropertyChanged("HasPrevPage");
 			}
 		}
 		protected bool _internalLoadingArchives;
@@ -117,7 +117,7 @@ namespace LRReader.UWP.ViewModels
 				if (value != _sortByIndex)
 				{
 					_sortByIndex = value;
-					RaisePropertyChanged("SortByIndex");
+					OnPropertyChanged("SortByIndex");
 				}
 			}
 		}
@@ -127,8 +127,8 @@ namespace LRReader.UWP.ViewModels
 		{
 			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
 				SortBy.Add(n);
-			SortByIndex = _sortByIndex = SortBy.IndexOf(SharedGlobal.SettingsManager.SortByDefault);
-			OrderBy = SharedGlobal.SettingsManager.OrderByDefault;
+			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
+			OrderBy = Settings.OrderByDefault;
 		}
 
 		public async Task NextPage()
@@ -175,7 +175,7 @@ namespace LRReader.UWP.ViewModels
 							continue;
 						var archive = SharedGlobal.ArchivesManager.GetArchive(a.arcid);
 						if (archive != null)
-							await DispatcherHelper.RunAsync(() => ArchiveList.Add(archive));
+							await DispatcherService.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
 				TotalArchives = resultPage.recordsFiltered;

@@ -1,14 +1,14 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class ArchiveEditViewModel : ViewModelBase
+	public class ArchiveEditViewModel : ObservableObject
 	{
 		public Archive Archive;
 
@@ -22,7 +22,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_saving = value;
-				RaisePropertyChanged("Saving");
+				OnPropertyChanged("Saving");
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace LRReader.UWP.ViewModels
 				if (_currentPlugin != value)
 				{
 					_currentPlugin = value;
-					RaisePropertyChanged("CurrentPlugin");
+					OnPropertyChanged("CurrentPlugin");
 				}
 			}
 		}
@@ -48,9 +48,9 @@ namespace LRReader.UWP.ViewModels
 			Archive = archive;
 			Title = archive.title;
 			Tags = archive.tags;
-			RaisePropertyChanged("Title");
-			RaisePropertyChanged("Tags");
-			RaisePropertyChanged("Archive");
+			OnPropertyChanged("Title");
+			OnPropertyChanged("Tags");
+			OnPropertyChanged("Archive");
 			Plugins.Clear();
 			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
 			foreach (var p in plugins)
@@ -65,8 +65,8 @@ namespace LRReader.UWP.ViewModels
 			{
 				Title = result.title;
 				Tags = result.tags;
-				RaisePropertyChanged("Title");
-				RaisePropertyChanged("Tags");
+				OnPropertyChanged("Title");
+				OnPropertyChanged("Tags");
 			}
 			Plugins.Clear();
 			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
@@ -83,7 +83,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				Archive.title = Title;
 				Archive.tags = Tags;
-				RaisePropertyChanged("Archive");
+				OnPropertyChanged("Archive");
 			}
 			Saving = false;
 		}
@@ -104,7 +104,7 @@ namespace LRReader.UWP.ViewModels
 							Tags = Tags.TrimEnd() + ",";
 						}
 						Tags += result.data.new_tags;
-						RaisePropertyChanged("Tags");
+						OnPropertyChanged("Tags");
 					}
 				}
 				else

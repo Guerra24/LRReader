@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Internal;
+using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using System;
 using System.Net.NetworkInformation;
@@ -16,6 +16,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.Views.Main
 {
@@ -61,7 +62,7 @@ namespace LRReader.UWP.Views.Main
 #if !SIDELOAD && !DEBUG
 			await DownloadUpdateStore();
 #endif
-			bool firstRun = SharedGlobal.SettingsManager.Profile == null;
+			bool firstRun = Settings.Profile == null;
 			if (firstRun)
 			{
 				await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -73,11 +74,11 @@ namespace LRReader.UWP.Views.Main
 #if !DEBUG
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
 #endif
-			SharedGlobal.ApiConnection.RefreshSettings(SharedGlobal.SettingsManager.Profile);
+			SharedGlobal.ApiConnection.RefreshSettings(Settings.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
-				var address = SharedGlobal.SettingsManager.Profile.ServerAddress;
+				var address = Settings.Profile.ServerAddress;
 				if (address.Contains("127.0.0.") || address.Contains("localhost"))
 				{
 					ViewModel.Status = lang.GetString("LoadingPage/NoConnectionLocalHost");
@@ -108,7 +109,7 @@ namespace LRReader.UWP.Views.Main
 				await Reload();
 				return;
 			}
-			if (serverInfo.nofun_mode && !SharedGlobal.SettingsManager.Profile.HasApiKey)
+			if (serverInfo.nofun_mode && !Settings.Profile.HasApiKey)
 			{
 				ViewModel.Status = lang.GetString("LoadingPage/MissingKey");
 				await Reload();
@@ -151,7 +152,7 @@ namespace LRReader.UWP.Views.Main
 
 			downloadTask.Progress = async (info, progress) =>
 			{
-				await DispatcherHelper.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
+				await DispatcherService.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
 			};
 
 			var result = await downloadTask.AsTask();

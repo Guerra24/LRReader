@@ -1,23 +1,17 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Internal;
-using LRReader.Shared.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels.Base
 {
-	public class ArchiveBaseViewModel : ViewModelBase
+	public class ArchiveBaseViewModel : ObservableObject
 	{
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
@@ -26,7 +20,7 @@ namespace LRReader.UWP.ViewModels.Base
 			set
 			{
 				_refreshOnErrorButton = value;
-				RaisePropertyChanged("RefreshOnErrorButton");
+				OnPropertyChanged("RefreshOnErrorButton");
 			}
 		}
 		private bool _controlsEnabled;
@@ -36,8 +30,8 @@ namespace LRReader.UWP.ViewModels.Base
 			set
 			{
 				_controlsEnabled = value;
-				RaisePropertyChanged("ControlsEnabled");
-				RaisePropertyChanged("Downloading");
+				OnPropertyChanged("ControlsEnabled");
+				OnPropertyChanged("Downloading");
 			}
 		}
 		private Archive _archive = new Archive() { arcid = "", isnew = "" };
@@ -51,9 +45,9 @@ namespace LRReader.UWP.ViewModels.Base
 					if (!_archive.arcid.Equals(value.arcid))
 					{
 						_archive = value;
-						BookmarkedArchive = Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
-						RaisePropertyChanged("Archive");
-						RaisePropertyChanged("IsNew");
+						BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+						OnPropertyChanged("Archive");
+						OnPropertyChanged("IsNew");
 					}
 				}
 			}
@@ -69,7 +63,7 @@ namespace LRReader.UWP.ViewModels.Base
 			set
 			{
 				_downloading = value;
-				RaisePropertyChanged("Downloading");
+				OnPropertyChanged("Downloading");
 			}
 		}
 		private BookmarkedArchive _bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
@@ -86,9 +80,9 @@ namespace LRReader.UWP.ViewModels.Base
 				{
 					_bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
 				}
-				RaisePropertyChanged("Bookmarked");
-				RaisePropertyChanged("Pages");
-				RaisePropertyChanged("BookmarkedArchive");
+				OnPropertyChanged("Bookmarked");
+				OnPropertyChanged("Pages");
+				OnPropertyChanged("BookmarkedArchive");
 			}
 		}
 		public bool Bookmarked
@@ -103,23 +97,23 @@ namespace LRReader.UWP.ViewModels.Base
 				{
 					if (value)
 					{
-						var exist = Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+						var exist = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
 						if (exist != null)
 						{
 							BookmarkedArchive = exist;
 						}
 						else
 						{
-							Global.SettingsManager.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
+							Settings.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
 						}
 					}
 					else
 					{
-						Global.SettingsManager.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
+						Settings.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
 						BookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
 					}
-					Global.SettingsManager.SaveProfiles();
-					RaisePropertyChanged("Icon");
+					Settings.SaveProfiles();
+					OnPropertyChanged("Icon");
 				}
 			}
 		}
@@ -141,7 +135,7 @@ namespace LRReader.UWP.ViewModels.Base
 				if (value != _pages)
 				{
 					_pages = value;
-					RaisePropertyChanged("Pages");
+					OnPropertyChanged("Pages");
 				}
 			}
 		}
@@ -160,7 +154,7 @@ namespace LRReader.UWP.ViewModels.Base
 					BookmarkedArchive.page = value;
 					BookmarkedArchive.totalPages = Pages;
 					BookmarkedArchive.Update();
-					Global.SettingsManager.SaveProfiles();
+					Settings.SaveProfiles();
 				}
 			}
 		}
@@ -169,7 +163,7 @@ namespace LRReader.UWP.ViewModels.Base
 			get => new SymbolIconSource() { Symbol = Bookmarked ? Symbol.Favorite : Symbol.Pictures };
 		}
 
-		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
+		public bool CanEdit => Settings.Profile.HasApiKey;
 
 		public async Task LoadArchive()
 		{
@@ -181,7 +175,7 @@ namespace LRReader.UWP.ViewModels.Base
 				Archive.pagecount = result.pagecount;
 				Archive.progress = result.progress;
 				Archive.UpdateTags();
-				RaisePropertyChanged("Archive");
+				OnPropertyChanged("Archive");
 			}
 		}
 

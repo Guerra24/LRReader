@@ -1,15 +1,12 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Internal;
+﻿using LRReader.Internal;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class WebTabViewModel : ViewModelBase
+	public class WebTabViewModel : ObservableObject
 	{
 		private static List<string> Allowed = new List<string>() { "/upload", "/batch", "/config", "/config/plugins", "/logs" };
 
@@ -20,7 +17,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_title = value;
-				RaisePropertyChanged("Title");
+				OnPropertyChanged("Title");
 			}
 		}
 		private string _error = "";
@@ -30,7 +27,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_error = value;
-				RaisePropertyChanged("Error");
+				OnPropertyChanged("Error");
 			}
 		}
 		private bool _showError;
@@ -40,7 +37,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_showError = value;
-				RaisePropertyChanged("ShowError");
+				OnPropertyChanged("ShowError");
 			}
 		}
 		public Uri Page;

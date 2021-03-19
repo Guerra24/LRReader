@@ -7,8 +7,6 @@ namespace LRReader.Shared.Internal
 	{
 		public static ApiConnection ApiConnection { get; set; }
 		public static SharedEventManager EventManager { get; set; }
-		public static ISettingsStorage SettingsStorage { get; set; } = new StubSettingsStorage();
-		public static SettingsManager SettingsManager { get; set; }
 		public static ArchivesManager ArchivesManager { get; set; }
 		public static UpdatesManager UpdatesManager { get; } = new UpdatesManager();
 		public static ServerInfo ServerInfo { get; set; }

@@ -4,6 +4,7 @@ using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Internal
 {
@@ -90,8 +91,8 @@ namespace LRReader.Shared.Internal
 				var range = result.Data;
 				MIN_VERSION = range.minSupported;
 				MAX_VERSION = range.maxSupported;
-				SharedGlobal.SettingsStorage.StoreObjectLocal("MinVersion", MIN_VERSION.ToString());
-				SharedGlobal.SettingsStorage.StoreObjectLocal("MaxVersion", MAX_VERSION.ToString());
+				SettingsStorage.StoreObjectLocal("MinVersion", MIN_VERSION.ToString());
+				SettingsStorage.StoreObjectLocal("MaxVersion", MAX_VERSION.ToString());
 			}
 			else
 			{
@@ -101,8 +102,8 @@ namespace LRReader.Shared.Internal
 
 		private void ReadVersion()
 		{
-			MIN_VERSION = Version.Parse(SharedGlobal.SettingsStorage.GetObjectLocal("MinVersion", MIN_VERSION.ToString()));
-			MAX_VERSION = Version.Parse(SharedGlobal.SettingsStorage.GetObjectLocal("MaxVersion", MAX_VERSION.ToString()));
+			MIN_VERSION = Version.Parse(SettingsStorage.GetObjectLocal("MinVersion", MIN_VERSION.ToString()));
+			MAX_VERSION = Version.Parse(SettingsStorage.GetObjectLocal("MaxVersion", MAX_VERSION.ToString()));
 		}
 	}
 

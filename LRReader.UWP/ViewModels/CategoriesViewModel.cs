@@ -1,21 +1,16 @@
-﻿using GalaSoft.MvvmLight;
-using static LRReader.Internal.Global;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using LRReader.UWP.Services;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Internal;
-using LRReader.UWP.Views.Tabs;
-using GalaSoft.MvvmLight.Threading;
-using GalaSoft.MvvmLight.Command;
-using LRReader.Shared.Providers;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class CategoriesViewModel : ViewModelBase
+	public class CategoriesViewModel : ObservableObject
 	{
 		private bool _loadingCategories = true;
 		public bool LoadingCategories
@@ -24,8 +19,8 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_loadingCategories = value;
-				RaisePropertyChanged("LoadingCategories");
-				RaisePropertyChanged("ControlsEnabled");
+				OnPropertyChanged("LoadingCategories");
+				OnPropertyChanged("ControlsEnabled");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -35,8 +30,8 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_refreshOnErrorButton = value;
-				RaisePropertyChanged("RefreshOnErrorButton");
-				RaisePropertyChanged("ControlsEnabled");
+				OnPropertyChanged("RefreshOnErrorButton");
+				OnPropertyChanged("ControlsEnabled");
 			}
 		}
 		public ObservableCollection<Category> CategoriesList = new ObservableCollection<Category>();
@@ -47,7 +42,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_controlsEnabled = value;
-				RaisePropertyChanged("ControlsEnabled");
+				OnPropertyChanged("ControlsEnabled");
 			}
 		}
 		protected bool _internalLoadingCategories;
@@ -83,14 +78,14 @@ namespace LRReader.UWP.ViewModels
 			var result = await CategoriesProvider.GetCategories();
 			if (result != null)
 			{
-				if (SharedGlobal.SettingsManager.Profile.HasApiKey)
+				if (Settings.Profile.HasApiKey)
 					CategoriesList.Add(new AddNewCategory());
 				await Task.Run(async () =>
 				{
 					foreach (var a in result.OrderBy(c => !c.pinned))
 					{
 						a.DeleteCategory += DeleteCategory;
-						await DispatcherHelper.RunAsync(() => CategoriesList.Add(a));
+						await DispatcherService.RunAsync(() => CategoriesList.Add(a));
 					}
 				});
 			}

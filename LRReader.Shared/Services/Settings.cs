@@ -1,6 +1,6 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,10 +8,12 @@ using System.Collections.Specialized;
 using System.Linq;
 using static LRReader.Shared.Internal.SharedGlobal;
 
-namespace LRReader.Shared.Internal
+namespace LRReader.Shared.Services
 {
-	public class SettingsManager : ViewModelBase
+	public class SettingsService : ObservableObject
 	{
+
+		private readonly ISettingsStorageService SettingsStorage;
 
 		private ObservableCollection<ServerProfile> _profiles;
 		public ObservableCollection<ServerProfile> Profiles
@@ -20,7 +22,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				_profiles = value;
-				RaisePropertyChanged("Profiles");
+				OnPropertyChanged("Profiles");
 			}
 		}
 		private ServerProfile _profile;
@@ -34,7 +36,7 @@ namespace LRReader.Shared.Internal
 				if (_profile != value)
 				{
 					_profile = value;
-					RaisePropertyChanged("Profile");
+					OnPropertyChanged("Profile");
 				}
 			}
 		}
@@ -52,7 +54,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectLocal("DefaultZoom", value);
-				RaisePropertyChanged("DefaultZoom");
+				OnPropertyChanged("DefaultZoom");
 			}
 		}
 		public bool ReadRTL
@@ -79,7 +81,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("BookmarkReminder", value);
-				RaisePropertyChanged("BookmarkReminder");
+				OnPropertyChanged("BookmarkReminder");
 			}
 		}
 		public BookmarkReminderMode BookmarkReminderMode
@@ -118,7 +120,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("FitToWidth", value);
-				RaisePropertyChanged("FitToWidth");
+				OnPropertyChanged("FitToWidth");
 			}
 		}
 		public int FitScaleLimit
@@ -127,7 +129,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectLocal("FitScaleLimit", value);
-				RaisePropertyChanged("FitScaleLimit");
+				OnPropertyChanged("FitScaleLimit");
 			}
 		}
 		public AppTheme Theme
@@ -163,7 +165,7 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectLocal("SettingsVersion", value);
-				RaisePropertyChanged("SettingsVersionLocal");
+				OnPropertyChanged("SettingsVersionLocal");
 			}
 		}
 		public static readonly int CurrentRoamedVersion = 1;
@@ -173,15 +175,16 @@ namespace LRReader.Shared.Internal
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
-				RaisePropertyChanged("SettingsVersionRoamed");
+				OnPropertyChanged("SettingsVersionRoamed");
 			}
 		}
-		public SettingsManager()
+		public SettingsService(ISettingsStorageService settingsStorage)
 		{
+			SettingsStorage = settingsStorage;
 			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
 			if (profiles != null)
 			{
-				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles as string);
+				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles);
 			}
 			else
 			{
@@ -199,7 +202,7 @@ namespace LRReader.Shared.Internal
 			var profile = SettingsStorage.GetObjectLocal<string>("ProfileUID");
 			if (profile != null)
 			{
-				Profile = Profiles.FirstOrDefault(p => p.UID.Equals(profile as string));
+				Profile = Profiles.FirstOrDefault(p => p.UID.Equals(profile));
 			}
 		}
 
@@ -261,8 +264,8 @@ namespace LRReader.Shared.Internal
 		private void ProfilesChanges(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			SaveProfiles();
-			RaisePropertyChanged("ProfilesAvailable");
-			RaisePropertyChanged("AtLeastOneProfile");
+			OnPropertyChanged("ProfilesAvailable");
+			OnPropertyChanged("AtLeastOneProfile");
 		}
 
 		public ServerProfile AddProfile(string name, string address, string apikey)

@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.UWP.Internal;
+﻿using LRReader.UWP.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
@@ -8,12 +7,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
+using LRReader.Shared.Services;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class SettingsPageViewModel : ViewModelBase
+	public class SettingsPageViewModel : ObservableObject
 	{
-		public SettingsManager SettingsManager => SharedGlobal.SettingsManager;
+		public SettingsService SettingsManager => Service.Settings;
 		public Version Version => Util.GetAppVersion();
 		public Version MinVersion => UpdatesManager.MIN_VERSION;
 		public Version MaxVersion => UpdatesManager.MAX_VERSION;
@@ -30,7 +31,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_showReleaseInfo = value;
-				RaisePropertyChanged("ShowReleaseInfo");
+				OnPropertyChanged("ShowReleaseInfo");
 			}
 		}
 		private ServerInfo _serverInfo;
@@ -40,7 +41,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_serverInfo = value;
-				RaisePropertyChanged("ServerInfo");
+				OnPropertyChanged("ServerInfo");
 			}
 		}
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
@@ -57,7 +58,7 @@ namespace LRReader.UWP.ViewModels
 						SettingsManager.SortByDefault = "title";
 					else
 						SettingsManager.SortByDefault = SortBy.ElementAt(value);
-					RaisePropertyChanged("SortByIndex");
+					OnPropertyChanged("SortByIndex");
 				}
 			}
 		}
@@ -83,8 +84,8 @@ namespace LRReader.UWP.ViewModels
 		{
 			AvifMissing = !await Util.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe");
 			HeifMissing = !await Util.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe");
-			RaisePropertyChanged("AvifMissing");
-			RaisePropertyChanged("HeifMissing");
+			OnPropertyChanged("AvifMissing");
+			OnPropertyChanged("HeifMissing");
 		}
 
 		public async Task RestartWorker()
@@ -115,7 +116,7 @@ namespace LRReader.UWP.ViewModels
 				if (result != null)
 				{
 					_shinobuStatus = result;
-					RaisePropertyChanged("ShinobuPID");
+					OnPropertyChanged("ShinobuPID");
 				}
 				else
 				{
@@ -123,9 +124,9 @@ namespace LRReader.UWP.ViewModels
 					_shinobuStatus.is_alive = 0;
 				}
 			}
-			RaisePropertyChanged("ShinobuRunning");
-			RaisePropertyChanged("ShinobuStopped");
-			RaisePropertyChanged("ShinobuUnknown");
+			OnPropertyChanged("ShinobuRunning");
+			OnPropertyChanged("ShinobuStopped");
+			OnPropertyChanged("ShinobuUnknown");
 		}
 
 		public async void UpdateReleaseData()
@@ -134,14 +135,14 @@ namespace LRReader.UWP.ViewModels
 			if (info != null)
 			{
 				ReleaseInfo = info;
-				RaisePropertyChanged("ReleaseInfo");
+				OnPropertyChanged("ReleaseInfo");
 				ShowReleaseInfo = true;
 			}
 			else
 			{
 				ShowReleaseInfo = false;
 				ReleaseInfo = null;
-				RaisePropertyChanged("ReleaseInfo");
+				OnPropertyChanged("ReleaseInfo");
 			}
 		}
 

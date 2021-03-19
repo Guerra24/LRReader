@@ -1,13 +1,14 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -23,7 +24,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_loadingImages = value;
-				RaisePropertyChanged("LoadingImages");
+				OnPropertyChanged("LoadingImages");
 			}
 		}
 		public ObservableCollection<ImagePageSet> ArchiveImages = new ObservableCollection<ImagePageSet>();
@@ -37,7 +38,7 @@ namespace LRReader.UWP.ViewModels
 				if (_showReader != value)
 				{
 					_showReader = value;
-					RaisePropertyChanged("ShowReader");
+					OnPropertyChanged("ShowReader");
 				}
 			}
 		}
@@ -47,7 +48,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_downloading = value;
-				RaisePropertyChanged("Downloading");
+				OnPropertyChanged("Downloading");
 			}
 		}
 		private bool _internalLoadingImages;
@@ -58,7 +59,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_readerContent = value;
-				RaisePropertyChanged("ReaderContent");
+				OnPropertyChanged("ReaderContent");
 			}
 		}
 		private int _readerIndex;
@@ -69,11 +70,11 @@ namespace LRReader.UWP.ViewModels
 			{
 				ReaderContent = ArchiveImagesReader.ElementAt(value);
 				_readerIndex = value;
-				RaisePropertyChanged("ReaderProgress");
+				OnPropertyChanged("ReaderProgress");
 			}
 		}
 		public int ReaderProgress => ReaderIndex + 1;
-		private int _zoomValue = Global.SettingsManager.DefaultZoom;
+		private int _zoomValue = Settings.DefaultZoom;
 		public int ZoomValue
 		{
 			get => _zoomValue;
@@ -82,7 +83,7 @@ namespace LRReader.UWP.ViewModels
 				if (value != _zoomValue)
 				{
 					_zoomValue = value;
-					RaisePropertyChanged("ZoomValue");
+					OnPropertyChanged("ZoomValue");
 					ZoomChangedEvent?.Invoke();
 				}
 			}
@@ -95,14 +96,14 @@ namespace LRReader.UWP.ViewModels
 			await LoadArchive();
 			await LoadImages(animate);
 			CreateImageSets();
-			RaisePropertyChanged("Icon");
+			OnPropertyChanged("Icon");
 			ControlsEnabled = true;
 		}
 
 		public void ReloadBookmarkedObject()
 		{
-			BookmarkedArchive = Global.SettingsManager.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
-			RaisePropertyChanged("Icon");
+			BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+			OnPropertyChanged("Icon");
 		}
 
 		public async Task LoadImages(bool animate = true)
@@ -122,7 +123,7 @@ namespace LRReader.UWP.ViewModels
 				await Task.Run(async () =>
 				{
 					foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
-						await DispatcherHelper.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)));
+						await DispatcherService.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)));
 				});
 				Pages = ArchiveImages.Count;
 			}
@@ -143,9 +144,9 @@ namespace LRReader.UWP.ViewModels
 			for (int k = 0; k < ArchiveImages.Count; k++)
 			{
 				var i = new ArchiveImageSet();
-				if (Global.SettingsManager.TwoPages)
+				if (Settings.TwoPages)
 				{
-					if (Global.SettingsManager.ReadRTL)
+					if (Settings.ReadRTL)
 					{
 						if (k == 0)
 							i.RightImage = ArchiveImages.ElementAt(k).Image;
@@ -176,7 +177,7 @@ namespace LRReader.UWP.ViewModels
 				}
 				tmp.Add(i);
 			}
-			if (Global.SettingsManager.ReadRTL)
+			if (Settings.ReadRTL)
 				tmp.Reverse();
 			foreach (var i in tmp)
 			{

@@ -1,16 +1,15 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class CategoryArchiveViewModel : ViewModelBase
+	public class CategoryArchiveViewModel : ObservableObject
 	{
 		public string archiveID;
 
@@ -56,13 +55,11 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task<bool> AddToCategory(string id)
 		{
-			System.Diagnostics.Debug.WriteLine($"Added to {id}");
 			return await CategoriesProvider.AddArchiveToCategory(id, archiveID);
 		}
 
 		public async Task<bool> RemoveFromCategory(string id)
 		{
-			System.Diagnostics.Debug.WriteLine($"Removed from {id}");
 			return await CategoriesProvider.RemoveArchiveFromCategory(id, archiveID);
 		}
 

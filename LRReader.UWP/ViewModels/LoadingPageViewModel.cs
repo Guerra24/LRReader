@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class LoadingPageViewModel : ViewModelBase
+	public class LoadingPageViewModel : ObservableObject
 	{
 		private string _status;
 		public string Status
@@ -11,7 +11,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_status = value;
-				RaisePropertyChanged("Status");
+				OnPropertyChanged("Status");
 			}
 		}
 		private string _statusSub;
@@ -21,7 +21,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_statusSub = value;
-				RaisePropertyChanged("StatusSub");
+				OnPropertyChanged("StatusSub");
 			}
 		}
 		private bool _active;
@@ -31,7 +31,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_active = value;
-				RaisePropertyChanged("Active");
+				OnPropertyChanged("Active");
 			}
 		}
 		private bool _updating;
@@ -41,7 +41,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_updating = value;
-				RaisePropertyChanged("Updating");
+				OnPropertyChanged("Updating");
 			}
 		}
 		private double _progress;
@@ -51,7 +51,7 @@ namespace LRReader.UWP.ViewModels
 			set
 			{
 				_progress = value;
-				RaisePropertyChanged("Progress");
+				OnPropertyChanged("Progress");
 			}
 		}
 	}

@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.Extensions;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,7 +70,7 @@ namespace LRReader.UWP.Views.Items
 				set
 				{
 					_missingImage = value;
-					RaisePropertyChanged("MissingImage");
+					OnPropertyChanged("MissingImage");
 				}
 			}
 		}

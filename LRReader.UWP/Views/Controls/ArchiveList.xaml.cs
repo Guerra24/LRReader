@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -36,8 +37,8 @@ namespace LRReader.UWP.Views.Controls
 			if (loaded)
 				return;
 			loaded = true;
-			AscFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Ascending;
-			DesFlyoutItem.IsChecked = Global.SettingsManager.OrderByDefault == Order.Descending;
+			AscFlyoutItem.IsChecked = Settings.OrderByDefault == Order.Ascending;
+			DesFlyoutItem.IsChecked = Settings.OrderByDefault == Order.Descending;
 			await Refresh();
 		}
 

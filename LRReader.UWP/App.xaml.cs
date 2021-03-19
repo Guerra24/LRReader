@@ -1,6 +1,6 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
-using LRReader.Shared.Internal;
+﻿using LRReader.Internal;
+using LRReader.Shared.Services;
+using LRReader.UWP.Services;
 using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
@@ -14,6 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP
 {
@@ -26,7 +27,7 @@ namespace LRReader.UWP
 			Init.EarlyInit();
 			AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
 			Global.Init();
-			switch (Global.SettingsManager.Theme)
+			switch (Settings.Theme)
 			{
 				case AppTheme.Dark:
 					this.RequestedTheme = ApplicationTheme.Dark;
@@ -63,7 +64,7 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			DispatcherHelper.Initialize();
+			DispatcherService.Init();
 
 			Frame rootFrame = Window.Current.Content as Frame;
 

@@ -1,8 +1,8 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using LRReader.Internal;
-using LRReader.Shared.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
+using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
@@ -59,7 +59,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
 				.Subscribe(async (height) =>
-				await DispatcherHelper.RunAsync(() =>
+				await DispatcherService.RunAsync(() =>
 				(ReaderControl.ContentTemplateRoot as ReaderImage).UpdateDecodedResolution((int)Math.Round(height))));
 			_loadSemaphore.Wait();
 		}
@@ -87,7 +87,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 					}
 				}
 				_loadSemaphore.Release();
-				if (Global.SettingsManager.OpenReader)
+				if (Service.Settings.OpenReader)
 				{
 					if (Data.Bookmarked)
 						i = Data.BookmarkProgress;
@@ -108,13 +108,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			Data.ShowReader = true;
 			int count = Data.Pages;
-			if (Global.SettingsManager.TwoPages)
+			if (Service.Settings.TwoPages)
 			{
 				if (i != 0)
 				{
 					--i; i /= 2; ++i;
 				}
-				if (Global.SettingsManager.ReadRTL)
+				if (Service.Settings.ReadRTL)
 				{
 					int preDiv = count;
 					--count; count /= 2; ++count;
@@ -125,7 +125,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			else
 			{
-				if (Global.SettingsManager.ReadRTL)
+				if (Service.Settings.ReadRTL)
 					Data.ReaderIndex = count - i - 1;
 				else
 					Data.ReaderIndex = i;
@@ -162,26 +162,26 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.ShowReader = false;
 			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
-			if (Global.SettingsManager.TwoPages)
+			if (Service.Settings.TwoPages)
 			{
 				if (conv != 0)
 				{
 					conv *= 2;
 				}
-				if (Global.SettingsManager.ReadRTL)
+				if (Service.Settings.ReadRTL)
 				{
 					conv = count - conv - (count % 2);
 				}
 			}
 			else
 			{
-				if (Global.SettingsManager.ReadRTL)
+				if (Service.Settings.ReadRTL)
 					conv = count - conv - 1;
 			}
 			conv = Math.Clamp(conv, 0, count - 1);
 
 			/*int leftTarget = conv;
-			if (Global.SettingsManager.TwoPages)
+			if (Service.Settings.TwoPages)
 			{
 				leftTarget = Math.Max(conv - 1, 0);
 				if (conv == Data.Pages - 1 && Data.Pages % 2 == 0)
@@ -189,7 +189,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			int rightTarget = conv;
 
-			if (Global.SettingsManager.ReadRTL)
+			if (Service.Settings.ReadRTL)
 			{
 				int tmp = leftTarget;
 				leftTarget = rightTarget;
@@ -203,8 +203,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			await FadeIn.StartAsync(ImagesGrid);
 
-			if (Global.ControlFlags.V077)
-				await Data.SetProgress(conv + 1);
 			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
 				if (Data.Archive.IsNewArchive())
@@ -212,7 +210,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 					await Data.ClearNew();
 					Data.Archive.isnew = "false";
 				}
-				if (Data.Bookmarked && Global.SettingsManager.RemoveBookmark)
+				if (Data.Bookmarked && Service.Settings.RemoveBookmark)
 				{
 					var dialog = new ContentDialog
 					{
@@ -227,8 +225,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			else if (!Data.Bookmarked)
 			{
-				var mode = Global.SettingsManager.BookmarkReminderMode;
-				if (Global.SettingsManager.BookmarkReminder &&
+				var mode = Service.Settings.BookmarkReminderMode;
+				if (Service.Settings.BookmarkReminder &&
 					((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
 				{
 					var dialog = new ContentDialog
@@ -244,7 +242,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 			}
 			if (Data.Bookmarked)
+			{
 				Data.BookmarkProgress = conv;
+				if (Global.ControlFlags.V077)
+					await Data.SetProgress(conv + 1);
+			}
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -301,14 +303,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 					e.Handled = true;
 					if (Math.Floor(offset) <= 0)
 					{
-						if (Global.SettingsManager.ReadRTL)
+						if (Service.Settings.ReadRTL)
 							NextPage();
 						else
 							PrevPage();
 					}
 					else
 					{
-						ScrollViewer.ChangeView(null, offset - Global.SettingsManager.KeyboardScroll, null, false);
+						ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
 					}
 					break;
 				case VirtualKey.Down:
@@ -316,14 +318,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 					e.Handled = true;
 					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
 					{
-						if (Global.SettingsManager.ReadRTL)
+						if (Service.Settings.ReadRTL)
 							PrevPage();
 						else
 							NextPage();
 					}
 					else
 					{
-						ScrollViewer.ChangeView(null, offset + Global.SettingsManager.KeyboardScroll, null, false);
+						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
 					}
 					break;
 			}
@@ -357,7 +359,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
 						{
 							e.Handled = true;
-							if (Global.SettingsManager.ReadRTL)
+							if (Service.Settings.ReadRTL)
 								PrevPage();
 							else
 								NextPage();
@@ -365,7 +367,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
 						{
 							e.Handled = true;
-							if (Global.SettingsManager.ReadRTL)
+							if (Service.Settings.ReadRTL)
 								NextPage();
 							else
 								PrevPage();
@@ -459,9 +461,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 				return;
 			float zoomFactor;
-			if (Global.SettingsManager.FitToWidth)
+			if (Service.Settings.FitToWidth)
 			{
-				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Global.SettingsManager.FitScaleLimit * 0.01);
+				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Service.Settings.FitScaleLimit * 0.01);
 			}
 			else
 			{
@@ -547,9 +549,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private string GetOpenTarget()
 		{
 			var target = "openL";
-			if (Global.SettingsManager.TwoPages)
+			if (Service.Settings.TwoPages)
 			{
-				if (Global.SettingsManager.ReadRTL)
+				if (Service.Settings.ReadRTL)
 				{
 					target = i % 2 == 0 ? "openL" : "openR";
 					if (i == Data.Pages - 1)

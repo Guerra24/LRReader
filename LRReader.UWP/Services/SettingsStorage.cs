@@ -1,14 +1,9 @@
-﻿using LRReader.Shared.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LRReader.Shared.Services;
 using Windows.Storage;
 
-namespace LRReader.UWP.Impl
+namespace LRReader.UWP.Services
 {
-	public class SettingsStorage : ISettingsStorage
+	public class SettingsStorageService : ISettingsStorageService
 	{
 		private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 		private ApplicationDataContainer roamedSettings = ApplicationData.Current.RoamingSettings;

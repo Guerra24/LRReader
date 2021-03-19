@@ -1,17 +1,13 @@
-﻿using GalaSoft.MvvmLight;
-using LRReader.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-using LRReader.UWP.Views.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels.Base
 {
-	public class CategoryBaseViewModel : ViewModelBase
+	public class CategoryBaseViewModel : ObservableObject
 	{
 		private Category _category;
 		public Category Category
@@ -20,7 +16,7 @@ namespace LRReader.UWP.ViewModels.Base
 			set
 			{
 				_category = value;
-				RaisePropertyChanged("Category");
+				OnPropertyChanged("Category");
 			}
 		}
 		private bool _missingImage = false;
@@ -30,7 +26,7 @@ namespace LRReader.UWP.ViewModels.Base
 			set
 			{
 				_missingImage = value;
-				RaisePropertyChanged("MissingImage");
+				OnPropertyChanged("MissingImage");
 			}
 		}
 		private bool _searchImage = false;
@@ -40,10 +36,10 @@ namespace LRReader.UWP.ViewModels.Base
 			set
 			{
 				_searchImage = value;
-				RaisePropertyChanged("SearchImage");
+				OnPropertyChanged("SearchImage");
 			}
 		}
-		public bool CanEdit => Global.SettingsManager.Profile.HasApiKey;
+		public bool CanEdit => Settings.Profile.HasApiKey;
 
 		public async Task UpdateCategory(string name, string search, bool pinned)
 		{
@@ -53,7 +49,7 @@ namespace LRReader.UWP.ViewModels.Base
 				Category.name = name;
 				Category.search = search;
 				Category.pinned = pinned;
-				RaisePropertyChanged("Category");
+				OnPropertyChanged("Category");
 			}
 		}
 	}
