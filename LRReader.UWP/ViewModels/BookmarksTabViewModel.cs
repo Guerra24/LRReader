@@ -14,21 +14,13 @@ namespace LRReader.UWP.ViewModels
 		public bool LoadingArchives
 		{
 			get => _loadingArchives;
-			set
-			{
-				_loadingArchives = value;
-				OnPropertyChanged("LoadingArchives");
-			}
+			set => SetProperty(ref _loadingArchives, value);
 		}
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
 		{
 			get => _refreshOnErrorButton;
-			set
-			{
-				_refreshOnErrorButton = value;
-				OnPropertyChanged("RefreshOnErrorButton");
-			}
+			set	=> SetProperty(ref _refreshOnErrorButton, value);
 		}
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
 

@@ -14,31 +14,19 @@ namespace LRReader.UWP.ViewModels
 		public string Title
 		{
 			get => _title;
-			set
-			{
-				_title = value;
-				OnPropertyChanged("Title");
-			}
+			set => SetProperty(ref _title, value);
 		}
 		private string _error = "";
 		public string Error
 		{
 			get => _error;
-			set
-			{
-				_error = value;
-				OnPropertyChanged("Error");
-			}
+			set => SetProperty(ref _error, value);
 		}
 		private bool _showError;
 		public bool ShowError
 		{
 			get => _showError;
-			set
-			{
-				_showError = value;
-				OnPropertyChanged("ShowError");
-			}
+			set => SetProperty(ref _showError, value);
 		}
 		public Uri Page;
 

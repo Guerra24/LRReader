@@ -19,11 +19,7 @@ namespace LRReader.UWP.ViewModels
 		public bool Saving
 		{
 			get => _saving;
-			set
-			{
-				_saving = value;
-				OnPropertyChanged("Saving");
-			}
+			set => SetProperty(ref _saving, value);
 		}
 
 		public ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
@@ -32,14 +28,7 @@ namespace LRReader.UWP.ViewModels
 		public Plugin CurrentPlugin
 		{
 			get => _currentPlugin;
-			set
-			{
-				if (_currentPlugin != value)
-				{
-					_currentPlugin = value;
-					OnPropertyChanged("CurrentPlugin");
-				}
-			}
+			set => SetProperty(ref _currentPlugin, value);
 		}
 		public string Arg = "";
 

@@ -21,11 +21,7 @@ namespace LRReader.UWP.ViewModels
 		public bool LoadingImages
 		{
 			get => _loadingImages;
-			set
-			{
-				_loadingImages = value;
-				OnPropertyChanged("LoadingImages");
-			}
+			set => SetProperty(ref _loadingImages, value);
 		}
 		public ObservableCollection<ImagePageSet> ArchiveImages = new ObservableCollection<ImagePageSet>();
 		public ObservableCollection<ArchiveImageSet> ArchiveImagesReader = new ObservableCollection<ArchiveImageSet>();
@@ -33,34 +29,19 @@ namespace LRReader.UWP.ViewModels
 		public bool ShowReader
 		{
 			get => _showReader;
-			set
-			{
-				if (_showReader != value)
-				{
-					_showReader = value;
-					OnPropertyChanged("ShowReader");
-				}
-			}
+			set => SetProperty(ref _showReader, value);
 		}
 		public override bool Downloading
 		{
 			get => _downloading || !ControlsEnabled;
-			set
-			{
-				_downloading = value;
-				OnPropertyChanged("Downloading");
-			}
+			set => SetProperty(ref _downloading, value);
 		}
 		private bool _internalLoadingImages;
 		private ArchiveImageSet _readerContent;
 		public ArchiveImageSet ReaderContent
 		{
 			get => _readerContent;
-			set
-			{
-				_readerContent = value;
-				OnPropertyChanged("ReaderContent");
-			}
+			set	=> SetProperty(ref _readerContent, value);
 		}
 		private int _readerIndex;
 		public int ReaderIndex

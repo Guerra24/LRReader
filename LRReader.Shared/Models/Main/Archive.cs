@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace LRReader.Shared.Models.Main
 {
-	public class Archive
+	public class Archive : IEquatable<Archive>
 	{
 		public string arcid { get; set; }
 		public string isnew { get; set; }
@@ -24,10 +24,7 @@ namespace LRReader.Shared.Models.Main
 		public ObservableCollection<ArchiveTagsGroup> TagsGroups { get; set; } = new ObservableCollection<ArchiveTagsGroup>();
 
 		[OnDeserialized]
-		internal void OnDeserializedMethod(StreamingContext context)
-		{
-			UpdateTags();
-		}
+		internal void OnDeserializedMethod(StreamingContext context) => UpdateTags();
 
 		public bool IsNewArchive()
 		{
@@ -43,7 +40,7 @@ namespace LRReader.Shared.Models.Main
 		public void UpdateTags()
 		{
 			TagsClean = "";
-			if (tags == null) // TODO: Apparently tags can be null, what? Follow up
+			if (tags == null) // TODO: v0.7.7 returns null tags when there are no plugins enabled.
 				return;
 			var separatedTags = tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 			foreach (var s in separatedTags)
@@ -88,6 +85,33 @@ namespace LRReader.Shared.Models.Main
 			var group = new ArchiveTagsGroup() { Namespace = @namespace };
 			list.Add(group);
 			return group;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is null)
+				return false;
+			if (obj is Archive other)
+			{
+				if (other == this)
+					return true;
+				return arcid.Equals(other.arcid);
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return arcid.GetHashCode();
+		}
+
+		public bool Equals(Archive other)
+		{
+			if (other is null)
+				return false;
+			if (other == this)
+				return true;
+			return arcid.Equals(other.arcid);
 		}
 	}
 

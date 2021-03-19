@@ -17,11 +17,7 @@ namespace LRReader.UWP.ViewModels.Base
 		public bool RefreshOnErrorButton
 		{
 			get => _refreshOnErrorButton;
-			set
-			{
-				_refreshOnErrorButton = value;
-				OnPropertyChanged("RefreshOnErrorButton");
-			}
+			set => SetProperty(ref _refreshOnErrorButton, value);
 		}
 		private bool _controlsEnabled;
 		public bool ControlsEnabled
@@ -29,8 +25,7 @@ namespace LRReader.UWP.ViewModels.Base
 			get => _controlsEnabled && !RefreshOnErrorButton;
 			set
 			{
-				_controlsEnabled = value;
-				OnPropertyChanged("ControlsEnabled");
+				SetProperty(ref _controlsEnabled, value);
 				OnPropertyChanged("Downloading");
 			}
 		}
@@ -40,15 +35,10 @@ namespace LRReader.UWP.ViewModels.Base
 			get => _archive;
 			set
 			{
-				if (_archive != value)
+				if (SetProperty(ref _archive, value))
 				{
-					if (!_archive.arcid.Equals(value.arcid))
-					{
-						_archive = value;
-						BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
-						OnPropertyChanged("Archive");
-						OnPropertyChanged("IsNew");
-					}
+					BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+					OnPropertyChanged("IsNew");
 				}
 			}
 		}
@@ -60,11 +50,7 @@ namespace LRReader.UWP.ViewModels.Base
 		public virtual bool Downloading
 		{
 			get => _downloading;
-			set
-			{
-				_downloading = value;
-				OnPropertyChanged("Downloading");
-			}
+			set => SetProperty(ref _downloading, value);
 		}
 		private BookmarkedArchive _bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
 		public BookmarkedArchive BookmarkedArchive
@@ -132,11 +118,7 @@ namespace LRReader.UWP.ViewModels.Base
 			}
 			set
 			{
-				if (value != _pages)
-				{
-					_pages = value;
-					OnPropertyChanged("Pages");
-				}
+				SetProperty(ref _pages, value);
 			}
 		}
 		public int BookmarkProgress

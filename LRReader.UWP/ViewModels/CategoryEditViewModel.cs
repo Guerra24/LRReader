@@ -22,11 +22,7 @@ namespace LRReader.UWP.ViewModels
 		public bool CanSave
 		{
 			get => _canSave;
-			set
-			{
-				_canSave = value;
-				OnPropertyChanged("CanSave");
-			}
+			set => SetProperty(ref _canSave, value);
 		}
 
 		public ObservableCollection<Archive> CategoryArchives = new ObservableCollection<Archive>();

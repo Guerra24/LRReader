@@ -8,51 +8,31 @@ namespace LRReader.UWP.ViewModels
 		public string Status
 		{
 			get => _status;
-			set
-			{
-				_status = value;
-				OnPropertyChanged("Status");
-			}
+			set => SetProperty(ref _status, value);
 		}
 		private string _statusSub;
 		public string StatusSub
 		{
 			get => _statusSub;
-			set
-			{
-				_statusSub = value;
-				OnPropertyChanged("StatusSub");
-			}
+			set => SetProperty(ref _statusSub, value);
 		}
 		private bool _active;
 		public bool Active
 		{
 			get => _active;
-			set
-			{
-				_active = value;
-				OnPropertyChanged("Active");
-			}
+			set => SetProperty(ref _active, value);
 		}
 		private bool _updating;
 		public bool Updating
 		{
 			get => _updating;
-			set
-			{
-				_updating = value;
-				OnPropertyChanged("Updating");
-			}
+			set => SetProperty(ref _updating, value);
 		}
 		private double _progress;
 		public double Progress
 		{
 			get => _progress;
-			set
-			{
-				_progress = value;
-				OnPropertyChanged("Progress");
-			}
+			set => SetProperty(ref _progress, value);
 		}
 	}
 }

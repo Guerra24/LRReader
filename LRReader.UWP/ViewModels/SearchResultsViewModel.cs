@@ -18,8 +18,7 @@ namespace LRReader.UWP.ViewModels
 			get => _loadingArchives;
 			set
 			{
-				_loadingArchives = value;
-				OnPropertyChanged("LoadingArchives");
+				SetProperty(ref _loadingArchives, value);
 				OnPropertyChanged("ControlsEnabled");
 				OnPropertyChanged("HasNextPage");
 				OnPropertyChanged("HasPrevPage");
@@ -31,8 +30,7 @@ namespace LRReader.UWP.ViewModels
 			get => _refreshOnErrorButton;
 			set
 			{
-				_refreshOnErrorButton = value;
-				OnPropertyChanged("RefreshOnErrorButton");
+				SetProperty(ref _refreshOnErrorButton, value);
 				OnPropertyChanged("ControlsEnabled");
 				OnPropertyChanged("HasNextPage");
 				OnPropertyChanged("HasPrevPage");
@@ -45,10 +43,8 @@ namespace LRReader.UWP.ViewModels
 			get => _page;
 			set
 			{
-				if (value != _page)
+				if (SetProperty(ref _page, value))
 				{
-					_page = value;
-					OnPropertyChanged("Page");
 					OnPropertyChanged("DisplayPage");
 					OnPropertyChanged("HasNextPage");
 					OnPropertyChanged("HasPrevPage");
@@ -62,11 +58,7 @@ namespace LRReader.UWP.ViewModels
 			get => _totalArchives;
 			set
 			{
-				if (value != _totalArchives)
-				{
-					_totalArchives = value;
-					OnPropertyChanged("TotalArchives");
-				}
+				SetProperty(ref _totalArchives, value);
 			}
 		}
 		public bool HasNextPage => Page < TotalArchives / SharedGlobal.ServerInfo.archives_per_page && ControlsEnabled;
@@ -75,21 +67,13 @@ namespace LRReader.UWP.ViewModels
 		public bool NewOnly
 		{
 			get => _newOnly;
-			set
-			{
-				_newOnly = value;
-				OnPropertyChanged("NewOnly");
-			}
+			set => SetProperty(ref _newOnly, value);
 		}
 		private bool _untaggedOnly;
 		public bool UntaggedOnly
 		{
 			get => _untaggedOnly;
-			set
-			{
-				_untaggedOnly = value;
-				OnPropertyChanged("UntaggedOnly");
-			}
+			set => SetProperty(ref _untaggedOnly, value);
 		}
 		public string Query = "";
 		public Category Category = new Category() { id = "", search = "" };
@@ -99,8 +83,7 @@ namespace LRReader.UWP.ViewModels
 			get => _controlsEnabled && !RefreshOnErrorButton;
 			set
 			{
-				_controlsEnabled = value;
-				OnPropertyChanged("ControlsEnabled");
+				SetProperty(ref _controlsEnabled, value);
 				OnPropertyChanged("HasNextPage");
 				OnPropertyChanged("HasPrevPage");
 			}
@@ -112,14 +95,7 @@ namespace LRReader.UWP.ViewModels
 		public int SortByIndex
 		{
 			get => _sortByIndex;
-			set
-			{
-				if (value != _sortByIndex)
-				{
-					_sortByIndex = value;
-					OnPropertyChanged("SortByIndex");
-				}
-			}
+			set => SetProperty(ref _sortByIndex, value);
 		}
 		public Order OrderBy = Order.Ascending;
 

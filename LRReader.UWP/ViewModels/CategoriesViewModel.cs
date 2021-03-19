@@ -18,8 +18,7 @@ namespace LRReader.UWP.ViewModels
 			get => _loadingCategories;
 			set
 			{
-				_loadingCategories = value;
-				OnPropertyChanged("LoadingCategories");
+				SetProperty(ref _loadingCategories, value);
 				OnPropertyChanged("ControlsEnabled");
 			}
 		}
@@ -29,8 +28,7 @@ namespace LRReader.UWP.ViewModels
 			get => _refreshOnErrorButton;
 			set
 			{
-				_refreshOnErrorButton = value;
-				OnPropertyChanged("RefreshOnErrorButton");
+				SetProperty(ref _refreshOnErrorButton, value);
 				OnPropertyChanged("ControlsEnabled");
 			}
 		}
@@ -39,11 +37,7 @@ namespace LRReader.UWP.ViewModels
 		public bool ControlsEnabled
 		{
 			get => _controlsEnabled && !RefreshOnErrorButton;
-			set
-			{
-				_controlsEnabled = value;
-				OnPropertyChanged("ControlsEnabled");
-			}
+			set => SetProperty(ref _controlsEnabled, value);
 		}
 		protected bool _internalLoadingCategories;
 

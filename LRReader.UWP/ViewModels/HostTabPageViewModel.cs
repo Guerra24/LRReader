@@ -10,14 +10,7 @@ namespace LRReader.UWP.ViewModels
 		public CustomTab CurrentTab
 		{
 			get => _currentTab;
-			set
-			{
-				if (_currentTab != value)
-				{
-					_currentTab = value;
-					OnPropertyChanged("CurrentTab");
-				}
-			}
+			set => SetProperty(ref _currentTab, value);
 		}
 		private bool _fullscreen = false;
 		public bool FullScreen
@@ -25,12 +18,8 @@ namespace LRReader.UWP.ViewModels
 			get => _fullscreen;
 			set
 			{
-				if (_fullscreen != value)
-				{
-					_fullscreen = value;
-					OnPropertyChanged("FullScreen");
-					OnPropertyChanged("Windowed");
-				}
+				SetProperty(ref _fullscreen, value);
+				OnPropertyChanged("Windowed");
 			}
 		}
 		public bool Windowed

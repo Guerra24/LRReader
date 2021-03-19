@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
@@ -13,31 +12,19 @@ namespace LRReader.UWP.ViewModels.Base
 		public Category Category
 		{
 			get => _category;
-			set
-			{
-				_category = value;
-				OnPropertyChanged("Category");
-			}
+			set => SetProperty(ref _category, value);
 		}
 		private bool _missingImage = false;
 		public bool MissingImage
 		{
 			get => _missingImage;
-			set
-			{
-				_missingImage = value;
-				OnPropertyChanged("MissingImage");
-			}
+			set => SetProperty(ref _missingImage, value);
 		}
 		private bool _searchImage = false;
 		public bool SearchImage
 		{
 			get => _searchImage;
-			set
-			{
-				_searchImage = value;
-				OnPropertyChanged("SearchImage");
-			}
+			set => SetProperty(ref _searchImage, value);
 		}
 		public bool CanEdit => Settings.Profile.HasApiKey;
 

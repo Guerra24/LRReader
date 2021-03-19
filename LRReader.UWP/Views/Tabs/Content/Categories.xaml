@@ -31,7 +31,7 @@
 				Name="CategoriesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True"
 				ItemClick="CategoriesGrid_ItemClick"
 				ItemTemplateSelector="{StaticResource CategoryTemplateSelector}"
-				ItemsSource="{x:Bind Data.CategoriesList, Mode=OneWay}"
+				ItemsSource="{x:Bind Data.CategoriesList}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />

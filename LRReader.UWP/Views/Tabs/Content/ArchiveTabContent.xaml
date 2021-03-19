@@ -35,7 +35,7 @@
 			<GridView
 				x:Name="ImagesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True"
 				ItemClick="ImagesGrid_ItemClick"
-				ItemsSource="{x:Bind Data.ArchiveImages, Mode=OneWay}"
+				ItemsSource="{x:Bind Data.ArchiveImages}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
 				<GridView.Header>
 					<StackPanel Padding="50,5,50,5">

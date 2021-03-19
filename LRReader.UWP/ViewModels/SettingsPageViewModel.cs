@@ -28,21 +28,13 @@ namespace LRReader.UWP.ViewModels
 		public bool ShowReleaseInfo
 		{
 			get => _showReleaseInfo;
-			set
-			{
-				_showReleaseInfo = value;
-				OnPropertyChanged("ShowReleaseInfo");
-			}
+			set => SetProperty(ref _showReleaseInfo, value);
 		}
 		private ServerInfo _serverInfo;
 		public ServerInfo ServerInfo
 		{
 			get => _serverInfo;
-			set
-			{
-				_serverInfo = value;
-				OnPropertyChanged("ServerInfo");
-			}
+			set => SetProperty(ref _serverInfo, value);
 		}
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
 		private int _sortByIndex = -1;
@@ -82,10 +74,8 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task CheckForPackages()
 		{
-			AvifMissing = !await Util.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe");
-			HeifMissing = !await Util.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe");
-			OnPropertyChanged("AvifMissing");
-			OnPropertyChanged("HeifMissing");
+			SetProperty(ref AvifMissing, !await Util.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
+			SetProperty(ref HeifMissing, !await Util.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
 		}
 
 		public async Task RestartWorker()
@@ -134,15 +124,13 @@ namespace LRReader.UWP.ViewModels
 			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
 			{
-				ReleaseInfo = info;
-				OnPropertyChanged("ReleaseInfo");
+				SetProperty(ref ReleaseInfo, info, nameof(ReleaseInfo));
 				ShowReleaseInfo = true;
 			}
 			else
 			{
 				ShowReleaseInfo = false;
-				ReleaseInfo = null;
-				OnPropertyChanged("ReleaseInfo");
+				SetProperty(ref ReleaseInfo, null, nameof(ReleaseInfo));
 			}
 		}
 
