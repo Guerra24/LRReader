@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
@@ -101,16 +102,31 @@ namespace LRReader.Shared
 		public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this IRestResponse restResponse)
 		{
 			var apiResponse = new GenericApiResponse<T>();
-			switch (restResponse.StatusCode)
+			var data = await Task.Run(() =>
 			{
-				case HttpStatusCode.OK:
-					apiResponse.Data = await Task.Run(() => JsonConvert.DeserializeObject<T>(restResponse.Content));
-					apiResponse.OK = true;
-					break;
-				default:
-					apiResponse.Error = await restResponse.GetError();
-					break;
-			}
+				try
+				{
+					return JsonConvert.DeserializeObject<T>(restResponse.Content);
+				}
+				catch (Exception e)
+				{
+					Crashes.TrackError(e); // We are getting bad data from the instance, send stack trace
+					return default;
+				}
+			});
+			if (data != null)
+				switch (restResponse.StatusCode)
+				{
+					case HttpStatusCode.OK:
+						apiResponse.Data = data;
+						apiResponse.OK = true;
+						break;
+					default:
+						apiResponse.Error = await restResponse.GetError();
+						break;
+				}
+			else
+				apiResponse.Error = new GenericApiError { title = "Error while decoding response" };
 			apiResponse.Code = restResponse.StatusCode;
 			return apiResponse;
 		}
@@ -124,7 +140,7 @@ namespace LRReader.Shared
 					error.title = "Unauthorized";
 					return error;
 				default:
-					return new GenericApiError() { title = $"Error code: {(int)restResponse.StatusCode} {restResponse.StatusDescription}", error = $"{restResponse.ResponseUri}" };
+					return new GenericApiError { title = $"Error code: {(int)restResponse.StatusCode} {restResponse.StatusDescription}", error = $"{restResponse.ResponseUri}" };
 			}
 		}
 	}

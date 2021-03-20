@@ -150,7 +150,8 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task RegenThumbnails(bool force)
 		{
-			thumbnailJob = await ArchivesProvider.RegenerateThumbnails(force);
+			if (thumbnailJob == null)
+				thumbnailJob = await ArchivesProvider.RegenerateThumbnails(force);
 		}
 
 		public async Task CheckThumbnailJob()
@@ -158,7 +159,6 @@ namespace LRReader.UWP.ViewModels
 			if (thumbnailJob == null)
 				return;
 			var status = await ServerProvider.GetMinionStatus(thumbnailJob.job);
-			System.Diagnostics.Debug.WriteLine(status.state);
 
 			if (status.state.Equals("finished"))
 			{
