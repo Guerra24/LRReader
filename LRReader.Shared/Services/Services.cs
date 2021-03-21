@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
@@ -9,7 +10,9 @@ namespace LRReader.Shared.Services
 	{
 		public static IServiceProvider Services { get; set; }
 
-		public static void Init(ConfigureServices services = null)
+		private static bool Loaded;
+
+		public static void BuildServices(ConfigureServices services = null)
 		{
 			var collection = new ServiceCollection();
 			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
@@ -19,9 +22,22 @@ namespace LRReader.Shared.Services
 			Services = collection.BuildServiceProvider();
 		}
 
+		public static async Task InitServices()
+		{
+			if (Loaded)
+				return;
+			await Settings.Load();
+			Loaded = true;
+		}
+
 		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
 		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
 		public static SettingsService Settings => Services.GetRequiredService<SettingsService>();
 
+	}
+
+	public interface IService
+	{
+		Task Load();
 	}
 }

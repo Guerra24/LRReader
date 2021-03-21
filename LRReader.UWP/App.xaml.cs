@@ -26,7 +26,6 @@ namespace LRReader.UWP
 		{
 			Init.EarlyInit();
 			AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
-			Global.Init();
 			switch (Settings.Theme)
 			{
 				case AppTheme.Dark:

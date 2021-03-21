@@ -12,7 +12,7 @@ namespace LRReader.UWP
 	{
 		public static void EarlyInit()
 		{
-			Service.Init((ServiceCollection collection) =>
+			Service.BuildServices((ServiceCollection collection) =>
 			{
 				collection.Replace(ServiceDescriptor.Singleton<ISettingsStorageService, SettingsStorageService>());
 				collection.Replace(ServiceDescriptor.Singleton<IFilesService, FilesService>());
@@ -23,9 +23,7 @@ namespace LRReader.UWP
 				collection.AddSingleton<FirstRunPageViewModel>();
 				collection.AddSingleton<CategoriesViewModel>();
 				collection.AddSingleton<LoadingPageViewModel>();
-
 			});
-			ArchivesManager.TemporaryFolder = ApplicationData.Current.LocalCacheFolder.Path;
 		}
 	}
 }

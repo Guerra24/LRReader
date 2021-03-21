@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Internal;
@@ -62,6 +63,9 @@ namespace LRReader.UWP.Views.Main
 #if !SIDELOAD && !DEBUG
 			await DownloadUpdateStore();
 #endif
+			await InitServices();
+			Global.Init();
+
 			bool firstRun = Settings.Profile == null;
 			if (firstRun)
 			{

@@ -6,14 +6,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using static LRReader.Shared.Internal.SharedGlobal;
 
 namespace LRReader.Shared.Services
 {
-	public class SettingsService : ObservableObject
+	public class SettingsService : ObservableObject, IService
 	{
 
 		private readonly ISettingsStorageService SettingsStorage;
+		private readonly IFilesService Files;
 
 		private ObservableCollection<ServerProfile> _profiles;
 		public ObservableCollection<ServerProfile> Profiles
@@ -161,41 +163,45 @@ namespace LRReader.Shared.Services
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{
-			get => SettingsStorage.GetObjectLocal<int>("SettingsVersion");
+			get => SettingsStorage.GetObjectLocal("SettingsVersion", CurrentLocalVersion);
 			set
 			{
 				SettingsStorage.StoreObjectLocal("SettingsVersion", value);
 				OnPropertyChanged("SettingsVersionLocal");
 			}
 		}
-		public static readonly int CurrentRoamedVersion = 1;
+		public static readonly int CurrentRoamedVersion = 2;
 		public int SettingsVersionRoamed
 		{
-			get => SettingsStorage.GetObjectRoamed<int>("SettingsVersion");
+			get => SettingsStorage.GetObjectRoamed("SettingsVersion", CurrentRoamedVersion);
 			set
 			{
 				SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
 				OnPropertyChanged("SettingsVersionRoamed");
 			}
 		}
-		public SettingsService(ISettingsStorageService settingsStorage)
+		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files)
 		{
 			SettingsStorage = settingsStorage;
-			var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
-			if (profiles != null)
+			Files = files;
+		}
+
+		public async Task Load()
+		{
+			if (Files.ExistFile(Files.Local + "/Profiles.json"))
 			{
-				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles);
+				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json"));
 			}
 			else
 			{
 				Profiles = new ObservableCollection<ServerProfile>();
 			}
 
+			UpgradeSettings();
+
 			UpgradeProfiles();
 
 			SaveProfiles();
-
-			UpgradeSettings();
 
 			Profiles.CollectionChanged += ProfilesChanges;
 
@@ -253,6 +259,14 @@ namespace LRReader.Shared.Services
 				{
 					case 0:
 						break;
+					case 1:
+						var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
+						if (profiles != null)
+						{
+							Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles);
+						}
+						SettingsStorage.DeleteObjectRoamed("Profiles");
+						break;
 				}
 				if (roamedVersion >= CurrentRoamedVersion - 1)
 					break;
@@ -288,10 +302,11 @@ namespace LRReader.Shared.Services
 			SaveProfiles();
 		}
 
-		public void SaveProfiles()
+		public async void SaveProfiles()
 		{
-			SettingsStorage.StoreObjectRoamed("Profiles", JsonConvert.SerializeObject(Profiles));
+			await Files.StoreFile(Files.Local + "/Profiles.json", JsonConvert.SerializeObject(Profiles));
 		}
+
 	}
 	public enum BookmarkReminderMode
 	{

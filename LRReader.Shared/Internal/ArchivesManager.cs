@@ -15,8 +15,6 @@ namespace LRReader.Shared.Internal
 		public List<TagStats> TagStats = new List<TagStats>();
 		public List<string> Namespaces = new List<string>();
 
-		public static string TemporaryFolder;
-
 		public async Task ReloadArchives()
 		{
 			Archives.Clear();
@@ -34,9 +32,9 @@ namespace LRReader.Shared.Internal
 			{
 				try
 				{
-					var index = Files.GetFile(TemporaryFolder + "/Index-v2.json");
-					var tags = Files.GetFile(TemporaryFolder + "/Tags-v1.json");
-					var namespaces = Files.GetFile(TemporaryFolder + "/Namespaces-v1.json");
+					var index = Files.GetFile(Files.LocalCache + "/Index-v2.json");
+					var tags = Files.GetFile(Files.LocalCache + "/Tags-v1.json");
+					var namespaces = Files.GetFile(Files.LocalCache + "/Namespaces-v1.json");
 					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
@@ -55,20 +53,20 @@ namespace LRReader.Shared.Internal
 			if (resultA != null)
 			{
 				var temp = resultA.ToDictionary(c => c.arcid, c => c);
-				await Files.StoreFile(TemporaryFolder + "/Index-v2.json", JsonConvert.SerializeObject(temp));
+				await Files.StoreFile(Files.LocalCache + "/Index-v2.json", JsonConvert.SerializeObject(temp));
 				Archives = temp;
 			}
 			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
 			{
-				await Files.StoreFile(TemporaryFolder + "/Tags-v1.json", JsonConvert.SerializeObject(resultT));
+				await Files.StoreFile(Files.LocalCache + "/Tags-v1.json", JsonConvert.SerializeObject(resultT));
 				foreach (var t in resultT)
 				{
 					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 						Namespaces.Add(t.@namespace);
 					TagStats.Add(t);
 				}
-				await Files.StoreFile(TemporaryFolder + "/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
+				await Files.StoreFile(Files.LocalCache + "/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
 			}
 		}
 

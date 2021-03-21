@@ -28,14 +28,8 @@ namespace LRReader.UWP.Services
 
 		public void StoreObjectRoamed(string key, object obj) => roamedSettings.Values[key] = obj;
 
-		public void DeleteObjectLocal(string key)
-		{
-			localSettings.Values.Remove(key);
-		}
+		public void DeleteObjectLocal(string key) => localSettings.Values.Remove(key);
 
-		public void DeleteObjectRoamed(string key)
-		{
-			roamedSettings.Values.Remove(key);
-		}
+		public void DeleteObjectRoamed(string key) => roamedSettings.Values.Remove(key);
 	}
 }
