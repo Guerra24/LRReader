@@ -1,9 +1,12 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Internal;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace LRReader.Shared.Models.Main
@@ -50,7 +53,26 @@ namespace LRReader.Shared.Models.Main
 			foreach (var s in separatedTags)
 				TagsList.Add(s.Trim());
 
-			TagsGroups.Clear();
+			// TODO: Apparently we can crash here with a COMException
+			try
+			{
+				TagsGroups.Clear();
+			}
+			catch (Exception e)
+			{
+				var props = new Dictionary<string, string> { { "HResult", e.HResult.ToString() } };
+				Crashes.TrackError(e, props);
+				try
+				{
+					TagsGroups.SafeClear(); // Try safe-clear
+				}
+				catch (Exception e1)
+				{
+					var props1 = new Dictionary<string, string> { { "HResult", e1.HResult.ToString() } };
+					Crashes.TrackError(e1, props1);
+					TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
+				}
+			}
 			var tmp = new List<ArchiveTagsGroup>();
 			foreach (var s in separatedTags)
 			{
