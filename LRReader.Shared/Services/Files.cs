@@ -24,9 +24,9 @@ namespace LRReader.Shared.Services
 
 	public class StubFilesService : IFilesService
 	{
-		public string LocalCache => throw new System.NotImplementedException();
+		public string LocalCache => "";
 
-		public string Local => throw new System.NotImplementedException();
+		public string Local => "";
 
 		public async Task<string> GetFile(string path)
 		{

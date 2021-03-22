@@ -41,6 +41,12 @@ Download the `LRReader.appinstaller` file, run it and follow instructions.
 
 ## Usage
 
+### Profile
+
+Make sure the URL includes `http://` or `https://`.
+
+To enable editing LANraragi needs to be configured without password or with an API Key.
+
 ### Tabs
 
 `Ctrl` + `W` or `Ctrl` + `F4` close Tab<br>

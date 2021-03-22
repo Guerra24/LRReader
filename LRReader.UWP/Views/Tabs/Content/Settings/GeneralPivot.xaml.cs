@@ -40,18 +40,21 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
 		{
-			ServerProfileDialog dialog = new ServerProfileDialog(false);
+			var dialog = new ServerProfileDialog(false);
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				Data.SettingsManager.AddProfile(dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
+				var url = dialog.ProfileServerAddress.Text;
+				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
+					url = "http://" + url;
+				Data.SettingsManager.AddProfile(dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
 			}
 		}
 
 		private async void ButtonEdit_Click(object sender, RoutedEventArgs e)
 		{
-			ServerProfileDialog dialog = new ServerProfileDialog(true);
-			ServerProfile profile = Data.SettingsManager.Profile;
+			var dialog = new ServerProfileDialog(true);
+			var profile = Data.SettingsManager.Profile;
 			dialog.ProfileName.Text = profile.Name;
 			dialog.ProfileServerAddress.Text = profile.ServerAddress;
 			dialog.ProfileServerApiKey.Password = profile.ServerApiKey;
@@ -59,7 +62,10 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
+				var url = dialog.ProfileServerAddress.Text;
+				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
+					url = "http://" + url;
+				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
 				Global.ApiConnection.RefreshSettings(Data.SettingsManager.Profile);
 			}
 		}

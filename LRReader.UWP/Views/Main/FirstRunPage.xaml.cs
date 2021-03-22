@@ -1,23 +1,11 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
-using LRReader.UWP.ViewModels;
+﻿using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Views.Tabs;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -60,18 +48,21 @@ namespace LRReader.UWP.Views.Main
 
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
 		{
-			ServerProfileDialog dialog = new ServerProfileDialog(false);
+			var dialog = new ServerProfileDialog(false);
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				ViewModel.SettingsManager.Profile = ViewModel.SettingsManager.AddProfile(dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
+				var url = dialog.ProfileServerAddress.Text;
+				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
+					url = "http://" + url;
+				ViewModel.SettingsManager.Profile = ViewModel.SettingsManager.AddProfile(dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
 			}
 		}
 
 		private async void ButtonEdit_Click(object sender, RoutedEventArgs e)
 		{
-			ServerProfileDialog dialog = new ServerProfileDialog(true);
-			ServerProfile profile = ViewModel.SettingsManager.Profile;
+			var dialog = new ServerProfileDialog(true);
+			var profile = ViewModel.SettingsManager.Profile;
 			dialog.ProfileName.Text = profile.Name;
 			dialog.ProfileServerAddress.Text = profile.ServerAddress;
 			dialog.ProfileServerApiKey.Password = profile.ServerApiKey;
@@ -79,7 +70,10 @@ namespace LRReader.UWP.Views.Main
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				ViewModel.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, dialog.ProfileServerAddress.Text, dialog.ProfileServerApiKey.Password);
+				var url = dialog.ProfileServerAddress.Text;
+				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
+					url = "http://" + url;
+				ViewModel.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
 			}
 		}
 

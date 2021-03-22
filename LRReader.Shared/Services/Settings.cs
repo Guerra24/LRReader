@@ -1,11 +1,15 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using static LRReader.Shared.Internal.SharedGlobal;
 
@@ -164,26 +168,33 @@ namespace LRReader.Shared.Services
 		public int SettingsVersionLocal
 		{
 			get => SettingsStorage.GetObjectLocal("SettingsVersion", CurrentLocalVersion);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("SettingsVersion", value);
-				OnPropertyChanged("SettingsVersionLocal");
-			}
+			set => SettingsStorage.StoreObjectLocal("SettingsVersion", value);
 		}
 		public static readonly int CurrentRoamedVersion = 2;
 		public int SettingsVersionRoamed
 		{
 			get => SettingsStorage.GetObjectRoamed("SettingsVersion", CurrentRoamedVersion);
-			set
-			{
-				SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
-				OnPropertyChanged("SettingsVersionRoamed");
-			}
+			set => SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
 		}
+
+		private Subject<bool> save = new Subject<bool>();
+
 		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files)
 		{
 			SettingsStorage = settingsStorage;
 			Files = files;
+			save.Throttle(TimeSpan.FromMilliseconds(500))
+				.Subscribe(async (n) =>
+				{
+					try
+					{
+						await Files.StoreFile(Files.Local + "/Profiles.json", JsonConvert.SerializeObject(Profiles));
+					}
+					catch (Exception e)
+					{
+						Crashes.TrackError(e);
+					}
+				});
 		}
 
 		public async Task Load()
@@ -302,9 +313,9 @@ namespace LRReader.Shared.Services
 			SaveProfiles();
 		}
 
-		public async void SaveProfiles()
+		public void SaveProfiles()
 		{
-			await Files.StoreFile(Files.Local + "/Profiles.json", JsonConvert.SerializeObject(Profiles));
+			save.OnNext(true);
 		}
 
 	}
