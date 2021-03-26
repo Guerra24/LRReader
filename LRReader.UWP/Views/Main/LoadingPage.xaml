@@ -21,11 +21,10 @@
 				<RowDefinition />
 				<RowDefinition />
 			</Grid.RowDefinitions>
-			<BitmapIcon
+			<Image
 				Grid.Row="1" Width="620" Height="300"
 				Margin="0,0,0,1" HorizontalAlignment="Center" VerticalAlignment="Center"
-				Foreground="{ThemeResource SystemAccentColor}"
-				UriSource="/Assets/SplashScreen.scale-200.png" />
+				Source="/Assets/SplashScreen.scale-200.png" />
 			<Grid Grid.Row="2">
 				<muxc:ProgressRing
 					Width="40" Height="40" HorizontalAlignment="Center"
