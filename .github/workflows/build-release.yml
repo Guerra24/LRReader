@@ -4,7 +4,7 @@ on:
     types: [published]
 jobs:
   buildAppxBundle:
-    name: Build AppInstaller and Bundle
+    name: Build AppInstaller
     runs-on: windows-2019
     steps:
     - name: Checkout
