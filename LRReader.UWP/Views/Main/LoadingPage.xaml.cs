@@ -5,12 +5,12 @@ using LRReader.UWP.Extensions;
 using LRReader.UWP.Internal;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
 using Windows.Services.Store;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -140,27 +140,39 @@ namespace LRReader.UWP.Views.Main
 				return;
 
 			var context = StoreContext.GetDefault();
-
-			var packageUpdates = await context.GetAppAndOptionalStorePackageUpdatesAsync();
-			if (packageUpdates.Count == 0)
+			if (!context.CanSilentlyDownloadStorePackageUpdates)
 				return;
-
-			IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> downloadTask;
-			if (context.CanSilentlyDownloadStorePackageUpdates)
-				downloadTask = context.TrySilentDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
-			else
-				//downloadTask = context.RequestDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
-				return;
-
-			ViewModel.Updating = true;
-
-			downloadTask.Progress = async (info, progress) =>
+			try
 			{
-				await DispatcherService.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
-			};
+				ViewModel.Updating = true;
+				ViewModel.Indeterminate = true;
 
-			var result = await downloadTask.AsTask();
-			ViewModel.Updating = false;
+				var packageUpdates = await context.GetAppAndOptionalStorePackageUpdatesAsync();
+				if (packageUpdates.Count == 0)
+					return;
+
+				var downloadTask = context.TrySilentDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
+				//downloadTask = context.RequestDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
+
+				ViewModel.Indeterminate = false;
+
+				downloadTask.Progress = async (info, progress) =>
+				{
+					await DispatcherService.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
+				};
+				var result = await downloadTask.AsTask();
+			}
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+				ViewModel.Updating = false;
+				ViewModel.Indeterminate = false;
+				ViewModel.Status = lang.GetString("LoadingPage/UpdateError");
+				ViewModel.StatusSub = lang.GetString("LoadingPage/UpdateErrorCode").AsFormat(e.HResult);
+				await Task.Delay(TimeSpan.FromSeconds(2.5));
+				ViewModel.Status = "";
+				ViewModel.StatusSub = "";
+			}
 		}
 
 	}

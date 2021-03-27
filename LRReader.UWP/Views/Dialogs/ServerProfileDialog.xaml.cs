@@ -1,5 +1,6 @@
 ﻿using LRReader.UWP.Extensions;
 using LRReader.UWP.Internal;
+using Microsoft.AppCenter.Crashes;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
@@ -71,8 +72,16 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			var dataPackage = new DataPackage();
 			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}");
-			Clipboard.SetContent(dataPackage);
+			try
+			{
+				// For some reason throws invalid cast exception
+				dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}".ToString());
+				Clipboard.SetContent(dataPackage);
+			}
+			catch (Exception er)
+			{
+				Crashes.TrackError(er);
+			}
 		}
 	}
 }

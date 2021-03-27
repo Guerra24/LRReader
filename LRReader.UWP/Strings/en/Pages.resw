@@ -192,4 +192,10 @@
   <data name="LoadingPage.NoConnectionLocalHostSub" xml:space="preserve">
     <value>Check Profile-&gt;Edit for more information</value>
   </data>
+  <data name="LoadingPage.UpdateError" xml:space="preserve">
+    <value>An error ocurred while checking for updates</value>
+  </data>
+  <data name="LoadingPage.UpdateErrorCode" xml:space="preserve">
+    <value>Error code 0x{0:X}</value>
+  </data>
 </root>

@@ -28,6 +28,12 @@ namespace LRReader.UWP.ViewModels
 			get => _updating;
 			set => SetProperty(ref _updating, value);
 		}
+		private bool _indeterminate;
+		public bool Indeterminate
+		{
+			get => _indeterminate;
+			set => SetProperty(ref _indeterminate, value);
+		}
 		private double _progress;
 		public double Progress
 		{
