@@ -165,13 +165,22 @@ namespace LRReader.UWP.Views.Main
 			catch (Exception e)
 			{
 				Crashes.TrackError(e);
-				ViewModel.Updating = false;
+
 				ViewModel.Indeterminate = false;
+				ViewModel.Updating = false;
+
 				ViewModel.Status = lang.GetString("LoadingPage/UpdateError");
 				ViewModel.StatusSub = lang.GetString("LoadingPage/UpdateErrorCode").AsFormat(e.HResult);
+
 				await Task.Delay(TimeSpan.FromSeconds(2.5));
+
 				ViewModel.Status = "";
 				ViewModel.StatusSub = "";
+			}
+			finally
+			{
+				ViewModel.Indeterminate = false;
+				ViewModel.Updating = false;
 			}
 		}
 
