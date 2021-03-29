@@ -39,11 +39,9 @@
 				<StackPanel VerticalAlignment="Top">
 					<TextBlock
 						Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="18"
-						IsTextSelectionEnabled="True"
 						Text="{x:Bind ViewModel.Status, Mode=OneWay}" />
 					<TextBlock
 						Margin="0,5,0,0" HorizontalAlignment="Center" FontSize="17"
-						IsTextSelectionEnabled="True"
 						Text="{x:Bind ViewModel.StatusSub, Mode=OneWay}" />
 				</StackPanel>
 			</Grid>
