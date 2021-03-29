@@ -1,25 +1,17 @@
 ﻿using LRReader.Internal;
-using LRReader.UWP.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Tabs;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Extensions;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -55,7 +47,7 @@ namespace LRReader.UWP.Views.Items
 				var image = new BitmapImage();
 				image.DecodePixelType = DecodePixelType.Logical;
 				image.DecodePixelHeight = 138;
-				image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(ViewModel.Archive.arcid), image);
+				image = await Global.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image);
 				if (image != null)
 				{
 					if (image.PixelHeight != 0 && image.PixelWidth != 0)

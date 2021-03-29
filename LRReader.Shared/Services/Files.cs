@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
@@ -20,6 +21,10 @@ namespace LRReader.Shared.Services
 
 		bool ExistFile(string path);
 
+		DirectoryInfo CreateDirectory(string path);
+
+		bool ExistDirectory(string path);
+
 	}
 
 	public class StubFilesService : IFilesService
@@ -40,25 +45,22 @@ namespace LRReader.Shared.Services
 			return new byte[0];
 		}
 
-		public async Task StoreFile(string path, string content)
-		{
-			await Task.Delay(1);
-		}
+		public Task StoreFile(string path, string content) => Task.Delay(1);
 
-		public async Task StoreFile(string path, byte[] content)
-		{
-			await Task.Delay(1);
-		}
+		public Task StoreFile(string path, byte[] content) => Task.Delay(1);
 
 		public void DeleteFile(string path)
 		{
 		}
 
-		public bool ExistFile(string path)
+		public bool ExistFile(string path) => false;
+
+		public DirectoryInfo CreateDirectory(string path)
 		{
-			return false;
+			return new DirectoryInfo("");
 		}
 
+		public bool ExistDirectory(string path) => false;
 
 	}
 

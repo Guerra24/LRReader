@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using LRReader.Internal;
 using System;
+using LRReader.Shared.Services;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -44,8 +45,8 @@ namespace LRReader.UWP.Views.Items
 			}
 			_current = n.LeftImage + n.RightImage;
 			var animTask = FadeOut.StartAsync(ImagesRoot);
-			var lImage = SharedGlobal.ImagesManager.GetImageCached(n.LeftImage);
-			var rImage = SharedGlobal.ImagesManager.GetImageCached(n.RightImage);
+			var lImage = Service.Images.GetImageCached(n.LeftImage);
+			var rImage = Service.Images.GetImageCached(n.RightImage);
 			await animTask;
 			var imageL = new BitmapImage();
 			var imageR = new BitmapImage();

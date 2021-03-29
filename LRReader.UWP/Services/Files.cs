@@ -27,5 +27,10 @@ namespace LRReader.UWP.Services
 
 		public bool ExistFile(string path) => File.Exists(path);
 
+		public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
+
+		public bool ExistDirectory(string path) => Directory.Exists(path);
+
+
 	}
 }

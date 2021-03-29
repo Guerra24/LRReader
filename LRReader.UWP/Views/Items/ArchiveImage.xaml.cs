@@ -1,6 +1,6 @@
 ﻿using LRReader.Internal;
-using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
@@ -50,7 +50,7 @@ namespace LRReader.UWP.Views.Items
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
 			image.DecodePixelHeight = 275;
-			image = await Global.ImageProcessing.ByteToBitmap(await SharedGlobal.ImagesManager.GetImageCached(n.Image), image, n.Image.EndsWith("avif"));
+			image = await Global.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image), image, n.Image.EndsWith("avif"));
 			Ring.IsActive = false;
 			Image.Source = image;
 

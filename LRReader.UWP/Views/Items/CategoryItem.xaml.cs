@@ -1,6 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.Views.Dialogs;
@@ -13,7 +13,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
@@ -52,7 +51,7 @@ namespace LRReader.UWP.Views.Items
 					var image = new BitmapImage();
 					image.DecodePixelType = DecodePixelType.Logical;
 					image.DecodePixelHeight = 275;
-					image = await Global.ImageProcessing.ByteToBitmap(await ArchivesProvider.GetThumbnail(first), image);
+					image = await Global.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(first), image);
 					if (image == null)
 						ViewModel.MissingImage = true;
 					else

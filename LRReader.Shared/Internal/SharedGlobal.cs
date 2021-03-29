@@ -10,7 +10,6 @@ namespace LRReader.Shared.Internal
 		public static ArchivesManager ArchivesManager { get; set; }
 		public static UpdatesManager UpdatesManager { get; } = new UpdatesManager();
 		public static ServerInfo ServerInfo { get; set; }
-		public static ImagesManager ImagesManager { get; set; } = new ImagesManager();
 		public static ControlFlags ControlFlags { get; set; } = new ControlFlags();
 	}
 
