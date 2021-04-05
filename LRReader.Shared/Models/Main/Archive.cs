@@ -44,7 +44,7 @@ namespace LRReader.Shared.Models.Main
 		{
 			TagsClean = "";
 			if (tags == null) // TODO: v0.7.7 returns null tags when there are no plugins enabled.
-				return;
+				tags = ""; // Use empty string as fallback instead
 			var separatedTags = tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 			foreach (var s in separatedTags)
 				TagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
