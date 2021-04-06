@@ -27,7 +27,8 @@ namespace LRReader.Shared.Services
 		{
 			if (Loaded)
 				return;
-			await Settings.Load();
+			await Settings.Init();
+			await Images.Init();
 			Loaded = true;
 		}
 
@@ -40,6 +41,6 @@ namespace LRReader.Shared.Services
 
 	public interface IService
 	{
-		Task Load();
+		Task Init();
 	}
 }

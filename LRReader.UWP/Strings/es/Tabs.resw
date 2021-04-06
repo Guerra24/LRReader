@@ -135,6 +135,9 @@
   <data name="Archive.CopyTag.Text" xml:space="preserve">
     <value>Copiar</value>
   </data>
+  <data name="Archive.Delete.Content" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
   <data name="Archive.Download.Content" xml:space="preserve">
     <value>Descargar</value>
   </data>

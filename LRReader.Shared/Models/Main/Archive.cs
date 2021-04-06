@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace LRReader.Shared.Models.Main
@@ -200,5 +199,11 @@ namespace LRReader.Shared.Models.Main
 	public class ArchiveCategories : GenericApiResult
 	{
 		List<Category> categories { get; set; }
+	}
+
+	public class DeleteArchiveResult : GenericApiResult
+	{
+		public string id { get; set; }
+		public string filename { get; set; }
 	}
 }

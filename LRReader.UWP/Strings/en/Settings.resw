@@ -165,6 +165,9 @@
   <data name="General.Categories.Header" xml:space="preserve">
     <value>Open Categories tab on start</value>
   </data>
+  <data name="General.ClearThumbCache.Content" xml:space="preserve">
+    <value>Clear Thumbnail Cache</value>
+  </data>
   <data name="General.CompactMarks.Header" xml:space="preserve">
     <value>Use compact Bookmarks</value>
   </data>
@@ -194,6 +197,9 @@
   </data>
   <data name="General.Search.Text" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="General.Size.Text" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="General.SortBy.Header" xml:space="preserve">
     <value>Sort by</value>

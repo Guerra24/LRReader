@@ -147,7 +147,8 @@ namespace LRReader.UWP.Views.Items
 			var result = await dialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				await ViewModel.Category.DeleteCategory?.Invoke(ViewModel.Category);
+				if (ViewModel.Category.DeleteCategory != null)
+					await ViewModel.Category.DeleteCategory(ViewModel.Category);
 			}
 		}
 	}

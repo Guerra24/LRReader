@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -197,9 +198,9 @@ namespace LRReader.Shared.Services
 				});
 		}
 
-		public async Task Load()
+		public async Task Init()
 		{
-			if (Files.ExistFile(Files.Local + "/Profiles.json"))
+			if (File.Exists(Files.Local + "/Profiles.json"))
 			{
 				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json"));
 			}

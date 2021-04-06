@@ -70,9 +70,14 @@
 								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind Data.CanEdit}" />
 							<Button
-								x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DonwloadButton_Click"
+								x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DownloadButton_Click"
 								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"
 								Style="{ThemeResource ButtonRevealStyle}" />
+							<Button
+								x:Uid="/Tabs/Archive/Delete" Margin="2,0,0,0" Click="DeleteButton_Click"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								Style="{ThemeResource ButtonRevealStyle}"
+								Visibility="{x:Bind Data.CanEdit}" />
 						</StackPanel>
 					</StackPanel>
 				</GridView.Header>

@@ -51,6 +51,9 @@
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Download" Click="DownloadMenuItem_Click" Icon="Download"
 				IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
+			<MenuFlyoutItem
+				x:Uid="/Items/Archive/Delete" Click="DeleteMenuItem_Click" Icon="Delete"
+				Visibility="{x:Bind ViewModel.CanEdit}" />
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 

@@ -482,7 +482,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await dialog.ShowAsync();
 		}
 
-		private async void DonwloadButton_Click(object sender, RoutedEventArgs e)
+		private async void DownloadButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.Downloading = true;
 			var download = await Data.DownloadArchive();
@@ -565,5 +565,21 @@ namespace LRReader.UWP.Views.Tabs.Content
 			return target;
 		}
 
+		private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+		{
+			var lang = ResourceLoader.GetForCurrentView("Dialogs");
+			var dialog = new ContentDialog()
+			{
+				Title = lang.GetString("RemoveArchive/Title").AsFormat(Data.Archive.title),
+				Content = lang.GetString("RemoveArchive/Content"),
+				PrimaryButtonText = lang.GetString("RemoveArchive/PrimaryButtonText"),
+				CloseButtonText = lang.GetString("RemoveArchive/CloseButtonText")
+			};
+			var result = await dialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
+			{
+				await Data.DeleteArchive();
+			}
+		}
 	}
 }

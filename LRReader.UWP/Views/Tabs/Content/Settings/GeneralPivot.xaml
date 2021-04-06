@@ -8,9 +8,11 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Uid="/Settings/GeneralPivot"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
+	Loaded="PivotItem_Loaded"
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
+		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</PivotItem.Resources>
@@ -65,6 +67,18 @@
 			<ComboBox
 				x:Name="ThemeComboBox" x:Uid="/Settings/General/Theme" Margin="0,0,0,10"
 				SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+			<StackPanel Margin="0,5,0,15" Orientation="Horizontal">
+				<Button
+					x:Uid="/Settings/General/ClearThumbCache" Margin="0,0,10,0" Click="ButtonClearThumbCache_Click"
+					IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+				<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+					<Run x:Uid="/Settings/General/Size" />
+					<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
+				</TextBlock>
+				<ProgressRing
+					Width="30" Height="30" VerticalAlignment="Center"
+					IsActive="{x:Bind Data.ProgressCache, Mode=OneWay}" />
+			</StackPanel>
 			<ToggleSwitch
 				x:Uid="/Settings/General/CrashReport" Margin="0,0,0,10" Loading="TrackCrashes_Loading"
 				Toggled="TrackCrashes_Toggled" />

@@ -137,6 +137,18 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult();
 		}
 
+		public static async Task<DeleteArchiveResult> DeleteArchive(string id)
+		{
+			var client = SharedGlobal.ApiConnection.GetClient();
+
+			var rq = new RestRequest("api/archives/{id}", Method.DELETE);
+			rq.AddParameter("id", id, ParameterType.UrlSegment);
+
+			var r = await client.ExecuteAsync(rq);
+
+			return await r.GetResult<DeleteArchiveResult>();
+		}
+
 		public static async Task<byte[]> GetImage(string path)
 		{
 			if (string.IsNullOrEmpty(path))

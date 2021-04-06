@@ -23,7 +23,7 @@
 		<local:BookmarkTemplateSelector x:Key="BookmarkTemplateSelector" CompactTemplate="{StaticResource CompactBookmarkItem}" FullTemplate="{StaticResource FullBookmarkItem}" />
 	</UserControl.Resources>
 
-	<Grid Padding="0,10">
+	<Grid>
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging"

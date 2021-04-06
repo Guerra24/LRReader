@@ -12,7 +12,6 @@
 	mc:Ignorable="d">
 
 	<PivotItem.Resources>
-		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:EnumConverter x:Key="EnumConverter" />
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</PivotItem.Resources>

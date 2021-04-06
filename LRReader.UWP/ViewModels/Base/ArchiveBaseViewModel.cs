@@ -172,5 +172,10 @@ namespace LRReader.UWP.ViewModels.Base
 		{
 			return await ArchivesProvider.DownloadArchive(Archive.arcid);
 		}
+
+		public async Task DeleteArchive()
+		{
+			await Global.ArchivesManager.DeleteArchive(Archive.arcid);
+		}
 	}
 }

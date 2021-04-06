@@ -23,14 +23,5 @@ namespace LRReader.UWP.Services
 
 		public Task StoreFile(string path, byte[] content) => File.WriteAllBytesAsync(path, content);
 
-		public void DeleteFile(string path) => File.Delete(path);
-
-		public bool ExistFile(string path) => File.Exists(path);
-
-		public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
-
-		public bool ExistDirectory(string path) => Directory.Exists(path);
-
-
 	}
 }

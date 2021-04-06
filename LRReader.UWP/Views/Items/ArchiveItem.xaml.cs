@@ -8,6 +8,7 @@ using LRReader.UWP.Views.Tabs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -29,10 +30,13 @@ namespace LRReader.UWP.Views.Items
 
 		private bool _open;
 
+		private ResourceLoader lang;
+
 		public ArchiveItem()
 		{
 			this.InitializeComponent();
 			ViewModel = new ArchiveItemViewModel();
+			lang = ResourceLoader.GetForCurrentView("Dialogs");
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -180,5 +184,20 @@ namespace LRReader.UWP.Views.Items
 			await dialog.ShowAsync();
 		}
 
+		private async void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new ContentDialog()
+			{
+				Title = lang.GetString("RemoveArchive/Title").AsFormat(ViewModel.Archive.title),
+				Content = lang.GetString("RemoveArchive/Content"),
+				PrimaryButtonText = lang.GetString("RemoveArchive/PrimaryButtonText"),
+				CloseButtonText = lang.GetString("RemoveArchive/CloseButtonText")
+			};
+			var result = await dialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
+			{
+				await ViewModel.DeleteArchive();
+			}
+		}
 	}
 }

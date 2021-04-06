@@ -77,5 +77,19 @@ namespace LRReader.Shared.Internal
 			return null;
 		}
 
+		public async Task DeleteArchive(string id)
+		{
+			var result = await ArchivesProvider.DeleteArchive(id);
+			if (result.success)
+			{
+				SharedGlobal.EventManager.DeleteArchive(id);
+				Archives.Remove(id);
+			}
+			else
+			{
+				SharedGlobal.EventManager.ShowNotification("An error ocurred while deleting archive.", "Metadata has been deleted, remove file manually.", 0);
+			}
+		}
+
 	}
 }

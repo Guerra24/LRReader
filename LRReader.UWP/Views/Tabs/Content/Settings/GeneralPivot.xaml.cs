@@ -38,6 +38,8 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			OrderByComboBox.Items.Add(langb.GetString("Archives/OrderDesc/Text"));
 		}
 
+		private async void PivotItem_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateThumbnailCacheSize();
+
 		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new ServerProfileDialog(false);
@@ -124,5 +126,8 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		{
 			(sender as ToggleSwitch).IsOn = await Crashes.IsEnabledAsync();
 		}
+
+		private async void ButtonClearThumbCache_Click(object sender, RoutedEventArgs e) => await Data.ClearThumbnailCache();
+
 	}
 }

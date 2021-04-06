@@ -123,6 +123,9 @@
   <data name="Archive.Categories.Text" xml:space="preserve">
     <value>Categories</value>
   </data>
+  <data name="Archive.Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Archive.Download.Text" xml:space="preserve">
     <value>Download</value>
   </data>

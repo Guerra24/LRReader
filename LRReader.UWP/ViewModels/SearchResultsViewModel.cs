@@ -105,6 +105,7 @@ namespace LRReader.UWP.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
+			SharedGlobal.EventManager.DeleteArchiveEvent += DeleteArchive;
 		}
 
 		public async Task NextPage()
@@ -161,6 +162,11 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = false;
 			_internalLoadingArchives = false;
 			ControlsEnabled = true;
+		}
+
+		public void DeleteArchive(string id)
+		{
+			ArchiveList.Remove(SharedGlobal.ArchivesManager.GetArchive(id));
 		}
 
 		protected virtual bool CustomArchiveCheck(Archive archive) => true;

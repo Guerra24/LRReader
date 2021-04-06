@@ -54,6 +54,13 @@ namespace LRReader.UWP.ViewModels
 				}
 			}
 		}
+		public string ThumbnailCacheSize;
+		private bool _progressCache;
+		public bool ProgressCache
+		{
+			get => _progressCache;
+			set => SetProperty(ref _progressCache, value);
+		}
 		public MinionJob thumbnailJob;
 
 		public ControlFlags ControlFlags
@@ -162,9 +169,29 @@ namespace LRReader.UWP.ViewModels
 
 			if (status.state.Equals("finished"))
 			{
-				SharedGlobal.EventManager.ShowNotification("Thumbnail generation completed", "");
+				SharedGlobal.EventManager.ShowNotification("Thumbnail generation completed", "", 0 );
 				thumbnailJob = null;
 			}
+		}
+
+		public async Task UpdateThumbnailCacheSize()
+		{
+			if (ProgressCache)
+				return;
+			ProgressCache = true;
+			ThumbnailCacheSize = await Service.Images.GetThumbnailCacheSize();
+			OnPropertyChanged("ThumbnailCacheSize");
+			ProgressCache = false;
+		}
+		public async Task ClearThumbnailCache()
+		{
+			if (ProgressCache)
+				return;
+			ProgressCache = true;
+			await Service.Images.DeleteThumbnailCache();
+			ThumbnailCacheSize = await Service.Images.GetThumbnailCacheSize();
+			OnPropertyChanged("ThumbnailCacheSize");
+			ProgressCache = false;
 		}
 	}
 }

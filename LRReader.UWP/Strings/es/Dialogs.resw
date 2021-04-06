@@ -171,6 +171,18 @@
   <data name="ProgressConflict.Remote" xml:space="preserve">
     <value>Usar remoto ({0}/{1})</value>
   </data>
+  <data name="RemoveArchive.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="RemoveArchive.Content" xml:space="preserve">
+    <value>¿Estás seguro de que quieres eliminarlo?</value>
+  </data>
+  <data name="RemoveArchive.PrimaryButtonText" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="RemoveArchive.Title" xml:space="preserve">
+    <value>Eliminar {0}</value>
+  </data>
   <data name="RemoveCategory.CloseButtonText" xml:space="preserve">
     <value>No</value>
   </data>

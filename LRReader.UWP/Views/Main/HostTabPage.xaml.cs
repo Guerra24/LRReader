@@ -60,6 +60,7 @@ namespace LRReader.UWP.Views.Main
 			Global.EventManager.AddTabEvent += AddTab;
 			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
+			Global.EventManager.DeleteArchiveEvent += DeleteArchive;
 			await DispatcherService.RunAsync(() =>
 			{
 				Global.EventManager.AddTab(new ArchivesTab());
@@ -90,6 +91,7 @@ namespace LRReader.UWP.Views.Main
 			Global.EventManager.AddTabEvent -= AddTab;
 			Global.EventManager.CloseAllTabsEvent -= CloseAllTabs;
 			Global.EventManager.CloseTabWithHeaderEvent -= CloseTabWithHeader;
+			Global.EventManager.DeleteArchiveEvent -= DeleteArchive;
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
@@ -187,6 +189,12 @@ namespace LRReader.UWP.Views.Main
 			{
 				AppView.TryEnterFullScreenMode();
 			}
+		}
+
+		public void DeleteArchive(string id)
+		{
+			CloseTabWithHeader("Edit_" + id);
+			CloseTabWithHeader("Archive_" + id);
 		}
 
 		private async Task ShowWhatsNew()
