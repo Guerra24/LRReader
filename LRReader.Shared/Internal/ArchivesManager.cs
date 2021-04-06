@@ -79,6 +79,8 @@ namespace LRReader.Shared.Internal
 
 		public async Task DeleteArchive(string id)
 		{
+			if (!SharedGlobal.ControlFlags.V078)
+				return;
 			var result = await ArchivesProvider.DeleteArchive(id);
 			if (result.success)
 			{

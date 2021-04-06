@@ -17,12 +17,14 @@ namespace LRReader.Shared.Internal
 	{
 		public bool CategoriesEnabled = true;
 		public bool V077 = false;
+		public bool V078 = false;
 
 		public void Check(ServerInfo serverInfo)
 		{
 			if (serverInfo.version == new Version(0, 7, 5))
 				CategoriesEnabled = false;
 			V077 = serverInfo.version >= new Version(0, 7, 7);
+			V078 = serverInfo.version >= new Version(0, 7, 8);
 		}
 	}
 }
