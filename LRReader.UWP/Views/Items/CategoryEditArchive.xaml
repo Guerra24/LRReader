@@ -103,7 +103,7 @@
 			</Grid.RowDefinitions>
 			<TextBlock
 				x:Name="Title" Grid.Row="0" Padding="5,0"
-				FontSize="15"
+				FontSize="15" MaxHeight="114"
 				Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
 				TextTrimming="CharacterEllipsis" TextWrapping="WrapWholeWords"
 				ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />

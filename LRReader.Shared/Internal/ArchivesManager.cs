@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -79,9 +80,14 @@ namespace LRReader.Shared.Internal
 
 		public async Task DeleteArchive(string id)
 		{
+			if (!Archives.ContainsKey(id))
+				return;
 			var result = await ArchivesProvider.DeleteArchive(id);
 			if (result.success)
 			{
+				var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(id));
+				if (bookmark != null)
+					Settings.Profile.Bookmarks.Remove(bookmark);
 				SharedGlobal.EventManager.DeleteArchive(id);
 				Archives.Remove(id);
 			}

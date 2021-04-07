@@ -20,13 +20,18 @@ namespace LRReader.UWP.ViewModels
 		public bool RefreshOnErrorButton
 		{
 			get => _refreshOnErrorButton;
-			set	=> SetProperty(ref _refreshOnErrorButton, value);
+			set => SetProperty(ref _refreshOnErrorButton, value);
 		}
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
 
 		private bool _internalLoadingArchives;
 
 		public bool Empty => ArchiveList.Count == 0;
+
+		public BookmarksTabViewModel()
+		{
+			EventManager.DeleteArchiveEvent += DeleteArchive;
+		}
 
 		public async Task Refresh()
 		{
@@ -60,6 +65,11 @@ namespace LRReader.UWP.ViewModels
 			if (animate)
 				LoadingArchives = false;
 			_internalLoadingArchives = false;
+		}
+
+		public void DeleteArchive(string id)
+		{
+			ArchiveList.Remove(ArchivesManager.GetArchive(id));
 		}
 
 	}

@@ -156,6 +156,9 @@
   <data name="CreateCategory.Pinned.Header" xml:space="preserve">
     <value>Pinned</value>
   </data>
+  <data name="CreateCategory.SearchQuery.Header" xml:space="preserve">
+    <value>Leave empty for a static category</value>
+  </data>
   <data name="CreateCategory.SearchQuery.PlaceholderText" xml:space="preserve">
     <value>Search Query</value>
   </data>
@@ -187,13 +190,13 @@
     <value>No</value>
   </data>
   <data name="RemoveCategory.Content" xml:space="preserve">
-    <value>Are you sure you want to remove it?</value>
+    <value>Are you sure you want to delete it?</value>
   </data>
   <data name="RemoveCategory.PrimaryButtonText" xml:space="preserve">
     <value>Yes</value>
   </data>
   <data name="RemoveCategory.Title" xml:space="preserve">
-    <value>Remove Category: {0}</value>
+    <value>Delete {0}</value>
   </data>
   <data name="ServerProfile.Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copy</value>

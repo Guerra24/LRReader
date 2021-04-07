@@ -69,7 +69,7 @@ namespace LRReader.UWP.Views.Controls
 						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
 					}
 				}
-				else
+				else if (string.IsNullOrEmpty(sender.Text) && !string.IsNullOrEmpty(query))
 				{
 					query = "";
 					await HandleSearch();

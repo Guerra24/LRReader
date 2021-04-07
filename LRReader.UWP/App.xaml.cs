@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter;
@@ -24,8 +23,8 @@ namespace LRReader.UWP
 
 		public App()
 		{
-			Init.EarlyInit();
 			AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
+			Init.EarlyInit();
 			switch (Settings.Theme)
 			{
 				case AppTheme.Dark:
@@ -61,7 +60,7 @@ namespace LRReader.UWP
 		/// will be used such as when the application is launched to open a specific file.
 		/// </summary>
 		/// <param name="e">Details about the launch request and process.</param>
-		protected override void OnLaunched(LaunchActivatedEventArgs e)
+		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			CoreApplication.EnablePrelaunch(true);
 
@@ -98,6 +97,10 @@ namespace LRReader.UWP
 					rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
 				}
 				Window.Current.Activate();
+			}
+			else
+			{
+				await InitServices();
 			}
 		}
 

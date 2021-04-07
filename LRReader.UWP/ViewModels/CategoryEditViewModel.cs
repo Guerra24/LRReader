@@ -57,7 +57,7 @@ namespace LRReader.UWP.ViewModels
 				}
 			}
 			OnPropertyChanged("Empty");
-			foreach (var a in removeMissing) category.archives.Remove(a);
+			removeMissing.ForEach(a => category.archives.Remove(a));
 			_loading = false;
 		}
 
@@ -96,6 +96,20 @@ namespace LRReader.UWP.ViewModels
 			OnPropertyChanged("Name");
 			OnPropertyChanged("Search");
 			OnPropertyChanged("Pinned");
+
+			var removeMissing = new List<string>();
+			foreach (var a in category.archives)
+			{
+				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
+				if (archive != null)
+					CategoryArchives.Add(archive);
+				else
+				{
+					removeMissing.Add(a);
+					await CategoriesProvider.RemoveArchiveFromCategory(category.id, a);
+				}
+			}
+			removeMissing.ForEach(a => category.archives.Remove(a));
 
 			foreach (var a in category.archives)
 			{

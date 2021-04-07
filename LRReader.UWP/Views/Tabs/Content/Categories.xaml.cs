@@ -38,7 +38,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 				var result = await dialog.ShowAsync();
 				if (result == ContentDialogResult.Primary)
 				{
-					await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
+					var category = await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
+					if (category != null && string.IsNullOrEmpty(dialog.SearchQuery.Text))
+						Global.EventManager.AddTab(new CategoryEditTab(category));
 				}
 			}
 			else

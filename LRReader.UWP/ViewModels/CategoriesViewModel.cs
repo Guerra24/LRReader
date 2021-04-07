@@ -41,14 +41,16 @@ namespace LRReader.UWP.ViewModels
 		}
 		protected bool _internalLoadingCategories;
 
-		public async Task CreateCategory(string name, string search = "", bool pinned = false)
+		public async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
 		{
 			var resultCreate = await CategoriesProvider.CreateCategory(name, search, pinned);
 			if (resultCreate != null)
 			{
 				resultCreate.DeleteCategory += DeleteCategory;
 				CategoriesList.Add(resultCreate);
+				return resultCreate;
 			}
+			return null;
 		}
 
 		public async Task DeleteCategory(Category category)

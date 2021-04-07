@@ -1,10 +1,8 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Windows.Storage;
 
 namespace LRReader.UWP
 {

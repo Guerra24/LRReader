@@ -27,9 +27,11 @@
 				<TextBlock
 					x:Uid="/Pages/FirstRunPage/Welcome" Margin="0,0,0,10" HorizontalAlignment="Center"
 					FontSize="28" />
+				<!--
 				<TextBlock
 					x:Uid="/Pages/FirstRunPage/Setup" Margin="0,0,0,10" HorizontalAlignment="Center"
 					Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+				-->
 				<ComboBox
 					x:Uid="/Pages/FirstRunPage/ProfileSelect" Margin="0,0,0,10" HorizontalAlignment="Stretch"
 					IsEnabled="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay}"

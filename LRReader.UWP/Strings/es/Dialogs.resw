@@ -156,6 +156,9 @@
   <data name="CreateCategory.Pinned.Header" xml:space="preserve">
     <value>Anclado</value>
   </data>
+  <data name="CreateCategory.SearchQuery.Header" xml:space="preserve">
+    <value>Dejar vacío para una categoría estática</value>
+  </data>
   <data name="CreateCategory.SearchQuery.PlaceholderText" xml:space="preserve">
     <value>Texto a buscar</value>
   </data>
@@ -193,7 +196,7 @@
     <value>Si</value>
   </data>
   <data name="RemoveCategory.Title" xml:space="preserve">
-    <value>Eliminar Categoría: {0}</value>
+    <value>Eliminar {0}</value>
   </data>
   <data name="ServerProfile.Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copiar</value>

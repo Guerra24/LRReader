@@ -28,7 +28,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 	{
 		private BookmarksTabViewModel Data;
 
-		private bool loaded;
 		private ResourceLoader lang;
 
 		public Bookmarks()
@@ -40,9 +39,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (loaded)
-				return;
-			loaded = true;
 			await Data.Refresh();
 		}
 
