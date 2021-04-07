@@ -63,8 +63,9 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			DispatcherService.Init();
+			CoreApplication.EnablePrelaunch(true);
 
+			DispatcherService.Init();
 			Frame rootFrame = Window.Current.Content as Frame;
 
 			if (rootFrame == null)
@@ -79,7 +80,7 @@ namespace LRReader.UWP
 				Window.Current.Content = rootFrame;
 			}
 
-			if (e.PrelaunchActivated == false)
+			if (!e.PrelaunchActivated)
 			{
 				if (rootFrame.Content == null)
 				{

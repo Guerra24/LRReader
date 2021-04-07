@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
@@ -32,11 +33,14 @@ namespace LRReader.UWP.Views.Items
 
 		private ResourceLoader lang;
 
+		private ControlFlags flags;
+
 		public ArchiveItem()
 		{
 			this.InitializeComponent();
 			ViewModel = new ArchiveItemViewModel();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
+			flags = Global.ControlFlags;
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

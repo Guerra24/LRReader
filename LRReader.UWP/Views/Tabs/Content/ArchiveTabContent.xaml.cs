@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
@@ -48,6 +49,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
+		private ControlFlags flags;
+
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
@@ -56,6 +59,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data = new ArchivePageViewModel();
 			Data.ZoomChangedEvent += FitImages;
 			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
+
+			flags = Global.ControlFlags;
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
 				.Subscribe(async (height) =>

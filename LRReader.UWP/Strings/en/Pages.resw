@@ -139,7 +139,7 @@
     <value>Yes, remove select profile</value>
   </data>
   <data name="FirstRunPage.Setup.Text" xml:space="preserve">
-    <value>First we need to setup a profile</value>
+    <value />
   </data>
   <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
     <value>Welcome</value>

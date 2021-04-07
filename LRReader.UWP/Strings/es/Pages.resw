@@ -139,7 +139,7 @@
     <value>Sí, eliminar</value>
   </data>
   <data name="FirstRunPage.Setup.Text" xml:space="preserve">
-    <value>Primero debemos crear un perfil</value>
+    <value />
   </data>
   <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
     <value>Bienvenido</value>

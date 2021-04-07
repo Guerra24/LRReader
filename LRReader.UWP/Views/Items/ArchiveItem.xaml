@@ -3,10 +3,9 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
-	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:controls1="using:LRReader.UWP.Views.Controls"
-	xmlns:convrt="using:LRReader.Internal"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
@@ -19,8 +18,8 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<convrt:NegateBoolConverter x:Key="NegateBool" />
-		<convrt:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
+		<internal:NegateBoolConverter x:Key="NegateBool" />
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
 		<Storyboard x:Name="ShowPopup">
 			<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="TagsPopup" />
 		</Storyboard>
@@ -43,7 +42,7 @@
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Edit" Click="EditMenuItem_Click" Icon="Edit"
 				Visibility="{x:Bind ViewModel.CanEdit}" />
-			<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="CategoriesButton_Click" Visibility="{x:Bind ViewModel.CanEdit}">
+			<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="CategoriesButton_Click" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
 				<MenuFlyoutItem.Icon>
 					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
 				</MenuFlyoutItem.Icon>
@@ -53,7 +52,7 @@
 				IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
 			<MenuFlyoutItem
 				x:Uid="/Items/Archive/Delete" Click="DeleteMenuItem_Click" Icon="Delete"
-				Visibility="{x:Bind ViewModel.CanEdit}" />
+				Visibility="{x:Bind flags.V078Edit}" />
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
