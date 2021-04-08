@@ -63,6 +63,7 @@ namespace LRReader.UWP.Views.Dialogs
 			return !string.IsNullOrEmpty(ProfileName.Text);
 		}
 
+
 		private bool ValidateServerAddress()
 		{
 			return !string.IsNullOrEmpty(ProfileServerAddress.Text) && Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute);
@@ -72,16 +73,8 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			var dataPackage = new DataPackage();
 			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			try
-			{
-				// For some reason throws invalid cast exception
-				dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}".ToString());
-				Clipboard.SetContent(dataPackage);
-			}
-			catch (Exception er)
-			{
-				Crashes.TrackError(er);
-			}
+			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}");
+			Clipboard.SetContent(dataPackage);
 		}
 	}
 }

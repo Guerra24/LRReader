@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.Graphics.Imaging;
-using Windows.Storage.Streams;
 using Windows.System;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Internal
 {
@@ -25,7 +21,7 @@ namespace LRReader.UWP.Internal
 
 		public static string GetPackageFamilyName()
 		{
-			return AppInfo.Current.PackageFamilyName;
+			return Package.Current.Id.FamilyName;
 		}
 
 		public static async Task<bool> OpenInBrowser(Uri uri)
