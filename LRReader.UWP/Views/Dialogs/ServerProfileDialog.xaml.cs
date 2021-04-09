@@ -63,7 +63,6 @@ namespace LRReader.UWP.Views.Dialogs
 			return !string.IsNullOrEmpty(ProfileName.Text);
 		}
 
-
 		private bool ValidateServerAddress()
 		{
 			return !string.IsNullOrEmpty(ProfileServerAddress.Text) && Uri.IsWellFormedUriString(ProfileServerAddress.Text, UriKind.Absolute);
