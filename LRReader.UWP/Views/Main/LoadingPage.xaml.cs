@@ -144,17 +144,14 @@ namespace LRReader.UWP.Views.Main
 				return;
 			try
 			{
-				ViewModel.Updating = true;
-				ViewModel.Indeterminate = true;
-
 				var packageUpdates = await context.GetAppAndOptionalStorePackageUpdatesAsync();
 				if (packageUpdates.Count == 0)
 					return;
 
+				ViewModel.Updating = true;
+
 				var downloadTask = context.TrySilentDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
 				//downloadTask = context.RequestDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
-
-				ViewModel.Indeterminate = false;
 
 				downloadTask.Progress = async (info, progress) =>
 				{
@@ -166,20 +163,18 @@ namespace LRReader.UWP.Views.Main
 			{
 				Crashes.TrackError(e);
 
-				ViewModel.Indeterminate = false;
 				ViewModel.Updating = false;
 
 				ViewModel.Status = lang.GetString("LoadingPage/UpdateError");
 				ViewModel.StatusSub = lang.GetString("LoadingPage/UpdateErrorCode").AsFormat(e.HResult);
 
-				await Task.Delay(TimeSpan.FromSeconds(2.5));
+				await Task.Delay(TimeSpan.FromSeconds(3));
 
 				ViewModel.Status = "";
 				ViewModel.StatusSub = "";
 			}
 			finally
 			{
-				ViewModel.Indeterminate = false;
 				ViewModel.Updating = false;
 			}
 		}

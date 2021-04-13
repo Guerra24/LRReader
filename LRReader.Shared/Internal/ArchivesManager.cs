@@ -23,6 +23,8 @@ namespace LRReader.Shared.Internal
 			Namespaces.Clear();
 
 			var serverInfo = await ServerProvider.GetServerInfo();
+			if (serverInfo == null)
+				return;
 			var currentTimestamp = SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
 			if (currentTimestamp != serverInfo.cache_last_cleared)
 			{

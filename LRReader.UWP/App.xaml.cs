@@ -62,8 +62,6 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			CoreApplication.EnablePrelaunch(true);
-
 			DispatcherService.Init();
 			Frame rootFrame = Window.Current.Content as Frame;
 
@@ -71,6 +69,17 @@ namespace LRReader.UWP
 			{
 				rootFrame = new Frame();
 				rootFrame.NavigationFailed += OnNavigationFailed;
+				rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
+				UpdateButtonsOnThemeChange(RequestedTheme);
+
+				var CoreView = CoreApplication.GetCurrentView();
+				var AppView = ApplicationView.GetForCurrentView();
+				var coreTitleBar = CoreView.TitleBar;
+				coreTitleBar.ExtendViewIntoTitleBar = true;
+
+				var titleBar = AppView.TitleBar;
+				titleBar.ButtonBackgroundColor = Colors.Transparent;
+				titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
@@ -81,21 +90,9 @@ namespace LRReader.UWP
 
 			if (!e.PrelaunchActivated)
 			{
+				CoreApplication.EnablePrelaunch(true);
 				if (rootFrame.Content == null)
-				{
-					var CoreView = CoreApplication.GetCurrentView();
-					var AppView = ApplicationView.GetForCurrentView();
-					var coreTitleBar = CoreView.TitleBar;
-					coreTitleBar.ExtendViewIntoTitleBar = true;
-
-					var titleBar = AppView.TitleBar;
-					titleBar.ButtonBackgroundColor = Colors.Transparent;
-					titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-					rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
-					UpdateButtonsOnThemeChange(RequestedTheme);
 					rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
-				}
 				Window.Current.Activate();
 			}
 			else

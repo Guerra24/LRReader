@@ -58,7 +58,10 @@ namespace LRReader.Shared.Services
 			}
 			else
 			{
-				archivesCache.AddReplace(path, data = await ArchivesProvider.GetImage(path));
+				data = await ArchivesProvider.GetImage(path);
+				if (data == null)
+					return null;
+				archivesCache.AddReplace(path, data);
 				key.Dispose();
 				return data;
 			}
@@ -84,6 +87,8 @@ namespace LRReader.Shared.Services
 				else
 				{
 					data = await ArchivesProvider.GetThumbnail(id);
+					if (data == null)
+						return null;
 					Directory.CreateDirectory(directory);
 					await Files.StoreFile(path, data);
 				}
