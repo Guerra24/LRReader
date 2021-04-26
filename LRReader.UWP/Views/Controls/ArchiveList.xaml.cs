@@ -29,7 +29,7 @@ namespace LRReader.UWP.Views.Controls
 		public ArchiveList()
 		{
 			this.InitializeComponent();
-			Data = new SearchResultsViewModel();
+			Data = DataContext as SearchResultsViewModel;
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)

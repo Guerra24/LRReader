@@ -1,14 +1,12 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels.Base;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -17,6 +15,8 @@ namespace LRReader.UWP.ViewModels
 
 	public class ArchivePageViewModel : ArchiveBaseViewModel
 	{
+		private readonly SettingsService Settings;
+
 		private bool _loadingImages = false;
 		public bool LoadingImages
 		{
@@ -41,7 +41,7 @@ namespace LRReader.UWP.ViewModels
 		public ArchiveImageSet ReaderContent
 		{
 			get => _readerContent;
-			set	=> SetProperty(ref _readerContent, value);
+			set => SetProperty(ref _readerContent, value);
 		}
 		private int _readerIndex;
 		public int ReaderIndex
@@ -55,7 +55,7 @@ namespace LRReader.UWP.ViewModels
 			}
 		}
 		public int ReaderProgress => ReaderIndex + 1;
-		private int _zoomValue = Settings.DefaultZoom;
+		private int _zoomValue = 0;
 		public int ZoomValue
 		{
 			get => _zoomValue;
@@ -70,6 +70,12 @@ namespace LRReader.UWP.ViewModels
 			}
 		}
 		public event ZoomChanged ZoomChangedEvent;
+
+		public ArchivePageViewModel(SettingsService settings)
+		{
+			Settings = settings;
+			_zoomValue = Settings.DefaultZoom;
+		}
 
 		public async Task Reload(bool animate)
 		{

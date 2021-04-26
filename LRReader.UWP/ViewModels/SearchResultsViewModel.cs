@@ -1,17 +1,24 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
+	public delegate bool CustomArchiveCheck(Archive archive);
+
 	public class SearchResultsViewModel : ObservableObject
 	{
+		protected readonly SettingsService Settings;
+		protected readonly EventsService Events;
+
+		public CustomArchiveCheck CustomArchiveCheckEvent = (a) => true;
+
 		private bool _loadingArchives = true;
 		public bool LoadingArchives
 		{
@@ -99,8 +106,11 @@ namespace LRReader.UWP.ViewModels
 		}
 		public Order OrderBy = Order.Ascending;
 
-		public SearchResultsViewModel()
+		public SearchResultsViewModel(SettingsService settings, EventsService events)
 		{
+			Settings = settings;
+			Events = events;
+
 			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
@@ -148,7 +158,7 @@ namespace LRReader.UWP.ViewModels
 				{
 					foreach (var a in resultPage.data)
 					{
-						if (!CustomArchiveCheck(a))
+						if (!CustomArchiveCheckEvent(a))
 							continue;
 						var archive = SharedGlobal.ArchivesManager.GetArchive(a.arcid);
 						if (archive != null)
@@ -168,7 +178,5 @@ namespace LRReader.UWP.ViewModels
 		{
 			ArchiveList.Remove(SharedGlobal.ArchivesManager.GetArchive(id));
 		}
-
-		protected virtual bool CustomArchiveCheck(Archive archive) => true;
 	}
 }

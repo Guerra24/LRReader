@@ -6,7 +6,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class SearchResults : UserControl
 	{
-
 		public SearchResults()
 		{
 			this.InitializeComponent();
@@ -26,6 +25,5 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			ArchiveList.Search(category);
 		}
-
 	}
 }

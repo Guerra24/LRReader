@@ -2,13 +2,15 @@
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Tabs;
 using System.Threading.Tasks;
-using static LRReader.Internal.Global;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
 	public class ArchivesPageViewModel : SearchResultsViewModel
 	{
+		public ArchivesPageViewModel(SettingsService settings, EventsService events) : base(settings, events)
+		{
+		}
+
 		public async Task Refresh()
 		{
 			if (_internalLoadingArchives)
@@ -21,7 +23,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
 				if (archive != null)
-					Service.Events.CloseTabWithId(archive.title);
+					Events.CloseTabWithId(archive.title);
 			}
 			await SharedGlobal.ArchivesManager.ReloadArchives();
 			LoadBookmarks();
@@ -43,9 +45,9 @@ namespace LRReader.UWP.ViewModels
 					{
 						var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
 						if (archive != null)
-							Service.Events.AddTab(new ArchiveTab(archive), false);
+							Events.AddTab(new ArchiveTab(archive), false);
 						else
-							Service.Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+							Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
 		}
 

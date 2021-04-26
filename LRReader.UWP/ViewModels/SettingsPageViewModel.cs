@@ -14,7 +14,10 @@ namespace LRReader.UWP.ViewModels
 {
 	public class SettingsPageViewModel : ObservableObject
 	{
-		public SettingsService SettingsManager => Service.Settings;
+		private readonly ImagesService Images;
+		private readonly EventsService Events;
+
+		public SettingsService SettingsManager;
 		public Version Version => Util.GetAppVersion();
 		public Version MinVersion => UpdatesManager.MIN_VERSION;
 		public Version MaxVersion => UpdatesManager.MAX_VERSION;
@@ -71,8 +74,12 @@ namespace LRReader.UWP.ViewModels
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel()
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events)
 		{
+			SettingsManager = settings;
+			Images = images;
+			Events = events;
+
 			UpdateReleaseData();
 			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
 				SortBy.Add(n);
@@ -169,7 +176,7 @@ namespace LRReader.UWP.ViewModels
 
 			if (status.state.Equals("finished"))
 			{
-				Service.Events.ShowNotification("Thumbnail generation completed", "");
+				Events.ShowNotification("Thumbnail generation completed", "");
 				thumbnailJob = null;
 			}
 		}
@@ -179,7 +186,7 @@ namespace LRReader.UWP.ViewModels
 			if (ProgressCache)
 				return;
 			ProgressCache = true;
-			ThumbnailCacheSize = await Service.Images.GetThumbnailCacheSize();
+			ThumbnailCacheSize = await Images.GetThumbnailCacheSize();
 			OnPropertyChanged("ThumbnailCacheSize");
 			ProgressCache = false;
 		}
@@ -188,8 +195,8 @@ namespace LRReader.UWP.ViewModels
 			if (ProgressCache)
 				return;
 			ProgressCache = true;
-			await Service.Images.DeleteThumbnailCache();
-			ThumbnailCacheSize = await Service.Images.GetThumbnailCacheSize();
+			await Images.DeleteThumbnailCache();
+			ThumbnailCacheSize = await Images.GetThumbnailCacheSize();
 			OnPropertyChanged("ThumbnailCacheSize");
 			ProgressCache = false;
 		}

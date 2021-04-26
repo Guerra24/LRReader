@@ -1,17 +1,19 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
 	public class CategoriesViewModel : ObservableObject
 	{
+		private readonly SettingsService Settings;
+
 		private bool _loadingCategories = true;
 		public bool LoadingCategories
 		{
@@ -40,6 +42,11 @@ namespace LRReader.UWP.ViewModels
 			set => SetProperty(ref _controlsEnabled, value);
 		}
 		protected bool _internalLoadingCategories;
+
+		public CategoriesViewModel(SettingsService settings)
+		{
+			Settings = settings;
+		}
 
 		public async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
 		{

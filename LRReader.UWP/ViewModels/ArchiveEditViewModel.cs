@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -11,6 +10,8 @@ namespace LRReader.UWP.ViewModels
 {
 	public class ArchiveEditViewModel : ObservableObject
 	{
+		private readonly EventsService Events;
+
 		public Archive Archive;
 
 		public string Title { get; set; }
@@ -32,6 +33,11 @@ namespace LRReader.UWP.ViewModels
 			set => SetProperty(ref _currentPlugin, value);
 		}
 		public string Arg = "";
+
+		public ArchiveEditViewModel(EventsService events)
+		{
+			Events = events;
+		}
 
 		public async Task LoadArchive(Archive archive)
 		{
@@ -99,7 +105,7 @@ namespace LRReader.UWP.ViewModels
 				}
 				else
 				{
-					Service.Events.ShowNotification("Error while fetching tags", result.error, 0);
+					Events.ShowNotification("Error while fetching tags", result.error, 0);
 				}
 			}
 			Saving = false;

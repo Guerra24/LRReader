@@ -1,15 +1,18 @@
 ﻿using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using static LRReader.Shared.Internal.SharedGlobal;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels
 {
 	public class BookmarksTabViewModel : ObservableObject
 	{
+		private readonly EventsService Events;
+		private readonly SettingsService Settings;
+
 		private bool _loadingArchives = false;
 		public bool LoadingArchives
 		{
@@ -28,8 +31,10 @@ namespace LRReader.UWP.ViewModels
 
 		public bool Empty => ArchiveList.Count == 0;
 
-		public BookmarksTabViewModel()
+		public BookmarksTabViewModel(EventsService events, SettingsService settings)
 		{
+			Events = events;
+			Settings = settings;
 			Events.DeleteArchiveEvent += DeleteArchive;
 		}
 

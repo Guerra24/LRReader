@@ -56,7 +56,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			this.InitializeComponent();
 			ScrollViewer.SetVisualOpacity(0);
 
-			Data = new ArchivePageViewModel();
+			Data = DataContext as ArchivePageViewModel;
 			Data.ZoomChangedEvent += FitImages;
 			Service.Events.RebuildReaderImagesSetEvent += Data.CreateImageSets;
 

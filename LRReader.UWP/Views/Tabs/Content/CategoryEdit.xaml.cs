@@ -13,47 +13,35 @@ using Windows.UI.Xaml.Input;
 namespace LRReader.UWP.Views.Tabs.Content
 {
 
-	internal class CustomSearchViewModel : SearchResultsViewModel
-	{
-		internal Category category;
-
-		protected override bool CustomArchiveCheck(Archive archive)
-		{
-			if (category != null)
-				return !category.archives.Contains(archive.arcid);
-			else
-				return true;
-		}
-	}
-
 	public sealed partial class CategoryEdit : UserControl
 	{
 
 		public CategoryEditViewModel ViewModel;
-		private CustomSearchViewModel Data;
 
 		private ResourceLoader lang;
 
 		public CategoryEdit()
 		{
 			this.InitializeComponent();
-			ViewModel = new CategoryEditViewModel();
-			ArchiveList.Data = Data = new CustomSearchViewModel();
+			ViewModel = DataContext as CategoryEditViewModel;
+			ArchiveList.Data.CustomArchiveCheckEvent = CustomArchiveCheck;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 		}
 
-		internal void SetCategoryInternal(Category category) => Data.category = category;
-
-		public async void LoadCategory(Category category)
+		private bool CustomArchiveCheck(Archive archive)
 		{
-			await ViewModel.LoadCategory(category);
-			Data.category = ViewModel.category;
+			if (ViewModel.category != null)
+				return !ViewModel.category.archives.Contains(archive.arcid);
+			else
+				return true;
 		}
+
+		public async void LoadCategory(Category category) => await ViewModel.LoadCategory(category);
 
 		public async Task Refresh()
 		{
 			await ViewModel.Refresh();
-			await Data.ReloadSearch();
+			await ArchiveList.Data.ReloadSearch();
 		}
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
