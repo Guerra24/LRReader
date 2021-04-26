@@ -75,7 +75,7 @@ namespace LRReader.UWP.Views.Items
 
 		private void Add_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new SearchResultsTab(ViewModel.Category), false);
+			Service.Events.AddTab(new SearchResultsTab(ViewModel.Category), false);
 		}
 
 		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -85,7 +85,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Global.EventManager.AddTab(new SearchResultsTab(ViewModel.Category), false);
+					Service.Events.AddTab(new SearchResultsTab(ViewModel.Category), false);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ namespace LRReader.UWP.Views.Items
 			}
 
 			if (listMode)
-				Global.EventManager.AddTab(new CategoryEditTab(ViewModel.Category));
+				Service.Events.AddTab(new CategoryEditTab(ViewModel.Category));
 			else
 			{
 				var dialog = new CreateCategory(true);

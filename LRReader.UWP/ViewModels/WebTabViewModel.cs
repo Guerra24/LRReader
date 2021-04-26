@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace LRReader.UWP.ViewModels
 			else if (path.Equals("/"))
 			{
 				args.Cancel = true;
-				Global.EventManager.CloseTabWithHeader(TabId);
+				Service.Events.CloseTabWithId(TabId);
 			}
 			else if (path.Equals(Page.AbsolutePath))
 			{

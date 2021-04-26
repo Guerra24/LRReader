@@ -169,7 +169,7 @@ namespace LRReader.UWP.ViewModels
 
 			if (status.state.Equals("finished"))
 			{
-				SharedGlobal.EventManager.ShowNotification("Thumbnail generation completed", "");
+				Service.Events.ShowNotification("Thumbnail generation completed", "");
 				thumbnailJob = null;
 			}
 		}

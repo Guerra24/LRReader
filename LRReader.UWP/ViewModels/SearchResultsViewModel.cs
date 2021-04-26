@@ -105,7 +105,7 @@ namespace LRReader.UWP.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
-			SharedGlobal.EventManager.DeleteArchiveEvent += DeleteArchive;
+			Events.DeleteArchiveEvent += DeleteArchive;
 		}
 
 		public async Task NextPage()

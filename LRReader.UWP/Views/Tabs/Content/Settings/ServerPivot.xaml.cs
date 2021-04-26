@@ -21,15 +21,15 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			Data = DataContext as SettingsPageViewModel;
 		}
 
-		private void UploadArchive_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/upload"));
+		private void UploadArchive_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/upload"));
 
-		private void BatchTagging_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/batch"));
+		private void BatchTagging_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/batch"));
 
-		private void EditSettings_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/config"));
+		private void EditSettings_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/config"));
 
-		private void EditPlugins_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/config/plugins"));
+		private void EditPlugins_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/config/plugins"));
 
-		private void Logs_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/logs"));
+		private void Logs_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new WebTab(Service.Settings.Profile.ServerAddressBrowser + "/logs"));
 
 		private async void RestartWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.RestartWorker();
 

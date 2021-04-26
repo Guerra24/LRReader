@@ -69,12 +69,12 @@ namespace LRReader.UWP.Views.Items
 
 		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
+			Service.Events.AddTab(new ArchiveTab(ViewModel.Archive), false);
 		}
 
 		private void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			Global.EventManager.AddTab(new ArchiveEditTab(ViewModel.Archive));
+			Service.Events.AddTab(new ArchiveEditTab(ViewModel.Archive));
 		}
 
 		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
@@ -126,7 +126,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Global.EventManager.AddTab(new ArchiveTab(ViewModel.Archive), false);
+					Service.Events.AddTab(new ArchiveTab(ViewModel.Archive), false);
 				}
 			}
 		}

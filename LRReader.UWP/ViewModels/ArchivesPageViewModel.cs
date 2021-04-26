@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Internal;
+using LRReader.Shared.Services;
 using LRReader.UWP.Views.Tabs;
 using System.Threading.Tasks;
 using static LRReader.Internal.Global;
@@ -20,7 +21,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
 				if (archive != null)
-					EventManager.CloseTabWithHeader(archive.title);
+					Service.Events.CloseTabWithId(archive.title);
 			}
 			await SharedGlobal.ArchivesManager.ReloadArchives();
 			LoadBookmarks();
@@ -42,9 +43,9 @@ namespace LRReader.UWP.ViewModels
 					{
 						var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
 						if (archive != null)
-							EventManager.AddTab(new ArchiveTab(archive), false);
+							Service.Events.AddTab(new ArchiveTab(archive), false);
 						else
-							EventManager.ShowError("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+							Service.Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
 		}
 

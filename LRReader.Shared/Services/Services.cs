@@ -19,6 +19,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<IFilesService, StubFilesService>();
 			collection.AddSingleton<SettingsService>();
 			collection.AddSingleton<ImagesService>();
+			collection.AddSingleton<EventsService>();
 			services?.Invoke(collection);
 			Services = collection.BuildServiceProvider();
 		}
@@ -36,6 +37,7 @@ namespace LRReader.Shared.Services
 		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
 		public static SettingsService Settings => Services.GetRequiredService<SettingsService>();
 		public static ImagesService Images => Services.GetRequiredService<ImagesService>();
+		public static EventsService Events => Services.GetRequiredService<EventsService>();
 
 	}
 

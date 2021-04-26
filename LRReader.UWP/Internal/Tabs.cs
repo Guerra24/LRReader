@@ -1,14 +1,10 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LRReader.Shared;
+using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 
 namespace LRReader.Internal
 {
-	public class CustomTab : TabViewItem
+	public class CustomTab : TabViewItem, ICustomTab
 	{
 		public object CustomTabControl
 		{

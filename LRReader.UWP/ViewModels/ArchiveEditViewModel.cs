@@ -1,6 +1,7 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -98,7 +99,7 @@ namespace LRReader.UWP.ViewModels
 				}
 				else
 				{
-					Global.EventManager.ShowNotification("Error while fetching tags", result.error, 0);
+					Service.Events.ShowNotification("Error while fetching tags", result.error, 0);
 				}
 			}
 			Saving = false;

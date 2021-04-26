@@ -135,7 +135,6 @@
     <Compile Include="Init.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Internal\Converters.cs" />
-    <Compile Include="Internal\EventManager.cs" />
     <Compile Include="Internal\Global.cs" />
     <Compile Include="Internal\ImageProcessing.cs" />
     <Compile Include="Internal\Tabs.cs" />

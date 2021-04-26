@@ -1,6 +1,7 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using RestSharp;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +89,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				Service.Events.ShowNotification("Network Error", r.ErrorMessage);
 				return null;
 			}
 			switch (r.StatusCode)
@@ -106,7 +107,7 @@ namespace LRReader.Shared.Providers
 					return download;
 				default:
 					var error = await r.GetError();
-					SharedGlobal.EventManager.ShowError(error.title, error.error);
+					Service.Events.ShowNotification(error.title, error.error);
 					return null;
 			}
 		}

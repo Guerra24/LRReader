@@ -90,12 +90,12 @@ namespace LRReader.Shared.Internal
 				var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(id));
 				if (bookmark != null)
 					Settings.Profile.Bookmarks.Remove(bookmark);
-				SharedGlobal.EventManager.DeleteArchive(id);
+				Events.DeleteArchive(id);
 				Archives.Remove(id);
 			}
 			else
 			{
-				SharedGlobal.EventManager.ShowNotification("An error ocurred while deleting archive.", "Metadata has been deleted, remove file manually.", 0);
+				Events.ShowNotification("An error ocurred while deleting archive.", "Metadata has been deleted, remove file manually.", 0);
 			}
 		}
 

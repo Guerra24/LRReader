@@ -1,5 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using System;
@@ -40,12 +41,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 				{
 					var category = await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
 					if (category != null && string.IsNullOrEmpty(dialog.SearchQuery.Text))
-						Global.EventManager.AddTab(new CategoryEditTab(category));
+						Service.Events.AddTab(new CategoryEditTab(category));
 				}
 			}
 			else
 			{
-				Global.EventManager.AddTab(new SearchResultsTab(e.ClickedItem as Category));
+				Service.Events.AddTab(new SearchResultsTab(e.ClickedItem as Category));
 			}
 		}
 

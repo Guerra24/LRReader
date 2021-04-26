@@ -42,7 +42,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Data.Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Events.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 
@@ -86,11 +86,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
 				if (status == FileUpdateStatus.Complete)
 				{
-					SharedGlobal.EventManager.ShowNotification(lang.GetString("Bookmarks/ExportComplete"), lang.GetString("Bookmarks/ExportCompleteFile").AsFormat(file.Path), 8000);
+					Service.Events.ShowNotification(lang.GetString("Bookmarks/ExportComplete"), lang.GetString("Bookmarks/ExportCompleteFile").AsFormat(file.Path), 8000);
 				}
 				else
 				{
-					SharedGlobal.EventManager.ShowNotification(lang.GetString("Bookmarks/ExportError"), lang.GetString("Bookmarks/ExportErrorFile").AsFormat(file.Path), 8000);
+					Service.Events.ShowNotification(lang.GetString("Bookmarks/ExportError"), lang.GetString("Bookmarks/ExportErrorFile").AsFormat(file.Path), 8000);
 				}
 			}
 			else
@@ -115,7 +115,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 				catch (Exception e)
 				{
-					Global.EventManager.ShowError(lang.GetString("Bookmarks/ImportError"), e.Message, 0);
+					Service.Events.ShowNotification(lang.GetString("Bookmarks/ImportError"), e.Message, 0);
 					return;
 				}
 				var dialog = new ContentDialog()
@@ -130,7 +130,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				{
 					Service.Settings.Profile.Bookmarks = bookmarks;
 					Service.Settings.SaveProfiles();
-					Global.EventManager.CloseAllTabs();
+					Service.Events.CloseAllTabs();
 					(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
 				}
 			}

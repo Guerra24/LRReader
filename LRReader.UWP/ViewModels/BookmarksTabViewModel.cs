@@ -30,7 +30,7 @@ namespace LRReader.UWP.ViewModels
 
 		public BookmarksTabViewModel()
 		{
-			EventManager.DeleteArchiveEvent += DeleteArchive;
+			Events.DeleteArchiveEvent += DeleteArchive;
 		}
 
 		public async Task Refresh()

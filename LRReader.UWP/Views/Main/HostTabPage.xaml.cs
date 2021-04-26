@@ -56,19 +56,19 @@ namespace LRReader.UWP.Views.Main
 
 			Window.Current.SetTitleBar(TitleBar);
 
-			Global.EventManager.ShowNotificationEvent += ShowNotification;
-			Global.EventManager.AddTabEvent += AddTab;
-			Global.EventManager.CloseAllTabsEvent += CloseAllTabs;
-			Global.EventManager.CloseTabWithHeaderEvent += CloseTabWithHeader;
-			Global.EventManager.DeleteArchiveEvent += DeleteArchive;
+			Events.ShowNotificationEvent += ShowNotification;
+			Events.AddTabEvent += AddTab;
+			Events.CloseAllTabsEvent += CloseAllTabs;
+			Events.CloseTabWithIdEvent += CloseTabWithId;
+			Events.DeleteArchiveEvent += DeleteArchive;
 			await DispatcherService.RunAsync(() =>
 			{
-				Global.EventManager.AddTab(new ArchivesTab());
+				Events.AddTab(new ArchivesTab());
 				if (Settings.OpenBookmarksTab)
-					Global.EventManager.AddTab(new BookmarksTab(), false);
+					Events.AddTab(new BookmarksTab(), false);
 				if (Global.ControlFlags.CategoriesEnabled)
 					if (Settings.OpenCategoriesTab)
-						Global.EventManager.AddTab(new CategoriesTab(), false);
+						Events.AddTab(new CategoriesTab(), false);
 			});
 			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
 			if (info != null)
@@ -87,11 +87,11 @@ namespace LRReader.UWP.Views.Main
 			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
 
 			Window.Current.SetTitleBar(null);
-			Global.EventManager.ShowNotificationEvent -= ShowNotification;
-			Global.EventManager.AddTabEvent -= AddTab;
-			Global.EventManager.CloseAllTabsEvent -= CloseAllTabs;
-			Global.EventManager.CloseTabWithHeaderEvent -= CloseTabWithHeader;
-			Global.EventManager.DeleteArchiveEvent -= DeleteArchive;
+			Events.ShowNotificationEvent -= ShowNotification;
+			Events.AddTabEvent -= AddTab;
+			Events.CloseAllTabsEvent -= CloseAllTabs;
+			Events.CloseTabWithIdEvent -= CloseTabWithId;
+			Events.DeleteArchiveEvent -= DeleteArchive;
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
@@ -111,15 +111,15 @@ namespace LRReader.UWP.Views.Main
 
 		private void ShowNotification(string title, string content, int duration = 5000) => Notifications.Show(new NotificationItem(title, content), duration);
 
-		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new SettingsTab());
+		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Events.AddTab(new SettingsTab());
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
 
-		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new BookmarksTab(), true);
+		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Events.AddTab(new BookmarksTab(), true);
 
-		private void Categories_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new CategoriesTab(), true);
+		private void Categories_Click(object sender, RoutedEventArgs e) => Events.AddTab(new CategoriesTab(), true);
 
-		private void Search_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new SearchResultsTab(), true);
+		private void Search_Click(object sender, RoutedEventArgs e) => Events.AddTab(new SearchResultsTab(), true);
 
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.FullScreen = AppView.IsFullScreenMode;
 
@@ -130,8 +130,9 @@ namespace LRReader.UWP.Views.Main
 			TabViewControl.TabItems.Remove(args.Tab);
 		}
 
-		public async void AddTab(CustomTab tab, bool switchToTab)
+		public async void AddTab(object tabo, bool switchToTab)
 		{
+			var tab = tabo as CustomTab;
 			var current = GetTabFromId(tab.CustomTabId);
 			if (current != null)
 			{
@@ -156,7 +157,7 @@ namespace LRReader.UWP.Views.Main
 			TabViewControl.TabItems.Clear();
 		}
 
-		public void CloseTabWithHeader(string id)
+		public void CloseTabWithId(string id)
 		{
 			var tab = GetTabFromId(id);
 			if (tab != null)
@@ -193,8 +194,8 @@ namespace LRReader.UWP.Views.Main
 
 		public void DeleteArchive(string id)
 		{
-			CloseTabWithHeader("Edit_" + id);
-			CloseTabWithHeader("Archive_" + id);
+			CloseTabWithId("Edit_" + id);
+			CloseTabWithId("Archive_" + id);
 		}
 
 		private async Task ShowWhatsNew()

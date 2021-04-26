@@ -70,7 +70,7 @@ namespace LRReader.Shared.Services
 			set
 			{
 				SettingsStorage.StoreObjectLocal("ReadRTL", value);
-				EventManager.RebuildReaderImagesSet();
+				Service.Events.RebuildReaderImagesSet();
 			}
 		}
 		public bool TwoPages
@@ -79,7 +79,7 @@ namespace LRReader.Shared.Services
 			set
 			{
 				SettingsStorage.StoreObjectLocal("TwoPages", value);
-				EventManager.RebuildReaderImagesSet();
+				Service.Events.RebuildReaderImagesSet();
 			}
 		}
 		public bool BookmarkReminder

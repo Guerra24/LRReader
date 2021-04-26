@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using RestSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				SharedGlobal.EventManager.ShowError("Network Error", r.ErrorMessage);
+				Service.Events.ShowNotification("Network Error", r.ErrorMessage);
 				return null;
 			}
 			if (result.OK)
@@ -44,7 +45,7 @@ namespace LRReader.Shared.Providers
 			}
 			else
 			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				Service.Events.ShowNotification(result.Error.title, result.Error.error);
 				return null;
 			}
 		}

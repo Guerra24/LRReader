@@ -58,7 +58,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			Data = new ArchivePageViewModel();
 			Data.ZoomChangedEvent += FitImages;
-			Global.EventManager.RebuildReaderImagesSetEvent += Data.CreateImageSets;
+			Service.Events.RebuildReaderImagesSetEvent += Data.CreateImageSets;
 
 			flags = Global.ControlFlags;
 
@@ -479,7 +479,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e) => resizePixel.OnNext(ScrollViewer.ExtentHeight);
 
-		private void EditButton_Click(object sender, RoutedEventArgs e) => Global.EventManager.AddTab(new ArchiveEditTab(Data.Archive));
+		private void EditButton_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new ArchiveEditTab(Data.Archive));
 
 		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -546,10 +546,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public void RemoveEvent()
 		{
 			Data.ZoomChangedEvent -= FitImages;
-			Global.EventManager.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
+			Service.Events.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
 
-		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Global.EventManager.AddTab(new SearchResultsTab((e.ClickedItem as ArchiveTagsGroupTag).FullTag));
+		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Events.AddTab(new SearchResultsTab((e.ClickedItem as ArchiveTagsGroupTag).FullTag));
 
 		private string GetOpenTarget()
 		{

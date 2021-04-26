@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using RestSharp;
@@ -44,7 +45,7 @@ namespace LRReader.Shared
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
-				SharedGlobal.EventManager.ShowError("Network Error", request.ErrorMessage);
+				Service.Events.ShowNotification("Network Error", request.ErrorMessage);
 				return false;
 			}
 			if (result.OK)
@@ -53,7 +54,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				Service.Events.ShowNotification(result.Error.title, result.Error.error);
 				return false;
 			}
 		}
@@ -74,7 +75,7 @@ namespace LRReader.Shared
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
-				SharedGlobal.EventManager.ShowError("Network Error", request.ErrorMessage);
+				Service.Events.ShowNotification("Network Error", request.ErrorMessage);
 				return default(T);
 			}
 			if (result.OK)
@@ -83,7 +84,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				SharedGlobal.EventManager.ShowError(result.Error.title, result.Error.error);
+				Service.Events.ShowNotification(result.Error.title, result.Error.error);
 				return default(T);
 			}
 		}
