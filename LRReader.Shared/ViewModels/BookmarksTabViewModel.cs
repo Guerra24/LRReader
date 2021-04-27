@@ -4,7 +4,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace LRReader.UWP.ViewModels
+namespace LRReader.Shared.ViewModels
 {
 	public class BookmarksTabViewModel : ObservableObject
 	{

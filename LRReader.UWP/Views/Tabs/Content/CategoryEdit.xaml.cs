@@ -1,5 +1,5 @@
 ﻿using LRReader.Shared.Models.Main;
-using LRReader.UWP.ViewModels;
+using LRReader.Shared.ViewModels;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;

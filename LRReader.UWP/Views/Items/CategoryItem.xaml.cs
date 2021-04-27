@@ -5,6 +5,7 @@ using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
@@ -28,7 +29,8 @@ namespace LRReader.UWP.Views.Items
 		public CategoryItem()
 		{
 			this.InitializeComponent();
-			ViewModel = new CategoryBaseViewModel();
+			// TODO: Proper fix
+			ViewModel = Service.Services.GetRequiredService<CategoryBaseViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
 		}
 

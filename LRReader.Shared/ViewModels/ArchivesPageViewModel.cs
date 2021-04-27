@@ -1,8 +1,7 @@
 ﻿using LRReader.Shared.Services;
-using LRReader.UWP.Views.Tabs;
 using System.Threading.Tasks;
 
-namespace LRReader.UWP.ViewModels
+namespace LRReader.Shared.ViewModels
 {
 	public class ArchivesPageViewModel : SearchResultsViewModel
 	{
@@ -48,10 +47,10 @@ namespace LRReader.UWP.ViewModels
 					foreach (var b in Settings.Profile.Bookmarks)
 					{
 						var archive = Archives.GetArchive(b.archiveID);
-						if (archive != null)
-							Events.AddTab(new ArchiveTab(archive), false);
-						else
-							Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+						//if (archive != null)
+//							Events.AddTab(new ArchiveTab(archive), false);
+	//					else
+		//					Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
 		}
 

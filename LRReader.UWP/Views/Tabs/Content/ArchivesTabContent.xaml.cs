@@ -1,8 +1,7 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
+using LRReader.Shared.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;

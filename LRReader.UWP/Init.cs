@@ -2,6 +2,7 @@
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
+using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.ViewModels.Items;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -31,6 +32,7 @@ namespace LRReader.UWP
 				collection.AddTransient<ArchivePageViewModel>();
 				collection.AddTransient<CategoryEditViewModel>();
 				collection.AddTransient<ArchiveItemViewModel>();
+				collection.AddTransient<CategoryBaseViewModel>();
 			});
 		}
 	}

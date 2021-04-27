@@ -1,6 +1,6 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-using LRReader.UWP.ViewModels;
+using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;

@@ -1,13 +1,15 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels.Base
 {
 	public class CategoryBaseViewModel : ObservableObject
 	{
+		protected readonly SettingsService Settings;
+
 		private Category _category;
 		public Category Category
 		{
@@ -27,6 +29,11 @@ namespace LRReader.UWP.ViewModels.Base
 			set => SetProperty(ref _searchImage, value);
 		}
 		public bool CanEdit => Settings.Profile.HasApiKey;
+
+		public CategoryBaseViewModel(SettingsService settings)
+		{
+			Settings = settings;
+		}
 
 		public async Task UpdateCategory(string name, string search, bool pinned)
 		{

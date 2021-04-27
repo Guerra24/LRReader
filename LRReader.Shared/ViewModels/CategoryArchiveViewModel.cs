@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LRReader.UWP.ViewModels
+namespace LRReader.Shared.ViewModels
 {
 	public class CategoryArchiveViewModel : ObservableObject
 	{
@@ -65,7 +65,7 @@ namespace LRReader.UWP.ViewModels
 
 		public void Search(string text)
 		{
-			List<Category> temp = Source.Where(c => c.name.Contains(text, StringComparison.CurrentCultureIgnoreCase)).ToList();
+			List<Category> temp = Source.Where(c => c.name.IndexOf(text, StringComparison.CurrentCultureIgnoreCase) >= 0).ToList();
 
 			for (int i = Categories.Count - 1; i >= 0; i--)
 			{
