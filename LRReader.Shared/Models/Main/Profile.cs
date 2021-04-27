@@ -1,4 +1,4 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System;
@@ -18,7 +18,7 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public bool HasApiKey
 		{
-			get => !string.IsNullOrEmpty(ServerApiKey) || !SharedGlobal.ServerInfo.has_password;
+			get => !string.IsNullOrEmpty(ServerApiKey) || !Service.Api.ServerInfo.has_password;
 		}
 
 		[JsonIgnore]

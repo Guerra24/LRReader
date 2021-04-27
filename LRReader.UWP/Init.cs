@@ -24,6 +24,7 @@ namespace LRReader.UWP
 				collection.AddSingleton<FirstRunPageViewModel>();
 				collection.AddSingleton<CategoriesViewModel>();
 				collection.AddSingleton<LoadingPageViewModel>();
+				collection.AddSingleton<HostTabPageViewModel>();
 
 				collection.AddTransient<SearchResultsViewModel>();
 				collection.AddTransient<ArchiveEditViewModel>();

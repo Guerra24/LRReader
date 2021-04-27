@@ -1,7 +1,6 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Services;
 using LRReader.UWP.Internal;
-using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
@@ -34,8 +33,7 @@ namespace LRReader.UWP.Views.Main
 		public HostTabPage()
 		{
 			this.InitializeComponent();
-
-			Data = new HostTabPageViewModel();
+			Data = DataContext as HostTabPageViewModel;
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
@@ -67,7 +65,7 @@ namespace LRReader.UWP.Views.Main
 				Events.AddTab(new ArchivesTab());
 				if (Settings.OpenBookmarksTab)
 					Events.AddTab(new BookmarksTab(), false);
-				if (Global.ControlFlags.CategoriesEnabled)
+				if (Api.ControlFlags.CategoriesEnabled)
 					if (Settings.OpenCategoriesTab)
 						Events.AddTab(new CategoriesTab(), false);
 			});

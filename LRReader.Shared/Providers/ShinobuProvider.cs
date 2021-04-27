@@ -1,7 +1,7 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers
 {
@@ -10,7 +10,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<ShinobuStatus> GetShinobuStatus()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/shinobu");
 
@@ -21,7 +21,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> RestartWorker()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/shinobu/restart");
 
@@ -32,7 +32,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> StopWorker()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/shinobu/stop");
 

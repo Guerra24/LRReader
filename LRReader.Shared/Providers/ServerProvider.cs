@@ -1,9 +1,9 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers
 {
@@ -12,7 +12,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<ServerInfo> GetServerInfo()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/info");
 
@@ -38,7 +38,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<List<Plugin>> GetPlugins(PluginType type)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/plugins/{type}");
 			rq.AddParameter("type", type.ToString().ToLower(), ParameterType.UrlSegment);
@@ -50,7 +50,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<UsePluginResult> UsePlugin(string plugin, string arcid = "", string arg = "")
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/plugins/use");
 			rq.AddQueryParameter("plugin", plugin);
@@ -64,7 +64,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<MinionStatus> GetMinionStatus(int job)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/minion/{job}");
 			rq.AddParameter("job", job, ParameterType.UrlSegment);

@@ -78,7 +78,7 @@ namespace LRReader.UWP.Views.Main
 #if !DEBUG
 			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
 #endif
-			SharedGlobal.ApiConnection.RefreshSettings(Settings.Profile);
+			Api.RefreshSettings(Settings.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
@@ -99,7 +99,7 @@ namespace LRReader.UWP.Views.Main
 				await Reload();
 				return;
 			}
-			SharedGlobal.ServerInfo = serverInfo;
+			Api.ServerInfo = serverInfo;
 			if (serverInfo.version < UpdatesManager.MIN_VERSION)
 			{
 				ViewModel.Status = lang.GetString("LoadingPage/InstanceNotSupported").AsFormat(serverInfo.version, UpdatesManager.MIN_VERSION);
@@ -120,7 +120,7 @@ namespace LRReader.UWP.Views.Main
 				return;
 			}
 			await Archives.ReloadArchives();
-			SharedGlobal.ControlFlags.Check(serverInfo);
+			Api.ControlFlags.Check(serverInfo);
 			ViewModel.Active = false;
 			(Window.Current.Content as Frame).Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());
 		}

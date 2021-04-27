@@ -1,5 +1,4 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -14,6 +13,7 @@ namespace LRReader.UWP.ViewModels
 	public class CategoryEditViewModel : ObservableObject
 	{
 		private readonly ArchivesService Archives;
+		private readonly ApiService Api;
 
 		public Category category;
 
@@ -34,9 +34,10 @@ namespace LRReader.UWP.ViewModels
 
 		private bool _loading;
 
-		public CategoryEditViewModel(ArchivesService archives)
+		public CategoryEditViewModel(ArchivesService archives, ApiService api)
 		{
 			Archives = archives;
+			Api = api;
 		}
 
 		public async Task LoadCategory(Category cat)
@@ -75,7 +76,7 @@ namespace LRReader.UWP.ViewModels
 				return;
 			_loading = true;
 			CategoryArchives.Clear();
-			if (SharedGlobal.ControlFlags.V077)
+			if (Api.ControlFlags.V077)
 			{
 				var result = await CategoriesProvider.GetCategory(category.id);
 				if (result == null)

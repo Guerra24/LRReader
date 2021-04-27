@@ -1,5 +1,4 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -17,6 +16,7 @@ namespace LRReader.UWP.ViewModels
 		protected readonly EventsService Events;
 		protected readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
+		private readonly ApiService Api;
 
 		public CustomArchiveCheck CustomArchiveCheckEvent = (a) => true;
 
@@ -69,7 +69,7 @@ namespace LRReader.UWP.ViewModels
 				SetProperty(ref _totalArchives, value);
 			}
 		}
-		public bool HasNextPage => Page < TotalArchives / SharedGlobal.ServerInfo.archives_per_page && ControlsEnabled;
+		public bool HasNextPage => Page < TotalArchives / Api.ServerInfo.archives_per_page && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
 		private bool _newOnly;
 		public bool NewOnly
@@ -107,12 +107,13 @@ namespace LRReader.UWP.ViewModels
 		}
 		public Order OrderBy = Order.Ascending;
 
-		public SearchResultsViewModel(SettingsService settings, EventsService events, ArchivesService archives, IDispatcherService dispatcher)
+		public SearchResultsViewModel(SettingsService settings, EventsService events, ArchivesService archives, IDispatcherService dispatcher, ApiService api)
 		{
 			Settings = settings;
 			Events = events;
 			Dispatcher = dispatcher;
 			Archives = archives;
+			Api = api;
 
 			foreach (var n in Archives.Namespaces)
 				SortBy.Add(n);
@@ -154,7 +155,7 @@ namespace LRReader.UWP.ViewModels
 			else
 				sortby = SortBy.ElementAt(SortByIndex);
 			var resultPage = await SearchProvider.Search(
-				SharedGlobal.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, OrderBy);
+				Api.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, OrderBy);
 			if (resultPage != null)
 			{
 				await Task.Run(async () =>

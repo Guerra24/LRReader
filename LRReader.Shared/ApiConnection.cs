@@ -12,29 +12,6 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared
 {
-	public class ApiConnection
-	{
-		private RestClient client;
-
-		public void RefreshSettings(ServerProfile profile)
-		{
-			client = new RestClient();
-			client.UseNewtonsoftJson();
-			client.BaseUrl = new Uri(profile.ServerAddress);
-			client.UserAgent = "LRReader";
-			if (!string.IsNullOrEmpty(profile.ServerApiKey))
-			{
-				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
-				client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
-			}
-		}
-
-		public RestClient GetClient()
-		{
-			return client;
-		}
-
-	}
 
 	public static class ApiExtentions
 	{

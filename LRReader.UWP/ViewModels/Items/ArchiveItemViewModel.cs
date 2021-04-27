@@ -12,7 +12,7 @@ namespace LRReader.UWP.ViewModels.Items
 			set => SetProperty(ref _missingImage, value);
 		}
 
-		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives) : base(settings, archives)
+		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives, ApiService api) : base(settings, archives, api)
 		{
 		}
 	}

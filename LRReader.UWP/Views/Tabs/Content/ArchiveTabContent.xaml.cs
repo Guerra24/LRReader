@@ -59,7 +59,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.ZoomChangedEvent += FitImages;
 			Service.Events.RebuildReaderImagesSetEvent += Data.CreateImageSets;
 
-			flags = Global.ControlFlags;
+			flags = Service.Api.ControlFlags;
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
 				.Subscribe(async (height) =>
@@ -75,7 +75,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!_opened)
 			{
 				await _loadSemaphore.WaitAsync();
-				if (Global.ControlFlags.V077 && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
+				if (Service.Api.ControlFlags.V077 && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
 				{
 					var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
 					await conflictDialog.ShowAsync();
@@ -248,7 +248,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.Bookmarked)
 			{
 				Data.BookmarkProgress = conv;
-				if (Global.ControlFlags.V077)
+				if (Service.Api.ControlFlags.V077)
 					await Data.SetProgress(conv + 1);
 			}
 		}

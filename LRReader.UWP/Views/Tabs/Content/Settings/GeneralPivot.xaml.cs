@@ -69,7 +69,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
 					url = "http://" + url;
 				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
-				Global.ApiConnection.RefreshSettings(Data.SettingsManager.Profile);
+				Service.Api.RefreshSettings(Data.SettingsManager.Profile);
 			}
 		}
 

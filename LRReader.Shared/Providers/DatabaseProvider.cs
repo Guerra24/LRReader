@@ -1,11 +1,10 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
 using RestSharp;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers
 {
@@ -14,7 +13,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<List<TagStats>> GetTagStats()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/database/stats");
 
@@ -25,7 +24,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<DatabaseCleanResult> CleanDatabase()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/database/clean");
 
@@ -36,7 +35,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> DropDatabase()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/database/drop");
 
@@ -47,7 +46,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<DownloadPayload> BackupJSON()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/database/backup");
 
@@ -55,7 +54,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				Service.Events.ShowNotification("Network Error", r.ErrorMessage);
+				Events.ShowNotification("Network Error", r.ErrorMessage);
 				return null;
 			}
 			switch (r.StatusCode)
@@ -68,14 +67,14 @@ namespace LRReader.Shared.Providers
 					return download;
 				default:
 					var error = await r.GetError();
-					Service.Events.ShowNotification(error.title, error.error);
+					Events.ShowNotification(error.title, error.error);
 					return null;
 			}
 		}
 
 		public static async Task<bool> ClearAllNew()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/database/isnew", Method.DELETE);
 

@@ -1,9 +1,8 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Models.Main;
 using RestSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers
 {
@@ -12,7 +11,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<List<Category>> GetCategories()
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories");
 
@@ -23,7 +22,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories", Method.PUT);
 			rq.AddQueryParameter("name", name);
@@ -36,7 +35,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				Service.Events.ShowNotification("Network Error", r.ErrorMessage);
+				Events.ShowNotification("Network Error", r.ErrorMessage);
 				return null;
 			}
 			if (result.OK)
@@ -45,14 +44,14 @@ namespace LRReader.Shared.Providers
 			}
 			else
 			{
-				Service.Events.ShowNotification(result.Error.title, result.Error.error);
+				Events.ShowNotification(result.Error.title, result.Error.error);
 				return null;
 			}
 		}
 
 		public static async Task<bool> UpdateCategory(string id, string name = "", string search = "", bool pinned = false)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}", Method.PUT);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -67,7 +66,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> DeleteCategory(string id)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}", Method.DELETE);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -79,7 +78,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> AddArchiveToCategory(string id, string archive)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}/{archive}", Method.PUT);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -92,7 +91,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> RemoveArchiveFromCategory(string id, string archive)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}/{archive}", Method.DELETE);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -105,7 +104,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<Category> GetCategory(string id)
 		{
-			var client = SharedGlobal.ApiConnection.GetClient();
+			var client = Api.GetClient();
 
 			var rq = new RestRequest("api/categories/{id}");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);

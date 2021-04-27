@@ -6,7 +6,12 @@ namespace LRReader.UWP.ViewModels
 {
 	public class ArchivesPageViewModel : SearchResultsViewModel
 	{
-		public ArchivesPageViewModel(SettingsService settings, EventsService events, ArchivesService archives, IDispatcherService dispatcher) : base(settings, events, archives, dispatcher)
+		public ArchivesPageViewModel(
+			SettingsService settings,
+			EventsService events,
+			ArchivesService archives,
+			IDispatcherService dispatcher,
+			ApiService api) : base(settings, events, archives, dispatcher, api)
 		{
 		}
 

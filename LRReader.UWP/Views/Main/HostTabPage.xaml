@@ -9,6 +9,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
 	mc:Ignorable="d">
 

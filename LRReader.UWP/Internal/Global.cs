@@ -15,7 +15,6 @@ namespace LRReader.Internal
 		{
 			if (Loaded)
 				return;
-			ApiConnection = new ApiConnection();
 			ImageProcessing = new ImageProcessing();
 			Loaded = true;
 		}

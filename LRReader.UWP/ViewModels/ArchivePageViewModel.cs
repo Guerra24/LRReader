@@ -70,7 +70,7 @@ namespace LRReader.UWP.ViewModels
 		}
 		public event ZoomChanged ZoomChangedEvent;
 
-		public ArchivePageViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher) : base(settings, archives)
+		public ArchivePageViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api) : base(settings, archives, api)
 		{
 			Dispatcher = dispatcher;
 			_zoomValue = Settings.DefaultZoom;

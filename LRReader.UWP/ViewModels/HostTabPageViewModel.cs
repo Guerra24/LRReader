@@ -1,11 +1,13 @@
 ﻿using LRReader.Internal;
-using LRReader.Shared.Internal;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace LRReader.UWP.ViewModels
 {
 	public class HostTabPageViewModel : ObservableObject
 	{
+		private readonly ApiService Api;
+
 		private CustomTab _currentTab;
 		public CustomTab CurrentTab
 		{
@@ -28,7 +30,12 @@ namespace LRReader.UWP.ViewModels
 		}
 		public ControlFlags ControlFlags
 		{
-			get => SharedGlobal.ControlFlags;
+			get => Api.ControlFlags;
+		}
+
+		public HostTabPageViewModel(ApiService api)
+		{
+			Api = api;
 		}
 
 	}

@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
@@ -13,9 +12,9 @@ namespace LRReader.UWP.ViewModels.Base
 {
 	public class ArchiveBaseViewModel : ObservableObject
 	{
-
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
+		private readonly ApiService Api;
 
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
@@ -115,7 +114,7 @@ namespace LRReader.UWP.ViewModels.Base
 				int pages = _pages;
 				if (Bookmarked)
 					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
-				if (Global.ControlFlags.V077 && pages == 0)
+				if (Api.ControlFlags.V077 && pages == 0)
 					pages = Archive.pagecount;
 				_pages = pages;
 				return _pages;
@@ -151,10 +150,11 @@ namespace LRReader.UWP.ViewModels.Base
 
 		public bool CanEdit => Settings.Profile.HasApiKey;
 
-		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives)
+		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api)
 		{
 			Settings = settings;
 			Archives = archives;
+			Api = api;
 		}
 
 		public async Task LoadArchive()

@@ -1,14 +1,14 @@
-﻿using LRReader.UWP.Internal;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
+using LRReader.UWP.Internal;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using LRReader.Shared.Services;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -16,6 +16,7 @@ namespace LRReader.UWP.ViewModels
 	{
 		private readonly ImagesService Images;
 		private readonly EventsService Events;
+		private readonly ApiService Api;
 
 		public SettingsService SettingsManager;
 		public Version Version => Util.GetAppVersion();
@@ -68,17 +69,18 @@ namespace LRReader.UWP.ViewModels
 
 		public ControlFlags ControlFlags
 		{
-			get => SharedGlobal.ControlFlags;
+			get => Api.ControlFlags;
 		}
 
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, ApiService api)
 		{
 			SettingsManager = settings;
 			Images = images;
 			Events = events;
+			Api = api;
 
 			UpdateReleaseData();
 			foreach (var n in archives.Namespaces)
