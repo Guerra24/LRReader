@@ -1,10 +1,8 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using static LRReader.Shared.Internal.SharedGlobal;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -12,6 +10,8 @@ namespace LRReader.UWP.ViewModels
 	{
 		private readonly EventsService Events;
 		private readonly SettingsService Settings;
+		private readonly ArchivesService Archives;
+		private readonly IDispatcherService Dispatcher;
 
 		private bool _loadingArchives = false;
 		public bool LoadingArchives
@@ -31,10 +31,12 @@ namespace LRReader.UWP.ViewModels
 
 		public bool Empty => ArchiveList.Count == 0;
 
-		public BookmarksTabViewModel(EventsService events, SettingsService settings)
+		public BookmarksTabViewModel(EventsService events, SettingsService settings, ArchivesService archives, IDispatcherService dispatcher)
 		{
 			Events = events;
 			Settings = settings;
+			Archives = archives;
+			Dispatcher = dispatcher;
 			Events.DeleteArchiveEvent += DeleteArchive;
 		}
 
@@ -52,15 +54,15 @@ namespace LRReader.UWP.ViewModels
 			ArchiveList.Clear();
 			if (animate)
 				LoadingArchives = true;
-			if (ArchivesManager.Archives.Count > 0)
+			if (Archives.Archives.Count > 0)
 			{
 				await Task.Run(async () =>
 				{
 					foreach (var b in Settings.Profile.Bookmarks)
 					{
-						var archive = ArchivesManager.GetArchive(b.archiveID);
+						var archive = Archives.GetArchive(b.archiveID);
 						if (archive != null)
-							await DispatcherService.RunAsync(() => ArchiveList.Add(archive));
+							await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
 				OnPropertyChanged("Empty");
@@ -74,7 +76,7 @@ namespace LRReader.UWP.ViewModels
 
 		public void DeleteArchive(string id)
 		{
-			ArchiveList.Remove(ArchivesManager.GetArchive(id));
+			ArchiveList.Remove(Archives.GetArchive(id));
 		}
 
 	}

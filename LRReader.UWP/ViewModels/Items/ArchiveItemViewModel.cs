@@ -1,4 +1,5 @@
-﻿using LRReader.UWP.ViewModels.Base;
+﻿using LRReader.Shared.Services;
+using LRReader.UWP.ViewModels.Base;
 
 namespace LRReader.UWP.ViewModels.Items
 {
@@ -9,6 +10,10 @@ namespace LRReader.UWP.ViewModels.Items
 		{
 			get => _missingImage;
 			set => SetProperty(ref _missingImage, value);
+		}
+
+		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives) : base(settings, archives)
+		{
 		}
 	}
 }

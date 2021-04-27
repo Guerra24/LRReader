@@ -68,7 +68,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 						text = sQuery.Split(" ").Last();
 						query = sender.Text.Substring(0, Math.Max(0, sQuery.LastIndexOf(" ")));
 					}
-					foreach (var t in Global.ArchivesManager.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
+					foreach (var t in Service.Archives.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
 					{
 						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
 					}
@@ -98,7 +98,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
 		{
 			var random = new Random();
-			var list = Global.ArchivesManager.Archives;
+			var list = Service.Archives.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
 			Service.Events.AddTab(new ArchiveTab(item.Value));
 		}

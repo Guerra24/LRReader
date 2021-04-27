@@ -17,6 +17,8 @@ namespace LRReader.Shared.Services
 			var collection = new ServiceCollection();
 			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
 			collection.AddSingleton<IFilesService, StubFilesService>();
+			collection.AddSingleton<IDispatcherService, StubDispatcherService>();
+			collection.AddSingleton<ArchivesService>();
 			collection.AddSingleton<SettingsService>();
 			collection.AddSingleton<ImagesService>();
 			collection.AddSingleton<EventsService>();
@@ -28,6 +30,7 @@ namespace LRReader.Shared.Services
 		{
 			if (Loaded)
 				return;
+			Dispatcher.Init();
 			await Settings.Init();
 			await Images.Init();
 			Loaded = true;
@@ -35,6 +38,8 @@ namespace LRReader.Shared.Services
 
 		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
 		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
+		public static IDispatcherService Dispatcher => Services.GetRequiredService<IDispatcherService>();
+		public static ArchivesService Archives => Services.GetRequiredService<ArchivesService>();
 		public static SettingsService Settings => Services.GetRequiredService<SettingsService>();
 		public static ImagesService Images => Services.GetRequiredService<ImagesService>();
 		public static EventsService Events => Services.GetRequiredService<EventsService>();

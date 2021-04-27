@@ -1,7 +1,6 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +14,7 @@ namespace LRReader.UWP.ViewModels
 
 	public class ArchivePageViewModel : ArchiveBaseViewModel
 	{
-		private readonly SettingsService Settings;
+		private readonly IDispatcherService Dispatcher;
 
 		private bool _loadingImages = false;
 		public bool LoadingImages
@@ -71,9 +70,9 @@ namespace LRReader.UWP.ViewModels
 		}
 		public event ZoomChanged ZoomChangedEvent;
 
-		public ArchivePageViewModel(SettingsService settings)
+		public ArchivePageViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher) : base(settings, archives)
 		{
-			Settings = settings;
+			Dispatcher = dispatcher;
 			_zoomValue = Settings.DefaultZoom;
 		}
 
@@ -110,7 +109,7 @@ namespace LRReader.UWP.ViewModels
 				await Task.Run(async () =>
 				{
 					foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
-						await DispatcherService.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)));
+						await Dispatcher.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)));
 				});
 				Pages = ArchiveImages.Count;
 			}

@@ -1,9 +1,9 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Internal;
-using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.AppCenter.Crashes;
 using System;
@@ -60,10 +60,10 @@ namespace LRReader.UWP.Views.Main
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+			await InitServices();
 #if !SIDELOAD && !DEBUG
 			await DownloadUpdateStore();
 #endif
-			await InitServices();
 			Global.Init();
 
 			bool firstRun = Settings.Profile == null;
@@ -119,7 +119,7 @@ namespace LRReader.UWP.Views.Main
 				await Reload();
 				return;
 			}
-			await SharedGlobal.ArchivesManager.ReloadArchives();
+			await Archives.ReloadArchives();
 			SharedGlobal.ControlFlags.Check(serverInfo);
 			ViewModel.Active = false;
 			(Window.Current.Content as Frame).Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());
@@ -155,7 +155,7 @@ namespace LRReader.UWP.Views.Main
 
 				downloadTask.Progress = async (info, progress) =>
 				{
-					await DispatcherService.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
+					await Service.Dispatcher.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
 				};
 				var result = await downloadTask.AsTask();
 			}

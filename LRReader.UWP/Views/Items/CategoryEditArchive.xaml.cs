@@ -4,6 +4,7 @@ using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Tabs;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
@@ -27,7 +28,8 @@ namespace LRReader.UWP.Views.Items
 		public CategoryEditArchive()
 		{
 			this.InitializeComponent();
-			ViewModel = new ArchiveItemViewModel();
+			// TODO: Proper fix
+			ViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

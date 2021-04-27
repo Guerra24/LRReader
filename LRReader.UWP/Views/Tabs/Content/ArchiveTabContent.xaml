@@ -41,7 +41,8 @@
 				<GridView.Header>
 					<StackPanel Padding="50,5,50,5">
 						<TextBlock
-							Margin="0,0,0,8" FontSize="24" IsTextSelectionEnabled="True"
+							Margin="0,0,0,8" HorizontalAlignment="Left" FontSize="24"
+							IsTextSelectionEnabled="True"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
 						<controls1:ArchiveTags Margin="0,0,0,8" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />

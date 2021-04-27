@@ -3,7 +3,6 @@ using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
@@ -64,7 +63,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
 				.Subscribe(async (height) =>
-				await DispatcherService.RunAsync(() =>
+				await Service.Dispatcher.RunAsync(() =>
 				(ReaderControl.ContentTemplateRoot as ReaderImage).UpdateDecodedResolution((int)Math.Round(height))));
 			_loadSemaphore.Wait();
 		}

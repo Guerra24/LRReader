@@ -1,4 +1,5 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Services;
 using LRReader.UWP.Internal;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
@@ -61,7 +62,7 @@ namespace LRReader.UWP.Views.Main
 			Events.CloseAllTabsEvent += CloseAllTabs;
 			Events.CloseTabWithIdEvent += CloseTabWithId;
 			Events.DeleteArchiveEvent += DeleteArchive;
-			await DispatcherService.RunAsync(() =>
+			await Service.Dispatcher.RunAsync(() =>
 			{
 				Events.AddTab(new ArchivesTab());
 				if (Settings.OpenBookmarksTab)
@@ -143,7 +144,7 @@ namespace LRReader.UWP.Views.Main
 			{
 				TabViewControl.TabItems.Add(tab);
 				if (switchToTab)
-					await DispatcherService.RunAsync(() => Data.CurrentTab = tab);
+					await Service.Dispatcher.RunAsync(() => Data.CurrentTab = tab);
 			}
 		}
 

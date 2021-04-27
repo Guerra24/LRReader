@@ -1,7 +1,6 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
@@ -13,6 +12,7 @@ namespace LRReader.UWP.ViewModels
 	public class CategoriesViewModel : ObservableObject
 	{
 		private readonly SettingsService Settings;
+		private readonly IDispatcherService Dispatcher;
 
 		private bool _loadingCategories = true;
 		public bool LoadingCategories
@@ -43,9 +43,10 @@ namespace LRReader.UWP.ViewModels
 		}
 		protected bool _internalLoadingCategories;
 
-		public CategoriesViewModel(SettingsService settings)
+		public CategoriesViewModel(SettingsService settings, IDispatcherService dispatcher)
 		{
 			Settings = settings;
+			Dispatcher = dispatcher;
 		}
 
 		public async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
@@ -88,7 +89,7 @@ namespace LRReader.UWP.ViewModels
 					foreach (var a in result.OrderBy(c => !c.pinned))
 					{
 						a.DeleteCategory += DeleteCategory;
-						await DispatcherService.RunAsync(() => CategoriesList.Add(a));
+						await Dispatcher.RunAsync(() => CategoriesList.Add(a));
 					}
 				});
 			}

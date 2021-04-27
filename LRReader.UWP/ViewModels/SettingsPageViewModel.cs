@@ -74,14 +74,14 @@ namespace LRReader.UWP.ViewModels
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives)
 		{
 			SettingsManager = settings;
 			Images = images;
 			Events = events;
 
 			UpdateReleaseData();
-			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
+			foreach (var n in archives.Namespaces)
 				SortBy.Add(n);
 			_sortByIndex = SortBy.IndexOf(SettingsManager.SortByDefault);
 		}

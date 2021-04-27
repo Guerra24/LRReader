@@ -1,4 +1,6 @@
 ﻿using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
+using LRReader.UWP.ViewModels.Items;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.UWP.ViewModels
@@ -15,5 +17,6 @@ namespace LRReader.UWP.ViewModels
 		public ArchiveEditViewModel ArchiveEditInstance => Service.Services.GetRequiredService<ArchiveEditViewModel>();
 		public ArchivePageViewModel ArchivePageInstance => Service.Services.GetRequiredService<ArchivePageViewModel>();
 		public CategoryEditViewModel CategoryEditInstance => Service.Services.GetRequiredService<CategoryEditViewModel>();
+		public ArchiveItemViewModel ArchiveItemInstance => Service.Services.GetRequiredService<ArchiveItemViewModel>();
 	}
 }

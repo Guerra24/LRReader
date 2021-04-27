@@ -1,20 +1,31 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-using LRReader.Shared.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static LRReader.Shared.Services.Service;
 
-namespace LRReader.Shared.Internal
+namespace LRReader.Shared.Services
 {
-	public class ArchivesManager
+	public class ArchivesService
 	{
+		private readonly IFilesService Files;
+		private readonly ISettingsStorageService SettingsStorage;
+		private readonly SettingsService Settings;
+		private readonly EventsService Events;
+
 		public Dictionary<string, Archive> Archives = new Dictionary<string, Archive>();
 		public List<TagStats> TagStats = new List<TagStats>();
 		public List<string> Namespaces = new List<string>();
+
+		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, EventsService events)
+		{
+			Files = files;
+			SettingsStorage = settingsStorage;
+			Settings = settings;
+			Events = events;
+		}
 
 		public async Task ReloadArchives()
 		{

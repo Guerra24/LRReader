@@ -1,5 +1,4 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.UWP.Views.Tabs;
 using System.Threading.Tasks;
 
@@ -7,7 +6,7 @@ namespace LRReader.UWP.ViewModels
 {
 	public class ArchivesPageViewModel : SearchResultsViewModel
 	{
-		public ArchivesPageViewModel(SettingsService settings, EventsService events) : base(settings, events)
+		public ArchivesPageViewModel(SettingsService settings, EventsService events, ArchivesService archives, IDispatcherService dispatcher) : base(settings, events, archives, dispatcher)
 		{
 		}
 
@@ -21,11 +20,11 @@ namespace LRReader.UWP.ViewModels
 			LoadingArchives = true;
 			foreach (var b in Settings.Profile.Bookmarks)
 			{
-				var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
+				var archive = Archives.GetArchive(b.archiveID);
 				if (archive != null)
 					Events.CloseTabWithId(archive.title);
 			}
-			await SharedGlobal.ArchivesManager.ReloadArchives();
+			await Archives.ReloadArchives();
 			LoadBookmarks();
 			Page = 0;
 			LoadingArchives = false;
@@ -35,15 +34,15 @@ namespace LRReader.UWP.ViewModels
 		public void LoadBookmarks()
 		{
 			SortBy.Clear();
-			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
+			foreach (var n in Archives.Namespaces)
 				SortBy.Add(n);
 			SortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
 			if (Settings.OpenBookmarksStart)
-				if (SharedGlobal.ArchivesManager.Archives.Count > 0)
+				if (Archives.Archives.Count > 0)
 					foreach (var b in Settings.Profile.Bookmarks)
 					{
-						var archive = SharedGlobal.ArchivesManager.GetArchive(b.archiveID);
+						var archive = Archives.GetArchive(b.archiveID);
 						if (archive != null)
 							Events.AddTab(new ArchiveTab(archive), false);
 						else

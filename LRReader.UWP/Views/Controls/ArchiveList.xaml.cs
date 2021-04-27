@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Tabs;
@@ -11,9 +10,9 @@ using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using static LRReader.Shared.Services.Service;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -64,7 +63,7 @@ namespace LRReader.UWP.Views.Controls
 						text = sQuery.Split(" ").Last();
 						query = sender.Text.Substring(0, Math.Max(0, sQuery.LastIndexOf(" ")));
 					}
-					foreach (var t in Global.ArchivesManager.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
+					foreach (var t in Archives.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
 					{
 						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
 					}
@@ -94,7 +93,7 @@ namespace LRReader.UWP.Views.Controls
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
 		{
 			var random = new Random();
-			var list = Global.ArchivesManager.Archives;
+			var list = Archives.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
 			Events.AddTab(new ArchiveTab(item.Value));
 		}

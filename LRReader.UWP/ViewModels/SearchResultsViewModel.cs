@@ -2,7 +2,6 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,6 +15,8 @@ namespace LRReader.UWP.ViewModels
 	{
 		protected readonly SettingsService Settings;
 		protected readonly EventsService Events;
+		protected readonly ArchivesService Archives;
+		private readonly IDispatcherService Dispatcher;
 
 		public CustomArchiveCheck CustomArchiveCheckEvent = (a) => true;
 
@@ -106,12 +107,14 @@ namespace LRReader.UWP.ViewModels
 		}
 		public Order OrderBy = Order.Ascending;
 
-		public SearchResultsViewModel(SettingsService settings, EventsService events)
+		public SearchResultsViewModel(SettingsService settings, EventsService events, ArchivesService archives, IDispatcherService dispatcher)
 		{
 			Settings = settings;
 			Events = events;
+			Dispatcher = dispatcher;
+			Archives = archives;
 
-			foreach (var n in SharedGlobal.ArchivesManager.Namespaces)
+			foreach (var n in Archives.Namespaces)
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
@@ -160,9 +163,9 @@ namespace LRReader.UWP.ViewModels
 					{
 						if (!CustomArchiveCheckEvent(a))
 							continue;
-						var archive = SharedGlobal.ArchivesManager.GetArchive(a.arcid);
+						var archive = Archives.GetArchive(a.arcid);
 						if (archive != null)
-							await DispatcherService.RunAsync(() => ArchiveList.Add(archive));
+							await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
 				TotalArchives = resultPage.recordsFiltered;
@@ -176,7 +179,7 @@ namespace LRReader.UWP.ViewModels
 
 		public void DeleteArchive(string id)
 		{
-			ArchiveList.Remove(SharedGlobal.ArchivesManager.GetArchive(id));
+			ArchiveList.Remove(Archives.GetArchive(id));
 		}
 	}
 }

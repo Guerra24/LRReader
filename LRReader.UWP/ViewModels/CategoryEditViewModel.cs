@@ -1,6 +1,7 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace LRReader.UWP.ViewModels
 {
 	public class CategoryEditViewModel : ObservableObject
 	{
+		private readonly ArchivesService Archives;
+
 		public Category category;
 
 		public string Name { get; set; }
@@ -31,6 +34,11 @@ namespace LRReader.UWP.ViewModels
 
 		private bool _loading;
 
+		public CategoryEditViewModel(ArchivesService archives)
+		{
+			Archives = archives;
+		}
+
 		public async Task LoadCategory(Category cat)
 		{
 			if (_loading)
@@ -47,7 +55,7 @@ namespace LRReader.UWP.ViewModels
 			var removeMissing = new List<string>();
 			foreach (var a in category.archives)
 			{
-				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
+				var archive = Archives.GetArchive(a);
 				if (archive != null)
 					CategoryArchives.Add(archive);
 				else
@@ -100,7 +108,7 @@ namespace LRReader.UWP.ViewModels
 			var removeMissing = new List<string>();
 			foreach (var a in category.archives)
 			{
-				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
+				var archive = Archives.GetArchive(a);
 				if (archive != null)
 					CategoryArchives.Add(archive);
 				else
@@ -113,7 +121,7 @@ namespace LRReader.UWP.ViewModels
 
 			foreach (var a in category.archives)
 			{
-				var archive = SharedGlobal.ArchivesManager.GetArchive(a);
+				var archive = Archives.GetArchive(a);
 				CategoryArchives.Add(archive);
 			}
 			OnPropertyChanged("Empty");
@@ -140,7 +148,7 @@ namespace LRReader.UWP.ViewModels
 			if (result)
 			{
 				category.archives.Add(archiveID);
-				CategoryArchives.Add(SharedGlobal.ArchivesManager.GetArchive(archiveID));
+				CategoryArchives.Add(Archives.GetArchive(archiveID));
 				OnPropertyChanged("Empty");
 			}
 		}
@@ -151,7 +159,7 @@ namespace LRReader.UWP.ViewModels
 			if (result)
 			{
 				category.archives.Remove(archiveID);
-				CategoryArchives.Remove(SharedGlobal.ArchivesManager.GetArchive(archiveID));
+				CategoryArchives.Remove(Archives.GetArchive(archiveID));
 				OnPropertyChanged("Empty");
 			}
 		}

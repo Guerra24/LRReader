@@ -62,7 +62,6 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			DispatcherService.Init();
 			Frame rootFrame = Window.Current.Content as Frame;
 
 			if (rootFrame == null)

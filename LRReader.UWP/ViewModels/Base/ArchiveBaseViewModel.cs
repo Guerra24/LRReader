@@ -2,17 +2,21 @@
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
-using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.ViewModels.Base
 {
 	public class ArchiveBaseViewModel : ObservableObject
 	{
+
+		protected readonly SettingsService Settings;
+		protected readonly ArchivesService Archives;
+
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
 		{
@@ -147,6 +151,12 @@ namespace LRReader.UWP.ViewModels.Base
 
 		public bool CanEdit => Settings.Profile.HasApiKey;
 
+		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives)
+		{
+			Settings = settings;
+			Archives = archives;
+		}
+
 		public async Task LoadArchive()
 		{
 			var result = await ArchivesProvider.GetArchive(Archive.arcid);
@@ -175,7 +185,7 @@ namespace LRReader.UWP.ViewModels.Base
 
 		public async Task DeleteArchive()
 		{
-			await Global.ArchivesManager.DeleteArchive(Archive.arcid);
+			await Archives.DeleteArchive(Archive.arcid);
 		}
 	}
 }

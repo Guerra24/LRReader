@@ -7,7 +7,6 @@ namespace LRReader.Shared.Internal
 	public class SharedGlobal
 	{
 		public static ApiConnection ApiConnection { get; set; }
-		public static ArchivesManager ArchivesManager { get; set; }
 		public static UpdatesManager UpdatesManager { get; } = new UpdatesManager();
 		public static ServerInfo ServerInfo { get; set; }
 		public static ControlFlags ControlFlags { get; set; } = new ControlFlags();
