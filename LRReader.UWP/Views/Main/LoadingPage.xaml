@@ -9,6 +9,7 @@
 	Background="{ThemeResource AppBarBackgroundThemeBrush}"
 	DataContext="{Binding LoadingPageInstance, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
+	NavigationCacheMode="Required"
 	mc:Ignorable="d">
 
 	<Grid>

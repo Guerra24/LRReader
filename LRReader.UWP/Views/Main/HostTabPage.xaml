@@ -11,6 +11,7 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
+	NavigationCacheMode="Required"
 	mc:Ignorable="d">
 
 	<Page.KeyboardAccelerators>

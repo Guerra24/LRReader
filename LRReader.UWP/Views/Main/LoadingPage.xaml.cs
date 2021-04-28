@@ -3,7 +3,6 @@ using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.Internal;
 using LRReader.UWP.ViewModels;
 using Microsoft.AppCenter.Crashes;
 using System;
@@ -76,7 +75,7 @@ namespace LRReader.UWP.Views.Main
 
 			ViewModel.Active = true;
 #if !DEBUG
-			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Util.GetAppVersion());
+			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Platform.GetVersion());
 #endif
 			Api.RefreshSettings(Settings.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
