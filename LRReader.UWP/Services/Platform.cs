@@ -1,9 +1,12 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.Views.Tabs;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.System;
+using Windows.UI.Xaml.Controls;
+using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
 namespace LRReader.UWP.Services
 {
@@ -12,6 +15,8 @@ namespace LRReader.UWP.Services
 		private readonly TabsService Tabs;
 
 		private readonly Uri checkUri = new Uri("check:check");
+
+		private readonly Dictionary<Symbols, SymbolIconSource> SymbolToSymbol = new Dictionary<Symbols, SymbolIconSource>();
 
 		public UWPlatformService(TabsService tabs)
 		{
@@ -29,6 +34,9 @@ namespace LRReader.UWP.Services
 			Tabs.MapTabToType(Tab.SearchResults, typeof(SearchResultsTab));
 			Tabs.MapTabToType(Tab.Settings, typeof(SettingsTab));
 			Tabs.MapTabToType(Tab.Web, typeof(WebTab));
+
+			SymbolToSymbol.Add(Symbols.Favorite, new SymbolIconSource { Symbol = Symbol.Favorite });
+			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });
 		}
 
 		public Version GetVersion()
@@ -37,14 +45,22 @@ namespace LRReader.UWP.Services
 			return new Version(version.Major, version.Minor, version.Build, version.Revision);
 		}
 
-		public string GetPackageFamilyName()
-		{
-			return Package.Current.Id.FamilyName;
-		}
-
 		public Task<bool> OpenInBrowser(Uri uri)
 		{
 			return Launcher.LaunchUriAsync(uri).AsTask();
+		}
+
+		public object GetSymbol(Symbols symbol)
+		{
+			SymbolIconSource symb;
+			if (!SymbolToSymbol.TryGetValue(symbol, out symb))
+				return null;
+			return symb;
+		}
+
+		public string GetPackageFamilyName()
+		{
+			return Package.Current.Id.FamilyName;
 		}
 
 		public async Task<bool> CheckAppInstalled(string package)

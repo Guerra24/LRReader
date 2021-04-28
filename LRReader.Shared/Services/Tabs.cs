@@ -70,8 +70,8 @@ namespace LRReader.Shared.Services
 
 		public async void OpenTab(Tab tab, bool switchToTab = true, params object[] args)
 		{
-			var type = Tabs[tab];
-			if (type == null)
+			Type type;
+			if (!Tabs.TryGetValue(tab, out type))
 				return;
 			var newTab = (ICustomTab)Activator.CreateInstance(type, args);
 			var current = GetTabFromId(newTab.CustomTabId);

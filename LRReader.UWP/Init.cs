@@ -1,8 +1,8 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
-using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.ViewModels.Items;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

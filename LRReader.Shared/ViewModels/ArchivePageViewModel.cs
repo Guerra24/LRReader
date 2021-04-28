@@ -1,7 +1,7 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels.Base;
+using LRReader.Shared.ViewModels.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -70,7 +70,7 @@ namespace LRReader.UWP.ViewModels
 		}
 		public event ZoomChanged ZoomChangedEvent;
 
-		public ArchivePageViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api) : base(settings, archives, api)
+		public ArchivePageViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api, IPlatformService platform) : base(settings, archives, api, platform)
 		{
 			Dispatcher = dispatcher;
 			_zoomValue = Settings.DefaultZoom;

@@ -2,7 +2,7 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.ViewModels.Base;
+using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using System;

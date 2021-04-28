@@ -10,7 +10,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	IconSource="{x:Bind TabContent.Data.Icon, Mode=OneWay}"
+	IconSource="{x:Bind (controls:IconSource)TabContent.Data.Icon, Mode=OneWay}"
 	ToolTipService.ToolTip="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
 	mc:Ignorable="d">
 	<controls:TabViewItem.Header>

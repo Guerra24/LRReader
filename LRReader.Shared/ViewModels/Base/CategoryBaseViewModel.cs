@@ -4,7 +4,7 @@ using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
 
-namespace LRReader.UWP.ViewModels.Base
+namespace LRReader.Shared.ViewModels.Base
 {
 	public class CategoryBaseViewModel : ObservableObject
 	{

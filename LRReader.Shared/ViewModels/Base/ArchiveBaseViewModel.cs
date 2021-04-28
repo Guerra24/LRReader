@@ -5,16 +5,15 @@ using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
-using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
-namespace LRReader.UWP.ViewModels.Base
+namespace LRReader.Shared.ViewModels.Base
 {
 	public class ArchiveBaseViewModel : ObservableObject
 	{
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
 		private readonly ApiService Api;
+		private readonly IPlatformService Platform;
 
 		private bool _refreshOnErrorButton = false;
 		public bool RefreshOnErrorButton
@@ -143,18 +142,19 @@ namespace LRReader.UWP.ViewModels.Base
 				}
 			}
 		}
-		public SymbolIconSource Icon
+		public object Icon
 		{
-			get => new SymbolIconSource() { Symbol = Bookmarked ? Symbol.Favorite : Symbol.Pictures };
+			get => Platform.GetSymbol(Bookmarked ? Symbols.Favorite : Symbols.Pictures);
 		}
 
 		public bool CanEdit => Settings.Profile.HasApiKey;
 
-		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api)
+		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api, IPlatformService platform)
 		{
 			Settings = settings;
 			Archives = archives;
 			Api = api;
+			Platform = platform;
 		}
 
 		public async Task LoadArchive()

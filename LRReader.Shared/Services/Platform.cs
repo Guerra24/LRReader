@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
+
+	public enum Symbols
+	{
+		Favorite, Pictures
+	}
+
 	public interface IPlatformService
 	{
 		void Init();
@@ -10,6 +16,8 @@ namespace LRReader.Shared.Services
 		Version GetVersion();
 
 		Task<bool> OpenInBrowser(Uri uri);
+
+		object GetSymbol(Symbols symbol);
 
 	}
 
@@ -28,6 +36,11 @@ namespace LRReader.Shared.Services
 		public Task<bool> OpenInBrowser(Uri uri)
 		{
 			return Task.Run(() => false);
+		}
+
+		public object GetSymbol(Symbols symbol)
+		{
+			return null;
 		}
 	}
 }
