@@ -16,6 +16,6 @@ namespace LRReader.UWP.ViewModels
 		public ArchiveEditViewModel ArchiveEditInstance => Service.Services.GetRequiredService<ArchiveEditViewModel>();
 		public ArchivePageViewModel ArchivePageInstance => Service.Services.GetRequiredService<ArchivePageViewModel>();
 		public CategoryEditViewModel CategoryEditInstance => Service.Services.GetRequiredService<CategoryEditViewModel>();
-		public HostTabPageViewModel HostTabPageInstance => Service.Services.GetRequiredService<HostTabPageViewModel>();
+		public TabsService HostTabPageInstance => Service.Services.GetRequiredService<TabsService>();
 	}
 }

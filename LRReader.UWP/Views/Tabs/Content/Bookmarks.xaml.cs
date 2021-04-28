@@ -40,7 +40,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Data.Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Events.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.Archive, e.ClickedItem as Archive);
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 
@@ -128,7 +128,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				{
 					Service.Settings.Profile.Bookmarks = bookmarks;
 					Service.Settings.SaveProfiles();
-					Service.Events.CloseAllTabs();
+					Service.Tabs.CloseAllTabs();
 					(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
 				}
 			}

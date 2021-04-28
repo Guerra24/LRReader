@@ -18,6 +18,7 @@ namespace LRReader.UWP
 				collection.Replace(ServiceDescriptor.Singleton<ISettingsStorageService, SettingsStorageService>());
 				collection.Replace(ServiceDescriptor.Singleton<IFilesService, FilesService>());
 				collection.Replace(ServiceDescriptor.Singleton<IDispatcherService, DispatcherService>());
+				collection.Replace(ServiceDescriptor.Singleton<IPlatformService, UWPlatformService>());
 
 				collection.AddSingleton<ArchivesPageViewModel>();
 				collection.AddSingleton<SettingsPageViewModel>();
@@ -25,7 +26,6 @@ namespace LRReader.UWP
 				collection.AddSingleton<FirstRunPageViewModel>();
 				collection.AddSingleton<CategoriesViewModel>();
 				collection.AddSingleton<LoadingPageViewModel>();
-				collection.AddSingleton<HostTabPageViewModel>();
 
 				collection.AddTransient<SearchResultsViewModel>();
 				collection.AddTransient<ArchiveEditViewModel>();

@@ -1,7 +1,7 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
-using LRReader.UWP.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
@@ -38,10 +38,11 @@ namespace LRReader.UWP.Views.Controls
 			loaded = true;
 			AscFlyoutItem.IsChecked = Settings.OrderByDefault == Order.Ascending;
 			DesFlyoutItem.IsChecked = Settings.OrderByDefault == Order.Descending;
+
 			await Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Events.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.Archive, true, e.ClickedItem as Archive);
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
@@ -95,7 +96,7 @@ namespace LRReader.UWP.Views.Controls
 			var random = new Random();
 			var list = Archives.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
-			Events.AddTab(new ArchiveTab(item.Value));
+			Service.Tabs.OpenTab(Tab.Archive, item.Value);
 		}
 
 		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();

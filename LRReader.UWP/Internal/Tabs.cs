@@ -1,4 +1,4 @@
-﻿using LRReader.Shared;
+﻿using LRReader.Shared.Models;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 

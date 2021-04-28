@@ -1,6 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
@@ -478,7 +476,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e) => resizePixel.OnNext(ScrollViewer.ExtentHeight);
 
-		private void EditButton_Click(object sender, RoutedEventArgs e) => Service.Events.AddTab(new ArchiveEditTab(Data.Archive));
+		private void EditButton_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.ArchiveEdit, Data.Archive);
 
 		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -548,7 +546,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Service.Events.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
 		}
 
-		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Events.AddTab(new SearchResultsTab((e.ClickedItem as ArchiveTagsGroupTag).FullTag));
+		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.SearchResults, (e.ClickedItem as ArchiveTagsGroupTag).FullTag);
 
 		private string GetOpenTarget()
 		{

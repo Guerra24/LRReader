@@ -1,4 +1,4 @@
-﻿using LRReader.UWP.Internal;
+﻿using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
@@ -30,19 +30,19 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		{
 			if (Uri.TryCreate(e.Link, UriKind.Absolute, out Uri link))
 			{
-				await Util.OpenInBrowser(link);
+				await Service.Platform.OpenInBrowser(link);
 			}
 		}
 
 		private async void ButtonDownload_Click(object sender, RoutedEventArgs e)
 		{
-			await Util.OpenInBrowser(new Uri(Data.ReleaseInfo.link));
+			await Service.Platform.OpenInBrowser(new Uri(Data.ReleaseInfo.link));
 			await ApplicationView.GetForCurrentView().TryConsolidateAsync();
 		}
 
 		private async void WebButton_Click(object sender, RoutedEventArgs e)
 		{
-			await Util.OpenInBrowser(new Uri((sender as Button).Tag as string));
+			await Service.Platform.OpenInBrowser(new Uri((sender as Button).Tag as string));
 		}
 	}
 }

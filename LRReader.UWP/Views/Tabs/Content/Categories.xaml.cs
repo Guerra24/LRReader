@@ -40,12 +40,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 				{
 					var category = await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
 					if (category != null && string.IsNullOrEmpty(dialog.SearchQuery.Text))
-						Service.Events.AddTab(new CategoryEditTab(category));
+						Service.Tabs.OpenTab(Tab.CategoryEdit, category);
 				}
 			}
 			else
 			{
-				Service.Events.AddTab(new SearchResultsTab(e.ClickedItem as Category));
+				Service.Tabs.OpenTab(Tab.SearchResults, e.ClickedItem as Category);
 			}
 		}
 

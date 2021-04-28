@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
@@ -87,7 +86,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
 			if (profile == null)
 			{
-				Service.Events.CloseAllTabs();
+				Service.Tabs.CloseAllTabs();
 				(Window.Current.Content as Frame).Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
 				return;
 			}
@@ -104,7 +103,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			if (result == ContentDialogResult.Primary)
 			{
 				Data.SettingsManager.Profile = profile;
-				Service.Events.CloseAllTabs();
+				Service.Tabs.CloseAllTabs();
 				(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
 			}
 			else

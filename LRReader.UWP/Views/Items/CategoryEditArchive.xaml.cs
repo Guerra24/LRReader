@@ -3,7 +3,6 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Items;
-using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -70,7 +69,7 @@ namespace LRReader.UWP.Views.Items
 
 		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
 		{
-			Service.Events.AddTab(new ArchiveTab(ViewModel.Archive), false);
+			Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
 		}
 
 		private async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -108,7 +107,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Service.Events.AddTab(new ArchiveTab(ViewModel.Archive), false);
+					Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
 					e.Handled = true;
 				}
 			}

@@ -1,13 +1,11 @@
 ﻿using LRReader.Internal;
 using LRReader.Shared.Services;
 using LRReader.UWP.Internal;
-using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
@@ -23,7 +21,7 @@ namespace LRReader.UWP.Views.Main
 	public sealed partial class HostTabPage : Page
 	{
 
-		private HostTabPageViewModel Data;
+		private TabsService Data;
 
 		private CoreApplicationView CoreView;
 		private ApplicationView AppView;
@@ -33,7 +31,7 @@ namespace LRReader.UWP.Views.Main
 		public HostTabPage()
 		{
 			this.InitializeComponent();
-			Data = DataContext as HostTabPageViewModel;
+			Data = DataContext as TabsService;
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
@@ -56,20 +54,19 @@ namespace LRReader.UWP.Views.Main
 			Window.Current.SetTitleBar(TitleBar);
 
 			Events.ShowNotificationEvent += ShowNotification;
-			Events.AddTabEvent += AddTab;
-			Events.CloseAllTabsEvent += CloseAllTabs;
-			Events.CloseTabWithIdEvent += CloseTabWithId;
-			Events.DeleteArchiveEvent += DeleteArchive;
+
+			Data.Hook();
+
 			await Service.Dispatcher.RunAsync(() =>
 			{
-				Events.AddTab(new ArchivesTab());
+				Data.AddTab(new ArchivesTab());
 				if (Settings.OpenBookmarksTab)
-					Events.AddTab(new BookmarksTab(), false);
+					Data.AddTab(new BookmarksTab(), false);
 				if (Api.ControlFlags.CategoriesEnabled)
 					if (Settings.OpenCategoriesTab)
-						Events.AddTab(new CategoriesTab(), false);
+						Data.AddTab(new CategoriesTab(), false);
 			});
-			var info = await Global.UpdatesManager.CheckUpdates(Util.GetAppVersion());
+			var info = await Global.UpdatesManager.CheckUpdates(Platform.GetVersion());
 			if (info != null)
 				ShowNotification(lang.GetString("HostTab/Update1") + " " + info.name, lang.GetString("HostTab/Update2"), 0);
 #if !SIDELOAD
@@ -87,10 +84,8 @@ namespace LRReader.UWP.Views.Main
 
 			Window.Current.SetTitleBar(null);
 			Events.ShowNotificationEvent -= ShowNotification;
-			Events.AddTabEvent -= AddTab;
-			Events.CloseAllTabsEvent -= CloseAllTabs;
-			Events.CloseTabWithIdEvent -= CloseTabWithId;
-			Events.DeleteArchiveEvent -= DeleteArchive;
+
+			Data.UnHook();
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
@@ -110,72 +105,27 @@ namespace LRReader.UWP.Views.Main
 
 		private void ShowNotification(string title, string content, int duration = 5000) => Notifications.Show(new NotificationItem(title, content), duration);
 
-		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Events.AddTab(new SettingsTab());
+		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.AddTab(new SettingsTab());
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
 
-		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Events.AddTab(new BookmarksTab(), true);
+		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Data.AddTab(new BookmarksTab(), true);
 
-		private void Categories_Click(object sender, RoutedEventArgs e) => Events.AddTab(new CategoriesTab(), true);
+		private void Categories_Click(object sender, RoutedEventArgs e) => Data.AddTab(new CategoriesTab(), true);
 
-		private void Search_Click(object sender, RoutedEventArgs e) => Events.AddTab(new SearchResultsTab(), true);
+		private void Search_Click(object sender, RoutedEventArgs e) => Data.AddTab(new SearchResultsTab(), true);
 
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.FullScreen = AppView.IsFullScreenMode;
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			if (args.Tab is CustomTab tab)
-				tab.Unload();
-			TabViewControl.TabItems.Remove(args.Tab);
+			Data.CloseTab(args.Tab as CustomTab);
 		}
-
-		public async void AddTab(object tabo, bool switchToTab)
-		{
-			var tab = tabo as CustomTab;
-			var current = GetTabFromId(tab.CustomTabId);
-			if (current != null)
-			{
-				if (switchToTab)
-					Data.CurrentTab = current;
-			}
-			else
-			{
-				TabViewControl.TabItems.Add(tab);
-				if (switchToTab)
-					await Service.Dispatcher.RunAsync(() => Data.CurrentTab = tab);
-			}
-		}
-
-		public void CloseAllTabs()
-		{
-			foreach (var t in TabViewControl.TabItems)
-			{
-				if (t is CustomTab tab)
-					tab.Unload();
-			}
-			TabViewControl.TabItems.Clear();
-		}
-
-		public void CloseTabWithId(string id)
-		{
-			var tab = GetTabFromId(id);
-			if (tab != null)
-			{
-				TabViewControl.TabItems.Remove(tab);
-			}
-		}
-
-		private CustomTab GetTabFromId(string id) => TabViewControl.TabItems.FirstOrDefault(t => (t as CustomTab).CustomTabId.Equals(id)) as CustomTab;
 
 		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			args.Handled = true;
-			var t = Data.CurrentTab;
-			if (!t.IsClosable)
-				return;
-			if (t is CustomTab tab)
-				tab.Unload();
-			TabViewControl.TabItems.Remove(t);
+			Data.CloseCurrentTab();
 		}
 
 		private void FullScreen_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -191,21 +141,15 @@ namespace LRReader.UWP.Views.Main
 			}
 		}
 
-		public void DeleteArchive(string id)
-		{
-			CloseTabWithId("Edit_" + id);
-			CloseTabWithId("Archive_" + id);
-		}
-
 		private async Task ShowWhatsNew()
 		{
 			var version = Version.Parse(SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
-			if (version >= Util.GetAppVersion())
+			if (version >= Platform.GetVersion())
 				return;
-			var result = await Global.UpdatesManager.GetChangelog(Util.GetAppVersion());
+			var result = await Global.UpdatesManager.GetChangelog(Platform.GetVersion());
 			if (result == null)
 				return;
-			SettingsStorage.StoreObjectLocal("_version", Util.GetAppVersion().ToString());
+			SettingsStorage.StoreObjectLocal("_version", Platform.GetVersion().ToString());
 			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), result);
 			await dialog.ShowAsync();
 		}

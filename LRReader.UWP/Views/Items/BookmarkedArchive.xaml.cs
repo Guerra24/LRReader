@@ -4,7 +4,6 @@ using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Items;
 using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -71,12 +70,12 @@ namespace LRReader.UWP.Views.Items
 
 		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
 		{
-			Service.Events.AddTab(new ArchiveTab(ViewModel.Archive), false);
+			Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
 		}
 
 		private void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			Service.Events.AddTab(new ArchiveEditTab(ViewModel.Archive));
+			Service.Tabs.OpenTab(Tab.ArchiveEdit, ViewModel.Archive);
 		}
 
 		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
@@ -128,7 +127,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Service.Events.AddTab(new ArchiveTab(ViewModel.Archive), false);
+					Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
 				}
 			}
 		}

@@ -4,7 +4,6 @@ using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels.Base;
 using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -77,7 +76,7 @@ namespace LRReader.UWP.Views.Items
 
 		private void Add_Click(object sender, RoutedEventArgs e)
 		{
-			Service.Events.AddTab(new SearchResultsTab(ViewModel.Category), false);
+			Service.Tabs.OpenTab(Tab.SearchResults, false, ViewModel.Category);
 		}
 
 		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -87,7 +86,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Service.Events.AddTab(new SearchResultsTab(ViewModel.Category), false);
+					Service.Tabs.OpenTab(Tab.SearchResults, false, ViewModel.Category);
 				}
 			}
 		}
@@ -122,7 +121,7 @@ namespace LRReader.UWP.Views.Items
 			}
 
 			if (listMode)
-				Service.Events.AddTab(new CategoryEditTab(ViewModel.Category));
+				Service.Tabs.OpenTab(Tab.CategoryEdit, ViewModel.Category);
 			else
 			{
 				var dialog = new CreateCategory(true);

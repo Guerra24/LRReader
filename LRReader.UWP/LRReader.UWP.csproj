@@ -131,6 +131,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\Files.cs" />
+    <Compile Include="Services\Platform.cs" />
     <Compile Include="Services\SettingsStorage.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="Extensions\Extensions.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Internal\Global.cs" />
     <Compile Include="Internal\ImageProcessing.cs" />
     <Compile Include="Internal\Tabs.cs" />
-    <Compile Include="Internal\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secrets.cs" />
     <Compile Include="Services\Dispatcher.cs" />
@@ -146,7 +146,6 @@
     <Compile Include="ViewModels\Base\ArchiveBaseViewModel.cs" />
     <Compile Include="ViewModels\Base\CategoryBaseViewModel.cs" />
     <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
-    <Compile Include="ViewModels\HostTabPageViewModel.cs" />
     <Compile Include="ViewModels\Items\ArchiveItemViewModel.cs" />
     <Compile Include="ViewModels\LoadingPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />

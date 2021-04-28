@@ -5,13 +5,18 @@ namespace LRReader.Shared.ViewModels
 {
 	public class ArchivesPageViewModel : SearchResultsViewModel
 	{
+
+		private readonly TabsService Tabs;
+
 		public ArchivesPageViewModel(
 			SettingsService settings,
 			EventsService events,
 			ArchivesService archives,
+			TabsService tabs,
 			IDispatcherService dispatcher,
 			ApiService api) : base(settings, events, archives, dispatcher, api)
 		{
+			Tabs = tabs;
 		}
 
 		public async Task Refresh()
@@ -26,7 +31,7 @@ namespace LRReader.Shared.ViewModels
 			{
 				var archive = Archives.GetArchive(b.archiveID);
 				if (archive != null)
-					Events.CloseTabWithId(archive.title);
+					Tabs.CloseTabWithId(archive.title);
 			}
 			await Archives.ReloadArchives();
 			LoadBookmarks();
@@ -47,10 +52,10 @@ namespace LRReader.Shared.ViewModels
 					foreach (var b in Settings.Profile.Bookmarks)
 					{
 						var archive = Archives.GetArchive(b.archiveID);
-						//if (archive != null)
-//							Events.AddTab(new ArchiveTab(archive), false);
-	//					else
-		//					Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+						if (archive != null)
+							Tabs.OpenTab(Tab.Archive, false, archive);
+						else
+							Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
 					}
 		}
 

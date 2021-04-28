@@ -3,7 +3,7 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.Internal;
+using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
@@ -17,9 +17,10 @@ namespace LRReader.UWP.ViewModels
 		private readonly ImagesService Images;
 		private readonly EventsService Events;
 		private readonly ApiService Api;
+		private readonly IPlatformService Platform;
 
 		public SettingsService SettingsManager;
-		public Version Version => Util.GetAppVersion();
+		public Version Version => Platform.GetVersion();
 		public Version MinVersion => UpdatesManager.MIN_VERSION;
 		public Version MaxVersion => UpdatesManager.MAX_VERSION;
 		private ShinobuStatus _shinobuStatus = new ShinobuStatus();
@@ -75,12 +76,13 @@ namespace LRReader.UWP.ViewModels
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, ApiService api)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, ApiService api, IPlatformService platform)
 		{
 			SettingsManager = settings;
 			Images = images;
 			Events = events;
 			Api = api;
+			Platform = platform;
 
 			UpdateReleaseData();
 			foreach (var n in archives.Namespaces)
@@ -90,8 +92,8 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task CheckForPackages()
 		{
-			SetProperty(ref AvifMissing, !await Util.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
-			SetProperty(ref HeifMissing, !await Util.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
+			SetProperty(ref AvifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
+			SetProperty(ref HeifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
 		}
 
 		public async Task RestartWorker()
@@ -137,7 +139,7 @@ namespace LRReader.UWP.ViewModels
 
 		public async void UpdateReleaseData()
 		{
-			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Util.GetAppVersion());
+			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.GetVersion());
 			if (info != null)
 			{
 				SetProperty(ref ReleaseInfo, info, nameof(ReleaseInfo));

@@ -1,6 +1,6 @@
-﻿using LRReader.UWP.Extensions;
-using LRReader.UWP.Internal;
-using Microsoft.AppCenter.Crashes;
+﻿using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
+using LRReader.UWP.Services;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
@@ -53,7 +53,7 @@ namespace LRReader.UWP.Views.Dialogs
 			{
 				ProfileError.Text = lang.GetString("ServerProfile/ErrorLocalHost").AsFormat("\n");
 				Command.Visibility = Visibility.Visible;
-				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}";
+				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n={(Service.Platform as UWPlatformService).GetPackageFamilyName()}";
 			}
 			IsPrimaryButtonEnabled = allow && ValidateProfileName();
 		}
@@ -72,7 +72,7 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			var dataPackage = new DataPackage();
 			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={Util.GetPackageFamilyName()}");
+			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={(Service.Platform as UWPlatformService).GetPackageFamilyName()}");
 			Clipboard.SetContent(dataPackage);
 		}
 	}

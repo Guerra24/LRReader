@@ -45,7 +45,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			reloading = false;
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Events.AddTab(new ArchiveTab(e.ClickedItem as Archive), true);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.Archive, e.ClickedItem as Archive);
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
@@ -99,7 +99,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var random = new Random();
 			var list = Service.Archives.Archives;
 			var item = list.ElementAt(random.Next(list.Count() - 1));
-			Service.Events.AddTab(new ArchiveTab(item.Value));
+			Service.Tabs.OpenTab(Tab.Archive, item.Value);
 		}
 
 		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();

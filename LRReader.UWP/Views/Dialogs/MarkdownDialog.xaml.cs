@@ -1,4 +1,4 @@
-﻿using LRReader.UWP.Internal;
+﻿using LRReader.Shared.Services;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using Windows.UI.Xaml.Controls;
@@ -20,7 +20,7 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			if (Uri.TryCreate(e.Link, UriKind.Absolute, out Uri link))
 			{
-				await Util.OpenInBrowser(link);
+				await Service.Platform.OpenInBrowser(link);
 			}
 		}
 
