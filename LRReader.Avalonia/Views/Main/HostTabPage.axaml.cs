@@ -43,6 +43,8 @@ namespace LRReader.Avalonia.Views.Main
 		
 		private void HostTabPage_DetachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
 		{
+			if (Design.IsDesignMode)
+				return;
 			Data.UnHook();
 		}
 	}

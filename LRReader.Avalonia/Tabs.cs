@@ -1,14 +1,14 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Aura.UI.Controls;
+using Avalonia;
 using Avalonia.Styling;
 using LRReader.Shared.Models;
 using System;
 
 namespace LRReader.Avalonia
 {
-	public class CustomTab : TabItem, ICustomTab, IStyleable
+	public class CustomTab : AuraTabItem, ICustomTab, IStyleable
 	{
-		Type IStyleable.StyleKey => typeof(TabItem);
+		Type IStyleable.StyleKey => typeof(AuraTabItem);
 
 		public object CustomTabControl
 		{
@@ -21,11 +21,6 @@ namespace LRReader.Avalonia
 			get => GetValue(CustomTabIdProperty) as string;
 			set => SetValue(CustomTabIdProperty, value);
 		}
-		public bool IsClosable
-		{
-			get => (bool)GetValue(IsClosableProperty);
-			set => SetValue(IsClosableProperty, value);
-		}
 
 		public virtual void Unload()
 		{
@@ -33,6 +28,5 @@ namespace LRReader.Avalonia
 
 		public static readonly AvaloniaProperty<object> CustomTabControlProperty = AvaloniaProperty.Register<CustomTab, object>("CustomTabControl");
 		public static readonly AvaloniaProperty<string> CustomTabIdProperty = AvaloniaProperty.Register<CustomTab, string>("CustomTabId");
-		public static readonly AvaloniaProperty<bool> IsClosableProperty = AvaloniaProperty.Register<CustomTab, bool>("IsClosable");
 	}
 }

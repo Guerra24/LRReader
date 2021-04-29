@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:aura="using:Aura.UI.Controls"
+			 xmlns:models="using:LRReader.Shared.Models.Main"
+			 xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
+			 mc:Ignorable="d"
+			 d:DesignWidth="800"
+			 d:DesignHeight="450"
+			 x:CompileBindings="True"
+			 x:DataType="vm:ArchivesPageViewModel"
+			 x:Class="LRReader.Avalonia.Views.Tabs.Content.Archives"
+			 DataContext="{ReflectionBinding ArchivesPageInstance, Source={StaticResource Locator}}"
+			 AttachedToVisualTree="Archives_AttachedToVisualTree">
+
+	<Grid>
+		<aura:CardCollection Items="{Binding ArchiveList, Mode=OneTime}">
+			<aura:CardCollection.ItemTemplate>
+				<DataTemplate x:DataType="models:Archive">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<TextBlock
+							x:Name="Title"
+							Grid.Row="0"
+							Padding="5,0"
+							HorizontalAlignment="Center"
+							FontSize="16"
+							Text="{Binding title, Mode=OneWay}"
+							TextTrimming="CharacterEllipsis"
+							 />
+						<Grid x:Name="Overlay"
+							  Grid.Row="1">
+							<Image
+								x:Name="Thumbnail"
+								Width="200"
+								Height="275"
+								HorizontalAlignment="Center" />
+						</Grid>
+						<Grid
+							x:Name="TagsGrid"
+							Grid.Row="2">
+							<TextBlock
+								Grid.Row="2"
+								Padding="2,0"
+								Text="{Binding TagsClean, Mode=OneWay}"
+								TextTrimming="CharacterEllipsis" />
+						</Grid>
+					</Grid>
+				</DataTemplate>
+			</aura:CardCollection.ItemTemplate>
+		</aura:CardCollection>
+		<Button Content="Retry"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				IsVisible="{Binding RefreshOnErrorButton, Mode=OneWay}"/>
+	</Grid>
+</UserControl>

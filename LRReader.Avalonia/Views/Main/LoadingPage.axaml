@@ -2,7 +2,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:ring="using:AvaloniaProgressRing"
+			 xmlns:aura="using:Aura.UI.Controls"
 			 xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
 			 mc:Ignorable="d"
 			 d:DesignWidth="1500"
@@ -25,11 +25,11 @@
 			   VerticalAlignment="Center"
 			   Source="/Assets/SplashScreen.scale-200.png"/>
 		<Grid Grid.Row="2">
-			<ring:ProgressRing Width="40"
-							   Height="40"
-							   HorizontalAlignment="Center"
-							   VerticalAlignment="Top"
-							   IsActive="{Binding Active, Mode=OneWay}"/>
+			<aura:ProgressRing
+				HorizontalAlignment="Center"
+				VerticalAlignment="Top"
+				IsIndeterminate="True"
+				IsVisible="{Binding Active, Mode=OneWay}"/>
 			<ProgressBar Width="200"
 						 Margin="0,18,0,0"
 						 Value="{Binding Progress, Mode=OneWay}"

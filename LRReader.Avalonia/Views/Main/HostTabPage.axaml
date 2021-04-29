@@ -2,6 +2,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:aura="using:Aura.UI.Controls"
 			 xmlns:vm="clr-namespace:LRReader.Shared.Services;assembly=LRReader.Shared"
 			 mc:Ignorable="d"
 			 d:DesignWidth="1500"
@@ -10,51 +11,49 @@
 			 x:DataType="vm:TabsService"
 			 x:Class="LRReader.Avalonia.Views.Main.HostTabPage"
 			 AttachedToVisualTree="HostTabPage_AttachedToVisualTree"
+			 DetachedFromVisualTree="HostTabPage_DetachedToVisualTree"
 			 DataContext="{ReflectionBinding HostTabPageInstance, Source={StaticResource Locator}}">
 
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition/>
-		</Grid.RowDefinitions>
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition/>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<Grid.Styles>
-				<Style Selector="Button">
-					<Setter Property="Width"
-							Value="34"/>
-					<Setter Property="Height"
-							Value="32" />
-				</Style>
-			</Grid.Styles>
-			<StackPanel Orientation="Horizontal">
-				<TabStrip Items="{Binding TabItems, Mode=OneTime}"
-						  SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
-						  HorizontalAlignment="Left">
-				</TabStrip>
-				<Button Content="bkm"/>
-				<Button Content="cte"/>
-				<Button Content="src"/>
-			</StackPanel>
-			<Grid Grid.Column="1"
-				  Background="Transparent"/>
-			<Border
-				Grid.Column="2"
-				Width="1"
-				Margin="3,8,3,8"
-				Background="{DynamicResource TextControlForeground}" />
-			<StackPanel Grid.Column="3"
-						Orientation="Horizontal">
-				<Button Content="full"/>
-				<Button Content="stg"/>
-			</StackPanel>
-		</Grid>
-		<ContentControl Grid.Row="1"
-						Content="{ReflectionBinding CurrentTab.Content, Mode=OneWay}"/>
+		<aura:AuraTabView
+			AdderButtonIsVisible="False"
+			Items="{Binding TabItems, Mode=OneTime}"
+			SelectedItem="{Binding CurrentTab, Mode=TwoWay}">
+			<aura:AuraTabView.Footer>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.Styles>
+						<Style Selector="Button">
+							<Setter Property="Width"
+									Value="34"/>
+							<Setter Property="Height"
+									Value="32" />
+						</Style>
+					</Grid.Styles>
+					<StackPanel Orientation="Horizontal">
+						<Button Content="bkm"/>
+						<Button Content="cte"/>
+						<Button Content="src"/>
+					</StackPanel>
+					<Grid Grid.Column="1"
+						  Background="Transparent"/>
+					<Border
+						Grid.Column="2"
+						Width="1"
+						Margin="3,8,3,8"
+						Background="{DynamicResource TextControlForeground}" />
+					<StackPanel Grid.Column="3"
+								Orientation="Horizontal">
+						<Button Content="full"/>
+						<Button Content="stg"/>
+					</StackPanel>
+				</Grid>
+			</aura:AuraTabView.Footer>
+		</aura:AuraTabView>
 	</Grid>
 </UserControl>
