@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <StartupObject>LRReader.Avalonia.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.2" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.2" />
+    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.9.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.1" />
+   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Strings\en\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+  </ItemGroup>
+</Project>

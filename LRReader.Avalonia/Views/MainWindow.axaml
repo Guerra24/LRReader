@@ -1,0 +1,11 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:main="using:LRReader.Avalonia.Views.Main"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="LRReader.Avalonia.Views.MainWindow"
+        Title="LRReader"
+		Icon="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png">
+	<main:LoadingPage/>
+</Window>

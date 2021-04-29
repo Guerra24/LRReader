@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Archive.AddBookmark.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Archive.AddBookmark.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Archive.AddBookmark.Title" xml:space="preserve">
+    <value>Bookmark Archive?</value>
+  </data>
+  <data name="Archive.Bookmark.Content" xml:space="preserve">
+    <value>Bookmark</value>
+  </data>
+  <data name="Archive.Continue.Text" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Archive.CopyTag.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Archive.Delete.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Archive.Download.Content" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Archive.Edit.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Archive.RemoveBookmark.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Archive.RemoveBookmark.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
+    <value>Remove Bookmark?</value>
+  </data>
+  <data name="ArchiveEdit.ID.Header" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="ArchiveEdit.Plugin.Header" xml:space="preserve">
+    <value>Plugin</value>
+  </data>
+  <data name="ArchiveEdit.Plugin.PlaceholderText" xml:space="preserve">
+    <value>Plugin...</value>
+  </data>
+  <data name="ArchiveEdit.RunPlugin.Content" xml:space="preserve">
+    <value>Run Plugin</value>
+  </data>
+  <data name="ArchiveEdit.Save.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ArchiveEdit.Tags.Header" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="ArchiveEdit.Title.Header" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Archives.Clear.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Archives.New.Content" xml:space="preserve">
+    <value>New only</value>
+  </data>
+  <data name="Archives.Order.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Order by</value>
+  </data>
+  <data name="Archives.OrderAsc.Text" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="Archives.OrderDesc.Text" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="Archives.Random.Content" xml:space="preserve">
+    <value>Random archive</value>
+  </data>
+  <data name="Archives.Search.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Archives.SortBy.PlaceholderText" xml:space="preserve">
+    <value>Sort by...</value>
+  </data>
+  <data name="Archives.Tab.Header" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="Archives.Untagged.Content" xml:space="preserve">
+    <value>Untagged only</value>
+  </data>
+  <data name="Bookmarks.Empty.Text" xml:space="preserve">
+    <value>Try bookmarking something</value>
+  </data>
+  <data name="Bookmarks.Export.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Bookmarks.ExportComplete" xml:space="preserve">
+    <value>Export completed successfully</value>
+  </data>
+  <data name="Bookmarks.ExportCompleteFile" xml:space="preserve">
+    <value>Saved to {0}</value>
+  </data>
+  <data name="Bookmarks.ExportError" xml:space="preserve">
+    <value>An error ocurred</value>
+  </data>
+  <data name="Bookmarks.ExportErrorFile" xml:space="preserve">
+    <value>Unable to save {0}</value>
+  </data>
+  <data name="Bookmarks.Import.Text" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.Content" xml:space="preserve">
+    <value>Current bookmarks will be replaced, do you want to continue?{0}The app will reload.</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Import and reload</value>
+  </data>
+  <data name="Bookmarks.ImportDialog.Title" xml:space="preserve">
+    <value>Import Bookmarks</value>
+  </data>
+  <data name="Bookmarks.ImportError" xml:space="preserve">
+    <value>An error occurred while importing bookmarks</value>
+  </data>
+  <data name="Bookmarks.Tab.Header" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="Categories.Tab.Header" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CategoriesEdit.DragAdd" xml:space="preserve">
+    <value>Add to category</value>
+  </data>
+  <data name="CategoriesEdit.DragRemove" xml:space="preserve">
+    <value>Remove from category</value>
+  </data>
+  <data name="CategoriesEdit.Empty.Text" xml:space="preserve">
+    <value>Try dragging an archive</value>
+  </data>
+  <data name="CategoriesEdit.Pinned.Content" xml:space="preserve">
+    <value>Pinned</value>
+  </data>
+  <data name="SearchResults.Tab.Header" xml:space="preserve">
+    <value>Search</value>
+  </data>
+</root>

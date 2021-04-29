@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ring="using:AvaloniaProgressRing"
+			 xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
+			 mc:Ignorable="d"
+			 d:DesignWidth="1500"
+			 d:DesignHeight="1000"
+			 x:CompileBindings="True"
+			 x:DataType="vm:LoadingPageViewModel"
+			 x:Class="LRReader.Avalonia.Views.Main.LoadingPage"
+			 AttachedToVisualTree="LoadingPage_AttachedToVisualTree"
+			 DataContext="{ReflectionBinding LoadingPageInstance, Source={StaticResource Locator}}">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Image Grid.Row="1"
+			   Width="620"
+			   Height="300"
+			   HorizontalAlignment="Center"
+			   VerticalAlignment="Center"
+			   Source="/Assets/SplashScreen.scale-200.png"/>
+		<Grid Grid.Row="2">
+			<ring:ProgressRing Width="40"
+							   Height="40"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Top"
+							   IsActive="{Binding Active, Mode=OneWay}"/>
+			<ProgressBar Width="200"
+						 Margin="0,18,0,0"
+						 Value="{Binding Progress, Mode=OneWay}"
+						 IsVisible="{Binding Updating, Mode=OneWay}"
+						 VerticalAlignment="Top"/>
+			<StackPanel VerticalAlignment="Top">
+				<TextBlock HorizontalAlignment="Center"
+						   FontSize="18"
+						   Text="{Binding Status, Mode=OneWay}"/>
+				<TextBlock Margin="0,5,0,0"
+						   HorizontalAlignment="Center"
+						   FontSize="17"
+						   Text="{Binding StatusSub, Mode=OneWay}"/>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</UserControl>
