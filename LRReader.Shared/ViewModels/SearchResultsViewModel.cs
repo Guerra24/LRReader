@@ -44,7 +44,7 @@ namespace LRReader.Shared.ViewModels
 				OnPropertyChanged("HasPrevPage");
 			}
 		}
-		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
+		public ObservableCollection<Archive> ArchiveList { get; } = new ObservableCollection<Archive>();
 		private int _page = 0;
 		public int Page
 		{

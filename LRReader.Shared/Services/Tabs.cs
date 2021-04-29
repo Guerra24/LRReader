@@ -18,8 +18,7 @@ namespace LRReader.Shared.Services
 		private readonly EventsService Events;
 		private readonly IDispatcherService Dispatcher;
 
-		private ObservableCollection<ICustomTab> _tabItems = new ObservableCollection<ICustomTab>();
-		public ObservableCollection<ICustomTab> TabItems => _tabItems;
+		public ObservableCollection<ICustomTab> TabItems { get; } = new ObservableCollection<ICustomTab>();
 
 		private ICustomTab _currentTab;
 		public ICustomTab CurrentTab
