@@ -18,7 +18,8 @@ namespace LRReader.Shared.Services
 		private readonly EventsService Events;
 		private readonly IDispatcherService Dispatcher;
 
-		public ObservableCollection<ICustomTab> TabItems = new ObservableCollection<ICustomTab>();
+		private ObservableCollection<ICustomTab> _tabItems = new ObservableCollection<ICustomTab>();
+		public ObservableCollection<ICustomTab> TabItems => _tabItems;
 
 		private ICustomTab _currentTab;
 		public ICustomTab CurrentTab
@@ -36,14 +37,8 @@ namespace LRReader.Shared.Services
 				OnPropertyChanged("Windowed");
 			}
 		}
-		public bool Windowed
-		{
-			get => !_fullscreen;
-		}
-		public ControlFlags ControlFlags
-		{
-			get => Api.ControlFlags;
-		}
+		public bool Windowed => !_fullscreen;
+		public ControlFlags ControlFlags => Api.ControlFlags;
 
 		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
 

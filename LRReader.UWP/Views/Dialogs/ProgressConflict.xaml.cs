@@ -1,5 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.UWP.Extensions;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models.Main;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 

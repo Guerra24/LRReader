@@ -33,8 +33,9 @@ namespace LRReader.Shared.Services
 		{
 			if (Loaded)
 				return;
-			Platform.Init();
 			Dispatcher.Init();
+			Platform.Init();
+			await SettingsStorage.Init();
 			await Settings.Init();
 			await Images.Init();
 			Loaded = true;

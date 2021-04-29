@@ -1,6 +1,8 @@
-﻿namespace LRReader.Shared.Services
+﻿using System.Threading.Tasks;
+
+namespace LRReader.Shared.Services
 {
-	public interface ISettingsStorageService
+	public interface ISettingsStorageService : IService
 	{
 		void StoreObjectLocal(string key, object obj);
 
@@ -21,6 +23,8 @@
 
 	public class StubSettingsStorageService : ISettingsStorageService
 	{
+		public Task Init() => Task.Delay(1);
+
 		public T GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
 
 		public T GetObjectLocal<T>(string key, T def) => def;

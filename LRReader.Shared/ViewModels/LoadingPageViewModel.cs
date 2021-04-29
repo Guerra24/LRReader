@@ -1,6 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace LRReader.UWP.ViewModels
+namespace LRReader.Shared.ViewModels
 {
 	public class LoadingPageViewModel : ObservableObject
 	{

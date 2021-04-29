@@ -1,9 +1,9 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.Extensions;
-using LRReader.UWP.ViewModels;
+using LRReader.Shared.ViewModels;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Net.NetworkInformation;

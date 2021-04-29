@@ -21,9 +21,4 @@ namespace LRReader.UWP.Extensions
 		public static void SetVisualOpacity(this UIElement element, float opacity) => ElementCompositionPreview.GetElementVisual(element).Opacity = opacity;
 
 	}
-
-	public static class StringExtensions
-	{
-		public static string AsFormat(this string format, params object[] args) => string.Format(format, args);
-	}
 }

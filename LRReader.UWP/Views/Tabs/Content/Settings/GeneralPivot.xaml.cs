@@ -1,6 +1,6 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using LRReader.UWP.Extensions;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;

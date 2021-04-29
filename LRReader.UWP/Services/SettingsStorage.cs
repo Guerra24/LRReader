@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Services;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace LRReader.UWP.Services
@@ -7,6 +8,8 @@ namespace LRReader.UWP.Services
 	{
 		private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 		private ApplicationDataContainer roamedSettings = ApplicationData.Current.RoamingSettings;
+
+		public Task Init() => Task.Delay(1);
 
 		public T GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
 

@@ -1,6 +1,6 @@
-﻿using LRReader.Shared.Services;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
-using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Main;
 using Newtonsoft.Json;

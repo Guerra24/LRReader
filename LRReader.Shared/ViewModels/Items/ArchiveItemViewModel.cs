@@ -1,7 +1,7 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 
-namespace LRReader.UWP.ViewModels.Items
+namespace LRReader.Shared.ViewModels.Items
 {
 	public class ArchiveItemViewModel : ArchiveBaseViewModel
 	{

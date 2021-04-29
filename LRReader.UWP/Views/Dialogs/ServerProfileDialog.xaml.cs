@@ -1,5 +1,5 @@
-﻿using LRReader.Shared.Services;
-using LRReader.UWP.Extensions;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using System;
 using Windows.ApplicationModel.DataTransfer;

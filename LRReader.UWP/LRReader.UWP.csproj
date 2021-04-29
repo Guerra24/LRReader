@@ -143,7 +143,6 @@
     <Compile Include="Secrets.cs" />
     <Compile Include="Services\Dispatcher.cs" />
     <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
-    <Compile Include="ViewModels\LoadingPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WebTabViewModel.cs" />
