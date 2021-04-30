@@ -40,7 +40,11 @@ namespace LRReader.Shared.ViewModels
 		public ArchiveImageSet ReaderContent
 		{
 			get => _readerContent;
-			set => SetProperty(ref _readerContent, value);
+			set
+			{
+				_readerContent = value;
+				OnPropertyChanged("ReaderContent");
+			}
 		}
 		private int _readerIndex;
 		public int ReaderIndex

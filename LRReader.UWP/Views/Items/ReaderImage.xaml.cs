@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using LRReader.Internal;
 using System;
 using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -66,24 +67,24 @@ namespace LRReader.UWP.Views.Items
 
 		private void Animate()
 		{
-			/*var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
+			var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)
 			{
-				ImagesRoot.Opacity = 1;
+				ImagesRoot.SetVisualOpacity(1);
 				// UWP Image.Source is async, right now the layout hasn't updated yet
 				// which causes animation fade to go black.
 				// Wait around 100ms to update layout.
-				await Task.Delay(100);
-				if (_fixLayout)
+				//await Task.Delay(100);
+				/*if (_fixLayout)
 				{
 					_fixLayout = false;
-				}
+				}*/
 			}
-			else*/
+			else
 				FadeIn.Start(ImagesRoot);
-			//openLeft?.TryStart(LeftImage);
-			//openRight?.TryStart(RightImage);
+			openLeft?.TryStart(LeftImage);
+			openRight?.TryStart(RightImage);
 		}
 
 		public void UpdateDecodedResolution(int height)
