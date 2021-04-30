@@ -18,12 +18,12 @@ namespace LRReader.Avalonia.Views.Tabs.Content
 		public Archives()
 		{
 			InitializeComponent();
+			Data = DataContext as ArchivesPageViewModel;
 		}
 
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
-			Data = DataContext as ArchivesPageViewModel;
 		}
 
 		private async void Archives_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

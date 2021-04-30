@@ -10,6 +10,7 @@
 				x:Class="LRReader.Avalonia.Views.Tabs.ArchivesTab"
 				Header="Archives"
 				CustomTabId="Archives"
-				IsClosable="False">
+				IsClosable="False"
+				Height="34">
 	<content:Archives />
 </tabs:CustomTab>

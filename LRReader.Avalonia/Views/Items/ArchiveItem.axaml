@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d"
+			 d:DesignWidth="196"
+			 d:DesignHeight="318"
+			 x:Class="LRReader.Avalonia.Views.Items.ArchiveItem"
+			 Width="196"
+			 DataContextChanged="ArchiveItem_DataContextChanged">
+	<Grid Background="#1f1f1f">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<TextBlock
+			x:Name="Title"
+			Grid.Row="0"
+			Padding="5,0"
+			HorizontalAlignment="Center"
+			FontSize="16"
+			Text="{Binding Archive.title, Mode=OneWay}"
+			TextTrimming="CharacterEllipsis"
+			ToolTip.Tip="{Binding Archive.title, Mode=OneWay}" />
+		<Grid x:Name="Overlay"
+			  Grid.Row="1">
+			<Image x:Name="Thumbnail"
+				   Width="200"
+				   Height="275"
+				   HorizontalAlignment="Center"/>
+			<Grid IsVisible="{Binding MissingImage, Mode=OneWay}">
+				<TextBlock Text="No Image"/>
+			</Grid>
+			<Grid HorizontalAlignment="Left"
+				  VerticalAlignment="Bottom"
+				  Background="#1f1f1f"
+				  IsVisible="{Binding Bookmarked, Mode=OneWay}">
+				<TextBlock Padding="6,2"
+						   FontSize="16"
+						   Text="{Binding BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}"/>
+			</Grid>
+			<Grid HorizontalAlignment="Right"
+				  VerticalAlignment="Bottom"
+				  Background="#1f1f1f"
+				  IsVisible="{Binding IsNew}">
+				<TextBlock Text="New!"
+						   Padding="6,2"
+						   FontSize="16"/>
+			</Grid>
+		</Grid>
+		<Grid Grid.Row="2">
+			<TextBlock Padding="2,2"
+					   Text="{Binding Archive.TagsClean, Mode=OneWay}"
+					   TextTrimming="CharacterEllipsis"/>
+		</Grid>
+	</Grid>
+</UserControl>

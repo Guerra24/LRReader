@@ -18,6 +18,8 @@
 		<aura:AuraTabView
 			AdderButtonIsVisible="False"
 			Items="{Binding TabItems, Mode=OneTime}"
+			Background="Black"
+			SecondaryBackground="#171717"
 			SelectedItem="{Binding CurrentTab, Mode=TwoWay}">
 			<aura:AuraTabView.Footer>
 				<Grid>

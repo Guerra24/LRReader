@@ -21,13 +21,13 @@ namespace LRReader.Avalonia.Views.Main
 		public LoadingPage()
 		{
 			InitializeComponent();
+			ViewModel = DataContext as LoadingPageViewModel;
+			lang = ResourceLoader.GetForCurrentView("Pages");
 		}
 
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
-			ViewModel = DataContext as LoadingPageViewModel;
-			lang = ResourceLoader.GetForCurrentView("Pages");
 		}
 
 		private async void LoadingPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
