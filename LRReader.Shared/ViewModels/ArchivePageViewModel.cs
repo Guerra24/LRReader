@@ -1,7 +1,9 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -57,7 +59,19 @@ namespace LRReader.Shared.ViewModels
 				OnPropertyChanged("ReaderProgress");
 			}
 		}
-		public int ReaderProgress => ReaderIndex + 1;
+		public int ReaderProgress
+		{
+			get
+			{
+				var progress = ReaderIndex;
+				if (Service.Settings.TwoPages)
+					if (progress != 0)
+						progress *= 2;
+				progress = progress.Clamp(0, Pages - 1);
+				return progress + 1;
+			}
+		}
+
 		private int _zoomValue = 0;
 		public int ZoomValue
 		{
@@ -167,8 +181,6 @@ namespace LRReader.Shared.ViewModels
 				}
 				tmp.Add(i);
 			}
-			if (Settings.ReadRTL)
-				tmp.Reverse();
 			foreach (var i in tmp)
 			{
 				ArchiveImagesReader.Add(i);

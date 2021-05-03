@@ -11,6 +11,7 @@ using LRReader.Internal;
 using System;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
+using Windows.Foundation;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -39,11 +40,11 @@ namespace LRReader.UWP.Views.Items
 				return;
 			}
 			var n = args.NewValue as ArchiveImageSet;
-			if (_current.Equals(n.LeftImage + n.RightImage))
+			/*if (_current.Equals(n.LeftImage + n.RightImage))
 			{
 				Animate();
 				return;
-			}
+			}*/
 			_current = n.LeftImage + n.RightImage;
 			var animTask = FadeOut.StartAsync(ImagesRoot);
 			var lImage = Service.Images.GetImageCached(n.LeftImage);
@@ -58,10 +59,18 @@ namespace LRReader.UWP.Views.Items
 			RightImage.Source = await Global.ImageProcessing.ByteToBitmap(await rImage, imageR);
 			var lSize = await Global.ImageProcessing.GetImageSize(await lImage);
 			var rSize = await Global.ImageProcessing.GetImageSize(await rImage);
-			LeftImage.Width = lSize.Width;
-			LeftImage.Height = lSize.Height;
-			RightImage.Width = rSize.Width;
-			RightImage.Height = rSize.Height;
+			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));
+			LeftImage.Width = LeftImage.Height = RightImage.Width = RightImage.Width = 0;
+			if (LeftImage.Source != null)
+			{
+				LeftImage.Width = size.Width;
+				LeftImage.Height = size.Height;
+			}
+			if (RightImage.Source != null)
+			{
+				RightImage.Width = size.Width;
+				RightImage.Height = size.Height;
+			}
 			Animate();
 		}
 

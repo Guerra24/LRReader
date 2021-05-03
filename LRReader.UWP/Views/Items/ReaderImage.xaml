@@ -11,7 +11,7 @@
 	mc:Ignorable="d">
 
 	<StackPanel x:Name="ImagesRoot" Orientation="Horizontal">
-		<Image Name="LeftImage" />
-		<Image Name="RightImage" />
+		<Image Name="LeftImage" Stretch="Uniform" />
+		<Image Name="RightImage" Stretch="Uniform" />
 	</StackPanel>
 </UserControl>

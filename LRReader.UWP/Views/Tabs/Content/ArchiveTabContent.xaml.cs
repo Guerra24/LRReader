@@ -111,28 +111,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private async void OpenReader()
 		{
 			Data.ShowReader = true;
-			int count = Data.Pages;
 			if (Service.Settings.TwoPages)
 			{
 				if (i != 0)
 				{
 					--i; i /= 2; ++i;
 				}
-				if (Service.Settings.ReadRTL)
-				{
-					int preDiv = count;
-					--count; count /= 2; ++count;
-					Data.ReaderIndex = count - i - (preDiv % 2);
-				}
-				else
-					Data.ReaderIndex = i;
+				Data.ReaderIndex = i;
 			}
 			else
 			{
-				if (Service.Settings.ReadRTL)
-					Data.ReaderIndex = count - i - 1;
-				else
-					Data.ReaderIndex = i;
+				Data.ReaderIndex = i;
 			}
 
 			if (Data.Archive.IsNewArchive())
@@ -167,21 +156,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
 			if (Service.Settings.TwoPages)
-			{
 				if (conv != 0)
-				{
 					conv *= 2;
-				}
-				if (Service.Settings.ReadRTL)
-				{
-					conv = count - conv - (count % 2);
-				}
-			}
-			else
-			{
-				if (Service.Settings.ReadRTL)
-					conv = count - conv - 1;
-			}
 			conv = Math.Clamp(conv, 0, count - 1);
 
 			int leftTarget = conv;
@@ -306,31 +282,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 				case VirtualKey.Up:
 					e.Handled = true;
 					if (Math.Floor(offset) <= 0)
-					{
-						if (Service.Settings.ReadRTL)
-							NextPage();
-						else
-							PrevPage();
-					}
+						PrevPage();
 					else
-					{
 						ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
-					}
 					break;
 				case VirtualKey.Down:
 				case VirtualKey.Space:
 					e.Handled = true;
 					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
-					{
-						if (Service.Settings.ReadRTL)
-							PrevPage();
-						else
-							NextPage();
-					}
+						NextPage();
 					else
-					{
 						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
-					}
 					break;
 			}
 		}
@@ -363,18 +325,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
 						{
 							e.Handled = true;
-							if (Service.Settings.ReadRTL)
-								PrevPage();
-							else
-								NextPage();
+							NextPage();
 						}
 						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
 						{
 							e.Handled = true;
-							if (Service.Settings.ReadRTL)
-								NextPage();
-							else
-								PrevPage();
+							PrevPage();
 						}
 						break;
 					case VirtualKeyModifiers.Control:
@@ -438,6 +394,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void NextPage()
 		{
+			if (Service.Settings.ReadRTL)
+				GoLeft();
+			else
+				GoRight();
+		}
+
+		private void PrevPage()
+		{
+			if (Service.Settings.ReadRTL)
+				GoRight();
+			else
+				GoLeft();
+		}
+
+		private void GoRight()
+		{
 			if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
 			{
 				++Data.ReaderIndex;
@@ -445,7 +417,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		private void PrevPage()
+		private void GoLeft()
 		{
 			if (Data.ReaderIndex > 0)
 			{
