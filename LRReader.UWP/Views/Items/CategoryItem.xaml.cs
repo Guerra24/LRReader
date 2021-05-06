@@ -69,8 +69,16 @@ namespace LRReader.UWP.Views.Items
 					ViewModel.SearchImage = true;
 				}
 
-				Overlay.FadeIn();
-				Title.FadeIn();
+				if (Service.Platform.AnimationsEnabled)
+				{
+					Overlay.FadeIn();
+					Title.FadeIn();
+				}
+				else
+				{
+					Overlay.SetVisualOpacity(1);
+					Title.SetVisualOpacity(1);
+				}
 				_oldID = ViewModel.Category.id;
 			}
 		}

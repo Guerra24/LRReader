@@ -57,13 +57,22 @@ namespace LRReader.UWP.Views.Items
 						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
 							Thumbnail.Stretch = Stretch.Uniform;
 					Thumbnail.Source = image;
-					Thumbnail.FadeIn();
 				}
 				else
 					ViewModel.MissingImage = true;
 
-				Title.FadeIn();
-				Progress.FadeIn();
+				if (Service.Platform.AnimationsEnabled)
+				{
+					Title.FadeIn();
+					Progress.FadeIn();
+					Thumbnail.FadeIn();
+				}
+				else
+				{
+					Title.SetVisualOpacity(1);
+					Progress.SetVisualOpacity(1);
+					Thumbnail.SetVisualOpacity(1);
+				}
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}

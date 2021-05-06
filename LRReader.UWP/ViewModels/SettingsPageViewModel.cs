@@ -20,7 +20,7 @@ namespace LRReader.UWP.ViewModels
 		private readonly IPlatformService Platform;
 
 		public SettingsService SettingsManager;
-		public Version Version => Platform.GetVersion();
+		public Version Version => Platform.Version;
 		public Version MinVersion => UpdatesManager.MIN_VERSION;
 		public Version MaxVersion => UpdatesManager.MAX_VERSION;
 		private ShinobuStatus _shinobuStatus = new ShinobuStatus();
@@ -139,7 +139,7 @@ namespace LRReader.UWP.ViewModels
 
 		public async void UpdateReleaseData()
 		{
-			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.GetVersion());
+			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
 			if (info != null)
 			{
 				SetProperty(ref ReleaseInfo, info, nameof(ReleaseInfo));

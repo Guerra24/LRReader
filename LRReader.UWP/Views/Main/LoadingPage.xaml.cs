@@ -75,7 +75,7 @@ namespace LRReader.UWP.Views.Main
 
 			ViewModel.Active = true;
 #if !DEBUG
-			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Platform.GetVersion());
+			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Platform.Version);
 #endif
 			Api.RefreshSettings(Settings.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();

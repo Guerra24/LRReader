@@ -73,9 +73,18 @@ namespace LRReader.UWP.Views.Items
 					Thumbnail.Source = image;
 				}
 
-				Overlay.FadeIn();
-				Title.FadeIn();
-				TagsGrid.FadeIn();
+				if (Service.Platform.AnimationsEnabled)
+				{
+					Overlay.FadeIn();
+					Title.FadeIn();
+					TagsGrid.FadeIn();
+				}
+				else
+				{
+					Overlay.SetVisualOpacity(1);
+					Title.SetVisualOpacity(1);
+					TagsGrid.SetVisualOpacity(1);
+				}
 				_oldID = ViewModel.Archive.arcid;
 			}
 		}
@@ -134,12 +143,13 @@ namespace LRReader.UWP.Views.Items
 		private async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
 			_open = true;
-			await Task.Delay(TimeSpan.FromMilliseconds(300));
+			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
 			if (_open)
 			{
 				_open = false;
 				TagsPopup.IsOpen = true;
-				ShowPopup.Begin();
+				if (Service.Platform.AnimationsEnabled)
+					ShowPopup.Begin();
 			}
 		}
 
@@ -151,7 +161,12 @@ namespace LRReader.UWP.Views.Items
 				TagsPopup.IsOpen = false;
 			}
 			if (TagsPopup.IsOpen)
-				HidePopup.Begin();
+			{
+				if (Service.Platform.AnimationsEnabled)
+					HidePopup.Begin();
+				else
+					TagsPopup.IsOpen = false;
+			}
 		}
 
 		private void TagsGrid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)

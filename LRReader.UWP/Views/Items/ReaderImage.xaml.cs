@@ -1,17 +1,15 @@
-﻿using LRReader.UWP.Internal;
-using LRReader.Shared.Internal;
+﻿using LRReader.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using System;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using LRReader.Internal;
-using System;
-using LRReader.Shared.Services;
-using LRReader.UWP.Extensions;
-using Windows.Foundation;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -39,6 +37,7 @@ namespace LRReader.UWP.Views.Items
 				_current = "";
 				return;
 			}
+			var animate = Service.Platform.AnimationsEnabled;
 			var n = args.NewValue as ArchiveImageSet;
 			/*if (_current.Equals(n.LeftImage + n.RightImage))
 			{
@@ -46,15 +45,18 @@ namespace LRReader.UWP.Views.Items
 				return;
 			}*/
 			_current = n.LeftImage + n.RightImage;
-			var animTask = FadeOut.StartAsync(ImagesRoot);
+			Task animTask = null;
+			if (animate)
+				animTask = FadeOut.StartAsync(ImagesRoot);
 			var lImage = Service.Images.GetImageCached(n.LeftImage);
 			var rImage = Service.Images.GetImageCached(n.RightImage);
-			await animTask;
 			var imageL = new BitmapImage();
 			var imageR = new BitmapImage();
 			imageR.DecodePixelType = imageL.DecodePixelType = DecodePixelType.Logical;
 			if (_height != 0)
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
+			if (animTask != null)
+				await animTask;
 			LeftImage.Source = await Global.ImageProcessing.ByteToBitmap(await lImage, imageL);
 			RightImage.Source = await Global.ImageProcessing.ByteToBitmap(await rImage, imageR);
 			var lSize = await Global.ImageProcessing.GetImageSize(await lImage);
@@ -71,7 +73,8 @@ namespace LRReader.UWP.Views.Items
 				RightImage.Width = size.Width;
 				RightImage.Height = size.Height;
 			}
-			Animate();
+			if (animate)
+				Animate();
 		}
 
 		private void Animate()

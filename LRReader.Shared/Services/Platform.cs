@@ -13,7 +13,11 @@ namespace LRReader.Shared.Services
 	{
 		void Init();
 
-		Version GetVersion();
+		Version Version { get; }
+
+		bool AnimationsEnabled { get; }
+
+		uint HoverTime { get; }
 
 		Task<bool> OpenInBrowser(Uri uri);
 
@@ -28,10 +32,11 @@ namespace LRReader.Shared.Services
 		{
 		}
 
-		public Version GetVersion()
-		{
-			return new Version(0, 0, 0, 0);
-		}
+		public Version Version => new Version(0, 0, 0, 0);
+
+		public bool AnimationsEnabled => false;
+
+		public uint HoverTime => 300;
 
 		public Task<bool> OpenInBrowser(Uri uri)
 		{

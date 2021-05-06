@@ -128,30 +128,45 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				_wasNew = true;
 			}
-			await FadeOut.StartAsync(ImagesGrid);
-			await FadeIn.StartAsync(ScrollViewer);
+			if (Service.Platform.AnimationsEnabled)
+			{
+				await FadeOut.StartAsync(ImagesGrid);
+				await FadeIn.StartAsync(ScrollViewer);
+			}
+			else
+			{
+				ImagesGrid.SetVisualOpacity(0);
+				ScrollViewer.SetVisualOpacity(1);
+			}
 			_focus = true;
 			FocusReader();
 		}
 
 		public async void CloseReader()
 		{
+			var animate = Service.Platform.AnimationsEnabled;
 			var left = ReaderControl.FindDescendant("LeftImage");
 			var right = ReaderControl.FindDescendant("RightImage");
 			ConnectedAnimation animLeft = null, animRight = null;
-			if (Data.ReaderContent.LeftImage != null)
+			if (animate)
 			{
-				animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
-				animLeft.Configuration = new BasicConnectedAnimationConfiguration();
-			}
-			if (Data.ReaderContent.RightImage != null)
-			{
-				animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
-				animRight.Configuration = new BasicConnectedAnimationConfiguration();
+				if (Data.ReaderContent.LeftImage != null)
+				{
+					animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
+					animLeft.Configuration = new BasicConnectedAnimationConfiguration();
+				}
+				if (Data.ReaderContent.RightImage != null)
+				{
+					animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
+					animRight.Configuration = new BasicConnectedAnimationConfiguration();
+				}
 			}
 
 			_focus = false;
-			await FadeOut.StartAsync(ScrollViewer);
+			if (animate)
+				await FadeOut.StartAsync(ScrollViewer);
+			else
+				ScrollViewer.SetVisualOpacity(0);
 			Data.ShowReader = false;
 			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
@@ -176,12 +191,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 				rightTarget = tmp;
 			}
 
-			if (Data.ReaderContent.LeftImage != null)
+			if (Data.ReaderContent.LeftImage != null && animLeft != null)
 				await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
-			if (Data.ReaderContent.RightImage != null)
+			if (Data.ReaderContent.RightImage != null & animRight != null)
 				await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
 
-			await FadeIn.StartAsync(ImagesGrid);
+			if (animate)
+				await FadeIn.StartAsync(ImagesGrid);
+			else
+				ImagesGrid.SetVisualOpacity(1);
 
 			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
@@ -234,8 +252,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!Data.ControlsEnabled)
 				return;
 			i = Data.ArchiveImages.IndexOf(e.ClickedItem as ImagePageSet);
-			var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
-			anim.Configuration = new BasicConnectedAnimationConfiguration();
+			if (Service.Platform.AnimationsEnabled)
+			{
+				var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
+				anim.Configuration = new BasicConnectedAnimationConfiguration();
+			}
 			OpenReader();
 		}
 
@@ -244,8 +265,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!Data.ControlsEnabled)
 				return;
 			i = Data.BookmarkProgress;
-			var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), Data.ArchiveImages.ElementAt(i), "Image");
-			anim.Configuration = new BasicConnectedAnimationConfiguration();
+			if (Service.Platform.AnimationsEnabled)
+			{
+				var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), Data.ArchiveImages.ElementAt(i), "Image");
+				anim.Configuration = new BasicConnectedAnimationConfiguration();
+			}
 			OpenReader();
 		}
 
@@ -445,7 +469,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
-			ScrollViewer.ChangeView(null, null, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim);
+			ScrollViewer.ChangeView(null, null, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim || !Service.Platform.AnimationsEnabled);
 		}
 
 		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e) => resizePixel.OnNext(ScrollViewer.ExtentHeight);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.System;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
@@ -17,6 +18,8 @@ namespace LRReader.UWP.Services
 		private readonly Uri checkUri = new Uri("check:check");
 
 		private readonly Dictionary<Symbols, SymbolIconSource> SymbolToSymbol = new Dictionary<Symbols, SymbolIconSource>();
+
+		private UISettings UISettings;
 
 		public UWPlatformService(TabsService tabs)
 		{
@@ -37,13 +40,22 @@ namespace LRReader.UWP.Services
 
 			SymbolToSymbol.Add(Symbols.Favorite, new SymbolIconSource { Symbol = Symbol.Favorite });
 			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });
+
+			UISettings = new UISettings();
 		}
 
-		public Version GetVersion()
+		public Version Version
 		{
-			var version = Package.Current.Id.Version;
-			return new Version(version.Major, version.Minor, version.Build, version.Revision);
+			get
+			{
+				var version = Package.Current.Id.Version;
+				return new Version(version.Major, version.Minor, version.Build, version.Revision);
+			}
 		}
+
+		public bool AnimationsEnabled => UISettings.AnimationsEnabled;
+
+		public uint HoverTime => UISettings.MouseHoverTime;
 
 		public Task<bool> OpenInBrowser(Uri uri)
 		{

@@ -66,7 +66,7 @@ namespace LRReader.UWP.Views.Main
 					if (Settings.OpenCategoriesTab)
 						Data.AddTab(new CategoriesTab(), false);
 			});
-			var info = await Global.UpdatesManager.CheckUpdates(Platform.GetVersion());
+			var info = await Global.UpdatesManager.CheckUpdates(Platform.Version);
 			if (info != null)
 				ShowNotification(lang.GetString("HostTab/Update1") + " " + info.name, lang.GetString("HostTab/Update2"), 0);
 #if !SIDELOAD
@@ -144,12 +144,12 @@ namespace LRReader.UWP.Views.Main
 		private async Task ShowWhatsNew()
 		{
 			var version = Version.Parse(SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
-			if (version >= Platform.GetVersion())
+			if (version >= Platform.Version)
 				return;
-			var result = await Global.UpdatesManager.GetChangelog(Platform.GetVersion());
+			var result = await Global.UpdatesManager.GetChangelog(Platform.Version);
 			if (result == null)
 				return;
-			SettingsStorage.StoreObjectLocal("_version", Platform.GetVersion().ToString());
+			SettingsStorage.StoreObjectLocal("_version", Platform.Version.ToString());
 			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), result);
 			await dialog.ShowAsync();
 		}
