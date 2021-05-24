@@ -16,8 +16,6 @@
 	<UserControl.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVis" />
-		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
-		<Style BasedOn="{StaticResource ToggleButtonRevealStyle}" TargetType="ToggleButton" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -56,6 +54,9 @@
 				Drop="CategoryArchives_Drop"
 				ItemsSource="{x:Bind ViewModel.CategoryArchives}"
 				SelectionMode="Extended">
+				<GridView.Resources>
+					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+				</GridView.Resources>
 				<GridView.ItemTemplate>
 					<DataTemplate>
 						<items:CategoryEditArchive />

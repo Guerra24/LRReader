@@ -180,9 +180,9 @@
 	</ControlTemplate>
 
 	<Style x:Key="CustomNotificationStyle" TargetType="local:InAppNotification">
-		<Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" />
+		<Setter Property="Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
 		<Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-		<Setter Property="BorderBrush" Value="{ThemeResource BrushBorderTooltip}" />
+		<Setter Property="BorderBrush" Value="{ThemeResource SurfaceStrokeColorFlyoutBrush}" />
 		<Setter Property="Visibility" Value="Collapsed" />
 		<Setter Property="BorderThickness" Value="1" />
 		<Setter Property="HorizontalAlignment" Value="Stretch" />

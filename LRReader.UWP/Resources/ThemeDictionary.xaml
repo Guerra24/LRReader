@@ -16,8 +16,8 @@
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#DADADA</Color>
-			<Color x:Key="BrushItemGridBackgroundColor">#E5E5E5</Color>
-			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
+			<Color x:Key="BrushItemGridBackgroundColor">#B3FFFFFF</Color>
+			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#B2B2B2" />
 			<SolidColorBrush x:Key="BrushNamespaceBackground" Color="#D2D2D2" />
 			<AcrylicBrush
@@ -25,10 +25,12 @@
 				FallbackColor="{ThemeResource ColorNavTop}"
 				TintColor="{ThemeResource SystemChromeMediumColor}"
 				TintOpacity=".5" />
-			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
-			<SolidColorBrush x:Key="BrushBorderTooltip" Color="#D1D1D1" />
+			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#505050</Color>
-			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}"/>
+			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}" />
+			<StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
+			<SolidColorBrush x:Key="ReaderBackground" Color="White" />
+			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393"/>
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -44,8 +46,8 @@
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
 			<Color x:Key="ColorNavTop">#171717</Color>
-			<Color x:Key="BrushItemGridBackgroundColor">#1f1f1f</Color>
-			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
+			<Color x:Key="BrushItemGridBackgroundColor">#0FFFFFFF</Color>
+			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#4F4F4F" />
 			<SolidColorBrush x:Key="BrushNamespaceBackground" Color="#333333" />
 			<AcrylicBrush
@@ -53,10 +55,12 @@
 				FallbackColor="{ThemeResource ColorNavTop}"
 				TintColor="{ThemeResource SystemChromeMediumColor}"
 				TintOpacity=".5" />
-			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource BrushItemGridBackgroundColor}" />
-			<SolidColorBrush x:Key="BrushBorderTooltip" Color="#1C1C1C" />
+			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#C0C0C0</Color>
-			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}"/>
+			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}" />
+			<StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
+			<SolidColorBrush x:Key="ReaderBackground" Color="Black" />
+			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#7C7C7C"/>
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

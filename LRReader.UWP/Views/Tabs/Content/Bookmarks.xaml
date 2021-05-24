@@ -31,6 +31,9 @@
 				ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				<GridView.Resources>
+					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+				</GridView.Resources>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>

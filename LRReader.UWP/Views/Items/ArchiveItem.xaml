@@ -71,10 +71,10 @@
 		<Grid x:Name="Overlay" Grid.Row="1">
 			<Popup x:Name="TagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
 				<Grid
-					Padding="2" Windows10version1903:Translation="0,0,32"
-					Background="{ThemeResource GridOverGridBackground}"
-					BorderBrush="{ThemeResource BrushBorderTooltip}"
-					BorderThickness="1" CornerRadius="3" IsHitTestVisible="False">
+					Padding="4" Windows10version1903:Translation="0,0,32"
+					Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+					BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+					BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" IsHitTestVisible="False">
 					<Windows10version1903:Grid.Shadow>
 						<Windows10version1903:ThemeShadow />
 					</Windows10version1903:Grid.Shadow>

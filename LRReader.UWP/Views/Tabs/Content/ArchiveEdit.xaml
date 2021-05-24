@@ -21,9 +21,6 @@
 				<ColumnDefinition Width="3*" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<Grid.Resources>
-				<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
-			</Grid.Resources>
 			<StackPanel Grid.Column="1" Margin="0,20,0,20">
 				<TextBox
 					x:Uid="/Tabs/ArchiveEdit/ID" Margin="0,0,0,10" IsReadOnly="True"

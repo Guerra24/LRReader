@@ -14,16 +14,21 @@
 
 	<UserControl.Resources>
 		<Style x:Key="TagStyle" TargetType="Grid">
-			<Setter Property="CornerRadius" Value="2" />
+			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
 			<Setter Property="Padding" Value="4,2" />
-			<Setter Property="Background" Value="{ThemeResource BrushTagBackground}" />
+			<Setter Property="Background" Value="{ThemeResource ControlStrongStrokeColorDisabled}" />
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
 		</Style>
 		<Style x:Key="NamespaceStyle" TargetType="Grid">
-			<Setter Property="CornerRadius" Value="2" />
+			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
 			<Setter Property="Padding" Value="4,2" />
-			<Setter Property="Background" Value="{ThemeResource BrushNamespaceBackground}" />
+			<Setter Property="Background" Value="{ThemeResource ControlFillColorDefault}" />
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
 			<Setter Property="Margin" Value="0,0,4,0" />
 		</Style>
+		<SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
 	</UserControl.Resources>
 
 	<muxc:ItemsRepeater ItemsSource="{x:Bind ItemsSource, Mode=OneWay}">

@@ -32,7 +32,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 	public sealed partial class ArchiveTabContent : UserControl
 	{
 		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseIn);
-		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseOut);
+		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseIn);
 
 		public ArchivePageViewModel Data;
 
@@ -125,19 +125,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 
 			if (Data.Archive.IsNewArchive())
-			{
 				_wasNew = true;
-			}
 			if (Service.Platform.AnimationsEnabled)
-			{
-				await FadeOut.StartAsync(ImagesGrid);
 				await FadeIn.StartAsync(ScrollViewer);
-			}
 			else
-			{
-				ImagesGrid.SetVisualOpacity(0);
 				ScrollViewer.SetVisualOpacity(1);
-			}
 			_focus = true;
 			FocusReader();
 		}
@@ -163,11 +155,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 
 			_focus = false;
-			if (animate)
-				await FadeOut.StartAsync(ScrollViewer);
-			else
-				ScrollViewer.SetVisualOpacity(0);
-			Data.ShowReader = false;
 			int conv = Data.ReaderIndex;
 			int count = Data.Pages;
 			if (Service.Settings.TwoPages)
@@ -190,16 +177,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 				leftTarget = rightTarget;
 				rightTarget = tmp;
 			}
-
-			if (Data.ReaderContent.LeftImage != null && animLeft != null)
-				await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
-			if (Data.ReaderContent.RightImage != null & animRight != null)
-				await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
-
 			if (animate)
-				await FadeIn.StartAsync(ImagesGrid);
+			{
+				if (Data.ReaderContent.LeftImage != null && animLeft != null)
+					await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
+				if (Data.ReaderContent.RightImage != null & animRight != null)
+					await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
+				await FadeOut.StartAsync(ScrollViewer);
+			}
 			else
-				ImagesGrid.SetVisualOpacity(1);
+			{
+				ScrollViewer.SetVisualOpacity(0);
+			}
+			Data.ShowReader = false;
 
 			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{

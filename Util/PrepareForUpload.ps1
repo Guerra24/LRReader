@@ -17,4 +17,4 @@ Set-Location "./LRReader.UWP"
 Remove-Item -Path "./Install.ps1","./Add-AppDevPackage.ps1"
 Remove-Item -Path "./Add-AppDevPackage.resources" –recurse
 Set-Location "./Dependencies/"
-Remove-Item -Path "./arm","./Win32" –recurse
+Remove-Item -Path "./arm","./Win32" –recurse -ErrorAction SilentlyContinue

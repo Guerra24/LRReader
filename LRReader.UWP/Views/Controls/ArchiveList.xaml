@@ -8,15 +8,13 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-	Loaded="UserControl_Loaded"
 	DataContext="{Binding SearchResultsInstance, Source={StaticResource Locator}}"
+	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVis" />
-		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
-		<Style BasedOn="{StaticResource ToggleButtonRevealStyle}" TargetType="ToggleButton" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -34,6 +32,9 @@
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed"
 				SelectionMode="{x:Bind SelectionMode, Mode=OneWay}">
+				<GridView.Resources>
+					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+				</GridView.Resources>
 				<GridView.Header>
 					<Grid Margin="0,10,0,10">
 						<Grid.RowDefinitions>
@@ -72,8 +73,7 @@
 							Orientation="Horizontal">
 							<Button
 								x:Uid="/Tabs/Archives/Order" Margin="0,0,10,0" Padding="8"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ButtonRevealStyle}">
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
 								<Button.Flyout>
 									<MenuFlyout>
 										<muxc:RadioMenuFlyoutItem
@@ -95,8 +95,7 @@
 							<Button
 								x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
 								Click="ClearButton_Click"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ButtonRevealStyle}">
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
 								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE894;" />
 							</Button>
 						</StackPanel>

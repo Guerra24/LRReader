@@ -14,7 +14,6 @@
 	<Page.Resources>
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-		<Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button" />
 	</Page.Resources>
 
 	<Grid>
@@ -22,7 +21,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource TitlebarBackground}" />
+		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}" />
 		<Grid Grid.Row="1">
 			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 				<TextBlock

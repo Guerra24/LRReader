@@ -38,6 +38,9 @@
 				ItemClick="ImagesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveImages}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				<GridView.Resources>
+					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+				</GridView.Resources>
 				<GridView.Header>
 					<StackPanel Padding="50,5,50,5">
 						<TextBlock
@@ -47,15 +50,10 @@
 							TextWrapping="WrapWholeWords" />
 						<controls1:ArchiveTags Margin="0,0,0,8" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
 						<StackPanel Orientation="Horizontal">
-							<ToggleButton
-								x:Uid="/Tabs/Archive/Bookmark"
-								IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ToggleButtonRevealStyle}" />
+							<ToggleButton x:Uid="/Tabs/Archive/Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<Button
 								Margin="2,0,0,0" Click="Continue_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}">
 								<TextBlock>
 									<Run x:Uid="/Tabs/Archive/Continue"/> (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)
@@ -64,21 +62,17 @@
 							<Button
 								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0" Click="EditButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind Data.CanEdit}" />
 							<Button
 								Margin="2,0,0,0" Click="CategoriesButton_Click" Content="Categories"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind flags.CategoriesEnabledEdit}" />
 							<Button
 								x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DownloadButton_Click"
-								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}"
-								Style="{ThemeResource ButtonRevealStyle}" />
+								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
 							<Button
 								x:Uid="/Tabs/Archive/Delete" Margin="2,0,0,0" Click="DeleteButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Style="{ThemeResource ButtonRevealStyle}"
 								Visibility="{x:Bind flags.V078Edit}" />
 						</StackPanel>
 					</StackPanel>
@@ -120,7 +114,7 @@
 		<muxc:ProgressRing
 			Grid.Row="1" Width="80" Height="80"
 			IsActive="{x:Bind Data.LoadingImages, Mode=OneWay}" />
-		<ScrollViewer
+		<ScrollViewer Background="{ThemeResource ReaderBackground}"
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ScrollViewer_PointerPressed"
 			RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped"

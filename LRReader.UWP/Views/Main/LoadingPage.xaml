@@ -6,7 +6,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Background="{ThemeResource AppBarBackgroundThemeBrush}"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding LoadingPageInstance, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
@@ -15,7 +15,7 @@
 	<Grid>
 		<Grid
 			x:Name="TitleBar" Height="32" VerticalAlignment="Top"
-			Background="{ThemeResource TitlebarBackground}" />
+			Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}" />
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition />
