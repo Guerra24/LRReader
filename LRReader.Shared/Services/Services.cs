@@ -52,6 +52,8 @@ namespace LRReader.Shared.Services
 		public static ApiService Api => Services.GetRequiredService<ApiService>();
 		public static TabsService Tabs => Services.GetRequiredService<TabsService>();
 
+		public static IImageProcessingService<T> ImageProcessing<T>() => Services.GetRequiredService<IImageProcessingService<T>>();
+
 	}
 
 	public interface IService

@@ -3,10 +3,8 @@ using KeyedSemaphores;
 using LRReader.Shared.Providers;
 using Microsoft.AppCenter.Crashes;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services

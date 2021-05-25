@@ -1,20 +1,21 @@
-﻿using System;
+﻿using LRReader.Shared.Services;
+using System;
+using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LRReader.UWP.Internal
+namespace LRReader.UWP.Services
 {
-	public class ImageProcessing
+	public class ImageProcessingService : IImageProcessingService<BitmapImage>
 	{
 
 		private SemaphoreSlim semaphore;
 
-		public ImageProcessing()
+		public ImageProcessingService()
 		{
 			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
 		}
@@ -77,7 +78,6 @@ namespace LRReader.UWP.Internal
 			return image;
 		}
 
-
 		public async Task<Size> GetImageSize(byte[] bytes)
 		{
 			if (bytes == null)
@@ -91,7 +91,7 @@ namespace LRReader.UWP.Internal
 				try
 				{
 					var decoder = await BitmapDecoder.CreateAsync(stream);
-					return new Size(decoder.PixelWidth, decoder.PixelHeight);
+					return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
 				}
 				catch (Exception)
 				{

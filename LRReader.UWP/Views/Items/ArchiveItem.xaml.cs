@@ -1,5 +1,4 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Extensions;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
@@ -61,7 +60,7 @@ namespace LRReader.UWP.Views.Items
 				var image = new BitmapImage();
 				image.DecodePixelType = DecodePixelType.Logical;
 				image.DecodePixelHeight = 275;
-				image = await Global.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image);
+				image = await Service.ImageProcessing<BitmapImage>().ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image);
 
 				if (image == null)
 					ViewModel.MissingImage = true;

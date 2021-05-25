@@ -1,6 +1,6 @@
 ﻿using LRReader.Internal;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Services;
-using LRReader.UWP.Internal;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Tabs;
@@ -66,7 +66,7 @@ namespace LRReader.UWP.Views.Main
 					if (Settings.OpenCategoriesTab)
 						Data.AddTab(new CategoriesTab(), false);
 			});
-			var info = await Global.UpdatesManager.CheckUpdates(Platform.Version);
+			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
 			if (info != null)
 				ShowNotification(lang.GetString("HostTab/Update1") + " " + info.name, lang.GetString("HostTab/Update2"), 0);
 #if !SIDELOAD
@@ -146,7 +146,7 @@ namespace LRReader.UWP.Views.Main
 			var version = Version.Parse(SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
 			if (version >= Platform.Version)
 				return;
-			var result = await Global.UpdatesManager.GetChangelog(Platform.Version);
+			var result = await SharedGlobal.UpdatesManager.GetChangelog(Platform.Version);
 			if (result == null)
 				return;
 			SettingsStorage.StoreObjectLocal("_version", Platform.Version.ToString());

@@ -6,6 +6,7 @@ using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP
 {
@@ -19,6 +20,8 @@ namespace LRReader.UWP
 				collection.Replace(ServiceDescriptor.Singleton<IFilesService, FilesService>());
 				collection.Replace(ServiceDescriptor.Singleton<IDispatcherService, DispatcherService>());
 				collection.Replace(ServiceDescriptor.Singleton<IPlatformService, UWPlatformService>());
+
+				collection.AddSingleton<IImageProcessingService<BitmapImage>, ImageProcessingService>();
 
 				collection.AddSingleton<ArchivesPageViewModel>();
 				collection.AddSingleton<SettingsPageViewModel>();

@@ -2,6 +2,7 @@
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,9 +29,6 @@ namespace LRReader.Shared.ViewModels
 			{
 				SetProperty(ref _loadingArchives, value);
 				OnPropertyChanged("ControlsEnabled");
-				OnPropertyChanged("HasNextPage");
-				OnPropertyChanged("HasPrevPage");
-				OnPropertyChanged("TotalPages");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -41,8 +39,6 @@ namespace LRReader.Shared.ViewModels
 			{
 				SetProperty(ref _refreshOnErrorButton, value);
 				OnPropertyChanged("ControlsEnabled");
-				OnPropertyChanged("HasNextPage");
-				OnPropertyChanged("HasPrevPage");
 			}
 		}
 		public ObservableCollection<Archive> ArchiveList { get; } = new ObservableCollection<Archive>();
@@ -50,26 +46,23 @@ namespace LRReader.Shared.ViewModels
 		public int Page
 		{
 			get => _page;
-			set
-			{
-				if (SetProperty(ref _page, value))
-				{
-					OnPropertyChanged("DisplayPage");
-					OnPropertyChanged("HasNextPage");
-					OnPropertyChanged("HasPrevPage");
-				}
-			}
+			set => SetProperty(ref _page, value);
 		}
-		public int DisplayPage => Page + 1;
 		private int _totalArchives;
 		public int TotalArchives
 		{
 			get => _totalArchives;
-			set => SetProperty(ref _totalArchives, value);
+			set
+			{
+				SetProperty(ref _totalArchives, value);
+				OnPropertyChanged("TotalPages");
+			}
 		}
-		public int TotalPages => TotalArchives / Api.ServerInfo.archives_per_page;
+
+		public int TotalPages => (int)Math.Max(Math.Ceiling(TotalArchives / (double)Api.ServerInfo.archives_per_page), 1);
 		public bool HasNextPage => Page < TotalPages && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
+
 		private bool _newOnly;
 		public bool NewOnly
 		{
@@ -88,12 +81,7 @@ namespace LRReader.Shared.ViewModels
 		public bool ControlsEnabled
 		{
 			get => _controlsEnabled && !RefreshOnErrorButton;
-			set
-			{
-				SetProperty(ref _controlsEnabled, value);
-				OnPropertyChanged("HasNextPage");
-				OnPropertyChanged("HasPrevPage");
-			}
+			set => SetProperty(ref _controlsEnabled, value);
 		}
 		protected bool _internalLoadingArchives;
 		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
@@ -157,6 +145,7 @@ namespace LRReader.Shared.ViewModels
 				Api.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, OrderBy);
 			if (resultPage != null)
 			{
+				TotalArchives = resultPage.recordsFiltered;
 				await Task.Run(async () =>
 				{
 					foreach (var a in resultPage.data)
@@ -168,7 +157,6 @@ namespace LRReader.Shared.ViewModels
 							await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
 					}
 				});
-				TotalArchives = resultPage.recordsFiltered;
 			}
 			else
 				RefreshOnErrorButton = true;
