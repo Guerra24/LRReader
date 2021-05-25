@@ -30,6 +30,7 @@ namespace LRReader.Shared.ViewModels
 				OnPropertyChanged("ControlsEnabled");
 				OnPropertyChanged("HasNextPage");
 				OnPropertyChanged("HasPrevPage");
+				OnPropertyChanged("TotalPages");
 			}
 		}
 		private bool _refreshOnErrorButton = false;
@@ -64,12 +65,10 @@ namespace LRReader.Shared.ViewModels
 		public int TotalArchives
 		{
 			get => _totalArchives;
-			set
-			{
-				SetProperty(ref _totalArchives, value);
-			}
+			set => SetProperty(ref _totalArchives, value);
 		}
-		public bool HasNextPage => Page < TotalArchives / Api.ServerInfo.archives_per_page && ControlsEnabled;
+		public int TotalPages => TotalArchives / Api.ServerInfo.archives_per_page;
+		public bool HasNextPage => Page < TotalPages && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
 		private bool _newOnly;
 		public bool NewOnly

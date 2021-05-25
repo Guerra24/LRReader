@@ -91,7 +91,7 @@
 								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE894;" />
 							</Button>
 						</StackPanel>
-						<StackPanel
+						<!--<StackPanel
 							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">
 							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
@@ -103,11 +103,18 @@
 							<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
 								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72A;" />
 							</Button>
-						</StackPanel>
+						</StackPanel>-->
+						<muxc:PagerControl
+							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
+							DisplayMode="ComboBox"
+							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+							NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+							SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+							SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
 					</Grid>
 				</GridView.Header>
 				<GridView.Footer>
-					<StackPanel Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
+					<!--<StackPanel Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
 						<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
 							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
 						</Button>
@@ -117,7 +124,13 @@
 						<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
 							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72A;" />
 						</Button>
-					</StackPanel>
+					</StackPanel>-->
+					<muxc:PagerControl
+						Margin="0,10,0,0" HorizontalAlignment="Center" DisplayMode="ComboBox"
+						IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+						NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+						SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+						SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
 				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
