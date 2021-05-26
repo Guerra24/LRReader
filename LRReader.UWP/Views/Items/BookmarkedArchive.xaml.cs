@@ -48,7 +48,7 @@ namespace LRReader.UWP.Views.Items
 				var image = new BitmapImage();
 				image.DecodePixelType = DecodePixelType.Logical;
 				image.DecodePixelWidth = 200;
-				image = await Service.ImageProcessing<BitmapImage>().ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image);
+				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image) as BitmapImage;
 
 				if (image != null)
 				{

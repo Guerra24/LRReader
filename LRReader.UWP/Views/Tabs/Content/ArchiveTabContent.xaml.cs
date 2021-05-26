@@ -155,27 +155,21 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 
 			_focus = false;
-			int conv = Data.ReaderIndex;
+			int currentPage = Data.ReaderContent.Page;
 			int count = Data.Pages;
-			if (Service.Settings.TwoPages)
-				if (conv != 0)
-					conv *= 2;
-			conv = Math.Clamp(conv, 0, count - 1);
 
-			int leftTarget = conv;
+			int leftTarget = currentPage;
+			int rightTarget = currentPage;
+
 			if (Service.Settings.TwoPages)
 			{
-				leftTarget = Math.Max(conv - 1, 0);
-				if (conv == Data.Pages - 1 && Data.Pages % 2 == 0)
-					leftTarget++;
-			}
-			int rightTarget = conv;
-
-			if (Service.Settings.ReadRTL)
-			{
-				int tmp = leftTarget;
-				leftTarget = rightTarget;
-				rightTarget = tmp;
+				leftTarget--;
+				if (Service.Settings.ReadRTL)
+				{
+					int tmp = leftTarget;
+					leftTarget = rightTarget;
+					rightTarget = tmp;
+				}
 			}
 			if (animate)
 			{
@@ -191,7 +185,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			Data.ShowReader = false;
 
-			if (conv >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
+			if (currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
 				if (Data.Archive.IsNewArchive())
 				{
@@ -231,9 +225,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			if (Data.Bookmarked)
 			{
-				Data.BookmarkProgress = conv;
+				Data.BookmarkProgress = currentPage;
 				if (Service.Api.ControlFlags.V077)
-					await Data.SetProgress(conv + 1);
+					await Data.SetProgress(currentPage + 1);
 			}
 		}
 
@@ -541,16 +535,18 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var target = "openL";
 			if (Service.Settings.TwoPages)
 			{
+				var openL = "openL";
+				var openR = "openR";
 				if (Service.Settings.ReadRTL)
 				{
-					target = i % 2 == 0 ? "openL" : "openR";
-					if (i == Data.Pages - 1)
-						target = "openL";
-					else if (i == 0)
-						target = "openR";
+					openL = "openR";
+					openR = "openL";
 				}
-				else
-					target = i % 2 == 0 ? "openR" : "openL";
+				target = i % 2 == 0 ? openR : openL;
+				if (i == Data.Pages - 1)
+					target = openR;
+				else if (i == 0)
+					target = openR;
 			}
 			return target;
 		}

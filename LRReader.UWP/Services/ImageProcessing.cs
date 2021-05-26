@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Services
 {
-	public class ImageProcessingService : IImageProcessingService<BitmapImage>
+	public class ImageProcessingService : IImageProcessingService
 	{
 
 		private SemaphoreSlim semaphore;
@@ -20,7 +20,7 @@ namespace LRReader.UWP.Services
 			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
 		}
 
-		public async Task<BitmapImage> ByteToBitmap(byte[] bytes, BitmapImage image = null, bool transcode = false)
+		public async Task<object> ByteToBitmap(byte[] bytes, object image = null, bool transcode = false)
 		{
 			if (bytes == null)
 				return null;
@@ -48,7 +48,7 @@ namespace LRReader.UWP.Services
 								await encoder.FlushAsync();
 								if (image == null)
 									image = new BitmapImage();
-								image.SetSource(converted);
+								(image as BitmapImage).SetSource(converted);
 							}
 						}
 					}
@@ -67,7 +67,7 @@ namespace LRReader.UWP.Services
 						image = new BitmapImage();
 					try
 					{
-						await image.SetSourceAsync(stream);
+						await (image as BitmapImage).SetSourceAsync(stream);
 					}
 					catch (Exception)
 					{

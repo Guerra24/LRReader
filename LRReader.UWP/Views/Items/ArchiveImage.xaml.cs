@@ -49,7 +49,7 @@ namespace LRReader.UWP.Views.Items
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
 			image.DecodePixelHeight = 275;
-			image = await Service.ImageProcessing<BitmapImage>().ByteToBitmap(await Service.Images.GetImageCached(n.Image), image, n.Image.EndsWith("avif"));
+			image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image), image, n.Image.EndsWith("avif")) as BitmapImage;
 			Ring.IsActive = false;
 			Image.Source = image;
 

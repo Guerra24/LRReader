@@ -56,9 +56,9 @@ namespace LRReader.UWP.Views.Items
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
 			if (animTask != null)
 				await animTask;
-			var imageProcessing = Service.ImageProcessing<BitmapImage>();
-			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, imageL);
-			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, imageR);
+			var imageProcessing = Service.ImageProcessing;
+			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, imageL) as BitmapImage;
+			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, imageR) as BitmapImage;
 			var lSize = await imageProcessing.GetImageSize(await lImage);
 			var rSize = await imageProcessing.GetImageSize(await rImage);
 			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));
