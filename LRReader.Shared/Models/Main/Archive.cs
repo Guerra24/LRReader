@@ -141,7 +141,7 @@ namespace LRReader.Shared.Models.Main
 		public List<string> pages { get; set; }
 	}
 
-	public class ArchiveImageSet
+	public class ReaderImageSet
 	{
 		public string LeftImage { get; set; }
 		public string RightImage { get; set; }

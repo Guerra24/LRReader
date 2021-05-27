@@ -14,6 +14,8 @@ namespace LRReader.UWP.Services
 
 		public Task RunAsync(Action action) => Dispatcher.EnqueueAsync(action);
 
+		public bool Run(Action action) => Dispatcher.TryEnqueue(() => action.Invoke());
+
 	}
 
 }

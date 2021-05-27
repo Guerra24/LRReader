@@ -58,9 +58,13 @@
 				</TextBlock>
 			</Grid>
 			<ToggleSwitch x:Uid="/Settings/Reader/TwoPages" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
+			<ToggleSwitch
+				x:Uid="/Settings/Reader/SetBuilder" Margin="16,-5,0,10"
+				IsOn="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}"
+				Visibility="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}" />
 			<ToggleSwitch x:Uid="/Settings/Reader/Reminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
 			<muxc:RadioButtons
-				x:Name="ReminderModeRadio" Margin="16,-5,0,10"
+				x:Name="ReminderModeRadio" Margin="16,-15,0,15"
 				SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}"
 				Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}" />
 			<ToggleSwitch x:Uid="/Settings/Reader/RemoveBookmarkReminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />

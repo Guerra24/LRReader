@@ -38,7 +38,10 @@
 					</StackPanel>
 				</Button>
 				<Button Click="WebButton_Click" Style="{ThemeResource AccentButtonStyle}" Tag="https://ko-fi.com/guerra24">
-					<Image Height="19" Margin="0,0,8,0" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+					<StackPanel Orientation="Horizontal">
+						<Image Height="19" Margin="0,0,4,0" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+						<TextBlock Text="Ko-Fi" />
+					</StackPanel>
 				</Button>
 			</StackPanel>
 			<StackPanel x:Name="UpdateInfo" Orientation="Vertical" Visibility="Collapsed">

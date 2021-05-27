@@ -8,6 +8,8 @@ namespace LRReader.Shared.Services
 		void Init();
 
 		Task RunAsync(Action action);
+
+		bool Run(Action action);
 	}
 
 	public class StubDispatcherService : IDispatcherService
@@ -20,6 +22,12 @@ namespace LRReader.Shared.Services
 		{
 			action.Invoke();
 			return null;
+		}
+
+		public bool Run(Action action)
+		{
+			action.Invoke();
+			return true;
 		}
 	}
 }

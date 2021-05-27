@@ -79,6 +79,7 @@ namespace LRReader.Shared.Services
 			set
 			{
 				SettingsStorage.StoreObjectLocal("TwoPages", value);
+				OnPropertyChanged("TwoPages");
 				Service.Events.RebuildReaderImagesSet();
 			}
 		}
@@ -163,6 +164,11 @@ namespace LRReader.Shared.Services
 		{
 			get => (Order)SettingsStorage.GetObjectRoamed("OrderByDefault", (int)Order.Ascending);
 			set => SettingsStorage.StoreObjectRoamed("OrderByDefault", (int)value);
+		}
+		public bool ReaderImageSetBuilder
+		{
+			get => SettingsStorage.GetObjectLocal("ReaderImageSetBuilder", true);
+			set => SettingsStorage.StoreObjectLocal("ReaderImageSetBuilder", value);
 		}
 
 		public static readonly int CurrentLocalVersion = 4;

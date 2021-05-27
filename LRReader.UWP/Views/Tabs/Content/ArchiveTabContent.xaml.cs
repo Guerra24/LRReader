@@ -516,7 +516,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.SearchResults, (e.ClickedItem as ArchiveTagsGroupTag).FullTag);
 
-		private string GetOpenTarget(ArchiveImageSet target, int item)
+		private string GetOpenTarget(ReaderImageSet target, int item)
 		{
 			var targetAnim = "openL";
 			if (target.TwoPages)

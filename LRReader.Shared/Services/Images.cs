@@ -19,8 +19,8 @@ namespace LRReader.Shared.Services
 		public ImagesService(IFilesService files)
 		{
 			Files = files;
-			archivesCache = new LRUCache<string, byte[]>(100, 10);
-			thumbnailsCache = new LRUCache<string, byte[]>(500, 50);
+			archivesCache = new LRUCache<string, byte[]>(500, 50);
+			thumbnailsCache = new LRUCache<string, byte[]>(1000, 50);
 			Directory.CreateDirectory(Files.LocalCache + "/Images");
 			thumbnailCacheDirectory = Directory.CreateDirectory(Files.LocalCache + "/Images/Thumbnails");
 		}

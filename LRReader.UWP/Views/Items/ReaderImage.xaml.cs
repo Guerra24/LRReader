@@ -37,7 +37,7 @@ namespace LRReader.UWP.Views.Items
 				return;
 			}
 			var animate = Service.Platform.AnimationsEnabled;
-			var n = args.NewValue as ArchiveImageSet;
+			var n = args.NewValue as ReaderImageSet;
 			/*if (_current.Equals(n.LeftImage + n.RightImage))
 			{
 				Animate();

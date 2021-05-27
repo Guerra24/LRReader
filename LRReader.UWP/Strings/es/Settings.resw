@@ -285,6 +285,12 @@
   <data name="Reader.RTL.ToolTipService.ToolTip" xml:space="preserve">
     <value>Invierte la dirección de lectura de las páginas</value>
   </data>
+  <data name="Reader.SetBuilder.Header" xml:space="preserve">
+    <value>Usar orden de lectura mejorado</value>
+  </data>
+  <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Utiliza la relación de aspecto de la imagen al crear el orden de las páginas. Recomendado para archivos con relación de aspecto variable.</value>
+  </data>
   <data name="Reader.TwoPages.Header" xml:space="preserve">
     <value>Mostrar dos páginas</value>
   </data>
