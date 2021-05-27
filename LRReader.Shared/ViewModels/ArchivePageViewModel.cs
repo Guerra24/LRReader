@@ -174,18 +174,20 @@ namespace LRReader.Shared.ViewModels
 							{
 								i.RightImage = ArchiveImages.ElementAt(k).Image;
 								i.LeftImage = ArchiveImages.ElementAt(++k).Image;
+								i.TwoPages = true;
 							}
 						}
 						else
 						{
 							if (k == 0)
-								i.RightImage = ArchiveImages.ElementAt(k).Image;
+								i.LeftImage = ArchiveImages.ElementAt(k).Image;
 							else if (k == ArchiveImages.Count - 1)
-								i.RightImage = ArchiveImages.ElementAt(k).Image;
+								i.LeftImage = ArchiveImages.ElementAt(k).Image;
 							else
 							{
 								i.LeftImage = ArchiveImages.ElementAt(k).Image;
 								i.RightImage = ArchiveImages.ElementAt(++k).Image;
+								i.TwoPages = true;
 							}
 						}
 					}

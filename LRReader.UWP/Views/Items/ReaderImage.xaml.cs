@@ -62,7 +62,7 @@ namespace LRReader.UWP.Views.Items
 			var lSize = await imageProcessing.GetImageSize(await lImage);
 			var rSize = await imageProcessing.GetImageSize(await rImage);
 			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));
-			LeftImage.Width = LeftImage.Height = RightImage.Width = RightImage.Width = 0;
+			LeftImage.Width = LeftImage.Height = RightImage.Width = RightImage.Height = 0;
 			if (LeftImage.Source != null)
 			{
 				LeftImage.Width = size.Width;

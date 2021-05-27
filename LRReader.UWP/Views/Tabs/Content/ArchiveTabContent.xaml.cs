@@ -36,7 +36,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public ArchivePageViewModel Data;
 
-		private int i;
 		private bool _wasNew;
 		private bool _opened;
 		private bool _focus = true;
@@ -93,9 +92,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 				_loadSemaphore.Release();
 				if (Service.Settings.OpenReader)
 				{
+					var page = 0;
 					if (Data.Bookmarked)
-						i = Data.BookmarkProgress;
-					OpenReader();
+						page = Data.BookmarkProgress;
+					OpenReader(page);
 				}
 				_opened = true;
 			}
@@ -108,21 +108,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_loadSemaphore.Release();
 		}
 
-		private async void OpenReader()
+		private async void OpenReader(int page, object item = null)
 		{
+			var readerSet = Data.ArchiveImagesReader.First(s => s.Page >= page);
+			var index = Data.ArchiveImagesReader.IndexOf(readerSet);
+
+			if (Service.Platform.AnimationsEnabled && item != null)
+			{
+				var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(readerSet, page), item, "Image");
+				anim.Configuration = new BasicConnectedAnimationConfiguration();
+			}
+
 			Data.ShowReader = true;
-			if (Service.Settings.TwoPages)
-			{
-				if (i != 0)
-				{
-					--i; i /= 2; ++i;
-				}
-				Data.ReaderIndex = i;
-			}
-			else
-			{
-				Data.ReaderIndex = i;
-			}
+			Data.ReaderIndex = index;
 
 			if (Data.Archive.IsNewArchive())
 				_wasNew = true;
@@ -161,7 +159,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			int leftTarget = currentPage;
 			int rightTarget = currentPage;
 
-			if (Service.Settings.TwoPages)
+			if (Data.ReaderContent.TwoPages)
 			{
 				leftTarget--;
 				if (Service.Settings.ReadRTL)
@@ -235,26 +233,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.ControlsEnabled)
 				return;
-			i = Data.ArchiveImages.IndexOf(e.ClickedItem as ImagePageSet);
-			if (Service.Platform.AnimationsEnabled)
-			{
-				var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), e.ClickedItem, "Image");
-				anim.Configuration = new BasicConnectedAnimationConfiguration();
-			}
-			OpenReader();
+			OpenReader(Data.ArchiveImages.IndexOf(e.ClickedItem as ImagePageSet), e.ClickedItem);
 		}
 
 		private void Continue_Click(object sender, RoutedEventArgs e)
 		{
 			if (!Data.ControlsEnabled)
 				return;
-			i = Data.BookmarkProgress;
-			if (Service.Platform.AnimationsEnabled)
-			{
-				var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(), Data.ArchiveImages.ElementAt(i), "Image");
-				anim.Configuration = new BasicConnectedAnimationConfiguration();
-			}
-			OpenReader();
+			OpenReader(Data.BookmarkProgress);
 		}
 
 		private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -530,25 +516,25 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.SearchResults, (e.ClickedItem as ArchiveTagsGroupTag).FullTag);
 
-		private string GetOpenTarget()
+		private string GetOpenTarget(ArchiveImageSet target, int item)
 		{
-			var target = "openL";
-			if (Service.Settings.TwoPages)
+			var targetAnim = "openL";
+			if (target.TwoPages)
 			{
-				var openL = "openL";
-				var openR = "openR";
 				if (Service.Settings.ReadRTL)
 				{
-					openL = "openR";
-					openR = "openL";
+					if (target.Page != item)
+						targetAnim = "openR";
 				}
-				target = i % 2 == 0 ? openR : openL;
-				if (i == Data.Pages - 1)
-					target = openR;
-				else if (i == 0)
-					target = openR;
+				else
+				{
+					targetAnim = "openR";
+					if (target.Page != item)
+						targetAnim = "openL";
+
+				}
 			}
-			return target;
+			return targetAnim;
 		}
 
 		private async void DeleteButton_Click(object sender, RoutedEventArgs e)
