@@ -56,7 +56,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			Data = DataContext as ArchivePageViewModel;
 			Data.ZoomChangedEvent += FitImages;
-			Service.Events.RebuildReaderImagesSetEvent += Data.CreateImageSets;
 
 			flags = Service.Api.ControlFlags;
 
@@ -511,7 +510,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public void RemoveEvent()
 		{
 			Data.ZoomChangedEvent -= FitImages;
-			Service.Events.RebuildReaderImagesSetEvent -= Data.CreateImageSets;
+			Data.UnHook();
 		}
 
 		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.SearchResults, (e.ClickedItem as ArchiveTagsGroupTag).FullTag);

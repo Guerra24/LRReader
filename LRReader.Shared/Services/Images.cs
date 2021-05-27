@@ -3,23 +3,35 @@ using KeyedSemaphores;
 using LRReader.Shared.Providers;
 using Microsoft.AppCenter.Crashes;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
+	public class RawImage
+	{
+		public byte[] Data { get; set; }
+		public Size Size { get; set; }
+	}
+
 	public class ImagesService : IService
 	{
 		private readonly IFilesService Files;
-		private LRUCache<string, byte[]> archivesCache;
+		private readonly ImageProcessingService ImageProcessing;
+
+		private LRUCache<string, byte[]> imagesCache;
+		private LRUCache<string, Size> imagesSizeCache;
 		private LRUCache<string, byte[]> thumbnailsCache;
 		private DirectoryInfo thumbnailCacheDirectory;
 
-		public ImagesService(IFilesService files)
+		public ImagesService(IFilesService files, ImageProcessingService imageProcessing)
 		{
 			Files = files;
-			archivesCache = new LRUCache<string, byte[]>(500, 50);
+			ImageProcessing = imageProcessing;
+			imagesCache = new LRUCache<string, byte[]>(500, 50);
+			imagesSizeCache = new LRUCache<string, Size>(10000, 100);
 			thumbnailsCache = new LRUCache<string, byte[]>(1000, 50);
 			Directory.CreateDirectory(Files.LocalCache + "/Images");
 			thumbnailCacheDirectory = Directory.CreateDirectory(Files.LocalCache + "/Images/Thumbnails");
@@ -43,25 +55,54 @@ namespace LRReader.Shared.Services
 			});
 		}
 
+		public async Task<Size> GetImageSizeCached(string path)
+		{
+			if (string.IsNullOrEmpty(path))
+				return new Size(0, 0);
+			var key = await KeyedSemaphore.LockAsync(path + "size");
+			Size size;
+			if (imagesSizeCache.TryGet(path, out size))
+			{
+				key.Dispose();
+				return size;
+			}
+			else
+			{
+				var image = await GetImageCached(path);
+				if (image == null)
+				{
+					key.Dispose();
+					return new Size(0, 0);
+				}
+				size = await ImageProcessing.GetImageSize(image);
+				imagesSizeCache.AddReplace(path, size);
+				key.Dispose();
+				return size;
+			}
+		}
+
 		public async Task<byte[]> GetImageCached(string path)
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
 			var key = await KeyedSemaphore.LockAsync(path);
-			byte[] data;
-			if (archivesCache.TryGet(path, out data))
+			byte[] image;
+			if (imagesCache.TryGet(path, out image))
 			{
 				key.Dispose();
-				return data;
+				return image;
 			}
 			else
 			{
-				data = await ArchivesProvider.GetImage(path);
-				if (data == null)
+				image = await ArchivesProvider.GetImage(path);
+				if (image == null)
+				{
+					key.Dispose();
 					return null;
-				archivesCache.AddReplace(path, data);
+				}
+				imagesCache.AddReplace(path, image);
 				key.Dispose();
-				return data;
+				return image;
 			}
 		}
 
@@ -86,7 +127,10 @@ namespace LRReader.Shared.Services
 				{
 					data = await ArchivesProvider.GetThumbnail(id);
 					if (data == null)
+					{
+						key.Dispose();
 						return null;
+					}
 					Directory.CreateDirectory(directory);
 					await Files.StoreFile(path, data);
 				}

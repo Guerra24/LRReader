@@ -26,7 +26,7 @@
 	<Grid>
 		<controls:TabView
 			x:Name="TabViewControl" VerticalAlignment="Stretch"
-			Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}"
+			Background="{ThemeResource TitlebarBackground}"
 			IsAddTabButtonVisible="False"
 			SelectedItem="{x:Bind Data.CurrentTab, Mode=TwoWay}"
 			TabCloseRequested="TabView_TabCloseRequested"

@@ -168,7 +168,11 @@ namespace LRReader.Shared.Services
 		public bool ReaderImageSetBuilder
 		{
 			get => SettingsStorage.GetObjectLocal("ReaderImageSetBuilder", true);
-			set => SettingsStorage.StoreObjectLocal("ReaderImageSetBuilder", value);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("ReaderImageSetBuilder", value);
+				Service.Events.RebuildReaderImagesSet();
+			}
 		}
 
 		public static readonly int CurrentLocalVersion = 4;

@@ -21,7 +21,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}" />
+		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource TitlebarBackground}" />
 		<Grid Grid.Row="1">
 			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 				<TextBlock

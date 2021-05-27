@@ -289,7 +289,7 @@
     <value>Use improved read order</value>
   </data>
   <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Uses image's aspect ratio when building the pages order. Recommended for archives with variable aspect ratio.</value>
+    <value>Uses aspect ratio when building the pages order. Recommended for archives with variable aspect ratio.</value>
   </data>
   <data name="Reader.TwoPages.Header" xml:space="preserve">
     <value>Show two pages</value>

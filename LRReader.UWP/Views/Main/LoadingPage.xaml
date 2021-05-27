@@ -15,7 +15,7 @@
 	<Grid>
 		<Grid
 			x:Name="TitleBar" Height="32" VerticalAlignment="Top"
-			Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}" />
+			Background="{ThemeResource TitlebarBackground}" />
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition />

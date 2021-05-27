@@ -15,7 +15,7 @@
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#E5E5E5"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
-			<Color x:Key="ColorNavTop">#DADADA</Color>
+			<Color x:Key="ColorNavTop">#D0D0D0</Color>
 			<Color x:Key="BrushItemGridBackgroundColor">#B3FFFFFF</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#B2B2B2" />
@@ -23,8 +23,8 @@
 			<AcrylicBrush
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
-				TintColor="{ThemeResource SystemChromeMediumColor}"
-				TintOpacity=".5" />
+				TintColor="{ThemeResource SystemChromeAltHighColor}"
+				TintOpacity="0.8" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#505050</Color>
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}" />
@@ -45,7 +45,7 @@
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#1f1f1f"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
 				TintOpacity="0.6" />
-			<Color x:Key="ColorNavTop">#171717</Color>
+			<Color x:Key="ColorNavTop">#151515</Color>
 			<Color x:Key="BrushItemGridBackgroundColor">#0FFFFFFF</Color>
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#4F4F4F" />
@@ -53,8 +53,8 @@
 			<AcrylicBrush
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
-				TintColor="{ThemeResource SystemChromeMediumColor}"
-				TintOpacity=".5" />
+				TintColor="{ThemeResource SystemChromeAltHighColor}"
+				TintOpacity="0.8" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#C0C0C0</Color>
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}" />

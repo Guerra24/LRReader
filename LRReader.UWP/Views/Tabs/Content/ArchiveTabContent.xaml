@@ -113,10 +113,11 @@
 		</Button>
 		<muxc:ProgressRing
 			Grid.Row="1" Width="80" Height="80"
-			IsActive="{x:Bind Data.LoadingImages, Mode=OneWay}"
+			Background="#4B000000" IsActive="True"
 			IsIndeterminate="{x:Bind Data.LoadingIndeterminate, Mode=OneWay}"
 			Maximum="{x:Bind Data.BuildMax, Mode=OneWay}"
-			Value="{x:Bind Data.BuildProgress, Mode=OneWay}" Background="#4B000000" />
+			Visibility="{x:Bind Data.LoadingImages, Mode=OneWay}"
+			Value="{x:Bind Data.BuildProgress, Mode=OneWay}" />
 		<ScrollViewer Background="{ThemeResource ReaderBackground}"
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ScrollViewer_PointerPressed"

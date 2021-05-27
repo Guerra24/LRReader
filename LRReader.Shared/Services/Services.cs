@@ -45,7 +45,7 @@ namespace LRReader.Shared.Services
 		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
 		public static IDispatcherService Dispatcher => Services.GetRequiredService<IDispatcherService>();
 		public static IPlatformService Platform => Services.GetRequiredService<IPlatformService>();
-		public static IImageProcessingService ImageProcessing => Services.GetRequiredService<IImageProcessingService>();
+		public static ImageProcessingService ImageProcessing => Services.GetRequiredService<ImageProcessingService>();
 		public static ArchivesService Archives => Services.GetRequiredService<ArchivesService>();
 		public static SettingsService Settings => Services.GetRequiredService<SettingsService>();
 		public static ImagesService Images => Services.GetRequiredService<ImagesService>();

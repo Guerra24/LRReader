@@ -20,7 +20,7 @@ namespace LRReader.UWP
 				collection.Replace(ServiceDescriptor.Singleton<IDispatcherService, DispatcherService>());
 				collection.Replace(ServiceDescriptor.Singleton<IPlatformService, UWPlatformService>());
 
-				collection.AddSingleton<IImageProcessingService, ImageProcessingService>();
+				collection.AddSingleton<ImageProcessingService, UWPImageProcessingService>();
 
 				collection.AddSingleton<ArchivesPageViewModel>();
 				collection.AddSingleton<SettingsPageViewModel>();

@@ -21,6 +21,7 @@ namespace LRReader.UWP.Views.Items
 		//private bool _fixLayout = true;
 		private string _current = "";
 		private int _height;
+		private ImageProcessingService imageProcessing = Service.ImageProcessing;
 
 		public ReaderImage()
 		{
@@ -56,11 +57,10 @@ namespace LRReader.UWP.Views.Items
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
 			if (animTask != null)
 				await animTask;
-			var imageProcessing = Service.ImageProcessing;
 			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, imageL) as BitmapImage;
 			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, imageR) as BitmapImage;
-			var lSize = await imageProcessing.GetImageSize(await lImage);
-			var rSize = await imageProcessing.GetImageSize(await rImage);
+			var lSize = await Service.Images.GetImageSizeCached(n.LeftImage);
+			var rSize = await Service.Images.GetImageSizeCached(n.RightImage);
 			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));
 			LeftImage.Width = LeftImage.Height = RightImage.Width = RightImage.Height = 0;
 			if (LeftImage.Source != null)

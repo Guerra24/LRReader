@@ -10,17 +10,16 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Services
 {
-	public class ImageProcessingService : IImageProcessingService
+	public class UWPImageProcessingService : ImageProcessingService
 	{
-
 		private SemaphoreSlim semaphore;
 
-		public ImageProcessingService()
+		public UWPImageProcessingService()
 		{
 			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
 		}
 
-		public async Task<object> ByteToBitmap(byte[] bytes, object image = null, bool transcode = false)
+		public override async Task<object> ByteToBitmap(byte[] bytes, object image = null, bool transcode = false)
 		{
 			if (bytes == null)
 				return null;
@@ -78,26 +77,29 @@ namespace LRReader.UWP.Services
 			return image;
 		}
 
-		public async Task<Size> GetImageSize(byte[] bytes)
+		public override async Task<Size> GetImageSize(byte[] bytes)
 		{
 			if (bytes == null)
 				return new Size(0, 0);
 			if (bytes.Length == 0)
 				return new Size(0, 0);
-			using (var stream = new InMemoryRandomAccessStream())
-			{
-				await stream.WriteAsync(bytes.AsBuffer());
-				stream.Seek(0);
-				try
+			var size = await base.GetImageSize(bytes);
+			if (size.Width == -1)
+				using (var stream = new InMemoryRandomAccessStream())
 				{
-					var decoder = await BitmapDecoder.CreateAsync(stream);
-					return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+					await stream.WriteAsync(bytes.AsBuffer());
+					stream.Seek(0);
+					try
+					{
+						var decoder = await BitmapDecoder.CreateAsync(stream);
+						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+					}
+					catch (Exception)
+					{
+						return new Size(0, 0);
+					}
 				}
-				catch (Exception)
-				{
-					return new Size(0, 0);
-				}
-			}
+			return size;
 		}
 
 	}
