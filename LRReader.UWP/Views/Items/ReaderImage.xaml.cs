@@ -18,7 +18,7 @@ namespace LRReader.UWP.Views.Items
 		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseIn);
 		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseOut);
 
-		//private bool _fixLayout = true;
+		public bool disableAnimation = true;
 		private string _current = "";
 		private int _height;
 		private ImageProcessingService imageProcessing = Service.ImageProcessing;
@@ -47,7 +47,15 @@ namespace LRReader.UWP.Views.Items
 			_current = n.LeftImage + n.RightImage;
 			Task animTask = null;
 			if (animate)
-				animTask = FadeOut.StartAsync(ImagesRoot);
+				if (disableAnimation)
+				{
+					ImagesRoot.SetVisualOpacity(0);
+					disableAnimation = false;
+				}
+				else
+				{
+					animTask = FadeOut.StartAsync(ImagesRoot);
+				}
 			var lImage = Service.Images.GetImageCached(n.LeftImage);
 			var rImage = Service.Images.GetImageCached(n.RightImage);
 			var imageL = new BitmapImage();

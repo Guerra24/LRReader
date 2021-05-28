@@ -38,8 +38,6 @@ namespace LRReader.Shared.Services
 								var png = PngMetadataReader.ReadMetadata(stream);
 								var pngdir = png.OfType<PngDirectory>().FirstOrDefault();
 								return new Size(pngdir.GetInt32(PngDirectory.TagImageWidth), pngdir.GetInt32(PngDirectory.TagImageHeight));
-							case FileType.Bmp:
-								break;
 							case FileType.Gif:
 								var gif = GifMetadataReader.ReadMetadata(stream);
 								var gifdir = gif.OfType<GifHeaderDirectory>().FirstOrDefault();
@@ -49,7 +47,7 @@ namespace LRReader.Shared.Services
 								var webpdir = webp.OfType<WebPDirectory>().FirstOrDefault();
 								return new Size(webpdir.GetInt32(WebPDirectory.TagImageWidth), webpdir.GetInt32(WebPDirectory.TagImageHeight));
 							default:
-								return new Size(-1, 0);
+								return new Size(0, 0);
 						}
 					}
 				}
@@ -57,7 +55,7 @@ namespace LRReader.Shared.Services
 				{
 					Crashes.TrackError(e);
 				}
-				return new Size(-1, 0);
+				return new Size(0, 0);
 			});
 		}
 	}

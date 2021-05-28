@@ -84,7 +84,7 @@ namespace LRReader.UWP.Services
 			if (bytes.Length == 0)
 				return new Size(0, 0);
 			var size = await base.GetImageSize(bytes);
-			if (size.Width == -1)
+			if (size.IsEmpty)
 				using (var stream = new InMemoryRandomAccessStream())
 				{
 					await stream.WriteAsync(bytes.AsBuffer());

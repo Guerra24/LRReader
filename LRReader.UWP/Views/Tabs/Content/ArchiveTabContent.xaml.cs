@@ -136,6 +136,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var animate = Service.Platform.AnimationsEnabled;
 			var left = ReaderControl.FindDescendant("LeftImage");
 			var right = ReaderControl.FindDescendant("RightImage");
+			(ReaderControl.ContentTemplateRoot as ReaderImage).disableAnimation = true;
+
 			ConnectedAnimation animLeft = null, animRight = null;
 			if (animate)
 			{
@@ -275,7 +277,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				case VirtualKey.Up:
 					e.Handled = true;
 					if (Math.Floor(offset) <= 0)
-						PrevPage();
+						PrevPage(true);
 					else
 						ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
 					break;
@@ -283,7 +285,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				case VirtualKey.Space:
 					e.Handled = true;
 					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
-						NextPage();
+						NextPage(true);
 					else
 						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
 					break;
@@ -318,17 +320,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
 						{
 							e.Handled = true;
-							NextPage();
+							NextPage(true);
 						}
 						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
 						{
 							e.Handled = true;
-							PrevPage();
+							PrevPage(true);
 						}
 						break;
 					case VirtualKeyModifiers.Control:
 						e.Handled = true;
-						Data.ZoomValue += (int)(delta * 0.1);
+						Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), 100, 400);
 						FitImages();
 						break;
 				}
@@ -385,17 +387,17 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
 		}
 
-		private void NextPage()
+		private void NextPage(bool ignore = false)
 		{
-			if (Service.Settings.ReadRTL)
+			if (Service.Settings.ReadRTL && !ignore)
 				GoLeft();
 			else
 				GoRight();
 		}
 
-		private void PrevPage()
+		private void PrevPage(bool ignore = false)
 		{
-			if (Service.Settings.ReadRTL)
+			if (Service.Settings.ReadRTL && !ignore)
 				GoRight();
 			else
 				GoLeft();
