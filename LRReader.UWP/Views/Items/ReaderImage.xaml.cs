@@ -3,9 +3,9 @@ using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
@@ -19,74 +19,64 @@ namespace LRReader.UWP.Views.Items
 		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseOut);
 
 		public bool disableAnimation = true;
-		private string _current = "";
 		private int _height;
 		private ImageProcessingService imageProcessing = Service.ImageProcessing;
+
+		private SemaphoreSlim decodePixel = new SemaphoreSlim(1);
 
 		public ReaderImage()
 		{
 			this.InitializeComponent();
 		}
 
-		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+		public async Task ChangePage(ReaderImageSet set)
 		{
-			if (args.NewValue == null)
-			{
-				LeftImage.Source = null;
-				RightImage.Source = null;
-				_current = "";
-				return;
-			}
-			var animate = Service.Platform.AnimationsEnabled;
-			var n = args.NewValue as ReaderImageSet;
-			/*if (_current.Equals(n.LeftImage + n.RightImage))
-			{
-				Animate();
-				return;
-			}*/
-			_current = n.LeftImage + n.RightImage;
-			Task animTask = null;
-			if (animate)
-				if (disableAnimation)
-				{
-					ImagesRoot.SetVisualOpacity(0);
-					disableAnimation = false;
-				}
-				else
-				{
-					animTask = FadeOut.StartAsync(ImagesRoot);
-				}
-			var lImage = Service.Images.GetImageCached(n.LeftImage);
-			var rImage = Service.Images.GetImageCached(n.RightImage);
+			await decodePixel.WaitAsync();
+			var lImage = Service.Images.GetImageCached(set.LeftImage);
+			var rImage = Service.Images.GetImageCached(set.RightImage);
 			var imageL = new BitmapImage();
 			var imageR = new BitmapImage();
 			imageR.DecodePixelType = imageL.DecodePixelType = DecodePixelType.Logical;
 			if (_height != 0)
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
-			if (animTask != null)
-				await animTask;
 			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, imageL) as BitmapImage;
 			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, imageR) as BitmapImage;
-			var lSize = await Service.Images.GetImageSizeCached(n.LeftImage);
-			var rSize = await Service.Images.GetImageSizeCached(n.RightImage);
+			var lSize = await Service.Images.GetImageSizeCached(set.LeftImage);
+			var rSize = await Service.Images.GetImageSizeCached(set.RightImage);
 			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));
-			LeftImage.Width = LeftImage.Height = RightImage.Width = RightImage.Height = 0;
+			LeftImage.Height = RightImage.Height = 0;
 			if (LeftImage.Source != null)
 			{
-				LeftImage.Width = size.Width;
+				//LeftImage.Width = size.Width;
 				LeftImage.Height = size.Height;
 			}
 			if (RightImage.Source != null)
 			{
-				RightImage.Width = size.Width;
+				//RightImage.Width = size.Width;
 				RightImage.Height = size.Height;
 			}
-			if (animate)
-				Animate();
+			decodePixel.Release();
 		}
 
-		private void Animate()
+		public async Task FadeOutPage()
 		{
+			if (!Service.Platform.AnimationsEnabled)
+				return;
+			if (disableAnimation)
+			{
+				ImagesRoot.SetVisualOpacity(0);
+				disableAnimation = false;
+			}
+			else
+			{
+				await FadeOut.StartAsync(ImagesRoot);
+			}
+		}
+
+		public void FadeInPage()
+		{
+			if (!Service.Platform.AnimationsEnabled)
+				return;
 			var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)
@@ -107,15 +97,17 @@ namespace LRReader.UWP.Views.Items
 			openRight?.TryStart(RightImage);
 		}
 
-		public void UpdateDecodedResolution(int height)
+		public async Task UpdateDecodedResolution(int height)
 		{
 			if (_height == height)
 				return;
+			await decodePixel.WaitAsync();
 			_height = height;
 			if (LeftImage.Source != null)
 				(LeftImage.Source as BitmapImage).DecodePixelHeight = height;
 			if (RightImage.Source != null)
 				(RightImage.Source as BitmapImage).DecodePixelHeight = height;
+			decodePixel.Release();
 		}
 
 	}

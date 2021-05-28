@@ -118,8 +118,9 @@
 			Maximum="{x:Bind Data.BuildMax, Mode=OneWay}"
 			Visibility="{x:Bind Data.LoadingImages, Mode=OneWay}"
 			Value="{x:Bind Data.BuildProgress, Mode=OneWay}" />
-		<ScrollViewer Background="{ThemeResource ReaderBackground}"
+		<ScrollViewer
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+			Background="{ThemeResource ReaderBackground}"
 			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ScrollViewer_PointerPressed"
 			RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped"
 			VerticalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged"
@@ -127,17 +128,11 @@
 			<ScrollViewer.KeyboardAccelerators>
 				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
 			</ScrollViewer.KeyboardAccelerators>
-			<ContentControl
+			<items:ReaderImage
 				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
-				Content="{x:Bind Data.ReaderContent, Mode=OneWay}"
-				KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp" ManipulationDelta="ReaderControl_ManipulationDelta"
-				ManipulationMode="TranslateY,TranslateX,System" PointerWheelChanged="ReaderControl_PointerWheelChanged" SizeChanged="ReaderControl_SizeChanged">
-				<ContentControl.ContentTemplate>
-					<DataTemplate>
-						<items:ReaderImage />
-					</DataTemplate>
-				</ContentControl.ContentTemplate>
-			</ContentControl>
+				IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
+				ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" PointerWheelChanged="ReaderControl_PointerWheelChanged"
+				SizeChanged="ReaderControl_SizeChanged" />
 		</ScrollViewer>
 		<Button
 			Grid.RowSpan="2" Width="38" Height="38"

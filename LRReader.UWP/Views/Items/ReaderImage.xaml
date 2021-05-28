@@ -7,11 +7,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
 	<StackPanel x:Name="ImagesRoot" Orientation="Horizontal">
-		<Image Name="LeftImage" Stretch="Uniform" />
-		<Image Name="RightImage" Stretch="Uniform" />
+		<Image Name="LeftImage" />
+		<Image Name="RightImage" />
 	</StackPanel>
 </UserControl>

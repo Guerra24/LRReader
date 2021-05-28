@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -60,9 +61,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			flags = Service.Api.ControlFlags;
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
-				.Subscribe(async (height) =>
-				await Service.Dispatcher.RunAsync(() =>
-				(ReaderControl.ContentTemplateRoot as ReaderImage).UpdateDecodedResolution((int)Math.Round(height))));
+				.Subscribe((height) =>
+				Service.Dispatcher.Run(async () =>
+				await ReaderControl.UpdateDecodedResolution((int)Math.Round(height))));
 			_loadSemaphore.Wait();
 		}
 
@@ -120,6 +121,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			Data.ShowReader = true;
 			Data.ReaderIndex = index;
+			await ChangePage();
 
 			if (Data.Archive.IsNewArchive())
 				_wasNew = true;
@@ -127,6 +129,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await FadeIn.StartAsync(ScrollViewer);
 			else
 				ScrollViewer.SetVisualOpacity(1);
+
 			_focus = true;
 			FocusReader();
 		}
@@ -136,7 +139,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var animate = Service.Platform.AnimationsEnabled;
 			var left = ReaderControl.FindDescendant("LeftImage");
 			var right = ReaderControl.FindDescendant("RightImage");
-			(ReaderControl.ContentTemplateRoot as ReaderImage).disableAnimation = true;
+			ReaderControl.disableAnimation = true;
 
 			ConnectedAnimation animLeft = null, animRight = null;
 			if (animate)
@@ -403,22 +406,32 @@ namespace LRReader.UWP.Views.Tabs.Content
 				GoLeft();
 		}
 
-		private void GoRight()
+		private async void GoRight()
 		{
 			if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
 			{
 				++Data.ReaderIndex;
+				await ReaderControl.FadeOutPage();
 				ScrollViewer.ChangeView(null, 0, null, true);
+				await ChangePage();
 			}
 		}
 
-		private void GoLeft()
+		private async void GoLeft()
 		{
 			if (Data.ReaderIndex > 0)
 			{
 				--Data.ReaderIndex;
+				await ReaderControl.FadeOutPage();
 				ScrollViewer.ChangeView(null, 0, null, true);
+				await ChangePage();
 			}
+		}
+
+		private async Task ChangePage()
+		{
+			await ReaderControl.ChangePage(Data.ReaderContent);
+			ReaderControl.FadeInPage();
 		}
 
 		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(false);
