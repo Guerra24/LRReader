@@ -92,7 +92,7 @@ jobs:
         APPCENTER_APP_ID: ${{ secrets.APPCENTER_APP_ID }}
       run: |
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly" /p:AppxPackageSigningEnabled=false
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
