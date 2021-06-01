@@ -8,14 +8,19 @@
 	x:Uid="/Dialogs/ServerProfile/Dialog"
 	IsPrimaryButtonEnabled="False"
 	mc:Ignorable="d">
+	<ContentDialog.Resources>
+		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:ServerProfileDialog" />
+	</ContentDialog.Resources>
 
 	<StackPanel>
 		<TextBox
 			x:Name="ProfileName" x:Uid="/Dialogs/ServerProfile/ProfileName" Margin="0,0,0,10"
 			x:FieldModifier="public" TextChanging="ProfileName_TextChanging" />
 		<TextBox
-			x:Name="ProfileServerAddress" Text="http://" SelectionStart="{x:Bind ProfileServerAddress.Text.Length}" x:Uid="/Dialogs/ServerProfile/ProfileAddress" Margin="0,0,0,10"
-			x:FieldModifier="public" TextChanging="ProfileServerAddress_TextChanging" />
+			x:Name="ProfileServerAddress" x:Uid="/Dialogs/ServerProfile/ProfileAddress" Margin="0,0,0,10"
+			x:FieldModifier="public"
+			SelectionStart="{x:Bind ProfileServerAddress.Text.Length}"
+			Text="http://" TextChanging="ProfileServerAddress_TextChanging" />
 		<PasswordBox
 			x:Name="ProfileServerApiKey" x:Uid="/Dialogs/ServerProfile/ProfileApiKey" Margin="0,0,0,10"
 			x:FieldModifier="public" />

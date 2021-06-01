@@ -74,7 +74,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!_opened)
 			{
 				await _loadSemaphore.WaitAsync();
-				if (Service.Api.ControlFlags.V077 && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
+				if (Service.Api.ControlFlags.ProgressTracking && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
 				{
 					var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
 					await conflictDialog.ShowAsync();
@@ -228,7 +228,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.Bookmarked)
 			{
 				Data.BookmarkProgress = currentPage;
-				if (Service.Api.ControlFlags.V077)
+				if (Service.Api.ControlFlags.ProgressTracking)
 					await Data.SetProgress(currentPage + 1);
 			}
 		}

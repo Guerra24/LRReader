@@ -10,6 +10,10 @@
 	Loaded="ContentDialog_Loaded"
 	mc:Ignorable="d">
 
+	<ContentDialog.Resources>
+		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:CategoryArchive" />
+	</ContentDialog.Resources>
+
 	<StackPanel>
 		<AutoSuggestBox
 			x:Uid="/Dialogs/CategoryArchive/Search" Margin="0,0,0,5" QueryIcon="Find"

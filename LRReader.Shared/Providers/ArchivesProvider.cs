@@ -106,7 +106,7 @@ namespace LRReader.Shared.Providers
 					return download;
 				default:
 					var error = await r.GetError();
-					Events.ShowNotification(error.title, error.error);
+					Events.ShowNotification(error.operation, error.error);
 					return null;
 			}
 		}

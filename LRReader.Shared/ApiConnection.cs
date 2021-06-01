@@ -31,7 +31,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				Service.Events.ShowNotification(result.Error.title, result.Error.error);
+				Service.Events.ShowNotification(result.Error.operation, result.Error.error);
 				return false;
 			}
 		}
@@ -61,7 +61,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				Service.Events.ShowNotification(result.Error.title, result.Error.error);
+				Service.Events.ShowNotification(result.Error.operation, result.Error.error);
 				return default(T);
 			}
 		}
@@ -104,22 +104,42 @@ namespace LRReader.Shared
 						break;
 				}
 			else
-				apiResponse.Error = new GenericApiError { title = "Error while decoding response" };
+				apiResponse.Error = new GenericApiResult { operation = "Error while decoding response" };
 			apiResponse.Code = restResponse.StatusCode;
 			return apiResponse;
 		}
 
-		public static async Task<GenericApiError> GetError(this IRestResponse restResponse)
+		public static async Task<GenericApiResult> GetError(this IRestResponse restResponse)
 		{
+			var error = await Task.Run(() =>
+			{
+				try
+				{
+					return JsonConvert.DeserializeObject<GenericApiResult>(restResponse.Content);
+				}
+				catch (Exception e)
+				{
+					var attachments = new ErrorAttachmentLog[]
+					{
+						ErrorAttachmentLog.AttachmentWithText(restResponse.Content, "error-response.txt")
+					};
+					Crashes.TrackError(e, attachments: attachments);
+					return null;
+				}
+			});
+			if (error == null)
+				return new GenericApiResult { operation = $"Error code: {(int)restResponse.StatusCode} {restResponse.StatusDescription}", error = $"{restResponse.ResponseUri}" };
 			switch (restResponse.StatusCode)
 			{
 				case HttpStatusCode.Unauthorized:
-					var error = await Task.Run(() => JsonConvert.DeserializeObject<GenericApiError>(restResponse.Content));
-					error.title = "Unauthorized";
-					return error;
+					error.operation = "Unauthorized";
+					break;
 				default:
-					return new GenericApiError { title = $"Error code: {(int)restResponse.StatusCode} {restResponse.StatusDescription}", error = $"{restResponse.ResponseUri}" };
+					if (string.IsNullOrEmpty(error.operation))
+						error.operation = "";
+					break;
 			}
+			return error;
 		}
 	}
 

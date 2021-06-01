@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -24,6 +22,8 @@ namespace LRReader.Shared.Models.Main
 		public int cache_last_cleared { get; set; }
 		public string version_desc { get; set; }
 		public int total_pages_read { get; set; }
+		[JsonConverter(typeof(BoolConverter))]
+		public bool server_tracks_progress { get; set; }
 
 		[JsonIgnore]
 		public bool _unauthorized;

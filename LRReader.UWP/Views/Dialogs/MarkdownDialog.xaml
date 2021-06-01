@@ -8,6 +8,11 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	PrimaryButtonText="Ok"
 	mc:Ignorable="d">
+
+	<ContentDialog.Resources>
+		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:MarkdownDialog" />
+	</ContentDialog.Resources>
+
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<controls:MarkdownTextBlock
 			Margin="0,0,0,10" Background="Transparent" LinkClicked="MarkdownText_LinkClicked"

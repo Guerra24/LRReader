@@ -16,6 +16,8 @@ namespace LRReader.Shared.Services
 
 		Task StoreFile(string path, byte[] content);
 
+		Task StoreFileSafe(string path, string content);
+
 	}
 
 	public class StubFilesService : IFilesService
@@ -39,6 +41,8 @@ namespace LRReader.Shared.Services
 		public Task StoreFile(string path, string content) => Task.Delay(1);
 
 		public Task StoreFile(string path, byte[] content) => Task.Delay(1);
+
+		public Task StoreFileSafe(string path, string content) => Task.Delay(1);
 
 	}
 

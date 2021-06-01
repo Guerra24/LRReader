@@ -44,7 +44,7 @@ namespace LRReader.Shared.Providers
 			}
 			else
 			{
-				Events.ShowNotification(result.Error.title, result.Error.error);
+				Events.ShowNotification(result.Error.operation, result.Error.error);
 				return null;
 			}
 		}
