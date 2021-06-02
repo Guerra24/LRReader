@@ -177,7 +177,11 @@ namespace LRReader.UWP.ViewModels
 			if (thumbnailJob == null)
 				return;
 			var status = await ServerProvider.GetMinionStatus(thumbnailJob.job);
-
+			if (status == null)
+			{
+				thumbnailJob = null;
+				return;
+			}
 			if (status.state.Equals("finished"))
 			{
 				Events.ShowNotification("Thumbnail generation completed", "");
