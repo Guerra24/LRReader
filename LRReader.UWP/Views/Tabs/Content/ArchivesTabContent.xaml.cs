@@ -124,7 +124,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void PagerControl_SelectedIndexChanged(PagerControl sender, PagerControlSelectedIndexChangedEventArgs args)
 		{
-			await Data.LoadPage(args.NewPageIndex);
+			if (loaded)
+				await Data.LoadPage(args.NewPageIndex);
 		}
 
 		private async Task HandleSearch()
