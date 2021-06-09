@@ -10,7 +10,6 @@
 	xmlns:x1="using:LRReader.Shared.Models.Main"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	DataContext="{Binding ArchiveTagsInstace, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>

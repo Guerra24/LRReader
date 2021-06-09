@@ -130,6 +130,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Internal\Utils.cs" />
     <Compile Include="Services\Files.cs" />
     <Compile Include="Services\Platform.cs" />
     <Compile Include="Services\SettingsStorage.cs" />

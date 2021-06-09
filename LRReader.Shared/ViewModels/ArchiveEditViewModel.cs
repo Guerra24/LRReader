@@ -3,6 +3,7 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,12 +27,16 @@ namespace LRReader.Shared.ViewModels
 
 		public ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
 
+		public ObservableCollection<EditableTag> TagsList = new ObservableCollection<EditableTag>();
+
 		private Plugin _currentPlugin;
+
 		public Plugin CurrentPlugin
 		{
 			get => _currentPlugin;
 			set => SetProperty(ref _currentPlugin, value);
 		}
+
 		public string Arg = "";
 
 		public ArchiveEditViewModel(EventsService events)
@@ -47,10 +52,13 @@ namespace LRReader.Shared.ViewModels
 			OnPropertyChanged("Title");
 			OnPropertyChanged("Tags");
 			OnPropertyChanged("Archive");
-			Plugins.Clear();
+			TagsList.Clear();
+			foreach (var t in Tags.Split(','))
+				TagsList.Add(new EditableTag { Tag = t.Trim() });
+			TagsList.Add(new AddTag());
 			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
-			foreach (var p in plugins)
-				Plugins.Add(p);
+			Plugins.Clear();
+			plugins.ForEach(p => Plugins.Add(p));
 			CurrentPlugin = Plugins.ElementAt(0);
 		}
 
@@ -61,13 +69,16 @@ namespace LRReader.Shared.ViewModels
 			{
 				Title = result.title;
 				Tags = result.tags;
+				TagsList.Clear();
+				foreach (var t in Tags.Split(','))
+					TagsList.Add(new EditableTag { Tag = t.Trim() });
+				TagsList.Add(new AddTag());
 				OnPropertyChanged("Title");
 				OnPropertyChanged("Tags");
 			}
-			Plugins.Clear();
 			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
-			foreach (var p in plugins)
-				Plugins.Add(p);
+			Plugins.Clear();
+			plugins.ForEach(p => Plugins.Add(p));
 			CurrentPlugin = Plugins.ElementAt(0);
 		}
 
@@ -79,6 +90,10 @@ namespace LRReader.Shared.ViewModels
 			{
 				Archive.title = Title;
 				Archive.tags = Tags;
+				TagsList.Clear();
+				foreach (var t in Tags.Split(','))
+					TagsList.Add(new EditableTag { Tag = t.Trim() });
+				TagsList.Add(new AddTag());
 				OnPropertyChanged("Archive");
 			}
 			Saving = false;
@@ -110,5 +125,26 @@ namespace LRReader.Shared.ViewModels
 			}
 			Saving = false;
 		}
+
+		public void AddEmptyTag()
+		{
+			TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = "" });
+		}
+
+		public void RemoveTag(EditableTag editableTag)
+		{
+			TagsList.Remove(editableTag);
+		}
+
+	}
+
+	public class EditableTag
+	{
+		public string Tag { get; set; }
+	}
+
+	public class AddTag : EditableTag
+	{
+
 	}
 }

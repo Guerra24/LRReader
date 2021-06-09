@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:internal="using:LRReader.Internal">
+	<internal:DefaultElementAnimator x:Key="ItemsRepeaterAnimator" />
+
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Light">
 			<SolidColorBrush x:Key="BrushText" Color="Black" />
@@ -30,7 +33,7 @@
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}" />
 			<StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
 			<SolidColorBrush x:Key="ReaderBackground" Color="White" />
-			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393"/>
+			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -60,7 +63,7 @@
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}" />
 			<StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
 			<SolidColorBrush x:Key="ReaderBackground" Color="Black" />
-			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#7C7C7C"/>
+			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#7C7C7C" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

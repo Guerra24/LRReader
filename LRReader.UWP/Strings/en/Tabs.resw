@@ -153,6 +153,9 @@
   <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
     <value>Remove Bookmark?</value>
   </data>
+  <data name="ArchiveEdit.AddTag.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ArchiveEdit.ID.Header" xml:space="preserve">
     <value>ID</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="ArchiveEdit.Plugin.PlaceholderText" xml:space="preserve">
     <value>Plugin...</value>
+  </data>
+  <data name="ArchiveEdit.RemoveTag.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="ArchiveEdit.RunPlugin.Content" xml:space="preserve">
     <value>Run Plugin</value>

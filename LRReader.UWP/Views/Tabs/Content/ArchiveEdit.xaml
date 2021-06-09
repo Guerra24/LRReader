@@ -2,16 +2,185 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.ArchiveEdit"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:viewmodels="using:LRReader.Shared.ViewModels"
 	DataContext="{Binding ArchiveEditInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
+		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+			<Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="Padding" Value="5.5" />
+		</Style>
+		<DataTemplate x:Key="EditableTagTemplate" x:DataType="viewmodels:EditableTag">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<TextBox
+					x:Uid="/Tabs/ArchiveEdit/EditableTag" MinWidth="40" MinHeight="0"
+					Padding="4,2"
+					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+					CornerRadius="4,0,0,4"
+					Style="{StaticResource EditTagTextBoxStyle}"
+					Text="{x:Bind Tag}" />
+				<Button
+					x:Uid="/Tabs/ArchiveEdit/RemoveTag" Grid.Column="1"
+					Background="{ThemeResource ControlStrongStrokeColorDisabled}"
+					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+					BorderThickness="0,1,1,1" Click="RemoveButton_Click" Content="&#xE738;"
+					CornerRadius="0,4,4,0"
+					Style="{ThemeResource AddRemoveButtonStyle}"
+					Tag="{x:Bind}" />
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="AddTagTemplate" x:DataType="viewmodels:AddTag">
+			<Button
+				x:Uid="/Tabs/ArchiveEdit/AddTag"
+				Background="{ThemeResource ControlStrongStrokeColorDisabled}"
+				BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+				BorderThickness="1" Click="AddButton_Click" Content="&#xE710;"
+				CornerRadius="{ThemeResource ControlCornerRadius}"
+				Style="{ThemeResource AddRemoveButtonStyle}" />
+		</DataTemplate>
+		<local:TagTemplateSelector x:Key="TagTemplateSelector" AddTemplate="{StaticResource AddTagTemplate}" EditableTemplate="{StaticResource EditableTagTemplate}" />
+		<Style x:Key="EditTagTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+			<!--  Stolen from https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/TextBox_themeresources.xaml  -->
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="TextBox">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<ContentPresenter
+								x:Name="HeaderContentPresenter" Grid.Row="0" Grid.Column="0"
+								Grid.ColumnSpan="2"
+								Margin="{ThemeResource TextBoxTopHeaderMargin}"
+								VerticalAlignment="Top" x:DeferLoadStrategy="Lazy"
+								Content="{TemplateBinding Header}"
+								ContentTemplate="{TemplateBinding HeaderTemplate}"
+								FontWeight="Normal"
+								Foreground="{ThemeResource TextControlHeaderForeground}"
+								TextWrapping="Wrap" Visibility="Collapsed" />
+							<Border
+								x:Name="BorderElement" Grid.Row="1" Grid.RowSpan="1"
+								Grid.Column="0" Grid.ColumnSpan="2"
+								MinWidth="{TemplateBinding MinWidth}"
+								MinHeight="{TemplateBinding MinHeight}"
+								Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								Control.IsTemplateFocusTarget="True"
+								CornerRadius="{TemplateBinding CornerRadius}" />
+							<ScrollViewer
+								x:Name="ContentElement" Grid.Row="1" Grid.Column="0"
+								Margin="{TemplateBinding BorderThickness}"
+								Padding="{TemplateBinding Padding}"
+								AutomationProperties.AccessibilityView="Raw"
+								Foreground="{TemplateBinding Foreground}"
+								HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+								HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+								IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+								IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+								IsTabStop="False"
+								IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+								VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+								VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+								ZoomMode="Disabled" />
+							<TextBlock
+								x:Name="PlaceholderTextContentPresenter" Grid.Row="1" Grid.Column="0"
+								Grid.ColumnSpan="2"
+								Margin="{TemplateBinding BorderThickness}"
+								Padding="{TemplateBinding Padding}"
+								Foreground="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForeground}}"
+								IsHitTestVisible="False"
+								Text="{TemplateBinding PlaceholderText}"
+								TextAlignment="{TemplateBinding TextAlignment}"
+								TextWrapping="{TemplateBinding TextWrapping}" />
+							<ContentPresenter
+								x:Name="DescriptionPresenter" Grid.Row="2" Grid.Column="0"
+								Grid.ColumnSpan="2" x:Load="False" AutomationProperties.AccessibilityView="Raw"
+								Content="{TemplateBinding Description}"
+								Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}" />
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal" />
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlHeaderForegroundDisabled}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundDisabled}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushDisabled}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundDisabled}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForegroundDisabled}}" />
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="PointerOver">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushPointerOver}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundPointerOver}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForegroundPointerOver}}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundPointerOver}" />
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Focused">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForegroundFocused}}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundFocused}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushFocused}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderThickness">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderThemeThicknessFocused}" />
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundFocused}" />
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 	</UserControl.Resources>
 
 	<ScrollViewer>
@@ -36,6 +205,15 @@
 					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Tags, Mode=TwoWay}"
 					TextWrapping="Wrap" />
+				<muxc:ItemsRepeater
+					Margin="0,0,0,10"
+					Animator="{StaticResource ItemsRepeaterAnimator}"
+					ItemTemplate="{StaticResource TagTemplateSelector}"
+					ItemsSource="{x:Bind Data.TagsList}">
+					<muxc:ItemsRepeater.Layout>
+						<muxc:FlowLayout MinColumnSpacing="2" MinRowSpacing="2" />
+					</muxc:ItemsRepeater.Layout>
+				</muxc:ItemsRepeater>
 				<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 					<ComboBox
 						x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,20,0"
