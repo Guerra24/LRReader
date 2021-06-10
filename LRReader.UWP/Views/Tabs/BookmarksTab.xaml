@@ -29,7 +29,7 @@
 				</Viewbox>
 				<Button.Flyout>
 					<MenuFlyout Placement="Bottom">
-						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Export" Click="ExportButton_Click" Icon="Download"/>
+						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Export" Click="ExportButton_Click" Icon="Download" />
 						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Import" Click="ImportButton_Click" Icon="ImportAll" />
 					</MenuFlyout>
 				</Button.Flyout>

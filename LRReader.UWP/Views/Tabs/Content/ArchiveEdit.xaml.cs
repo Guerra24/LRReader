@@ -18,21 +18,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public async void LoadArchive(Archive archive) => await Data.LoadArchive(archive);
 
-		public async void Refresh() => await Data.ReloadArchive();
-
-		private async void SaveButton_Click(object sender, RoutedEventArgs e) => await Data.SaveArchive();
-
-		private async void PluginButton_Click(object sender, RoutedEventArgs e) => await Data.UsePlugin();
-
-		private void AddButton_Click(object sender, RoutedEventArgs e)
-		{
-			Data.AddEmptyTag();
-		}
-
-		private void RemoveButton_Click(object sender, RoutedEventArgs e)
-		{
-			Data.RemoveTag((sender as Button).Tag as EditableTag);
-		}
 	}
 
 	public class TagTemplateSelector : DataTemplateSelector

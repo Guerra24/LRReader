@@ -14,9 +14,5 @@ namespace LRReader.UWP.Views.Tabs
 			this.CustomTabId = "Edit_" + archive.arcid;
 		}
 
-		private void RefreshButton_Click(object sender, RoutedEventArgs e)
-		{
-			TabContent.Refresh();
-		}
 	}
 }

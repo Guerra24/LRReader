@@ -8,24 +8,24 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	ToolTipService.ToolTip="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	Header="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>
 		<controls:SymbolIconSource Symbol="Edit" />
 	</controls:TabViewItem.IconSource>
-	<controls:TabViewItem.Header>
-		<StackPanel Orientation="Horizontal">
-			<TextBlock MaxWidth="200" Text="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}" TextTrimming="WordEllipsis" />
-		</StackPanel>
-	</controls:TabViewItem.Header>
+	<controls:TabViewItem.HeaderTemplate>
+		<DataTemplate x:DataType="x:String">
+			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
+		</DataTemplate>
+	</controls:TabViewItem.HeaderTemplate>
 	<internal:CustomTab.CustomTabControl>
-		<StackPanel Orientation="Horizontal">
-			<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
-				<Viewbox MaxWidth="16" MaxHeight="16">
-					<SymbolIcon Symbol="Refresh" />
-				</Viewbox>
-			</Button>
-		</StackPanel>
+		<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<SymbolIcon Symbol="Refresh" />
+			</Viewbox>
+		</Button>
 	</internal:CustomTab.CustomTabControl>
 
 	<content:ArchiveEdit x:Name="TabContent" />

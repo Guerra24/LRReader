@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -109,6 +104,18 @@ namespace LRReader.Internal
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
 			return Enum.ToObject(targetType, value);
+		}
+	}
+	public class DisabledTextConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return (bool)value ? Application.Current.Resources["TextControlHeaderForegroundDisabled"] : Application.Current.Resources["TextControlHeaderForeground"];
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

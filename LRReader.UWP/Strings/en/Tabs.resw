@@ -177,6 +177,9 @@
   <data name="ArchiveEdit.Tags.Header" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="ArchiveEdit.TagsV2.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="ArchiveEdit.Title.Header" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -266,5 +269,8 @@
   </data>
   <data name="SearchResults.Tab.Header" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Settings.Tab.Header" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

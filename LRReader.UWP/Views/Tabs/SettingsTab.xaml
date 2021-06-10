@@ -6,12 +6,12 @@
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
-	xmlns:local="using:LRReader.Views.Tabs"
+	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Uid="/Tabs/Settings/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Settings"
-	Header="Settings"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>
 		<controls:SymbolIconSource Symbol="Setting" />
