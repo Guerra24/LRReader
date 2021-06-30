@@ -61,7 +61,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			Events = events;
 			SaveCommand = new AsyncRelayCommand(SaveArchive, () => !Saving);
-			UsePluginCommand = new AsyncRelayCommand(UsePlugin, () => !Saving);
+			UsePluginCommand = new AsyncRelayCommand(UsePlugin, () => !Saving && Plugins.Count > 0);
 			ReloadCommand = new AsyncRelayCommand(ReloadArchive, () => !Saving);
 
 			TagCommand = new RelayCommand<EditableTag>(HandleTagCommand, (_) => !Saving);
@@ -75,10 +75,7 @@ namespace LRReader.Shared.ViewModels
 
 			OnPropertyChanged("Title");
 			OnPropertyChanged("Archive");
-			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
-			Plugins.Clear();
-			plugins.ForEach(p => Plugins.Add(p));
-			CurrentPlugin = Plugins.ElementAt(0);
+			await ReloadPlugins();
 		}
 
 		private async Task ReloadArchive()
@@ -90,10 +87,7 @@ namespace LRReader.Shared.ViewModels
 				ReloadTagsList(result.tags);
 				OnPropertyChanged("Title");
 			}
-			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
-			Plugins.Clear();
-			plugins.ForEach(p => Plugins.Add(p));
-			CurrentPlugin = Plugins.ElementAt(0);
+			await ReloadPlugins();
 		}
 
 		private async Task SaveArchive()
@@ -133,6 +127,20 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 			Saving = false;
+		}
+
+		private async Task ReloadPlugins()
+		{
+			var plugins = await ServerProvider.GetPlugins(PluginType.Metadata);
+			if (plugins == null || plugins.Count == 0)
+			{
+				CurrentPlugin = null;
+				return;
+			}
+			Plugins.Clear();
+			plugins.ForEach(p => Plugins.Add(p));
+			CurrentPlugin = Plugins.ElementAt(0);
+			UsePluginCommand.NotifyCanExecuteChanged();
 		}
 
 		private string BuildTags()

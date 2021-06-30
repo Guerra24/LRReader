@@ -11,13 +11,14 @@
   <ItemGroup>
     <PackageReference Include="Caching.dll" Version="1.3.5.1" />
     <PackageReference Include="KeyedSemaphores" Version="2.0.0" />
-    <PackageReference Include="MetadataExtractor" Version="2.5.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
+    <PackageReference Include="MetadataExtractor" Version="2.6.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.7" />
+    <PackageReference Include="SharpZipLib" Version="1.3.2" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 

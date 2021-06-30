@@ -72,7 +72,7 @@
 			<Popup x:Name="TagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
 				<Grid
 					Padding="4" Windows10version1903:Translation="0,0,32"
-					Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+					Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
 					BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
 					BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" IsHitTestVisible="False">
 					<Windows10version1903:Grid.Shadow>

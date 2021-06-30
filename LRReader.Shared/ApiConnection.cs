@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Internal;
+﻿using ICSharpCode.SharpZipLib.BZip2;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
@@ -6,6 +7,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,7 +90,18 @@ namespace LRReader.Shared
 				}
 				catch (Exception e)
 				{
-					Crashes.TrackError(e); // We are getting bad data from the instance, send stack trace
+					var json = CompressData(restResponse.Content);
+					if (json == null)
+					{
+						Crashes.TrackError(e);
+						return default;
+					}
+
+					var attachments = new ErrorAttachmentLog[]
+					{
+						ErrorAttachmentLog.AttachmentWithBinary(json, "input.json.bz2", "application/x-bzip2")
+					};
+					Crashes.TrackError(e, attachments: attachments); // We are getting bad data from the instance, send stack trace
 					return default;
 				}
 			});
@@ -140,6 +153,21 @@ namespace LRReader.Shared
 					break;
 			}
 			return error;
+		}
+
+		private static byte[] CompressData(string data)
+		{
+			if (data == null)
+				return null;
+			byte[] buffer = Encoding.UTF8.GetBytes(data);
+			using (var compressed = new MemoryStream())
+			{
+				using (var bzip2Comp = new BZip2OutputStream(compressed))
+				{
+					bzip2Comp.Write(buffer, 0, buffer.Length);
+				}
+				return compressed.ToArray();
+			}
 		}
 	}
 

@@ -9,7 +9,7 @@
 		<ResourceDictionary>
 			<vm:ViewModelLocator x:Key="Locator" />
 			<ResourceDictionary.MergedDictionaries>
-				<controls:XamlControlsResources ControlsResourcesVersion="Version2">
+				<controls:XamlControlsResources>
 					<controls:XamlControlsResources.MergedDictionaries>
 						<ResourceDictionary Source="/Resources/ThemeDictionary.xaml" />
 						<ResourceDictionary Source="/Resources/NotificationStyle.xaml" />

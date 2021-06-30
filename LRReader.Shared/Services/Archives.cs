@@ -96,6 +96,11 @@ namespace LRReader.Shared.Services
 			if (!Archives.ContainsKey(id))
 				return;
 			var result = await ArchivesProvider.DeleteArchive(id);
+			if (result == null)
+			{
+				Events.ShowNotification("Unable to delete archive", "", 0);
+				return;
+			}
 			if (result.success)
 			{
 				var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(id));
@@ -106,7 +111,7 @@ namespace LRReader.Shared.Services
 			}
 			else
 			{
-				Events.ShowNotification("An error ocurred while deleting archive.", "Metadata has been deleted, remove file manually.", 0);
+				Events.ShowNotification("An error ocurred while deleting archive", "Metadata has been deleted, remove file manually.", 0);
 			}
 		}
 

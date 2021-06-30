@@ -173,6 +173,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 					rightTarget = tmp;
 				}
 			}
+			leftTarget = leftTarget.Clamp(0, count - 1);
+			rightTarget = rightTarget.Clamp(0, count - 1);
 			if (animate)
 			{
 				if (Data.ReaderContent.LeftImage != null && animLeft != null)
