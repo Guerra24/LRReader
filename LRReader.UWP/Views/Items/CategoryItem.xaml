@@ -41,10 +41,10 @@
 				x:Name="Thumbnail" Width="200" Height="275"
 				HorizontalAlignment="Center" />
 			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
-				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
+				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>
 			<Grid x:Name="SearchImage" x:Load="{x:Bind ViewModel.SearchImage, Mode=OneWay}">
-				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="24" Glyph="&#xE721;" />
+				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="24" Glyph="&#xE721;" />
 			</Grid>
 			<Grid
 				x:Name="PinnedGrid" Padding="4" HorizontalAlignment="Left"
@@ -52,7 +52,7 @@
 				x:Load="{x:Bind ViewModel.Category.pinned, Mode=OneWay}"
 				Background="{ThemeResource GridOverGridBackground}"
 				CornerRadius="0,4,0,0">
-				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="26" Glyph="&#xE735;" />
+				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="26" Glyph="&#xE735;" />
 			</Grid>
 		</Grid>
 	</Grid>

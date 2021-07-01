@@ -27,7 +27,7 @@
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
 				TintColor="{ThemeResource SystemChromeAltHighColor}"
-				TintOpacity="0.8" />
+				TintOpacity="0.5" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#505050</Color>
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}" />
@@ -72,7 +72,7 @@
 				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
 				FallbackColor="{ThemeResource ColorNavTop}"
 				TintColor="{ThemeResource SystemChromeAltHighColor}"
-				TintOpacity="0.8" />
+				TintOpacity="0.5" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#C0C0C0</Color>
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}" />

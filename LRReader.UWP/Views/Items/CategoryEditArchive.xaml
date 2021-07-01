@@ -75,7 +75,7 @@
 					HorizontalAlignment="Center" />
 			</Grid>
 			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
-				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
+				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>
 			<Grid
 				x:Name="ProgressGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"

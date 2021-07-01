@@ -35,7 +35,7 @@
 				Visibility="{x:Bind ViewModel.CanEdit}" />
 			<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="CategoriesButton_Click" Visibility="{x:Bind ViewModel.CanEdit}">
 				<MenuFlyoutItem.Icon>
-					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
 				</MenuFlyoutItem.Icon>
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
@@ -57,7 +57,7 @@
 				<RowDefinition Height="1*" />
 			</Grid.RowDefinitions>
 			<Grid x:Name="MissingImage" Grid.RowSpan="2" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
-				<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
+				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>
 			<Rectangle Grid.RowSpan="2">
 				<Rectangle.Fill>

@@ -7,6 +7,7 @@ using Microsoft.AppCenter.Crashes;
 using System;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.Services.Store;
@@ -29,6 +30,8 @@ namespace LRReader.UWP.Views.Main
 
 		private ResourceLoader lang;
 
+		private static SplashScreen splashScreen;
+
 		public LoadingPage()
 		{
 			this.InitializeComponent();
@@ -41,6 +44,9 @@ namespace LRReader.UWP.Views.Main
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+			if (e.Parameter is SplashScreen splash)
+				splashScreen = splash;
+			UpdateSplash();
 			TitleBar.Height = CoreView.TitleBar.Height;
 			CoreView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
 		}
@@ -176,5 +182,17 @@ namespace LRReader.UWP.Views.Main
 			}
 		}
 
+		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			UpdateSplash();
+		}
+
+		private void UpdateSplash()
+		{
+			Splash.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.X);
+			Splash.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Y);
+			Splash.Width = splashScreen.ImageLocation.Width;
+			Splash.Height = splashScreen.ImageLocation.Height;
+		}
 	}
 }

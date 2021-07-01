@@ -38,7 +38,7 @@
 			<TextBlock x:Name="PageCount" Padding="6,2" FontSize="16" />
 		</Grid>
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
-			<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="34" Glyph="&#xE8CD;" />
+			<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 		</Grid>
 		<muxc:ProgressRing
 			Name="Ring" Width="50" Height="50"

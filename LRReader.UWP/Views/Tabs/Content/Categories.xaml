@@ -19,7 +19,7 @@
 		</DataTemplate>
 		<DataTemplate x:Key="AddNewCategoryTemplate" x:DataType="main:AddNewCategory">
 			<Grid Width="196" Height="297" Background="{ThemeResource BrushItemGridBackground}">
-				<SymbolIcon Symbol="Add" />
+				<SymbolIcon Symbol="NewFolder" />
 			</Grid>
 		</DataTemplate>
 		<local:CategoryTemplateSelector x:Key="CategoryTemplateSelector" AddNewTemplate="{StaticResource AddNewCategoryTemplate}" StaticTemplate="{StaticResource StaticCategoryTemplate}" />

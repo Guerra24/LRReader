@@ -14,7 +14,7 @@
 	CustomTabId="Bookmarks"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>
-		<controls:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
+		<controls:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 	</controls:TabViewItem.IconSource>
 	<internal:CustomTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal">

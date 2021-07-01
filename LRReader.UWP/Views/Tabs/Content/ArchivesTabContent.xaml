@@ -76,7 +76,7 @@
 											Tag="Descending" />
 									</MenuFlyout>
 								</Button.Flyout>
-								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE8CB;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE8CB;" />
 							</Button>
 							<ComboBox
 								x:Uid="/Tabs/Archives/SortBy" MinWidth="150" HorizontalAlignment="Stretch"
@@ -88,20 +88,20 @@
 								x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
 								Click="ClearButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
-								<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE894;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 							</Button>
 						</StackPanel>
 						<!--<StackPanel
 							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">
 							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
-								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72B;" />
 							</Button>
 							<TextBlock
 								Margin="10,0" VerticalAlignment="Center" FontSize="22"
 								Text="{x:Bind Data.DisplayPage, Mode=OneWay}" />
 							<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
-								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72A;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72A;" />
 							</Button>
 						</StackPanel>-->
 						<muxc:PagerControl
@@ -116,13 +116,13 @@
 				<GridView.Footer>
 					<!--<StackPanel Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
 						<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
-							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72B;" />
 						</Button>
 						<TextBlock
 							Margin="10,0" VerticalAlignment="Center" FontSize="22"
 							Text="{x:Bind Data.DisplayPage, Mode=OneWay}" />
 						<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
-							<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72A;" />
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72A;" />
 						</Button>
 					</StackPanel>-->
 					<muxc:PagerControl

@@ -125,7 +125,7 @@
 				<Button
 					x:Name="PART_DismissButton" Grid.Column="1" Margin="0"
 					VerticalAlignment="Center" AutomationProperties.Name="Dismiss" Content="&#xE894;"
-					CornerRadius="2" FontFamily="Segoe MDL2 Assets" FontSize="12"
+					CornerRadius="2" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="12"
 					Style="{StaticResource DismissTextBlockButtonStyle}">
 					<Button.RenderTransform>
 						<TranslateTransform x:Name="DismissButtonTransform" X="25" Y="0" />

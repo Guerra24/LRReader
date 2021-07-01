@@ -91,7 +91,7 @@ namespace LRReader.UWP
 			{
 				CoreApplication.EnablePrelaunch(true);
 				if (rootFrame.Content == null)
-					rootFrame.Navigate(typeof(LoadingPage), e.Arguments, new SuppressNavigationTransitionInfo());
+					rootFrame.Navigate(typeof(LoadingPage), e.SplashScreen, new SuppressNavigationTransitionInfo());
 				Window.Current.Activate();
 			}
 			else

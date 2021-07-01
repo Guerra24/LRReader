@@ -15,7 +15,7 @@
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:DisabledTextConverter x:Key="DisabledTextConverter" />
 		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-			<Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+			<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
 			<Setter Property="FontSize" Value="12" />
 			<Setter Property="Padding" Value="5.5" />
 		</Style>
@@ -208,7 +208,7 @@
 				<Grid Margin="0,0,0,10">
 					<ToggleButton
 						x:Name="ToggleVisuals" Padding="4.5" HorizontalAlignment="Right"
-						VerticalAlignment="Top" Content="&#xE8AB;" FontFamily="Segoe MDL2 Assets" />
+						VerticalAlignment="Top" Content="&#xE8AB;" FontFamily="{StaticResource SymbolThemeFontFamily}" />
 					<TextBox
 						x:Name="TextTags" x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="80"
 						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"

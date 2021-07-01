@@ -89,7 +89,7 @@
 				<controls:GridSplitter.Element>
 					<Grid BorderBrush="{ThemeResource SystemControlBackgroundListLowRevealBorderBrush}" BorderThickness="1,1,1,0">
 						<TextBlock
-							HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"
+							HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"
 							FontSize="16" IsHitTestVisible="False" Text="&#xE784;" />
 					</Grid>
 				</controls:GridSplitter.Element>

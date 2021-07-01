@@ -14,7 +14,7 @@
 	CustomTabId="Categories"
 	mc:Ignorable="d">
 	<controls:TabViewItem.IconSource>
-		<controls:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
+		<controls:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 	</controls:TabViewItem.IconSource>
 	<internal:CustomTab.CustomTabControl>
 		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">

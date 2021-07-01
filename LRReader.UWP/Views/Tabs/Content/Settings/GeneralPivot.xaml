@@ -57,7 +57,7 @@
 				<Button
 					x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
 					VerticalAlignment="Bottom" Click="ClearButton_Click">
-					<FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE894;" />
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 				</Button>
 			</StackPanel>
 			<ComboBox

@@ -59,17 +59,17 @@
 					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
 						<Button x:Uid="/Pages/HostTabPage/Bookmarks" Click="Bookmarks_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
-								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE728;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 							</Viewbox>
 						</Button>
 						<Button x:Uid="/Pages/HostTabPage/Categories" Click="Categories_Click" Visibility="{x:Bind Data.ControlFlags.CategoriesEnabled, Converter={StaticResource BoolToVisibility}}">
 							<Viewbox MaxWidth="16" MaxHeight="16">
-								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF5ED;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 							</Viewbox>
 						</Button>
 						<Button x:Uid="/Pages/HostTabPage/Search" Click="Search_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
-								<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;" />
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 							</Viewbox>
 						</Button>
 					</StackPanel>
