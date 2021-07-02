@@ -4,10 +4,8 @@ using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -20,6 +18,7 @@ namespace LRReader.Shared.ViewModels
 		public AsyncRelayCommand ReloadCommand { get; }
 
 		private RelayCommand<EditableTag> TagCommand { get; }
+		public RelayCommand AddAllTags { get; }
 
 		public Archive Archive;
 
@@ -42,11 +41,14 @@ namespace LRReader.Shared.ViewModels
 				SaveCommand.NotifyCanExecuteChanged();
 				UsePluginCommand.NotifyCanExecuteChanged();
 				ReloadCommand.NotifyCanExecuteChanged();
+				AddAllTags.NotifyCanExecuteChanged();
 			}
 		}
 
 		public ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
 		public ObservableCollection<EditableTag> TagsList = new ObservableCollection<EditableTag>();
+
+		public ObservableCollection<EditableTag> PluginTagsList = new ObservableCollection<EditableTag>();
 
 		private Plugin _currentPlugin;
 		public Plugin CurrentPlugin
@@ -55,16 +57,27 @@ namespace LRReader.Shared.ViewModels
 			set => SetProperty(ref _currentPlugin, value);
 		}
 
+		private bool _useTextTags;
+		public bool UseTextTags
+		{
+			get => _useTextTags;
+			set => SetProperty(ref _useTextTags, value);
+		}
+
 		public string Arg = "";
 
-		public ArchiveEditViewModel(EventsService events)
+		public ArchiveEditViewModel(EventsService events, SettingsService settings)
 		{
 			Events = events;
+
+			UseTextTags = !settings.UseVisualTags;
+
 			SaveCommand = new AsyncRelayCommand(SaveArchive, () => !Saving);
 			UsePluginCommand = new AsyncRelayCommand(UsePlugin, () => !Saving && Plugins.Count > 0);
 			ReloadCommand = new AsyncRelayCommand(ReloadArchive, () => !Saving);
 
 			TagCommand = new RelayCommand<EditableTag>(HandleTagCommand, (_) => !Saving);
+			AddAllTags = new RelayCommand(AddPluginTags, () => !Saving && Plugins.Count > 0 && PluginTagsList.Count > 0);
 		}
 
 		public async Task LoadArchive(Archive archive)
@@ -93,13 +106,22 @@ namespace LRReader.Shared.ViewModels
 		private async Task SaveArchive()
 		{
 			Saving = true;
-			var tags = BuildTags();
+			string tags;
+			if (UseTextTags)
+				tags = Tags;
+			else
+				tags = BuildTags();
 			var result = await ArchivesProvider.UpdateArchive(Archive.arcid, Title, tags);
 			if (result)
 			{
 				Archive.title = Title;
 				Archive.tags = tags;
-				Tags = BuildTags();
+				if (UseTextTags)
+					ReloadTagsList(tags);
+				else
+					Tags = BuildTags();
+				PluginTagsList.Clear();
+				AddAllTags.NotifyCanExecuteChanged();
 				OnPropertyChanged("Archive");
 			}
 			Saving = false;
@@ -109,6 +131,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			await SaveArchive();
 			Saving = true;
+			PluginTagsList.Clear();
 			var result = await ServerProvider.UsePlugin(CurrentPlugin.@namespace, Archive.arcid, Arg);
 			if (result != null)
 			{
@@ -116,9 +139,18 @@ namespace LRReader.Shared.ViewModels
 				{
 					if (!string.IsNullOrEmpty(result.data.new_tags))
 					{
-						foreach (var t in result.data.new_tags.Split(','))
-							TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = t.Trim(), Command = TagCommand });
-						Tags = BuildTags();
+						if (UseTextTags)
+						{
+							if (!Tags.TrimEnd().EndsWith(","))
+								Tags = Tags.TrimEnd() + ",";
+							Tags += result.data.new_tags;
+						}
+						else
+						{
+							foreach (var t in result.data.new_tags.Split(','))
+								PluginTagsList.Add(new PluginTag { Tag = t.Trim(), Command = TagCommand });
+							AddAllTags.NotifyCanExecuteChanged();
+						}
 					}
 				}
 				else
@@ -137,10 +169,19 @@ namespace LRReader.Shared.ViewModels
 				CurrentPlugin = null;
 				return;
 			}
+			PluginTagsList.Clear();
 			Plugins.Clear();
 			plugins.ForEach(p => Plugins.Add(p));
 			CurrentPlugin = Plugins.ElementAt(0);
 			UsePluginCommand.NotifyCanExecuteChanged();
+			AddAllTags.NotifyCanExecuteChanged();
+		}
+
+		private void AddPluginTags()
+		{
+			foreach (var tag in PluginTagsList)
+				if (!TagsList.Contains(tag))
+					TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = tag.Tag, Command = TagCommand });
 		}
 
 		private string BuildTags()
@@ -155,9 +196,18 @@ namespace LRReader.Shared.ViewModels
 		private void HandleTagCommand(EditableTag tag)
 		{
 			if (tag is AddTag)
+			{
 				TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = "", Command = TagCommand });
+			}
+			else if (tag is PluginTag)
+			{
+				if (!TagsList.Contains(tag))
+					TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = tag.Tag, Command = TagCommand });
+			}
 			else
+			{
 				TagsList.Remove(tag);
+			}
 		}
 
 		private void ReloadTagsList(string tags)
@@ -175,9 +225,26 @@ namespace LRReader.Shared.ViewModels
 	{
 		public string Tag { get; set; }
 		public RelayCommand<EditableTag> Command { get; internal set; }
+
+		public override bool Equals(object obj)
+		{
+			if (obj is AddTag || this is AddTag)
+				return false;
+			return obj is EditableTag tag &&
+				   Tag.Equals(tag.Tag);
+		}
+
+		public override int GetHashCode()
+		{
+			return Tag.GetHashCode();
+		}
 	}
 
 	public class AddTag : EditableTag
+	{
+
+	}
+	public class PluginTag : EditableTag
 	{
 
 	}

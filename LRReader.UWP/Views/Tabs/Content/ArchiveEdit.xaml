@@ -26,11 +26,11 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<TextBox
-					x:Uid="/Tabs/ArchiveEdit/EditableTag" MinWidth="40" MinHeight="0"
-					Padding="4,2"
+					MinWidth="40" MinHeight="0" Padding="4,2"
 					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
 					CornerRadius="4,0,0,4"
 					IsEnabled="{Binding IsEnabled, ElementName=RemoveTag}"
+					IsSpellCheckEnabled="False"
 					Style="{StaticResource EditTagTextBoxStyle}"
 					Text="{x:Bind Tag, Mode=TwoWay}" />
 				<Button
@@ -58,6 +58,27 @@
 				Style="{ThemeResource AddRemoveButtonStyle}" />
 		</DataTemplate>
 		<local:TagTemplateSelector x:Key="TagTemplateSelector" AddTemplate="{StaticResource AddTagTemplate}" EditableTemplate="{StaticResource EditableTagTemplate}" />
+		<DataTemplate x:Key="PluginTagTemplate" x:DataType="viewmodels:EditableTag">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Border Background="{ThemeResource TextControlBackground}" CornerRadius="4,0,0,4">
+					<TextBlock Padding="4,2" VerticalAlignment="Bottom" Text="{x:Bind Tag, Mode=TwoWay}" />
+				</Border>
+				<Button
+					x:Name="AddPluginTag" x:Uid="/Tabs/ArchiveEdit/PluginTag" Grid.Column="1"
+					Background="{ThemeResource ControlStrongStrokeColorDisabled}"
+					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+					BorderThickness="0,1,1,1"
+					Command="{x:Bind Command}"
+					CommandParameter="{x:Bind}"
+					Content="&#xE710;" CornerRadius="0,4,4,0"
+					Style="{ThemeResource AddRemoveButtonStyle}"
+					Tag="{x:Bind}" />
+			</Grid>
+		</DataTemplate>
 		<Style x:Key="EditTagTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
 			<!--  Stolen from https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/TextBox_themeresources.xaml  -->
 			<Setter Property="Template">
@@ -207,13 +228,16 @@
 					Text="{x:Bind Data.Title, Mode=TwoWay}" />
 				<Grid Margin="0,0,0,10">
 					<ToggleButton
-						x:Name="ToggleVisuals" Padding="4.5" HorizontalAlignment="Right"
-						VerticalAlignment="Top" Content="&#xE8AB;" FontFamily="{StaticResource SymbolThemeFontFamily}" />
+						Padding="4.5" HorizontalAlignment="Right" VerticalAlignment="Top"
+						Content="&#xE8AB;"
+						FontFamily="{StaticResource SymbolThemeFontFamily}"
+						IsChecked="{x:Bind Data.UseTextTags, Mode=TwoWay}"
+						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
 					<TextBox
 						x:Name="TextTags" x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="80"
 						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
-						IsReadOnly="True"
-						Text="{x:Bind Data.Tags, Mode=OneWay}"
+						IsSpellCheckEnabled="False"
+						Text="{x:Bind Data.Tags, Mode=TwoWay}"
 						TextWrapping="Wrap" Visibility="Collapsed" />
 					<StackPanel x:Name="VisualTags">
 						<TextBlock
@@ -230,12 +254,32 @@
 				</Grid>
 				<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 					<ComboBox
-						x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,20,0"
+						x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,10,0"
 						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
 						ItemsSource="{x:Bind Data.Plugins}"
 						SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
 					<Button x:Uid="/Tabs/ArchiveEdit/RunPlugin" VerticalAlignment="Bottom" Command="{x:Bind Data.UsePluginCommand}" />
 				</StackPanel>
+				<Grid x:Name="PluginTags" Margin="0,0,0,10">
+					<Button
+						x:Uid="/Tabs/ArchiveEdit/AddAllTags" Padding="4.5" HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						Command="{x:Bind Data.AddAllTags}"
+						Content="&#xE710;"
+						FontFamily="{StaticResource SymbolThemeFontFamily}" />
+					<StackPanel>
+						<TextBlock
+							x:Uid="/Tabs/ArchiveEdit/TagsV2"
+							Margin="{ThemeResource TextBoxTopHeaderMargin}"
+							HorizontalAlignment="Left"
+							Foreground="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource DisabledTextConverter}}" />
+						<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemTemplate="{StaticResource PluginTagTemplate}" ItemsSource="{x:Bind Data.PluginTagsList}">
+							<muxc:ItemsRepeater.Layout>
+								<muxc:FlowLayout MinColumnSpacing="3" MinRowSpacing="3" />
+							</muxc:ItemsRepeater.Layout>
+						</muxc:ItemsRepeater>
+					</StackPanel>
+				</Grid>
 				<TextBox
 					Margin="0,0,0,10"
 					Header="{x:Bind Data.CurrentPlugin.oneshot_arg, Mode=OneWay}"
@@ -254,10 +298,11 @@
 				<VisualState x:Name="Normal" />
 				<VisualState x:Name="Flipped">
 					<VisualState.StateTriggers>
-						<StateTrigger IsActive="{x:Bind ToggleVisuals.IsChecked.Value, Mode=OneWay}" />
+						<StateTrigger IsActive="{x:Bind Data.UseTextTags, Mode=OneWay}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="VisualTags.Visibility" Value="Collapsed" />
+						<Setter Target="PluginTags.Visibility" Value="Collapsed" />
 						<Setter Target="TextTags.Visibility" Value="Visible" />
 					</VisualState.Setters>
 				</VisualState>

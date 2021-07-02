@@ -174,6 +174,11 @@ namespace LRReader.Shared.Services
 				Service.Events.RebuildReaderImagesSet();
 			}
 		}
+		public bool UseVisualTags
+		{
+			get => SettingsStorage.GetObjectRoamed("UseVisualTags", false);
+			set => SettingsStorage.StoreObjectRoamed("UseVisualTags", value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal

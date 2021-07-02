@@ -228,6 +228,12 @@
   <data name="General.Theme.PlaceholderText" xml:space="preserve">
     <value>Theme</value>
   </data>
+  <data name="General.VisualTags.Header" xml:space="preserve">
+    <value>Use visual tags for editor</value>
+  </data>
+  <data name="General.VisualTags.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Uses controls for tag editing instead of a text box</value>
+  </data>
   <data name="GeneralPivot.Header" xml:space="preserve">
     <value>General</value>
   </data>
