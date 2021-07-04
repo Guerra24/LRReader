@@ -45,14 +45,14 @@
 					Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 			</controls:ModernInput>
 			<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 			</controls:ModernInput>
 			<controls:ModernInput x:Uid="/Settings/Reader/RTL">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
 			</controls:ModernInput>
 			<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
 				<controls:ModernExpander.Input>
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
 				</controls:ModernExpander.Input>
 				<controls:ModernExpander.Items>
 					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch" Style="{ThemeResource GroupModernInputStyle}">
@@ -74,7 +74,7 @@
 			</controls:ModernExpander>
 			<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
 				<controls:ModernExpander.Input>
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
 				</controls:ModernExpander.Input>
 				<controls:ModernExpander.Items>
 					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
@@ -82,14 +82,14 @@
 			</controls:ModernExpander>
 			<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
 				<controls:ModernExpander.Input>
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
 				</controls:ModernExpander.Input>
 				<controls:ModernExpander.Items>
 					<muxc:RadioButtons x:Name="ReminderModeRadio" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernExpander.Items>
 			</controls:ModernExpander>
 			<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
 			</controls:ModernInput>
 			<HyperlinkButton x:Uid="/Settings/Reader/AV1Notice" NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" Visibility="{x:Bind Data.AvifMissing, Mode=OneWay}" />
 			<HyperlinkButton x:Uid="/Settings/Reader/HEIFNotice" NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" Visibility="{x:Bind Data.HeifMissing, Mode=OneWay}" />

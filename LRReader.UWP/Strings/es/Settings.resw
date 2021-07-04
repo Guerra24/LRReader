@@ -156,31 +156,37 @@
   <data name="General.AppTheme.System" xml:space="preserve">
     <value>Por defecto</value>
   </data>
-  <data name="General.Bookmarked.Header" xml:space="preserve">
+  <data name="General.Bookmarked.HeaderText" xml:space="preserve">
     <value>Abrir archivos con marcadores al inicio</value>
   </data>
-  <data name="General.Bookmarks.Header" xml:space="preserve">
+  <data name="General.Bookmarks.HeaderText" xml:space="preserve">
     <value>Abrir la pestaña Marcadores al inicio</value>
   </data>
-  <data name="General.Categories.Header" xml:space="preserve">
+  <data name="General.Categories.HeaderText" xml:space="preserve">
     <value>Abrir la pestaña Categorías al inicio</value>
   </data>
   <data name="General.ClearThumbCache.Content" xml:space="preserve">
     <value>Borrar la caché de miniaturas</value>
   </data>
-  <data name="General.CompactMarks.Header" xml:space="preserve">
+  <data name="General.CompactMarks.HeaderText" xml:space="preserve">
     <value>Usar marcadores compactos</value>
   </data>
   <data name="General.Connection.Text" xml:space="preserve">
     <value>Conexión</value>
   </data>
-  <data name="General.CrashReport.Header" xml:space="preserve">
+  <data name="General.CrashReport.HeaderText" xml:space="preserve">
     <value>Recopilar datos de los errores y fallos</value>
   </data>
   <data name="General.EditProfile.Content" xml:space="preserve">
     <value>Editar</value>
   </data>
-  <data name="General.OrderBy.Header" xml:space="preserve">
+  <data name="General.ExpanderProfile.HeaderText" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="General.InputSortBy.HeaderText" xml:space="preserve">
+    <value>Agrupar por</value>
+  </data>
+  <data name="General.OrderBy.HeaderText" xml:space="preserve">
     <value>Ordenar por</value>
   </data>
   <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
@@ -201,9 +207,6 @@
   <data name="General.Size.Text" xml:space="preserve">
     <value>Tamaño</value>
   </data>
-  <data name="General.SortBy.Header" xml:space="preserve">
-    <value>Agrupar por</value>
-  </data>
   <data name="General.SortBy.PlaceholderText" xml:space="preserve">
     <value>Titulo</value>
   </data>
@@ -222,16 +225,13 @@
   <data name="General.Tabs.Text" xml:space="preserve">
     <value>Pestañas</value>
   </data>
-  <data name="General.Theme.Header" xml:space="preserve">
+  <data name="General.Theme.HeaderText" xml:space="preserve">
     <value>Tema</value>
   </data>
-  <data name="General.Theme.PlaceholderText" xml:space="preserve">
-    <value>Tema</value>
+  <data name="General.VisualTags.HeaderText" xml:space="preserve">
+    <value>Etiquetas visuales en el editor</value>
   </data>
-  <data name="General.VisualTags.Header" xml:space="preserve">
-    <value>Utilizar etiquetas visuales en el editor</value>
-  </data>
-  <data name="General.VisualTags.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="General.VisualTags.SubText" xml:space="preserve">
     <value>Utiliza controles para la edición de etiquetas en lugar de un cuadro de texto</value>
   </data>
   <data name="GeneralPivot.Header" xml:space="preserve">

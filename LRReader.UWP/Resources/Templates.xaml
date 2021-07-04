@@ -30,7 +30,7 @@
 		<Setter Property="Transitions">
 			<Setter.Value>
 				<TransitionCollection>
-					<RepositionThemeTransition />
+					<RepositionThemeTransition IsStaggeringEnabled="False" />
 				</TransitionCollection>
 			</Setter.Value>
 		</Setter>
@@ -47,6 +47,9 @@
 						<Grid.Resources>
 							<Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
 							<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+							<Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="ToggleSwitch">
+								<Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
+							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition />

@@ -29,10 +29,13 @@
 			</Border>
 		</DataTemplate>
 		<local:ItemTemplateSelector x:Key="ExpanderItemSelector" LastItem="{StaticResource LastItem}" OtherItem="{StaticResource OtherItem}" />
+		<Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="ToggleSwitch">
+			<Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
+		</Style>
 	</muxc:Expander.Resources>
 	<muxc:Expander.Transitions>
 		<TransitionCollection>
-			<RepositionThemeTransition />
+			<RepositionThemeTransition IsStaggeringEnabled="False" />
 		</TransitionCollection>
 	</muxc:Expander.Transitions>
 
