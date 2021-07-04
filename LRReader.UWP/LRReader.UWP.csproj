@@ -158,6 +158,7 @@
     <Compile Include="Views\Controls\ModernExpander.xaml.cs">
       <DependentUpon>ModernExpander.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ModernGroup.cs" />
     <Compile Include="Views\Controls\ModernInput.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>

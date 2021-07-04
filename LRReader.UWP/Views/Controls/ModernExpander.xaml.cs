@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace LRReader.UWP.Views.Controls
 {
+	[ContentProperty(Name = "Items")]
 	public sealed partial class ModernExpander : Expander
 	{
 		public ModernExpander()

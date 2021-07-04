@@ -3,11 +3,12 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
-	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters">
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
 
 	<Style BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput" />
 
-	<Style x:Key="GroupModernInputStyle" BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput">
+	<Style x:Key="GroupedModernInputStyle" BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput">
 		<Setter Property="Margin" Value="0" />
 		<Setter Property="Padding" Value="0" />
 		<Setter Property="Background" Value="{x:Null}" />
@@ -68,8 +69,29 @@
 							Grid.Column="1" Margin="0,0,16,0"
 							HorizontalAlignment="{x:Bind InputHorizontalAlignment}"
 							VerticalAlignment="Center"
-							Content="{x:Bind Content}" />
+							Content="{x:Bind Control}" />
 					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style TargetType="controls:ModernGroup">
+		<Setter Property="Margin" Value="0,0,0,29" />
+		<Setter Property="Transitions">
+			<Setter.Value>
+				<TransitionCollection>
+					<RepositionThemeTransition IsStaggeringEnabled="False" />
+				</TransitionCollection>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:ModernGroup">
+					<StackPanel>
+						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Text}" />
+						<muxc:ItemsRepeater ItemsSource="{x:Bind Content}" />
+					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

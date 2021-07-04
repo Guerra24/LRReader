@@ -20,42 +20,42 @@
 	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
 		<StackPanel
 			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
-			MaxWidth="1000" Padding="24,10,24,40" HorizontalAlignment="Center">
-			<controls:ModernInput x:Uid="/Settings/Reader/Zoom" InputHorizontalAlignment="Stretch">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Slider
-						IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
-						TickFrequency="30" TickPlacement="None"
-						Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
-					<TextBlock
-						Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
-						VerticalAlignment="Center">
-						<Run Text="{x:Bind Data.SettingsManager.DefaultZoom, Mode=OneWay}" />%
-					</TextBlock>
-				</Grid>
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/Reader/Keyboard">
-				<muxc:NumberBox
-					MinWidth="120" Minimum="1" SmallChange="20"
-					SpinButtonPlacementMode="Inline"
-					Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/Reader/RTL">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
-				<controls:ModernExpander.Input>
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
-				</controls:ModernExpander.Input>
-				<controls:ModernExpander.Items>
-					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch" Style="{ThemeResource GroupModernInputStyle}">
+			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Uid="/Settings/Reader/ReaderGroup">
+				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" InputHorizontalAlignment="Stretch">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Slider
+							IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+							TickFrequency="30" TickPlacement="None"
+							Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
+						<TextBlock
+							Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+							VerticalAlignment="Center">
+							<Run Text="{x:Bind Data.SettingsManager.DefaultZoom, Mode=OneWay}" />%
+						</TextBlock>
+					</Grid>
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Reader/Keyboard">
+					<muxc:NumberBox
+						MinWidth="120" Minimum="1" SmallChange="20"
+						SpinButtonPlacementMode="Inline"
+						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Reader/RTL">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch" Style="{ThemeResource GroupedModernInputStyle}">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
@@ -70,29 +70,27 @@
 							</TextBlock>
 						</Grid>
 					</controls:ModernInput>
-				</controls:ModernExpander.Items>
-			</controls:ModernExpander>
-			<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
-				<controls:ModernExpander.Input>
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
-				</controls:ModernExpander.Input>
-				<controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
 					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
-				</controls:ModernExpander.Items>
-			</controls:ModernExpander>
-			<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
-				<controls:ModernExpander.Input>
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
-				</controls:ModernExpander.Input>
-				<controls:ModernExpander.Items>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/Reader/BookmarksGroup">
+				<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
 					<muxc:RadioButtons x:Name="ReminderModeRadio" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
-				</controls:ModernExpander.Items>
-			</controls:ModernExpander>
-			<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<HyperlinkButton x:Uid="/Settings/Reader/AV1Notice" NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" Visibility="{x:Bind Data.AvifMissing, Mode=OneWay}" />
-			<HyperlinkButton x:Uid="/Settings/Reader/HEIFNotice" NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" Visibility="{x:Bind Data.HeifMissing, Mode=OneWay}" />
+				</controls:ModernExpander>
+				<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<HyperlinkButton x:Uid="/Settings/Reader/AV1Notice" NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" Visibility="{x:Bind Data.AvifMissing, Mode=OneWay}" />
+				<HyperlinkButton x:Uid="/Settings/Reader/HEIFNotice" NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" Visibility="{x:Bind Data.HeifMissing, Mode=OneWay}" />
+			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

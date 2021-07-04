@@ -246,6 +246,9 @@
   <data name="Reader.AV1Notice.Content" xml:space="preserve">
     <value>Instale las extensiones de vídeo AV1 para ver contenido en AVIF</value>
   </data>
+  <data name="Reader.BookmarksGroup.Text" xml:space="preserve">
+    <value>Marcadores</value>
+  </data>
   <data name="Reader.FitLimit.HeaderText" xml:space="preserve">
     <value>Límite de escalado de página</value>
   </data>
@@ -266,6 +269,9 @@
   </data>
   <data name="Reader.Keyboard.SubText" xml:space="preserve">
     <value>Distancia en píxeles cuando se usa el teclado</value>
+  </data>
+  <data name="Reader.ReaderGroup.Text" xml:space="preserve">
+    <value>Lector</value>
   </data>
   <data name="Reader.Reminder.HeaderText" xml:space="preserve">
     <value>Preguntar si se quiere agregar marcador</value>

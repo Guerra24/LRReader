@@ -16,35 +16,13 @@
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 		<internal:EnumToInt x:Key="EnumToInt" />
-		<Style x:Key="GroupTitle" TargetType="TextBlock">
-			<Setter Property="Margin" Value="1,0,0,8" />
-			<Setter Property="FontWeight" Value="Bold" />
-			<Setter Property="Transitions">
-				<Setter.Value>
-					<TransitionCollection>
-						<RepositionThemeTransition IsStaggeringEnabled="False" />
-					</TransitionCollection>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style x:Key="Group" TargetType="StackPanel">
-			<Setter Property="Margin" Value="0,0,0,29" />
-			<Setter Property="Transitions">
-				<Setter.Value>
-					<TransitionCollection>
-						<RepositionThemeTransition IsStaggeringEnabled="False" />
-					</TransitionCollection>
-				</Setter.Value>
-			</Setter>
-		</Style>
 	</PivotItem.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
 		<StackPanel
 			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
-			MaxWidth="1000" Padding="24,10,24,10" HorizontalAlignment="Center">
-			<StackPanel Style="{ThemeResource Group}">
-				<TextBlock x:Uid="/Settings/General/Connection" Style="{ThemeResource GroupTitle}" />
+			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Uid="/Settings/General/Connection">
 				<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile">
 					<controls:ModernExpander.Input>
 						<ComboBox
@@ -54,28 +32,25 @@
 							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
 							SelectionChanged="ComboBox_SelectionChanged" />
 					</controls:ModernExpander.Input>
-					<controls:ModernExpander.Items>
-						<StackPanel Orientation="Horizontal">
-							<Button x:Uid="/Settings/General/AddProfile" Margin="0,0,10,0" Click="ButtonAdd_Click" />
-							<Button
-								x:Uid="/Settings/General/EditProfile" Margin="0,0,10,0" Click="ButtonEdit_Click"
-								IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-							<Button x:Uid="/Settings/General/RemoveProfile">
-								<Button.Flyout>
-									<Flyout x:Name="RemoveFlyout">
-										<StackPanel>
-											<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-											<Button x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
-										</StackPanel>
-									</Flyout>
-								</Button.Flyout>
-							</Button>
-						</StackPanel>
-					</controls:ModernExpander.Items>
+					<StackPanel Orientation="Horizontal">
+						<Button x:Uid="/Settings/General/AddProfile" Margin="0,0,10,0" Click="ButtonAdd_Click" />
+						<Button
+							x:Uid="/Settings/General/EditProfile" Margin="0,0,10,0" Click="ButtonEdit_Click"
+							IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+						<Button x:Uid="/Settings/General/RemoveProfile">
+							<Button.Flyout>
+								<Flyout x:Name="RemoveFlyout">
+									<StackPanel>
+										<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+										<Button x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
+									</StackPanel>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+					</StackPanel>
 				</controls:ModernExpander>
-			</StackPanel>
-			<StackPanel Style="{ThemeResource Group}">
-				<TextBlock x:Uid="/Settings/General/Tabs" Style="{ThemeResource GroupTitle}" />
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
 				<controls:ModernInput x:Uid="/Settings/General/Categories" IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
 				</controls:ModernInput>
@@ -91,9 +66,8 @@
 				<controls:ModernInput x:Uid="/Settings/General/VisualTags">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVisualTags, Mode=TwoWay}" />
 				</controls:ModernInput>
-			</StackPanel>
-			<StackPanel Style="{ThemeResource Group}">
-				<TextBlock x:Uid="/Settings/General/Search" Style="{ThemeResource GroupTitle}" />
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/Search">
 				<controls:ModernInput x:Uid="/Settings/General/InputSortBy">
 					<StackPanel Orientation="Horizontal">
 						<ComboBox
@@ -110,9 +84,8 @@
 				<controls:ModernInput x:Uid="/Settings/General/OrderBy">
 					<ComboBox x:Name="OrderByComboBox" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
-			</StackPanel>
-			<StackPanel Style="{ThemeResource Group}">
-				<TextBlock x:Uid="/Settings/General/App" Style="{ThemeResource GroupTitle}" />
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/App">
 				<controls:ModernInput x:Uid="/Settings/General/Theme">
 					<ComboBox x:Name="ThemeComboBox" MinWidth="120" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
@@ -131,7 +104,7 @@
 				<controls:ModernInput x:Uid="/Settings/General/CrashReport">
 					<ToggleSwitch Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
 				</controls:ModernInput>
-			</StackPanel>
+			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

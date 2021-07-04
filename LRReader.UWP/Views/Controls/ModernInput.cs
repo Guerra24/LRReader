@@ -1,8 +1,10 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace LRReader.UWP.Views.Controls
 {
+	[ContentProperty(Name = "Control")]
 	public sealed class ModernInput : ContentControl
 	{
 		public ModernInput()
@@ -10,10 +12,10 @@ namespace LRReader.UWP.Views.Controls
 			this.DefaultStyleKey = typeof(ModernInput);
 		}
 
-		public new object Content
+		public object Control
 		{
-			get => GetValue(ContentProperty);
-			set => SetValue(ContentProperty, value);
+			get => GetValue(ControlProperty);
+			set => SetValue(ControlProperty, value);
 		}
 
 		public string HeaderText
@@ -21,6 +23,7 @@ namespace LRReader.UWP.Views.Controls
 			get => GetValue(HeaderTextProperty) as string;
 			set => SetValue(HeaderTextProperty, value);
 		}
+
 		public string SubText
 		{
 			get => GetValue(SubTextProperty) as string;
@@ -39,7 +42,7 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(TextMarginProperty, value);
 		}
 
-		public static readonly new DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty ControlProperty = DependencyProperty.Register("Control", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty SubTextProperty = DependencyProperty.Register("SubText", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty InputHorizontalAlignmentProperty = DependencyProperty.Register("InputHorizontalAlignment", typeof(HorizontalAlignment), typeof(ModernInput), new PropertyMetadata(HorizontalAlignment.Right));
