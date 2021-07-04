@@ -13,6 +13,7 @@
 					<controls:XamlControlsResources.MergedDictionaries>
 						<ResourceDictionary Source="/Resources/ThemeDictionary.xaml" />
 						<ResourceDictionary Source="/Resources/NotificationStyle.xaml" />
+						<ResourceDictionary Source="/Resources/Templates.xaml" />
 					</controls:XamlControlsResources.MergedDictionaries>
 				</controls:XamlControlsResources>
 			</ResourceDictionary.MergedDictionaries>

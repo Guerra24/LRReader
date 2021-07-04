@@ -2,6 +2,7 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.Settings.ReaderPivot"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
@@ -16,58 +17,90 @@
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</PivotItem.Resources>
 
-	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
-		<StackPanel Padding="30,20" HorizontalAlignment="Left">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="320" />
-					<ColumnDefinition Width="40" />
-				</Grid.ColumnDefinitions>
-				<Slider
-					x:Uid="/Settings/Reader/Zoom" Margin="0,0,0,10" IsThumbToolTipEnabled="False"
-					Maximum="400" Minimum="100" TickFrequency="30"
-					TickPlacement="BottomRight"
-					Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
-				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Right"
-					VerticalAlignment="Center">
-					<Run Text="{x:Bind Data.SettingsManager.DefaultZoom, Mode=OneWay}" />%
-				</TextBlock>
-			</Grid>
-			<muxc:NumberBox
-				x:Uid="/Settings/Reader/Keyboard" Margin="0,0,0,10" Minimum="1"
-				SmallChange="20" SpinButtonPlacementMode="Inline"
-				Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
-			<ToggleSwitch x:Uid="/Settings/Reader/AutoOpen" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
-			<ToggleSwitch x:Uid="/Settings/Reader/RTL" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
-			<ToggleSwitch x:Uid="/Settings/Reader/FitWidth" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
-			<Grid Visibility="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="320" />
-					<ColumnDefinition Width="40" />
-				</Grid.ColumnDefinitions>
-				<Slider
-					x:Uid="/Settings/Reader/FitLimit" Margin="0,0,0,10" IsThumbToolTipEnabled="False"
-					Maximum="400" Minimum="100" StepFrequency="5"
-					TickFrequency="25.0" TickPlacement="BottomRight"
-					Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
-				<TextBlock
-					Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Right"
-					VerticalAlignment="Center">
-					<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
-				</TextBlock>
-			</Grid>
-			<ToggleSwitch x:Uid="/Settings/Reader/TwoPages" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
-			<ToggleSwitch
-				x:Uid="/Settings/Reader/SetBuilder" Margin="16,-5,0,10"
-				IsOn="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}"
-				Visibility="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}" />
-			<ToggleSwitch x:Uid="/Settings/Reader/Reminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
-			<muxc:RadioButtons
-				x:Name="ReminderModeRadio" Margin="16,-15,0,15"
-				SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}"
-				Visibility="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}" />
-			<ToggleSwitch x:Uid="/Settings/Reader/RemoveBookmarkReminder" Margin="0,0,0,10" IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Padding="24,10,24,40" HorizontalAlignment="Center">
+			<controls:ModernInput x:Uid="/Settings/Reader/Zoom" InputHorizontalAlignment="Stretch">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Slider
+						IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+						TickFrequency="30" TickPlacement="None"
+						Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
+					<TextBlock
+						Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+						VerticalAlignment="Center">
+						<Run Text="{x:Bind Data.SettingsManager.DefaultZoom, Mode=OneWay}" />%
+					</TextBlock>
+				</Grid>
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/Keyboard">
+				<muxc:NumberBox
+					MinWidth="120" Minimum="1" SmallChange="20"
+					SpinButtonPlacementMode="Inline"
+					Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/RTL">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+			</controls:ModernInput>
+			<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+				</controls:ModernExpander.Input>
+				<controls:ModernExpander.Items>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition MaxWidth="400" />
+						</Grid.ColumnDefinitions>
+						<StackPanel Margin="0,8,0,8" VerticalAlignment="Center">
+							<TextBlock x:Uid="/Settings/Reader/FitLimitHeader" />
+							<TextBlock
+								x:Uid="/Settings/Reader/FitLimitSub" FontSize="12" FontWeight="SemiBold"
+								Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+						</StackPanel>
+						<Grid Grid.Column="1" VerticalAlignment="Center">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Slider
+								IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+								StepFrequency="5" TickFrequency="25.0" TickPlacement="None"
+								Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
+							<TextBlock Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center">
+								<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
+							</TextBlock>
+						</Grid>
+					</Grid>
+				</controls:ModernExpander.Items>
+			</controls:ModernExpander>
+			<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+				</controls:ModernExpander.Input>
+				<controls:ModernExpander.Items>
+					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
+				</controls:ModernExpander.Items>
+			</controls:ModernExpander>
+			<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+				</controls:ModernExpander.Input>
+				<controls:ModernExpander.Items>
+					<muxc:RadioButtons x:Name="ReminderModeRadio" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernExpander.Items>
+			</controls:ModernExpander>
+			<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+			</controls:ModernInput>
 			<HyperlinkButton x:Uid="/Settings/Reader/AV1Notice" NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" Visibility="{x:Bind Data.AvifMissing, Mode=OneWay}" />
 			<HyperlinkButton x:Uid="/Settings/Reader/HEIFNotice" NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" Visibility="{x:Bind Data.HeifMissing, Mode=OneWay}" />
 		</StackPanel>

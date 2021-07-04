@@ -152,6 +152,12 @@
     <Compile Include="Views\Controls\ArchiveList.xaml.cs">
       <DependentUpon>ArchiveList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ModernInput.xaml.cs">
+      <DependentUpon>ModernInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ModernExpander.xaml.cs">
+      <DependentUpon>ModernExpander.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
     </Compile>
@@ -379,6 +385,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\ThemeDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -390,6 +400,14 @@
     <Page Include="Views\Controls\ArchiveList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\ModernInput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\ModernExpander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\CategoryArchive.xaml">
       <SubType>Designer</SubType>

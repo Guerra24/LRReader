@@ -229,7 +229,7 @@
     <value>Tema</value>
   </data>
   <data name="General.VisualTags.Header" xml:space="preserve">
-    <value>Utilizar etiquetas visuales para el editor</value>
+    <value>Utilizar etiquetas visuales en el editor</value>
   </data>
   <data name="General.VisualTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Utiliza controles para la edición de etiquetas en lugar de un cuadro de texto</value>
@@ -240,37 +240,37 @@
   <data name="LocalDataPivot.Header" xml:space="preserve">
     <value>Datos locales</value>
   </data>
-  <data name="Reader.AutoOpen.Header" xml:space="preserve">
+  <data name="Reader.AutoOpen.HeaderText" xml:space="preserve">
     <value>Abrir el lector automáticamente</value>
   </data>
   <data name="Reader.AV1Notice.Content" xml:space="preserve">
     <value>Instale las extensiones de vídeo AV1 para ver contenido en AVIF</value>
   </data>
-  <data name="Reader.FitLimit.Header" xml:space="preserve">
-    <value>Ajustar límite de escalado de página</value>
+  <data name="Reader.FitLimitHeader.Text" xml:space="preserve">
+    <value>Límite de escalado de página</value>
   </data>
-  <data name="Reader.FitLimit.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Reader.FitLimitSub.Text" xml:space="preserve">
     <value>Escala máxima que se puede aplicar a una página</value>
   </data>
-  <data name="Reader.FitWidth.Header" xml:space="preserve">
+  <data name="Reader.FitWidth.HeaderText" xml:space="preserve">
     <value>Ajustar las páginas al ancho</value>
   </data>
-  <data name="Reader.FitWidth.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Reader.FitWidth.SubText" xml:space="preserve">
     <value>Escala las páginas al ancho completo de la ventana</value>
   </data>
   <data name="Reader.HEIFNotice.Content" xml:space="preserve">
     <value>Instale las extensiones de imagen HEIF para ver contenido en HEIF</value>
   </data>
-  <data name="Reader.Keyboard.Header" xml:space="preserve">
+  <data name="Reader.Keyboard.HeaderText" xml:space="preserve">
     <value>Distancia de desplazamiento del teclado</value>
   </data>
-  <data name="Reader.Keyboard.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Distancia de desplazamiento, en píxeles, cuando se usa el teclado</value>
+  <data name="Reader.Keyboard.SubText" xml:space="preserve">
+    <value>Distancia en píxeles cuando se usa el teclado</value>
   </data>
-  <data name="Reader.Reminder.Header" xml:space="preserve">
+  <data name="Reader.Reminder.HeaderText" xml:space="preserve">
     <value>Preguntar si se quiere agregar marcador</value>
   </data>
-  <data name="Reader.Reminder.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Reader.Reminder.SubText" xml:space="preserve">
     <value>Solicite marcar el archivo si se cierra a la mitad</value>
   </data>
   <data name="Reader.ReminderMode.All" xml:space="preserve">
@@ -279,31 +279,31 @@
   <data name="Reader.ReminderMode.New" xml:space="preserve">
     <value>Solo archivos "nuevos"</value>
   </data>
-  <data name="Reader.RemoveBookmarkReminder.Header" xml:space="preserve">
+  <data name="Reader.RemoveBookmarkReminder.HeaderText" xml:space="preserve">
     <value>Preguntar si se quiere eliminar el marcador</value>
   </data>
-  <data name="Reader.RemoveBookmarkReminder.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Reader.RemoveBookmarkReminder.SubText" xml:space="preserve">
     <value>Solicite desmarcar cuando se completa el archivo</value>
   </data>
-  <data name="Reader.RTL.Header" xml:space="preserve">
+  <data name="Reader.RTL.HeaderText" xml:space="preserve">
     <value>Leer de derecha a izquierda</value>
   </data>
-  <data name="Reader.RTL.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Reader.RTL.SubText" xml:space="preserve">
     <value>Invierte la dirección de lectura de las páginas</value>
   </data>
-  <data name="Reader.SetBuilder.Header" xml:space="preserve">
+  <data name="Reader.SetBuilder.Content" xml:space="preserve">
     <value>Usar orden de lectura mejorado</value>
   </data>
   <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
     <value>Utiliza la relación de aspecto al crear el orden de las páginas. Recomendado para archivos con relación de aspecto variable.</value>
   </data>
-  <data name="Reader.TwoPages.Header" xml:space="preserve">
+  <data name="Reader.TwoPages.HeaderText" xml:space="preserve">
     <value>Mostrar dos páginas</value>
   </data>
-  <data name="Reader.TwoPages.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Reader.TwoPages.SubText" xml:space="preserve">
     <value>Se mostrarán dos páginas a la vez</value>
   </data>
-  <data name="Reader.Zoom.Header" xml:space="preserve">
+  <data name="Reader.Zoom.HeaderText" xml:space="preserve">
     <value>Zoom predeterminado</value>
   </data>
   <data name="ReaderPivot.Header" xml:space="preserve">
