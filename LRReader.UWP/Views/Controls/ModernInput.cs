@@ -3,11 +3,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Controls
 {
-	public sealed partial class ModernInput : ContentControl
+	public sealed class ModernInput : ContentControl
 	{
 		public ModernInput()
 		{
-			this.InitializeComponent();
+			this.DefaultStyleKey = typeof(ModernInput);
 		}
 
 		public new object Content
@@ -33,9 +33,16 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(InputHorizontalAlignmentProperty, value);
 		}
 
+		public Thickness TextMargin
+		{
+			get => (Thickness)GetValue(TextMarginProperty);
+			set => SetValue(TextMarginProperty, value);
+		}
+
 		public static readonly new DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty SubTextProperty = DependencyProperty.Register("SubText", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty InputHorizontalAlignmentProperty = DependencyProperty.Register("InputHorizontalAlignment", typeof(HorizontalAlignment), typeof(ModernInput), new PropertyMetadata(HorizontalAlignment.Right));
+		public static readonly DependencyProperty TextMarginProperty = DependencyProperty.Register("TextMargin", typeof(Thickness), typeof(ModernInput), new PropertyMetadata(new Thickness(0)));
 	}
 }

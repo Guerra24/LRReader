@@ -131,6 +131,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Internal\Utils.cs" />
+    <Compile Include="Resources\Templates.xaml.cs">
+      <DependentUpon>Templates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\Files.cs" />
     <Compile Include="Services\Platform.cs" />
     <Compile Include="Services\SettingsStorage.cs" />
@@ -152,12 +155,10 @@
     <Compile Include="Views\Controls\ArchiveList.xaml.cs">
       <DependentUpon>ArchiveList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ModernInput.xaml.cs">
-      <DependentUpon>ModernInput.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Controls\ModernExpander.xaml.cs">
       <DependentUpon>ModernExpander.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ModernInput.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
     </Compile>
@@ -393,15 +394,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\WinUITemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\ArchiveTags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ArchiveList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Controls\ModernInput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

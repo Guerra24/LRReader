@@ -246,10 +246,10 @@
   <data name="Reader.AV1Notice.Content" xml:space="preserve">
     <value>Install AV1 Video Extentions to view AVIF content</value>
   </data>
-  <data name="Reader.FitLimitHeader.Text" xml:space="preserve">
+  <data name="Reader.FitLimit.HeaderText" xml:space="preserve">
     <value>Scale limit</value>
   </data>
-  <data name="Reader.FitLimitSub.Text" xml:space="preserve">
+  <data name="Reader.FitLimit.SubText" xml:space="preserve">
     <value>Maximum scaling that can be applied to a page</value>
   </data>
   <data name="Reader.FitWidth.HeaderText" xml:space="preserve">

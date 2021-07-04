@@ -55,18 +55,8 @@
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
 				</controls:ModernExpander.Input>
 				<controls:ModernExpander.Items>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition />
-							<ColumnDefinition MaxWidth="400" />
-						</Grid.ColumnDefinitions>
-						<StackPanel Margin="0,8,0,8" VerticalAlignment="Center">
-							<TextBlock x:Uid="/Settings/Reader/FitLimitHeader" />
-							<TextBlock
-								x:Uid="/Settings/Reader/FitLimitSub" FontSize="12" FontWeight="SemiBold"
-								Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-						</StackPanel>
-						<Grid Grid.Column="1" VerticalAlignment="Center">
+					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch" Style="{ThemeResource GroupModernInputStyle}">
+						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="Auto" />
@@ -79,7 +69,7 @@
 								<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
 							</TextBlock>
 						</Grid>
-					</Grid>
+					</controls:ModernInput>
 				</controls:ModernExpander.Items>
 			</controls:ModernExpander>
 			<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
