@@ -166,7 +166,7 @@
     <value>Abrir la pestaña Categorías al inicio</value>
   </data>
   <data name="General.ClearThumbCache.Content" xml:space="preserve">
-    <value>Borrar la caché de miniaturas</value>
+    <value>Limpiar</value>
   </data>
   <data name="General.CompactMarks.HeaderText" xml:space="preserve">
     <value>Usar marcadores compactos</value>
@@ -228,6 +228,9 @@
   <data name="General.Theme.HeaderText" xml:space="preserve">
     <value>Tema</value>
   </data>
+  <data name="General.ThumbCache.HeaderText" xml:space="preserve">
+    <value>Caché de miniaturas</value>
+  </data>
   <data name="General.VisualTags.HeaderText" xml:space="preserve">
     <value>Etiquetas visuales en el editor</value>
   </data>
@@ -244,7 +247,10 @@
     <value>Abrir el lector automáticamente</value>
   </data>
   <data name="Reader.AV1Notice.Content" xml:space="preserve">
-    <value>Instale las extensiones de vídeo AV1 para ver contenido en AVIF</value>
+    <value>Instalar para ver contenido AVIF</value>
+  </data>
+  <data name="Reader.AV1NoticeInfo.Title" xml:space="preserve">
+    <value>Faltan extensiones de vídeo AV1</value>
   </data>
   <data name="Reader.BookmarksGroup.Text" xml:space="preserve">
     <value>Marcadores</value>
@@ -262,7 +268,10 @@
     <value>Escala las páginas al ancho completo de la ventana</value>
   </data>
   <data name="Reader.HEIFNotice.Content" xml:space="preserve">
-    <value>Instale las extensiones de imagen HEIF para ver contenido en HEIF</value>
+    <value>Instalar para ver contenido HEIF</value>
+  </data>
+  <data name="Reader.HEIFNoticeInfo.Title" xml:space="preserve">
+    <value>Faltan extensiones de imagen HEIF</value>
   </data>
   <data name="Reader.Keyboard.HeaderText" xml:space="preserve">
     <value>Distancia de desplazamiento del teclado</value>

@@ -38,10 +38,17 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ItemsProperty, value);
 		}
 
+		public string Icon
+		{
+			get => GetValue(IconProperty) as string;
+			set => SetValue(IconProperty, value);
+		}
+
 		public static readonly DependencyProperty InputProperty = DependencyProperty.Register("Input", typeof(object), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
 		public static readonly DependencyProperty SubTextProperty = DependencyProperty.Register("SubText", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
 		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernExpander), new PropertyMetadata(new List<object>()));
+		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
 	}
 
 	public class ItemTemplateSelector : DataTemplateSelector

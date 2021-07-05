@@ -23,7 +23,7 @@
 			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
 			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/General/Connection">
-				<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile">
+				<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile" Icon="&#xE779;">
 					<controls:ModernExpander.Input>
 						<ComboBox
 							x:Name="ProfileSelection" MinWidth="120"
@@ -51,24 +51,24 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
-				<controls:ModernInput x:Uid="/Settings/General/Categories" IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}">
+				<controls:ModernInput x:Uid="/Settings/General/Categories" Icon="&#xE8B7;" IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/Bookmarks">
+				<controls:ModernInput x:Uid="/Settings/General/Bookmarks" Icon="&#xE728;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/Bookmarked">
+				<controls:ModernInput x:Uid="/Settings/General/Bookmarked" Icon="&#xE734;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/CompactMarks">
+				<controls:ModernInput x:Uid="/Settings/General/CompactMarks" Icon="&#xF0E2;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/VisualTags">
+				<controls:ModernInput x:Uid="/Settings/General/VisualTags" Icon="&#xE8EC;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVisualTags, Mode=TwoWay}" />
 				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Search">
-				<controls:ModernInput x:Uid="/Settings/General/InputSortBy">
+				<controls:ModernInput x:Uid="/Settings/General/InputSortBy" Icon="&#xF168;">
 					<StackPanel Orientation="Horizontal">
 						<ComboBox
 							x:Uid="/Settings/General/SortBy" MinWidth="120"
@@ -81,27 +81,28 @@
 						</Button>
 					</StackPanel>
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/OrderBy">
+				<controls:ModernInput x:Uid="/Settings/General/OrderBy" Icon="&#xE8CB;">
 					<ComboBox x:Name="OrderByComboBox" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/App">
-				<controls:ModernInput x:Uid="/Settings/General/Theme">
+				<controls:ModernInput x:Uid="/Settings/General/Theme" Icon="&#xE790;">
 					<ComboBox x:Name="ThemeComboBox" MinWidth="120" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
-				<StackPanel Margin="0,5,0,15" Orientation="Horizontal">
-					<Button
-						x:Uid="/Settings/General/ClearThumbCache" Margin="0,0,10,0" Click="ButtonClearThumbCache_Click"
-						IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
-					<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
-						<Run x:Uid="/Settings/General/Size" />
-						<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
-					</TextBlock>
-					<ProgressRing
-						Width="30" Height="30" VerticalAlignment="Center"
-						IsActive="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-				</StackPanel>
-				<controls:ModernInput x:Uid="/Settings/General/CrashReport">
+				<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Icon="&#xE8B9;">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+							<Run x:Uid="/Settings/General/Size" />
+							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
+						</TextBlock>
+						<ProgressRing
+							Width="30" Height="30" Margin="0,0,10,0"
+							VerticalAlignment="Center" IsActive="True"
+							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
+						<Button x:Uid="/Settings/General/ClearThumbCache" Click="ButtonClearThumbCache_Click" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+					</StackPanel>
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Icon="&#xEBE8;">
 					<ToggleSwitch Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
 				</controls:ModernInput>
 			</controls:ModernGroup>

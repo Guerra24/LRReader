@@ -22,7 +22,7 @@
 			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
 			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/Reader/ReaderGroup">
-				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" InputHorizontalAlignment="Stretch">
+				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Icon="&#xE71E;" InputHorizontalAlignment="Stretch">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*" />
@@ -39,23 +39,23 @@
 						</TextBlock>
 					</Grid>
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/Keyboard">
+				<controls:ModernInput x:Uid="/Settings/Reader/Keyboard" Icon="&#xF210;">
 					<muxc:NumberBox
 						MinWidth="120" Minimum="1" SmallChange="20"
 						SpinButtonPlacementMode="Inline"
 						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen">
+				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Icon="&#xE78B;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/RTL">
+				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Icon="&#xE8A0;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+				<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" Icon="&#xE9A6;" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
-					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch" Style="{ThemeResource GroupedModernInputStyle}">
+					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
@@ -71,25 +71,53 @@
 						</Grid>
 					</controls:ModernInput>
 				</controls:ModernExpander>
-				<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
+				<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" Icon="&#xF57C;" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
 					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
 				</controls:ModernExpander>
+				<muxc:InfoBar x:Uid="/Settings/Reader/AV1NoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.AvifMissing, Mode=OneWay}">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+					<muxc:InfoBar.IconSource>
+						<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA86;" />
+					</muxc:InfoBar.IconSource>
+					<muxc:InfoBar.ActionButton>
+						<HyperlinkButton
+							x:Uid="/Settings/Reader/AV1Notice" Margin="0,0,-1,0" HorizontalAlignment="Right"
+							NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" />
+					</muxc:InfoBar.ActionButton>
+				</muxc:InfoBar>
+				<muxc:InfoBar x:Uid="/Settings/Reader/HEIFNoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.HeifMissing, Mode=OneWay}">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+					<muxc:InfoBar.IconSource>
+						<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA86;" />
+					</muxc:InfoBar.IconSource>
+					<muxc:InfoBar.ActionButton>
+						<HyperlinkButton
+							x:Uid="/Settings/Reader/HEIFNotice" Margin="0,0,-1,0" HorizontalAlignment="Right"
+							NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" />
+					</muxc:InfoBar.ActionButton>
+				</muxc:InfoBar>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Reader/BookmarksGroup">
-				<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
+				<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" Icon="&#xEB50;" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
 					<muxc:RadioButtons x:Name="ReminderModeRadio" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernExpander>
-				<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder">
+				<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder" Icon="&#xEB4F;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<HyperlinkButton x:Uid="/Settings/Reader/AV1Notice" NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" Visibility="{x:Bind Data.AvifMissing, Mode=OneWay}" />
-				<HyperlinkButton x:Uid="/Settings/Reader/HEIFNotice" NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" Visibility="{x:Bind Data.HeifMissing, Mode=OneWay}" />
 			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>

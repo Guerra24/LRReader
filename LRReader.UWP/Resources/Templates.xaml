@@ -53,23 +53,29 @@
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition />
 							<ColumnDefinition MaxWidth="400" />
 						</Grid.ColumnDefinitions>
-						<StackPanel Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
-							<TextBlock Text="{x:Bind HeaderText}" />
+						<FontIcon
+							Margin="0,0,16,0"
+							FontFamily="{StaticResource SymbolThemeFontFamily}"
+							Glyph="{x:Bind Icon, Mode=OneWay}"
+							Visibility="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+						<StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
+							<TextBlock Text="{x:Bind HeaderText, Mode=OneWay}" />
 							<TextBlock
 								FontSize="12" FontWeight="SemiBold"
 								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-								Text="{x:Bind SubText}"
+								Text="{x:Bind SubText, Mode=OneWay}"
 								TextWrapping="WrapWholeWords"
 								Visibility="{Binding SubText, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
 						</StackPanel>
 						<ContentPresenter
-							Grid.Column="1" Margin="0,0,16,0"
-							HorizontalAlignment="{x:Bind InputHorizontalAlignment}"
+							Grid.Column="2" Margin="0,0,16,0"
+							HorizontalAlignment="{x:Bind InputHorizontalAlignment, Mode=OneWay}"
 							VerticalAlignment="Center"
-							Content="{x:Bind Control}" />
+							Content="{x:Bind Control, Mode=OneWay}" />
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
@@ -89,8 +95,8 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ModernGroup">
 					<StackPanel>
-						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Text}" />
-						<muxc:ItemsRepeater ItemsSource="{x:Bind Content}" />
+						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Text, Mode=OneWay}" />
+						<muxc:ItemsRepeater ItemsSource="{x:Bind Content, Mode=OneWay}" />
 					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>

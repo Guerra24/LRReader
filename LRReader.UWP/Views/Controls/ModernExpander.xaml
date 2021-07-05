@@ -20,18 +20,33 @@
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<DataTemplate x:Key="OtherItem" x:DataType="UIElement">
 			<Border Background="{ThemeResource ExpanderContentBackground}" BorderBrush="{ThemeResource ExpanderContentBorderBrush}" BorderThickness="0,0,0,1">
-				<ContentPresenter Padding="16,9,16,9" Content="{x:Bind}" />
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Grid Width="36" />
+					<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
+				</Grid>
 			</Border>
 		</DataTemplate>
 		<DataTemplate x:Key="LastItem" x:DataType="UIElement">
 			<Border Background="{ThemeResource ExpanderContentBackground}" CornerRadius="0,0,2,2">
-				<ContentPresenter Padding="16,9,16,9" Content="{x:Bind}" />
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Grid Width="36" />
+					<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
+				</Grid>
 			</Border>
 		</DataTemplate>
 		<local:ItemTemplateSelector x:Key="ExpanderItemSelector" LastItem="{StaticResource LastItem}" OtherItem="{StaticResource OtherItem}" />
 		<Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="ToggleSwitch">
 			<Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
 		</Style>
+		<Style BasedOn="{StaticResource GroupedModernInputStyle}" TargetType="local:ModernInput" />
 	</muxc:Expander.Resources>
 	<muxc:Expander.Transitions>
 		<TransitionCollection>
@@ -42,10 +57,16 @@
 	<muxc:Expander.Header>
 		<Grid>
 			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<StackPanel Margin="0,16,0,16" VerticalAlignment="Center">
+			<FontIcon
+				x:Name="HeaderIcon" Margin="0,0,16,0"
+				FontFamily="{StaticResource SymbolThemeFontFamily}"
+				Glyph="{x:Bind Icon, Mode=OneWay}"
+				Visibility="{x:Bind Icon, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />
+			<StackPanel Grid.Column="1" Margin="0,16,0,16" VerticalAlignment="Center">
 				<TextBlock Text="{x:Bind HeaderText, Mode=OneWay}" />
 				<TextBlock
 					FontSize="12" FontWeight="SemiBold"
@@ -55,10 +76,11 @@
 					Visibility="{x:Bind SubText, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />
 			</StackPanel>
 			<ContentPresenter
-				Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+				Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"
 				Content="{x:Bind Input, Mode=OneWay}" />
 		</Grid>
 	</muxc:Expander.Header>
+
 
 	<ListView ItemTemplateSelector="{StaticResource ExpanderItemSelector}" ItemsSource="{x:Bind Items, Mode=OneWay}" SelectionMode="None">
 		<ListView.ItemContainerStyle>
