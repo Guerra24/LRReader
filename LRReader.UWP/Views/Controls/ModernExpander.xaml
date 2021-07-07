@@ -19,30 +19,39 @@
 		<Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<DataTemplate x:Key="OtherItem" x:DataType="UIElement">
-			<Border Background="{ThemeResource ExpanderContentBackground}" BorderBrush="{ThemeResource ExpanderContentBorderBrush}" BorderThickness="0,0,0,1">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<Grid Width="36" />
-					<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
-				</Grid>
-			</Border>
+			<Grid
+				Background="{ThemeResource ExpanderContentBackground}"
+				BackgroundSizing="InnerBorderEdge"
+				BorderBrush="{ThemeResource ExpanderContentBorderBrush}"
+				BorderThickness="0,0,0,1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid Width="36" />
+				<ContentPresenter
+					Grid.Column="1" Padding="16,9,16,9" x:Phase="1"
+					Content="{x:Bind}" />
+			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="LastItem" x:DataType="UIElement">
-			<Border Background="{ThemeResource ExpanderContentBackground}" CornerRadius="0,0,2,2">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<Grid Width="36" />
-					<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
-				</Grid>
-			</Border>
+			<Grid Background="{ThemeResource ExpanderContentBackground}" BackgroundSizing="InnerBorderEdge" CornerRadius="0,0,2,2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid Width="36" />
+				<ContentPresenter
+					Grid.Column="1" Padding="16,9,16,9" x:Phase="1"
+					Content="{x:Bind}" />
+			</Grid>
 		</DataTemplate>
-		<local:ItemTemplateSelector x:Key="ExpanderItemSelector" LastItem="{StaticResource LastItem}" OtherItem="{StaticResource OtherItem}" />
+		<local:ItemTemplateSelector
+			x:Key="ExpanderItemSelector"
+			Items="{x:Bind Items, Mode=OneWay}"
+			ItemsRepeater="{x:Bind Repeater}"
+			LastItem="{StaticResource LastItem}"
+			OtherItem="{StaticResource OtherItem}" />
 		<Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="ToggleSwitch">
 			<Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
 		</Style>
@@ -82,17 +91,6 @@
 	</muxc:Expander.Header>
 
 
-	<ListView ItemTemplateSelector="{StaticResource ExpanderItemSelector}" ItemsSource="{x:Bind Items, Mode=OneWay}" SelectionMode="None">
-		<ListView.ItemContainerStyle>
-			<Style TargetType="ListViewItem">
-				<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-				<Setter Property="Padding" Value="0" />
-				<Setter Property="Margin" Value="0" />
-			</Style>
-		</ListView.ItemContainerStyle>
-		<ListView.ItemContainerTransitions>
-			<TransitionCollection />
-		</ListView.ItemContainerTransitions>
-	</ListView>
+	<muxc:ItemsRepeater x:Name="Repeater" ItemTemplate="{StaticResource ExpanderItemSelector}" ItemsSource="{x:Bind Items, Mode=OneWay}" />
 
 </muxc:Expander>

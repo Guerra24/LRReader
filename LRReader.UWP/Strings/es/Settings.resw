@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About.About.Text" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
   <data name="About.Check.Content" xml:space="preserve">
     <value>Buscar actualizaciones</value>
   </data>
@@ -129,20 +132,32 @@
   <data name="About.DownloadYes.Content" xml:space="preserve">
     <value>Cerrar y Actualizar</value>
   </data>
-  <data name="About.NotFound.Text" xml:space="preserve">
+  <data name="About.License.Content" xml:space="preserve">
+    <value>Licencia</value>
+  </data>
+  <data name="About.Links.Text" xml:space="preserve">
+    <value>Enlaces</value>
+  </data>
+  <data name="About.NotFound.HeaderText" xml:space="preserve">
     <value>No se encontraron actualizaciones</value>
   </data>
+  <data name="About.Privacy.Content" xml:space="preserve">
+    <value>Política de privacidad</value>
+  </data>
   <data name="About.Supported.Text" xml:space="preserve">
-    <value>Versiones soportadas de LANraragi</value>
+    <value>LANraragi</value>
   </data>
   <data name="About.Updates.Text" xml:space="preserve">
     <value>Actualizaciones</value>
+  </data>
+  <data name="About.Version.Text" xml:space="preserve">
+    <value>Versión</value>
   </data>
   <data name="AboutPivot.Header" xml:space="preserve">
     <value>Acerca de</value>
   </data>
   <data name="General.AddProfile.Content" xml:space="preserve">
-    <value>Agregar perfil</value>
+    <value>Agregar</value>
   </data>
   <data name="General.App.Text" xml:space="preserve">
     <value>Aplicación</value>

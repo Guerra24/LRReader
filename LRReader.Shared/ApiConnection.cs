@@ -68,6 +68,26 @@ namespace LRReader.Shared
 			}
 		}
 
+		public async static Task<GenericApiResponse<T>> GetResultComplete<T>(this IRestResponse request)
+		{
+			var result = await request.GetResultInternal<T>();
+
+			if (!string.IsNullOrEmpty(request.ErrorMessage))
+			{
+				Service.Events.ShowNotification("Network Error", request.ErrorMessage);
+				return null;
+			}
+			if (result.OK)
+			{
+				return result;
+			}
+			else
+			{
+				Service.Events.ShowNotification(result.Error.operation, result.Error.error);
+				return null;
+			}
+		}
+
 		public async static Task<T> GetResultNoError<T>(this IRestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
@@ -111,6 +131,7 @@ namespace LRReader.Shared
 					case HttpStatusCode.OK:
 						apiResponse.Data = data;
 						apiResponse.OK = true;
+						apiResponse.Json = restResponse.Content;
 						break;
 					default:
 						apiResponse.Error = await restResponse.GetError();
@@ -155,7 +176,7 @@ namespace LRReader.Shared
 			return error;
 		}
 
-		private static byte[] CompressData(string data)
+		public static byte[] CompressData(string data)
 		{
 			if (data == null)
 				return null;

@@ -19,6 +19,8 @@ namespace LRReader.UWP.ViewModels
 		private readonly ApiService Api;
 		private readonly IPlatformService Platform;
 
+		public readonly string LRReader = "LRReader";
+
 		public SettingsService SettingsManager;
 		public Version Version => Platform.Version;
 		public Version MinVersion => UpdatesManager.MIN_VERSION;

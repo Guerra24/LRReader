@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -56,10 +57,15 @@ namespace LRReader.UWP.Views.Controls
 		public DataTemplate LastItem { get; set; }
 		public DataTemplate OtherItem { get; set; }
 
-		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		public IList<object> Items { get; set; }
+		public ItemsRepeater ItemsRepeater { get; set; }
+
+		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
-			return (itemsControl.IndexFromContainer(container) == (itemsControl.ItemsSource as IList<object>).Count - 1) ? LastItem : OtherItem;
+			var last = Items.LastOrDefault();
+			if (item.Equals(last))
+				return LastItem;
+			return OtherItem;
 		}
 	}
 }

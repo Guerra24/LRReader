@@ -21,7 +21,9 @@ namespace LRReader.Shared.Models.Main
 		public T Data { get; set; }
 		public GenericApiResult Error { get; set; }
 		public bool OK { get; set; }
-		public HttpStatusCode Code;
+		public HttpStatusCode Code { get; set; }
+
+		public string Json { get; set; }
 	}
 
 }

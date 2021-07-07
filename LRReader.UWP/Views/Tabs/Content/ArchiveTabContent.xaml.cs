@@ -111,6 +111,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private async void OpenReader(int page, object item = null)
 		{
 			var readerSet = Data.ArchiveImagesReader.First(s => s.Page >= page);
+			if (readerSet == null)
+				return;
 			var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 
 			if (Service.Platform.AnimationsEnabled && item != null)

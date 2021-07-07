@@ -1,7 +1,9 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -145,16 +147,34 @@ namespace LRReader.Shared.ViewModels
 				Api.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, OrderBy);
 			if (resultPage != null)
 			{
-				TotalArchives = resultPage.recordsFiltered;
+				TotalArchives = resultPage.Data.recordsFiltered;
 				await Task.Run(async () =>
 				{
-					foreach (var a in resultPage.data)
+					try
 					{
-						if (!CustomArchiveCheckEvent(a))
-							continue;
-						var archive = Archives.GetArchive(a.arcid);
-						if (archive != null)
-							await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
+						foreach (var a in resultPage.Data.data)
+						{
+							if (!CustomArchiveCheckEvent(a))
+								continue;
+							var archive = Archives.GetArchive(a.arcid);
+							if (archive != null)
+								await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
+						}
+					}
+					catch (Exception e)
+					{
+						// TODO: Some instances are returning null archives, dump data and send back
+						try
+						{
+							var json = ApiExtentions.CompressData(resultPage.Json);
+							var attachments = new ErrorAttachmentLog[]
+							{
+							ErrorAttachmentLog.AttachmentWithBinary(json, "resultPage.json.bz2", "application/x-bzip2")
+							};
+							Events.ShowNotification("API is returning bad data", "An error log has been recorded for analysis", 0);
+							Crashes.TrackError(e, attachments: attachments);
+						}
+						catch (Exception) { } // Just in case
 					}
 				});
 			}

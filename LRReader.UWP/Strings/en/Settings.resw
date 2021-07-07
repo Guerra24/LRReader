@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About.About.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="About.Check.Content" xml:space="preserve">
     <value>Check for updates</value>
   </data>
@@ -129,20 +132,32 @@
   <data name="About.DownloadYes.Content" xml:space="preserve">
     <value>Close and Update</value>
   </data>
-  <data name="About.NotFound.Text" xml:space="preserve">
+  <data name="About.License.Content" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="About.Links.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="About.NotFound.HeaderText" xml:space="preserve">
     <value>No updates found</value>
   </data>
+  <data name="About.Privacy.Content" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
   <data name="About.Supported.Text" xml:space="preserve">
-    <value>LANraragi supported versions</value>
+    <value>LANraragi</value>
   </data>
   <data name="About.Updates.Text" xml:space="preserve">
     <value>Updates</value>
+  </data>
+  <data name="About.Version.Text" xml:space="preserve">
+    <value>Version</value>
   </data>
   <data name="AboutPivot.Header" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="General.AddProfile.Content" xml:space="preserve">
-    <value>Add Profile</value>
+    <value>Add </value>
   </data>
   <data name="General.App.Text" xml:space="preserve">
     <value>App</value>

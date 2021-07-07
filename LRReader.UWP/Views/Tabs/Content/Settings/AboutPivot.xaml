@@ -2,7 +2,8 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.Settings.AboutPivot"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
@@ -15,57 +16,86 @@
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</PivotItem.Resources>
 
-	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
-		<StackPanel Padding="30,20" HorizontalAlignment="Left">
-			<TextBlock Margin="0,0,0,10">
-				<Run>LRReader</Run>
-				<Run Text="{x:Bind Data.Version}" />
-			</TextBlock>
-			<TextBlock Margin="0,0,0,10">
-				<Run x:Uid="/Settings/About/Supported" />
-				<Run Text="{x:Bind Data.MinVersion}" />
-				<Run Text="-" />
-				<Run Text="{x:Bind Data.MaxVersion}" />
-			</TextBlock>
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button
-					Margin="0,0,10,0" Click="WebButton_Click"
-					Style="{ThemeResource AccentButtonStyle}"
-					Tag="https://github.com/Guerra24/LRReader">
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Uid="/Settings/About/About">
+				<controls:ModernExpander HeaderText="LRReader" Icon="&#xE946;" IsExpanded="True">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition MaxWidth="100" />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Grid.Resources>
+							<Style TargetType="TextBlock">
+								<Setter Property="Margin" Value="0,3" />
+							</Style>
+						</Grid.Resources>
+						<StackPanel Orientation="Vertical">
+							<TextBlock x:Uid="/Settings/About/Version" />
+							<TextBlock x:Uid="/Settings/About/Supported" />
+						</StackPanel>
+						<StackPanel Grid.Column="1" Orientation="Vertical">
+							<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+								<Run Text="{x:Bind Data.Version}" />
+							</TextBlock>
+							<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+								<Run Text="{x:Bind Data.MinVersion}" />
+								<Run Text="-" />
+								<Run Text="{x:Bind Data.MaxVersion}" />
+							</TextBlock>
+						</StackPanel>
+					</Grid>
 					<StackPanel Orientation="Horizontal">
-						<Image Height="19" Margin="0,0,4,0" Source="ms-appx:///Assets/Other/GitHub.png" />
-						<TextBlock Text="Github" />
+						<TextBlock x:Uid="/Settings/About/Links" Padding="0,5,11,6" FontWeight="SemiBold" />
+						<Button x:Uid="/Settings/About/License" Click="License_Click" Style="{ThemeResource TextBlockButtonStyle}" />
+						<Button x:Uid="/Settings/About/Privacy" Click="Privacy_Click" Style="{ThemeResource TextBlockButtonStyle}" />
 					</StackPanel>
-				</Button>
-				<Button Click="WebButton_Click" Style="{ThemeResource AccentButtonStyle}" Tag="https://ko-fi.com/guerra24">
-					<StackPanel Orientation="Horizontal">
-						<Image Height="19" Margin="0,0,4,0" Source="ms-appx:///Assets/Other/Ko-fi.png" />
-						<TextBlock Text="Ko-Fi" />
+				</controls:ModernExpander>
+				<controls:ModernInput
+					Click="WebButton_Click" HeaderText="Github" IsButton="True"
+					RightIcon="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
+					<controls:ModernInput.CustomIcon>
+						<Image Height="20" Source="ms-appx:///Assets/Other/GitHub.png" />
+					</controls:ModernInput.CustomIcon>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Click="WebButton_Click" HeaderText="Ko-Fi" IsButton="True"
+					RightIcon="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
+					<controls:ModernInput.CustomIcon>
+						<Image Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+					</controls:ModernInput.CustomIcon>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Name="UpdateInfo" Visibility="Collapsed" x:Uid="/Settings/About/Updates">
+				<controls:ModernInput x:Uid="/Settings/About/NotFound" Icon="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+					<Button x:Uid="/Settings/About/Check" Click="CheckUpdatesButton_Click" Style="{ThemeResource AccentButtonStyle}" />
+				</controls:ModernInput>
+				<controls:ModernExpander HeaderText="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" Icon="&#xE896;" IsExpanded="True">
+					<StackPanel Orientation="Vertical" Visibility="Collapsed">
+						<TextBlock Margin="0,0,0,10" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+						<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
+							<comcontrols:MarkdownTextBlock
+								Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
+								LinkClicked="MarkdownText_LinkClicked"
+								Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
+						</StackPanel>
 					</StackPanel>
-				</Button>
-			</StackPanel>
-			<StackPanel x:Name="UpdateInfo" Orientation="Vertical" Visibility="Collapsed">
-				<TextBlock x:Uid="/Settings/About/Updates" Margin="0,10,0,5" FontSize="24" />
-				<Button x:Uid="/Settings/About/Check" Margin="0,5,0,10" Click="CheckUpdatesButton_Click" />
-				<TextBlock x:Uid="/Settings/About/NotFound" Margin="0,0,0,10" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-				<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
-					<TextBlock Margin="0,0,0,10" FontSize="20" Text="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" />
-					<controls:MarkdownTextBlock
-						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
-						LinkClicked="MarkdownText_LinkClicked"
-						Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-					<Button x:Uid="/Settings/About/Download" Margin="0,0,0,50">
-						<Button.Flyout>
-							<Flyout x:Name="DownloadFlyout">
-								<StackPanel>
-									<TextBlock x:Uid="/Settings/About/DownloadNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-									<Button x:Uid="/Settings/About/DownloadYes" HorizontalAlignment="Center" Click="ButtonDownload_Click" />
-								</StackPanel>
-							</Flyout>
-						</Button.Flyout>
-					</Button>
-				</StackPanel>
-			</StackPanel>
+					<controls:ModernInput>
+						<Button x:Uid="/Settings/About/Download">
+							<Button.Flyout>
+								<Flyout x:Name="DownloadFlyout">
+									<StackPanel>
+										<TextBlock x:Uid="/Settings/About/DownloadNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+										<Button x:Uid="/Settings/About/DownloadYes" HorizontalAlignment="Center" Click="ButtonDownload_Click" />
+									</StackPanel>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+					</controls:ModernInput>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>
