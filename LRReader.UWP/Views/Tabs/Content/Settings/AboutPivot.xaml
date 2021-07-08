@@ -54,15 +54,15 @@
 					</StackPanel>
 				</controls:ModernExpander>
 				<controls:ModernInput
-					Click="WebButton_Click" HeaderText="Github" IsButton="True"
-					RightIcon="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
+					x:Uid="/Settings/About/Github" Click="WebButton_Click" HeaderText="Github"
+					IsButton="True" RightIcon="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
 					<controls:ModernInput.CustomIcon>
 						<Image Height="20" Source="ms-appx:///Assets/Other/GitHub.png" />
 					</controls:ModernInput.CustomIcon>
 				</controls:ModernInput>
 				<controls:ModernInput
-					Click="WebButton_Click" HeaderText="Ko-Fi" IsButton="True"
-					RightIcon="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
+					x:Uid="/Settings/About/KoFi" Click="WebButton_Click" HeaderText="Ko-Fi"
+					IsButton="True" RightIcon="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
 					<controls:ModernInput.CustomIcon>
 						<Image Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
 					</controls:ModernInput.CustomIcon>
@@ -70,7 +70,7 @@
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Name="UpdateInfo" x:Uid="/Settings/About/Updates" Visibility="Collapsed">
 				<controls:ModernInput x:Uid="/Settings/About/NotFound" Icon="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
-					<Button x:Uid="/Settings/About/Check" Click="CheckUpdatesButton_Click" Style="{ThemeResource AccentButtonStyle}" />
+					<Button x:Uid="/Settings/About/Check" Click="CheckUpdatesButton_Click" />
 				</controls:ModernInput>
 				<controls:ModernExpander
 					HeaderText="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}"

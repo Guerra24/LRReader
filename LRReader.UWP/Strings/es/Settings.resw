@@ -132,6 +132,12 @@
   <data name="About.DownloadYes.Content" xml:space="preserve">
     <value>Cerrar y Actualizar</value>
   </data>
+  <data name="About.Github.SubText" xml:space="preserve">
+    <value>Código fuente, sugerencias y soporte técnico</value>
+  </data>
+  <data name="About.KoFi.SubText" xml:space="preserve">
+    <value>Donaciones</value>
+  </data>
   <data name="About.License.Content" xml:space="preserve">
     <value>Licencia</value>
   </data>

@@ -59,18 +59,9 @@ namespace LRReader.Shared.Models.Main
 			}
 			catch (Exception e)
 			{
-				var props = new Dictionary<string, string> { { "HResult", e.HResult.ToString() } };
-				Crashes.TrackError(e, props);
-				try
-				{
-					TagsGroups.SafeClear(); // Try safe-clear
-				}
-				catch (Exception e1)
-				{
-					var props1 = new Dictionary<string, string> { { "HResult", e1.HResult.ToString() } };
-					Crashes.TrackError(e1, props1);
-					TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
-				}
+				// Drop original collection, can cause more COMExceptions
+				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
+				Crashes.TrackError(e);
 			}
 			var tmp = new List<ArchiveTagsGroup>();
 			foreach (var s in separatedTags)
@@ -94,11 +85,19 @@ namespace LRReader.Shared.Models.Main
 				tmp.Remove(c);
 				tmp.Add(c);
 			}
-			tmp.ForEach(g =>
+			try
 			{
-				g.Namespace = g.Namespace.UpperFirstLetter().Replace('_', ' ');
-				TagsGroups.Add(g);
-			});
+				tmp.ForEach(g =>
+				{
+					g.Namespace = g.Namespace.UpperFirstLetter().Replace('_', ' ');
+					TagsGroups.Add(g);
+				});
+			}
+			catch (Exception e)
+			{
+				// Handle damaged collection just in case
+				Crashes.TrackError(e);
+			}
 		}
 
 		private ArchiveTagsGroup AddTagsGroup(List<ArchiveTagsGroup> list, string @namespace)
