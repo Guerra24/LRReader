@@ -68,20 +68,18 @@
 					</controls:ModernInput.CustomIcon>
 				</controls:ModernInput>
 			</controls:ModernGroup>
-			<controls:ModernGroup x:Name="UpdateInfo" Visibility="Collapsed" x:Uid="/Settings/About/Updates">
+			<controls:ModernGroup x:Name="UpdateInfo" x:Uid="/Settings/About/Updates" Visibility="Collapsed">
 				<controls:ModernInput x:Uid="/Settings/About/NotFound" Icon="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 					<Button x:Uid="/Settings/About/Check" Click="CheckUpdatesButton_Click" Style="{ThemeResource AccentButtonStyle}" />
 				</controls:ModernInput>
-				<controls:ModernExpander HeaderText="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}" Icon="&#xE896;" IsExpanded="True">
-					<StackPanel Orientation="Vertical" Visibility="Collapsed">
-						<TextBlock Margin="0,0,0,10" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-						<StackPanel Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
-							<comcontrols:MarkdownTextBlock
-								Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
-								LinkClicked="MarkdownText_LinkClicked"
-								Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-						</StackPanel>
-					</StackPanel>
+				<controls:ModernExpander
+					HeaderText="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}"
+					Icon="&#xE896;" IsExpanded="True"
+					Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
+					<comcontrols:MarkdownTextBlock
+						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
+						LinkClicked="MarkdownText_LinkClicked"
+						Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
 					<controls:ModernInput>
 						<Button x:Uid="/Settings/About/Download">
 							<Button.Flyout>
