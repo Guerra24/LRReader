@@ -21,7 +21,7 @@
 
 	<Style x:Key="DefaultModernInputStyle" TargetType="controls:ModernInput">
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-		<Setter Property="Margin" Value="0,0,0,0" />
+		<Setter Property="Margin" Value="0" />
 		<Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
 		<Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
 		<Setter Property="BorderBrush" Value="{ThemeResource ExpanderHeaderBorderBrush}" />

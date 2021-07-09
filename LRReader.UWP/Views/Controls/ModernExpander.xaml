@@ -7,7 +7,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Margin="0,0,0,0"
+	Margin="0"
 	Padding="0"
 	HorizontalAlignment="Stretch"
 	HorizontalContentAlignment="Stretch"
@@ -42,9 +42,7 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<Grid Width="36" />
-				<ContentPresenter
-					Grid.Column="1" Padding="16,9,16,9" x:Phase="1"
-					Content="{x:Bind}" />
+				<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
 			</Grid>
 		</DataTemplate>
 		<local:ItemTemplateSelector
