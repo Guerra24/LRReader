@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
+using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
@@ -7,6 +8,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Tabs.Content.Settings
 {
@@ -18,6 +20,41 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
+
+			switch (this.ActualTheme)
+			{
+				case ElementTheme.Light:
+					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-light.png");
+					break;
+				case ElementTheme.Dark:
+					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-dark.png");
+					break;
+			}
+
+			var Listener = new ThemeListener();
+			Listener.ThemeChanged += Listener_ThemeChanged;
+		}
+
+		private void Listener_ThemeChanged(ThemeListener sender)
+		{
+			switch (sender.CurrentTheme)
+			{
+				case ApplicationTheme.Light:
+					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-light.png");
+					break;
+				case ApplicationTheme.Dark:
+					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-dark.png");
+					break;
+			}
+		}
+
+		private BitmapImage GetIcon(string uri)
+		{
+			var image = new BitmapImage();
+			image.DecodePixelType = DecodePixelType.Logical;
+			image.DecodePixelHeight = 20;
+			image.UriSource = new Uri(uri);
+			return image;
 		}
 
 		private void UploadArchive_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.Web, Service.Settings.Profile.ServerAddressBrowser + "/upload");

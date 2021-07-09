@@ -51,8 +51,8 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
-				<controls:ModernInput x:Uid="/Settings/General/Categories" Icon="&#xE8B7;" IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
+				<controls:ModernInput x:Uid="/Settings/General/Categories" Icon="&#xE8B7;">
+					<ToggleSwitch IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/Bookmarks" Icon="&#xE728;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />

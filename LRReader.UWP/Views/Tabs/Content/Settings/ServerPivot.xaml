@@ -2,7 +2,8 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.Settings.ServerPivot"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
@@ -15,97 +16,98 @@
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</PivotItem.Resources>
 
-	<ScrollViewer Padding="12,0" VerticalScrollBarVisibility="Auto">
-		<StackPanel Padding="30,20" HorizontalAlignment="Left">
-			<controls:WrapPanel
-				Margin="0,0,0,10" HorizontalSpacing="10" Orientation="Horizontal"
-				VerticalSpacing="10">
-				<Button x:Uid="/Settings/Server/Upload" Click="UploadArchive_Click" />
-				<Button x:Uid="/Settings/Server/Batch" Click="BatchTagging_Click" />
-				<Button x:Uid="/Settings/Server/Settings" Click="EditSettings_Click" />
-				<Button x:Uid="/Settings/Server/PluginSettings" Click="EditPlugins_Click" />
-				<Button x:Uid="/Settings/Server/Logs" Click="Logs_Click" />
-			</controls:WrapPanel>
-			<TextBlock x:Uid="/Settings/Server/ApiRequired" Margin="0,0,0,5" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-			<TextBlock Margin="0,0,0,5" FontSize="18">
-				<Run Text="{x:Bind Data.ServerInfo.name, Mode=OneWay}" />
-				<Run Text="-" />
-				<Run Text="{x:Bind Data.ServerInfo.motd, Mode=OneWay}" />
-			</TextBlock>
-			<TextBlock Margin="0,0,0,5">
-				<Run Text="{x:Bind Data.ServerInfo.version, Mode=OneWay}" />
-				<Run Text="-" />
-				<Run Text="{x:Bind Data.ServerInfo.version_name, Mode=OneWay}" />
-			</TextBlock>
-			<CheckBox
-				x:Uid="/Settings/Server/ResizedImages"
-				IsChecked="{x:Bind Data.ServerInfo.server_resizes_images, Mode=OneWay}"
-				IsHitTestVisible="False" IsTabStop="False" />
-			<CheckBox
-				x:Uid="/Settings/Server/UsePassword"
-				IsChecked="{x:Bind Data.ServerInfo.has_password, Mode=OneWay}"
-				IsHitTestVisible="False" IsTabStop="False" />
-			<CheckBox
-				x:Uid="/Settings/Server/NoFun"
-				IsChecked="{x:Bind Data.ServerInfo.nofun_mode, Mode=OneWay}"
-				IsHitTestVisible="False" IsTabStop="False" />
-			<CheckBox
-				x:Uid="/Settings/Server/Debug" Margin="0,0,0,10"
-				IsChecked="{x:Bind Data.ServerInfo.debug_mode, Mode=OneWay}"
-				IsHitTestVisible="False" IsTabStop="False" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal" Visibility="{x:Bind Data.ControlFlags.V077}">
-				<Button x:Uid="/Settings/Server/RegenThumb" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
-					<Button.Flyout>
-						<Flyout x:Name="RegenThumbsFlyout">
-							<StackPanel>
-								<TextBlock x:Uid="/Settings/Server/RegenThumbNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-								<Button x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center" Click="RegenThumb_Click" />
-							</StackPanel>
-						</Flyout>
-					</Button.Flyout>
-				</Button>
-				<CheckBox
-					x:Name="RegenThumbForced" x:Uid="/Settings/Server/RegenThumbForced" Margin="10,0,0,0"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
-			</StackPanel>
-			<TextBlock x:Uid="/Settings/Server/Worker" Margin="0,0,0,5" FontSize="18" />
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<TextBlock x:Uid="/Settings/Server/WorkerStatus" />
-				<TextBlock Foreground="#1AA51A" Visibility="{x:Bind Data.ShinobuRunning, Mode=OneWay}">
-					<Run x:Uid="/Settings/Server/WorkerRunning" />
-					(PID:
-					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
-				</TextBlock>
-				<TextBlock Foreground="#CF2525" Visibility="{x:Bind Data.ShinobuStopped, Mode=OneWay}">
-					<Run x:Uid="/Settings/Server/WorkerStopped" />
-					(PID:
-					<Run Text="{x:Bind Data.ShinobuPID, Mode=OneWay}" />)
-				</TextBlock>
-				<TextBlock x:Uid="/Settings/Server/WorkerUnknown" Visibility="{x:Bind Data.ShinobuUnknown, Mode=OneWay}" />
-			</StackPanel>
-			<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-				<Button
-					x:Uid="/Settings/Server/WorkerRestart" Margin="0,0,10,0" Click="RestartWorkerButton_Click"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
-				<Button
-					x:Uid="/Settings/Server/WorkerStop" Click="StopWorkerButton_Click"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
-			</StackPanel>
-			<TextBlock x:Uid="/Settings/Server/Database" Margin="0,0,0,5" FontSize="18" />
-			<Button
-				x:Uid="/Settings/Server/ResetCache" Margin="0,0,0,10" Click="ResetSearchButton_Click"
-				IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
-			<Button x:Uid="/Settings/Server/ClearNew" Margin="0,0,0,10" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
-				<Button.Flyout>
-					<Flyout x:Name="ClearNewFlyout">
-						<StackPanel>
-							<TextBlock x:Uid="/Settings/Server/ClearNewNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-							<Button x:Uid="/Settings/Server/ClearNewYes" HorizontalAlignment="Center" Click="ClearAllNewButton_Click" />
-						</StackPanel>
-					</Flyout>
-				</Button.Flyout>
-			</Button>
-			<Button x:Uid="/Settings/Server/BackupDB" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
+			<controls:ModernGroup Text="Server">
+				<controls:ModernExpander
+					xmlns:Sys="using:System"
+					HeaderText="{x:Bind Sys:String.Format(x:Null, '{0} - {1}', Data.ServerInfo.name, Data.ServerInfo.motd), Mode=OneWay}"
+					IsExpanded="True"
+					SubText="{x:Bind Sys:String.Format(x:Null, '{0} - {1}', Data.ServerInfo.version, Data.ServerInfo.version_name), Mode=OneWay}"
+					ToolTip="{x:Bind Data.ServerInfo.version_desc, Mode=OneWay}">
+					<controls:ModernExpander.CustomIcon>
+						<Image x:Name="Logo" Height="20" Source="ms-appx:///Assets/Other/LANraragi-dark.png" />
+					</controls:ModernExpander.CustomIcon>
+					<StackPanel>
+						<TextBlock x:Uid="/Settings/Server/ApiRequired" Margin="0,0,0,10" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+						<comcontrols:WrapPanel HorizontalSpacing="10" Orientation="Horizontal">
+							<Button x:Uid="/Settings/Server/Upload" Click="UploadArchive_Click" />
+							<Button x:Uid="/Settings/Server/Batch" Click="BatchTagging_Click" />
+							<Button x:Uid="/Settings/Server/Settings" Click="EditSettings_Click" />
+							<Button x:Uid="/Settings/Server/PluginSettings" Click="EditPlugins_Click" />
+							<Button x:Uid="/Settings/Server/Logs" Click="Logs_Click" />
+						</comcontrols:WrapPanel>
+					</StackPanel>
+					<StackPanel>
+						<CheckBox
+							x:Uid="/Settings/Server/ResizedImages"
+							IsChecked="{x:Bind Data.ServerInfo.server_resizes_images, Mode=OneWay}"
+							IsHitTestVisible="False" IsTabStop="False" />
+						<CheckBox
+							x:Uid="/Settings/Server/UsePassword"
+							IsChecked="{x:Bind Data.ServerInfo.has_password, Mode=OneWay}"
+							IsHitTestVisible="False" IsTabStop="False" />
+						<CheckBox
+							x:Uid="/Settings/Server/NoFun"
+							IsChecked="{x:Bind Data.ServerInfo.nofun_mode, Mode=OneWay}"
+							IsHitTestVisible="False" IsTabStop="False" />
+						<CheckBox
+							x:Uid="/Settings/Server/Debug"
+							IsChecked="{x:Bind Data.ServerInfo.debug_mode, Mode=OneWay}"
+							IsHitTestVisible="False" IsTabStop="False" />
+					</StackPanel>
+				</controls:ModernExpander>
+				<controls:ModernExpander
+					x:Uid="/Settings/Server/RegenThumbnails" Icon="&#xE8B9;"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+					Visibility="{x:Bind Data.ControlFlags.V077}">
+					<controls:ModernExpander.Input>
+						<Button x:Uid="/Settings/Server/RegenThumb" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+							<Button.Flyout>
+								<Flyout x:Name="RegenThumbsFlyout">
+									<StackPanel>
+										<TextBlock x:Uid="/Settings/Server/RegenThumbNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+										<Button x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center" Click="RegenThumb_Click" />
+									</StackPanel>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+					</controls:ModernExpander.Input>
+					<CheckBox x:Name="RegenThumbForced" x:Uid="/Settings/Server/RegenThumbForced" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/Server/Worker">
+				<controls:ModernExpander HeaderText="{x:Bind Data.ShinobuStatusText, Mode=OneWay}" Icon="&#xE74C;" SubText="{x:Bind Data.ShinobuPid, Mode=OneWay}">
+					<controls:ModernInput x:Uid="/Settings/Server/WorkerRestart">
+						<Button x:Uid="/Settings/Server/WorkerRestartButton" Click="RestartWorkerButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+					</controls:ModernInput>
+					<controls:ModernInput x:Uid="/Settings/Server/WorkerStop">
+						<Button x:Uid="/Settings/Server/WorkerStopButton" Click="StopWorkerButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/Server/Database">
+				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Icon="&#xE7C5;">
+					<Button x:Uid="/Settings/Server/ResetCacheButton" Click="ResetSearchButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Icon="&#xE74E;">
+					<Button x:Uid="/Settings/Server/BackupDBButton" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Server/ClearNew" Icon="&#xE75C;">
+					<Button x:Uid="/Settings/Server/ClearNewButton" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+						<Button.Flyout>
+							<Flyout x:Name="ClearNewFlyout">
+								<StackPanel>
+									<TextBlock x:Uid="/Settings/Server/ClearNewNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+									<Button x:Uid="/Settings/Server/ClearNewYes" HorizontalAlignment="Center" Click="ClearAllNewButton_Click" />
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</controls:ModernInput>
+			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>
 </PivotItem>

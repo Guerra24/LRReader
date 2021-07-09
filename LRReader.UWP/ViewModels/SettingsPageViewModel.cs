@@ -9,6 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 
 namespace LRReader.UWP.ViewModels
 {
@@ -19,17 +20,29 @@ namespace LRReader.UWP.ViewModels
 		private readonly ApiService Api;
 		private readonly IPlatformService Platform;
 
+		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
+
 		public readonly string LRReader = "LRReader";
 
 		public SettingsService SettingsManager;
 		public Version Version => Platform.Version;
 		public Version MinVersion => UpdatesManager.MIN_VERSION;
 		public Version MaxVersion => UpdatesManager.MAX_VERSION;
-		private ShinobuStatus _shinobuStatus = new ShinobuStatus();
-		public bool ShinobuRunning => _shinobuStatus.is_alive == 1 && !ShinobuUnknown;
-		public bool ShinobuStopped => _shinobuStatus.is_alive == 0 && !ShinobuUnknown;
-		public bool ShinobuUnknown => !SettingsManager.Profile.HasApiKey || _shinobuStatus.pid == 0;
-		public int ShinobuPID => _shinobuStatus.pid;
+
+		private string _shinobuStatusText;
+		public string ShinobuStatusText
+		{
+			get => _shinobuStatusText;
+			set => SetProperty(ref _shinobuStatusText, value);
+		}
+
+		private string _shinobuPid;
+		public string ShinobuPid
+		{
+			get => _shinobuPid;
+			set => SetProperty(ref _shinobuPid, value);
+		}
+
 		public ReleaseInfo ReleaseInfo;
 		private bool _showReleaseInfo;
 		public bool ShowReleaseInfo
@@ -120,23 +133,23 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task UpdateShinobuStatus()
 		{
+			var worker = lang.GetString("Server/WorkerStatus/Text");
+			var status = lang.GetString("Server/WorkerUnknown/Text");
+			var pid = "";
 			if (SettingsManager.Profile.HasApiKey)
 			{
 				var result = await ShinobuProvider.GetShinobuStatus();
-				if (result != null)
+				if (result?.pid != 0)
 				{
-					_shinobuStatus = result;
-					OnPropertyChanged("ShinobuPID");
-				}
-				else
-				{
-					_shinobuStatus.pid = 0;
-					_shinobuStatus.is_alive = 0;
+					if (result.is_alive)
+						status = lang.GetString("Server/WorkerRunning/Text");
+					else
+						status = lang.GetString("Server/WorkerStopped/Text");
+					pid = $"PID: {result.pid}";
 				}
 			}
-			OnPropertyChanged("ShinobuRunning");
-			OnPropertyChanged("ShinobuStopped");
-			OnPropertyChanged("ShinobuUnknown");
+			ShinobuStatusText = $"{worker}{status}";
+			ShinobuPid = pid;
 		}
 
 		public async void UpdateReleaseData()

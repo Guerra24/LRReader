@@ -12,6 +12,7 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
+		<internal:StringToColorConverter x:Key="StringToColorConverter" />
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:DisabledTextConverter x:Key="DisabledTextConverter" />
 		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
@@ -29,6 +30,7 @@
 					MinWidth="40" MinHeight="0" Padding="4,2"
 					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
 					CornerRadius="4,0,0,4"
+					Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource StringToColorConverter}}"
 					IsEnabled="{Binding IsEnabled, ElementName=RemoveTag}"
 					IsSpellCheckEnabled="False"
 					Template="{StaticResource EditTagTextBoxTemplate}"
@@ -68,7 +70,10 @@
 					Background="{ThemeResource TextControlBackground}"
 					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
 					BorderThickness="1" CornerRadius="4,0,0,4">
-					<TextBlock Padding="4,2" VerticalAlignment="Bottom" Text="{x:Bind Tag, Mode=TwoWay}" />
+					<TextBlock
+						Padding="4,2" VerticalAlignment="Bottom"
+						Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource StringToColorConverter}}"
+						Text="{x:Bind Tag, Mode=TwoWay}" />
 				</Border>
 				<Button
 					x:Name="AddPluginTag" x:Uid="/Tabs/ArchiveEdit/PluginTag" Grid.Column="1"
@@ -82,7 +87,7 @@
 					Tag="{x:Bind}" />
 			</Grid>
 		</DataTemplate>
-		<!-- Stolen from https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/TextBox_themeresources.xaml -->
+		<!--  Stolen from https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/TextBox_themeresources.xaml  -->
 		<ControlTemplate x:Key="EditTagTextBoxTemplate" TargetType="TextBox">
 			<Grid>
 				<Grid.RowDefinitions>

@@ -7,7 +7,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Margin="0,0,0,3"
+	Margin="0,0,0,0"
 	Padding="0"
 	HorizontalAlignment="Stretch"
 	HorizontalContentAlignment="Stretch"
@@ -18,6 +18,7 @@
 	<muxc:Expander.Resources>
 		<Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+		<converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
 		<DataTemplate x:Key="OtherItem" x:DataType="UIElement">
 			<Grid
 				Background="{ThemeResource ExpanderContentBackground}"
@@ -64,7 +65,7 @@
 	</muxc:Expander.Transitions>
 
 	<muxc:Expander.Header>
-		<Grid>
+		<Grid ToolTipService.ToolTip="{x:Bind ToolTip, Mode=OneWay}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
@@ -75,6 +76,7 @@
 				FontFamily="{StaticResource SymbolThemeFontFamily}"
 				Glyph="{x:Bind Icon, Mode=OneWay}"
 				Visibility="{x:Bind Icon, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />
+			<ContentPresenter Margin="0,0,16,0" Content="{x:Bind CustomIcon, Mode=OneWay}" Visibility="{x:Bind CustomIcon, Mode=OneWay, Converter={StaticResource EmptyObjectToObjectConverter}}" />
 			<StackPanel Grid.Column="1" Margin="0,16,0,16" VerticalAlignment="Center">
 				<TextBlock Text="{x:Bind HeaderText, Mode=OneWay}" />
 				<TextBlock

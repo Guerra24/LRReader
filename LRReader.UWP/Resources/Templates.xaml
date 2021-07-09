@@ -21,7 +21,7 @@
 
 	<Style x:Key="DefaultModernInputStyle" TargetType="controls:ModernInput">
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-		<Setter Property="Margin" Value="0,0,0,3" />
+		<Setter Property="Margin" Value="0,0,0,0" />
 		<Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
 		<Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
 		<Setter Property="BorderBrush" Value="{ThemeResource ExpanderHeaderBorderBrush}" />
@@ -134,7 +134,7 @@
 	</Style>
 
 	<Style TargetType="controls:ModernGroup">
-		<Setter Property="Margin" Value="0,0,0,29" />
+		<Setter Property="Margin" Value="0,0,0,32" />
 		<Setter Property="Transitions">
 			<Setter.Value>
 				<TransitionCollection>
@@ -147,7 +147,11 @@
 				<ControlTemplate TargetType="controls:ModernGroup">
 					<StackPanel>
 						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Text, Mode=OneWay}" />
-						<muxc:ItemsRepeater ItemsSource="{x:Bind Content, Mode=OneWay}" />
+						<muxc:ItemsRepeater ItemsSource="{x:Bind Content, Mode=OneWay}">
+							<muxc:ItemsRepeater.Layout>
+								<muxc:StackLayout Spacing="3" />
+							</muxc:ItemsRepeater.Layout>
+						</muxc:ItemsRepeater>
 					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>

@@ -348,20 +348,26 @@
   <data name="Server.ApiRequired.Text" xml:space="preserve">
     <value>Se requiere clave para usar las opciones del servidor</value>
   </data>
-  <data name="Server.BackupDB.Content" xml:space="preserve">
+  <data name="Server.BackupDB.HeaderText" xml:space="preserve">
     <value>Copia de la base de datos</value>
   </data>
-  <data name="Server.BackupDB.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Server.BackupDB.SubText" xml:space="preserve">
     <value>Devuelve una copia de seguridad en JSON. Esta copia de seguridad se puede importar manualmente</value>
+  </data>
+  <data name="Server.BackupDBButton.Content" xml:space="preserve">
+    <value>Descargar</value>
   </data>
   <data name="Server.Batch.Content" xml:space="preserve">
     <value>Etiquetado por lotes</value>
   </data>
-  <data name="Server.ClearNew.Content" xml:space="preserve">
-    <value>Limpiar los archivos "Nuevos"</value>
+  <data name="Server.ClearNew.HeaderText" xml:space="preserve">
+    <value>Limpiar "Nuevos"</value>
   </data>
-  <data name="Server.ClearNew.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Server.ClearNew.SubText" xml:space="preserve">
     <value>Elimina el estado "Nuevo" en todos los archivos</value>
+  </data>
+  <data name="Server.ClearNewButton.Content" xml:space="preserve">
+    <value>Limpiar</value>
   </data>
   <data name="Server.ClearNewNotice.Text" xml:space="preserve">
     <value>Todos los archivos "Nuevos" se limpiarán. ¿Quieres continuar?</value>
@@ -385,7 +391,7 @@
     <value>Configuración de Plugins</value>
   </data>
   <data name="Server.RegenThumb.Content" xml:space="preserve">
-    <value>Generar miniaturas</value>
+    <value>Generar</value>
   </data>
   <data name="Server.RegenThumbForced.Content" xml:space="preserve">
     <value>Forzar todo</value>
@@ -393,17 +399,23 @@
   <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
     <value>Regenera todas las miniaturas</value>
   </data>
+  <data name="Server.RegenThumbnails.HeaderText" xml:space="preserve">
+    <value>Miniaturas</value>
+  </data>
   <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
     <value>Generar las miniaturas que faltan, si se fuerza regenera todas</value>
   </data>
   <data name="Server.RegenThumbYes.Content" xml:space="preserve">
     <value>Si, generar miniaturas</value>
   </data>
-  <data name="Server.ResetCache.Content" xml:space="preserve">
-    <value>Restablecer caché de búsqueda</value>
+  <data name="Server.ResetCache.HeaderText" xml:space="preserve">
+    <value>Caché de búsqueda</value>
   </data>
-  <data name="Server.ResetCache.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Server.ResetCache.SubText" xml:space="preserve">
     <value>Las búsquedas se almacenan para mejorar el rendimiento. Si hay problemas con eso, use esto</value>
+  </data>
+  <data name="Server.ResetCacheButton.Content" xml:space="preserve">
+    <value>Restablecer</value>
   </data>
   <data name="Server.ResizedImages.Content" xml:space="preserve">
     <value>Imágenes redimensionadas</value>
@@ -420,11 +432,11 @@
   <data name="Server.Worker.Text" xml:space="preserve">
     <value>Trabajador de fondo</value>
   </data>
-  <data name="Server.WorkerRestart.Content" xml:space="preserve">
-    <value>Reiniciar</value>
+  <data name="Server.WorkerRestart.HeaderText" xml:space="preserve">
+    <value>Reiniciar el trabajador de fondo</value>
   </data>
-  <data name="Server.WorkerRestart.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Reinicia el trabajador de fondo</value>
+  <data name="Server.WorkerRestartButton.Content" xml:space="preserve">
+    <value>Reiniciar</value>
   </data>
   <data name="Server.WorkerRunning.Text" xml:space="preserve">
     <value> Ejecutando</value>
@@ -432,11 +444,11 @@
   <data name="Server.WorkerStatus.Text" xml:space="preserve">
     <value>Estado:</value>
   </data>
-  <data name="Server.WorkerStop.Content" xml:space="preserve">
-    <value>Apagar</value>
+  <data name="Server.WorkerStop.HeaderText" xml:space="preserve">
+    <value>Apagar el trabajador de fondo</value>
   </data>
-  <data name="Server.WorkerStop.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Apaga el trabajador de fondo</value>
+  <data name="Server.WorkerStopButton.Content" xml:space="preserve">
+    <value>Apagar</value>
   </data>
   <data name="Server.WorkerStopped.Text" xml:space="preserve">
     <value> Apagado</value>

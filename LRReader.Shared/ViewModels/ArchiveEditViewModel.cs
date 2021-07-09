@@ -3,6 +3,7 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -148,7 +149,7 @@ namespace LRReader.Shared.ViewModels
 						else
 						{
 							foreach (var t in result.data.new_tags.Split(','))
-								PluginTagsList.Add(new PluginTag { Tag = t.Trim(), Command = TagCommand });
+								PluginTagsList.Add(ColorTag(new PluginTag { Tag = t.Trim(), Command = TagCommand }));
 							AddAllTags.NotifyCanExecuteChanged();
 						}
 					}
@@ -181,7 +182,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			foreach (var tag in PluginTagsList)
 				if (!TagsList.Contains(tag))
-					TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = tag.Tag, Command = TagCommand });
+					TagsList.Insert(TagsList.Count - 1, ColorTag(new EditableTag { Tag = tag.Tag, Command = TagCommand }));
 		}
 
 		private string BuildTags()
@@ -202,7 +203,7 @@ namespace LRReader.Shared.ViewModels
 			else if (tag is PluginTag)
 			{
 				if (!TagsList.Contains(tag))
-					TagsList.Insert(TagsList.Count - 1, new EditableTag { Tag = tag.Tag, Command = TagCommand });
+					TagsList.Insert(TagsList.Count - 1, ColorTag(new EditableTag { Tag = tag.Tag, Command = TagCommand }));
 			}
 			else
 			{
@@ -213,17 +214,34 @@ namespace LRReader.Shared.ViewModels
 		private void ReloadTagsList(string tags)
 		{
 			TagsList.Clear();
-			foreach (var t in tags.Split(','))
-				TagsList.Add(new EditableTag { Tag = t.Trim(), Command = TagCommand });
+			foreach (var t in tags.Split(',').OrderByDescending(t => t.Contains(":")).ThenBy(t => t.Trim()))
+				TagsList.Add(ColorTag(new EditableTag { Tag = t.Trim(), Command = TagCommand }));
 			TagsList.Add(new AddTag { Command = TagCommand });
 			Tags = BuildTags();
 		}
 
+
+		private T ColorTag<T>(T tag) where T : EditableTag
+		{
+			if (tag is AddTag)
+				return tag;
+			string color = null;
+			var text = tag.Tag.ToLower();
+			if (text.Contains("artist:"))
+				color = "#22a7f0";
+			else if (text.Contains("series:") || text.Contains("parody:"))
+				color = "#d2527f";
+			else if (text.Contains("circle:") || text.Contains("group:"))
+				color = "#36d7b7";
+			tag.Color = color;
+			return tag;
+		}
 	}
 
 	public class EditableTag
 	{
 		public string Tag { get; set; }
+		public string Color { get; set; }
 		public RelayCommand<EditableTag> Command { get; internal set; }
 
 		public override bool Equals(object obj)

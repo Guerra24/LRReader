@@ -1,8 +1,11 @@
-﻿namespace LRReader.Shared.Models.Main
+﻿using Newtonsoft.Json;
+
+namespace LRReader.Shared.Models.Main
 {
 	public class ShinobuStatus : GenericApiResult
 	{
-		public int is_alive { get; set; }
+		[JsonConverter(typeof(BoolConverter))]
+		public bool is_alive { get; set; }
 		public int pid { get; set; }
 	}
 }
