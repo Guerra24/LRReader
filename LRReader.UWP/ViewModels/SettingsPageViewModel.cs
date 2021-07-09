@@ -139,7 +139,7 @@ namespace LRReader.UWP.ViewModels
 			if (SettingsManager.Profile.HasApiKey)
 			{
 				var result = await ShinobuProvider.GetShinobuStatus();
-				if (result?.pid != 0)
+				if (result != null && result.pid != 0)
 				{
 					if (result.is_alive)
 						status = lang.GetString("Server/WorkerRunning/Text");

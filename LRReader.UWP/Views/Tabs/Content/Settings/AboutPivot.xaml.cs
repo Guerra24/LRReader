@@ -3,12 +3,14 @@ using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Tabs.Content.Settings
 {
@@ -25,6 +27,40 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 #if SIDELOAD
 			UpdateInfo.Visibility = Visibility.Visible;
 #endif
+			switch (this.ActualTheme)
+			{
+				case ElementTheme.Light:
+					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-light.png");
+					break;
+				case ElementTheme.Dark:
+					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-dark.png");
+					break;
+			}
+
+			var Listener = new ThemeListener();
+			Listener.ThemeChanged += Listener_ThemeChanged;
+		}
+
+		private void Listener_ThemeChanged(ThemeListener sender)
+		{
+			switch (sender.CurrentTheme)
+			{
+				case ApplicationTheme.Light:
+					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-light.png");
+					break;
+				case ApplicationTheme.Dark:
+					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-dark.png");
+					break;
+			}
+		}
+
+		private BitmapImage GetIcon(string uri)
+		{
+			var image = new BitmapImage();
+			image.DecodePixelType = DecodePixelType.Logical;
+			image.DecodePixelHeight = 20;
+			image.UriSource = new Uri(uri);
+			return image;
 		}
 
 		private void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)

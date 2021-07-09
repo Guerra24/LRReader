@@ -57,7 +57,7 @@
 					x:Uid="/Settings/About/Github" Click="WebButton_Click" HeaderText="Github"
 					IsButton="True" RightIcon="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
 					<controls:ModernInput.CustomIcon>
-						<Image Height="20" Source="ms-appx:///Assets/Other/GitHub.png" />
+						<Image x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
 					</controls:ModernInput.CustomIcon>
 				</controls:ModernInput>
 				<controls:ModernInput

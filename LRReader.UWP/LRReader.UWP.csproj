@@ -289,7 +289,8 @@
     <Content Include="Assets\LargeTile.scale-150.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
-    <Content Include="Assets\Other\GitHub.png" />
+    <Content Include="Assets\Other\GitHub-light.png" />
+    <Content Include="Assets\Other\GitHub-dark.png" />
     <Content Include="Assets\Other\Ko-fi.png" />
     <Content Include="Assets\Other\LANraragi-dark.png" />
     <Content Include="Assets\Other\LANraragi-light.png" />
