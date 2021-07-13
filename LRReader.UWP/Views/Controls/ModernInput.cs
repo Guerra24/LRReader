@@ -20,16 +20,15 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ControlProperty, value);
 		}
 
-		public string HeaderText
+		public string Title
 		{
-			get => GetValue(HeaderTextProperty) as string;
-			set => SetValue(HeaderTextProperty, value);
+			get => GetValue(TitleProperty) as string;
+			set => SetValue(TitleProperty, value);
 		}
-
-		public string SubText
+		public string Description
 		{
-			get => GetValue(SubTextProperty) as string;
-			set => SetValue(SubTextProperty, value);
+			get => GetValue(DescriptionProperty) as string;
+			set => SetValue(DescriptionProperty, value);
 		}
 
 		public HorizontalAlignment InputHorizontalAlignment
@@ -108,8 +107,8 @@ namespace LRReader.UWP.Views.Controls
 		}
 
 		public static readonly DependencyProperty ControlProperty = DependencyProperty.Register("Control", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
-		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
-		public static readonly DependencyProperty SubTextProperty = DependencyProperty.Register("SubText", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
+		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
+		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("DescriptionProperty", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty InputHorizontalAlignmentProperty = DependencyProperty.Register("InputHorizontalAlignment", typeof(HorizontalAlignment), typeof(ModernInput), new PropertyMetadata(HorizontalAlignment.Right));
 		public static readonly DependencyProperty TextMarginProperty = DependencyProperty.Register("TextMargin", typeof(Thickness), typeof(ModernInput), new PropertyMetadata(new Thickness(0)));
 		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(ModernInput), new PropertyMetadata(null));

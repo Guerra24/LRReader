@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About.About.Text" xml:space="preserve">
+  <data name="About.About.Title" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="About.Check.Content" xml:space="preserve">
@@ -132,10 +132,10 @@
   <data name="About.DownloadYes.Content" xml:space="preserve">
     <value>Close and Update</value>
   </data>
-  <data name="About.Github.SubText" xml:space="preserve">
+  <data name="About.Github.Description" xml:space="preserve">
     <value>Source code, suggestions and support</value>
   </data>
-  <data name="About.KoFi.SubText" xml:space="preserve">
+  <data name="About.KoFi.Description" xml:space="preserve">
     <value>Donations</value>
   </data>
   <data name="About.License.Content" xml:space="preserve">
@@ -144,7 +144,7 @@
   <data name="About.Links.Text" xml:space="preserve">
     <value>Links</value>
   </data>
-  <data name="About.NotFound.HeaderText" xml:space="preserve">
+  <data name="About.NotFound.Title" xml:space="preserve">
     <value>No updates found</value>
   </data>
   <data name="About.Privacy.Content" xml:space="preserve">
@@ -153,7 +153,7 @@
   <data name="About.Supported.Text" xml:space="preserve">
     <value>LANraragi</value>
   </data>
-  <data name="About.Updates.Text" xml:space="preserve">
+  <data name="About.Updates.Title" xml:space="preserve">
     <value>Updates</value>
   </data>
   <data name="About.Version.Text" xml:space="preserve">
@@ -165,7 +165,7 @@
   <data name="General.AddProfile.Content" xml:space="preserve">
     <value>Add </value>
   </data>
-  <data name="General.App.Text" xml:space="preserve">
+  <data name="General.App.Title" xml:space="preserve">
     <value>App</value>
   </data>
   <data name="General.AppTheme.Dark" xml:space="preserve">
@@ -177,37 +177,37 @@
   <data name="General.AppTheme.System" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="General.Bookmarked.HeaderText" xml:space="preserve">
+  <data name="General.Bookmarked.Title" xml:space="preserve">
     <value>Open Bookmarked archives on start</value>
   </data>
-  <data name="General.Bookmarks.HeaderText" xml:space="preserve">
+  <data name="General.Bookmarks.Title" xml:space="preserve">
     <value>Open Bookmarks tab on start</value>
   </data>
-  <data name="General.Categories.HeaderText" xml:space="preserve">
+  <data name="General.Categories.Title" xml:space="preserve">
     <value>Open Categories tab on start</value>
   </data>
   <data name="General.ClearThumbCache.Content" xml:space="preserve">
     <value>Clear</value>
   </data>
-  <data name="General.CompactMarks.HeaderText" xml:space="preserve">
+  <data name="General.CompactMarks.Title" xml:space="preserve">
     <value>Use compact Bookmarks</value>
   </data>
-  <data name="General.Connection.Text" xml:space="preserve">
+  <data name="General.Connection.Title" xml:space="preserve">
     <value>Connection</value>
   </data>
-  <data name="General.CrashReport.HeaderText" xml:space="preserve">
+  <data name="General.CrashReport.Title" xml:space="preserve">
     <value>Collect error and crash logs</value>
   </data>
   <data name="General.EditProfile.Content" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="General.ExpanderProfile.HeaderText" xml:space="preserve">
+  <data name="General.ExpanderProfile.Title" xml:space="preserve">
     <value>Profile</value>
   </data>
-  <data name="General.InputSortBy.HeaderText" xml:space="preserve">
+  <data name="General.InputSortBy.Title" xml:space="preserve">
     <value>Sort by</value>
   </data>
-  <data name="General.OrderBy.HeaderText" xml:space="preserve">
+  <data name="General.OrderBy.Title" xml:space="preserve">
     <value>Order by</value>
   </data>
   <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
@@ -222,7 +222,7 @@
   <data name="General.RemoveProfileYes.Content" xml:space="preserve">
     <value>Yes, remove select profile</value>
   </data>
-  <data name="General.Search.Text" xml:space="preserve">
+  <data name="General.Search.Title" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="General.Size.Text" xml:space="preserve">
@@ -243,19 +243,19 @@
   <data name="General.SwitchProfile.Title" xml:space="preserve">
     <value>Change Profile</value>
   </data>
-  <data name="General.Tabs.Text" xml:space="preserve">
+  <data name="General.Tabs.Title" xml:space="preserve">
     <value>Tabs</value>
   </data>
-  <data name="General.Theme.HeaderText" xml:space="preserve">
+  <data name="General.Theme.Title" xml:space="preserve">
     <value>Theme</value>
   </data>
-  <data name="General.ThumbCache.HeaderText" xml:space="preserve">
+  <data name="General.ThumbCache.Title" xml:space="preserve">
     <value>Thumbnail Cache</value>
   </data>
-  <data name="General.VisualTags.HeaderText" xml:space="preserve">
+  <data name="General.VisualTags.Title" xml:space="preserve">
     <value>Visual tags editor</value>
   </data>
-  <data name="General.VisualTags.SubText" xml:space="preserve">
+  <data name="General.VisualTags.Description" xml:space="preserve">
     <value>Uses controls for tag editing instead of a text box</value>
   </data>
   <data name="GeneralPivot.Header" xml:space="preserve">
@@ -264,7 +264,7 @@
   <data name="LocalDataPivot.Header" xml:space="preserve">
     <value>Local data</value>
   </data>
-  <data name="Reader.AutoOpen.HeaderText" xml:space="preserve">
+  <data name="Reader.AutoOpen.Title" xml:space="preserve">
     <value>Open Reader automatically</value>
   </data>
   <data name="Reader.AV1Notice.Content" xml:space="preserve">
@@ -273,19 +273,19 @@
   <data name="Reader.AV1NoticeInfo.Title" xml:space="preserve">
     <value>Missing AV1 Video Extentions</value>
   </data>
-  <data name="Reader.BookmarksGroup.Text" xml:space="preserve">
+  <data name="Reader.BookmarksGroup.Title" xml:space="preserve">
     <value>Bookmarks</value>
   </data>
-  <data name="Reader.FitLimit.HeaderText" xml:space="preserve">
+  <data name="Reader.FitLimit.Title" xml:space="preserve">
     <value>Scale limit</value>
   </data>
-  <data name="Reader.FitLimit.SubText" xml:space="preserve">
+  <data name="Reader.FitLimit.Description" xml:space="preserve">
     <value>Maximum scaling that can be applied to a page</value>
   </data>
-  <data name="Reader.FitWidth.HeaderText" xml:space="preserve">
+  <data name="Reader.FitWidth.Title" xml:space="preserve">
     <value>Fit pages to width</value>
   </data>
-  <data name="Reader.FitWidth.SubText" xml:space="preserve">
+  <data name="Reader.FitWidth.Description" xml:space="preserve">
     <value>Scales pages to the full width of the window</value>
   </data>
   <data name="Reader.HEIFNotice.Content" xml:space="preserve">
@@ -294,19 +294,19 @@
   <data name="Reader.HEIFNoticeInfo.Title" xml:space="preserve">
     <value>Missing HEIF Image Extentions</value>
   </data>
-  <data name="Reader.Keyboard.HeaderText" xml:space="preserve">
+  <data name="Reader.Keyboard.Title" xml:space="preserve">
     <value>Keyboard scrolling distance</value>
   </data>
-  <data name="Reader.Keyboard.SubText" xml:space="preserve">
+  <data name="Reader.Keyboard.Description" xml:space="preserve">
     <value>Distance in pixels when keyboard is used</value>
   </data>
-  <data name="Reader.ReaderGroup.Text" xml:space="preserve">
+  <data name="Reader.ReaderGroup.Title" xml:space="preserve">
     <value>Reader</value>
   </data>
-  <data name="Reader.Reminder.HeaderText" xml:space="preserve">
+  <data name="Reader.Reminder.Title" xml:space="preserve">
     <value>Add Bookmark Reminder</value>
   </data>
-  <data name="Reader.Reminder.SubText" xml:space="preserve">
+  <data name="Reader.Reminder.Description" xml:space="preserve">
     <value>Ask to bookmark archive if closed half way through</value>
   </data>
   <data name="Reader.ReminderMode.All" xml:space="preserve">
@@ -315,16 +315,16 @@
   <data name="Reader.ReminderMode.New" xml:space="preserve">
     <value>Only "New" Archives</value>
   </data>
-  <data name="Reader.RemoveBookmarkReminder.HeaderText" xml:space="preserve">
+  <data name="Reader.RemoveBookmarkReminder.Title" xml:space="preserve">
     <value>Remove Bookmark Reminder</value>
   </data>
-  <data name="Reader.RemoveBookmarkReminder.SubText" xml:space="preserve">
+  <data name="Reader.RemoveBookmarkReminder.Description" xml:space="preserve">
     <value>Ask to remove bookmark once complete</value>
   </data>
-  <data name="Reader.RTL.HeaderText" xml:space="preserve">
+  <data name="Reader.RTL.Title" xml:space="preserve">
     <value>Read right-to-left</value>
   </data>
-  <data name="Reader.RTL.SubText" xml:space="preserve">
+  <data name="Reader.RTL.Description" xml:space="preserve">
     <value>Reverses the pages read direction</value>
   </data>
   <data name="Reader.SetBuilder.Content" xml:space="preserve">
@@ -333,13 +333,13 @@
   <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
     <value>Uses aspect ratio when building the pages order. Recommended for archives with variable aspect ratio.</value>
   </data>
-  <data name="Reader.TwoPages.HeaderText" xml:space="preserve">
+  <data name="Reader.TwoPages.Title" xml:space="preserve">
     <value>Show two pages</value>
   </data>
-  <data name="Reader.TwoPages.SubText" xml:space="preserve">
+  <data name="Reader.TwoPages.Description" xml:space="preserve">
     <value>Two pages will be displayed at once</value>
   </data>
-  <data name="Reader.Zoom.HeaderText" xml:space="preserve">
+  <data name="Reader.Zoom.Title" xml:space="preserve">
     <value>Default Zoom</value>
   </data>
   <data name="ReaderPivot.Header" xml:space="preserve">
@@ -348,10 +348,10 @@
   <data name="Server.ApiRequired.Text" xml:space="preserve">
     <value>API Key required to use server options</value>
   </data>
-  <data name="Server.BackupDB.HeaderText" xml:space="preserve">
+  <data name="Server.BackupDB.Title" xml:space="preserve">
     <value>Backup Database</value>
   </data>
-  <data name="Server.BackupDB.SubText" xml:space="preserve">
+  <data name="Server.BackupDB.Description" xml:space="preserve">
     <value>Returns a JSON backup. This backup can be manually imported</value>
   </data>
   <data name="Server.BackupDBButton.Content" xml:space="preserve">
@@ -360,10 +360,10 @@
   <data name="Server.Batch.Content" xml:space="preserve">
     <value>Batch Tagging</value>
   </data>
-  <data name="Server.ClearNew.HeaderText" xml:space="preserve">
+  <data name="Server.ClearNew.Title" xml:space="preserve">
     <value>Clear "New"</value>
   </data>
-  <data name="Server.ClearNew.SubText" xml:space="preserve">
+  <data name="Server.ClearNew.Description" xml:space="preserve">
     <value>Clears the 'New' flag on all archives</value>
   </data>
   <data name="Server.ClearNewButton.Content" xml:space="preserve">
@@ -375,7 +375,7 @@
   <data name="Server.ClearNewYes.Content" xml:space="preserve">
     <value>Yes, clear all new</value>
   </data>
-  <data name="Server.Database.Text" xml:space="preserve">
+  <data name="Server.Database.Title" xml:space="preserve">
     <value>Database</value>
   </data>
   <data name="Server.Debug.Content" xml:space="preserve">
@@ -399,7 +399,7 @@
   <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
     <value>Regenerates all thumbnails</value>
   </data>
-  <data name="Server.RegenThumbnails.HeaderText" xml:space="preserve">
+  <data name="Server.RegenThumbnails.Title" xml:space="preserve">
     <value>Thumbnails</value>
   </data>
   <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
@@ -408,10 +408,10 @@
   <data name="Server.RegenThumbYes.Content" xml:space="preserve">
     <value>Yes, generate thumbnails</value>
   </data>
-  <data name="Server.ResetCache.HeaderText" xml:space="preserve">
+  <data name="Server.ResetCache.Title" xml:space="preserve">
     <value>Search cache</value>
   </data>
-  <data name="Server.ResetCache.SubText" xml:space="preserve">
+  <data name="Server.ResetCache.Description" xml:space="preserve">
     <value>Results are stored to improve performance. If there are issues with that use this</value>
   </data>
   <data name="Server.ResetCacheButton.Content" xml:space="preserve">
@@ -419,6 +419,9 @@
   </data>
   <data name="Server.ResizedImages.Content" xml:space="preserve">
     <value>Resized Images</value>
+  </data>
+  <data name="Server.Server.Title" xml:space="preserve">
+    <value>Server</value>
   </data>
   <data name="Server.Settings.Content" xml:space="preserve">
     <value>Settings</value>
@@ -429,10 +432,10 @@
   <data name="Server.UsePassword.Content" xml:space="preserve">
     <value>Uses Password</value>
   </data>
-  <data name="Server.Worker.Text" xml:space="preserve">
+  <data name="Server.Worker.Title" xml:space="preserve">
     <value>Background Worker</value>
   </data>
-  <data name="Server.WorkerRestart.HeaderText" xml:space="preserve">
+  <data name="Server.WorkerRestart.Title" xml:space="preserve">
     <value>Restart background worker</value>
   </data>
   <data name="Server.WorkerRestartButton.Content" xml:space="preserve">
@@ -444,7 +447,7 @@
   <data name="Server.WorkerStatus.Text" xml:space="preserve">
     <value>Status:</value>
   </data>
-  <data name="Server.WorkerStop.HeaderText" xml:space="preserve">
+  <data name="Server.WorkerStop.Title" xml:space="preserve">
     <value>Stop background worker</value>
   </data>
   <data name="Server.WorkerStopButton.Content" xml:space="preserve">

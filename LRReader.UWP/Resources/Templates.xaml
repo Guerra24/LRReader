@@ -71,13 +71,13 @@
 							Visibility="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
 						<ContentPresenter Margin="0,0,16,0" Content="{x:Bind CustomIcon, Mode=OneWay}" Visibility="{Binding CustomIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
 						<StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
-							<TextBlock Text="{x:Bind HeaderText, Mode=OneWay}" />
+							<TextBlock Text="{x:Bind Title, Mode=OneWay}" />
 							<TextBlock
 								FontSize="12" FontWeight="SemiBold"
 								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-								Text="{x:Bind SubText, Mode=OneWay}"
+								Text="{x:Bind Description, Mode=OneWay}"
 								TextWrapping="WrapWholeWords"
-								Visibility="{Binding SubText, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+								Visibility="{Binding Description, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
 						</StackPanel>
 						<ContentPresenter
 							Grid.Column="2" Margin="0,0,16,0"
@@ -146,7 +146,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ModernGroup">
 					<StackPanel>
-						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Text, Mode=OneWay}" />
+						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Title, Mode=OneWay}" />
 						<muxc:ItemsRepeater ItemsSource="{x:Bind Content, Mode=OneWay}">
 							<muxc:ItemsRepeater.Layout>
 								<muxc:StackLayout Spacing="3" />

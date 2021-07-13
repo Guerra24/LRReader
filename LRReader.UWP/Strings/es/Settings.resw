@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About.About.Text" xml:space="preserve">
+  <data name="About.About.Title" xml:space="preserve">
     <value>Acerca de</value>
   </data>
   <data name="About.Check.Content" xml:space="preserve">
@@ -132,10 +132,10 @@
   <data name="About.DownloadYes.Content" xml:space="preserve">
     <value>Cerrar y Actualizar</value>
   </data>
-  <data name="About.Github.SubText" xml:space="preserve">
+  <data name="About.Github.Description" xml:space="preserve">
     <value>Código fuente, sugerencias y soporte técnico</value>
   </data>
-  <data name="About.KoFi.SubText" xml:space="preserve">
+  <data name="About.KoFi.Description" xml:space="preserve">
     <value>Donaciones</value>
   </data>
   <data name="About.License.Content" xml:space="preserve">
@@ -144,7 +144,7 @@
   <data name="About.Links.Text" xml:space="preserve">
     <value>Enlaces</value>
   </data>
-  <data name="About.NotFound.HeaderText" xml:space="preserve">
+  <data name="About.NotFound.Title" xml:space="preserve">
     <value>No se encontraron actualizaciones</value>
   </data>
   <data name="About.Privacy.Content" xml:space="preserve">
@@ -153,7 +153,7 @@
   <data name="About.Supported.Text" xml:space="preserve">
     <value>LANraragi</value>
   </data>
-  <data name="About.Updates.Text" xml:space="preserve">
+  <data name="About.Updates.Title" xml:space="preserve">
     <value>Actualizaciones</value>
   </data>
   <data name="About.Version.Text" xml:space="preserve">
@@ -165,7 +165,7 @@
   <data name="General.AddProfile.Content" xml:space="preserve">
     <value>Agregar</value>
   </data>
-  <data name="General.App.Text" xml:space="preserve">
+  <data name="General.App.Title" xml:space="preserve">
     <value>Aplicación</value>
   </data>
   <data name="General.AppTheme.Dark" xml:space="preserve">
@@ -177,37 +177,37 @@
   <data name="General.AppTheme.System" xml:space="preserve">
     <value>Por defecto</value>
   </data>
-  <data name="General.Bookmarked.HeaderText" xml:space="preserve">
+  <data name="General.Bookmarked.Title" xml:space="preserve">
     <value>Abrir archivos con marcadores al inicio</value>
   </data>
-  <data name="General.Bookmarks.HeaderText" xml:space="preserve">
+  <data name="General.Bookmarks.Title" xml:space="preserve">
     <value>Abrir la pestaña Marcadores al inicio</value>
   </data>
-  <data name="General.Categories.HeaderText" xml:space="preserve">
+  <data name="General.Categories.Title" xml:space="preserve">
     <value>Abrir la pestaña Categorías al inicio</value>
   </data>
   <data name="General.ClearThumbCache.Content" xml:space="preserve">
     <value>Limpiar</value>
   </data>
-  <data name="General.CompactMarks.HeaderText" xml:space="preserve">
+  <data name="General.CompactMarks.Title" xml:space="preserve">
     <value>Usar marcadores compactos</value>
   </data>
-  <data name="General.Connection.Text" xml:space="preserve">
+  <data name="General.Connection.Title" xml:space="preserve">
     <value>Conexión</value>
   </data>
-  <data name="General.CrashReport.HeaderText" xml:space="preserve">
+  <data name="General.CrashReport.Title" xml:space="preserve">
     <value>Recopilar datos de los errores y fallos</value>
   </data>
   <data name="General.EditProfile.Content" xml:space="preserve">
     <value>Editar</value>
   </data>
-  <data name="General.ExpanderProfile.HeaderText" xml:space="preserve">
+  <data name="General.ExpanderProfile.Title" xml:space="preserve">
     <value>Perfil</value>
   </data>
-  <data name="General.InputSortBy.HeaderText" xml:space="preserve">
+  <data name="General.InputSortBy.Title" xml:space="preserve">
     <value>Agrupar por</value>
   </data>
-  <data name="General.OrderBy.HeaderText" xml:space="preserve">
+  <data name="General.OrderBy.Title" xml:space="preserve">
     <value>Ordenar por</value>
   </data>
   <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
@@ -222,7 +222,7 @@
   <data name="General.RemoveProfileYes.Content" xml:space="preserve">
     <value>Sí, eliminar el perfil seleccionado</value>
   </data>
-  <data name="General.Search.Text" xml:space="preserve">
+  <data name="General.Search.Title" xml:space="preserve">
     <value>Buscar</value>
   </data>
   <data name="General.Size.Text" xml:space="preserve">
@@ -243,19 +243,19 @@
   <data name="General.SwitchProfile.Title" xml:space="preserve">
     <value>Cambiar Perfil</value>
   </data>
-  <data name="General.Tabs.Text" xml:space="preserve">
+  <data name="General.Tabs.Title" xml:space="preserve">
     <value>Pestañas</value>
   </data>
-  <data name="General.Theme.HeaderText" xml:space="preserve">
+  <data name="General.Theme.Title" xml:space="preserve">
     <value>Tema</value>
   </data>
-  <data name="General.ThumbCache.HeaderText" xml:space="preserve">
+  <data name="General.ThumbCache.Title" xml:space="preserve">
     <value>Caché de miniaturas</value>
   </data>
-  <data name="General.VisualTags.HeaderText" xml:space="preserve">
+  <data name="General.VisualTags.Title" xml:space="preserve">
     <value>Etiquetas visuales en el editor</value>
   </data>
-  <data name="General.VisualTags.SubText" xml:space="preserve">
+  <data name="General.VisualTags.Description" xml:space="preserve">
     <value>Utiliza controles para la edición de etiquetas en lugar de un cuadro de texto</value>
   </data>
   <data name="GeneralPivot.Header" xml:space="preserve">
@@ -264,7 +264,7 @@
   <data name="LocalDataPivot.Header" xml:space="preserve">
     <value>Datos locales</value>
   </data>
-  <data name="Reader.AutoOpen.HeaderText" xml:space="preserve">
+  <data name="Reader.AutoOpen.Title" xml:space="preserve">
     <value>Abrir el lector automáticamente</value>
   </data>
   <data name="Reader.AV1Notice.Content" xml:space="preserve">
@@ -273,19 +273,19 @@
   <data name="Reader.AV1NoticeInfo.Title" xml:space="preserve">
     <value>Faltan extensiones de vídeo AV1</value>
   </data>
-  <data name="Reader.BookmarksGroup.Text" xml:space="preserve">
+  <data name="Reader.BookmarksGroup.Title" xml:space="preserve">
     <value>Marcadores</value>
   </data>
-  <data name="Reader.FitLimit.HeaderText" xml:space="preserve">
+  <data name="Reader.FitLimit.Title" xml:space="preserve">
     <value>Límite de escalado de página</value>
   </data>
-  <data name="Reader.FitLimit.SubText" xml:space="preserve">
+  <data name="Reader.FitLimit.Description" xml:space="preserve">
     <value>Escala máxima que se puede aplicar a una página</value>
   </data>
-  <data name="Reader.FitWidth.HeaderText" xml:space="preserve">
+  <data name="Reader.FitWidth.Title" xml:space="preserve">
     <value>Ajustar las páginas al ancho</value>
   </data>
-  <data name="Reader.FitWidth.SubText" xml:space="preserve">
+  <data name="Reader.FitWidth.Description" xml:space="preserve">
     <value>Escala las páginas al ancho completo de la ventana</value>
   </data>
   <data name="Reader.HEIFNotice.Content" xml:space="preserve">
@@ -294,19 +294,19 @@
   <data name="Reader.HEIFNoticeInfo.Title" xml:space="preserve">
     <value>Faltan extensiones de imagen HEIF</value>
   </data>
-  <data name="Reader.Keyboard.HeaderText" xml:space="preserve">
+  <data name="Reader.Keyboard.Title" xml:space="preserve">
     <value>Distancia de desplazamiento del teclado</value>
   </data>
-  <data name="Reader.Keyboard.SubText" xml:space="preserve">
+  <data name="Reader.Keyboard.Description" xml:space="preserve">
     <value>Distancia en píxeles cuando se usa el teclado</value>
   </data>
-  <data name="Reader.ReaderGroup.Text" xml:space="preserve">
+  <data name="Reader.ReaderGroup.Title" xml:space="preserve">
     <value>Lector</value>
   </data>
-  <data name="Reader.Reminder.HeaderText" xml:space="preserve">
+  <data name="Reader.Reminder.Title" xml:space="preserve">
     <value>Preguntar si se quiere agregar marcador</value>
   </data>
-  <data name="Reader.Reminder.SubText" xml:space="preserve">
+  <data name="Reader.Reminder.Description" xml:space="preserve">
     <value>Solicite marcar el archivo si se cierra a la mitad</value>
   </data>
   <data name="Reader.ReminderMode.All" xml:space="preserve">
@@ -315,16 +315,16 @@
   <data name="Reader.ReminderMode.New" xml:space="preserve">
     <value>Solo archivos "nuevos"</value>
   </data>
-  <data name="Reader.RemoveBookmarkReminder.HeaderText" xml:space="preserve">
+  <data name="Reader.RemoveBookmarkReminder.Title" xml:space="preserve">
     <value>Preguntar si se quiere eliminar el marcador</value>
   </data>
-  <data name="Reader.RemoveBookmarkReminder.SubText" xml:space="preserve">
+  <data name="Reader.RemoveBookmarkReminder.Description" xml:space="preserve">
     <value>Solicite desmarcar cuando se completa el archivo</value>
   </data>
-  <data name="Reader.RTL.HeaderText" xml:space="preserve">
+  <data name="Reader.RTL.Title" xml:space="preserve">
     <value>Leer de derecha a izquierda</value>
   </data>
-  <data name="Reader.RTL.SubText" xml:space="preserve">
+  <data name="Reader.RTL.Description" xml:space="preserve">
     <value>Invierte la dirección de lectura de las páginas</value>
   </data>
   <data name="Reader.SetBuilder.Content" xml:space="preserve">
@@ -333,13 +333,13 @@
   <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
     <value>Utiliza la relación de aspecto al crear el orden de las páginas. Recomendado para archivos con relación de aspecto variable.</value>
   </data>
-  <data name="Reader.TwoPages.HeaderText" xml:space="preserve">
+  <data name="Reader.TwoPages.Title" xml:space="preserve">
     <value>Mostrar dos páginas</value>
   </data>
-  <data name="Reader.TwoPages.SubText" xml:space="preserve">
+  <data name="Reader.TwoPages.Description" xml:space="preserve">
     <value>Se mostrarán dos páginas a la vez</value>
   </data>
-  <data name="Reader.Zoom.HeaderText" xml:space="preserve">
+  <data name="Reader.Zoom.Title" xml:space="preserve">
     <value>Zoom predeterminado</value>
   </data>
   <data name="ReaderPivot.Header" xml:space="preserve">
@@ -348,10 +348,10 @@
   <data name="Server.ApiRequired.Text" xml:space="preserve">
     <value>Se requiere clave para usar las opciones del servidor</value>
   </data>
-  <data name="Server.BackupDB.HeaderText" xml:space="preserve">
+  <data name="Server.BackupDB.Title" xml:space="preserve">
     <value>Copia de la base de datos</value>
   </data>
-  <data name="Server.BackupDB.SubText" xml:space="preserve">
+  <data name="Server.BackupDB.Description" xml:space="preserve">
     <value>Devuelve una copia de seguridad en JSON. Esta copia de seguridad se puede importar manualmente</value>
   </data>
   <data name="Server.BackupDBButton.Content" xml:space="preserve">
@@ -360,10 +360,10 @@
   <data name="Server.Batch.Content" xml:space="preserve">
     <value>Etiquetado por lotes</value>
   </data>
-  <data name="Server.ClearNew.HeaderText" xml:space="preserve">
+  <data name="Server.ClearNew.Title" xml:space="preserve">
     <value>Limpiar "Nuevos"</value>
   </data>
-  <data name="Server.ClearNew.SubText" xml:space="preserve">
+  <data name="Server.ClearNew.Description" xml:space="preserve">
     <value>Elimina el estado "Nuevo" en todos los archivos</value>
   </data>
   <data name="Server.ClearNewButton.Content" xml:space="preserve">
@@ -375,7 +375,7 @@
   <data name="Server.ClearNewYes.Content" xml:space="preserve">
     <value>Sí, limpiar los nuevos</value>
   </data>
-  <data name="Server.Database.Text" xml:space="preserve">
+  <data name="Server.Database.Title" xml:space="preserve">
     <value>Base de datos</value>
   </data>
   <data name="Server.Debug.Content" xml:space="preserve">
@@ -399,7 +399,7 @@
   <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
     <value>Regenera todas las miniaturas</value>
   </data>
-  <data name="Server.RegenThumbnails.HeaderText" xml:space="preserve">
+  <data name="Server.RegenThumbnails.Title" xml:space="preserve">
     <value>Miniaturas</value>
   </data>
   <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
@@ -408,10 +408,10 @@
   <data name="Server.RegenThumbYes.Content" xml:space="preserve">
     <value>Si, generar miniaturas</value>
   </data>
-  <data name="Server.ResetCache.HeaderText" xml:space="preserve">
+  <data name="Server.ResetCache.Title" xml:space="preserve">
     <value>Caché de búsqueda</value>
   </data>
-  <data name="Server.ResetCache.SubText" xml:space="preserve">
+  <data name="Server.ResetCache.Description" xml:space="preserve">
     <value>Las búsquedas se almacenan para mejorar el rendimiento. Si hay problemas con eso, use esto</value>
   </data>
   <data name="Server.ResetCacheButton.Content" xml:space="preserve">
@@ -419,6 +419,9 @@
   </data>
   <data name="Server.ResizedImages.Content" xml:space="preserve">
     <value>Imágenes redimensionadas</value>
+  </data>
+  <data name="Server.Server.Title" xml:space="preserve">
+    <value>Servidor</value>
   </data>
   <data name="Server.Settings.Content" xml:space="preserve">
     <value>Ajustes</value>
@@ -429,10 +432,10 @@
   <data name="Server.UsePassword.Content" xml:space="preserve">
     <value>Utiliza contraseña</value>
   </data>
-  <data name="Server.Worker.Text" xml:space="preserve">
+  <data name="Server.Worker.Title" xml:space="preserve">
     <value>Trabajador de fondo</value>
   </data>
-  <data name="Server.WorkerRestart.HeaderText" xml:space="preserve">
+  <data name="Server.WorkerRestart.Title" xml:space="preserve">
     <value>Reiniciar el trabajador de fondo</value>
   </data>
   <data name="Server.WorkerRestartButton.Content" xml:space="preserve">
@@ -444,7 +447,7 @@
   <data name="Server.WorkerStatus.Text" xml:space="preserve">
     <value>Estado:</value>
   </data>
-  <data name="Server.WorkerStop.HeaderText" xml:space="preserve">
+  <data name="Server.WorkerStop.Title" xml:space="preserve">
     <value>Apagar el trabajador de fondo</value>
   </data>
   <data name="Server.WorkerStopButton.Content" xml:space="preserve">

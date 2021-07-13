@@ -22,15 +22,15 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(InputProperty, value);
 		}
 
-		public string HeaderText
+		public string Title
 		{
-			get => GetValue(HeaderTextProperty) as string;
-			set => SetValue(HeaderTextProperty, value);
+			get => GetValue(TitleProperty) as string;
+			set => SetValue(TitleProperty, value);
 		}
-		public string SubText
+		public string Description
 		{
-			get => GetValue(SubTextProperty) as string;
-			set => SetValue(SubTextProperty, value);
+			get => GetValue(DescriptionProperty) as string;
+			set => SetValue(DescriptionProperty, value);
 		}
 
 		public IList<object> Items
@@ -58,8 +58,8 @@ namespace LRReader.UWP.Views.Controls
 		}
 
 		public static readonly DependencyProperty InputProperty = DependencyProperty.Register("Input", typeof(object), typeof(ModernExpander), new PropertyMetadata(null));
-		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
-		public static readonly DependencyProperty SubTextProperty = DependencyProperty.Register("SubText", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
+		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
+		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
 		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernExpander), new PropertyMetadata(new List<object>()));
 		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty CustomIconProperty = DependencyProperty.Register("CustomIcon", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
