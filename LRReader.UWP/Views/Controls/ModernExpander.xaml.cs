@@ -39,16 +39,16 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ItemsProperty, value);
 		}
 
-		public string Icon
+		public string Glyph
 		{
-			get => GetValue(IconProperty) as string;
-			set => SetValue(IconProperty, value);
+			get => GetValue(GlyphProperty) as string;
+			set => SetValue(GlyphProperty, value);
 		}
 
-		public object CustomIcon
+		public IconElement Icon
 		{
-			get => GetValue(CustomIconProperty);
-			set => SetValue(CustomIconProperty, value);
+			get => GetValue(IconProperty) as IconElement;
+			set => SetValue(IconProperty, value);
 		}
 
 		public string ToolTip
@@ -61,8 +61,8 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
 		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
 		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernExpander), new PropertyMetadata(new List<object>()));
-		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
-		public static readonly DependencyProperty CustomIconProperty = DependencyProperty.Register("CustomIcon", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register("Glyph", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
+		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(IconElement), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register("ToolTip", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
 	}
 

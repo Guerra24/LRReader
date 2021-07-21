@@ -105,15 +105,17 @@ namespace LRReader.UWP.Views.Main
 
 		private void ShowNotification(string title, string content, int duration = 5000) => Notifications.Show(new NotificationItem(title, content), duration);
 
-		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.AddTab(new SettingsTab());
+		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
 
-		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Data.AddTab(new BookmarksTab(), true);
+		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Bookmarks);
 
-		private void Categories_Click(object sender, RoutedEventArgs e) => Data.AddTab(new CategoriesTab(), true);
+		private void Categories_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Categories);
 
-		private void Search_Click(object sender, RoutedEventArgs e) => Data.AddTab(new SearchResultsTab(), true);
+		private void Search_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.SearchResults);
+
+		private void Tools_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Tools);
 
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.FullScreen = AppView.IsFullScreenMode;
 

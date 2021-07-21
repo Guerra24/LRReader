@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LRReader.Shared.Tools;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
@@ -25,6 +26,9 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<EventsService>();
 			collection.AddSingleton<ApiService>();
 			collection.AddSingleton<TabsService>();
+
+			collection.AddSingleton<DeduplicationTool>();
+
 			services?.Invoke(collection);
 			Services = collection.BuildServiceProvider();
 		}

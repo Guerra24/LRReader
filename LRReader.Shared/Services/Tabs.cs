@@ -9,7 +9,7 @@ namespace LRReader.Shared.Services
 {
 	public enum Tab
 	{
-		Archives, Archive, ArchiveEdit, Bookmarks, Categories, CategoryEdit, SearchResults, Settings, Web
+		Archives, Archive, ArchiveEdit, Bookmarks, Categories, CategoryEdit, SearchResults, Settings, Web, Tools
 	}
 
 	public class TabsService : ObservableObject

@@ -175,6 +175,9 @@
     <Compile Include="Views\Dialogs\MarkdownDialog.xaml.cs">
       <DependentUpon>MarkdownDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Items\ArchiveHitItem.xaml.cs">
+      <DependentUpon>ArchiveHitItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\ArchiveImage.xaml.cs">
       <DependentUpon>ArchiveImage.xaml</DependentUpon>
     </Compile>
@@ -265,6 +268,9 @@
     <Compile Include="Views\Tabs\Content\Settings\ServerPivot.xaml.cs">
       <DependentUpon>ServerPivot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\Content\Tools.xaml.cs">
+      <DependentUpon>Tools.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\Content\WebTabContent.xaml.cs">
       <DependentUpon>WebTabContent.xaml</DependentUpon>
     </Compile>
@@ -273,6 +279,9 @@
     </Compile>
     <Compile Include="Views\Tabs\SettingsTab.xaml.cs">
       <DependentUpon>SettingsTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\ToolsTab.xaml.cs">
+      <DependentUpon>ToolsTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\WebTab.xaml.cs">
       <DependentUpon>WebTab.xaml</DependentUpon>
@@ -440,6 +449,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Items\ArchiveHitItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Items\ArchiveImage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -560,6 +573,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Tabs\Content\Tools.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tabs\Content\WebTabContent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -571,6 +588,10 @@
     <Page Include="Views\Tabs\SettingsTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\ToolsTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\WebTab.xaml">
       <Generator>MSBuild:Compile</Generator>

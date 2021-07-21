@@ -37,6 +37,7 @@ namespace LRReader.UWP.Services
 			Tabs.MapTabToType(Tab.SearchResults, typeof(SearchResultsTab));
 			Tabs.MapTabToType(Tab.Settings, typeof(SettingsTab));
 			Tabs.MapTabToType(Tab.Web, typeof(WebTab));
+			Tabs.MapTabToType(Tab.Tools, typeof(ToolsTab));
 
 			SymbolToSymbol.Add(Symbols.Favorite, new SymbolIconSource { Symbol = Symbol.Favorite });
 			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });

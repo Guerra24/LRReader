@@ -6,6 +6,13 @@ namespace LRReader.UWP.Views.Tabs
 {
 	public sealed partial class SearchResultsTab : CustomTab
 	{
+
+		public SearchResultsTab()
+		{
+			this.InitializeComponent();
+			CustomTabId = "Search_" + new Random().Next();
+		}
+
 		public SearchResultsTab(string query = "")
 		{
 			this.InitializeComponent();

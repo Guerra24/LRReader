@@ -35,6 +35,7 @@ namespace LRReader.UWP
 				collection.AddTransient<CategoryEditViewModel>();
 				collection.AddTransient<ArchiveItemViewModel>();
 				collection.AddTransient<CategoryBaseViewModel>();
+				collection.AddTransient<ToolsViewModel>();
 			});
 		}
 	}

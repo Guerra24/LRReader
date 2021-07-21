@@ -21,6 +21,7 @@
 
 	<Page.Resources>
 		<internal:BooleanToVisibilityConverter x:Name="BoolToVisibility" />
+		<Thickness x:Key="ScrollViewerScrollBarMargin">0</Thickness>
 	</Page.Resources>
 
 	<Grid>
@@ -70,6 +71,11 @@
 						<Button x:Uid="/Pages/HostTabPage/Search" Click="Search_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
+							</Viewbox>
+						</Button>
+						<Button Click="Tools_Click">
+							<Viewbox MaxWidth="16" MaxHeight="16">
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 							</Viewbox>
 						</Button>
 					</StackPanel>

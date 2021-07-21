@@ -7,7 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Uid="/Settings/ServerPivot"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
@@ -27,9 +27,9 @@
 					Description="{x:Bind Sys:String.Format(x:Null, '{0} - {1}', Data.ServerInfo.version, Data.ServerInfo.version_name), Mode=OneWay}"
 					IsExpanded="True"
 					ToolTip="{x:Bind Data.ServerInfo.version_desc, Mode=OneWay}">
-					<controls:ModernExpander.CustomIcon>
-						<Image x:Name="Logo" Height="20" Source="ms-appx:///Assets/Other/LANraragi-dark.png" />
-					</controls:ModernExpander.CustomIcon>
+					<controls:ModernExpander.Icon>
+						<muxc:ImageIcon x:Name="Logo" Height="20" Source="ms-appx:///Assets/Other/LANraragi-dark.png" />
+					</controls:ModernExpander.Icon>
 					<StackPanel>
 						<TextBlock x:Uid="/Settings/Server/ApiRequired" Margin="0,0,0,10" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 						<comcontrols:WrapPanel HorizontalSpacing="10" Orientation="Horizontal">
@@ -60,7 +60,7 @@
 					</StackPanel>
 				</controls:ModernExpander>
 				<controls:ModernExpander
-					x:Uid="/Settings/Server/RegenThumbnails" Icon="&#xE8B9;"
+					x:Uid="/Settings/Server/RegenThumbnails" Glyph="&#xE8B9;"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
 					Visibility="{x:Bind Data.ControlFlags.V077}">
 					<controls:ModernExpander.Input>
@@ -79,7 +79,7 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Server/Worker">
-				<controls:ModernExpander Title="{x:Bind Data.ShinobuStatusText, Mode=OneWay}" Description="{x:Bind Data.ShinobuPid, Mode=OneWay}" Icon="&#xE74C;">
+				<controls:ModernExpander Title="{x:Bind Data.ShinobuStatusText, Mode=OneWay}" Description="{x:Bind Data.ShinobuPid, Mode=OneWay}" Glyph="&#xE74C;">
 					<controls:ModernInput x:Uid="/Settings/Server/WorkerRestart">
 						<Button x:Uid="/Settings/Server/WorkerRestartButton" Click="RestartWorkerButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 					</controls:ModernInput>
@@ -89,13 +89,13 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Server/Database">
-				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Icon="&#xE7C5;">
+				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Glyph="&#xE7C5;">
 					<Button x:Uid="/Settings/Server/ResetCacheButton" Click="ResetSearchButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Icon="&#xE74E;">
+				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Glyph="&#xE74E;">
 					<Button x:Uid="/Settings/Server/BackupDBButton" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Server/ClearNew" Icon="&#xE75C;">
+				<controls:ModernInput x:Uid="/Settings/Server/ClearNew" Glyph="&#xE75C;">
 					<Button x:Uid="/Settings/Server/ClearNewButton" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 						<Button.Flyout>
 							<Flyout x:Name="ClearNewFlyout">

@@ -207,4 +207,16 @@ namespace LRReader.Shared.Models.Main
 		public string id { get; set; }
 		public string filename { get; set; }
 	}
+
+	public class ArchiveHit
+	{
+		public Archive Left { get; set; }
+		public Archive Right { get; set; }
+		public float Percent { get; set; }
+
+		public override bool Equals(object obj) => obj is ArchiveHit hit &&
+				   Left.Equals(hit.Left) && Right.Equals(hit.Right);
+
+		public override int GetHashCode() => Left.GetHashCode() + Right.GetHashCode();
+	}
 }

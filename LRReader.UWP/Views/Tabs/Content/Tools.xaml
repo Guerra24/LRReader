@@ -1,0 +1,110 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Tabs.Content.Tools"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:items="using:LRReader.Shared.Models.Main"
+	xmlns:items1="using:LRReader.UWP.Views.Items"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:viewmodels="using:LRReader.Shared.ViewModels"
+	DataContext="{Binding ToolsViewModelInstance, Source={StaticResource Locator}}"
+	mc:Ignorable="d">
+	<UserControl.Resources>
+		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+	</UserControl.Resources>
+
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
+			<controls:ModernExpander Margin="0,0,0,10" Title="Deduplicator" IsExpanded="True">
+				<controls:ModernInput Title="Pixel Threshold">
+					<muxc:NumberBox
+						MinWidth="80"
+						IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+						LargeChange="10" Maximum="255" Minimum="0"
+						SmallChange="1" SpinButtonPlacementMode="Compact"
+						Value="{x:Bind Data.PixelThreshold, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Percent Difference">
+					<muxc:NumberBox
+						MinWidth="80"
+						IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+						LargeChange="10" Maximum="100" Minimum="0"
+						SmallChange="1" SpinButtonPlacementMode="Compact"
+						Value="{x:Bind Data.PercentDifference, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Resolution (Width)">
+					<muxc:NumberBox
+						MinWidth="80"
+						IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+						LargeChange="50" Maximum="500" Minimum="32"
+						SmallChange="10" SpinButtonPlacementMode="Compact"
+						Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<CheckBox Content="Grayscale" IsChecked="{x:Bind Data.Grayscale, Mode=OneWay}" IsEnabled="False" />
+				<StackPanel>
+					<TextBlock Margin="0,0,0,10">
+						<Run Text="Step" />
+						<Run Text="{x:Bind Data.CurrentStep, Mode=OneWay}" />
+						<Run Text="of" />
+						<Run Text="{x:Bind Data.MaxSteps, Mode=OneWay}" />
+					</TextBlock>
+					<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxSteps, Mode=OneWay}" Value="{x:Bind Data.CurrentStep, Mode=OneWay}" />
+				</StackPanel>
+				<StackPanel>
+					<TextBlock Margin="0,0,0,10">
+						<Run Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
+						<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+						<Run Text="of" />
+						<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
+					</TextBlock>
+					<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}" Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+					<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+						<Run Text="Estimated time:" />
+						<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
+					</TextBlock>
+					<Button Command="{x:Bind Data.ExecuteCommand}" Content="Execute" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+						<Button.CommandParameter>
+							<viewmodels:Tools>Deduplicate</viewmodels:Tools>
+						</Button.CommandParameter>
+					</Button>
+				</StackPanel>
+			</controls:ModernExpander>
+			<GridView ItemsSource="{x:Bind Data.Items}">
+				<GridView.Resources>
+					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+				</GridView.Resources>
+				<GridView.ItemTemplate>
+					<DataTemplate x:DataType="items:ArchiveHit">
+						<items1:ArchiveHitItem />
+					</DataTemplate>
+				</GridView.ItemTemplate>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemContainerStyle>
+					<Style TargetType="GridViewItem">
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Margin" Value="5" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemContainerTransitions>
+					<TransitionCollection>
+						<PopupThemeTransition FromVerticalOffset="200" />
+						<ReorderThemeTransition />
+						<RepositionThemeTransition />
+					</TransitionCollection>
+				</GridView.ItemContainerTransitions>
+			</GridView>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

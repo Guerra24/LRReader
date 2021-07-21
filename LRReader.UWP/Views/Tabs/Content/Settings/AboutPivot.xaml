@@ -7,7 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Uid="/Settings/AboutPivot"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
@@ -22,9 +22,9 @@
 			MaxWidth="1000" Padding="24,10" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/About/About">
 				<controls:ModernExpander Title="LRReader" IsExpanded="True">
-					<controls:ModernExpander.CustomIcon>
-						<Image Height="20" Source="ms-appx:///Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
-					</controls:ModernExpander.CustomIcon>
+					<controls:ModernExpander.Icon>
+						<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+					</controls:ModernExpander.Icon>
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition MaxWidth="100" />
@@ -58,26 +58,26 @@
 				</controls:ModernExpander>
 				<controls:ModernInput
 					x:Uid="/Settings/About/Github" Title="Github" Click="WebButton_Click"
-					IsButton="True" RightIcon="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
-					<controls:ModernInput.CustomIcon>
-						<Image x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
-					</controls:ModernInput.CustomIcon>
+					IsButton="True" RightGlyph="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
+					<controls:ModernInput.Icon>
+						<muxc:ImageIcon x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
+					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 				<controls:ModernInput
 					x:Uid="/Settings/About/KoFi" Title="Ko-Fi" Click="WebButton_Click"
-					IsButton="True" RightIcon="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
-					<controls:ModernInput.CustomIcon>
-						<Image Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
-					</controls:ModernInput.CustomIcon>
+					IsButton="True" RightGlyph="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
+					<controls:ModernInput.Icon>
+						<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Name="UpdateInfo" x:Uid="/Settings/About/Updates" Visibility="Collapsed">
-				<controls:ModernInput x:Uid="/Settings/About/NotFound" Icon="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+				<controls:ModernInput x:Uid="/Settings/About/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 					<Button x:Uid="/Settings/About/Check" Click="CheckUpdatesButton_Click" />
 				</controls:ModernInput>
 				<controls:ModernExpander
 					Title="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}"
-					Icon="&#xE896;" IsExpanded="True"
+					Glyph="&#xE896;" IsExpanded="True"
 					Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
 					<comcontrols:MarkdownTextBlock
 						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"

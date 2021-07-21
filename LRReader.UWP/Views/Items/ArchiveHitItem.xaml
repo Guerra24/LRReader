@@ -1,0 +1,159 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Items.ArchiveHitItem"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+	xmlns:controls1="using:LRReader.UWP.Views.Controls"
+	xmlns:convrt="using:LRReader.Internal"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.UWP.Views.Items"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	Width="392"
+	d:DesignHeight="318"
+	d:DesignWidth="392"
+	DataContextChanged="UserControl_DataContextChanged"
+	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<convrt:NegateBoolConverter x:Key="NegateBool" />
+		<convrt:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
+		<Storyboard x:Name="ShowLeftPopup">
+			<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="LeftTagsPopup" />
+		</Storyboard>
+		<Storyboard x:Name="ShowRightPopup">
+			<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="RightTagsPopup" />
+		</Storyboard>
+		<Storyboard x:Name="HideLeftPopup" Completed="LeftHidePopup_Completed">
+			<PopOutThemeAnimation Storyboard.TargetName="LeftTagsPopup" />
+		</Storyboard>
+		<Storyboard x:Name="HideRightPopup" Completed="RightHidePopup_Completed">
+			<PopOutThemeAnimation Storyboard.TargetName="RightTagsPopup" />
+		</Storyboard>
+	</UserControl.Resources>
+
+	<Grid Background="{ThemeResource BrushItemGridBackground}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid x:Name="LeftGrid">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<TextBlock
+				Grid.Row="0" Padding="5,0" HorizontalAlignment="Center"
+				FontSize="16"
+				Text="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}"
+				TextTrimming="CharacterEllipsis"
+				ToolTipService.ToolTip="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}" />
+			<Grid Grid.Row="1">
+				<Popup x:Name="LeftTagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
+					<Grid
+						Padding="4" Windows10version1903:Translation="0,0,32"
+						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+						BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+						BorderThickness="1"
+						CornerRadius="{ThemeResource OverlayCornerRadius}"
+						IsHitTestVisible="False">
+						<Windows10version1903:Grid.Shadow>
+							<Windows10version1903:ThemeShadow />
+						</Windows10version1903:Grid.Shadow>
+						<muxc:ItemsRepeaterScrollHost>
+							<!--
+								For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
+								item display... idk whatever...
+							-->
+							<ScrollViewer>
+								<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind LeftViewModel.Archive.TagsGroups, Mode=OneWay}">
+									<controls1:ArchiveTags.Resources>
+										<SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundPointerOver" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundPressed" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelected" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPointerOver" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
+									</controls1:ArchiveTags.Resources>
+								</controls1:ArchiveTags>
+							</ScrollViewer>
+						</muxc:ItemsRepeaterScrollHost>
+					</Grid>
+				</Popup>
+				<Image
+					x:Name="LeftThumbnail" Width="200" Height="275"
+					HorizontalAlignment="Center" />
+				<Grid x:Name="LeftMissingImage" x:Load="{x:Bind LeftViewModel.MissingImage, Mode=OneWay}">
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+				</Grid>
+			</Grid>
+			<Grid Grid.Row="2" PointerEntered="LeftTagsGrid_PointerEntered" PointerExited="LeftTagsGrid_PointerExited">
+				<TextBlock
+					Grid.Row="2" Padding="2,0"
+					Text="{x:Bind LeftViewModel.Archive.TagsClean, Mode=OneWay}"
+					TextTrimming="CharacterEllipsis" />
+			</Grid>
+		</Grid>
+		<Grid x:Name="RightGrid" Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<TextBlock
+				Grid.Row="0" Padding="5,0" HorizontalAlignment="Center"
+				FontSize="16"
+				Text="{x:Bind RightViewModel.Archive.title, Mode=OneWay}"
+				TextTrimming="CharacterEllipsis"
+				ToolTipService.ToolTip="{x:Bind RightViewModel.Archive.title, Mode=OneWay}" />
+			<Grid Grid.Row="1">
+				<Popup x:Name="RightTagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
+					<Grid
+						Padding="4" Windows10version1903:Translation="0,0,32"
+						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+						BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+						BorderThickness="1"
+						CornerRadius="{ThemeResource OverlayCornerRadius}"
+						IsHitTestVisible="False">
+						<Windows10version1903:Grid.Shadow>
+							<Windows10version1903:ThemeShadow />
+						</Windows10version1903:Grid.Shadow>
+						<muxc:ItemsRepeaterScrollHost>
+							<!--
+								For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
+								item display... idk whatever...
+							-->
+							<ScrollViewer>
+								<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind RightViewModel.Archive.TagsGroups, Mode=OneWay}">
+									<controls1:ArchiveTags.Resources>
+										<SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundPointerOver" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundPressed" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelected" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPointerOver" Color="Transparent" />
+										<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
+									</controls1:ArchiveTags.Resources>
+								</controls1:ArchiveTags>
+							</ScrollViewer>
+						</muxc:ItemsRepeaterScrollHost>
+					</Grid>
+				</Popup>
+				<Image
+					x:Name="RightThumbnail" Width="200" Height="275"
+					HorizontalAlignment="Center" />
+				<Grid x:Name="RightMissingImage" x:Load="{x:Bind RightViewModel.MissingImage, Mode=OneWay}">
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+				</Grid>
+			</Grid>
+			<Grid Grid.Row="2" PointerEntered="RightTagsGrid_PointerEntered" PointerExited="RightTagsGrid_PointerExited">
+				<TextBlock
+					Grid.Row="2" Padding="2,0"
+					Text="{x:Bind RightViewModel.Archive.TagsClean, Mode=OneWay}"
+					TextTrimming="CharacterEllipsis" />
+			</Grid>
+		</Grid>
+	</Grid>
+</UserControl>

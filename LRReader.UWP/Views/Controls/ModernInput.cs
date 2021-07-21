@@ -43,16 +43,16 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(TextMarginProperty, value);
 		}
 
-		public string Icon
+		public string Glyph
 		{
-			get => GetValue(IconProperty) as string;
-			set => SetValue(IconProperty, value);
+			get => GetValue(GlyphProperty) as string;
+			set => SetValue(GlyphProperty, value);
 		}
 
-		public object CustomIcon
+		public object Icon
 		{
-			get => GetValue(CustomIconProperty);
-			set => SetValue(CustomIconProperty, value);
+			get => GetValue(IconProperty);
+			set => SetValue(IconProperty, value);
 		}
 
 		public bool IsButton
@@ -61,10 +61,10 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(IsButtonProperty, value);
 		}
 
-		public string RightIcon
+		public string RightGlyph
 		{
-			get => GetValue(RightIconProperty) as string;
-			set => SetValue(RightIconProperty, value);
+			get => GetValue(RightGlyphProperty) as string;
+			set => SetValue(RightGlyphProperty, value);
 		}
 
 		public event RoutedEventHandler Click;
@@ -111,9 +111,9 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("DescriptionProperty", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty InputHorizontalAlignmentProperty = DependencyProperty.Register("InputHorizontalAlignment", typeof(HorizontalAlignment), typeof(ModernInput), new PropertyMetadata(HorizontalAlignment.Right));
 		public static readonly DependencyProperty TextMarginProperty = DependencyProperty.Register("TextMargin", typeof(Thickness), typeof(ModernInput), new PropertyMetadata(new Thickness(0)));
-		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
-		public static readonly DependencyProperty CustomIconProperty = DependencyProperty.Register("CustomIcon", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register("Glyph", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(IconElement), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty IsButtonProperty = DependencyProperty.Register("IsButton", typeof(bool), typeof(ModernInput), new PropertyMetadata(false));
-		public static readonly DependencyProperty RightIconProperty = DependencyProperty.Register("RightIcon", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty RightGlyphProperty = DependencyProperty.Register("RightGlyph", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
 	}
 }

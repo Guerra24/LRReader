@@ -67,9 +67,9 @@
 						<FontIcon
 							Margin="0,0,16,0"
 							FontFamily="{StaticResource SymbolThemeFontFamily}"
-							Glyph="{x:Bind Icon, Mode=OneWay}"
-							Visibility="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-						<ContentPresenter Margin="0,0,16,0" Content="{x:Bind CustomIcon, Mode=OneWay}" Visibility="{Binding CustomIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+							Glyph="{x:Bind Glyph, Mode=OneWay}"
+							Visibility="{Binding Glyph, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+						<ContentPresenter Margin="0,0,16,0" Content="{x:Bind Icon, Mode=OneWay}" Visibility="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
 						<StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
 							<TextBlock Text="{x:Bind Title, Mode=OneWay}" />
 							<TextBlock
@@ -89,7 +89,7 @@
 							VerticalAlignment="Center"
 							FontFamily="{StaticResource SymbolThemeFontFamily}"
 							FontSize="14"
-							Glyph="{x:Bind RightIcon, Mode=OneWay}"
+							Glyph="{x:Bind RightGlyph, Mode=OneWay}"
 							Visibility="{x:Bind IsButton}" />
 
 						<VisualStateManager.VisualStateGroups>
