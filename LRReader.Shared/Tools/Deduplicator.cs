@@ -30,7 +30,7 @@ namespace LRReader.Shared.Tools
 			Archives = archives;
 		}
 
-		public async Task<List<ArchiveHit>> DeduplicateArchives(IProgress<ToolProgress<DeduplicatorStatus>> progress = null, int pixelThreshold = 10, float percentDifference = 0.2f, bool grayscale = false, int width = 125)
+		public async Task<List<ArchiveHit>> DeduplicateArchives(IProgress<ToolProgress<DeduplicatorStatus>> progress = null, int pixelThreshold = 10, float percentDifference = 0.2f, bool grayscale = false, int width = 125, float aspectRatioLimit = 0.75f)
 		{
 			// Creates false-positives with targets that are smaller.
 			// Skip images that have too large aspect ratio, store them in the comp dict with 100% diff
@@ -69,8 +69,15 @@ namespace LRReader.Shared.Tools
 					var fullKeyReversed = new Tuple<string, string>(targetPair.Key, sourcePair.Key);
 					if (sourcePair.Key.Equals(targetPair.Key) || comparatorDict.ContainsKey(fullKey) || comparatorDict.ContainsKey(fullKeyReversed))
 						return;
-					int differences = 0;
 					var target = targetPair.Value;
+
+					if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+					{
+						comparatorDict.TryAdd(fullKey, 1);
+						return;
+					}
+
+					int differences = 0;
 					for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
 					{
 						Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
