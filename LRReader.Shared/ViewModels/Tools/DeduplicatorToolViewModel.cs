@@ -24,13 +24,13 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _percentDifference;
 			set => SetProperty(ref _percentDifference, value);
 		}
-		private int _resolution = 125;
+		private int _resolution = 8;
 		public int Resolution
 		{
 			get => _resolution;
 			set => SetProperty(ref _resolution, value);
 		}
-		private bool _grayscale = true;
+		private bool _grayscale;
 		public bool Grayscale
 		{
 			get => _grayscale;

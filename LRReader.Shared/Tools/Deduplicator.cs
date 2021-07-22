@@ -29,7 +29,7 @@ namespace LRReader.Shared.Tools
 		public int Width { get; }
 		public float AspectRatioLimit { get; }
 
-		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = true, int width = 125, float aspectRatioLimit = 0.1f)
+		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = false, int width = 8, float aspectRatioLimit = 0.1f)
 		{
 			PixelThreshold = pixelThreshold;
 			PercentDifference = percentDifference;
@@ -67,7 +67,8 @@ namespace LRReader.Shared.Tools
 			var decodedThumbnails = (await Task.WhenAll(archives.Select(pair => Task.Run(async () =>
 			{
 				var image = Image.Load(await Images.GetThumbnailCached(pair.Key));
-				image.Mutate(i => i.Grayscale().Resize(width, 0));
+				image.Mutate(i => i.Resize(width, 0));
+				// i.Grayscale()
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, Interlocked.Increment(ref count));
 				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
 			})))).AsEnumerable().ToDictionary(pair => pair.Item1, pair => pair.Item2);
@@ -107,16 +108,16 @@ namespace LRReader.Shared.Tools
 						{
 							//if (grayscale)
 							//{
-							byte diff = (byte)Math.Abs(sourcePixelRow[x].R - targetPixelRow[x].R);
-							if (diff > pixelThreshold)
-								differences++;
-							/*}
-							else
-							{
+							//byte diff = (byte)Math.Abs(sourcePixelRow[x].R - targetPixelRow[x].R);
+							//if (diff > pixelThreshold)
+							//	differences++;
+							//}
+							//else
+							//{
 								float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
 								if (diff > pixelThreshold / 765f)
 									differences++;
-							}*/
+							//}
 						}
 					}
 					float diffPixels = differences;

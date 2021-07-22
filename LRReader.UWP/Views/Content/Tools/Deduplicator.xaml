@@ -50,8 +50,8 @@
 							<muxc:NumberBox
 								MinWidth="100"
 								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-								LargeChange="16" Maximum="500" Minimum="32"
-								SmallChange="8" SpinButtonPlacementMode="Compact"
+								Maximum="500" Minimum="4" SmallChange="1"
+								SpinButtonPlacementMode="Compact"
 								Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
 						</controls:ModernInput>
 						<controls:ModernInput Title="Aspect Ratio Limit" InputHorizontalAlignment="Stretch">
