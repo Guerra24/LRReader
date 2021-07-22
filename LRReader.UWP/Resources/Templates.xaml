@@ -146,7 +146,13 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ModernGroup">
 					<StackPanel>
-						<TextBlock Margin="1,0,0,8" FontWeight="Bold" Text="{x:Bind Title, Mode=OneWay}" />
+						<StackPanel.Resources>
+							<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+						</StackPanel.Resources>
+						<TextBlock
+							Margin="1,0,0,8" FontWeight="Bold"
+							Text="{x:Bind Title, Mode=OneWay}"
+							Visibility="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
 						<muxc:ItemsRepeater ItemsSource="{x:Bind Content, Mode=OneWay}">
 							<muxc:ItemsRepeater.Layout>
 								<muxc:StackLayout Spacing="3" />

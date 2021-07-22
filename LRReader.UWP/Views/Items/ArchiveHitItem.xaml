@@ -34,8 +34,8 @@
 
 	<Grid Background="{ThemeResource BrushItemGridBackground}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
+			<ColumnDefinition Width="196"/>
+			<ColumnDefinition Width="196"/>
 		</Grid.ColumnDefinitions>
 		<Grid x:Name="LeftGrid">
 			<Grid.RowDefinitions>
@@ -50,7 +50,7 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1">
-				<Popup x:Name="LeftTagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
+				<Popup x:Name="LeftTagsPopup" HorizontalOffset="-57" IsHitTestVisible="False">
 					<Grid
 						Padding="4" Windows10version1903:Translation="0,0,32"
 						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
@@ -109,7 +109,7 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind RightViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1">
-				<Popup x:Name="RightTagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
+				<Popup x:Name="RightTagsPopup" HorizontalOffset="-57"  IsHitTestVisible="False">
 					<Grid
 						Padding="4" Windows10version1903:Translation="0,0,32"
 						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"

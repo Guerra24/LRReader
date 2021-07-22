@@ -69,7 +69,7 @@
 			TextTrimming="CharacterEllipsis"
 			ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
 		<Grid x:Name="Overlay" Grid.Row="1">
-			<Popup x:Name="TagsPopup" HorizontalOffset="-50" IsHitTestVisible="False">
+			<Popup x:Name="TagsPopup" HorizontalOffset="-57" IsHitTestVisible="False">
 				<Grid
 					Padding="4" Windows10version1903:Translation="0,0,32"
 					Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"

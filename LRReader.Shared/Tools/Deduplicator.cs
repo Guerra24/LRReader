@@ -32,6 +32,9 @@ namespace LRReader.Shared.Tools
 
 		public async Task<List<ArchiveHit>> DeduplicateArchives(IProgress<ToolProgress<DeduplicatorStatus>> progress = null, int pixelThreshold = 10, float percentDifference = 0.2f, bool grayscale = false, int width = 125)
 		{
+			// Creates false-positives with targets that are smaller.
+			// Skip images that have too large aspect ratio, store them in the comp dict with 100% diff
+
 			progressFilter = new Subject<ToolProgress<DeduplicatorStatus>>();
 			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
 
@@ -92,6 +95,7 @@ namespace LRReader.Shared.Tools
 					diffPixels /= source.Width * source.Height;
 					comparatorDict.TryAdd(fullKey, diffPixels);
 				})));
+				// Inaccurate AF
 				var delta = DateTime.Now.Subtract(start);
 				long time = (decodedThumbnails.Count - count) * (delta.Ticks / Math.Max(count, 1));
 				UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Comparing, decodedThumbnails.Count, Interlocked.Increment(ref count), time: time));

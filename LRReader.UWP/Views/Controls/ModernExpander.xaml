@@ -30,9 +30,7 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<Grid Width="36" />
-				<ContentPresenter
-					Grid.Column="1" Padding="16,9,16,9" x:Phase="1"
-					Content="{x:Bind}" />
+				<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
 			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="LastItem" x:DataType="UIElement">
@@ -45,12 +43,7 @@
 				<ContentPresenter Grid.Column="1" Padding="16,9,16,9" Content="{x:Bind}" />
 			</Grid>
 		</DataTemplate>
-		<local:ItemTemplateSelector
-			x:Key="ExpanderItemSelector"
-			Items="{x:Bind Items, Mode=OneWay}"
-			ItemsRepeater="{x:Bind Repeater}"
-			LastItem="{StaticResource LastItem}"
-			OtherItem="{StaticResource OtherItem}" />
+		<local:ItemTemplateSelector x:Key="ExpanderItemSelector" LastItem="{StaticResource LastItem}" OtherItem="{StaticResource OtherItem}" />
 		<Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="ToggleSwitch">
 			<Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
 		</Style>
@@ -90,7 +83,22 @@
 		</Grid>
 	</muxc:Expander.Header>
 
-
-	<muxc:ItemsRepeater x:Name="Repeater" ItemTemplate="{StaticResource ExpanderItemSelector}" ItemsSource="{x:Bind Items, Mode=OneWay}" />
+	<ListView ItemTemplateSelector="{StaticResource ExpanderItemSelector}" ItemsSource="{x:Bind Items, Mode=OneWay}" SelectionMode="None">
+		<ListView.ItemContainerStyle>
+			<Style TargetType="ListViewItem">
+				<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+		</ListView.ItemContainerStyle>
+		<ListView.ItemsPanel>
+			<ItemsPanelTemplate>
+				<StackPanel />
+			</ItemsPanelTemplate>
+		</ListView.ItemsPanel>
+		<ListView.ItemContainerTransitions>
+			<TransitionCollection />
+		</ListView.ItemContainerTransitions>
+	</ListView>
 
 </muxc:Expander>

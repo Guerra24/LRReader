@@ -60,7 +60,7 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty InputProperty = DependencyProperty.Register("Input", typeof(object), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
 		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
-		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernExpander), new PropertyMetadata(new List<object>()));
+		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register("Glyph", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(IconElement), typeof(ModernExpander), new PropertyMetadata(null));
 		public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register("ToolTip", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
@@ -71,15 +71,10 @@ namespace LRReader.UWP.Views.Controls
 		public DataTemplate LastItem { get; set; }
 		public DataTemplate OtherItem { get; set; }
 
-		public IList<object> Items { get; set; }
-		public ItemsRepeater ItemsRepeater { get; set; }
-
-		protected override DataTemplate SelectTemplateCore(object item)
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
 		{
-			var last = Items.LastOrDefault();
-			if (item.Equals(last))
-				return LastItem;
-			return OtherItem;
+			var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
+			return (itemsControl.IndexFromContainer(container) == (itemsControl.ItemsSource as IList<object>).Count - 1) ? LastItem : OtherItem;
 		}
 	}
 }
