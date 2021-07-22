@@ -1,7 +1,4 @@
 ﻿using LRReader.Shared.Services;
-using LRReader.Shared.ViewModels;
-using LRReader.Shared.ViewModels.Base;
-using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,20 +19,8 @@ namespace LRReader.UWP
 
 				collection.AddSingleton<ImageProcessingService, UWPImageProcessingService>();
 
-				collection.AddSingleton<ArchivesPageViewModel>();
 				collection.AddSingleton<SettingsPageViewModel>();
-				collection.AddSingleton<BookmarksTabViewModel>();
 				collection.AddSingleton<FirstRunPageViewModel>();
-				collection.AddSingleton<CategoriesViewModel>();
-				collection.AddSingleton<LoadingPageViewModel>();
-
-				collection.AddTransient<SearchResultsViewModel>();
-				collection.AddTransient<ArchiveEditViewModel>();
-				collection.AddTransient<ArchivePageViewModel>();
-				collection.AddTransient<CategoryEditViewModel>();
-				collection.AddTransient<ArchiveItemViewModel>();
-				collection.AddTransient<CategoryBaseViewModel>();
-				collection.AddTransient<ToolsViewModel>();
 			});
 		}
 	}

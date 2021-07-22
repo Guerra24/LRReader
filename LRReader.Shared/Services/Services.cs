@@ -1,4 +1,8 @@
 ﻿using LRReader.Shared.Tools;
+using LRReader.Shared.ViewModels;
+using LRReader.Shared.ViewModels.Base;
+using LRReader.Shared.ViewModels.Items;
+using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -16,6 +20,7 @@ namespace LRReader.Shared.Services
 		public static void BuildServices(ConfigureServices services = null)
 		{
 			var collection = new ServiceCollection();
+			// Services
 			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
 			collection.AddSingleton<IFilesService, StubFilesService>();
 			collection.AddSingleton<IDispatcherService, StubDispatcherService>();
@@ -27,7 +32,24 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<ApiService>();
 			collection.AddSingleton<TabsService>();
 
+			// Tools
 			collection.AddSingleton<DeduplicationTool>();
+
+			// Pages
+			collection.AddSingleton<ArchivesPageViewModel>();
+			collection.AddSingleton<BookmarksTabViewModel>();
+			collection.AddSingleton<CategoriesViewModel>();
+			collection.AddSingleton<LoadingPageViewModel>();
+
+			collection.AddTransient<SearchResultsViewModel>();
+			collection.AddTransient<ArchiveEditViewModel>();
+			collection.AddTransient<ArchivePageViewModel>();
+			collection.AddTransient<CategoryEditViewModel>();
+			collection.AddTransient<ArchiveItemViewModel>();
+			collection.AddTransient<CategoryBaseViewModel>();
+
+			// Tool's Pages
+			collection.AddTransient<DeduplicatorToolViewModel>();
 
 			services?.Invoke(collection);
 			Services = collection.BuildServiceProvider();

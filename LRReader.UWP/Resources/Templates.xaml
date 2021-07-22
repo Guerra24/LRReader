@@ -147,13 +147,32 @@
 				<ControlTemplate TargetType="controls:ModernGroup">
 					<StackPanel>
 						<StackPanel.Resources>
+							<DataTemplate x:Key="ModernTemplate" x:DataType="UIElement">
+								<ContentPresenter Content="{x:Bind}">
+									<ContentPresenter.Transitions>
+										<TransitionCollection>
+											<RepositionThemeTransition IsStaggeringEnabled="False" />
+										</TransitionCollection>
+									</ContentPresenter.Transitions>
+								</ContentPresenter>
+							</DataTemplate>
+							<DataTemplate x:Key="GenericTemplate" x:DataType="UIElement">
+								<ContentPresenter Padding="8" Content="{x:Bind}">
+									<ContentPresenter.Transitions>
+										<TransitionCollection>
+											<RepositionThemeTransition IsStaggeringEnabled="False" />
+										</TransitionCollection>
+									</ContentPresenter.Transitions>
+								</ContentPresenter>
+							</DataTemplate>
 							<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+							<controls:ModernGroupItemTemplateSelector x:Key="TemplateSelector" GenericTemplate="{StaticResource GenericTemplate}" ModernTemplate="{StaticResource ModernTemplate}" />
 						</StackPanel.Resources>
 						<TextBlock
 							Margin="1,0,0,8" FontWeight="Bold"
 							Text="{x:Bind Title, Mode=OneWay}"
 							Visibility="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-						<muxc:ItemsRepeater ItemsSource="{x:Bind Content, Mode=OneWay}">
+						<muxc:ItemsRepeater ItemTemplate="{StaticResource TemplateSelector}" ItemsSource="{x:Bind Content, Mode=OneWay}">
 							<muxc:ItemsRepeater.Layout>
 								<muxc:StackLayout Spacing="3" />
 							</muxc:ItemsRepeater.Layout>

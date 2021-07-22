@@ -2,7 +2,7 @@
 	x:Class="LRReader.UWP.Views.Tabs.ToolsTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:content="using:LRReader.UWP.Views.Content.Tools"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
@@ -16,5 +16,5 @@
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 	</muxc:TabViewItem.IconSource>
 
-	<content:Tools />
+	<content:Deduplicator />
 </internal:CustomTab>

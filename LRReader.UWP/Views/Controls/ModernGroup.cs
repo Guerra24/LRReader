@@ -29,4 +29,21 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernGroup), new PropertyMetadata(null));
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernGroup), new PropertyMetadata(""));
 	}
+
+	public class ModernGroupItemTemplateSelector : DataTemplateSelector
+	{
+		public DataTemplate ModernTemplate { get; set; }
+		public DataTemplate GenericTemplate { get; set; }
+
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (item is ModernInput || item is ModernExpander)
+				return ModernTemplate;
+			return GenericTemplate;
+		}
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		{
+			return SelectTemplateCore(item);
+		}
+	}
 }

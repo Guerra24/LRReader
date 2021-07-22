@@ -6,9 +6,7 @@ using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Numerics;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
@@ -17,12 +15,34 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.Tools
 {
-	public class DeduplicationTool
+
+	public enum DeduplicatorStatus
+	{
+		PreloadAndDecode, Comparing, Cleanup, Completed
+	}
+
+	public class DeduplicatorParams : IToolParams
+	{
+		public int PixelThreshold { get; }
+		public float PercentDifference { get; }
+		public bool Grayscale { get; }
+		public int Width { get; }
+		public float AspectRatioLimit { get; }
+
+		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = true, int width = 125, float aspectRatioLimit = 0.1f)
+		{
+			PixelThreshold = pixelThreshold;
+			PercentDifference = percentDifference;
+			Grayscale = grayscale;
+			Width = width;
+			AspectRatioLimit = aspectRatioLimit;
+		}
+	}
+
+	public class DeduplicationTool : Tool<DeduplicatorStatus, DeduplicatorParams, List<ArchiveHit>>
 	{
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
-
-		private Subject<ToolProgress<DeduplicatorStatus>> progressFilter;
 
 		public DeduplicationTool(ImagesService images, ArchivesService archives)
 		{
@@ -30,16 +50,17 @@ namespace LRReader.Shared.Tools
 			Archives = archives;
 		}
 
-		public async Task<List<ArchiveHit>> DeduplicateArchives(IProgress<ToolProgress<DeduplicatorStatus>> progress = null, int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = false, int width = 125, float aspectRatioLimit = 0.1f)
+		protected override async Task<List<ArchiveHit>> Process(DeduplicatorParams @params)
 		{
+			int pixelThreshold = @params.PixelThreshold;
+			float percentDifference = @params.PercentDifference;
+			bool grayscale = @params.Grayscale;
+			int width = @params.Width;
+			float aspectRatioLimit = @params.AspectRatioLimit;
 			// Tweak values
 			// Find better names for params
-
-			progressFilter = new Subject<ToolProgress<DeduplicatorStatus>>();
-			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
-
 			var archives = Archives.Archives;
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 3, 0));
+			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 3, 0);
 			await Task.Delay(2000);
 
 			int count = 0;
@@ -47,17 +68,17 @@ namespace LRReader.Shared.Tools
 			{
 				var image = Image.Load(await Images.GetThumbnailCached(pair.Key));
 				image.Mutate(i => i.Grayscale().Resize(width, 0));
-				UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.PreloadAndDecode, archives.Count, Interlocked.Increment(ref count)));
+				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, Interlocked.Increment(ref count));
 				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
 			})))).AsEnumerable().ToDictionary(pair => pair.Item1, pair => pair.Item2);
 
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.PreloadAndDecode, archives.Count, count));
+			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, count);
 			await Task.Delay(2000);
 
 			count = 0;
 			var comparatorDict = new ConcurrentDictionary<Tuple<string, string>, float>();
 
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 3, 1));
+			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 3, 1);
 			await Task.Delay(2000);
 			var start = DateTime.Now;
 			foreach (var sourcePair in decodedThumbnails)
@@ -105,35 +126,33 @@ namespace LRReader.Shared.Tools
 				// Inaccurate AF
 				var delta = DateTime.Now.Subtract(start);
 				long time = (decodedThumbnails.Count - count) * (delta.Ticks / Math.Max(count, 1));
-				UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Comparing, decodedThumbnails.Count, Interlocked.Increment(ref count), time: time));
+				UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, Interlocked.Increment(ref count), time: time);
 			}
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Comparing, decodedThumbnails.Count, count, time: 0));
+			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, count, time: 0);
 			await Task.Delay(2000);
 
 			count = 0;
-
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, 0, 3, 2));
+			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, 0, 3, 2);
 			await Task.Delay(2000);
 			await Task.WhenAll(decodedThumbnails.Select(thumb => Task.Run(() =>
 			{
 				thumb.Value.Dispose();
-				UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, Interlocked.Increment(ref count)));
+				UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, Interlocked.Increment(ref count));
 			})));
+			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, count, 3, 3);
+			decodedThumbnails.Clear();
+			await Task.Delay(2000);
+
 			var hits = new List<ArchiveHit>();
 			foreach (var comp in comparatorDict)
 			{
 				if (comp.Value < percentDifference)
 					hits.Add(new ArchiveHit { Left = Archives.GetArchive(comp.Key.Item1), Right = Archives.GetArchive(comp.Key.Item2), Percent = comp.Value });
 			}
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, count, 3, 3));
-			await Task.Delay(2000);
-			UpdateProgress(new ToolProgress<DeduplicatorStatus>(DeduplicatorStatus.Completed, 0, 0, 0, 0));
-			progressFilter.OnCompleted();
+			comparatorDict.Clear();
+			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 0, 0);
 			return hits;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private void UpdateProgress(ToolProgress<DeduplicatorStatus> progress) => progressFilter.OnNext(progress);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static int GetManhattanDistanceInRgbSpace(ref Rgba32 a, ref Rgba32 b)
@@ -143,11 +162,6 @@ namespace LRReader.Shared.Tools
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static int Diff(ushort a, ushort b) => Math.Abs(a - b);
-	}
-
-	public enum DeduplicatorStatus
-	{
-		PreloadAndDecode, Comparing, Cleanup, Completed
 	}
 
 }

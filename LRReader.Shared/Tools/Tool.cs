@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Tools
@@ -28,6 +31,32 @@ namespace LRReader.Shared.Tools
 		{
 			return $"{Status}-{MaxProgress}-{CurrentProgress}-{MaxSteps}-{CurrentStep}-{Time}";
 		}
+	}
+
+	public interface IToolParams
+	{
+
+	}
+
+	public abstract class Tool<T, P, R> where P : IToolParams
+	{
+
+		private Subject<ToolProgress<T>> progressFilter;
+
+		public async Task<R> Execute(P @params, IProgress<ToolProgress<T>> progress = null)
+		{
+			progressFilter = new Subject<ToolProgress<T>>();
+			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
+			var result = await Process(@params);
+			GC.Collect();
+			progressFilter.OnCompleted();
+			return result;
+		}
+
+		protected abstract Task<R> Process(P @params);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1) => progressFilter.OnNext(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
 	}
 
 	public static class Util

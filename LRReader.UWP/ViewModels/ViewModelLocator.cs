@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.UWP.ViewModels
@@ -17,6 +18,7 @@ namespace LRReader.UWP.ViewModels
 		public ArchivePageViewModel ArchivePageInstance => Service.Services.GetRequiredService<ArchivePageViewModel>();
 		public CategoryEditViewModel CategoryEditInstance => Service.Services.GetRequiredService<CategoryEditViewModel>();
 		public TabsService HostTabPageInstance => Service.Services.GetRequiredService<TabsService>();
-		public ToolsViewModel ToolsViewModelInstance => Service.Services.GetRequiredService<ToolsViewModel>();
+
+		public DeduplicatorToolViewModel DeduplicatorToolViewModelInstance => Service.Services.GetRequiredService<DeduplicatorToolViewModel>();
 	}
 }
