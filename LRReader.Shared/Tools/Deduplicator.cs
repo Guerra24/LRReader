@@ -30,10 +30,10 @@ namespace LRReader.Shared.Tools
 			Archives = archives;
 		}
 
-		public async Task<List<ArchiveHit>> DeduplicateArchives(IProgress<ToolProgress<DeduplicatorStatus>> progress = null, int pixelThreshold = 10, float percentDifference = 0.2f, bool grayscale = false, int width = 125, float aspectRatioLimit = 0.75f)
+		public async Task<List<ArchiveHit>> DeduplicateArchives(IProgress<ToolProgress<DeduplicatorStatus>> progress = null, int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = false, int width = 125, float aspectRatioLimit = 0.1f)
 		{
-			// Creates false-positives with targets that are smaller.
-			// Skip images that have too large aspect ratio, store them in the comp dict with 100% diff
+			// Tweak values
+			// Find better names for params
 
 			progressFilter = new Subject<ToolProgress<DeduplicatorStatus>>();
 			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));

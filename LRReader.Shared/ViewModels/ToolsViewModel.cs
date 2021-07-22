@@ -65,7 +65,7 @@ namespace LRReader.Shared.ViewModels
 			set => SetProperty(ref _estimatedTime, value);
 		}
 		// Tool Params
-		private int _pixelThreshold = 10;
+		private int _pixelThreshold = 30;
 		public int PixelThreshold
 		{
 			get => _pixelThreshold;
