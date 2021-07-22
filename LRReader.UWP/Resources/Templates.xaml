@@ -148,22 +148,10 @@
 					<StackPanel>
 						<StackPanel.Resources>
 							<DataTemplate x:Key="ModernTemplate" x:DataType="UIElement">
-								<ContentPresenter Content="{x:Bind}">
-									<ContentPresenter.Transitions>
-										<TransitionCollection>
-											<RepositionThemeTransition IsStaggeringEnabled="False" />
-										</TransitionCollection>
-									</ContentPresenter.Transitions>
-								</ContentPresenter>
+								<ContentPresenter Content="{x:Bind}" />
 							</DataTemplate>
 							<DataTemplate x:Key="GenericTemplate" x:DataType="UIElement">
-								<ContentPresenter Padding="8" Content="{x:Bind}">
-									<ContentPresenter.Transitions>
-										<TransitionCollection>
-											<RepositionThemeTransition IsStaggeringEnabled="False" />
-										</TransitionCollection>
-									</ContentPresenter.Transitions>
-								</ContentPresenter>
+								<ContentPresenter Padding="8" Content="{x:Bind}" />
 							</DataTemplate>
 							<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 							<controls:ModernGroupItemTemplateSelector x:Key="TemplateSelector" GenericTemplate="{StaticResource GenericTemplate}" ModernTemplate="{StaticResource ModernTemplate}" />
@@ -172,11 +160,25 @@
 							Margin="1,0,0,8" FontWeight="Bold"
 							Text="{x:Bind Title, Mode=OneWay}"
 							Visibility="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-						<muxc:ItemsRepeater ItemTemplate="{StaticResource TemplateSelector}" ItemsSource="{x:Bind Content, Mode=OneWay}">
-							<muxc:ItemsRepeater.Layout>
-								<muxc:StackLayout Spacing="3" />
-							</muxc:ItemsRepeater.Layout>
-						</muxc:ItemsRepeater>
+						<ListView ItemTemplateSelector="{StaticResource TemplateSelector}" ItemsSource="{x:Bind Content, Mode=OneWay}" SelectionMode="None">
+							<ListView.ItemContainerStyle>
+								<Style TargetType="ListViewItem">
+									<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+									<Setter Property="Padding" Value="0" />
+									<Setter Property="Margin" Value="0" />
+								</Style>
+							</ListView.ItemContainerStyle>
+							<ListView.ItemsPanel>
+								<ItemsPanelTemplate>
+									<StackPanel Spacing="3" />
+								</ItemsPanelTemplate>
+							</ListView.ItemsPanel>
+							<ListView.ItemContainerTransitions>
+								<TransitionCollection>
+									<RepositionThemeTransition IsStaggeringEnabled="False" />
+								</TransitionCollection>
+							</ListView.ItemContainerTransitions>
+						</ListView>
 					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>
