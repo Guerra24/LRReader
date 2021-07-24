@@ -327,7 +327,7 @@
 
 					<VisualState x:Name="PointerOver">
 						<VisualState.Setters>
-							<Setter Target="TabContainer.Background" Value="{ThemeResource TabViewItemHeaderBackgroundPointerOver}" />
+							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlAltFillColorTertiary}" />
 							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundPointerOver}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundPointerOver}" />
@@ -338,7 +338,7 @@
 
 					<VisualState x:Name="Pressed">
 						<VisualState.Setters>
-							<Setter Target="TabContainer.Background" Value="{ThemeResource TabViewItemHeaderBackgroundPressed}" />
+							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlAltFillColorQuarternary}" />
 							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundPressed}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundPressed}" />

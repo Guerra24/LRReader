@@ -87,7 +87,7 @@
 					<StackPanel
 						x:Name="TabViewEndHeader" Grid.Column="3" VerticalAlignment="Bottom"
 						Orientation="Horizontal">
-						<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}">
+						<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" IsTabStop="False">
 							<ContentControl.ContentTransitions>
 								<TransitionCollection>
 									<ContentThemeTransition VerticalOffset="0" />

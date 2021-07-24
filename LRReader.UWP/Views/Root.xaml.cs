@@ -2,7 +2,7 @@
 
 namespace LRReader.UWP.Views
 {
-	public sealed partial class Root : UserControl
+	public sealed partial class Root : Page
 	{
 		public Root()
 		{
