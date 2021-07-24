@@ -73,7 +73,7 @@ namespace LRReader.UWP.Views.Main
 			if (firstRun)
 			{
 				await Task.Delay(TimeSpan.FromMilliseconds(500));
-				(Window.Current.Content as Frame).Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+				(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
 				return;
 			}
 
@@ -125,7 +125,7 @@ namespace LRReader.UWP.Views.Main
 			await Archives.ReloadArchives();
 			Api.ControlFlags.Check(serverInfo);
 			ViewModel.Active = false;
-			(Window.Current.Content as Frame).Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());
+			(Window.Current.Content as Root).Frame.Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());
 		}
 
 		private async Task Reload()
@@ -134,7 +134,7 @@ namespace LRReader.UWP.Views.Main
 			await Task.Delay(TimeSpan.FromSeconds(5));
 			ViewModel.Status = "";
 			ViewModel.StatusSub = "";
-			(Window.Current.Content as Frame).Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+			(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
 		}
 
 		private async Task DownloadUpdateStore()

@@ -87,7 +87,7 @@ namespace LRReader.UWP.Views.Main
 
 		private void ButtonContinue_Click(object sender, RoutedEventArgs e)
 		{
-			(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
+			(Window.Current.Content as Root).Frame.Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
 		}
 	}
 }

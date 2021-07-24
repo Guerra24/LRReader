@@ -1,10 +1,10 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.UWP.Views.Controls;
 using System;
 
 namespace LRReader.UWP.Views.Tabs
 {
-	public sealed partial class SearchResultsTab : CustomTab
+	public sealed partial class SearchResultsTab : ModernTab
 	{
 
 		public SearchResultsTab()

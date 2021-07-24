@@ -141,7 +141,6 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Internal\Converters.cs" />
     <Compile Include="Services\ImageProcessing.cs" />
-    <Compile Include="Internal\Tabs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secrets.cs" />
     <Compile Include="Services\Dispatcher.cs" />
@@ -160,6 +159,7 @@
     </Compile>
     <Compile Include="Views\Controls\ModernGroup.cs" />
     <Compile Include="Views\Controls\ModernInput.cs" />
+    <Compile Include="Views\Controls\ModernTab.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
     </Compile>
@@ -207,6 +207,9 @@
     </Compile>
     <Compile Include="Views\Main\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Root.xaml.cs">
+      <DependentUpon>Root.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\ArchiveEditTab.xaml.cs">
       <DependentUpon>ArchiveEditTab.xaml</DependentUpon>
@@ -391,7 +394,7 @@
       <Version>7.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.6.0-prerelease.210623001</Version>
+      <Version>2.6.1-prerelease.210709001</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -492,6 +495,10 @@
     <Page Include="Views\Main\LoadingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Root.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tabs\ArchiveEditTab.xaml">
       <SubType>Designer</SubType>

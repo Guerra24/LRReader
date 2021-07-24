@@ -1,32 +1,34 @@
-﻿<internal:CustomTab
+﻿<controls:ModernTab
 	x:Class="LRReader.UWP.Views.Tabs.ArchiveEditTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
-	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	Header="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
+	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
-	<controls:TabViewItem.IconSource>
-		<controls:SymbolIconSource Symbol="Edit" />
-	</controls:TabViewItem.IconSource>
-	<controls:TabViewItem.HeaderTemplate>
+	<muxc:TabViewItem.IconSource>
+		<muxc:SymbolIconSource Symbol="Edit" />
+	</muxc:TabViewItem.IconSource>
+	<muxc:TabViewItem.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
 			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
 		</DataTemplate>
-	</controls:TabViewItem.HeaderTemplate>
-	<internal:CustomTab.CustomTabControl>
+	</muxc:TabViewItem.HeaderTemplate>
+	<controls:ModernTab.CustomTabControl>
 		<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}">
 			<Viewbox MaxWidth="16" MaxHeight="16">
 				<SymbolIcon Symbol="Refresh" />
 			</Viewbox>
 		</Button>
-	</internal:CustomTab.CustomTabControl>
+	</controls:ModernTab.CustomTabControl>
 
 	<content:ArchiveEdit x:Name="TabContent" />
-</internal:CustomTab>
+</controls:ModernTab>

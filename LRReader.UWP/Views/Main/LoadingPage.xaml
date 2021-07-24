@@ -6,7 +6,6 @@
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding LoadingPageInstance, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"

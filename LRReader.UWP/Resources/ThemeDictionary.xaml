@@ -23,32 +23,12 @@
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#B2B2B2" />
 			<SolidColorBrush x:Key="BrushNamespaceBackground" Color="#D2D2D2" />
-			<AcrylicBrush
-				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
-				FallbackColor="{ThemeResource ColorNavTop}"
-				TintColor="{ThemeResource SystemChromeAltHighColor}"
-				TintOpacity="0.5" />
+			<SolidColorBrush x:Key="TitlebarBackground" Color="Transparent" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#505050</Color>
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}" />
-			<StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
 			<SolidColorBrush x:Key="ReaderBackground" Color="White" />
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393" />
-			<!-- Override, default is too transparent -->
-			<AcrylicBrush
-                x:Key="CustomAcrylicBackgroundFillColorDefaultBrush"
-                TintColor="#FCFCFC"
-                TintOpacity="0.50"
-                FallbackColor="#F9F9F9"
-                BackgroundSource="HostBackdrop"/>
-			<StaticResource x:Key="AcrylicBackgroundFillColorDefaultBrush" ResourceKey="CustomAcrylicBackgroundFillColorDefaultBrush" />
-			<AcrylicBrush
-                x:Key="CustomAcrylicInAppFillColorDefaultBrush"
-                TintColor="#FCFCFC"
-                TintOpacity="0.50"
-                FallbackColor="#F9F9F9"
-                BackgroundSource="Backdrop"/>
-			<StaticResource x:Key="AcrylicInAppFillColorDefaultBrush" ResourceKey="CustomAcrylicInAppFillColorDefaultBrush" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="BrushText" Color="White" />
@@ -68,32 +48,12 @@
 			<SolidColorBrush x:Key="BrushItemGridBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<SolidColorBrush x:Key="BrushTagBackground" Color="#4F4F4F" />
 			<SolidColorBrush x:Key="BrushNamespaceBackground" Color="#333333" />
-			<AcrylicBrush
-				x:Key="TitlebarBackground" BackgroundSource="HostBackdrop"
-				FallbackColor="{ThemeResource ColorNavTop}"
-				TintColor="{ThemeResource SystemChromeAltHighColor}"
-				TintOpacity="0.5" />
+			<SolidColorBrush x:Key="TitlebarBackground" Color="Transparent" />
 			<SolidColorBrush x:Key="GridViewItemPlaceholderBackground" Color="{ThemeResource ControlFillColorDefault}" />
 			<Color x:Key="TabsSeparator">#C0C0C0</Color>
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}" />
-			<StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
 			<SolidColorBrush x:Key="ReaderBackground" Color="Black" />
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#7C7C7C" />
-			<!-- Override, default is too transparent -->
-			<AcrylicBrush
-                x:Key="CustomAcrylicBackgroundFillColorDefaultBrush"
-                TintColor="#2C2C2C"
-                TintOpacity="0.50"
-                FallbackColor="#2C2C2C"
-                BackgroundSource="HostBackdrop"/>
-			<StaticResource x:Key="AcrylicBackgroundFillColorDefaultBrush" ResourceKey="CustomAcrylicBackgroundFillColorDefaultBrush" />
-			<AcrylicBrush
-                x:Key="CustomAcrylicInAppFillColorDefaultBrush"
-                TintColor="#2C2C2C"
-                TintOpacity="0.50"
-                FallbackColor="#2C2C2C"
-                BackgroundSource="Backdrop"/>
-			<StaticResource x:Key="AcrylicInAppFillColorDefaultBrush" ResourceKey="CustomAcrylicInAppFillColorDefaultBrush" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

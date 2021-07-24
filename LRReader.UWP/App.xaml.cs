@@ -1,5 +1,5 @@
 ﻿using LRReader.Shared.Services;
-using LRReader.UWP.Services;
+using LRReader.UWP.Views;
 using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
@@ -10,9 +10,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP
@@ -62,15 +60,10 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			Frame rootFrame = Window.Current.Content as Frame;
+			Root rootFrame = Window.Current.Content as Root;
 
 			if (rootFrame == null)
 			{
-				rootFrame = new Frame();
-				rootFrame.NavigationFailed += OnNavigationFailed;
-				rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
-				UpdateButtonsOnThemeChange(RequestedTheme);
-
 				var CoreView = CoreApplication.GetCurrentView();
 				var AppView = ApplicationView.GetForCurrentView();
 				var coreTitleBar = CoreView.TitleBar;
@@ -79,6 +72,10 @@ namespace LRReader.UWP
 				var titleBar = AppView.TitleBar;
 				titleBar.ButtonBackgroundColor = Colors.Transparent;
 				titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+				rootFrame = new Root();
+				rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
+				UpdateButtonsOnThemeChange(RequestedTheme);
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
@@ -90,24 +87,14 @@ namespace LRReader.UWP
 			if (!e.PrelaunchActivated)
 			{
 				CoreApplication.EnablePrelaunch(true);
-				if (rootFrame.Content == null)
-					rootFrame.Navigate(typeof(LoadingPage), e.SplashScreen, new SuppressNavigationTransitionInfo());
+				if (rootFrame.Frame.Content == null)
+					rootFrame.Frame.Navigate(typeof(LoadingPage), e.SplashScreen, new SuppressNavigationTransitionInfo());
 				Window.Current.Activate();
 			}
 			else
 			{
 				await InitServices();
 			}
-		}
-
-		/// <summary>
-		/// Invoked when Navigation to a certain page fails
-		/// </summary>
-		/// <param name="sender">The Frame which failed navigation</param>
-		/// <param name="e">Details about the navigation failure</param>
-		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-		{
-			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
 
 		/// <summary>

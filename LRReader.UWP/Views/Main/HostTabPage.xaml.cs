@@ -1,6 +1,6 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Services;
+using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Tabs;
@@ -121,7 +121,7 @@ namespace LRReader.UWP.Views.Main
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			Data.CloseTab(args.Tab as CustomTab);
+			Data.CloseTab(args.Tab as ModernTab);
 		}
 
 		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)

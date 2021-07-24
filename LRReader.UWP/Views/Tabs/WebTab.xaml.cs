@@ -1,9 +1,9 @@
-﻿using LRReader.Internal;
+﻿using LRReader.UWP.Views.Controls;
 using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs
 {
-	public sealed partial class WebTab : CustomTab
+	public sealed partial class WebTab : ModernTab
 	{
 
 		private string page;

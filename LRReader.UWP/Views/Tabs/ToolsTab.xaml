@@ -1,20 +1,21 @@
-﻿<internal:CustomTab
+﻿<controls:ModernTab
 	x:Class="LRReader.UWP.Views.Tabs.ToolsTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.UWP.Views.Content.Tools"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	Header="Tools"
+	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 	</muxc:TabViewItem.IconSource>
 
 	<content:Deduplicator />
-</internal:CustomTab>
+</controls:ModernTab>

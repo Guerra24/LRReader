@@ -1,22 +1,23 @@
-﻿<internal:CustomTab
+﻿<controls:ModernTab
 	x:Class="LRReader.UWP.Views.Tabs.BookmarksTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
-	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Uid="/Tabs/Bookmarks/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Bookmarks"
+	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
-	<controls:TabViewItem.IconSource>
-		<controls:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
-	</controls:TabViewItem.IconSource>
-	<internal:CustomTab.CustomTabControl>
+	<muxc:TabViewItem.IconSource>
+		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+	</muxc:TabViewItem.IconSource>
+	<controls:ModernTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal">
 			<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
 				<Viewbox MaxWidth="16" MaxHeight="16">
@@ -35,7 +36,7 @@
 				</Button.Flyout>
 			</Button>
 		</StackPanel>
-	</internal:CustomTab.CustomTabControl>
+	</controls:ModernTab.CustomTabControl>
 
 	<content:Bookmarks x:Name="TabContent" />
-</internal:CustomTab>
+</controls:ModernTab>

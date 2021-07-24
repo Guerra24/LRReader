@@ -1,10 +1,10 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.UWP.Views.Controls;
 using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs
 {
-	public sealed partial class ArchiveTab : CustomTab
+	public sealed partial class ArchiveTab : ModernTab
 	{
 
 		public ArchiveTab(Archive archive)
