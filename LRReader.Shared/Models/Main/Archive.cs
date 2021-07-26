@@ -1,6 +1,7 @@
 ﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Internal;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Toolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -213,6 +214,8 @@ namespace LRReader.Shared.Models.Main
 		public Archive Left { get; set; }
 		public Archive Right { get; set; }
 		public float Percent { get; set; }
+
+		public AsyncRelayCommand<string> Delete { get; set; }
 
 		public override bool Equals(object obj) => obj is ArchiveHit hit &&
 				   Left.Equals(hit.Left) && Right.Equals(hit.Right);

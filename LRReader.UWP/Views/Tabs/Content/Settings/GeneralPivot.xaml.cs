@@ -87,7 +87,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			if (profile == null)
 			{
 				Service.Tabs.CloseAllTabs();
-				(Window.Current.Content as Frame).Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+				(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
 				return;
 			}
 			if (profile == Data.SettingsManager.Profile)
@@ -104,7 +104,7 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			{
 				Data.SettingsManager.Profile = profile;
 				Service.Tabs.CloseAllTabs();
-				(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
+				(Window.Current.Content as Root).Frame.Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
 			}
 			else
 			{

@@ -31,8 +31,12 @@ jobs:
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
     - name: Upload Symbols
+      env:
+        APPCENTER_TOKEN: ${{ secrets.APPCENTER_TOKEN }}
       run: |
+        npm install -g appcenter-cli
         Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
+        foreach ($file in $(Get-ChildItem *.appxsym -File)) { appcenter crashes upload-symbols --app Guerra24/LRReader --appxsym $file --token ${env:APPCENTER_TOKEN} }
         Remove-Item $(Get-ChildItem *.appxsym -File)
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2

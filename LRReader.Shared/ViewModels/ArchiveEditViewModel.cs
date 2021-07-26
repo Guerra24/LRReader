@@ -1,8 +1,10 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -93,72 +95,94 @@ namespace LRReader.Shared.ViewModels
 
 		private async Task ReloadArchive()
 		{
-			var result = await ArchivesProvider.GetArchive(Archive.arcid);
-			if (result != null)
+			try
 			{
-				Title = result.title;
-				ReloadTagsList(result.tags);
-				OnPropertyChanged("Title");
+
+				var result = await ArchivesProvider.GetArchive(Archive.arcid);
+				if (result != null)
+				{
+					Title = result.title;
+					ReloadTagsList(result.tags);
+					OnPropertyChanged("Title");
+				}
+				await ReloadPlugins();
 			}
-			await ReloadPlugins();
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+			}
 		}
 
 		private async Task SaveArchive()
 		{
-			Saving = true;
-			string tags;
-			if (UseTextTags)
-				tags = Tags;
-			else
-				tags = BuildTags();
-			var result = await ArchivesProvider.UpdateArchive(Archive.arcid, Title, tags);
-			if (result)
+			try
 			{
-				Archive.title = Title;
-				Archive.tags = tags;
+				Saving = true;
+				string tags;
 				if (UseTextTags)
-					ReloadTagsList(tags);
+					tags = Tags;
 				else
-					Tags = BuildTags();
-				PluginTagsList.Clear();
-				AddAllTags.NotifyCanExecuteChanged();
-				OnPropertyChanged("Archive");
+					tags = BuildTags();
+				var result = await ArchivesProvider.UpdateArchive(Archive.arcid, Title, tags);
+				if (result)
+				{
+					Archive.title = Title;
+					Archive.tags = tags;
+					if (UseTextTags)
+						ReloadTagsList(tags);
+					else
+						Tags = BuildTags();
+					PluginTagsList.Clear();
+					AddAllTags.NotifyCanExecuteChanged();
+					OnPropertyChanged("Archive");
+				}
+				Saving = false;
 			}
-			Saving = false;
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+			}
 		}
 
 		private async Task UsePlugin()
 		{
-			await SaveArchive();
-			Saving = true;
-			PluginTagsList.Clear();
-			var result = await ServerProvider.UsePlugin(CurrentPlugin.@namespace, Archive.arcid, Arg);
-			if (result != null)
+			try
 			{
-				if (result.success)
+				await SaveArchive();
+				Saving = true;
+				PluginTagsList.Clear();
+				var result = await ServerProvider.UsePlugin(CurrentPlugin.@namespace, Archive.arcid, Arg);
+				if (result != null)
 				{
-					if (!string.IsNullOrEmpty(result.data.new_tags))
+					if (result.success)
 					{
-						if (UseTextTags)
+						if (!string.IsNullOrEmpty(result.data.new_tags))
 						{
-							if (!Tags.TrimEnd().EndsWith(","))
-								Tags = Tags.TrimEnd() + ",";
-							Tags += result.data.new_tags;
-						}
-						else
-						{
-							foreach (var t in result.data.new_tags.Split(','))
-								PluginTagsList.Add(ColorTag(new PluginTag { Tag = t.Trim(), Command = TagCommand }));
-							AddAllTags.NotifyCanExecuteChanged();
+							if (UseTextTags)
+							{
+								if (!Tags.TrimEnd().EndsWith(","))
+									Tags = Tags.TrimEnd() + ",";
+								Tags += result.data.new_tags;
+							}
+							else
+							{
+								foreach (var t in result.data.new_tags.Split(','))
+									PluginTagsList.Add(ColorTag(new PluginTag { Tag = t.Trim(), Command = TagCommand }));
+								AddAllTags.NotifyCanExecuteChanged();
+							}
 						}
 					}
+					else
+					{
+						Events.ShowNotification("Error while fetching tags", result.error, 0);
+					}
 				}
-				else
-				{
-					Events.ShowNotification("Error while fetching tags", result.error, 0);
-				}
+				Saving = false;
 			}
-			Saving = false;
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+			}
 		}
 
 		private async Task ReloadPlugins()

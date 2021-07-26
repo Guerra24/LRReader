@@ -1,5 +1,7 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Internal;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
+using Microsoft.AppCenter.Crashes;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -8,7 +10,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,8 +51,10 @@ namespace LRReader.Shared.Tools
 			Archives = archives;
 		}
 
-		protected override async Task<List<ArchiveHit>> Process(DeduplicatorParams @params)
+		protected override async Task<List<ArchiveHit>> Process(DeduplicatorParams @params, int threads)
 		{
+			var factory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(threads));
+
 			int pixelThreshold = @params.PixelThreshold;
 			float percentDifference = @params.PercentDifference;
 			bool grayscale = @params.Grayscale;
@@ -64,16 +67,29 @@ namespace LRReader.Shared.Tools
 			await Task.Delay(2000);
 
 			int count = 0;
-			var decodedThumbnails = (await Task.WhenAll(archives.Select(pair => Task.Run(async () =>
+			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(async () =>
 			{
-				var image = Image.Load(await Images.GetThumbnailCached(pair.Key));
-				image.Mutate(i => i.Resize(width, 0));
-				// i.Grayscale()
-				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, Interlocked.Increment(ref count));
-				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
-			})))).AsEnumerable().ToDictionary(pair => pair.Item1, pair => pair.Item2);
+				try
+				{
+					var image = Image.Load(await Images.GetThumbnailCached(pair.Key));
+					image.Mutate(i => i.Resize(width, 0));
+					UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, Interlocked.Increment(ref count));
+					return new Tuple<string, Image<Rgba32>>(pair.Key, image);
+				}
+				catch (Exception e)
+				{
+					Crashes.TrackError(e);
+					return null;
+				}
+			}).Unwrap()))).AsEnumerable().ToList();
+			tmp.RemoveAll(pair => pair == null);
+
+			var decodedThumbnails = tmp.ToDictionary(pair => pair.Item1, pair => pair.Item2);
 
 			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, count);
+			GC.Collect(); // TODO GC
+			GC.WaitForPendingFinalizers();
+			GC.Collect();
 			await Task.Delay(2000);
 
 			count = 0;
@@ -85,46 +101,45 @@ namespace LRReader.Shared.Tools
 			foreach (var sourcePair in decodedThumbnails)
 			{
 				var source = sourcePair.Value;
-				await Task.WhenAll(decodedThumbnails.Select(targetPair => Task.Run(() =>
+				await Task.WhenAll(decodedThumbnails.Select(targetPair => factory.StartNew(() =>
 				{
-					var fullKey = new Tuple<string, string>(sourcePair.Key, targetPair.Key);
-					var fullKeyReversed = new Tuple<string, string>(targetPair.Key, sourcePair.Key);
-					if (sourcePair.Key.Equals(targetPair.Key) || comparatorDict.ContainsKey(fullKey) || comparatorDict.ContainsKey(fullKeyReversed))
-						return;
-					var target = targetPair.Value;
-
-					if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+					try
 					{
-						comparatorDict.TryAdd(fullKey, 1);
-						return;
-					}
+						var fullKey = new Tuple<string, string>(sourcePair.Key, targetPair.Key);
+						var fullKeyReversed = new Tuple<string, string>(targetPair.Key, sourcePair.Key);
+						if (sourcePair.Key.Equals(targetPair.Key) || comparatorDict.ContainsKey(fullKey) || comparatorDict.ContainsKey(fullKeyReversed))
+							return;
+						var target = targetPair.Value;
 
-					int differences = 0;
-					for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
-					{
-						Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
-						Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
-						for (int x = 0; x < source.Width; x++)
+						if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
 						{
-							//if (grayscale)
-							//{
-							//byte diff = (byte)Math.Abs(sourcePixelRow[x].R - targetPixelRow[x].R);
-							//if (diff > pixelThreshold)
-							//	differences++;
-							//}
-							//else
-							//{
+							comparatorDict.TryAdd(fullKey, 1);
+							return;
+						}
+
+						int differences = 0;
+						for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
+						{
+							Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
+							Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
+							for (int x = 0; x < source.Width; x++)
+							{
 								float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
 								if (diff > pixelThreshold / 765f)
 									differences++;
-							//}
+							}
 						}
+						float diffPixels = differences;
+						diffPixels /= source.Width * source.Height;
+						comparatorDict.TryAdd(fullKey, diffPixels);
 					}
-					float diffPixels = differences;
-					diffPixels /= source.Width * source.Height;
-					comparatorDict.TryAdd(fullKey, diffPixels);
+					catch (Exception e)
+					{
+						Crashes.TrackError(e);
+					}
 				})));
-				// Inaccurate AF
+				GC.Collect(); // TODO GC
+							  // Inaccurate AF
 				var delta = DateTime.Now.Subtract(start);
 				long time = (decodedThumbnails.Count - count) * (delta.Ticks / Math.Max(count, 1));
 				UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, Interlocked.Increment(ref count), time: time);
@@ -132,10 +147,14 @@ namespace LRReader.Shared.Tools
 			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, count, time: 0);
 			await Task.Delay(2000);
 
+			GC.Collect(); // TODO GC
+			GC.WaitForPendingFinalizers();
+			GC.Collect();
+
 			count = 0;
 			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, 0, 3, 2);
 			await Task.Delay(2000);
-			await Task.WhenAll(decodedThumbnails.Select(thumb => Task.Run(() =>
+			await Task.WhenAll(decodedThumbnails.Select(thumb => factory.StartNew(() =>
 			{
 				thumb.Value.Dispose();
 				UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, Interlocked.Increment(ref count));

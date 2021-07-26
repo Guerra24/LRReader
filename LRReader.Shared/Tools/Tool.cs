@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -43,17 +44,27 @@ namespace LRReader.Shared.Tools
 
 		private Subject<ToolProgress<T>> progressFilter;
 
-		public async Task<R> Execute(P @params, IProgress<ToolProgress<T>> progress = null)
+		public async Task<R> Execute(P @params, int threads, IProgress<ToolProgress<T>> progress = null)
 		{
 			progressFilter = new Subject<ToolProgress<T>>();
 			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
-			var result = await Process(@params);
+			R result = default;
+			try
+			{
+				result = await Process(@params, threads);
+			}
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+			}
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
 			GC.Collect();
 			progressFilter.OnCompleted();
 			return result;
 		}
 
-		protected abstract Task<R> Process(P @params);
+		protected abstract Task<R> Process(P @params, int threads);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1) => progressFilter.OnNext(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));

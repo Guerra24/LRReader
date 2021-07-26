@@ -20,13 +20,13 @@
 		<GridView.Header>
 			<StackPanel MaxWidth="1000">
 				<controls:ModernGroup>
-					<controls:ModernExpander Title="Deduplicator" Margin="0,0,0,10">
+					<controls:ModernExpander Title="Deduplicator">
 						<controls:ModernInput Title="Pixel Threshold" Description="Pixel's difference need to be at least this to count as different">
 							<muxc:NumberBox
 								MinWidth="100"
 								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 								LargeChange="10" Maximum="255" Minimum="0"
-								SmallChange="1" SpinButtonPlacementMode="Compact"
+								SmallChange="1" SpinButtonPlacementMode="Inline"
 								Value="{x:Bind Data.PixelThreshold, Mode=TwoWay}" />
 						</controls:ModernInput>
 						<controls:ModernInput Title="Image Difference Limit" Description="Image's difference need to be less than this to be considered equal" InputHorizontalAlignment="Stretch">
@@ -36,6 +36,7 @@
 									<ColumnDefinition Width="Auto" />
 								</Grid.ColumnDefinitions>
 								<Slider
+									IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 									IsThumbToolTipEnabled="False" Maximum="100" Minimum="0"
 									TickPlacement="None"
 									Value="{x:Bind Data.PercentDifference, Mode=TwoWay}" />
@@ -51,7 +52,7 @@
 								MinWidth="100"
 								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 								Maximum="500" Minimum="4" SmallChange="1"
-								SpinButtonPlacementMode="Compact"
+								SpinButtonPlacementMode="Inline"
 								Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
 						</controls:ModernInput>
 						<controls:ModernInput Title="Aspect Ratio Limit" InputHorizontalAlignment="Stretch">
@@ -61,6 +62,7 @@
 									<ColumnDefinition Width="Auto" />
 								</Grid.ColumnDefinitions>
 								<Slider
+									IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 									IsThumbToolTipEnabled="False" LargeChange="0.1" Maximum="0.5"
 									Minimum="0" SmallChange="0.01" StepFrequency="0.01"
 									TickPlacement="None"
@@ -73,6 +75,9 @@
 						</controls:ModernInput>
 						<CheckBox Content="Grayscale" IsChecked="{x:Bind Data.Grayscale, Mode=OneWay}" IsEnabled="False" />
 					</controls:ModernExpander>
+					<controls:ModernInput Title="Worker Threads">
+						<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
+					</controls:ModernInput>
 					<StackPanel>
 						<TextBlock Margin="0,0,0,10">
 							<Run Text="Step" />

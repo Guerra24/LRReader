@@ -1,8 +1,11 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
+using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
@@ -10,6 +13,7 @@ namespace LRReader.Shared.ViewModels.Tools
 	public class DeduplicatorToolViewModel : ToolViewModel<DeduplicatorStatus>
 	{
 		private readonly DeduplicationTool Deduplicator;
+		private readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
 
 		private int _pixelThreshold = 30;
@@ -45,22 +49,39 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		public ObservableCollection<ArchiveHit> Items = new ObservableCollection<ArchiveHit>();
 
-		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher)
+		private AsyncRelayCommand<string> DeleteArchiveCommand;
+
+		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives)
 		{
 			Deduplicator = deduplicator;
 			Dispatcher = dispatcher;
+			Archives = archives;
+			DeleteArchiveCommand = new AsyncRelayCommand<string>(DeleteArchive);
 		}
 
 		protected override async Task Execute()
 		{
 			Items.Clear();
-			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Grayscale, Resolution, AspectRatioLimit), Progress);
-			await Task.Run(async () =>
+			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Grayscale, Resolution, AspectRatioLimit), Threads, Progress);
+			if (hits != null)
 			{
-				foreach (var hit in hits)
-					await Dispatcher.RunAsync(() => Items.Add(hit));
-			});
-			ToolStatus = null;
+				await Task.Run(async () =>
+				{
+					foreach (var hit in hits)
+					{
+						hit.Delete = DeleteArchiveCommand;
+						await Dispatcher.RunAsync(() => Items.Add(hit));
+					}
+				});
+				ToolStatus = null;
+			}
+		}
+
+		private async Task DeleteArchive(string arcid)
+		{
+			if (await Archives.DeleteArchive(arcid))
+				foreach (var item in Items.Where(hit => hit.Left.arcid.Equals(arcid) || hit.Right.arcid.Equals(arcid)).ToList())
+					Items.Remove(item);
 		}
 
 	}

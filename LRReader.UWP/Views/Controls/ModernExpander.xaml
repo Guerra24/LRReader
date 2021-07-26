@@ -24,7 +24,8 @@
 				Background="{ThemeResource ExpanderContentBackground}"
 				BackgroundSizing="InnerBorderEdge"
 				BorderBrush="{ThemeResource ExpanderContentBorderBrush}"
-				BorderThickness="0,0,0,1">
+				BorderThickness="0,0,0,1"
+				Visibility="{x:Bind Visibility, Mode=OneWay}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition />
@@ -34,7 +35,10 @@
 			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="LastItem" x:DataType="UIElement">
-			<Grid Background="{ThemeResource ExpanderContentBackground}" BackgroundSizing="InnerBorderEdge" CornerRadius="0,0,2,2">
+			<Grid
+				Background="{ThemeResource ExpanderContentBackground}"
+				BackgroundSizing="InnerBorderEdge" CornerRadius="0,0,2,2"
+				Visibility="{x:Bind Visibility, Mode=OneWay}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition />

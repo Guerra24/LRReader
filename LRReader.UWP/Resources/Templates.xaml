@@ -148,10 +148,10 @@
 					<StackPanel>
 						<StackPanel.Resources>
 							<DataTemplate x:Key="ModernTemplate" x:DataType="UIElement">
-								<ContentPresenter Content="{x:Bind}" />
+								<ContentPresenter Content="{x:Bind}" Visibility="{x:Bind Visibility, Mode=OneWay}" />
 							</DataTemplate>
 							<DataTemplate x:Key="GenericTemplate" x:DataType="UIElement">
-								<ContentPresenter Padding="8" Content="{x:Bind}" />
+								<ContentPresenter Padding="8" Content="{x:Bind}" Visibility="{x:Bind Visibility, Mode=OneWay}" />
 							</DataTemplate>
 							<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 							<controls:ModernGroupItemTemplateSelector x:Key="TemplateSelector" GenericTemplate="{StaticResource GenericTemplate}" ModernTemplate="{StaticResource ModernTemplate}" />

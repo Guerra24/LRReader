@@ -56,6 +56,12 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _estimatedTime;
 			set => SetProperty(ref _estimatedTime, value);
 		}
+		private int _threads = Math.Max(Environment.ProcessorCount, 1);
+		public int Threads
+		{
+			get => _threads;
+			set => SetProperty(ref _threads, value);
+		}
 
 		protected Progress<ToolProgress<T>> Progress;
 

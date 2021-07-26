@@ -91,15 +91,15 @@ namespace LRReader.Shared.Services
 			return null;
 		}
 
-		public async Task DeleteArchive(string id)
+		public async Task<bool> DeleteArchive(string id)
 		{
 			if (!Archives.ContainsKey(id))
-				return;
+				return false;
 			var result = await ArchivesProvider.DeleteArchive(id);
 			if (result == null)
 			{
 				Events.ShowNotification("Unable to delete archive", "", 0);
-				return;
+				return false;
 			}
 			if (result.success)
 			{
@@ -113,6 +113,7 @@ namespace LRReader.Shared.Services
 			{
 				Events.ShowNotification("An error ocurred while deleting archive", "Metadata has been deleted, remove file manually.", 0);
 			}
+			return true;
 		}
 
 	}

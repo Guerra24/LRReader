@@ -48,6 +48,8 @@ namespace LRReader.Shared.Services
 			collection.AddTransient<ArchiveItemViewModel>();
 			collection.AddTransient<CategoryBaseViewModel>();
 
+			collection.AddTransient<ArchiveHitViewModel>();
+
 			// Tool's Pages
 			collection.AddTransient<DeduplicatorToolViewModel>();
 

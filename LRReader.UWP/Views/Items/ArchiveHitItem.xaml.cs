@@ -4,23 +4,12 @@ using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LRReader.UWP.Views.Items
 {
@@ -29,7 +18,7 @@ namespace LRReader.UWP.Views.Items
 
 		private ArchiveItemViewModel LeftViewModel, RightViewModel;
 
-		private ArchiveHit old;
+		private ArchiveHitViewModel Data;
 
 		private bool _open;
 
@@ -39,16 +28,18 @@ namespace LRReader.UWP.Views.Items
 			// TODO: Proper fix
 			LeftViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
 			RightViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
+			Data = Service.Services.GetRequiredService<ArchiveHitViewModel>();
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)
 				return;
+			VisualStateManager.GoToState(this, "Normal", true);
 			var hit = args.NewValue as ArchiveHit;
-			if (!hit.Equals(old))
+			if (!hit.Equals(Data.ArchiveHit))
 			{
-				old = hit;
+				Data.ArchiveHit = hit;
 				LeftViewModel.Archive = hit.Left;
 				RightViewModel.Archive = hit.Right;
 
@@ -93,6 +84,12 @@ namespace LRReader.UWP.Views.Items
 				}
 			}
 		}
+
+		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+		{
+			Service.Tabs.OpenTab(Tab.Archive, false, (sender as MenuFlyoutItem).Tag);
+		}
+
 
 		private async void LeftTagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
@@ -155,6 +152,46 @@ namespace LRReader.UWP.Views.Items
 				else
 					RightTagsPopup.IsOpen = false;
 			}
+		}
+
+		private void LeftGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "PointerOverLeft", true);
+		}
+
+		private void LeftGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "Normal", true);
+		}
+
+		private void RightGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "PointerOverRight", true);
+		}
+
+		private void RightGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "Normal", true);
+		}
+
+		private void LeftDelete_Click(object sender, RoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "LeftConfirm", true);
+		}
+
+		private void RightDelete_Click(object sender, RoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "RightConfirm", true);
+		}
+
+		private void RightCancel_Click(object sender, RoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "PointerOverRight", true);
+		}
+
+		private void LeftCancel_Click(object sender, RoutedEventArgs e)
+		{
+			VisualStateManager.GoToState(this, "PointerOverLeft", true);
 		}
 
 		private void RightHidePopup_Completed(object sender, object e)

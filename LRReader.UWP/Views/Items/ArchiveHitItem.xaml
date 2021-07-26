@@ -8,10 +8,11 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Width="392"
+	Width="394"
 	d:DesignHeight="318"
-	d:DesignWidth="392"
+	d:DesignWidth="394"
 	DataContextChanged="UserControl_DataContextChanged"
 	mc:Ignorable="d">
 
@@ -34,10 +35,16 @@
 
 	<Grid Background="{ThemeResource BrushItemGridBackground}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="196"/>
-			<ColumnDefinition Width="196"/>
+			<ColumnDefinition Width="196" />
+			<ColumnDefinition Width="2" />
+			<ColumnDefinition Width="196" />
 		</Grid.ColumnDefinitions>
 		<Grid x:Name="LeftGrid">
+			<Grid.ContextFlyout>
+				<MenuFlyout>
+					<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add" Tag="{x:Bind LeftViewModel.Archive, Mode=OneWay}" />
+				</MenuFlyout>
+			</Grid.ContextFlyout>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
@@ -95,8 +102,57 @@
 					Text="{x:Bind LeftViewModel.Archive.TagsClean, Mode=OneWay}"
 					TextTrimming="CharacterEllipsis" />
 			</Grid>
+			<Grid
+				x:Name="LeftFilter" Grid.Row="1" Opacity="0"
+				PointerEntered="LeftGrid_PointerEntered" PointerExited="LeftGrid_PointerExited">
+				<Grid.Background>
+					<media:PipelineBrush Source="{media:BackdropSource}">
+						<media:BlurEffect Amount="16" />
+						<media:GrayscaleEffect />
+						<media:ShadeEffect Intensity="0.5" Color="Black" />
+					</media:PipelineBrush>
+				</Grid.Background>
+				<Grid x:Name="LeftDelete">
+					<Button
+						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"
+						Click="LeftDelete_Click" CornerRadius="0" ToolTipService.Placement="Mouse"
+						ToolTipService.ToolTip="Delete">
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="48" Glyph="&#xE74D;" />
+					</Button>
+				</Grid>
+				<Grid x:Name="LeftConfirmGrid" Visibility="Collapsed">
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<TextBlock
+						Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Center"
+						VerticalAlignment="Bottom" FontSize="16"
+						Foreground="{ThemeResource TextFillColorPrimary}"
+						Text="Are you sure?" />
+					<Button
+						Grid.Row="1" Margin="10" HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						Command="{x:Bind Data.ArchiveHit.Delete, Mode=OneWay}"
+						CommandParameter="{x:Bind Data.ArchiveHit.Left.arcid, Mode=OneWay}"
+						Content="Yes" />
+					<Button
+						Grid.Row="1" Grid.Column="1" Margin="10"
+						VerticalAlignment="Top" Click="LeftCancel_Click" Content="No" />
+				</Grid>
+			</Grid>
 		</Grid>
-		<Grid x:Name="RightGrid" Grid.Column="1">
+		<Grid Grid.Column="1" />
+		<Grid x:Name="RightGrid" Grid.Column="2">
+			<Grid.ContextFlyout>
+				<MenuFlyout>
+					<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add" Tag="{x:Bind RightViewModel.Archive, Mode=OneWay}" />
+				</MenuFlyout>
+			</Grid.ContextFlyout>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
@@ -109,7 +165,7 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind RightViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1">
-				<Popup x:Name="RightTagsPopup" HorizontalOffset="-57"  IsHitTestVisible="False">
+				<Popup x:Name="RightTagsPopup" HorizontalOffset="-57" IsHitTestVisible="False">
 					<Grid
 						Padding="4" Windows10version1903:Translation="0,0,32"
 						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
@@ -154,6 +210,81 @@
 					Text="{x:Bind RightViewModel.Archive.TagsClean, Mode=OneWay}"
 					TextTrimming="CharacterEllipsis" />
 			</Grid>
+			<Grid
+				x:Name="RightFilter" Grid.Row="1" Opacity="0"
+				PointerEntered="RightGrid_PointerEntered" PointerExited="RightGrid_PointerExited">
+				<Grid.Background>
+					<media:PipelineBrush Source="{media:BackdropSource}">
+						<media:BlurEffect Amount="16" />
+						<media:GrayscaleEffect />
+						<media:ShadeEffect Intensity="0.5" Color="Black" />
+					</media:PipelineBrush>
+				</Grid.Background>
+				<Grid x:Name="RightDelete">
+					<Button
+						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"
+						Click="RightDelete_Click" CornerRadius="0" ToolTipService.Placement="Mouse"
+						ToolTipService.ToolTip="Delete">
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="48" Glyph="&#xE74D;" />
+					</Button>
+				</Grid>
+				<Grid x:Name="RightConfirmGrid" Visibility="Collapsed">
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<TextBlock
+						Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Center"
+						VerticalAlignment="Bottom" FontSize="16"
+						Foreground="{ThemeResource TextFillColorPrimary}"
+						Text="Are you sure?" />
+					<Button
+						Grid.Row="1" Margin="10" HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						Command="{x:Bind Data.ArchiveHit.Delete, Mode=OneWay}"
+						CommandParameter="{x:Bind Data.ArchiveHit.Right.arcid, Mode=OneWay}"
+						Content="Yes" />
+					<Button
+						Grid.Row="1" Grid.Column="1" Margin="10"
+						VerticalAlignment="Top" Click="RightCancel_Click" Content="No" />
+				</Grid>
+			</Grid>
 		</Grid>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="CommonStates">
+				<VisualState x:Name="Normal" />
+				<VisualState x:Name="PointerOverLeft">
+					<VisualState.Setters>
+						<Setter Target="LeftFilter.Opacity" Value="1" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="PointerOverRight">
+					<VisualState.Setters>
+						<Setter Target="RightFilter.Opacity" Value="1" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="LeftConfirm">
+					<VisualState.Setters>
+						<Setter Target="LeftFilter.Opacity" Value="1" />
+						<Setter Target="LeftConfirmGrid.Visibility" Value="Visible" />
+						<Setter Target="LeftDelete.Visibility" Value="Collapsed" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="RightConfirm">
+					<VisualState.Setters>
+						<Setter Target="RightFilter.Opacity" Value="1" />
+						<Setter Target="RightConfirmGrid.Visibility" Value="Visible" />
+						<Setter Target="RightDelete.Visibility" Value="Collapsed" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0:0:0.10" />
+				</VisualStateGroup.Transitions>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </UserControl>
