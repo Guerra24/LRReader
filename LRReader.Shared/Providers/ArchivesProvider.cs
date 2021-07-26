@@ -181,7 +181,7 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult();
 		}
 
-		public static async Task<MinionJob> RegenerateThumbnails(bool force)
+		public static async Task<MinionJob> RegenerateThumbnails(bool force = false)
 		{
 			var client = Api.GetClient();
 

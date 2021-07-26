@@ -5,6 +5,7 @@
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:items1="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
@@ -14,6 +15,7 @@
 	mc:Ignorable="d">
 	<UserControl.Resources>
 		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</UserControl.Resources>
 
 	<GridView Padding="24,10" ItemsSource="{x:Bind Data.Items}">
@@ -88,13 +90,20 @@
 						<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxSteps, Mode=OneWay}" Value="{x:Bind Data.CurrentStep, Mode=OneWay}" />
 					</StackPanel>
 					<StackPanel>
-						<TextBlock Margin="0,0,0,10">
-							<Run Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
-							<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
-							<Run Text="of" />
-							<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
-						</TextBlock>
-						<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}" Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+						<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+							<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
+							<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+								<Run/>
+								<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+								<Run Text="of" />
+								<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
+							</TextBlock>
+						</StackPanel>
+						<muxc:ProgressBar
+							Margin="0,0,0,5"
+							IsIndeterminate="{x:Bind Data.Indeterminate, Mode=OneWay}"
+							Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}"
+							Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
 					</StackPanel>
 					<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">

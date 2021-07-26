@@ -30,7 +30,11 @@ namespace LRReader.Shared.ViewModels.Tools
 		public int CurrentProgress
 		{
 			get => _currentProgress;
-			set => SetProperty(ref _currentProgress, value == -1 ? _currentProgress : value);
+			set
+			{
+				SetProperty(ref _currentProgress, value == -1 ? _currentProgress : value);
+				OnPropertyChanged("Indeterminate");
+			}
 		}
 		private int _maxSteps;
 		public int MaxSteps
@@ -44,6 +48,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _currentStep;
 			set => SetProperty(ref _currentStep, value == -1 ? _currentStep : value);
 		}
+		public bool Indeterminate => CurrentProgress == -2;
 		private object _toolStatus;
 		public object ToolStatus
 		{

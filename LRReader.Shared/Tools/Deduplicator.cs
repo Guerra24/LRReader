@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using SixLabors.ImageSharp;
@@ -19,7 +20,7 @@ namespace LRReader.Shared.Tools
 
 	public enum DeduplicatorStatus
 	{
-		PreloadAndDecode, Comparing, Cleanup, Completed
+		GenerateThumbnails, PreloadAndDecode, Comparing, Cleanup, Completed
 	}
 
 	public class DeduplicatorParams : IToolParams
@@ -63,7 +64,17 @@ namespace LRReader.Shared.Tools
 			// Tweak values
 			// Find better names for params
 			var archives = Archives.Archives;
-			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 3, 0);
+			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
+
+			UpdateProgress(DeduplicatorStatus.GenerateThumbnails, archives.Count, -2, 4, 0);
+			while (true)
+			{
+				await Task.Delay(1000);
+				if (await Task.Run(async () => (await ServerProvider.GetMinionStatus(thumbnailJob.job)).state.Equals("finished")))
+					break;
+			}
+
+			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 4, 1);
 			await Task.Delay(2000);
 
 			int count = 0;
@@ -73,7 +84,10 @@ namespace LRReader.Shared.Tools
 				{
 					var image = Image.Load(await Images.GetThumbnailCached(pair.Key));
 					image.Mutate(i => i.Resize(width, 0));
-					UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, Interlocked.Increment(ref count));
+					int itemCount = Interlocked.Increment(ref count);
+					if (itemCount % 5000 == 0)
+						GC.Collect(); // TODO GC
+					UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
 					return new Tuple<string, Image<Rgba32>>(pair.Key, image);
 				}
 				catch (Exception e)
@@ -95,7 +109,7 @@ namespace LRReader.Shared.Tools
 			count = 0;
 			var comparatorDict = new ConcurrentDictionary<Tuple<string, string>, float>();
 
-			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 3, 1);
+			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 4, 2);
 			await Task.Delay(2000);
 			var start = DateTime.Now;
 			foreach (var sourcePair in decodedThumbnails)
@@ -138,11 +152,14 @@ namespace LRReader.Shared.Tools
 						Crashes.TrackError(e);
 					}
 				})));
-				GC.Collect(); // TODO GC
-							  // Inaccurate AF
+				int itemCount = Interlocked.Increment(ref count);
+				if (itemCount % 5000 == 0)
+					GC.Collect(); // TODO GC
+
+				// Inaccurate AF
 				var delta = DateTime.Now.Subtract(start);
-				long time = (decodedThumbnails.Count - count) * (delta.Ticks / Math.Max(count, 1));
-				UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, Interlocked.Increment(ref count), time: time);
+				long time = (decodedThumbnails.Count - itemCount) * (delta.Ticks / Math.Max(itemCount, 1));
+				UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, itemCount, time: time);
 			}
 			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, count, time: 0);
 			await Task.Delay(2000);
@@ -152,14 +169,14 @@ namespace LRReader.Shared.Tools
 			GC.Collect();
 
 			count = 0;
-			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, 0, 3, 2);
+			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, 0, 4, 3);
 			await Task.Delay(2000);
 			await Task.WhenAll(decodedThumbnails.Select(thumb => factory.StartNew(() =>
 			{
 				thumb.Value.Dispose();
 				UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, Interlocked.Increment(ref count));
 			})));
-			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, count, 3, 3);
+			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, count, 4, 4);
 			decodedThumbnails.Clear();
 			await Task.Delay(2000);
 
