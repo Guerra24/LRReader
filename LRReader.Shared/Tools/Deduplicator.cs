@@ -20,7 +20,7 @@ namespace LRReader.Shared.Tools
 
 	public enum DeduplicatorStatus
 	{
-		GenerateThumbnails, PreloadAndDecode, Comparing, Cleanup, Completed
+		GenerateThumbnails, PreloadAndDecode, Comparing, Completed
 	}
 
 	public class DeduplicatorParams : IToolParams
@@ -66,7 +66,7 @@ namespace LRReader.Shared.Tools
 			var archives = Archives.Archives;
 			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
 
-			UpdateProgress(DeduplicatorStatus.GenerateThumbnails, archives.Count, -2, 4, 0);
+			UpdateProgress(DeduplicatorStatus.GenerateThumbnails, archives.Count, -2, 3, 0);
 			while (true)
 			{
 				await Task.Delay(1000);
@@ -74,8 +74,8 @@ namespace LRReader.Shared.Tools
 					break;
 			}
 
-			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 4, 1);
-			await Task.Delay(2000);
+			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 3, 1);
+			await Task.Delay(1000);
 
 			int count = 0;
 			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(async () =>
@@ -104,91 +104,67 @@ namespace LRReader.Shared.Tools
 			GC.Collect(); // TODO GC
 			GC.WaitForPendingFinalizers();
 			GC.Collect();
-			await Task.Delay(2000);
+			await Task.Delay(1000);
 
 			count = 0;
-			var comparatorDict = new ConcurrentDictionary<Tuple<string, string>, float>();
 
-			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 4, 2);
-			await Task.Delay(2000);
+			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 3, 2);
+			await Task.Delay(1000);
 			var start = DateTime.Now;
-			foreach (var sourcePair in decodedThumbnails)
+
+			var hits = new ConcurrentBag<ArchiveHit>();
+			int maxItems = decodedThumbnails.Count;
+			while (decodedThumbnails.Count != 0)
 			{
-				var source = sourcePair.Value;
-				await Task.WhenAll(decodedThumbnails.Select(targetPair => factory.StartNew(() =>
+				var sourcePair = decodedThumbnails.First();
+				decodedThumbnails.Remove(sourcePair.Key);
+				using (var source = sourcePair.Value)
 				{
-					try
+					await Task.WhenAll(decodedThumbnails.Select(targetPair => factory.StartNew(() =>
 					{
-						var fullKey = new Tuple<string, string>(sourcePair.Key, targetPair.Key);
-						var fullKeyReversed = new Tuple<string, string>(targetPair.Key, sourcePair.Key);
-						if (sourcePair.Key.Equals(targetPair.Key) || comparatorDict.ContainsKey(fullKey) || comparatorDict.ContainsKey(fullKeyReversed))
-							return;
-						var target = targetPair.Value;
-
-						if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+						try
 						{
-							comparatorDict.TryAdd(fullKey, 1);
-							return;
-						}
+							var target = targetPair.Value;
+							if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+								return;
 
-						int differences = 0;
-						for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
-						{
-							Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
-							Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
-							for (int x = 0; x < source.Width; x++)
+							int differences = 0;
+							for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
 							{
-								float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
-								if (diff > pixelThreshold / 765f)
-									differences++;
+								Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
+								Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
+								for (int x = 0; x < source.Width; x++)
+								{
+									float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
+									if (diff > pixelThreshold / 765f)
+										differences++;
+								}
 							}
+							float diffPixels = differences;
+							diffPixels /= source.Width * source.Height;
+							if (diffPixels < percentDifference)
+								hits.Add(new ArchiveHit { Left = Archives.GetArchive(sourcePair.Key), Right = Archives.GetArchive(targetPair.Key) });
 						}
-						float diffPixels = differences;
-						diffPixels /= source.Width * source.Height;
-						comparatorDict.TryAdd(fullKey, diffPixels);
-					}
-					catch (Exception e)
-					{
-						Crashes.TrackError(e);
-					}
-				})));
+						catch (Exception e)
+						{
+							Crashes.TrackError(e);
+						}
+					})));
+				}
 				int itemCount = Interlocked.Increment(ref count);
 				if (itemCount % 5000 == 0)
 					GC.Collect(); // TODO GC
 
 				// Inaccurate AF
 				var delta = DateTime.Now.Subtract(start);
-				long time = (decodedThumbnails.Count - itemCount) * (delta.Ticks / Math.Max(itemCount, 1));
-				UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, itemCount, time: time);
+				long time = (maxItems - itemCount) * (delta.Ticks / Math.Max(itemCount, 1));
+				UpdateProgress(DeduplicatorStatus.Comparing, maxItems, itemCount, time: time);
 			}
-			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, count, time: 0);
-			await Task.Delay(2000);
+			UpdateProgress(DeduplicatorStatus.Comparing, maxItems, count, time: 0);
+			await Task.Delay(1000);
 
-			GC.Collect(); // TODO GC
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
-
-			count = 0;
-			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, 0, 4, 3);
-			await Task.Delay(2000);
-			await Task.WhenAll(decodedThumbnails.Select(thumb => factory.StartNew(() =>
-			{
-				thumb.Value.Dispose();
-				UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, Interlocked.Increment(ref count));
-			})));
-			UpdateProgress(DeduplicatorStatus.Cleanup, decodedThumbnails.Count, count, 4, 4);
-			decodedThumbnails.Clear();
-			await Task.Delay(2000);
-
-			var hits = new List<ArchiveHit>();
-			foreach (var comp in comparatorDict)
-			{
-				if (comp.Value < percentDifference)
-					hits.Add(new ArchiveHit { Left = Archives.GetArchive(comp.Key.Item1), Right = Archives.GetArchive(comp.Key.Item2), Percent = comp.Value });
-			}
-			comparatorDict.Clear();
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 0, 0);
-			return hits;
+			return hits.ToList();
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

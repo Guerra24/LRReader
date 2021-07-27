@@ -213,7 +213,6 @@ namespace LRReader.Shared.Models.Main
 	{
 		public Archive Left { get; set; }
 		public Archive Right { get; set; }
-		public float Percent { get; set; }
 
 		public AsyncRelayCommand<string> Delete { get; set; }
 
