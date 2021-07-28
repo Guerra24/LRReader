@@ -46,6 +46,12 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _aspectRatioLimit;
 			set => SetProperty(ref _aspectRatioLimit, (float)Math.Round(value, 2));
 		}
+		private int _delay = 25;
+		public int Delay
+		{
+			get => _delay;
+			set => SetProperty(ref _delay, value);
+		}
 
 		public ObservableCollection<ArchiveHit> Items = new ObservableCollection<ArchiveHit>();
 
@@ -61,19 +67,26 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		protected override async Task Execute()
 		{
+			ErrorTitle = null;
+			ErrorDescription = null;
 			Items.Clear();
 			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Grayscale, Resolution, AspectRatioLimit), Threads, Progress);
-			if (hits != null)
+			if (hits.Ok)
 			{
 				await Task.Run(async () =>
 				{
-					foreach (var hit in hits)
+					foreach (var hit in hits.Data)
 					{
 						hit.Delete = DeleteArchiveCommand;
 						await Dispatcher.RunAsync(() => Items.Add(hit));
 					}
 				});
 				ToolStatus = null;
+			}
+			else
+			{
+				ErrorTitle = hits.Title;
+				ErrorDescription = hits.Description;
 			}
 		}
 

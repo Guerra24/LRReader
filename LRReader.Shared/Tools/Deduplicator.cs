@@ -30,14 +30,16 @@ namespace LRReader.Shared.Tools
 		public bool Grayscale { get; }
 		public int Width { get; }
 		public float AspectRatioLimit { get; }
+		public int Delay { get; }
 
-		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = false, int width = 8, float aspectRatioLimit = 0.1f)
+		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = false, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0)
 		{
 			PixelThreshold = pixelThreshold;
 			PercentDifference = percentDifference;
 			Grayscale = grayscale;
 			Width = width;
 			AspectRatioLimit = aspectRatioLimit;
+			Delay = delay;
 		}
 	}
 
@@ -52,15 +54,17 @@ namespace LRReader.Shared.Tools
 			Archives = archives;
 		}
 
-		protected override async Task<List<ArchiveHit>> Process(DeduplicatorParams @params, int threads)
+		protected override async Task<ToolResult<List<ArchiveHit>>> Process(DeduplicatorParams @params, int threads)
 		{
 			var factory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(threads));
+			earlyExit = false;
 
 			int pixelThreshold = @params.PixelThreshold;
 			float percentDifference = @params.PercentDifference;
 			bool grayscale = @params.Grayscale;
 			int width = @params.Width;
 			float aspectRatioLimit = @params.AspectRatioLimit;
+			int delay = @params.Delay;
 			// Tweak values
 			// Find better names for params
 			var archives = Archives.Archives;
@@ -70,7 +74,7 @@ namespace LRReader.Shared.Tools
 			while (true)
 			{
 				await Task.Delay(1000);
-				if (await Task.Run(async () => (await ServerProvider.GetMinionStatus(thumbnailJob.job)).state.Equals("finished")))
+				if ((await ServerProvider.GetMinionStatus(thumbnailJob.job)).state.Equals("finished"))
 					break;
 			}
 
@@ -80,25 +84,30 @@ namespace LRReader.Shared.Tools
 			int count = 0;
 			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(async () =>
 			{
-				try
+				if (earlyExit)
+					return null;
+				await Task.Delay(delay);
+				var bytes = await Images.GetThumbnailCached(pair.Key, ignoreCache: true);
+				if (bytes == null)
 				{
-					var image = Image.Load(await Images.GetThumbnailCached(pair.Key, ignoreCache: true));
-					image.Mutate(i => i.Resize(width, 0));
-					int itemCount = Interlocked.Increment(ref count);
-					if (itemCount % 5000 == 0)
-						GC.Collect(); // TODO GC
-					UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
-					return new Tuple<string, Image<Rgba32>>(pair.Key, image);
-				}
-				catch (Exception e)
-				{
-					Crashes.TrackError(e);
+					earlyExit = true;
 					return null;
 				}
+				var image = Image.Load(bytes);
+				image.Mutate(i => i.Resize(width, 0));
+				int itemCount = Interlocked.Increment(ref count);
+				if (itemCount % 5000 == 0)
+					GC.Collect(); // TODO GC
+				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
+				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
 			}).Unwrap()))).AsEnumerable().ToList();
 			tmp.RemoveAll(pair => pair == null);
 
+			if (earlyExit)
+				return EarlyExit("An invalid thumbnail was detected", "Try increasing request delay, reducing worker threads or check that all thumbnails are valid");
+
 			var decodedThumbnails = tmp.ToDictionary(pair => pair.Item1, pair => pair.Item2);
+			tmp.Clear();
 
 			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, count);
 			GC.Collect(); // TODO GC
@@ -160,7 +169,7 @@ namespace LRReader.Shared.Tools
 			await Task.Delay(1000);
 
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 0, 0);
-			return hits.ToList();
+			return new ToolResult<List<ArchiveHit>> { Data = hits.ToList(), Ok = true };
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

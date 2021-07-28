@@ -67,6 +67,18 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _threads;
 			set => SetProperty(ref _threads, value);
 		}
+		private string _errorTitle;
+		public string ErrorTitle
+		{
+			get => _errorTitle;
+			set => SetProperty(ref _errorTitle, value);
+		}
+		private string _errorDescription;
+		public string ErrorDescription
+		{
+			get => _errorDescription;
+			set => SetProperty(ref _errorDescription, value);
+		}
 
 		protected Progress<ToolProgress<T>> Progress;
 

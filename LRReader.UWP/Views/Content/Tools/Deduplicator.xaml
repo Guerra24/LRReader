@@ -15,13 +15,14 @@
 	mc:Ignorable="d">
 	<UserControl.Resources>
 		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</UserControl.Resources>
 
 	<GridView Padding="24,10" ItemsSource="{x:Bind Data.Items}">
 		<GridView.Header>
 			<StackPanel MaxWidth="1000">
-				<controls:ModernGroup>
+				<controls:ModernGroup Margin="0">
 					<controls:ModernExpander Title="Deduplicator">
 						<controls:ModernInput Title="Pixel Threshold" Description="Pixel's difference need to be at least this to count as different">
 							<muxc:NumberBox
@@ -80,6 +81,12 @@
 					<controls:ModernInput Title="Worker Threads">
 						<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
 					</controls:ModernInput>
+					<controls:ModernInput Title="Request delay per thread" Description="Time in milliseconds">
+						<muxc:NumberBox
+							IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+							Maximum="1000" Minimum="0" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.Delay, Mode=TwoWay}" />
+					</controls:ModernInput>
 					<StackPanel>
 						<TextBlock Margin="0,0,0,10">
 							<Run Text="Step" />
@@ -93,7 +100,7 @@
 						<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 							<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
 							<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
-								<Run/>
+								<Run />
 								<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
 								<Run Text="of" />
 								<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
@@ -113,6 +120,12 @@
 						<Button Command="{x:Bind Data.ExecuteCommand}" Content="Execute" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 					</StackPanel>
 				</controls:ModernGroup>
+				<muxc:InfoBar
+						Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"
+						IsClosable="False"
+						IsOpen="{x:Bind Data.ErrorTitle, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
+						Message="{x:Bind Data.ErrorDescription, Mode=OneWay}"
+						Severity="Error" />
 			</StackPanel>
 		</GridView.Header>
 		<GridView.Resources>

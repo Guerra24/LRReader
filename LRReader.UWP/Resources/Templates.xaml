@@ -153,6 +153,9 @@
 							<DataTemplate x:Key="GenericTemplate" x:DataType="UIElement">
 								<ContentPresenter Padding="8" Content="{x:Bind}" Visibility="{x:Bind Visibility, Mode=OneWay}" />
 							</DataTemplate>
+							<DataTemplate x:Key="InfoBarTemplate" x:DataType="muxc:InfoBar">
+								<ContentPresenter Padding="8" Content="{x:Bind}" Visibility="{x:Bind IsOpen, Mode=OneWay}" />
+							</DataTemplate>
 							<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 							<controls:ModernGroupItemTemplateSelector x:Key="TemplateSelector" GenericTemplate="{StaticResource GenericTemplate}" ModernTemplate="{StaticResource ModernTemplate}" />
 						</StackPanel.Resources>
