@@ -1,6 +1,8 @@
 ﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
+using Microsoft.AppCenter.Crashes;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -56,12 +58,38 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			switch (r.StatusCode)
+			try
 			{
-				case HttpStatusCode.OK:
-					return r.RawBytes;
-				default:
-					return null;
+				if (r.RawBytes == null || r.StatusCode != HttpStatusCode.OK)
+					throw new Exception();
+				switch (r.StatusCode)
+				{
+					case HttpStatusCode.OK:
+						return r.RawBytes;
+					default:
+						return null;
+				}
+			}
+			catch (Exception e)
+			{
+				var properties = new Dictionary<string, string>
+				{
+					{ "StatusCode", r.StatusCode.ToString() }
+				};
+				if (r.Content != null)
+				{
+					var comp = ApiExtentions.CompressData(r.Content);
+					var attachments = new ErrorAttachmentLog[]
+					{
+						ErrorAttachmentLog.AttachmentWithBinary(comp, "content.html.bz2", "application/x-bzip2")
+					};
+					Crashes.TrackError(e, properties, attachments);
+				}
+				else
+				{
+					Crashes.TrackError(e, properties);
+				}
+				return null;
 			}
 		}
 

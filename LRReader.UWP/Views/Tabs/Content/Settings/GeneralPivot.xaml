@@ -7,6 +7,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Uid="/Settings/GeneralPivot"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Loaded="PivotItem_Loaded"
@@ -95,7 +96,7 @@
 							<Run x:Uid="/Settings/General/Size" />
 							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
 						</TextBlock>
-						<ProgressRing
+						<muxc:ProgressRing
 							Width="30" Height="30" Margin="0,0,10,0"
 							VerticalAlignment="Center" IsActive="True"
 							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
