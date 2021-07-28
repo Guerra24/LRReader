@@ -106,10 +106,12 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		public async Task<byte[]> GetThumbnailCached(string id, bool forced = false)
+		public async Task<byte[]> GetThumbnailCached(string id, bool forced = false, bool ignoreCache = false)
 		{
 			if (string.IsNullOrEmpty(id))
 				return null;
+			if (ignoreCache)
+				return await ArchivesProvider.GetThumbnail(id);
 			var key = await KeyedSemaphore.LockAsync(id);
 			byte[] data;
 			if (thumbnailsCache.TryGet(id, out data) && !forced)

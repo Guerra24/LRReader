@@ -82,7 +82,7 @@ namespace LRReader.Shared.Tools
 			{
 				try
 				{
-					var image = Image.Load(await Images.GetThumbnailCached(pair.Key));
+					var image = Image.Load(await Images.GetThumbnailCached(pair.Key, ignoreCache: true));
 					image.Mutate(i => i.Resize(width, 0));
 					int itemCount = Interlocked.Increment(ref count);
 					if (itemCount % 5000 == 0)
@@ -114,52 +114,55 @@ namespace LRReader.Shared.Tools
 
 			var hits = new ConcurrentBag<ArchiveHit>();
 			int maxItems = decodedThumbnails.Count;
-			while (decodedThumbnails.Count != 0)
+			await Task.Run(async () =>
 			{
-				var sourcePair = decodedThumbnails.First();
-				decodedThumbnails.Remove(sourcePair.Key);
-				using (var source = sourcePair.Value)
+				while (decodedThumbnails.Count != 0)
 				{
-					await Task.WhenAll(decodedThumbnails.Select(targetPair => factory.StartNew(() =>
+					var sourcePair = decodedThumbnails.First();
+					decodedThumbnails.Remove(sourcePair.Key);
+					using (var source = sourcePair.Value)
 					{
-						try
+						await Task.WhenAll(decodedThumbnails.Select(targetPair => factory.StartNew(() =>
 						{
-							var target = targetPair.Value;
-							if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
-								return;
-
-							int differences = 0;
-							for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
+							try
 							{
-								Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
-								Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
-								for (int x = 0; x < source.Width; x++)
-								{
-									float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
-									if (diff > pixelThreshold / 765f)
-										differences++;
-								}
-							}
-							float diffPixels = differences;
-							diffPixels /= source.Width * source.Height;
-							if (diffPixels < percentDifference)
-								hits.Add(new ArchiveHit { Left = Archives.GetArchive(sourcePair.Key), Right = Archives.GetArchive(targetPair.Key) });
-						}
-						catch (Exception e)
-						{
-							Crashes.TrackError(e);
-						}
-					})));
-				}
-				int itemCount = Interlocked.Increment(ref count);
-				if (itemCount % 5000 == 0)
-					GC.Collect(); // TODO GC
+								var target = targetPair.Value;
+								if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+									return;
 
-				// Inaccurate AF
-				var delta = DateTime.Now.Subtract(start);
-				long time = (maxItems - itemCount) * (delta.Ticks / Math.Max(itemCount, 1));
-				UpdateProgress(DeduplicatorStatus.Comparing, maxItems, itemCount, time: time);
-			}
+								int differences = 0;
+								for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
+								{
+									Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
+									Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
+									for (int x = 0; x < source.Width; x++)
+									{
+										float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
+										if (diff > pixelThreshold / 765f)
+											differences++;
+									}
+								}
+								float diffPixels = differences;
+								diffPixels /= source.Width * source.Height;
+								if (diffPixels < percentDifference)
+									hits.Add(new ArchiveHit { Left = Archives.GetArchive(sourcePair.Key), Right = Archives.GetArchive(targetPair.Key) });
+							}
+							catch (Exception e)
+							{
+								Crashes.TrackError(e);
+							}
+						})));
+					}
+					int itemCount = Interlocked.Increment(ref count);
+					if (itemCount % 5000 == 0)
+						GC.Collect(); // TODO GC
+
+					// Inaccurate AF
+					var delta = DateTime.Now.Subtract(start);
+					long time = (maxItems - itemCount) * (delta.Ticks / Math.Max(itemCount, 1));
+					UpdateProgress(DeduplicatorStatus.Comparing, maxItems, itemCount, time: time);
+				}
+			});
 			UpdateProgress(DeduplicatorStatus.Comparing, maxItems, count, time: 0);
 			await Task.Delay(1000);
 

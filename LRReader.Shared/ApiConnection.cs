@@ -1,11 +1,9 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
-using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
 using System;
 using System.IO;
 using System.Net;
