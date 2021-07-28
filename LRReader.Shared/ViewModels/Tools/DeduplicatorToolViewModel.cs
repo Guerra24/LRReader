@@ -67,10 +67,11 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		protected override async Task Execute()
 		{
+			// TODO Clean this
 			ErrorTitle = null;
 			ErrorDescription = null;
 			Items.Clear();
-			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Grayscale, Resolution, AspectRatioLimit), Threads, Progress);
+			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Grayscale, Resolution, AspectRatioLimit, Delay), Threads, Progress);
 			if (hits.Ok)
 			{
 				await Task.Run(async () =>

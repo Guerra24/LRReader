@@ -82,12 +82,13 @@ namespace LRReader.Shared.Tools
 			await Task.Delay(1000);
 
 			int count = 0;
-			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(async () =>
+			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(() =>
 			{
 				if (earlyExit)
 					return null;
-				await Task.Delay(delay);
-				var bytes = await Images.GetThumbnailCached(pair.Key, ignoreCache: true);
+				// TODO Oh my god
+				Thread.Sleep(delay); // Good ol' Thread.Sleep
+				var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key, ignoreCache: true)).GetAwaiter().GetResult();
 				if (bytes == null)
 				{
 					earlyExit = true;
@@ -100,7 +101,7 @@ namespace LRReader.Shared.Tools
 					GC.Collect(); // TODO GC
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
 				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
-			}).Unwrap()))).AsEnumerable().ToList();
+			})))).AsEnumerable().ToList();
 			tmp.RemoveAll(pair => pair == null);
 
 			if (earlyExit)

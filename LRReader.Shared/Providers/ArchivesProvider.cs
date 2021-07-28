@@ -58,8 +58,6 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			if (r.RawBytes == null || r.StatusCode != HttpStatusCode.OK)
-				throw new Exception();
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.OK:
