@@ -8,9 +8,9 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	x:Uid="/Tabs/Tools/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	Header="Tools"
 	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>

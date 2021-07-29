@@ -141,6 +141,15 @@
   <data name="Archive.Unbookmark.Text" xml:space="preserve">
     <value>Unbookmark</value>
   </data>
+  <data name="ArchiveHit.Sure.Text" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="ArchiveHit.SureNo.Content" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ArchiveHit.SureYes.Content" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="ArchiveImage.Reload.Text" xml:space="preserve">
     <value>Reload</value>
   </data>

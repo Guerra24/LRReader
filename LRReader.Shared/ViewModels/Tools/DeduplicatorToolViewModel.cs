@@ -4,7 +4,6 @@ using LRReader.Shared.Tools;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,12 +33,6 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _resolution;
 			set => SetProperty(ref _resolution, value);
 		}
-		private bool _grayscale;
-		public bool Grayscale
-		{
-			get => _grayscale;
-			set => SetProperty(ref _grayscale, value);
-		}
 		private float _aspectRatioLimit = 0.1f;
 		public float AspectRatioLimit
 		{
@@ -57,8 +50,9 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		private AsyncRelayCommand<string> DeleteArchiveCommand;
 
-		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives)
+		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives, IPlatformService platform) : base(platform)
 		{
+			ToolStatus = DeduplicatorStatus.Ready;
 			Deduplicator = deduplicator;
 			Dispatcher = dispatcher;
 			Archives = archives;
@@ -71,7 +65,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			ErrorTitle = null;
 			ErrorDescription = null;
 			Items.Clear();
-			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Grayscale, Resolution, AspectRatioLimit, Delay), Threads, Progress);
+			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Resolution, AspectRatioLimit, Delay), Threads, Progress);
 			if (hits.Ok)
 			{
 				await Task.Run(async () =>
@@ -82,7 +76,7 @@ namespace LRReader.Shared.ViewModels.Tools
 						await Dispatcher.RunAsync(() => Items.Add(hit));
 					}
 				});
-				ToolStatus = null;
+				ToolStatus = DeduplicatorStatus.Ready;
 			}
 			else
 			{

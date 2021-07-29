@@ -16,6 +16,7 @@
 	<UserControl.Resources>
 		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
+		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</UserControl.Resources>
 
@@ -23,8 +24,8 @@
 		<GridView.Header>
 			<StackPanel MaxWidth="1000">
 				<controls:ModernGroup Margin="0">
-					<controls:ModernExpander Title="Deduplicator">
-						<controls:ModernInput Title="Pixel Threshold" Description="Pixel's difference need to be at least this to count as different">
+					<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold">
 							<muxc:NumberBox
 								MinWidth="100"
 								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
@@ -32,7 +33,7 @@
 								SmallChange="1" SpinButtonPlacementMode="Inline"
 								Value="{x:Bind Data.PixelThreshold, Mode=TwoWay}" />
 						</controls:ModernInput>
-						<controls:ModernInput Title="Image Difference Limit" Description="Image's difference need to be less than this to be considered equal" InputHorizontalAlignment="Stretch">
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/ImageDiffLimit" InputHorizontalAlignment="Stretch">
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="*" />
@@ -50,7 +51,7 @@
 								</TextBlock>
 							</Grid>
 						</controls:ModernInput>
-						<controls:ModernInput Title="Resolution (Width)">
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/Resolution">
 							<muxc:NumberBox
 								MinWidth="100"
 								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
@@ -58,7 +59,7 @@
 								SpinButtonPlacementMode="Inline"
 								Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
 						</controls:ModernInput>
-						<controls:ModernInput Title="Aspect Ratio Limit" InputHorizontalAlignment="Stretch">
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/AspectRatio" InputHorizontalAlignment="Stretch">
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="*" />
@@ -76,33 +77,42 @@
 									Text="{x:Bind Data.AspectRatioLimit, Mode=OneWay}" />
 							</Grid>
 						</controls:ModernInput>
-						<CheckBox Content="Grayscale" IsChecked="{x:Bind Data.Grayscale, Mode=OneWay}" IsEnabled="False" />
 					</controls:ModernExpander>
-					<controls:ModernInput Title="Worker Threads">
+					<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads">
 						<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
 					</controls:ModernInput>
-					<controls:ModernInput Title="Request delay per thread" Description="Time in milliseconds">
+					<controls:ModernInput x:Uid="/Tools/Deduplicator/RequestDelay">
 						<muxc:NumberBox
 							IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 							Maximum="1000" Minimum="0" SpinButtonPlacementMode="Inline"
 							Value="{x:Bind Data.Delay, Mode=TwoWay}" />
 					</controls:ModernInput>
-					<StackPanel>
+					<StackPanel Margin="8">
+						<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>
 						<TextBlock Margin="0,0,0,10">
-							<Run Text="Step" />
-							<Run Text="{x:Bind Data.CurrentStep, Mode=OneWay}" />
-							<Run Text="of" />
+							<Run x:Uid="/Tools/Deduplicator/Step" />
+							<Run Text="{x:Bind Data.CurrentStepPlusOne, Mode=OneWay}" />
+							<Run x:Uid="/Tools/Deduplicator/Of" />
 							<Run Text="{x:Bind Data.MaxSteps, Mode=OneWay}" />
 						</TextBlock>
 						<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxSteps, Mode=OneWay}" Value="{x:Bind Data.CurrentStep, Mode=OneWay}" />
 					</StackPanel>
-					<StackPanel>
+					<StackPanel Margin="8">
+						<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>
 						<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
 							<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
 							<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 								<Run />
 								<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
-								<Run Text="of" />
+								<Run x:Uid="/Tools/Deduplicator/Of" />
 								<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
 							</TextBlock>
 						</StackPanel>
@@ -112,20 +122,33 @@
 							Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}"
 							Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
 					</StackPanel>
-					<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
-							<Run Text="Estimated time:" />
-							<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
-						</TextBlock>
-						<Button Command="{x:Bind Data.ExecuteCommand}" Content="Execute" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+					<StackPanel Margin="8">
+						<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>
+						<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+							<TextBlock Margin="0,0,10,0" VerticalAlignment="Center" Visibility="{x:Bind Data.EstimatedTime, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}">
+								<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
+								<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
+							</TextBlock>
+							<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+						</StackPanel>
 					</StackPanel>
 				</controls:ModernGroup>
 				<muxc:InfoBar
-						Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"
-						IsClosable="False"
-						IsOpen="{x:Bind Data.ErrorTitle, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
-						Message="{x:Bind Data.ErrorDescription, Mode=OneWay}"
-						Severity="Error" />
+					Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"
+					IsClosable="False"
+					IsOpen="{x:Bind Data.ErrorTitle, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
+					Message="{x:Bind Data.ErrorDescription, Mode=OneWay}"
+					Severity="Error">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+				</muxc:InfoBar>
 			</StackPanel>
 		</GridView.Header>
 		<GridView.Resources>

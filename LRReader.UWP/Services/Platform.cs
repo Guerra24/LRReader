@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
@@ -69,6 +70,12 @@ namespace LRReader.UWP.Services
 			if (!SymbolToSymbol.TryGetValue(symbol, out symb))
 				return null;
 			return symb;
+		}
+
+		public string GetLocalizedString(string key)
+		{
+			var split = key.Split(new[] { '/' }, 2);
+			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
 		public string GetPackageFamilyName()

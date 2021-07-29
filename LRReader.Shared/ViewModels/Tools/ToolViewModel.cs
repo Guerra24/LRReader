@@ -1,16 +1,11 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
@@ -18,6 +13,8 @@ namespace LRReader.Shared.ViewModels.Tools
 
 	public abstract class ToolViewModel<T> : ObservableObject
 	{
+		protected readonly IPlatformService Platform;
+
 		public AsyncRelayCommand ExecuteCommand { get; }
 
 		private int _maxProgress;
@@ -46,13 +43,22 @@ namespace LRReader.Shared.ViewModels.Tools
 		public int CurrentStep
 		{
 			get => _currentStep;
-			set => SetProperty(ref _currentStep, value == -1 ? _currentStep : value);
+			set
+			{
+				SetProperty(ref _currentStep, value == -1 ? _currentStep : value);
+				OnPropertyChanged("CurrentStepPlusOne");
+			}
 		}
+		public int CurrentStepPlusOne => Math.Min(CurrentStep + 1, MaxSteps);
 		public bool Indeterminate => CurrentProgress == -2;
 		private object _toolStatus;
 		public object ToolStatus
 		{
-			get => _toolStatus;
+			get
+			{
+				return Platform.GetLocalizedString(_toolStatus.GetType().GetMember(_toolStatus.ToString())[0].GetCustomAttribute<DescriptionAttribute>(false).Description);
+			}
+
 			set => SetProperty(ref _toolStatus, value);
 		}
 		private string _estimatedTime;
@@ -82,8 +88,9 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		protected Progress<ToolProgress<T>> Progress;
 
-		public ToolViewModel()
+		public ToolViewModel(IPlatformService platform)
 		{
+			Platform = platform;
 			ExecuteCommand = new AsyncRelayCommand(Execute);
 			Progress = new Progress<ToolProgress<T>>(p =>
 			{
@@ -92,7 +99,10 @@ namespace LRReader.Shared.ViewModels.Tools
 				CurrentProgress = p.CurrentProgress;
 				MaxSteps = p.MaxSteps;
 				CurrentStep = p.CurrentStep;
-				EstimatedTime = TimeSpan.FromTicks(p.Time).ToString(@"hh\:mm\:ss");
+				if (p.Time > 0)
+					EstimatedTime = TimeSpan.FromTicks(p.Time).ToString(@"hh\:mm\:ss");
+				else
+					EstimatedTime = "";
 			});
 		}
 

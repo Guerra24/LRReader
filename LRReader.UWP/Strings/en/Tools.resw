@@ -117,88 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FirstRunPage.Add.Content" xml:space="preserve">
-    <value>Add</value>
+  <data name="Deduplicator.AspectRatio.Description" xml:space="preserve">
+    <value>Maximum aspect ratio difference</value>
   </data>
-  <data name="FirstRunPage.Continue.Content" xml:space="preserve">
-    <value>Continue</value>
+  <data name="Deduplicator.AspectRatio.Title" xml:space="preserve">
+    <value>Aspect ratio limit</value>
   </data>
-  <data name="FirstRunPage.Edit.Content" xml:space="preserve">
-    <value>Edit</value>
+  <data name="Deduplicator.Comparing" xml:space="preserve">
+    <value>Comparing thumbnails</value>
   </data>
-  <data name="FirstRunPage.ProfileSelect.PlaceholderText" xml:space="preserve">
-    <value>Select Profile</value>
+  <data name="Deduplicator.Completed" xml:space="preserve">
+    <value>Completed</value>
   </data>
-  <data name="FirstRunPage.Remove.Content" xml:space="preserve">
-    <value>Remove</value>
+  <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
+    <value>Estimated time:</value>
   </data>
-  <data name="FirstRunPage.RemoveConfirm.Text" xml:space="preserve">
-    <value>Selected profile will be removed. Do you want to continue?</value>
+  <data name="Deduplicator.Execute.Content" xml:space="preserve">
+    <value>Execute</value>
   </data>
-  <data name="FirstRunPage.RemoveYes.Content" xml:space="preserve">
-    <value>Yes, remove select profile</value>
+  <data name="Deduplicator.Expander.Title" xml:space="preserve">
+    <value>Deduplicator</value>
   </data>
-  <data name="FirstRunPage.Setup.Text" xml:space="preserve">
-    <value />
+  <data name="Deduplicator.GenerateThumbnails" xml:space="preserve">
+    <value>Generating thumbnails</value>
   </data>
-  <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
-    <value>Welcome</value>
+  <data name="Deduplicator.ImageDiffLimit.Description" xml:space="preserve">
+    <value>Minimum total difference</value>
   </data>
-  <data name="HostTab.ChangelogTitle" xml:space="preserve">
-    <value>Release Notes</value>
+  <data name="Deduplicator.ImageDiffLimit.Title" xml:space="preserve">
+    <value>Image difference</value>
   </data>
-  <data name="HostTab.Update1" xml:space="preserve">
-    <value>New update available!</value>
+  <data name="Deduplicator.InvalidThumb.Message" xml:space="preserve">
+    <value>Try increasing request delay, reducing worker threads or check that all thumbnails are valid</value>
   </data>
-  <data name="HostTab.Update2" xml:space="preserve">
-    <value>Check Settings -&gt; About for more info</value>
+  <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
+    <value>An invalid thumbnail was detected</value>
   </data>
-  <data name="HostTabPage.Bookmarks.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Bookmarks</value>
+  <data name="Deduplicator.Of.Text" xml:space="preserve">
+    <value>of</value>
   </data>
-  <data name="HostTabPage.Categories.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Categories</value>
+  <data name="Deduplicator.PixelThreshold.Description" xml:space="preserve">
+    <value>Minimum per-pixel difference</value>
   </data>
-  <data name="HostTabPage.EnterFullScreen.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Full Screen Mode</value>
+  <data name="Deduplicator.PixelThreshold.Title" xml:space="preserve">
+    <value>Pixel threshold</value>
   </data>
-  <data name="HostTabPage.Search.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Search</value>
+  <data name="Deduplicator.PreloadAndDecode" xml:space="preserve">
+    <value>Loading and decoding</value>
   </data>
-  <data name="HostTabPage.Settings.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Settings</value>
+  <data name="Deduplicator.Ready" xml:space="preserve">
+    <value>Ready</value>
   </data>
-  <data name="HostTabPage.Tools.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Tools</value>
+  <data name="Deduplicator.RequestDelay.Description" xml:space="preserve">
+    <value>Time in milliseconds</value>
   </data>
-  <data name="LoadingPage.ClientNotSupported" xml:space="preserve">
-    <value>Version {0} not supported. Please update the app to a newer version</value>
+  <data name="Deduplicator.RequestDelay.Title" xml:space="preserve">
+    <value>Request delay per thread</value>
   </data>
-  <data name="LoadingPage.ClientRange" xml:space="preserve">
-    <value>LANraragi supported range {0} - {1}</value>
+  <data name="Deduplicator.Resolution.Title" xml:space="preserve">
+    <value>Resolution</value>
   </data>
-  <data name="LoadingPage.InstanceNotSupported" xml:space="preserve">
-    <value>Version {0} not supported. Please update your LANraragi instance to {1}</value>
+  <data name="Deduplicator.Step.Text" xml:space="preserve">
+    <value>Step</value>
   </data>
-  <data name="LoadingPage.InvalidKey" xml:space="preserve">
-    <value>Invalid or missing API key</value>
-  </data>
-  <data name="LoadingPage.MissingKey" xml:space="preserve">
-    <value>Running in No-Fun mode, API key required</value>
-  </data>
-  <data name="LoadingPage.NoConnection" xml:space="preserve">
-    <value>Unable to connect... Please select another profile</value>
-  </data>
-  <data name="LoadingPage.NoConnectionLocalHost" xml:space="preserve">
-    <value>Unable to connect... Make sure the app has localhost access</value>
-  </data>
-  <data name="LoadingPage.NoConnectionLocalHostSub" xml:space="preserve">
-    <value>Check Profile-&gt;Edit for more information</value>
-  </data>
-  <data name="LoadingPage.UpdateError" xml:space="preserve">
-    <value>An error ocurred while checking for updates</value>
-  </data>
-  <data name="LoadingPage.UpdateErrorCode" xml:space="preserve">
-    <value>Error code 0x{0:X}</value>
+  <data name="Deduplicator.Threads.Title" xml:space="preserve">
+    <value>Worker Threads</value>
   </data>
 </root>

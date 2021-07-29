@@ -49,15 +49,13 @@
 					</Grid.ColumnDefinitions>
 					<Grid.Resources>
 						<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-							<Setter Property="Background" Value="Transparent" />
-							<Setter Property="BorderBrush" Value="Transparent" />
 							<Setter Property="Width" Value="34" />
 							<Setter Property="Height" Value="32" />
 							<Setter Property="Padding" Value="0" />
 							<Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
 						</Style>
 					</Grid.Resources>
-					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" Spacing="2">
 						<Button x:Uid="/Pages/HostTabPage/Bookmarks" Click="Bookmarks_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
@@ -73,7 +71,7 @@
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 							</Viewbox>
 						</Button>
-						<Button Click="Tools_Click">
+						<Button x:Uid="/Pages/HostTabPage/Tools" Click="Tools_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 							</Viewbox>
@@ -86,7 +84,7 @@
 						Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
 					<StackPanel
 						x:Name="TabViewEndHeader" Grid.Column="3" VerticalAlignment="Bottom"
-						Orientation="Horizontal">
+						Orientation="Horizontal" Spacing="2">
 						<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" IsTabStop="False">
 							<ContentControl.ContentTransitions>
 								<TransitionCollection>

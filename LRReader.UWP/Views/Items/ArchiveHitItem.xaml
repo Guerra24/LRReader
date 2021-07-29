@@ -42,7 +42,9 @@
 		<Grid x:Name="LeftGrid">
 			<Grid.ContextFlyout>
 				<MenuFlyout>
-					<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add" Tag="{x:Bind LeftViewModel.Archive, Mode=OneWay}" />
+					<MenuFlyoutItem
+						x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add"
+						Tag="{x:Bind LeftViewModel.Archive, Mode=OneWay}" />
 				</MenuFlyout>
 			</Grid.ContextFlyout>
 			<Grid.RowDefinitions>
@@ -109,7 +111,7 @@
 					<media:PipelineBrush Source="{media:BackdropSource}">
 						<media:BlurEffect Amount="16" />
 						<media:GrayscaleEffect />
-						<media:ShadeEffect Intensity="0.5" Color="Black" />
+						<media:ShadeEffect Intensity="0.75" Color="Black" />
 					</media:PipelineBrush>
 				</Grid.Background>
 				<Grid x:Name="LeftDelete">
@@ -130,19 +132,17 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<TextBlock
-						Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Center"
-						VerticalAlignment="Bottom" FontSize="16"
-						Foreground="{ThemeResource TextFillColorPrimary}"
-						Text="Are you sure?" />
+						x:Uid="/Items/ArchiveHit/Sure" Grid.ColumnSpan="2" Margin="10"
+						HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"
+						Foreground="White" />
 					<Button
-						Grid.Row="1" Margin="10" HorizontalAlignment="Right"
-						VerticalAlignment="Top"
+						x:Uid="/Items/ArchiveHit/SureYes" Grid.Row="1" Margin="10"
+						HorizontalAlignment="Right" VerticalAlignment="Top"
 						Command="{x:Bind Data.ArchiveHit.Delete, Mode=OneWay}"
-						CommandParameter="{x:Bind Data.ArchiveHit.Left.arcid, Mode=OneWay}"
-						Content="Yes" />
+						CommandParameter="{x:Bind Data.ArchiveHit.Left.arcid, Mode=OneWay}" />
 					<Button
-						Grid.Row="1" Grid.Column="1" Margin="10"
-						VerticalAlignment="Top" Click="LeftCancel_Click" Content="No" />
+						x:Uid="/Items/ArchiveHit/SureNo" Grid.Row="1" Grid.Column="1"
+						Margin="10" VerticalAlignment="Top" Click="LeftCancel_Click" />
 				</Grid>
 			</Grid>
 		</Grid>
@@ -150,7 +150,9 @@
 		<Grid x:Name="RightGrid" Grid.Column="2">
 			<Grid.ContextFlyout>
 				<MenuFlyout>
-					<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add" Tag="{x:Bind RightViewModel.Archive, Mode=OneWay}" />
+					<MenuFlyoutItem
+						x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add"
+						Tag="{x:Bind RightViewModel.Archive, Mode=OneWay}" />
 				</MenuFlyout>
 			</Grid.ContextFlyout>
 			<Grid.RowDefinitions>
@@ -217,7 +219,7 @@
 					<media:PipelineBrush Source="{media:BackdropSource}">
 						<media:BlurEffect Amount="16" />
 						<media:GrayscaleEffect />
-						<media:ShadeEffect Intensity="0.5" Color="Black" />
+						<media:ShadeEffect Intensity="0.75" Color="Black" />
 					</media:PipelineBrush>
 				</Grid.Background>
 				<Grid x:Name="RightDelete">
@@ -238,19 +240,17 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<TextBlock
-						Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Center"
-						VerticalAlignment="Bottom" FontSize="16"
-						Foreground="{ThemeResource TextFillColorPrimary}"
-						Text="Are you sure?" />
+						x:Uid="/Items/ArchiveHit/Sure" Grid.ColumnSpan="2" Margin="10"
+						HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"
+						Foreground="White" />
 					<Button
-						Grid.Row="1" Margin="10" HorizontalAlignment="Right"
-						VerticalAlignment="Top"
+						x:Uid="/Items/ArchiveHit/SureYes" Grid.Row="1" Margin="10"
+						HorizontalAlignment="Right" VerticalAlignment="Top"
 						Command="{x:Bind Data.ArchiveHit.Delete, Mode=OneWay}"
-						CommandParameter="{x:Bind Data.ArchiveHit.Right.arcid, Mode=OneWay}"
-						Content="Yes" />
+						CommandParameter="{x:Bind Data.ArchiveHit.Right.arcid, Mode=OneWay}" />
 					<Button
-						Grid.Row="1" Grid.Column="1" Margin="10"
-						VerticalAlignment="Top" Click="RightCancel_Click" Content="No" />
+						x:Uid="/Items/ArchiveHit/SureNo" Grid.Row="1" Grid.Column="1"
+						Margin="10" VerticalAlignment="Top" Click="RightCancel_Click" />
 				</Grid>
 			</Grid>
 		</Grid>

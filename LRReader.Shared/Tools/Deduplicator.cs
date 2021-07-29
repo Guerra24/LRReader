@@ -2,13 +2,13 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.AppCenter.Crashes;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
@@ -20,23 +20,30 @@ namespace LRReader.Shared.Tools
 
 	public enum DeduplicatorStatus
 	{
-		GenerateThumbnails, PreloadAndDecode, Comparing, Completed
+		[Description("Tools/Deduplicator/GenerateThumbnails")]
+		GenerateThumbnails,
+		[Description("Tools/Deduplicator/PreloadAndDecode")]
+		PreloadAndDecode,
+		[Description("Tools/Deduplicator/Comparing")]
+		Comparing,
+		[Description("Tools/Deduplicator/Completed")]
+		Completed,
+		[Description("Tools/Deduplicator/Ready")]
+		Ready
 	}
 
 	public class DeduplicatorParams : IToolParams
 	{
 		public int PixelThreshold { get; }
 		public float PercentDifference { get; }
-		public bool Grayscale { get; }
 		public int Width { get; }
 		public float AspectRatioLimit { get; }
 		public int Delay { get; }
 
-		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, bool grayscale = false, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0)
+		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0)
 		{
 			PixelThreshold = pixelThreshold;
 			PercentDifference = percentDifference;
-			Grayscale = grayscale;
 			Width = width;
 			AspectRatioLimit = aspectRatioLimit;
 			Delay = delay;
@@ -47,11 +54,13 @@ namespace LRReader.Shared.Tools
 	{
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
+		private readonly IPlatformService Platform;
 
-		public DeduplicationTool(ImagesService images, ArchivesService archives)
+		public DeduplicationTool(ImagesService images, ArchivesService archives, IPlatformService platform)
 		{
 			Images = images;
 			Archives = archives;
+			Platform = platform;
 		}
 
 		protected override async Task<ToolResult<List<ArchiveHit>>> Process(DeduplicatorParams @params, int threads)
@@ -61,12 +70,10 @@ namespace LRReader.Shared.Tools
 
 			int pixelThreshold = @params.PixelThreshold;
 			float percentDifference = @params.PercentDifference;
-			bool grayscale = @params.Grayscale;
 			int width = @params.Width;
 			float aspectRatioLimit = @params.AspectRatioLimit;
 			int delay = @params.Delay;
-			// Tweak values
-			// Find better names for params
+
 			var archives = Archives.Archives;
 			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
 
@@ -97,23 +104,18 @@ namespace LRReader.Shared.Tools
 				var image = Image.Load(bytes);
 				image.Mutate(i => i.Resize(width, 0));
 				int itemCount = Interlocked.Increment(ref count);
-				if (itemCount % 5000 == 0)
-					GC.Collect(); // TODO GC
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
 				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
 			})))).AsEnumerable().ToList();
 			tmp.RemoveAll(pair => pair == null);
 
 			if (earlyExit)
-				return EarlyExit("An invalid thumbnail was detected", "Try increasing request delay, reducing worker threads or check that all thumbnails are valid");
+				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Title"), Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Message"));
 
 			var decodedThumbnails = tmp.ToDictionary(pair => pair.Item1, pair => pair.Item2);
 			tmp.Clear();
 
 			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, count);
-			GC.Collect(); // TODO GC
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
 			await Task.Delay(1000);
 
 			count = 0;
@@ -157,8 +159,6 @@ namespace LRReader.Shared.Tools
 						})));
 					}
 					int itemCount = Interlocked.Increment(ref count);
-					if (itemCount % 5000 == 0)
-						GC.Collect(); // TODO GC
 
 					// Inaccurate AF
 					var delta = DateTime.Now.Subtract(start);
@@ -168,7 +168,8 @@ namespace LRReader.Shared.Tools
 			});
 			UpdateProgress(DeduplicatorStatus.Comparing, maxItems, count, time: 0);
 			await Task.Delay(1000);
-
+			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 3, 3);
+			await Task.Delay(1000);
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 0, 0);
 			return new ToolResult<List<ArchiveHit>> { Data = hits.ToList(), Ok = true };
 		}

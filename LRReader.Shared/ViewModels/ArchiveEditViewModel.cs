@@ -133,6 +133,7 @@ namespace LRReader.Shared.ViewModels
 					else
 						Tags = BuildTags();
 					PluginTagsList.Clear();
+					OnPropertyChanged("PluginTagsList");
 					AddAllTags.NotifyCanExecuteChanged();
 					OnPropertyChanged("Archive");
 				}
@@ -151,6 +152,7 @@ namespace LRReader.Shared.ViewModels
 				await SaveArchive();
 				Saving = true;
 				PluginTagsList.Clear();
+				OnPropertyChanged("PluginTagsList");
 				var result = await ServerProvider.UsePlugin(CurrentPlugin.@namespace, Archive.arcid, Arg);
 				if (result != null)
 				{
@@ -169,6 +171,7 @@ namespace LRReader.Shared.ViewModels
 								foreach (var t in result.data.new_tags.Split(','))
 									PluginTagsList.Add(ColorTag(new PluginTag { Tag = t.Trim(), Command = TagCommand }));
 								AddAllTags.NotifyCanExecuteChanged();
+								OnPropertyChanged("PluginTagsList");
 							}
 						}
 					}
@@ -199,6 +202,7 @@ namespace LRReader.Shared.ViewModels
 			CurrentPlugin = Plugins.ElementAt(0);
 			UsePluginCommand.NotifyCanExecuteChanged();
 			AddAllTags.NotifyCanExecuteChanged();
+			OnPropertyChanged("PluginTagsList");
 		}
 
 		private void AddPluginTags()

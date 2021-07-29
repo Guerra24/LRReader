@@ -279,4 +279,7 @@
   <data name="Settings.Tab.Header" xml:space="preserve">
     <value>Ajustes</value>
   </data>
+  <data name="Tools.Tab.Header" xml:space="preserve">
+    <value>Herramientas</value>
+  </data>
 </root>
