@@ -283,7 +283,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 					break;
 				case VirtualKey.Up:
 					e.Handled = true;
-					if (Math.Floor(offset) <= 0)
+					if (Math.Floor(offset) <= 0 && Service.Settings.ScrollToChangePage)
 						PrevPage(true);
 					else
 						ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
@@ -291,7 +291,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				case VirtualKey.Down:
 				case VirtualKey.Space:
 					e.Handled = true;
-					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight)
+					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight && Service.Settings.ScrollToChangePage)
 						NextPage(true);
 					else
 						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
@@ -324,12 +324,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 				switch (e.KeyModifiers)
 				{
 					case VirtualKeyModifiers.None:
-						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0)
+						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0 && Service.Settings.ScrollToChangePage)
 						{
 							e.Handled = true;
 							NextPage(true);
 						}
-						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0)
+						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0 && Service.Settings.ScrollToChangePage)
 						{
 							e.Handled = true;
 							PrevPage(true);

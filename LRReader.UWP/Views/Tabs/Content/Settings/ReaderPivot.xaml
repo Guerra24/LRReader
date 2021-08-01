@@ -45,6 +45,9 @@
 						SpinButtonPlacementMode="Inline"
 						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}"/>
+				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 				</controls:ModernInput>

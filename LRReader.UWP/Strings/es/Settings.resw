@@ -462,4 +462,10 @@
   <data name="ServerPivot.Header" xml:space="preserve">
     <value>Servidor</value>
   </data>
+  <data name="Reader.ScrollToChange.Description" xml:space="preserve">
+    <value>Cambiar de página al desplazarse por la parte superior o inferior de la página</value>
+  </data>
+  <data name="Reader.ScrollToChange.Title" xml:space="preserve">
+    <value>Desplazarse para cambiar de página</value>
+  </data>
 </root>

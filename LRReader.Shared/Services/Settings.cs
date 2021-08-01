@@ -179,6 +179,11 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectRoamed("UseVisualTags", false);
 			set => SettingsStorage.StoreObjectRoamed("UseVisualTags", value);
 		}
+		public bool ScrollToChangePage
+		{
+			get => SettingsStorage.GetObjectRoamed("ScrollToChangePage", true);
+			set => SettingsStorage.StoreObjectRoamed("ScrollToChangePage", value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
