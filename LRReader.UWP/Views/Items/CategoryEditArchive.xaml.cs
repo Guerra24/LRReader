@@ -34,10 +34,13 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			ViewModel.Archive = args.NewValue as Archive;
+			var archive = args.NewValue as Archive;
 
-			if (!_oldID.Equals(ViewModel.Archive.arcid))
+			if (!archive.arcid.Equals(_oldID))
 			{
+				_oldID = archive.arcid;
+				ViewModel.Archive = archive;
+
 				Overlay.SetVisualOpacity(0);
 				Title.SetVisualOpacity(0);
 				TagsGrid.SetVisualOpacity(0);
@@ -71,7 +74,6 @@ namespace LRReader.UWP.Views.Items
 					Title.SetVisualOpacity(1);
 					TagsGrid.SetVisualOpacity(1);
 				}
-				_oldID = ViewModel.Archive.arcid;
 			}
 		}
 
@@ -87,6 +89,7 @@ namespace LRReader.UWP.Views.Items
 			if (_open)
 			{
 				_open = false;
+				TagsPopup.ClampPopup(-30);
 				TagsPopup.IsOpen = true;
 				if (Service.Platform.AnimationsEnabled)
 					ShowPopup.Begin();

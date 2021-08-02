@@ -20,7 +20,7 @@
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
-	<Grid Background="{ThemeResource BrushItemGridBackground}">
+	<Grid>
 		<Grid.Clip>
 			<RectangleGeometry Rect="0,0,200,275" />
 		</Grid.Clip>

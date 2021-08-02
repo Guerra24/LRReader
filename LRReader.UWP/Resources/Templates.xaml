@@ -523,7 +523,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
-			<Grid x:Name="TabContainerGrid" Background="{TemplateBinding Background}" XYFocusKeyboardNavigation="Enabled">
+			<Grid x:Name="TabContainerGrid" XYFocusKeyboardNavigation="Enabled">
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition x:Name="LeftContentColumn" Width="Auto" />

@@ -56,7 +56,7 @@
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
-	<Grid Background="{ThemeResource BrushItemGridBackground}">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -83,18 +83,8 @@
 							For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
 							item display... idk whatever...
 						-->
-						<ScrollViewer>
-							<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}">
-								<controls1:ArchiveTags.Resources>
-									<SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
-									<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
-									<SolidColorBrush x:Key="GridViewItemRevealBackgroundPointerOver" Color="Transparent" />
-									<SolidColorBrush x:Key="GridViewItemRevealBackgroundPressed" Color="Transparent" />
-									<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelected" Color="Transparent" />
-									<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPointerOver" Color="Transparent" />
-									<SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
-								</controls1:ArchiveTags.Resources>
-							</controls1:ArchiveTags>
+						<ScrollViewer x:Name="TagsPopupScroll">
+							<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
 						</ScrollViewer>
 					</muxc:ItemsRepeaterScrollHost>
 				</Grid>

@@ -43,6 +43,9 @@ namespace LRReader.Shared.Services
 			{
 				try
 				{
+					imagesCache.Clear();
+					imagesSizeCache.Clear();
+					thumbnailsCache.Clear();
 					var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
 					files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14)).ToList().ForEach(file => file.Delete());
 					var directories = thumbnailCacheDirectory.GetDirectories();
@@ -59,25 +62,22 @@ namespace LRReader.Shared.Services
 		{
 			if (string.IsNullOrEmpty(path))
 				return new Size(0, 0);
-			var key = await KeyedSemaphore.LockAsync(path + "size");
-			Size size;
-			if (imagesSizeCache.TryGet(path, out size))
+			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
 			{
-				key.Dispose();
-				return size;
-			}
-			else
-			{
-				var image = await GetImageCached(path);
-				if (image == null)
+				Size size;
+				if (imagesSizeCache.TryGet(path, out size))
 				{
-					key.Dispose();
-					return new Size(0, 0);
+					return size;
 				}
-				size = await ImageProcessing.GetImageSize(image);
-				imagesSizeCache.AddReplace(path, size);
-				key.Dispose();
-				return size;
+				else
+				{
+					var image = await GetImageCached(path);
+					if (image == null)
+						return new Size(0, 0);
+					size = await ImageProcessing.GetImageSize(image);
+					imagesSizeCache.AddReplace(path, size);
+					return size;
+				}
 			}
 		}
 
@@ -85,24 +85,21 @@ namespace LRReader.Shared.Services
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
-			var key = await KeyedSemaphore.LockAsync(path);
-			byte[] image;
-			if (imagesCache.TryGet(path, out image))
+			using (var key = await KeyedSemaphore.LockAsync(path))
 			{
-				key.Dispose();
-				return image;
-			}
-			else
-			{
-				image = await ArchivesProvider.GetImage(path);
-				if (image == null)
+				byte[] image;
+				if (imagesCache.TryGet(path, out image))
 				{
-					key.Dispose();
-					return null;
+					return image;
 				}
-				imagesCache.AddReplace(path, image);
-				key.Dispose();
-				return image;
+				else
+				{
+					image = await ArchivesProvider.GetImage(path);
+					if (image == null)
+						return null;
+					imagesCache.AddReplace(path, image);
+					return image;
+				}
 			}
 		}
 
@@ -112,33 +109,30 @@ namespace LRReader.Shared.Services
 				return null;
 			if (ignoreCache)
 				return await ArchivesProvider.GetThumbnail(id);
-			var key = await KeyedSemaphore.LockAsync(id);
-			byte[] data;
-			if (thumbnailsCache.TryGet(id, out data) && !forced)
+			using (var key = await KeyedSemaphore.LockAsync(id))
 			{
-				key.Dispose();
-				return data;
-			}
-			else
-			{
-				var directory = $"{thumbnailCacheDirectory.FullName}/{id.Substring(0, 2)}/";
-				var path = $"{directory}{id}.cache";
-				if (File.Exists(path) && !forced)
-					data = await Files.GetFileBytes(path);
+				byte[] data;
+				if (thumbnailsCache.TryGet(id, out data) && !forced)
+				{
+					return data;
+				}
 				else
 				{
-					data = await ArchivesProvider.GetThumbnail(id);
-					if (data == null)
+					var directory = $"{thumbnailCacheDirectory.FullName}/{id.Substring(0, 2)}/";
+					var path = $"{directory}{id}.cache";
+					if (File.Exists(path) && !forced)
+						data = await Files.GetFileBytes(path);
+					else
 					{
-						key.Dispose();
-						return null;
+						data = await ArchivesProvider.GetThumbnail(id);
+						if (data == null)
+							return null;
+						Directory.CreateDirectory(directory);
+						await Files.StoreFile(path, data);
 					}
-					Directory.CreateDirectory(directory);
-					await Files.StoreFile(path, data);
+					thumbnailsCache.AddReplace(id, data);
+					return data;
 				}
-				thumbnailsCache.AddReplace(id, data);
-				key.Dispose();
-				return data;
 			}
 		}
 

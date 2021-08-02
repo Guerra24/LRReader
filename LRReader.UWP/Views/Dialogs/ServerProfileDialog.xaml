@@ -7,10 +7,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Uid="/Dialogs/ServerProfile/Dialog"
 	IsPrimaryButtonEnabled="False"
+	Style="{StaticResource DefaultContentDialogStyle}"
 	mc:Ignorable="d">
-	<ContentDialog.Resources>
-		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:ServerProfileDialog" />
-	</ContentDialog.Resources>
 
 	<StackPanel>
 		<TextBox

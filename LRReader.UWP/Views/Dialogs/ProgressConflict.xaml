@@ -8,11 +8,11 @@
 	xmlns:local="using:LRReader.UWP.Views.Dialogs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Uid="/Dialogs/ProgressConflict/Dialog"
+	Style="{StaticResource DefaultContentDialogStyle}"
 	mc:Ignorable="d">
 
 	<ContentDialog.Resources>
 		<internal:EnumToInt x:Key="EnumToInt" />
-		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:ProgressConflict" />
 	</ContentDialog.Resources>
 
 	<controls:RadioButtons x:Name="ProgressOptions" SelectedIndex="{x:Bind Mode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />

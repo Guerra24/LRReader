@@ -44,7 +44,7 @@
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
-	<Grid Width="200" Height="150" Background="{ThemeResource BrushItemGridBackground}">
+	<Grid Width="200" Height="150">
 		<muxc:ParallaxView x:Name="Parallax" x:FieldModifier="public" VerticalShift="100">
 			<Image Name="Thumbnail" Stretch="UniformToFill" />
 		</muxc:ParallaxView>

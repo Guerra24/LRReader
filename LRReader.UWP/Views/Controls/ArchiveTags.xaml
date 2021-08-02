@@ -26,7 +26,6 @@
 			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
 			<Setter Property="Margin" Value="0,0,4,0" />
 		</Style>
-		<SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
 		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
 			<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
 			<Setter Property="FontSize" Value="12" />
@@ -72,13 +71,7 @@
 													Tag="{x:Bind FullTag}" />
 											</MenuFlyout>
 										</Grid.ContextFlyout>
-										<Grid
-											x:Name="TagGrid" Padding="4,2"
-											Background="{ThemeResource ControlStrongStrokeColorDisabled}"
-											BorderBrush="{ThemeResource ControlElevationBorderBrush}"
-											BorderThickness="1"
-											CornerRadius="{ThemeResource ControlCornerRadius}"
-											Visibility="Visible">
+										<Grid x:Name="TagGrid" Padding="4,2" Visibility="Visible">
 											<TextBlock Text="{x:Bind Tag}" />
 										</Grid>
 										<!--<TextBox
@@ -122,12 +115,14 @@
 								</ItemsPanelTemplate>
 							</GridView.ItemsPanel>
 							<GridView.ItemContainerStyle>
-								<Style TargetType="GridViewItem">
+								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
 									<Setter Property="Padding" Value="0" />
 									<Setter Property="Margin" Value="1,0" />
 									<Setter Property="MinWidth" Value="0" />
 									<Setter Property="MinHeight" Value="0" />
-									<Setter Property="BorderThickness" Value="0" />
+									<Setter Property="BorderThickness" Value="1" />
+									<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+									<Setter Property="Background" Value="{ThemeResource ControlStrongStrokeColorDisabled}" />
 								</Style>
 							</GridView.ItemContainerStyle>
 							<GridView.ItemContainerTransitions>

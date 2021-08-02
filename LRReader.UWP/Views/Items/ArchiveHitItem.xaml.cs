@@ -5,6 +5,7 @@ using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -19,6 +20,8 @@ namespace LRReader.UWP.Views.Items
 		private ArchiveItemViewModel LeftViewModel, RightViewModel;
 
 		private ArchiveHitViewModel Data;
+
+		private ArchiveHit _old = new ArchiveHit { Left = new Archive { arcid = "" }, Right = new Archive { arcid = "" } };
 
 		private bool _open;
 
@@ -37,8 +40,10 @@ namespace LRReader.UWP.Views.Items
 				return;
 			VisualStateManager.GoToState(this, "Normal", true);
 			var hit = args.NewValue as ArchiveHit;
-			if (!hit.Equals(Data.ArchiveHit))
+
+			if (!hit.Equals(_old))
 			{
+				_old = hit;
 				Data.ArchiveHit = hit;
 				LeftViewModel.Archive = hit.Left;
 				RightViewModel.Archive = hit.Right;
@@ -52,12 +57,12 @@ namespace LRReader.UWP.Views.Items
 				var leftImage = new BitmapImage();
 				leftImage.DecodePixelType = DecodePixelType.Logical;
 				leftImage.DecodePixelHeight = 275;
-				leftImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(LeftViewModel.Archive.arcid), leftImage) as BitmapImage;
+				leftImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(LeftViewModel.Archive.arcid, ignoreCache: true), leftImage) as BitmapImage;
 
 				var rightImage = new BitmapImage();
 				rightImage.DecodePixelType = DecodePixelType.Logical;
 				rightImage.DecodePixelHeight = 275;
-				rightImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(RightViewModel.Archive.arcid), rightImage) as BitmapImage;
+				rightImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(RightViewModel.Archive.arcid, ignoreCache: true), rightImage) as BitmapImage;
 				if (leftImage != null && rightImage != null)
 				{
 					if (leftImage.PixelHeight != 0 && leftImage.PixelWidth != 0)
@@ -98,6 +103,7 @@ namespace LRReader.UWP.Views.Items
 			if (_open)
 			{
 				_open = false;
+				LeftTagsPopup.ClampPopup(-57);
 				LeftTagsPopup.IsOpen = true;
 				if (Service.Platform.AnimationsEnabled)
 					ShowLeftPopup.Begin();
@@ -132,6 +138,7 @@ namespace LRReader.UWP.Views.Items
 			if (_open)
 			{
 				_open = false;
+				RightTagsPopup.ClampPopup(-57);
 				RightTagsPopup.IsOpen = true;
 				if (Service.Platform.AnimationsEnabled)
 					ShowRightPopup.Begin();
@@ -192,6 +199,32 @@ namespace LRReader.UWP.Views.Items
 		private void LeftCancel_Click(object sender, RoutedEventArgs e)
 		{
 			VisualStateManager.GoToState(this, "PointerOverLeft", true);
+		}
+
+		private void LeftGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(LeftGrid);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsMiddleButtonPressed)
+				{
+					Service.Tabs.OpenTab(Tab.Archive, false, LeftViewModel.Archive);
+					e.Handled = true;
+				}
+			}
+		}
+
+		private void RightGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var pointerPoint = e.GetCurrentPoint(RightGrid);
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			{
+				if (pointerPoint.Properties.IsMiddleButtonPressed)
+				{
+					Service.Tabs.OpenTab(Tab.Archive, false, RightViewModel.Archive);
+					e.Handled = true;
+				}
+			}
 		}
 
 		private void RightHidePopup_Completed(object sender, object e)

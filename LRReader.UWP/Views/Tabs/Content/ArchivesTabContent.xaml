@@ -25,9 +25,6 @@
 				ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
-				<GridView.Resources>
-					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
-				</GridView.Resources>
 				<GridView.Header>
 					<Grid Margin="0,10,0,10">
 						<Grid.RowDefinitions>
@@ -146,7 +143,7 @@
 					</ItemsPanelTemplate>
 				</GridView.ItemsPanel>
 				<GridView.ItemContainerStyle>
-					<Style TargetType="GridViewItem">
+					<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
 						<Setter Property="Padding" Value="0" />
 						<Setter Property="Margin" Value="5" />
 					</Style>

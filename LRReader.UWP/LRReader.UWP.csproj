@@ -130,6 +130,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Internal\Utils.cs" />
     <Compile Include="Resources\Templates.xaml.cs">
       <DependentUpon>Templates.xaml</DependentUpon>

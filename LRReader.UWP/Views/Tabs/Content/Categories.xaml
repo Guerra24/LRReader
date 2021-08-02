@@ -18,7 +18,7 @@
 			<items:CategoryItem />
 		</DataTemplate>
 		<DataTemplate x:Key="AddNewCategoryTemplate" x:DataType="main:AddNewCategory">
-			<Grid Width="196" Height="297" Background="{ThemeResource BrushItemGridBackground}">
+			<Grid Width="196" Height="297">
 				<SymbolIcon Symbol="NewFolder" />
 			</Grid>
 		</DataTemplate>
@@ -33,9 +33,6 @@
 				ItemTemplateSelector="{StaticResource CategoryTemplateSelector}"
 				ItemsSource="{x:Bind Data.CategoriesList}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
-				<GridView.Resources>
-					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
-				</GridView.Resources>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
@@ -45,7 +42,7 @@
 					</ItemsPanelTemplate>
 				</GridView.ItemsPanel>
 				<GridView.ItemContainerStyle>
-					<Style TargetType="GridViewItem">
+					<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
 						<Setter Property="Padding" Value="0" />
 						<Setter Property="Margin" Value="5" />
 					</Style>

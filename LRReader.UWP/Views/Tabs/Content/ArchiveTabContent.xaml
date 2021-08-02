@@ -18,17 +18,6 @@
 	<UserControl.Resources>
 		<convrt:BooleanToVisibilityConverter x:Key="BoolToVis" />
 		<convrt:NegateBoolConverter x:Key="NegateBool" />
-		<Style x:Key="TagStyle" TargetType="Grid">
-			<Setter Property="CornerRadius" Value="2" />
-			<Setter Property="Padding" Value="4,2" />
-			<Setter Property="Background" Value="{ThemeResource BrushTagBackground}" />
-		</Style>
-		<Style x:Key="NamespaceStyle" TargetType="Grid">
-			<Setter Property="CornerRadius" Value="2" />
-			<Setter Property="Padding" Value="4,2" />
-			<Setter Property="Background" Value="{ThemeResource BrushTagBackground}" />
-			<Setter Property="Margin" Value="0,0,4,0" />
-		</Style>
 	</UserControl.Resources>
 
 	<Grid>
@@ -91,9 +80,10 @@
 					</ItemsPanelTemplate>
 				</GridView.ItemsPanel>
 				<GridView.ItemContainerStyle>
-					<Style TargetType="GridViewItem">
+					<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
 						<Setter Property="Padding" Value="0" />
 						<Setter Property="Margin" Value="5" />
+						<Setter Property="CornerRadius" Value="10" />
 					</Style>
 				</GridView.ItemContainerStyle>
 				<GridView.ItemContainerTransitions>

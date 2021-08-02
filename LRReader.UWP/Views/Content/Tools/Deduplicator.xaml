@@ -151,9 +151,6 @@
 				</muxc:InfoBar>
 			</StackPanel>
 		</GridView.Header>
-		<GridView.Resources>
-			<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
-		</GridView.Resources>
 		<GridView.ItemTemplate>
 			<DataTemplate x:DataType="items:ArchiveHit">
 				<items1:ArchiveHitItem />
@@ -165,7 +162,7 @@
 			</ItemsPanelTemplate>
 		</GridView.ItemsPanel>
 		<GridView.ItemContainerStyle>
-			<Style TargetType="GridViewItem">
+			<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
 				<Setter Property="Padding" Value="0" />
 				<Setter Property="Margin" Value="5" />
 			</Style>

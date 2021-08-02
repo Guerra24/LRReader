@@ -8,11 +8,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	x:Uid="/Dialogs/CategoryArchive/Dialog"
 	Loaded="ContentDialog_Loaded"
+	Style="{StaticResource DefaultContentDialogStyle}"
 	mc:Ignorable="d">
-
-	<ContentDialog.Resources>
-		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:CategoryArchive" />
-	</ContentDialog.Resources>
 
 	<StackPanel>
 		<AutoSuggestBox

@@ -128,6 +128,7 @@ namespace LRReader.Shared.ViewModels
 				{
 					Archive.title = Title;
 					Archive.tags = tags;
+					Archive.UpdateTags();
 					if (UseTextTags)
 						ReloadTagsList(tags);
 					else

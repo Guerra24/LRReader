@@ -35,10 +35,13 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			ViewModel.Archive = args.NewValue as Archive;
+			var archive = args.NewValue as Archive;
 
-			if (!_oldID.Equals(ViewModel.Archive.arcid))
+			if (!archive.arcid.Equals(_oldID))
 			{
+				_oldID = archive.arcid;
+				ViewModel.Archive = archive;
+
 				Title.SetVisualOpacity(0);
 				Progress.SetVisualOpacity(0);
 				Thumbnail.SetVisualOpacity(0);
@@ -72,7 +75,6 @@ namespace LRReader.UWP.Views.Items
 					Progress.SetVisualOpacity(1);
 					Thumbnail.SetVisualOpacity(1);
 				}
-				_oldID = ViewModel.Archive.arcid;
 			}
 		}
 

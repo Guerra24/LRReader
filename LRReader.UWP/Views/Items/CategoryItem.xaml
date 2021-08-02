@@ -25,7 +25,7 @@
 		</MenuFlyout>
 	</UserControl.ContextFlyout>
 
-	<Grid Background="{ThemeResource BrushItemGridBackground}">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
