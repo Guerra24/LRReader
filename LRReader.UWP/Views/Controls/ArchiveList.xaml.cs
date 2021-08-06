@@ -93,9 +93,11 @@ namespace LRReader.UWP.Views.Controls
 
 		private void RandomButton_Click(object sender, RoutedEventArgs e)
 		{
-			var random = new Random();
 			var list = Archives.Archives;
-			var item = list.ElementAt(random.Next(list.Count() - 1));
+			if (list.Count <= 1)
+				return;
+			var random = new Random();
+			var item = list.ElementAt(random.Next(list.Count - 1));
 			Service.Tabs.OpenTab(Tab.Archive, item.Value);
 		}
 

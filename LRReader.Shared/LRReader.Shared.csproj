@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Caching.dll" Version="1.4.0" />
     <PackageReference Include="KeyedSemaphores" Version="2.0.0" />
-    <PackageReference Include="MetadataExtractor" Version="2.6.0" />
+    <PackageReference Include="MetadataExtractor" Version="2.7.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
