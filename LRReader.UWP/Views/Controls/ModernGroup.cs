@@ -26,7 +26,6 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(TitleProperty, value);
 		}
 
-		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernGroup), new PropertyMetadata(null));
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernGroup), new PropertyMetadata(""));
 	}
 }

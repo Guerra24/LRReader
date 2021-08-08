@@ -72,7 +72,7 @@
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 							</Viewbox>
 						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Tools" Click="Tools_Click">
+						<Button x:Uid="/Pages/HostTabPage/Tools" Click="Tools_Click" Visibility="{x:Bind Settings.Profile.HasApiKey, Mode=OneWay}">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 							</Viewbox>

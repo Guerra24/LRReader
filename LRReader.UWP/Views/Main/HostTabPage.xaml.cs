@@ -21,7 +21,8 @@ namespace LRReader.UWP.Views.Main
 	public sealed partial class HostTabPage : Page
 	{
 
-		private TabsService Data;
+		private readonly TabsService Data;
+		private readonly SettingsService Settings;
 
 		private CoreApplicationView CoreView;
 		private ApplicationView AppView;
@@ -32,6 +33,7 @@ namespace LRReader.UWP.Views.Main
 		{
 			this.InitializeComponent();
 			Data = DataContext as TabsService;
+			Settings = Service.Settings;
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();

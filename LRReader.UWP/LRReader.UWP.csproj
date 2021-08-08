@@ -149,6 +149,9 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WebTabViewModel.cs" />
+    <Compile Include="Views\Content\Tools\BulkEditor.xaml.cs">
+      <DependentUpon>BulkEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ArchiveTags.xaml.cs">
       <DependentUpon>ArchiveTags.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,12 @@
     </Compile>
     <Compile Include="Views\Controls\ModernGroup.cs" />
     <Compile Include="Views\Controls\ModernInput.cs" />
+    <Compile Include="Views\Controls\ModernPageTab.xaml.cs">
+      <DependentUpon>ModernPageTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ModernPageTabInitial.xaml.cs">
+      <DependentUpon>ModernPageTabInitial.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ModernTab.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
@@ -423,6 +432,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Content\Tools\BulkEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\ArchiveTags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -432,6 +445,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\ModernExpander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ModernPageTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ModernPageTabInitial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

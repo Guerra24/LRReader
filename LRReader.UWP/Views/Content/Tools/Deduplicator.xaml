@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Page
 	x:Class="LRReader.UWP.Views.Content.Tools.Deduplicator"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,14 +13,14 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding DeduplicatorToolViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
-	<UserControl.Resources>
+	<Page.Resources>
 		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-	</UserControl.Resources>
+	</Page.Resources>
 
-	<GridView Padding="24,10" ItemsSource="{x:Bind Data.Items}">
+	<GridView ItemsSource="{x:Bind Data.Items}">
 		<GridView.Header>
 			<StackPanel MaxWidth="1000">
 				<controls:ModernGroup Margin="0">
@@ -175,4 +175,4 @@
 			</TransitionCollection>
 		</GridView.ItemContainerTransitions>
 	</GridView>
-</UserControl>
+</Page>

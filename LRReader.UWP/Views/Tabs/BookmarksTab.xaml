@@ -18,7 +18,7 @@
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 	</muxc:TabViewItem.IconSource>
 	<controls:ModernTab.CustomTabControl>
-		<StackPanel Orientation="Horizontal">
+		<StackPanel Orientation="Horizontal" Spacing="2">
 			<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
 				<Viewbox MaxWidth="16" MaxHeight="16">
 					<SymbolIcon Symbol="Refresh" />

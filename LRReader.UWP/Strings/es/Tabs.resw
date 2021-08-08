@@ -279,6 +279,12 @@
   <data name="Settings.Tab.Header" xml:space="preserve">
     <value>Ajustes</value>
   </data>
+  <data name="Tools.Pages.BulkEditor.Title" xml:space="preserve">
+    <value>Editor por lotes</value>
+  </data>
+  <data name="Tools.Pages.Deduplicator.Title" xml:space="preserve">
+    <value>Deduplicador</value>
+  </data>
   <data name="Tools.Tab.Header" xml:space="preserve">
     <value>Herramientas</value>
   </data>

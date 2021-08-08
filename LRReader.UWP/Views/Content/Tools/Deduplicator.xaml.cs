@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Tools
 {
-	public sealed partial class Deduplicator : UserControl
+	public sealed partial class Deduplicator : Page
 	{
 		private DeduplicatorToolViewModel Data;
 

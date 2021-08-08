@@ -23,7 +23,7 @@
 		</StackPanel>
 	</muxc:TabViewItem.Header>
 	<controls:ModernTab.CustomTabControl>
-		<StackPanel Orientation="Horizontal">
+		<StackPanel Orientation="Horizontal" Spacing="2">
 			<Button ToolTipService.ToolTip="Zoom">
 				<Button.Flyout>
 					<Flyout>

@@ -17,5 +17,8 @@
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 	</muxc:TabViewItem.IconSource>
 
-	<content:Deduplicator />
+	<controls:ModernPageTab>
+		<controls:ModernPageTabItem x:Uid="/Tabs/Tools/Pages/Deduplicator" Icon="&#xE8C8;" Page="content:Deduplicator" />
+		<controls:ModernPageTabItem x:Uid="/Tabs/Tools/Pages/BulkEditor" Icon="&#xE932;" Page="content:BulkEditor" />
+	</controls:ModernPageTab>
 </controls:ModernTab>
