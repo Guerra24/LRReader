@@ -42,43 +42,22 @@ jobs:
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
-    - name: Upload Version
-      uses: actions/upload-artifact@v2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: Version
-        path: version.txt
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Upload to S3
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      run: aws s3 sync LRReader.UWP/AppPackages s3://${env:AWS_S3_BUCKET}/projects/lrr/$(Get-Content ".\version.txt") --no-progress --acl public-read --follow-symlinks
     - name: Upload to Release
       uses: Guerra24/upload-to-release@v1
       with:
         name: LRReader.appinstaller
         path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  uploadToS3:
-    name: Upload Release
-    needs: buildAppxBundle
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: LRReader
-          path: AppPackages
-      - name: Download Version
-        uses: actions/download-artifact@v2
-        with:
-          name: Version
-      - name: Setup Envs
-        run: echo "DEST_DIR=projects/lrr/$(cat version.txt)" >> $GITHUB_ENV
-      - name: Upload to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --follow-symlinks
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "us-east-1"
-          SOURCE_DIR: "AppPackages"
   buildStoreBundle:
     name: Build Store Bundle
     runs-on: windows-2019
