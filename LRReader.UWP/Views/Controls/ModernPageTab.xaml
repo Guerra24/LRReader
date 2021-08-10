@@ -21,7 +21,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<Grid MaxWidth="1000" Margin="0,0,0,10">
+		<Grid MaxWidth="1000" Margin="10">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
@@ -33,15 +33,19 @@
 				ItemsSource="{x:Bind BreadcrumbItems}">
 				<muxc:BreadcrumbBar.ItemTemplate>
 					<DataTemplate x:DataType="local:ModernPageTabItem">
-						<TextBlock Margin="10,0" Text="{x:Bind Title}" />
+						<TextBlock Margin="10,0" Text="{x:Bind Header}" />
 					</DataTemplate>
 				</muxc:BreadcrumbBar.ItemTemplate>
 			</muxc:BreadcrumbBar>
 		</Grid>
-		<Frame x:Name="Content" Grid.Row="1" IsNavigationStackEnabled="False">
-			<Frame.Transitions>
-				<TransitionCollection />
-			</Frame.Transitions>
-		</Frame>
+		<ScrollViewer Grid.Row="1">
+			<Frame x:Name="Content" IsNavigationStackEnabled="False" Margin="10,0">
+				<Frame.ContentTransitions>
+					<TransitionCollection>
+						<PopupThemeTransition FromVerticalOffset="200" />
+					</TransitionCollection>
+				</Frame.ContentTransitions>
+			</Frame>
+		</ScrollViewer>
 	</Grid>
 </UserControl>

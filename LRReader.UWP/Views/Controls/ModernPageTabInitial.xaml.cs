@@ -1,7 +1,5 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Controls
@@ -24,7 +22,7 @@ namespace LRReader.UWP.Views.Controls
 				Page = page;
 				foreach (var item in page.Items)
 				{
-					var tmp = new ModernInput { Title = item.Title, Tag = item, IsButton = true, Glyph = item.Icon, RightGlyph = "\uE76C" };
+					var tmp = new ModernInput { Title = item.Header, Description = item.Description, Tag = item, IsButton = true, Glyph = item.Icon, RightGlyph = "\uE76C" };
 					tmp.Click += PageButton_Click;
 					Pages.Items.Add(tmp);
 				}
@@ -33,7 +31,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private void PageButton_Click(object sender, RoutedEventArgs e)
 		{
-			Page.Navigate((sender as ModernInput).Tag as ModernPageTabItem, new SuppressNavigationTransitionInfo() /*new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight }*/);
+			Page.Navigate((sender as ModernInput).Tag as ModernPageTabItem);
 		}
 	}
 }

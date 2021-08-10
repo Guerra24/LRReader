@@ -2,13 +2,13 @@
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 
-namespace LRReader.UWP.Views.Tabs.Content.Settings
+namespace LRReader.UWP.Views.Content.Settings
 {
-	public sealed partial class ReaderPivot : PivotItem
+	public sealed partial class Reader : Page
 	{
 		private SettingsPageViewModel Data;
 
-		public ReaderPivot()
+		public Reader()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;

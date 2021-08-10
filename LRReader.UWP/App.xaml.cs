@@ -4,12 +4,15 @@ using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using System;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using static LRReader.Shared.Services.Service;
 
@@ -76,6 +79,9 @@ namespace LRReader.UWP
 				rootFrame = new Root();
 				rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
 				UpdateButtonsOnThemeChange(RequestedTheme);
+
+				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 14))
+					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{

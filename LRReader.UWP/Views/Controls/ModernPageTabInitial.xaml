@@ -8,11 +8,7 @@
 	NavigationCacheMode="Required"
 	mc:Ignorable="d">
 
-	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
-		<StackPanel
-			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
-			MaxWidth="1000" HorizontalAlignment="Center">
-			<local:ModernGroup x:Name="Pages" />
-		</StackPanel>
-	</ScrollViewer>
+	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
+		<local:ModernGroup x:Name="Pages" />
+	</StackPanel>
 </Page>

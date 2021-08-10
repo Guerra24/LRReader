@@ -2,31 +2,27 @@
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LRReader.UWP.Views.Tabs.Content.Settings
+namespace LRReader.UWP.Views.Content.Settings
 {
-	public sealed partial class AboutPivot : PivotItem
+	public sealed partial class About : Page
 	{
 		private SettingsPageViewModel Data;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
 
-		public AboutPivot()
+		public About()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;
-#if SIDELOAD
-			UpdateInfo.Visibility = Visibility.Visible;
-#endif
+
 			switch (this.ActualTheme)
 			{
 				case ElementTheme.Light:
@@ -61,25 +57,6 @@ namespace LRReader.UWP.Views.Tabs.Content.Settings
 			image.DecodePixelHeight = 20;
 			image.UriSource = new Uri(uri);
 			return image;
-		}
-
-		private void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
-		{
-			Data.UpdateReleaseData();
-		}
-
-		private async void MarkdownText_LinkClicked(object sender, LinkClickedEventArgs e)
-		{
-			if (Uri.TryCreate(e.Link, UriKind.Absolute, out Uri link))
-			{
-				await Service.Platform.OpenInBrowser(link);
-			}
-		}
-
-		private async void ButtonDownload_Click(object sender, RoutedEventArgs e)
-		{
-			await Service.Platform.OpenInBrowser(new Uri(Data.ReleaseInfo.link));
-			await ApplicationView.GetForCurrentView().TryConsolidateAsync();
 		}
 
 		private async void WebButton_Click(object sender, RoutedEventArgs e)

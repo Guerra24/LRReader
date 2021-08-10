@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Media;
+using Windows.Foundation.Metadata;
+using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views
 {
@@ -7,6 +9,10 @@ namespace LRReader.UWP.Views
 		public Root()
 		{
 			this.InitializeComponent();
+			if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 14))
+			{
+				Background = (AcrylicBrush)Resources["MicaFallbackBrush"];
+			}
 		}
 	}
 }

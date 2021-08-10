@@ -6,6 +6,7 @@
 
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Light">
+			<Color x:Key="MicaFallback">White</Color>
 			<SolidColorBrush x:Key="BrushText" Color="Black" />
 			<SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
 			<SolidColorBrush x:Key="BrushTextInverted" Color="White" />
@@ -31,6 +32,7 @@
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
+			<Color x:Key="MicaFallback">Black</Color>
 			<SolidColorBrush x:Key="BrushText" Color="White" />
 			<SolidColorBrush x:Key="BrushBaseBackground" Color="Black" />
 			<SolidColorBrush x:Key="BrushTextInverted" Color="Black" />

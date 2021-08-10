@@ -10,13 +10,13 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LRReader.UWP.Views.Tabs.Content.Settings
+namespace LRReader.UWP.Views.Content.Settings
 {
-	public sealed partial class ServerPivot : PivotItem
+	public sealed partial class Server : Page
 	{
 		private SettingsPageViewModel Data;
 
-		public ServerPivot()
+		public Server()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;

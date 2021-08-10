@@ -15,8 +15,6 @@ namespace LRReader.UWP.Views.Controls
 	public sealed partial class ModernPageTab : UserControl
 	{
 
-		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
-
 		private ObservableCollection<ModernPageTabItem> BreadcrumbItems = new ObservableCollection<ModernPageTabItem>();
 
 		private bool _loaded;
@@ -33,12 +31,18 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ItemsProperty, value);
 		}
 
+		public string Header
+		{
+			get => GetValue(HeaderProperty) as string;
+			set => SetValue(HeaderProperty, value);
+		}
+
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			if (_loaded)
 				return;
 			_loaded = true;
-			Navigate(new ModernPageTabItem { Title = lang.GetString("Tools/Tab/Header"), Page = typeof(ModernPageTabInitial) }, new SuppressNavigationTransitionInfo(), this);
+			Navigate(new ModernPageTabItem { Header = Header, Page = typeof(ModernPageTabInitial) });
 		}
 
 		private void GoBack_Click(object sender, RoutedEventArgs e)
@@ -46,14 +50,14 @@ namespace LRReader.UWP.Views.Controls
 			if (BreadcrumbItems.Count > 1)
 			{
 				BreadcrumbItems.Remove(BreadcrumbItems.Last());
-				Content.Navigate(BreadcrumbItems.Last().Page, null, new SuppressNavigationTransitionInfo() /*new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft }*/);
+				Content.Navigate(BreadcrumbItems.Last().Page, this);
 			}
 		}
 
-		public void Navigate(ModernPageTabItem item, NavigationTransitionInfo info, object @params = null)
+		public void Navigate(ModernPageTabItem item)
 		{
 			BreadcrumbItems.Add(item);
-			Content.Navigate(item.Page, @params, info);
+			Content.Navigate(item.Page, this);
 		}
 
 		private void Breadcrumb_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
@@ -65,16 +69,18 @@ namespace LRReader.UWP.Views.Controls
 					BreadcrumbItems.RemoveAt(i);
 				}
 				var item = (ModernPageTabItem)args.Item;
-				Content.Navigate(item.Page, null, new SuppressNavigationTransitionInfo() /*new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft }*/);
+				Content.Navigate(item.Page, this);
 			}
 		}
 
 		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<ModernPageTabItem>), typeof(ModernPageTab), new PropertyMetadata(null));
+		public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(ModernPageTab), new PropertyMetadata(null));
 	}
 
 	public class ModernPageTabItem
 	{
-		public string Title { get; set; }
+		public string Header { get; set; }
+		public string Description { get; set; }
 		public Type Page { get; set; }
 		public string Icon { get; set; }
 	}

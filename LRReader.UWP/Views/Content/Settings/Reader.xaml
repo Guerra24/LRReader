@@ -1,0 +1,121 @@
+﻿<Page
+	x:Class="LRReader.UWP.Views.Content.Settings.Reader"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:internal="using:LRReader.Internal"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
+	mc:Ignorable="d">
+
+	<Page.Resources>
+		<internal:EnumConverter x:Key="EnumConverter" />
+		<internal:EnumToInt x:Key="EnumToInt" />
+	</Page.Resources>
+
+	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
+		<controls:ModernGroup>
+			<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Slider
+						IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+						TickFrequency="30" TickPlacement="None"
+						Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
+					<TextBlock
+						Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+						VerticalAlignment="Center">
+						<Run Text="{x:Bind Data.SettingsManager.DefaultZoom, Mode=OneWay}" />%
+					</TextBlock>
+				</Grid>
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/Keyboard" Glyph="&#xF210;">
+				<muxc:NumberBox
+					MinWidth="120" Minimum="1" SmallChange="20"
+					SpinButtonPlacementMode="Inline"
+					Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
+			</controls:ModernInput>
+			<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xE8A0;">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
+			</controls:ModernInput>
+			<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" Glyph="&#xE9A6;" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
+				</controls:ModernExpander.Input>
+				<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Slider
+							IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+							StepFrequency="5" TickFrequency="25.0" TickPlacement="None"
+							Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
+						<TextBlock Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center">
+							<Run Text="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
+						</TextBlock>
+					</Grid>
+				</controls:ModernInput>
+			</controls:ModernExpander>
+			<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" Glyph="&#xF57C;" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
+				</controls:ModernExpander.Input>
+				<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
+			</controls:ModernExpander>
+			<muxc:InfoBar x:Uid="/Settings/Reader/AV1NoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.AvifMissing, Mode=OneWay}">
+				<muxc:InfoBar.Transitions>
+					<TransitionCollection>
+						<RepositionThemeTransition IsStaggeringEnabled="False" />
+					</TransitionCollection>
+				</muxc:InfoBar.Transitions>
+				<muxc:InfoBar.IconSource>
+					<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA86;" />
+				</muxc:InfoBar.IconSource>
+				<muxc:InfoBar.ActionButton>
+					<HyperlinkButton
+						x:Uid="/Settings/Reader/AV1Notice" Margin="0,0,-1,0" HorizontalAlignment="Right"
+						NavigateUri="ms-windows-store://pdp/?productid=9mvzqvxjbq9v" />
+				</muxc:InfoBar.ActionButton>
+			</muxc:InfoBar>
+			<muxc:InfoBar x:Uid="/Settings/Reader/HEIFNoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.HeifMissing, Mode=OneWay}">
+				<muxc:InfoBar.Transitions>
+					<TransitionCollection>
+						<RepositionThemeTransition IsStaggeringEnabled="False" />
+					</TransitionCollection>
+				</muxc:InfoBar.Transitions>
+				<muxc:InfoBar.IconSource>
+					<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA86;" />
+				</muxc:InfoBar.IconSource>
+				<muxc:InfoBar.ActionButton>
+					<HyperlinkButton
+						x:Uid="/Settings/Reader/HEIFNotice" Margin="0,0,-1,0" HorizontalAlignment="Right"
+						NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" />
+				</muxc:InfoBar.ActionButton>
+			</muxc:InfoBar>
+		</controls:ModernGroup>
+		<controls:ModernGroup x:Uid="/Settings/Reader/BookmarksGroup">
+			<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" Glyph="&#xEB50;" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />
+				</controls:ModernExpander.Input>
+				<muxc:RadioButtons x:Name="ReminderModeRadio" SelectedIndex="{x:Bind Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+			</controls:ModernExpander>
+			<controls:ModernInput x:Uid="/Settings/Reader/RemoveBookmarkReminder" Glyph="&#xEB4F;">
+				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.RemoveBookmark, Mode=TwoWay}" />
+			</controls:ModernInput>
+		</controls:ModernGroup>
+	</StackPanel>
+</Page>

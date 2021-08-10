@@ -12,15 +12,15 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace LRReader.UWP.Views.Tabs.Content.Settings
+namespace LRReader.UWP.Views.Content.Settings
 {
-	public sealed partial class GeneralPivot : PivotItem
+	public sealed partial class General : Page
 	{
 		private SettingsPageViewModel Data;
 
 		private ResourceLoader lang;
 
-		public GeneralPivot()
+		public General()
 		{
 			this.InitializeComponent();
 			Data = DataContext as SettingsPageViewModel;

@@ -117,19 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About.About.Title" xml:space="preserve">
-    <value>Acerca de</value>
-  </data>
-  <data name="About.Check.Content" xml:space="preserve">
+  <data name="Updates.Check.Content" xml:space="preserve">
     <value>Buscar actualizaciones</value>
   </data>
-  <data name="About.Download.Content" xml:space="preserve">
+  <data name="Updates.Download.Content" xml:space="preserve">
     <value>Descargar</value>
   </data>
-  <data name="About.DownloadNotice.Text" xml:space="preserve">
+  <data name="Updates.DownloadNotice.Text" xml:space="preserve">
     <value>La app se cerrará automáticamente</value>
   </data>
-  <data name="About.DownloadYes.Content" xml:space="preserve">
+  <data name="Updates.DownloadYes.Content" xml:space="preserve">
     <value>Cerrar y Actualizar</value>
   </data>
   <data name="About.Github.Description" xml:space="preserve">
@@ -144,7 +141,7 @@
   <data name="About.Links.Text" xml:space="preserve">
     <value>Enlaces</value>
   </data>
-  <data name="About.NotFound.Title" xml:space="preserve">
+  <data name="Updates.NotFound.Title" xml:space="preserve">
     <value>No se encontraron actualizaciones</value>
   </data>
   <data name="About.Privacy.Content" xml:space="preserve">
@@ -153,13 +150,10 @@
   <data name="About.Supported.Text" xml:space="preserve">
     <value>LANraragi</value>
   </data>
-  <data name="About.Updates.Title" xml:space="preserve">
-    <value>Actualizaciones</value>
-  </data>
   <data name="About.Version.Text" xml:space="preserve">
     <value>Versión</value>
   </data>
-  <data name="AboutPivot.Header" xml:space="preserve">
+  <data name="AboutPage.Header" xml:space="preserve">
     <value>Acerca de</value>
   </data>
   <data name="General.AddProfile.Content" xml:space="preserve">
@@ -258,7 +252,7 @@
   <data name="General.VisualTags.Description" xml:space="preserve">
     <value>Utiliza controles para la edición de etiquetas en lugar de un cuadro de texto</value>
   </data>
-  <data name="GeneralPivot.Header" xml:space="preserve">
+  <data name="GeneralPage.Header" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="LocalDataPivot.Header" xml:space="preserve">
@@ -300,9 +294,6 @@
   <data name="Reader.Keyboard.Description" xml:space="preserve">
     <value>Distancia en píxeles cuando se usa el teclado</value>
   </data>
-  <data name="Reader.ReaderGroup.Title" xml:space="preserve">
-    <value>Lector</value>
-  </data>
   <data name="Reader.Reminder.Title" xml:space="preserve">
     <value>Preguntar si se quiere agregar marcador</value>
   </data>
@@ -342,7 +333,7 @@
   <data name="Reader.Zoom.Title" xml:space="preserve">
     <value>Zoom predeterminado</value>
   </data>
-  <data name="ReaderPivot.Header" xml:space="preserve">
+  <data name="ReaderPage.Header" xml:space="preserve">
     <value>Lector</value>
   </data>
   <data name="Server.ApiRequired.Text" xml:space="preserve">
@@ -420,9 +411,6 @@
   <data name="Server.ResizedImages.Content" xml:space="preserve">
     <value>Imágenes redimensionadas</value>
   </data>
-  <data name="Server.Server.Title" xml:space="preserve">
-    <value>Servidor</value>
-  </data>
   <data name="Server.Settings.Content" xml:space="preserve">
     <value>Ajustes</value>
   </data>
@@ -459,7 +447,7 @@
   <data name="Server.WorkerUnknown.Text" xml:space="preserve">
     <value> Desconocido</value>
   </data>
-  <data name="ServerPivot.Header" xml:space="preserve">
+  <data name="ServerPage.Header" xml:space="preserve">
     <value>Servidor</value>
   </data>
   <data name="Reader.ScrollToChange.Description" xml:space="preserve">
@@ -467,5 +455,23 @@
   </data>
   <data name="Reader.ScrollToChange.Title" xml:space="preserve">
     <value>Desplazarse para cambiar de página</value>
+  </data>
+  <data name="UpdatesPage.Header" xml:space="preserve">
+    <value>Actualizaciones</value>
+  </data>
+  <data name="AboutPage.Description" xml:space="preserve">
+    <value>Versión, soporte, código fuente</value>
+  </data>
+  <data name="GeneralPage.Description" xml:space="preserve">
+    <value>Perfiles, pestañas, búsqueda, tema</value>
+  </data>
+  <data name="ReaderPage.Description" xml:space="preserve">
+    <value>Zoom, modo dos páginas, marcadores</value>
+  </data>
+  <data name="ServerPage.Description" xml:space="preserve">
+    <value>Ajustes, herramientas, base de datos</value>
+  </data>
+  <data name="UpdatesPage.Description" xml:space="preserve">
+    <value>Comprobar las actualizaciones</value>
   </data>
 </root>

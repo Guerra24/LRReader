@@ -149,6 +149,9 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WebTabViewModel.cs" />
+    <Compile Include="Views\Content\Settings\Updates.xaml.cs">
+      <DependentUpon>Updates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Content\Tools\BulkEditor.xaml.cs">
       <DependentUpon>BulkEditor.xaml</DependentUpon>
     </Compile>
@@ -260,26 +263,17 @@
     <Compile Include="Views\Tabs\Content\SearchResults.xaml.cs">
       <DependentUpon>SearchResults.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\Content\SettingsTabContent.xaml.cs">
-      <DependentUpon>SettingsTabContent.xaml</DependentUpon>
+    <Compile Include="Views\Content\Settings\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\Content\Settings\AboutPivot.xaml.cs">
-      <DependentUpon>AboutPivot.xaml</DependentUpon>
+    <Compile Include="Views\Content\Settings\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\Content\Settings\GeneralPivot.xaml.cs">
-      <DependentUpon>GeneralPivot.xaml</DependentUpon>
+    <Compile Include="Views\Content\Settings\Reader.xaml.cs">
+      <DependentUpon>Reader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\Content\Settings\HelpPivot.xaml.cs">
-      <DependentUpon>HelpPivot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tabs\Content\Settings\LocalDataPivot.xaml.cs">
-      <DependentUpon>LocalDataPivot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tabs\Content\Settings\ReaderPivot.xaml.cs">
-      <DependentUpon>ReaderPivot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tabs\Content\Settings\ServerPivot.xaml.cs">
-      <DependentUpon>ServerPivot.xaml</DependentUpon>
+    <Compile Include="Views\Content\Settings\Server.xaml.cs">
+      <DependentUpon>Server.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Content\Tools\Deduplicator.xaml.cs">
       <DependentUpon>Deduplicator.xaml</DependentUpon>
@@ -432,6 +426,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Content\Settings\Updates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Content\Tools\BulkEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -576,31 +574,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Tabs\Content\SettingsTabContent.xaml">
+    <Page Include="Views\Content\Settings\About.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Tabs\Content\Settings\AboutPivot.xaml">
+    <Page Include="Views\Content\Settings\General.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Tabs\Content\Settings\GeneralPivot.xaml">
+    <Page Include="Views\Content\Settings\Reader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Tabs\Content\Settings\HelpPivot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Tabs\Content\Settings\LocalDataPivot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Tabs\Content\Settings\ReaderPivot.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Tabs\Content\Settings\ServerPivot.xaml">
+    <Page Include="Views\Content\Settings\Server.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
