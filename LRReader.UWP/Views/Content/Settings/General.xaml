@@ -1,10 +1,11 @@
-﻿<Page
+﻿<controls:ModernBasePage
 	x:Class="LRReader.UWP.Views.Content.Settings.General"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
+	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
@@ -45,7 +46,13 @@
 					</Button>
 				</StackPanel>
 			</controls:ModernExpander>
-			<controls:ModernInput Title="Profiles" IsButton="True" Glyph="&#xE716;" RightGlyph="&#xE76C;"/>
+			<controls:ModernInput
+				x:Uid="/Settings/ProfilesPage" Click="PageButton_Click" Glyph="&#xE716;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/ProfilesPage" Page="local:Profiles" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
 		</controls:ModernGroup>
 		<controls:ModernGroup x:Uid="/Settings/General/Tabs">
 			<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
@@ -104,4 +111,4 @@
 			</controls:ModernInput>
 		</controls:ModernGroup>
 	</StackPanel>
-</Page>
+</controls:ModernBasePage>

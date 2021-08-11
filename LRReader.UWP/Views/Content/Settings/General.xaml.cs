@@ -2,6 +2,7 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter.Crashes;
@@ -14,7 +15,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
-	public sealed partial class General : Page
+	public sealed partial class General : ModernBasePage
 	{
 		private SettingsPageViewModel Data;
 

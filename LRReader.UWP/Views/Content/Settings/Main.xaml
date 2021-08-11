@@ -1,0 +1,57 @@
+﻿<controls:ModernBasePage
+	x:Class="LRReader.UWP.Views.Content.Settings.Main"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
+		<controls:ModernGroup x:Name="Pages">
+			<controls:ModernInput
+				x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/GeneralPage" Page="local:General" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
+			<controls:ModernInput
+				x:Uid="/Settings/ReaderPage" Click="PageButton_Click" Glyph="&#xE736;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/ReaderPage" Page="local:Reader" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
+			<controls:ModernInput
+				x:Uid="/Settings/ServerPage" Click="PageButton_Click" Glyph="&#xE83B;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/ServerPage" Page="local:Server" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
+			<controls:ModernInput
+				x:Uid="/Settings/UpdatesPage" Click="PageButton_Click" Glyph="&#xE895;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/UpdatesPage" Page="local:Updates" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
+			<controls:ModernInput
+				x:Uid="/Settings/AboutPage" Click="PageButton_Click" Glyph="&#xE946;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/AboutPage" Page="local:About" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
+			<controls:ModernInput
+				x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
+				IsButton="True" RightGlyph="&#xE76C;">
+				<controls:ModernInput.Tag>
+					<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
+				</controls:ModernInput.Tag>
+			</controls:ModernInput>
+		</controls:ModernGroup>
+	</StackPanel>
+</controls:ModernBasePage>

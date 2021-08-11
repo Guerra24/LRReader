@@ -1,17 +1,12 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP.Views.Controls
 {
-	[ContentProperty(Name = "Items")]
 	public sealed partial class ModernPageTab : UserControl
 	{
 
@@ -22,19 +17,18 @@ namespace LRReader.UWP.Views.Controls
 		public ModernPageTab()
 		{
 			this.InitializeComponent();
-			Items = new List<ModernPageTabItem>();
 		}
 
-		public IList<ModernPageTabItem> Items
+		public string Title
 		{
-			get => GetValue(ItemsProperty) as IList<ModernPageTabItem>;
-			set => SetValue(ItemsProperty, value);
+			get => GetValue(TitleProperty) as string;
+			set => SetValue(TitleProperty, value);
 		}
 
-		public string Header
+		public Type Initial
 		{
-			get => GetValue(HeaderProperty) as string;
-			set => SetValue(HeaderProperty, value);
+			get => GetValue(InitialProperty) as Type;
+			set => SetValue(InitialProperty, value);
 		}
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -42,7 +36,8 @@ namespace LRReader.UWP.Views.Controls
 			if (_loaded)
 				return;
 			_loaded = true;
-			Navigate(new ModernPageTabItem { Header = Header, Page = typeof(ModernPageTabInitial) });
+			if (Initial != null)
+				Navigate(new ModernPageTabItem { Title = Title, Page = Initial });
 		}
 
 		private void GoBack_Click(object sender, RoutedEventArgs e)
@@ -73,15 +68,14 @@ namespace LRReader.UWP.Views.Controls
 			}
 		}
 
-		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<ModernPageTabItem>), typeof(ModernPageTab), new PropertyMetadata(null));
-		public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(ModernPageTab), new PropertyMetadata(null));
+		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernPageTab), new PropertyMetadata(null));
+		public static readonly DependencyProperty InitialProperty = DependencyProperty.Register("Initial", typeof(Type), typeof(ModernPageTab), new PropertyMetadata(null));
 	}
 
 	public class ModernPageTabItem
 	{
-		public string Header { get; set; }
+		public string Title { get; set; }
 		public string Description { get; set; }
 		public Type Page { get; set; }
-		public string Icon { get; set; }
 	}
 }

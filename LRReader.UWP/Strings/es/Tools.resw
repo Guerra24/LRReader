@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BulkEditorPage.Header" xml:space="preserve">
+  <data name="BulkEditorPage.Title" xml:space="preserve">
     <value>Editor por lotes</value>
   </data>
   <data name="Deduplicator.AspectRatio.Description" xml:space="preserve">
@@ -186,7 +186,10 @@
   <data name="Deduplicator.Threads.Title" xml:space="preserve">
     <value>Hilos de trabajo</value>
   </data>
-  <data name="DeduplicatorPage.Header" xml:space="preserve">
+  <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Deduplicador</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>Herramientas</value>
   </data>
 </root>

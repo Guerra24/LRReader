@@ -153,7 +153,7 @@
   <data name="About.Version.Text" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="AboutPage.Header" xml:space="preserve">
+  <data name="AboutPage.Title" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="General.AddProfile.Content" xml:space="preserve">
@@ -252,7 +252,7 @@
   <data name="General.VisualTags.Description" xml:space="preserve">
     <value>Uses controls for tag editing instead of a text box</value>
   </data>
-  <data name="GeneralPage.Header" xml:space="preserve">
+  <data name="GeneralPage.Title" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="Reader.AutoOpen.Title" xml:space="preserve">
@@ -330,7 +330,7 @@
   <data name="Reader.Zoom.Title" xml:space="preserve">
     <value>Default Zoom</value>
   </data>
-  <data name="ReaderPage.Header" xml:space="preserve">
+  <data name="ReaderPage.Title" xml:space="preserve">
     <value>Reader</value>
   </data>
   <data name="Server.ApiRequired.Text" xml:space="preserve">
@@ -444,7 +444,7 @@
   <data name="Server.WorkerUnknown.Text" xml:space="preserve">
     <value> Unknown</value>
   </data>
-  <data name="ServerPage.Header" xml:space="preserve">
+  <data name="ServerPage.Title" xml:space="preserve">
     <value>Server</value>
   </data>
   <data name="Reader.ScrollToChange.Description" xml:space="preserve">
@@ -453,7 +453,7 @@
   <data name="Reader.ScrollToChange.Title" xml:space="preserve">
     <value>Scroll to change page</value>
   </data>
-  <data name="UpdatesPage.Header" xml:space="preserve">
+  <data name="UpdatesPage.Title" xml:space="preserve">
     <value>Updates</value>
   </data>
   <data name="AboutPage.Description" xml:space="preserve">
@@ -470,5 +470,14 @@
   </data>
   <data name="UpdatesPage.Description" xml:space="preserve">
     <value>Check for updates</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ProfilesPage.Title" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="FeedbackPage.Title" xml:space="preserve">
+    <value>Feedback</value>
   </data>
 </root>

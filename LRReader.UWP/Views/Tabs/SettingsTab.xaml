@@ -19,11 +19,5 @@
 		<muxc:SymbolIconSource Symbol="Setting" />
 	</muxc:TabViewItem.IconSource>
 
-	<controls:ModernPageTab x:Uid="/Tabs/Settings/Tab">
-		<controls:ModernPageTabItem x:Uid="/Settings/GeneralPage" Icon="&#xF8A6;" Page="settings:General" />
-		<controls:ModernPageTabItem x:Uid="/Settings/ReaderPage" Icon="&#xE736;" Page="settings:Reader" />
-		<controls:ModernPageTabItem x:Uid="/Settings/ServerPage" Icon="&#xE83B;" Page="settings:Server" />
-		<controls:ModernPageTabItem x:Uid="/Settings/UpdatesPage" Icon="&#xE895;" Page="settings:Updates" />
-		<controls:ModernPageTabItem x:Uid="/Settings/AboutPage" Icon="&#xE946;" Page="settings:About" />
-	</controls:ModernPageTab>
+	<controls:ModernPageTab x:Uid="/Settings/MainPage" Initial="settings:Main" />
 </controls:ModernTab>

@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
+using LRReader.UWP.Views.Controls;
 using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
-	public sealed partial class Server : Page
+	public sealed partial class Server : ModernBasePage
 	{
 		private SettingsPageViewModel Data;
 

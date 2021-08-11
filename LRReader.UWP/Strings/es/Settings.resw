@@ -153,7 +153,7 @@
   <data name="About.Version.Text" xml:space="preserve">
     <value>Versión</value>
   </data>
-  <data name="AboutPage.Header" xml:space="preserve">
+  <data name="AboutPage.Title" xml:space="preserve">
     <value>Acerca de</value>
   </data>
   <data name="General.AddProfile.Content" xml:space="preserve">
@@ -252,11 +252,8 @@
   <data name="General.VisualTags.Description" xml:space="preserve">
     <value>Utiliza controles para la edición de etiquetas en lugar de un cuadro de texto</value>
   </data>
-  <data name="GeneralPage.Header" xml:space="preserve">
+  <data name="GeneralPage.Title" xml:space="preserve">
     <value>General</value>
-  </data>
-  <data name="LocalDataPivot.Header" xml:space="preserve">
-    <value>Datos locales</value>
   </data>
   <data name="Reader.AutoOpen.Title" xml:space="preserve">
     <value>Abrir el lector automáticamente</value>
@@ -333,7 +330,7 @@
   <data name="Reader.Zoom.Title" xml:space="preserve">
     <value>Zoom predeterminado</value>
   </data>
-  <data name="ReaderPage.Header" xml:space="preserve">
+  <data name="ReaderPage.Title" xml:space="preserve">
     <value>Lector</value>
   </data>
   <data name="Server.ApiRequired.Text" xml:space="preserve">
@@ -447,7 +444,7 @@
   <data name="Server.WorkerUnknown.Text" xml:space="preserve">
     <value> Desconocido</value>
   </data>
-  <data name="ServerPage.Header" xml:space="preserve">
+  <data name="ServerPage.Title" xml:space="preserve">
     <value>Servidor</value>
   </data>
   <data name="Reader.ScrollToChange.Description" xml:space="preserve">
@@ -456,7 +453,7 @@
   <data name="Reader.ScrollToChange.Title" xml:space="preserve">
     <value>Desplazarse para cambiar de página</value>
   </data>
-  <data name="UpdatesPage.Header" xml:space="preserve">
+  <data name="UpdatesPage.Title" xml:space="preserve">
     <value>Actualizaciones</value>
   </data>
   <data name="AboutPage.Description" xml:space="preserve">
@@ -473,5 +470,14 @@
   </data>
   <data name="UpdatesPage.Description" xml:space="preserve">
     <value>Comprobar las actualizaciones</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="FeedbackPage.Title" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="ProfilesPage.Title" xml:space="preserve">
+    <value>Perfiles</value>
   </data>
 </root>

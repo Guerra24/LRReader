@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
@@ -26,7 +26,6 @@
     <AppxBundlePlatforms>x64|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxLogTelemetryFromSideloadingScript>False</AppxLogTelemetryFromSideloadingScript>
-    <PackageCertificateThumbprint>3C5876C281F89798F0E7F012CF2FA9642104DB74</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <Win32Resource>Resources\MiddleClickScrolling-CursorType.res</Win32Resource>
   </PropertyGroup>
@@ -149,11 +148,23 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WebTabViewModel.cs" />
+    <Compile Include="Views\Content\Settings\Feedback.xaml.cs">
+      <DependentUpon>Feedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Settings\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Settings\Profiles.xaml.cs">
+      <DependentUpon>Profiles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Content\Settings\Updates.xaml.cs">
       <DependentUpon>Updates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Content\Tools\BulkEditor.xaml.cs">
       <DependentUpon>BulkEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Tools\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ArchiveTags.xaml.cs">
       <DependentUpon>ArchiveTags.xaml</DependentUpon>
@@ -161,6 +172,7 @@
     <Compile Include="Views\Controls\ArchiveList.xaml.cs">
       <DependentUpon>ArchiveList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ModernBasePage.cs" />
     <Compile Include="Views\Controls\ModernExpander.xaml.cs">
       <DependentUpon>ModernExpander.xaml</DependentUpon>
     </Compile>
@@ -168,9 +180,6 @@
     <Compile Include="Views\Controls\ModernInput.cs" />
     <Compile Include="Views\Controls\ModernPageTab.xaml.cs">
       <DependentUpon>ModernPageTab.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\ModernPageTabInitial.xaml.cs">
-      <DependentUpon>ModernPageTabInitial.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ModernTab.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
@@ -426,11 +435,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Content\Settings\Feedback.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Content\Settings\Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Content\Settings\Profiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Content\Settings\Updates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Content\Tools\BulkEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Content\Tools\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -447,10 +472,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ModernPageTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\ModernPageTabInitial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
