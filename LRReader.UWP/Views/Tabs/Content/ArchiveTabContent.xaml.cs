@@ -48,7 +48,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
-		private ControlFlags flags;
+		private ControlFlags flags => Service.Api.ControlFlags;
+
+		private SettingsService settings => Service.Settings;
 
 		public ArchiveTabContent()
 		{
@@ -57,8 +59,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			Data = DataContext as ArchivePageViewModel;
 			Data.ZoomChangedEvent += FitImages;
-
-			flags = Service.Api.ControlFlags;
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
 				.Subscribe((height) =>
@@ -117,8 +117,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			if (Service.Platform.AnimationsEnabled && item != null)
 			{
-				var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(readerSet, page), item, "Image");
-				anim.Configuration = new BasicConnectedAnimationConfiguration();
+				var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Image");
+				if (!(image.ActualWidth == 0 || image.ActualHeight == 0))
+				{
+					var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(readerSet, page), item, "Image");
+					anim.Configuration = new BasicConnectedAnimationConfiguration();
+				}
 			}
 
 			Data.ShowReader = true;
@@ -258,11 +262,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			CloseReader();
 		}
 
-		private void Escape_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private void Close_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			args.Handled = true;
 			if (!Data.ShowReader)
 				return;
+			args.Handled = true;
 			CloseReader();
 		}
 
@@ -296,14 +300,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 					else
 						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
 					break;
+				case VirtualKey.Escape:
+					e.Handled = true;
+					CloseReader();
+					break;
 			}
 		}
 
 		private void ReaderControl_KeyDown(object sender, KeyRoutedEventArgs e)
 		{
-			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down)
+			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space || e.Key == VirtualKey.Escape)
 			{
 				e.Handled = true;
+				FocusReader();
 			}
 		}
 

@@ -40,19 +40,21 @@ namespace LRReader.UWP.Views.Controls
 				Navigate(new ModernPageTabItem { Title = Title, Page = Initial });
 		}
 
-		private void GoBack_Click(object sender, RoutedEventArgs e)
+		public bool GoBack()
 		{
 			if (BreadcrumbItems.Count > 1)
 			{
 				BreadcrumbItems.Remove(BreadcrumbItems.Last());
-				Content.Navigate(BreadcrumbItems.Last().Page, this);
+				ContentFrame.Navigate(BreadcrumbItems.Last().Page, this);
+				return true;
 			}
+			return false;
 		}
 
 		public void Navigate(ModernPageTabItem item)
 		{
 			BreadcrumbItems.Add(item);
-			Content.Navigate(item.Page, this);
+			ContentFrame.Navigate(item.Page, this);
 		}
 
 		private void Breadcrumb_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
@@ -64,7 +66,7 @@ namespace LRReader.UWP.Views.Controls
 					BreadcrumbItems.RemoveAt(i);
 				}
 				var item = (ModernPageTabItem)args.Item;
-				Content.Navigate(item.Page, this);
+				ContentFrame.Navigate(item.Page, this);
 			}
 		}
 

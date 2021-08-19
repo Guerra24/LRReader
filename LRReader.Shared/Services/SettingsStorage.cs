@@ -2,6 +2,8 @@
 
 namespace LRReader.Shared.Services
 {
+
+	//[CallerMemberName]
 	public interface ISettingsStorageService : IService
 	{
 		void StoreObjectLocal(string key, object obj);

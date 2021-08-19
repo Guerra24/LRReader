@@ -480,4 +480,7 @@
   <data name="ProfilesPage.Title" xml:space="preserve">
     <value>Perfiles</value>
   </data>
+  <data name="Reader.CustomBackground.Title" xml:space="preserve">
+    <value>Color de fondo</value>
+  </data>
 </root>

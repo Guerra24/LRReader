@@ -12,7 +12,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using static LRReader.Shared.Internal.SharedGlobal;
 
 namespace LRReader.Shared.Services
 {
@@ -183,6 +182,20 @@ namespace LRReader.Shared.Services
 		{
 			get => SettingsStorage.GetObjectRoamed("ScrollToChangePage", true);
 			set => SettingsStorage.StoreObjectRoamed("ScrollToChangePage", value);
+		}
+		public bool UseReaderBackground
+		{
+			get => SettingsStorage.GetObjectLocal("UseReaderBackground", false);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("UseReaderBackground", value);
+				OnPropertyChanged("UseReaderBackground");
+			}
+		}
+		public string ReaderBackground
+		{
+			get => SettingsStorage.GetObjectLocal("ReaderBackground", "#FF000000");
+			set => SettingsStorage.StoreObjectLocal("ReaderBackground", value);
 		}
 
 		public static readonly int CurrentLocalVersion = 4;

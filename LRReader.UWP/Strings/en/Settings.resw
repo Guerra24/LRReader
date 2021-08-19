@@ -480,4 +480,7 @@
   <data name="FeedbackPage.Title" xml:space="preserve">
     <value>Feedback</value>
   </data>
+  <data name="Reader.CustomBackground.Title" xml:space="preserve">
+    <value>Background color</value>
+  </data>
 </root>

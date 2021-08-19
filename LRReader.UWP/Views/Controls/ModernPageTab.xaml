@@ -26,7 +26,7 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<Button Click="GoBack_Click" IsEnabled="{x:Bind BreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
+			<Button Click="{x:Bind GoBack}" IsEnabled="{x:Bind BreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
 			<muxc:BreadcrumbBar
 				x:Name="Breadcrumb" Grid.Column="1" Margin="0,-3,0,0"
 				VerticalAlignment="Center" ItemClicked="Breadcrumb_ItemClicked"
@@ -39,7 +39,7 @@
 			</muxc:BreadcrumbBar>
 		</Grid>
 		<ScrollViewer Grid.Row="1">
-			<Frame x:Name="Content" Margin="10,0" IsNavigationStackEnabled="False">
+			<Frame x:Name="ContentFrame" Margin="10,0" IsNavigationStackEnabled="False">
 				<Frame.ContentTransitions>
 					<TransitionCollection>
 						<PopupThemeTransition FromVerticalOffset="200" />

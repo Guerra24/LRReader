@@ -28,6 +28,8 @@
 		<Setter Property="BorderThickness" Value="{ThemeResource ExpanderHeaderBorderThickness}" />
 		<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
 		<Setter Property="TextMargin" Value="0,16,0,16" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="UseSystemFocusVisuals" Value="True" />
 		<Setter Property="Transitions">
 			<Setter.Value>
 				<TransitionCollection>
@@ -135,6 +137,7 @@
 
 	<Style TargetType="controls:ModernGroup">
 		<Setter Property="Margin" Value="0,0,0,32" />
+		<Setter Property="IsTabStop" Value="False" />
 		<Setter Property="Transitions">
 			<Setter.Value>
 				<TransitionCollection>

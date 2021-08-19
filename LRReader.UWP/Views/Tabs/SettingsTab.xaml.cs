@@ -16,6 +16,8 @@ namespace LRReader.UWP.Views.Tabs
 		public SettingsTab()
 		{
 			this.InitializeComponent();
+			GoBack += () => ContentPage.GoBack();
+
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 			DispatcherTimer = new DispatcherTimer();
 			DispatcherTimer.Tick += DispatcherTimer_Tick;

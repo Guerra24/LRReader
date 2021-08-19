@@ -1,4 +1,5 @@
-﻿using Windows.UI.Input;
+﻿using Windows.System;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -58,7 +59,7 @@ namespace LRReader.UWP.Views.Controls
 		public bool IsButton
 		{
 			get => (bool)GetValue(IsButtonProperty);
-			set => SetValue(IsButtonProperty, value);
+			set => SetValue(IsButtonProperty, IsTabStop = value);
 		}
 
 		public string RightGlyph
@@ -101,9 +102,33 @@ namespace LRReader.UWP.Views.Controls
 			base.OnPointerReleased(e);
 			if (IsButton)
 			{
-				Click?.Invoke(this, null);
+				Click?.Invoke(this, e);
 				VisualStateManager.GoToState(this, "PointerOver", true);
 			}
+		}
+
+		protected override void OnKeyDown(KeyRoutedEventArgs e)
+		{
+			base.OnKeyDown(e);
+			if (IsButton && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
+				VisualStateManager.GoToState(this, "Pressed", true);
+		}
+
+		protected override void OnKeyUp(KeyRoutedEventArgs e)
+		{
+			base.OnKeyUp(e);
+			if (IsButton && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
+			{
+				Click?.Invoke(this, e);
+				VisualStateManager.GoToState(this, "Normal", true);
+			}
+		}
+
+		protected override void OnLostFocus(RoutedEventArgs e)
+		{
+			base.OnLostFocus(e);
+			if (IsButton)
+				VisualStateManager.GoToState(this, "Normal", true);
 		}
 
 		public static readonly DependencyProperty ControlProperty = DependencyProperty.Register("Control", typeof(object), typeof(ModernInput), new PropertyMetadata(null));

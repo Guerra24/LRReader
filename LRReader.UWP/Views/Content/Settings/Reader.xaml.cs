@@ -1,6 +1,8 @@
 ﻿using LRReader.UWP.ViewModels;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -22,5 +24,9 @@ namespace LRReader.UWP.Views.Content.Settings
 			 */
 		}
 
+		private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
+		{
+			((SolidColorBrush)Application.Current.Resources["CustomReaderBackground"]).Color = args.NewColor;
+		}
 	}
 }

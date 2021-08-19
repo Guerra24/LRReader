@@ -147,10 +147,12 @@ namespace LRReader.UWP.Views.Controls
 			{
 				if (pointerPoint.Properties.IsXButton1Pressed)
 				{
+					e.Handled = true;
 					await Data.PrevPage();
 				}
 				else if (pointerPoint.Properties.IsXButton2Pressed)
 				{
+					e.Handled = true;
 					await Data.NextPage();
 				}
 			}

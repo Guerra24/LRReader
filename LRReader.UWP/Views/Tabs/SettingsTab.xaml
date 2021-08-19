@@ -19,5 +19,5 @@
 		<muxc:SymbolIconSource Symbol="Setting" />
 	</muxc:TabViewItem.IconSource>
 
-	<controls:ModernPageTab x:Uid="/Settings/MainPage" Initial="settings:Main" />
+	<controls:ModernPageTab x:Name="ContentPage" x:Uid="/Settings/MainPage" Initial="settings:Main" />
 </controls:ModernTab>

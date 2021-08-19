@@ -115,9 +115,6 @@
 			RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped"
 			VerticalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
-			<ScrollViewer.KeyboardAccelerators>
-				<KeyboardAccelerator Key="Escape" Invoked="Escape_Invoked" />
-			</ScrollViewer.KeyboardAccelerators>
 			<items:ReaderImage
 				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
 				IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
@@ -140,5 +137,18 @@
 				<Run Text="{x:Bind Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />
 			</TextBlock>
 		</Grid>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="ThemeBackground" />
+				<VisualState x:Name="UserBackground" >
+					<VisualState.StateTriggers>
+						<StateTrigger IsActive="{x:Bind settings.UseReaderBackground, Mode=OneWay}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="ScrollViewer.Background" Value="{StaticResource CustomReaderBackground}" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </UserControl>

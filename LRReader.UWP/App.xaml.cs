@@ -14,6 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using static LRReader.Shared.Services.Service;
+using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
 
 namespace LRReader.UWP
 {
@@ -81,6 +82,8 @@ namespace LRReader.UWP
 
 				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 14))
 					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");
+
+				((SolidColorBrush)this.Resources["CustomReaderBackground"]).Color = ColorHelper.ToColor(Settings.ReaderBackground);
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{

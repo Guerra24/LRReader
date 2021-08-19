@@ -17,5 +17,5 @@
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 	</muxc:TabViewItem.IconSource>
 
-	<controls:ModernPageTab x:Uid="/Tools/MainPage" Initial="content:Main" />
+	<controls:ModernPageTab x:Name="ContentPage" x:Uid="/Tools/MainPage" Initial="content:Main" />
 </controls:ModernTab>

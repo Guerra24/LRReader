@@ -2,7 +2,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-	xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:LRReader.UWP.Views.Controls">
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
 
 	<!--  https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/GridViewItem_themeresources_21h1.xaml  -->
 	<ResourceDictionary.ThemeDictionaries>
@@ -716,11 +717,17 @@
 						HighContrastAdjustment="None" IsTabStop="False" />
 				</Viewbox>
 
+				<!--
+					If we template bind the ContentPresenter's Content property to the TabViewItem.Header property
+					we unfortunately run into the following issue if the header is [null] or empty:
+					The TabViewItem.Content property will be implictly bound to the Content property of the ContentPresenter.
+					To prevent this, we explicitly set a default empty content here and update the content in code behind.
+				-->
 				<ContentPresenter
 					x:Name="ContentPresenter" Grid.Column="1"
 					HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 					VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-					Content="{TemplateBinding Header}"
+					Content=""
 					ContentTemplate="{TemplateBinding HeaderTemplate}"
 					ContentTransitions="{TemplateBinding ContentTransitions}"
 					FontSize="{ThemeResource TabViewItemHeaderFontSize}"

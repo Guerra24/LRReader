@@ -9,5 +9,7 @@
 		bool IsClosable { get; set; }
 
 		void Unload();
+
+		bool BackRequested();
 	}
 }

@@ -75,6 +75,12 @@
 				</controls:ModernExpander.Input>
 				<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
 			</controls:ModernExpander>
+			<controls:ModernExpander x:Uid="/Settings/Reader/CustomBackground" Glyph="&#xE790;">
+				<controls:ModernExpander.Input>
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseReaderBackground, Mode=TwoWay}" />
+				</controls:ModernExpander.Input>
+				<ColorPicker ColorChanged="ColorPicker_ColorChanged" IsMoreButtonVisible="True" Color="{x:Bind Data.SettingsManager.ReaderBackground, Mode=TwoWay}" />
+			</controls:ModernExpander>
 			<muxc:InfoBar x:Uid="/Settings/Reader/AV1NoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.AvifMissing, Mode=OneWay}">
 				<muxc:InfoBar.Transitions>
 					<TransitionCollection>

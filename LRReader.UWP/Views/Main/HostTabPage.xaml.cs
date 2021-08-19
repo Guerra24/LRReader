@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -48,6 +49,9 @@ namespace LRReader.UWP.Views.Main
 			CoreView.TitleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
 			AppView.VisibleBoundsChanged += AppView_VisibleBoundsChanged;
 
+			SystemNavigationManager.GetForCurrentView().BackRequested += HostTabPage_BackRequested;
+			Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
+
 			TabViewStartHeader.Margin = new Thickness(CoreView.TitleBar.SystemOverlayLeftInset, 0, 0, 0);
 			TabViewEndHeader.Margin = new Thickness(0, 0, CoreView.TitleBar.SystemOverlayRightInset, 0);
 
@@ -84,10 +88,24 @@ namespace LRReader.UWP.Views.Main
 			CoreView.TitleBar.IsVisibleChanged -= TitleBar_IsVisibleChanged;
 			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
 
+			SystemNavigationManager.GetForCurrentView().BackRequested -= HostTabPage_BackRequested;
+			Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
+
 			Window.Current.SetTitleBar(null);
 			Events.ShowNotificationEvent -= ShowNotification;
 
 			Data.UnHook();
+		}
+
+		private void HostTabPage_BackRequested(object sender, BackRequestedEventArgs e)
+		{
+			e.Handled = Data.CurrentTab.BackRequested();
+		}
+
+		private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
+		{
+			if (e.CurrentPoint.Properties.IsXButton1Pressed)
+				e.Handled = Data.CurrentTab.BackRequested();
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
