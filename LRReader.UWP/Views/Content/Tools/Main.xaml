@@ -8,22 +8,26 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
-		<controls:ModernGroup x:Name="Pages">
-			<controls:ModernInput
-				x:Uid="/Tools/DeduplicatorPage" Click="PageButton_Click" Glyph="&#xE8C8;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Tools/DeduplicatorPage" Page="local:Deduplicator" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Tools/BulkEditorPage" Click="PageButton_Click" Glyph="&#xE932;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Tools/BulkEditorPage" Page="local:BulkEditor" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-		</controls:ModernGroup>
-	</StackPanel>
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Margin="10,0" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Name="Pages">
+				<controls:ModernInput
+					x:Uid="/Tools/DeduplicatorPage" Click="PageButton_Click" Glyph="&#xE8C8;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Tools/DeduplicatorPage" Page="local:Deduplicator" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Tools/BulkEditorPage" Click="PageButton_Click" Glyph="&#xE932;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Tools/BulkEditorPage" Page="local:BulkEditor" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
 </controls:ModernBasePage>

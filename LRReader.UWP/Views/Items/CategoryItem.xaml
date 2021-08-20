@@ -47,11 +47,13 @@
 				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="24" Glyph="&#xE721;" />
 			</Grid>
 			<Grid
-				x:Name="PinnedGrid" Padding="4" HorizontalAlignment="Left"
-				VerticalAlignment="Bottom"
+				x:Name="PinnedGrid" Margin="4,0,0,4" Padding="4"
+				HorizontalAlignment="Left" VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.Category.pinned, Mode=OneWay}"
 				Background="{ThemeResource GridOverGridBackground}"
-				CornerRadius="0,4,0,0">
+				BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+				BorderThickness="1"
+				CornerRadius="{ThemeResource ControlCornerRadius}">
 				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="26" Glyph="&#xE735;" />
 			</Grid>
 		</Grid>

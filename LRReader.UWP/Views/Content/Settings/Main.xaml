@@ -8,50 +8,54 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
-		<controls:ModernGroup x:Name="Pages">
-			<controls:ModernInput
-				x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/GeneralPage" Page="local:General" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Settings/ReaderPage" Click="PageButton_Click" Glyph="&#xE736;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/ReaderPage" Page="local:Reader" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Settings/ServerPage" Click="PageButton_Click" Glyph="&#xE83B;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/ServerPage" Page="local:Server" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Settings/UpdatesPage" Click="PageButton_Click" Glyph="&#xE895;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/UpdatesPage" Page="local:Updates" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Settings/AboutPage" Click="PageButton_Click" Glyph="&#xE946;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/AboutPage" Page="local:About" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-		</controls:ModernGroup>
-	</StackPanel>
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Margin="10,0" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Name="Pages">
+				<controls:ModernInput
+					x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/GeneralPage" Page="local:General" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/ReaderPage" Click="PageButton_Click" Glyph="&#xE736;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/ReaderPage" Page="local:Reader" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/ServerPage" Click="PageButton_Click" Glyph="&#xE83B;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/ServerPage" Page="local:Server" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/UpdatesPage" Click="PageButton_Click" Glyph="&#xE895;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/UpdatesPage" Page="local:Updates" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/AboutPage" Click="PageButton_Click" Glyph="&#xE946;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/AboutPage" Page="local:About" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
 </controls:ModernBasePage>

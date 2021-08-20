@@ -9,57 +9,61 @@
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
-	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
-		<controls:ModernGroup>
-			<controls:ModernExpander Title="LRReader" IsExpanded="True">
-				<controls:ModernExpander.Icon>
-					<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
-				</controls:ModernExpander.Icon>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition MaxWidth="100" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<Grid.Resources>
-						<Style TargetType="TextBlock">
-							<Setter Property="Margin" Value="0,3" />
-						</Style>
-					</Grid.Resources>
-					<StackPanel Orientation="Vertical">
-						<TextBlock x:Uid="/Settings/About/Version" />
-						<TextBlock x:Uid="/Settings/About/Supported" />
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Margin="10,0" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernExpander Title="LRReader" IsExpanded="True">
+					<controls:ModernExpander.Icon>
+						<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+					</controls:ModernExpander.Icon>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition MaxWidth="100" />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Grid.Resources>
+							<Style TargetType="TextBlock">
+								<Setter Property="Margin" Value="0,3" />
+							</Style>
+						</Grid.Resources>
+						<StackPanel Orientation="Vertical">
+							<TextBlock x:Uid="/Settings/About/Version" />
+							<TextBlock x:Uid="/Settings/About/Supported" />
+						</StackPanel>
+						<StackPanel Grid.Column="1" Orientation="Vertical">
+							<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+								<Run Text="{x:Bind Data.Version}" />
+							</TextBlock>
+							<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+								<Run Text="{x:Bind Data.MinVersion}" />
+								<Run Text="-" />
+								<Run Text="{x:Bind Data.MaxVersion}" />
+							</TextBlock>
+						</StackPanel>
+					</Grid>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock x:Uid="/Settings/About/Links" Padding="0,5,11,6" FontWeight="SemiBold" />
+						<Button x:Uid="/Settings/About/License" Click="License_Click" Style="{ThemeResource TextBlockButtonStyle}" />
+						<Button x:Uid="/Settings/About/Privacy" Click="Privacy_Click" Style="{ThemeResource TextBlockButtonStyle}" />
 					</StackPanel>
-					<StackPanel Grid.Column="1" Orientation="Vertical">
-						<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-							<Run Text="{x:Bind Data.Version}" />
-						</TextBlock>
-						<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-							<Run Text="{x:Bind Data.MinVersion}" />
-							<Run Text="-" />
-							<Run Text="{x:Bind Data.MaxVersion}" />
-						</TextBlock>
-					</StackPanel>
-				</Grid>
-				<StackPanel Orientation="Horizontal">
-					<TextBlock x:Uid="/Settings/About/Links" Padding="0,5,11,6" FontWeight="SemiBold" />
-					<Button x:Uid="/Settings/About/License" Click="License_Click" Style="{ThemeResource TextBlockButtonStyle}" />
-					<Button x:Uid="/Settings/About/Privacy" Click="Privacy_Click" Style="{ThemeResource TextBlockButtonStyle}" />
-				</StackPanel>
-			</controls:ModernExpander>
-			<controls:ModernInput
-				x:Uid="/Settings/About/Github" Title="Github" Click="WebButton_Click"
-				IsButton="True" RightGlyph="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
-				<controls:ModernInput.Icon>
-					<muxc:ImageIcon x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
-				</controls:ModernInput.Icon>
-			</controls:ModernInput>
-			<controls:ModernInput
-				x:Uid="/Settings/About/KoFi" Title="Ko-Fi" Click="WebButton_Click"
-				IsButton="True" RightGlyph="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
-				<controls:ModernInput.Icon>
-					<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
-				</controls:ModernInput.Icon>
-			</controls:ModernInput>
-		</controls:ModernGroup>
-	</StackPanel>
+				</controls:ModernExpander>
+				<controls:ModernInput
+					x:Uid="/Settings/About/Github" Title="Github" Click="WebButton_Click"
+					IsButton="True" RightGlyph="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
+					<controls:ModernInput.Icon>
+						<muxc:ImageIcon x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
+					</controls:ModernInput.Icon>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/About/KoFi" Title="Ko-Fi" Click="WebButton_Click"
+					IsButton="True" RightGlyph="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
+					<controls:ModernInput.Icon>
+						<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+					</controls:ModernInput.Icon>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
 </Page>

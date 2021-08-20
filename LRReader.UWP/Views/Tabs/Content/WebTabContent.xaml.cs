@@ -25,5 +25,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private void WebContent_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) => ViewModel.NavigationStarting(sender, args);
 
 		private void WebContent_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args) => ViewModel.NavigationCompleted(sender, args);
+
+		private async void WebContent_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+		{
+			string func = "var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; }'; document.head.appendChild(style);";
+			await sender.InvokeScriptAsync("eval", new string[] { func });
+		}
 	}
 }

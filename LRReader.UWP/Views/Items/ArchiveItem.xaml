@@ -107,19 +107,25 @@
 				<muxc:ProgressBar Background="Transparent" IsIndeterminate="True" />
 			</Grid>
 			<Grid
-				x:Name="ProgressGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+				x:Name="ProgressGrid" Margin="4,0,0,4" HorizontalAlignment="Left"
+				VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.Bookmarked, Mode=OneWay}"
 				Background="{ThemeResource GridOverGridBackground}"
-				CornerRadius="0,4,0,0">
+				BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+				BorderThickness="1"
+				CornerRadius="{ThemeResource ControlCornerRadius}">
 				<TextBlock Padding="6,2" FontSize="16">
 					<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
 				</TextBlock>
 			</Grid>
 			<Grid
-				x:Name="IsNewGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+				x:Name="IsNewGrid" Margin="0,0,4,4" HorizontalAlignment="Right"
+				VerticalAlignment="Bottom"
 				x:Load="{x:Bind ViewModel.IsNew, Mode=OneWay}"
 				Background="{ThemeResource GridOverGridBackground}"
-				CornerRadius="4,0,0,0">
+				BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+				BorderThickness="1"
+				CornerRadius="{ThemeResource ControlCornerRadius}">
 				<TextBlock x:Uid="/Items/Archive/New" Padding="6,2" FontSize="16" />
 			</Grid>
 		</Grid>

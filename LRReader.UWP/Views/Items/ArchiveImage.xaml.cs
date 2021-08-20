@@ -2,10 +2,12 @@
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
@@ -48,9 +50,16 @@ namespace LRReader.UWP.Views.Items
 
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
-			image.DecodePixelHeight = 275;
+			image.DecodePixelWidth = 200;
 			image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image), image, n.Image.EndsWith("avif")) as BitmapImage;
 			Ring.IsActive = false;
+			if (image.PixelHeight != 0 && image.PixelWidth != 0)
+			{
+				if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
+					Image.Stretch = Stretch.Uniform;
+				else
+					Image.Stretch = Stretch.UniformToFill;
+			}
 			Image.Source = image;
 
 			if (image != null)
@@ -74,11 +83,11 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0);
+		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e) => VisualStateManager.GoToState(this, "PointerOver", true);
 
-		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0, 0, 0, -26);
+		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e) => VisualStateManager.GoToState(this, "Normal", true);
 
-		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e) => PageCountGrid.Margin = new Thickness(0, 0, 0, -26);
+		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e) => VisualStateManager.GoToState(this, "Normal", true);
 	}
 
 }

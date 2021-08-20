@@ -38,14 +38,12 @@
 				</muxc:BreadcrumbBar.ItemTemplate>
 			</muxc:BreadcrumbBar>
 		</Grid>
-		<ScrollViewer Grid.Row="1">
-			<Frame x:Name="ContentFrame" Margin="10,0" IsNavigationStackEnabled="False">
-				<Frame.ContentTransitions>
-					<TransitionCollection>
-						<PopupThemeTransition FromVerticalOffset="200" />
-					</TransitionCollection>
-				</Frame.ContentTransitions>
-			</Frame>
-		</ScrollViewer>
+		<Frame x:Name="ContentFrame" Grid.Row="1" IsNavigationStackEnabled="False">
+			<Frame.ContentTransitions>
+				<TransitionCollection>
+					<PopupThemeTransition FromVerticalOffset="200" />
+				</TransitionCollection>
+			</Frame.ContentTransitions>
+		</Frame>
 	</Grid>
 </UserControl>

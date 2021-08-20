@@ -690,10 +690,11 @@
 				x:Name="TabContainer" Grid.Column="1"
 				Padding="{ThemeResource TabViewItemHeaderPadding}"
 				Background="{ThemeResource TabViewItemHeaderBackground}"
-				BorderBrush="{TemplateBinding BorderBrush}"
+				BorderBrush="{ThemeResource ControlElevationBorderBrush}"
 				BorderThickness="1" Control.IsTemplateFocusTarget="True"
 				CornerRadius="{ThemeResource OverlayCornerRadius}"
 				FocusVisualMargin="{TemplateBinding FocusVisualMargin}">
+				<!-- {TemplateBinding BorderBrush} -->
 
 				<Grid.BackgroundTransition>
 					<BrushTransition Duration="0:0:0.083" />

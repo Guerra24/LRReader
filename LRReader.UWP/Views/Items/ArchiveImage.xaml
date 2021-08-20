@@ -21,21 +21,20 @@
 	</UserControl.ContextFlyout>
 
 	<Grid>
-		<Grid.Clip>
-			<RectangleGeometry Rect="0,0,200,275" />
-		</Grid.Clip>
-		<Image x:Name="Image" />
+		<Image x:Name="Image" VerticalAlignment="Center" />
 		<Grid
-			x:Name="PageCountGrid" Margin="0,0,0,-26" HorizontalAlignment="Right"
+			x:Name="PageCountGrid" Margin="0,0,4,4" HorizontalAlignment="Right"
 			VerticalAlignment="Bottom"
 			Background="{ThemeResource GridOverGridBackground}"
-			CornerRadius="4,0,0,0">
-			<Grid.Transitions>
-				<TransitionCollection>
-					<RepositionThemeTransition />
-				</TransitionCollection>
-			</Grid.Transitions>
-			<TextBlock x:Name="PageCount" Padding="6,2" FontSize="16" />
+			BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+			BorderThickness="1"
+			CornerRadius="{ThemeResource ControlCornerRadius}">
+			<Grid.RenderTransform>
+				<TranslateTransform x:Name="PageCountGridTransform" Y="32" />
+			</Grid.RenderTransform>
+			<TextBlock
+				x:Name="PageCount" Padding="6,2" FontSize="16"
+				Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
 		</Grid>
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
 			<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
@@ -43,5 +42,22 @@
 		<muxc:ProgressRing
 			Name="Ring" Width="50" Height="50"
 			IsActive="True" />
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="CommonStates">
+				<VisualState x:Name="Normal" />
+				<VisualState x:Name="PointerOver">
+					<VisualState.Setters>
+						<Setter Target="PageCountGridTransform.Y" Value="0" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0:0:0.15">
+						<VisualTransition.GeneratedEasingFunction>
+							<QuadraticEase EasingMode="EaseOut" />
+						</VisualTransition.GeneratedEasingFunction>
+					</VisualTransition>
+				</VisualStateGroup.Transitions>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </UserControl>

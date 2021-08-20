@@ -16,8 +16,8 @@
 
 	<Grid>
 		<WebView
-			x:Name="WebContent" DefaultBackgroundColor="#34353B" NavigationCompleted="WebContent_NavigationCompleted"
-			NavigationStarting="WebContent_NavigationStarting"
+			x:Name="WebContent" DOMContentLoaded="WebContent_DOMContentLoaded" DefaultBackgroundColor="Transparent"
+			NavigationCompleted="WebContent_NavigationCompleted" NavigationStarting="WebContent_NavigationStarting"
 			Visibility="{x:Bind ViewModel.ShowError, Mode=OneWay, Converter={StaticResource NegateBoolToVisibility}}" />
 		<TextBlock
 			HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"

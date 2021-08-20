@@ -18,97 +18,101 @@
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</Page.Resources>
 
-	<StackPanel MaxWidth="1000" HorizontalAlignment="Center">
-		<controls:ModernGroup x:Uid="/Settings/General/Connection">
-			<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE779;">
-				<controls:ModernExpander.Input>
-					<ComboBox
-						x:Name="ProfileSelection" MinWidth="120"
-						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
-						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-						SelectionChanged="ComboBox_SelectionChanged" />
-				</controls:ModernExpander.Input>
-				<StackPanel Orientation="Horizontal">
-					<Button x:Uid="/Settings/General/AddProfile" Margin="0,0,10,0" Click="ButtonAdd_Click" />
-					<Button
-						x:Uid="/Settings/General/EditProfile" Margin="0,0,10,0" Click="ButtonEdit_Click"
-						IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-					<Button x:Uid="/Settings/General/RemoveProfile">
-						<Button.Flyout>
-							<Flyout x:Name="RemoveFlyout">
-								<StackPanel>
-									<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-									<Button x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
-								</StackPanel>
-							</Flyout>
-						</Button.Flyout>
-					</Button>
-				</StackPanel>
-			</controls:ModernExpander>
-			<controls:ModernInput
-				x:Uid="/Settings/ProfilesPage" Click="PageButton_Click" Glyph="&#xE716;"
-				IsButton="True" RightGlyph="&#xE76C;">
-				<controls:ModernInput.Tag>
-					<controls:ModernPageTabItem x:Uid="/Settings/ProfilesPage" Page="local:Profiles" />
-				</controls:ModernInput.Tag>
-			</controls:ModernInput>
-		</controls:ModernGroup>
-		<controls:ModernGroup x:Uid="/Settings/General/Tabs">
-			<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
-				<ToggleSwitch IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/Bookmarks" Glyph="&#xE728;">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/Bookmarked" Glyph="&#xE734;">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/CompactMarks" Glyph="&#xF0E2;">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/VisualTags" Glyph="&#xE8EC;">
-				<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVisualTags, Mode=TwoWay}" />
-			</controls:ModernInput>
-		</controls:ModernGroup>
-		<controls:ModernGroup x:Uid="/Settings/General/Search">
-			<controls:ModernInput x:Uid="/Settings/General/InputSortBy" Glyph="&#xF168;">
-				<StackPanel Orientation="Horizontal">
-					<ComboBox
-						x:Uid="/Settings/General/SortBy" MinWidth="120"
-						ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
-						SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}" />
-					<Button
-						x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
-						VerticalAlignment="Bottom" Click="ClearButton_Click">
-						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
-					</Button>
-				</StackPanel>
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/OrderBy" Glyph="&#xE8CB;">
-				<ComboBox x:Name="OrderByComboBox" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
-			</controls:ModernInput>
-		</controls:ModernGroup>
-		<controls:ModernGroup x:Uid="/Settings/General/App">
-			<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">
-				<ComboBox x:Name="ThemeComboBox" MinWidth="120" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Glyph="&#xE8B9;">
-				<StackPanel Orientation="Horizontal">
-					<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
-						<Run x:Uid="/Settings/General/Size" />
-						<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
-					</TextBlock>
-					<muxc:ProgressRing
-						Width="30" Height="30" Margin="0,0,10,0"
-						VerticalAlignment="Center" IsActive="True"
-						Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-					<Button x:Uid="/Settings/General/ClearThumbCache" Click="ButtonClearThumbCache_Click" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
-				</StackPanel>
-			</controls:ModernInput>
-			<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;">
-				<ToggleSwitch Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
-			</controls:ModernInput>
-		</controls:ModernGroup>
-	</StackPanel>
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" Margin="10,0" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Uid="/Settings/General/Connection">
+				<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE779;">
+					<controls:ModernExpander.Input>
+						<ComboBox
+							x:Name="ProfileSelection" MinWidth="120"
+							IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
+							ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
+							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
+							SelectionChanged="ComboBox_SelectionChanged" />
+					</controls:ModernExpander.Input>
+					<StackPanel Orientation="Horizontal">
+						<Button x:Uid="/Settings/General/AddProfile" Margin="0,0,10,0" Click="ButtonAdd_Click" />
+						<Button
+							x:Uid="/Settings/General/EditProfile" Margin="0,0,10,0" Click="ButtonEdit_Click"
+							IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+						<Button x:Uid="/Settings/General/RemoveProfile">
+							<Button.Flyout>
+								<Flyout x:Name="RemoveFlyout">
+									<StackPanel>
+										<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+										<Button x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
+									</StackPanel>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+					</StackPanel>
+				</controls:ModernExpander>
+				<!--<controls:ModernInput
+					x:Uid="/Settings/ProfilesPage" Click="PageButton_Click" Glyph="&#xE716;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/ProfilesPage" Page="local:Profiles" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>-->
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
+				<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
+					<ToggleSwitch IsEnabled="{x:Bind Data.ControlFlags.CategoriesEnabled}" IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/Bookmarks" Glyph="&#xE728;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/Bookmarked" Glyph="&#xE734;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/CompactMarks" Glyph="&#xF0E2;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/VisualTags" Glyph="&#xE8EC;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVisualTags, Mode=TwoWay}" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/Search">
+				<controls:ModernInput x:Uid="/Settings/General/InputSortBy" Glyph="&#xF168;">
+					<StackPanel Orientation="Horizontal">
+						<ComboBox
+							x:Uid="/Settings/General/SortBy" MinWidth="120"
+							ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
+							SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}" />
+						<Button
+							x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
+							VerticalAlignment="Bottom" Click="ClearButton_Click">
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+						</Button>
+					</StackPanel>
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/OrderBy" Glyph="&#xE8CB;">
+					<ComboBox x:Name="OrderByComboBox" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/App">
+				<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">
+					<ComboBox x:Name="ThemeComboBox" MinWidth="120" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Glyph="&#xE8B9;">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+							<Run x:Uid="/Settings/General/Size" />
+							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
+						</TextBlock>
+						<muxc:ProgressRing
+							Width="30" Height="30" Margin="0,0,10,0"
+							VerticalAlignment="Center" IsActive="True"
+							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
+						<Button x:Uid="/Settings/General/ClearThumbCache" Click="ButtonClearThumbCache_Click" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+					</StackPanel>
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;">
+					<ToggleSwitch Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
 </controls:ModernBasePage>
