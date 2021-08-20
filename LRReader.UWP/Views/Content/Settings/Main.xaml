@@ -8,10 +8,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
-		<StackPanel
-			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
-			MaxWidth="1000" Margin="10,0" HorizontalAlignment="Center">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
+		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Name="Pages">
 				<controls:ModernInput
 					x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"

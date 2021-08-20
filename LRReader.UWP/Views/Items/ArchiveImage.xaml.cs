@@ -50,16 +50,16 @@ namespace LRReader.UWP.Views.Items
 
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
-			image.DecodePixelWidth = 200;
+			image.DecodePixelHeight = 275;
 			image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image), image, n.Image.EndsWith("avif")) as BitmapImage;
 			Ring.IsActive = false;
-			if (image.PixelHeight != 0 && image.PixelWidth != 0)
+			/*if (image.PixelHeight != 0 && image.PixelWidth != 0)
 			{
 				if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
 					Image.Stretch = Stretch.Uniform;
 				else
 					Image.Stretch = Stretch.UniformToFill;
-			}
+			}*/
 			Image.Source = image;
 
 			if (image != null)

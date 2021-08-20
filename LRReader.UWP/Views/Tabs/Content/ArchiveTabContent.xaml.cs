@@ -188,6 +188,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (Data.ReaderContent.RightImage != null & animRight != null)
 					await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
 				await FadeOut.StartAsync(ScrollViewer);
+				await Task.Delay(200); // Give it a sec
 			}
 			else
 			{

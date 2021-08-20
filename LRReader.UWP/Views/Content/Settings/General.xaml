@@ -18,10 +18,8 @@
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</Page.Resources>
 
-	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
-		<StackPanel
-			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
-			MaxWidth="1000" Margin="10,0" HorizontalAlignment="Center">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
+		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/General/Connection">
 				<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE779;">
 					<controls:ModernExpander.Input>
