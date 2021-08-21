@@ -26,6 +26,6 @@ namespace LRReader.Shared.Models.Main
 		public string state { get; set; }
 		public string task { get; set; }
 		public string time { get; set; }
-		public int worker { get; set; }
+		public int? worker { get; set; }
 	}
 }

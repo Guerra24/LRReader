@@ -15,16 +15,18 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using ParallaxView = Microsoft.UI.Xaml.Controls.ParallaxView;
 
 namespace LRReader.UWP.Views.Items
 {
-	public sealed partial class ArchiveItem : UserControl
+	public sealed class GenericArchiveItem : Control
 	{
-
-		private ArchiveItemViewModel ViewModel;
+		public ArchiveItemViewModel ViewModel { get; }
 
 		private string _oldID;
 
@@ -32,18 +34,65 @@ namespace LRReader.UWP.Views.Items
 
 		private ResourceLoader lang;
 
-		private ControlFlags flags;
+		public ControlFlags flags => Service.Api.ControlFlags;
 
-		public ArchiveItem()
+		// Default
+		private Grid Overlay;
+		private TextBlock Title;
+		private Grid TagsGrid;
+		private Image Thumbnail;
+		private Popup TagsPopup;
+		private Storyboard ShowPopup;
+		private Storyboard HidePopup;
+
+		// Bookmark
+		private TextBlock Progress;
+		public ParallaxView Parallax;
+
+		public GenericArchiveItem()
 		{
-			this.InitializeComponent();
+			this.DefaultStyleKey = typeof(GenericArchiveItem);
 			// TODO: Proper fix
 			ViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
-			flags = Service.Api.ControlFlags;
+			DataContextChanged += Control_DataContextChanged;
+			PointerPressed += Control_PointerPressed;
 		}
 
-		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+		protected override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			Overlay = GetTemplateChild("Overlay") as Grid;
+			Title = GetTemplateChild("Title") as TextBlock;
+			TagsGrid = GetTemplateChild("TagsGrid") as Grid;
+			Thumbnail = GetTemplateChild("Thumbnail") as Image;
+			TagsPopup = GetTemplateChild("TagsPopup") as Popup;
+			ShowPopup = GetTemplateChild("ShowPopup") as Storyboard;
+			HidePopup = GetTemplateChild("HidePopup") as Storyboard;
+
+			Progress = GetTemplateChild("Progress") as TextBlock;
+			Parallax = GetTemplateChild("Parallax") as ParallaxView;
+		}
+
+		public double PopupOffset
+		{
+			get => (double)GetValue(PopupOffsetProperty);
+			set => SetValue(PopupOffsetProperty, value);
+		}
+
+		public int DecodePixelWidth
+		{
+			get => (int)GetValue(DecodePixelWidthProperty);
+			set => SetValue(DecodePixelWidthProperty, value);
+		}
+
+		public int DecodePixelHeight
+		{
+			get => (int)GetValue(DecodePixelHeightProperty);
+			set => SetValue(DecodePixelHeightProperty, value);
+		}
+
+		private async void Control_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)
 				return;
@@ -54,15 +103,19 @@ namespace LRReader.UWP.Views.Items
 				_oldID = archive.arcid;
 				ViewModel.Archive = archive;
 
-				Overlay.SetVisualOpacity(0);
-				Title.SetVisualOpacity(0);
-				TagsGrid.SetVisualOpacity(0);
+				Overlay?.SetVisualOpacity(0);
+				Title?.SetVisualOpacity(0);
+				Progress?.SetVisualOpacity(0);
+				TagsGrid?.SetVisualOpacity(0);
 				Thumbnail.Source = null;
 				ViewModel.MissingImage = false;
 
 				var image = new BitmapImage();
 				image.DecodePixelType = DecodePixelType.Logical;
-				image.DecodePixelHeight = 275;
+				if (DecodePixelHeight > 0)
+					image.DecodePixelHeight = DecodePixelHeight;
+				if (DecodePixelWidth > 0)
+					image.DecodePixelWidth = DecodePixelWidth;
 				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image) as BitmapImage;
 
 				if (image == null)
@@ -77,30 +130,32 @@ namespace LRReader.UWP.Views.Items
 
 				if (Service.Platform.AnimationsEnabled)
 				{
-					Overlay.FadeIn();
-					Title.FadeIn();
-					TagsGrid.FadeIn();
+					Overlay?.FadeIn();
+					Title?.FadeIn();
+					Progress?.FadeIn();
+					TagsGrid?.FadeIn();
 				}
 				else
 				{
-					Overlay.SetVisualOpacity(1);
-					Title.SetVisualOpacity(1);
-					TagsGrid.SetVisualOpacity(1);
+					Overlay?.SetVisualOpacity(1);
+					Title?.SetVisualOpacity(1);
+					Progress?.SetVisualOpacity(1);
+					TagsGrid?.SetVisualOpacity(1);
 				}
 			}
 		}
 
-		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
 		{
 			Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
 		}
 
-		private void EditMenuItem_Click(object sender, RoutedEventArgs e)
+		public void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			Service.Tabs.OpenTab(Tab.ArchiveEdit, ViewModel.Archive);
 		}
 
-		private async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
+		public async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.Downloading = true;
 			var download = await ViewModel.DownloadArchive();
@@ -137,25 +192,25 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void Add_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = true;
+		public void Add_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = true;
 
-		private void Remove_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = false;
+		public void Remove_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = false;
 
-		private async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+		public async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
 			_open = true;
 			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
 			if (_open)
 			{
 				_open = false;
-				TagsPopup.ClampPopup(-57);
+				TagsPopup.ClampPopup(PopupOffset);
 				TagsPopup.IsOpen = true;
 				if (Service.Platform.AnimationsEnabled)
 					ShowPopup.Begin();
 			}
 		}
 
-		private void TagsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+		public void TagsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
 		{
 			if (_open)
 			{
@@ -171,7 +226,7 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void TagsGrid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+		public void TagsGrid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
 		{
 			if (_open)
 			{
@@ -182,12 +237,12 @@ namespace LRReader.UWP.Views.Items
 				HidePopup.Begin();
 		}
 
-		private void HidePopup_Completed(object sender, object e)
+		public void HidePopup_Completed(object sender, object e)
 		{
 			TagsPopup.IsOpen = false;
 		}
 
-		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
+		private void Control_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(this);
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
@@ -200,13 +255,13 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
+		public async void CategoriesButton_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new CategoryArchive(ViewModel.Archive.arcid, ViewModel.Archive.title);
 			await dialog.ShowAsync();
 		}
 
-		private async void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
+		public async void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new ContentDialog()
 			{
@@ -221,5 +276,11 @@ namespace LRReader.UWP.Views.Items
 				await ViewModel.DeleteArchive();
 			}
 		}
+
+		public static readonly DependencyProperty PopupOffsetProperty = DependencyProperty.Register("PopupOffset", typeof(double), typeof(GenericArchiveItem), new PropertyMetadata(null));
+		public static readonly DependencyProperty DecodePixelWidthProperty = DependencyProperty.Register("DecodePixelWidth", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
+		public static readonly DependencyProperty DecodePixelHeightProperty = DependencyProperty.Register("DecodePixelHeight", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
+
+
 	}
 }

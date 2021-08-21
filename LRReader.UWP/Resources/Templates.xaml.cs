@@ -13,5 +13,6 @@ namespace LRReader.UWP.Resources
 		{
 			this.InitializeComponent();
 		}
+
 	}
 }

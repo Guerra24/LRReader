@@ -203,18 +203,10 @@
     <Compile Include="Views\Items\ArchiveImage.xaml.cs">
       <DependentUpon>ArchiveImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Items\CategoryEditArchive.xaml.cs">
-      <DependentUpon>CategoryEditArchive.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Items\ArchiveItem.xaml.cs">
-      <DependentUpon>ArchiveItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Items\BookmarkedArchive.xaml.cs">
-      <DependentUpon>BookmarkedArchive.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Items\CategoryItem.xaml.cs">
       <DependentUpon>CategoryItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Items\GenericArchiveItem.cs" />
     <Compile Include="Views\Items\NotificationItem.xaml.cs">
       <DependentUpon>NotificationItem.xaml</DependentUpon>
     </Compile>
@@ -497,18 +489,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Items\ArchiveImage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Items\CategoryEditArchive.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Items\ArchiveItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Items\BookmarkedArchive.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

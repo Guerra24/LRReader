@@ -135,7 +135,7 @@
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>
-						<items:ArchiveItem />
+						<items:GenericArchiveItem />
 					</DataTemplate>
 				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>

@@ -12,9 +12,9 @@ namespace LRReader.UWP.Services
 
 		public void Init() => Dispatcher = DispatcherQueue.GetForCurrentThread();
 
-		public Task RunAsync(Action action) => Dispatcher.EnqueueAsync(action);
+		public Task RunAsync(Action action, int priority) => Dispatcher.EnqueueAsync(action, (DispatcherQueuePriority)priority);
 
-		public bool Run(Action action) => Dispatcher.TryEnqueue(() => action.Invoke());
+		public bool Run(Action action, int priority) => Dispatcher.TryEnqueue((DispatcherQueuePriority)priority, () => action.Invoke());
 
 	}
 

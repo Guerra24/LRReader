@@ -158,7 +158,7 @@ namespace LRReader.Shared.ViewModels
 								continue;
 							var archive = Archives.GetArchive(a.arcid);
 							if (archive != null)
-								await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
+								await Dispatcher.RunAsync(() => ArchiveList.Add(archive), -10);
 						}
 					}
 					catch (Exception e)

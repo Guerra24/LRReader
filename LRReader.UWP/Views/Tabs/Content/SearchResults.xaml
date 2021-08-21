@@ -12,7 +12,7 @@
 	<controls:ArchiveList x:Name="ArchiveList">
 		<controls:ArchiveList.ItemDataTemplate>
 			<DataTemplate>
-				<items:ArchiveItem />
+				<items:GenericArchiveItem />
 			</DataTemplate>
 		</controls:ArchiveList.ItemDataTemplate>
 	</controls:ArchiveList>

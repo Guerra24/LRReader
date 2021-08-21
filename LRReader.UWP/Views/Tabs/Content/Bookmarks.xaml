@@ -15,10 +15,10 @@
 
 	<UserControl.Resources>
 		<DataTemplate x:Key="CompactBookmarkItem" x:DataType="main:Archive">
-			<items:BookmarkedArchive />
+			<items:GenericArchiveItem Style="{StaticResource BookmarkedArchiveItem}" />
 		</DataTemplate>
 		<DataTemplate x:Key="FullBookmarkItem" x:DataType="main:Archive">
-			<items:ArchiveItem />
+			<items:GenericArchiveItem />
 		</DataTemplate>
 		<local:BookmarkTemplateSelector x:Key="BookmarkTemplateSelector" CompactTemplate="{StaticResource CompactBookmarkItem}" FullTemplate="{StaticResource FullBookmarkItem}" />
 	</UserControl.Resources>

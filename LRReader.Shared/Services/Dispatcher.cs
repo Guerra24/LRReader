@@ -7,9 +7,9 @@ namespace LRReader.Shared.Services
 	{
 		void Init();
 
-		Task RunAsync(Action action);
+		Task RunAsync(Action action, int priority = 0);
 
-		bool Run(Action action);
+		bool Run(Action action, int priority = 0);
 	}
 
 	public class StubDispatcherService : IDispatcherService
@@ -18,13 +18,13 @@ namespace LRReader.Shared.Services
 		{
 		}
 
-		public Task RunAsync(Action action)
+		public Task RunAsync(Action action, int priority)
 		{
 			action.Invoke();
 			return null;
 		}
 
-		public bool Run(Action action)
+		public bool Run(Action action, int priority)
 		{
 			action.Invoke();
 			return true;

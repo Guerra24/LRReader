@@ -60,8 +60,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			if (args.ItemContainer.ContentTemplateRoot is BookmarkedArchive item)
-				if (item.Parallax.Source == null)
+			if (args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item)
+				if (item.Parallax != null && item.Parallax.Source == null)
 					item.Parallax.Source = ArchivesGrid;
 		}
 

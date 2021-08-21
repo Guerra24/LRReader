@@ -174,7 +174,7 @@ namespace LRReader.Shared.ViewModels
 				await Task.Run(async () =>
 				{
 					foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
-						await Dispatcher.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)));
+						await Dispatcher.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)), -10);
 				});
 				Pages = ArchiveImages.Count;
 			}

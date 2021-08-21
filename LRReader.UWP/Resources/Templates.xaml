@@ -2,9 +2,381 @@
 	x:Class="LRReader.UWP.Resources.Templates"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:internal="using:LRReader.Internal"
+	xmlns:items="using:LRReader.UWP.Views.Items"
+	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
+
+	<Style BasedOn="{StaticResource DefaultArchiveItem}" TargetType="items:GenericArchiveItem" />
+
+	<Style x:Key="BookmarkedArchiveItem" TargetType="items:GenericArchiveItem">
+		<Setter Property="Width" Value="200" />
+		<Setter Property="Height" Value="150"/>
+		<Setter Property="DecodePixelWidth" Value="200" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="items:GenericArchiveItem">
+					<Grid x:Name="Root">
+						<Grid.Resources>
+							<internal:NegateBoolConverter x:Key="NegateBool" />
+							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
+						</Grid.Resources>
+						<Grid.ContextFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Bookmark"
+									Click="{x:Bind Add_Click}"
+									Icon="Favorite"
+									Visibility="{Binding ViewModel.Bookmarked, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource NegateBoolVis}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Unbookmark"
+									Background="{ThemeResource UnbookmarkItem}"
+									Click="{x:Bind Remove_Click}"
+									Icon="Unfavorite"
+									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Edit"
+									Click="{x:Bind EditMenuItem_Click}"
+									Icon="Edit"
+									Visibility="{x:Bind ViewModel.CanEdit}" />
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
+									<MenuFlyoutItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
+									</MenuFlyoutItem.Icon>
+								</MenuFlyoutItem>
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Download"
+									Click="{x:Bind DownloadMenuItem_Click}"
+									Icon="Download"
+									IsEnabled="{Binding ViewModel.Downloading, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource NegateBool}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Delete"
+									Click="{x:Bind DeleteMenuItem_Click}"
+									Icon="Delete"
+									Visibility="{x:Bind flags.V078Edit}" />
+							</MenuFlyout>
+						</Grid.ContextFlyout>
+						<muxc:ParallaxView x:Name="Parallax" x:FieldModifier="public" VerticalShift="100">
+							<Image Name="Thumbnail" Stretch="UniformToFill" />
+						</muxc:ParallaxView>
+						<Grid>
+							<Grid.Background>
+								<media:BackdropBlurBrush Amount="4.0" />
+							</Grid.Background>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="2.5*" />
+								<RowDefinition Height="1*" />
+							</Grid.RowDefinitions>
+							<Grid Grid.RowSpan="2" Visibility="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+							</Grid>
+							<Rectangle Grid.RowSpan="2">
+								<Rectangle.Fill>
+									<SolidColorBrush Opacity="0.5" Color="{ThemeResource BrushDeepBackgroundColor}" />
+								</Rectangle.Fill>
+							</Rectangle>
+							<TextBlock
+								x:Name="Title" Padding="5,0,5,0" HorizontalAlignment="Center"
+								VerticalAlignment="Center" FontSize="16" FontWeight="Medium"
+								Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
+								TextAlignment="Center" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords"
+								ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
+							<TextBlock
+								x:Name="Progress" Grid.Row="1" HorizontalAlignment="Center"
+								VerticalAlignment="Center" FontSize="18"
+								Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}">
+								<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
+							</TextBlock>
+						</Grid>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="CategoryEditArchive" TargetType="items:GenericArchiveItem">
+		<Setter Property="Width" Value="250" />
+		<Setter Property="PopupOffset" Value="-30" />
+		<Setter Property="DecodePixelHeight" Value="138" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="items:GenericArchiveItem">
+					<Grid x:Name="Root">
+						<Grid.Resources>
+							<internal:NegateBoolConverter x:Key="NegateBool" />
+							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
+							<Storyboard x:Name="ShowPopup">
+								<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="TagsPopup" />
+							</Storyboard>
+							<Storyboard x:Name="HidePopup" Completed="{x:Bind HidePopup_Completed}">
+								<PopOutThemeAnimation Storyboard.TargetName="TagsPopup" />
+							</Storyboard>
+						</Grid.Resources>
+						<Grid.ContextFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Bookmark"
+									Click="{x:Bind Add_Click}"
+									Icon="Favorite"
+									Visibility="{Binding ViewModel.Bookmarked, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource NegateBoolVis}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Unbookmark"
+									Background="{ThemeResource UnbookmarkItem}"
+									Click="{x:Bind Remove_Click}"
+									Icon="Unfavorite"
+									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Edit"
+									Click="{x:Bind EditMenuItem_Click}"
+									Icon="Edit"
+									Visibility="{x:Bind ViewModel.CanEdit}" />
+								<!--<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
+									<MenuFlyoutItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
+									</MenuFlyoutItem.Icon>
+								</MenuFlyoutItem>-->
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Download"
+									Click="{x:Bind DownloadMenuItem_Click}"
+									Icon="Download"
+									IsEnabled="{Binding ViewModel.Downloading, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource NegateBool}}" />
+								<!--<MenuFlyoutItem
+									x:Uid="/Items/Archive/Delete"
+									Click="{x:Bind DeleteMenuItem_Click}"
+									Icon="Delete"
+									Visibility="{x:Bind flags.V078Edit}" />-->
+							</MenuFlyout>
+						</Grid.ContextFlyout>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Grid x:Name="Overlay">
+							<Popup x:Name="TagsPopup" HorizontalOffset="{x:Bind PopupOffset}" IsHitTestVisible="False">
+								<Grid
+									Padding="4" Windows10version1903:Translation="0,0,32"
+									Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+									BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+									BorderThickness="1"
+									CornerRadius="{ThemeResource OverlayCornerRadius}"
+									IsHitTestVisible="False">
+									<Windows10version1903:Grid.Shadow>
+										<Windows10version1903:ThemeShadow />
+									</Windows10version1903:Grid.Shadow>
+									<muxc:ItemsRepeaterScrollHost>
+										<!--
+											For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
+											item display... idk whatever...
+										-->
+										<ScrollViewer>
+											<controls:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
+										</ScrollViewer>
+									</muxc:ItemsRepeaterScrollHost>
+								</Grid>
+							</Popup>
+							<Grid Width="95">
+								<Image
+									x:Name="Thumbnail" Width="100" Height="137.5"
+									HorizontalAlignment="Center" />
+							</Grid>
+							<Grid Visibility="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+							</Grid>
+							<Grid
+								Margin="2,0,0,2" HorizontalAlignment="Left"
+								VerticalAlignment="Bottom"
+								Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}"
+								Background="{ThemeResource GridOverGridBackground}"
+								BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+								BorderThickness="1"
+								CornerRadius="{ThemeResource ControlCornerRadius}">
+								<TextBlock Padding="6,2" FontSize="16">
+									<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
+								</TextBlock>
+							</Grid>
+							<Grid
+								Margin="0,0,2,2" HorizontalAlignment="Right"
+								VerticalAlignment="Bottom"
+								Visibility="{x:Bind ViewModel.IsNew, Mode=OneWay}"
+								Background="{ThemeResource GridOverGridBackground}"
+								BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+								BorderThickness="1"
+								CornerRadius="{ThemeResource ControlCornerRadius}">
+								<TextBlock x:Uid="/Items/Archive/New" Padding="6,2" FontSize="16" />
+							</Grid>
+						</Grid>
+						<Grid Grid.Column="1">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="24" />
+							</Grid.RowDefinitions>
+							<TextBlock
+								x:Name="Title" Grid.Row="0" MaxHeight="114"
+								Padding="5,0" FontSize="15"
+								Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
+								TextTrimming="CharacterEllipsis" TextWrapping="WrapWholeWords"
+								ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
+							<Grid
+								x:Name="TagsGrid" Grid.Row="1" Background="Transparent"
+								PointerEntered="{x:Bind TagsGrid_PointerEntered}" PointerExited="{x:Bind TagsGrid_PointerExited}">
+								<TextBlock
+									HorizontalAlignment="Center" VerticalAlignment="Center"
+									Foreground="{ThemeResource ArchiveTagsLine}"
+									Text="Tags..." />
+							</Grid>
+						</Grid>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="DefaultArchiveItem" TargetType="items:GenericArchiveItem">
+		<Setter Property="Width" Value="196" />
+		<Setter Property="PopupOffset" Value="-57" />
+		<Setter Property="DecodePixelHeight" Value="275" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="items:GenericArchiveItem">
+					<Grid x:Name="Root">
+						<Grid.Resources>
+							<internal:NegateBoolConverter x:Key="NegateBool" />
+							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
+							<Storyboard x:Name="ShowPopup">
+								<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="TagsPopup" />
+							</Storyboard>
+							<Storyboard x:Name="HidePopup" Completed="{x:Bind HidePopup_Completed}">
+								<PopOutThemeAnimation Storyboard.TargetName="TagsPopup" />
+							</Storyboard>
+						</Grid.Resources>
+						<Grid.ContextFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Bookmark"
+									Click="{x:Bind Add_Click}"
+									Icon="Favorite"
+									Visibility="{Binding ViewModel.Bookmarked, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource NegateBoolVis}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Unbookmark"
+									Background="{ThemeResource UnbookmarkItem}"
+									Click="{x:Bind Remove_Click}"
+									Icon="Unfavorite"
+									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Edit"
+									Click="{x:Bind EditMenuItem_Click}"
+									Icon="Edit"
+									Visibility="{x:Bind ViewModel.CanEdit}" />
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
+									<MenuFlyoutItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
+									</MenuFlyoutItem.Icon>
+								</MenuFlyoutItem>
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Download"
+									Click="{x:Bind DownloadMenuItem_Click}"
+									Icon="Download"
+									IsEnabled="{Binding ViewModel.Downloading, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource NegateBool}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Delete"
+									Click="{x:Bind DeleteMenuItem_Click}"
+									Icon="Delete"
+									Visibility="{x:Bind flags.V078Edit}" />
+							</MenuFlyout>
+						</Grid.ContextFlyout>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<TextBlock
+							x:Name="Title" Grid.Row="0" Padding="5,0"
+							HorizontalAlignment="Center" FontSize="16"
+							Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
+							TextTrimming="CharacterEllipsis"
+							ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
+						<Grid x:Name="Overlay" Grid.Row="1">
+							<Popup x:Name="TagsPopup" HorizontalOffset="{x:Bind PopupOffset}" IsHitTestVisible="False">
+								<Grid
+									Padding="4" Windows10version1903:Translation="0,0,32"
+									Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+									BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+									BorderThickness="1"
+									CornerRadius="{ThemeResource OverlayCornerRadius}"
+									IsHitTestVisible="False">
+									<Windows10version1903:Grid.Shadow>
+										<Windows10version1903:ThemeShadow />
+									</Windows10version1903:Grid.Shadow>
+									<muxc:ItemsRepeaterScrollHost>
+										<!--
+											For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
+											item display... idk whatever...
+										-->
+										<ScrollViewer x:Name="TagsPopupScroll">
+											<controls:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
+										</ScrollViewer>
+									</muxc:ItemsRepeaterScrollHost>
+								</Grid>
+							</Popup>
+							<Image
+								x:Name="Thumbnail" Width="200" Height="275"
+								HorizontalAlignment="Center" />
+							<Grid Visibility="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+							</Grid>
+							<Grid Visibility="{x:Bind ViewModel.Downloading, Mode=OneWay}">
+								<Grid.Background>
+									<media:BackdropBlurBrush Amount="5.0" />
+								</Grid.Background>
+								<Rectangle>
+									<Rectangle.Fill>
+										<SolidColorBrush Opacity="0.4" Color="{ThemeResource BrushDeepBackgroundColor}" />
+									</Rectangle.Fill>
+								</Rectangle>
+								<muxc:ProgressBar Background="Transparent" IsIndeterminate="True" />
+							</Grid>
+							<Grid
+								Margin="4,0,0,4" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+								Background="{ThemeResource GridOverGridBackground}"
+								BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+								BorderThickness="1"
+								CornerRadius="{ThemeResource ControlCornerRadius}"
+								Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}">
+								<TextBlock Padding="6,2" FontSize="16">
+									<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
+								</TextBlock>
+							</Grid>
+							<Grid
+								Margin="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+								Background="{ThemeResource GridOverGridBackground}"
+								BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+								BorderThickness="1"
+								CornerRadius="{ThemeResource ControlCornerRadius}"
+								Visibility="{x:Bind ViewModel.IsNew, Mode=OneWay}">
+								<TextBlock x:Uid="/Items/Archive/New" Padding="6,2" FontSize="16" />
+							</Grid>
+						</Grid>
+						<Grid
+							x:Name="TagsGrid" Grid.Row="2"
+							PointerCaptureLost="{x:Bind TagsGrid_PointerCaptureLost}"
+							PointerEntered="{x:Bind TagsGrid_PointerEntered}"
+							PointerExited="{x:Bind TagsGrid_PointerExited}">
+							<TextBlock
+								Grid.Row="2" Padding="2,0"
+								Text="{x:Bind ViewModel.Archive.TagsClean, Mode=OneWay}"
+								TextTrimming="CharacterEllipsis" />
+						</Grid>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 	<Style BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput" />
 

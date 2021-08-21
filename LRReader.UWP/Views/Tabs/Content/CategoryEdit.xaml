@@ -56,7 +56,7 @@
 				SelectionMode="Extended">
 				<GridView.ItemTemplate>
 					<DataTemplate>
-						<items:CategoryEditArchive />
+						<items:GenericArchiveItem Style="{StaticResource CategoryEditArchive}" />
 					</DataTemplate>
 				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>
@@ -99,7 +99,7 @@
 				RandomVisible="False" SelectionMode="Extended">
 				<controls1:ArchiveList.ItemDataTemplate>
 					<DataTemplate>
-						<items:CategoryEditArchive />
+						<items:GenericArchiveItem Style="{StaticResource CategoryEditArchive}" />
 					</DataTemplate>
 				</controls1:ArchiveList.ItemDataTemplate>
 			</controls1:ArchiveList>
