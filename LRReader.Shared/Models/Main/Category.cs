@@ -24,6 +24,11 @@ namespace LRReader.Shared.Models.Main
 			return string.IsNullOrEmpty(search) && archives.Count == 0;
 		}
 
+		public override string ToString()
+		{
+			return name;
+		}
+
 		[JsonIgnore]
 		public DeleteCategory DeleteCategory;
 	}

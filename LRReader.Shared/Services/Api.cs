@@ -50,6 +50,7 @@ namespace LRReader.Shared.Services
 			V078 = serverInfo.version >= new Version(0, 7, 8);
 			V079 = serverInfo.version >= new Version(0, 7, 9);
 
+			// TODO: Drop <=0.7.5
 			CategoriesEnabled = serverInfo.version != new Version(0, 7, 5);
 			ProgressTracking = (!V079 && V077) || serverInfo.server_tracks_progress;
 		}

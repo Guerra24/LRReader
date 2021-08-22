@@ -280,7 +280,5 @@ namespace LRReader.UWP.Views.Items
 		public static readonly DependencyProperty PopupOffsetProperty = DependencyProperty.Register("PopupOffset", typeof(double), typeof(GenericArchiveItem), new PropertyMetadata(null));
 		public static readonly DependencyProperty DecodePixelWidthProperty = DependencyProperty.Register("DecodePixelWidth", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
 		public static readonly DependencyProperty DecodePixelHeightProperty = DependencyProperty.Register("DecodePixelHeight", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
-
-
 	}
 }

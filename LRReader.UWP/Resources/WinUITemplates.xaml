@@ -38,11 +38,11 @@
 			<StaticResource x:Key="GridViewItemFocusVisualSecondaryBrush" ResourceKey="FocusStrokeColorInnerBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemForegroundPointerOver" ResourceKey="TextFillColorSecondaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SubtleFillColorTertiaryBrush" />
+			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SystemAccentColorDark1" />
 			<StaticResource x:Key="GridViewItemForegroundSelected" ResourceKey="TextFillColorPrimaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SubtleFillColorTertiaryBrush" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SystemAccentColorDark1" />
 			<StaticResource x:Key="GridViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SystemAccentColorDark2" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedDisabled" ResourceKey="SubtleFillColorSecondaryBrush" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="HighContrast">
@@ -114,11 +114,11 @@
 			<StaticResource x:Key="GridViewItemFocusVisualSecondaryBrush" ResourceKey="FocusStrokeColorInnerBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemForegroundPointerOver" ResourceKey="TextFillColorSecondaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SubtleFillColorTertiaryBrush" />
+			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SystemAccentColorDark1" />
 			<StaticResource x:Key="GridViewItemForegroundSelected" ResourceKey="TextFillColorPrimaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SubtleFillColorTertiaryBrush" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SystemAccentColorDark1" />
 			<StaticResource x:Key="GridViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SystemAccentColorDark2" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedDisabled" ResourceKey="SubtleFillColorSecondaryBrush" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>

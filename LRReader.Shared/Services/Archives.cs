@@ -18,6 +18,8 @@ namespace LRReader.Shared.Services
 		public Dictionary<string, Archive> Archives = new Dictionary<string, Archive>();
 		public List<TagStats> TagStats = new List<TagStats>();
 		public List<string> Namespaces = new List<string>();
+		// TODO: Drop <=0.7.5
+		//public List<Category> Categories = new List<Category>();
 
 		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, EventsService events)
 		{
@@ -32,6 +34,7 @@ namespace LRReader.Shared.Services
 			Archives.Clear();
 			TagStats.Clear();
 			Namespaces.Clear();
+			//Categories.Clear();
 
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
@@ -49,9 +52,11 @@ namespace LRReader.Shared.Services
 					var index = Files.GetFile(Files.LocalCache + "/Index-v2.json");
 					var tags = Files.GetFile(Files.LocalCache + "/Tags-v1.json");
 					var namespaces = Files.GetFile(Files.LocalCache + "/Namespaces-v1.json");
+					//var categories = Files.GetFile(Files.LocalCache + "/Categories-v1.json");
 					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
+					//Categories = JsonConvert.DeserializeObject<List<Category>>(await categories);
 				}
 				catch (Exception)
 				{
@@ -82,6 +87,12 @@ namespace LRReader.Shared.Services
 				}
 				await Files.StoreFile(Files.LocalCache + "/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
 			}
+			/*var resultC = await CategoriesProvider.GetCategories();
+			if (resultC != null)
+			{
+				await Files.StoreFile(Files.LocalCache + "/Categories-v1.json", JsonConvert.SerializeObject(resultC));
+				Categories = resultC;
+			}*/
 		}
 
 		public Archive GetArchive(string id)

@@ -20,5 +20,6 @@ namespace LRReader.UWP.ViewModels
 		public TabsService HostTabPageInstance => Service.Services.GetRequiredService<TabsService>();
 
 		public DeduplicatorToolViewModel DeduplicatorToolViewModelInstance => Service.Services.GetRequiredService<DeduplicatorToolViewModel>();
+		public BulkEditorViewModel BulkEditorViewModelInstance => Service.Services.GetRequiredService<BulkEditorViewModel>();
 	}
 }

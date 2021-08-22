@@ -117,6 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BulkEditor.AddTo.Text" xml:space="preserve">
+    <value>Add to</value>
+  </data>
+  <data name="BulkEditor.Apply.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="BulkEditor.ChangeCategory.Text" xml:space="preserve">
+    <value>Change category</value>
+  </data>
+  <data name="BulkEditor.Delete.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="BulkEditor.DeleteSelected.Text" xml:space="preserve">
+    <value>Delete selected</value>
+  </data>
+  <data name="BulkEditor.DeleteSure.Text" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="BulkEditor.DeleteYes.Content" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="BulkEditor.RemoveOtherCats.Content" xml:space="preserve">
+    <value>Remove from other categories</value>
+  </data>
+  <data name="BulkEditor.SelectedArchives.Text" xml:space="preserve">
+    <value>Selected archives</value>
+  </data>
   <data name="BulkEditorPage.Title" xml:space="preserve">
     <value>Bulk Editor</value>
   </data>

@@ -118,12 +118,6 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 			removeMissing.ForEach(a => category.archives.Remove(a));
-
-			foreach (var a in category.archives)
-			{
-				var archive = Archives.GetArchive(a);
-				CategoryArchives.Add(archive);
-			}
 			OnPropertyChanged("Empty");
 			_loading = false;
 		}

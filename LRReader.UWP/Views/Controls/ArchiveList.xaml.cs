@@ -4,18 +4,21 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using static LRReader.Shared.Services.Service;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
 namespace LRReader.UWP.Views.Controls
 {
+	[ContentProperty(Name = "ItemDataTemplate")]
 	public sealed partial class ArchiveList : UserControl
 	{
 
@@ -195,26 +198,31 @@ namespace LRReader.UWP.Views.Controls
 
 		public new bool AllowDrop
 		{
-			get => (bool)GetValue(AllowDropProperty);
-			set => SetValue(AllowDropProperty, value);
+			get => ArchivesGrid.AllowDrop;
+			set => ArchivesGrid.AllowDrop = value;
 		}
 
 		public bool CanDragItems
 		{
-			get => (bool)GetValue(CanDragItemsProperty);
-			set => SetValue(CanDragItemsProperty, value);
+			get => ArchivesGrid.CanDragItems;
+			set => ArchivesGrid.CanDragItems = value;
 		}
 
 		public bool ItemClickEnabled
 		{
-			get => (bool)GetValue(ItemClickEnabledProperty);
-			set => SetValue(ItemClickEnabledProperty, value);
+			get => ArchivesGrid.IsItemClickEnabled;
+			set => ArchivesGrid.IsItemClickEnabled = value;
 		}
 
 		public ListViewSelectionMode SelectionMode
 		{
-			get => (ListViewSelectionMode)GetValue(SelectionModeProperty);
-			set => SetValue(SelectionModeProperty, value);
+			get => ArchivesGrid.SelectionMode;
+			set => ArchivesGrid.SelectionMode = value;
+		}
+
+		public IList<object> SelectedItems
+		{
+			get => ArchivesGrid.SelectedItems;
 		}
 
 		public event DragItemsStartingEventHandler DragItemsStarting = new DragItemsStartingEventHandler((a, b) => { });
@@ -227,8 +235,8 @@ namespace LRReader.UWP.Views.Controls
 
 		public DataTemplate ItemDataTemplate
 		{
-			get => GetValue(ItemDataTemplateProperty) as DataTemplate;
-			set => SetValue(ItemDataTemplateProperty, value);
+			get => ArchivesGrid.ItemTemplate;
+			set => ArchivesGrid.ItemTemplate = value;
 		}
 
 		public bool HandleF5
@@ -238,10 +246,6 @@ namespace LRReader.UWP.Views.Controls
 		}
 
 		public static readonly DependencyProperty RandomVisibleProperty = DependencyProperty.Register("RandomVisible", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
-		public static readonly DependencyProperty CanDragItemsProperty = DependencyProperty.Register("CanDragItems", typeof(bool), typeof(ArchiveList), new PropertyMetadata(false));
-		public static readonly DependencyProperty ItemClickEnabledProperty = DependencyProperty.Register("ItemClickEnabled", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
-		public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register("SelectionMode", typeof(ListViewSelectionMode), typeof(ArchiveList), new PropertyMetadata(ListViewSelectionMode.None));
-		public static readonly DependencyProperty ItemDataTemplateProperty = DependencyProperty.Register("ItemDataTemplate", typeof(DataTemplate), typeof(ArchiveList), new PropertyMetadata(null));
 		public static readonly DependencyProperty HandleF5Property = DependencyProperty.Register("HandleF5", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
 	}
 }

@@ -11,6 +11,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding DeduplicatorToolViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 	<Page.Resources>
@@ -20,7 +21,7 @@
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</Page.Resources>
 
-	<GridView ItemsSource="{x:Bind Data.Items}">
+	<GridView ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ItemsSource="{x:Bind Data.Items}">
 		<GridView.Header>
 			<StackPanel MaxWidth="1000">
 				<controls:ModernGroup Margin="0">

@@ -21,17 +21,12 @@
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
-				AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"
-				CanDragItems="{x:Bind CanDragItems, Mode=OneWay}"
 				DragItemsStarting="{x:Bind DragItemsStartingI, Mode=OneWay}"
 				DragOver="{x:Bind DragOverI, Mode=OneWay}"
 				Drop="{x:Bind DropI, Mode=OneWay}"
-				IsItemClickEnabled="{x:Bind ItemClickEnabled, Mode=OneWay}"
 				ItemClick="ArchivesGrid_ItemClick"
-				ItemTemplate="{x:Bind ItemDataTemplate, Mode=OneWay}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
-				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed"
-				SelectionMode="{x:Bind SelectionMode, Mode=OneWay}">
+				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed">
 				<GridView.Header>
 					<Grid Margin="0,10,0,10">
 						<Grid.RowDefinitions>

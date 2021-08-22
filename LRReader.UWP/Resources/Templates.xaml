@@ -45,7 +45,7 @@
 									Visibility="{x:Bind ViewModel.CanEdit}" />
 								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
 									<MenuFlyoutItem.Icon>
-										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
 								</MenuFlyoutItem>
 								<MenuFlyoutItem
@@ -137,7 +137,7 @@
 									Visibility="{x:Bind ViewModel.CanEdit}" />
 								<!--<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
 									<MenuFlyoutItem.Icon>
-										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
 								</MenuFlyoutItem>-->
 								<MenuFlyoutItem
@@ -275,7 +275,7 @@
 									Visibility="{x:Bind ViewModel.CanEdit}" />
 								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
 									<MenuFlyoutItem.Icon>
-										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF5ED;" />
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
 								</MenuFlyoutItem>
 								<MenuFlyoutItem

@@ -15,17 +15,15 @@
 		<AutoSuggestBox
 			x:Uid="/Dialogs/CategoryArchive/Search" Margin="0,0,0,5" QueryIcon="Find"
 			TextChanged="AutoSuggestBox_TextChanged" />
-		<ScrollViewer>
-			<ListView
-				x:Name="CategoriesList"
-				ItemsSource="{x:Bind Data.Categories}"
-				SelectionChanged="CategoriesList_SelectionChanged" SelectionMode="Multiple">
-				<ListView.ItemTemplate>
-					<DataTemplate x:DataType="main:Category">
-						<TextBlock Text="{x:Bind name}" />
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-		</ScrollViewer>
+		<ListView
+			x:Name="CategoriesList" MaxHeight="400"
+			ItemsSource="{x:Bind Data.Categories}"
+			SelectionChanged="CategoriesList_SelectionChanged" SelectionMode="Multiple">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="main:Category">
+					<TextBlock Text="{x:Bind name}" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
 	</StackPanel>
 </ContentDialog>

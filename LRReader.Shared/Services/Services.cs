@@ -52,6 +52,7 @@ namespace LRReader.Shared.Services
 
 			// Tool's Pages
 			collection.AddTransient<DeduplicatorToolViewModel>();
+			collection.AddTransient<BulkEditorViewModel>();
 
 			services?.Invoke(collection);
 			Services = collection.BuildServiceProvider();
