@@ -80,7 +80,7 @@ namespace LRReader.UWP
 				rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
 				UpdateButtonsOnThemeChange(RequestedTheme);
 
-				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 14))
+				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");
 
 				((SolidColorBrush)this.Resources["CustomReaderBackground"]).Color = ColorHelper.ToColor(Settings.ReaderBackground);

@@ -31,6 +31,7 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		public async Task Load()
 		{
+			var id = SelectedCategory?.id;
 			Categories.Clear();
 			var result = await CategoriesProvider.GetCategories();
 			if (result != null)
@@ -38,13 +39,17 @@ namespace LRReader.Shared.ViewModels.Tools
 				foreach (var c in result)
 					if (string.IsNullOrEmpty(c.search))
 						Categories.Add(c);
-				SelectedCategory = Categories.FirstOrDefault();
+				SelectedCategory = Categories.FirstOrDefault(c => c.id.Equals(id));
+				if (SelectedCategory == null)
+					SelectedCategory = Categories.FirstOrDefault();
 			}
 		}
 
 		[ICommand]
 		public async Task DeleteArchives(IList<object> archives)
 		{
+			if (archives.Count == 0)
+				return;
 			foreach (var a in archives.Cast<Archive>())
 				await Archives.DeleteArchive(a.arcid);
 		}
@@ -52,6 +57,8 @@ namespace LRReader.Shared.ViewModels.Tools
 		[ICommand]
 		public async Task ChangeCategory(IList<object> archives)
 		{
+			if (archives.Count == 0)
+				return;
 			var items = archives.Cast<Archive>();
 			if (MoveToCategory)
 			{

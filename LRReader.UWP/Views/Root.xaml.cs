@@ -9,7 +9,7 @@ namespace LRReader.UWP.Views
 		public Root()
 		{
 			this.InitializeComponent();
-			if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 14))
+			if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 			{
 				Background = (AcrylicBrush)Resources["MicaFallbackBrush"];
 			}

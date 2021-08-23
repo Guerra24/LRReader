@@ -26,6 +26,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ViewModel = DataContext as CategoryEditViewModel;
 			ArchiveList.Data.CustomArchiveCheckEvent = CustomArchiveCheck;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
+			VisualStateManager.GoToState(this, "Selected", false);
 		}
 
 		private bool CustomArchiveCheck(Archive archive)

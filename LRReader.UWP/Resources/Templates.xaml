@@ -439,15 +439,18 @@
 							<BrushTransition Duration="0:0:0.083" />
 						</Grid.BackgroundTransition>
 						<FontIcon
-							Margin="0,0,16,0"
+							x:Name="LeftFontIcon" Margin="0,0,16,0"
 							FontFamily="{StaticResource SymbolThemeFontFamily}"
 							Glyph="{x:Bind Glyph, Mode=OneWay}"
 							Visibility="{Binding Glyph, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-						<ContentPresenter Margin="0,0,16,0" Content="{x:Bind Icon, Mode=OneWay}" Visibility="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+						<ContentPresenter
+							x:Name="LeftIcon" Margin="0,0,16,0"
+							Content="{x:Bind Icon, Mode=OneWay}"
+							Visibility="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
 						<StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
-							<TextBlock Text="{x:Bind Title, Mode=OneWay}" />
+							<TextBlock x:Name="TitleBlock" Text="{x:Bind Title, Mode=OneWay}" />
 							<TextBlock
-								FontSize="12"
+								x:Name="DescriptionBlock" FontSize="12"
 								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
 								Text="{x:Bind Description, Mode=OneWay}"
 								TextWrapping="WrapWholeWords"
@@ -459,8 +462,8 @@
 							VerticalAlignment="Center"
 							Content="{x:Bind Control, Mode=OneWay}" />
 						<FontIcon
-							Grid.Column="2" Margin="0,0,16,0" HorizontalAlignment="Right"
-							VerticalAlignment="Center"
+							x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
+							HorizontalAlignment="Right" VerticalAlignment="Center"
 							FontFamily="{StaticResource SymbolThemeFontFamily}"
 							FontSize="14"
 							Glyph="{x:Bind RightGlyph, Mode=OneWay}"
@@ -490,12 +493,30 @@
 									</Storyboard>
 								</VisualState>
 								<VisualState x:Name="Disabled">
+									<VisualState.StateTriggers>
+										<StateTrigger IsActive="{Binding IsEnabled, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BoolNegationConverter}}" />
+									</VisualState.StateTriggers>
 									<Storyboard>
 										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Background">
 											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
 										</ObjectAnimationUsingKeyFrames>
 										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="BorderBrush">
 											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="LeftFontIcon" Storyboard.TargetProperty="Foreground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ExpanderHeaderDisabledForeground}" />
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="LeftIcon" Storyboard.TargetProperty="Foreground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ExpanderHeaderDisabledForeground}" />
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="TitleBlock" Storyboard.TargetProperty="Foreground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ExpanderHeaderDisabledForeground}" />
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="DescriptionBlock" Storyboard.TargetProperty="Foreground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ExpanderHeaderDisabledForeground}" />
+										</ObjectAnimationUsingKeyFrames>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="RightFontIcon" Storyboard.TargetProperty="Foreground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ExpanderHeaderDisabledForeground}" />
 										</ObjectAnimationUsingKeyFrames>
 									</Storyboard>
 								</VisualState>

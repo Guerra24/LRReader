@@ -73,14 +73,14 @@ namespace LRReader.UWP.Views.Controls
 		protected override void OnPointerEntered(PointerRoutedEventArgs e)
 		{
 			base.OnPointerEntered(e);
-			if (IsButton)
+			if (IsButton && IsEnabled)
 				VisualStateManager.GoToState(this, "PointerOver", true);
 		}
 
 		protected override void OnPointerExited(PointerRoutedEventArgs e)
 		{
 			base.OnPointerExited(e);
-			if (IsButton)
+			if (IsButton && IsEnabled)
 				VisualStateManager.GoToState(this, "Normal", true);
 		}
 
@@ -90,7 +90,7 @@ namespace LRReader.UWP.Views.Controls
 			if (!point.Properties.IsLeftButtonPressed)
 				return;
 			base.OnPointerPressed(e);
-			if (IsButton)
+			if (IsButton && IsEnabled)
 				VisualStateManager.GoToState(this, "Pressed", true);
 		}
 
@@ -100,7 +100,7 @@ namespace LRReader.UWP.Views.Controls
 			if (point.Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonReleased)
 				return;
 			base.OnPointerReleased(e);
-			if (IsButton)
+			if (IsButton && IsEnabled)
 			{
 				Click?.Invoke(this, e);
 				VisualStateManager.GoToState(this, "PointerOver", true);
@@ -110,14 +110,14 @@ namespace LRReader.UWP.Views.Controls
 		protected override void OnKeyDown(KeyRoutedEventArgs e)
 		{
 			base.OnKeyDown(e);
-			if (IsButton && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
+			if (IsButton && IsEnabled && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
 				VisualStateManager.GoToState(this, "Pressed", true);
 		}
 
 		protected override void OnKeyUp(KeyRoutedEventArgs e)
 		{
 			base.OnKeyUp(e);
-			if (IsButton && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
+			if (IsButton && IsEnabled && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
 			{
 				Click?.Invoke(this, e);
 				VisualStateManager.GoToState(this, "Normal", true);
@@ -127,7 +127,7 @@ namespace LRReader.UWP.Views.Controls
 		protected override void OnLostFocus(RoutedEventArgs e)
 		{
 			base.OnLostFocus(e);
-			if (IsButton)
+			if (IsButton && IsEnabled)
 				VisualStateManager.GoToState(this, "Normal", true);
 		}
 

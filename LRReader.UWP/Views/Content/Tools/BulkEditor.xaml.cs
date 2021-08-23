@@ -2,7 +2,6 @@
 using LRReader.Shared.ViewModels.Tools;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Content.Tools
 {
@@ -17,12 +16,6 @@ namespace LRReader.UWP.Views.Content.Tools
 		{
 			this.InitializeComponent();
 			Data = DataContext as BulkEditorViewModel;
-		}
-
-		protected override async void OnNavigatedTo(NavigationEventArgs e)
-		{
-			base.OnNavigatedTo(e);
-			await Data.Load();
 		}
 
 		private void HideFlyout_Click(object sender, RoutedEventArgs e)

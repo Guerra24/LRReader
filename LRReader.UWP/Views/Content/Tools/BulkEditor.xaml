@@ -12,20 +12,6 @@
 	DataContext="{Binding BulkEditorViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 	<Page.Resources>
-		<Style x:Key="SelectedItem" TargetType="ListViewItem">
-			<Setter Property="Margin" Value="0" />
-			<Setter Property="Padding" Value="8,4" />
-			<Setter Property="MinHeight" Value="0" />
-			<Setter Property="MinWidth" Value="0" />
-			<Setter Property="Background" Value="{ThemeResource ControlFillColorDefaultBrush}" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="ListViewItem">
-						<ListViewItemPresenter x:Name="Root" ContentMargin="{TemplateBinding Padding}" CornerRadius="4" />
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
 		<Style x:Key="ListViewCompact" TargetType="ListView">
 			<Setter Property="Width" Value="422" />
 			<Setter Property="MaxHeight" Value="500" />
@@ -33,13 +19,34 @@
 			<Setter Property="ItemTemplate">
 				<Setter.Value>
 					<DataTemplate x:DataType="main:Archive">
-						<TextBlock Text="{x:Bind title}" TextTrimming="WordEllipsis" />
+						<Grid Padding="4,2" Background="{ThemeResource ControlFillColorDefaultBrush}" CornerRadius="4">
+							<TextBlock Text="{x:Bind title}" TextTrimming="WordEllipsis" />
+						</Grid>
 					</DataTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
+					<ItemsPanelTemplate>
+						<StackPanel Spacing="2" />
+					</ItemsPanelTemplate>
 				</Setter.Value>
 			</Setter>
 			<Setter Property="ItemContainerStyle">
 				<Setter.Value>
-					<Style BasedOn="{StaticResource SelectedItem}" TargetType="ListViewItem" />
+					<Style TargetType="ListViewItem">
+						<Setter Property="Margin" Value="0" />
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="MinHeight" Value="0" />
+						<Setter Property="MinWidth" Value="0" />
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="ListViewItem">
+									<ListViewItemPresenter x:Name="Root" ContentMargin="0" CornerRadius="0" />
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
 				</Setter.Value>
 			</Setter>
 			<Setter Property="ItemContainerTransitions">

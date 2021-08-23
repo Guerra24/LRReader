@@ -59,7 +59,9 @@
 				</controls:ModernExpander>
 				<controls:ModernInput
 					x:Uid="/Tools/MainPage" Click="PageButton_Click" Glyph="&#xEC7A;"
-					IsButton="True" RightGlyph="&#xE76C;">
+					IsButton="True"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+					RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Tools/MainPage" Page="tools:Main" />
 					</controls:ModernInput.Tag>
@@ -98,13 +100,13 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Server/Database">
-				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Glyph="&#xE7C5;">
+				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Glyph="&#xE7C5;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/ResetCacheButton" Click="ResetSearchButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Glyph="&#xE74E;">
+				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Glyph="&#xE74E;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/BackupDBButton" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Server/ClearNew" Glyph="&#xE75C;">
+				<controls:ModernInput x:Uid="/Settings/Server/ClearNew" Glyph="&#xE75C;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/ClearNewButton" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 						<Button.Flyout>
 							<Flyout x:Name="ClearNewFlyout">

@@ -217,7 +217,12 @@ namespace LRReader.UWP.Views.Controls
 		public ListViewSelectionMode SelectionMode
 		{
 			get => ArchivesGrid.SelectionMode;
-			set => ArchivesGrid.SelectionMode = value;
+			set
+			{
+				ArchivesGrid.SelectionMode = value;
+				if (value == ListViewSelectionMode.Multiple || value == ListViewSelectionMode.Extended)
+					VisualStateManager.GoToState(this, "Selected", false);
+			}
 		}
 
 		public IList<object> SelectedItems
