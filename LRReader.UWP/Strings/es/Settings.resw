@@ -483,4 +483,7 @@
   <data name="Reader.CustomBackground.Title" xml:space="preserve">
     <value>Color de fondo</value>
   </data>
+  <data name="FeedbackPage.Description" xml:space="preserve">
+    <value>Cambios y solicitudes de características</value>
+  </data>
 </root>

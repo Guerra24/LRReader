@@ -33,8 +33,15 @@
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>
 				<controls:ModernInput
-					x:Uid="/Settings/UpdatesPage" Click="PageButton_Click" Glyph="&#xE895;"
+					x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
 					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Name="Updates" x:Uid="/Settings/UpdatesPage" Click="PageButton_Click"
+					Glyph="&#xE895;" IsButton="True" RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Settings/UpdatesPage" Page="local:Updates" />
 					</controls:ModernInput.Tag>
@@ -44,13 +51,6 @@
 					IsButton="True" RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Settings/AboutPage" Page="local:About" />
-					</controls:ModernInput.Tag>
-				</controls:ModernInput>
-				<controls:ModernInput
-					x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
-					IsButton="True" RightGlyph="&#xE76C;">
-					<controls:ModernInput.Tag>
-						<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>
 			</controls:ModernGroup>

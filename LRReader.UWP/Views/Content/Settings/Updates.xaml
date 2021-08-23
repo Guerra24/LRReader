@@ -17,7 +17,7 @@
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
-			<controls:ModernGroup x:Name="UpdateInfo" Visibility="Collapsed">
+			<controls:ModernGroup>
 				<controls:ModernInput x:Uid="/Settings/Updates/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 					<Button x:Uid="/Settings/Updates/Check" Click="CheckUpdatesButton_Click" />
 				</controls:ModernInput>
