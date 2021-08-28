@@ -34,7 +34,6 @@ namespace LRReader.Shared.Services
 
 	public class ControlFlags
 	{
-		public bool CategoriesEnabled = true;
 		public bool ProgressTracking = false;
 
 		public bool V077 = false;
@@ -42,7 +41,6 @@ namespace LRReader.Shared.Services
 		public bool V079 = false;
 
 		public bool V078Edit => V078 & Service.Settings.Profile.HasApiKey;
-		public bool CategoriesEnabledEdit => CategoriesEnabled & Service.Settings.Profile.HasApiKey;
 
 		public void Check(ServerInfo serverInfo)
 		{
@@ -50,8 +48,6 @@ namespace LRReader.Shared.Services
 			V078 = serverInfo.version >= new Version(0, 7, 8);
 			V079 = serverInfo.version >= new Version(0, 7, 9);
 
-			// TODO: Drop <=0.7.5
-			CategoriesEnabled = serverInfo.version != new Version(0, 7, 5);
 			ProgressTracking = (!V079 && V077) || serverInfo.server_tracks_progress;
 		}
 	}

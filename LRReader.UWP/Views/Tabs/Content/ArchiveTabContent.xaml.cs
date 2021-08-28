@@ -48,10 +48,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
-		private ControlFlags flags => Service.Api.ControlFlags;
-
-		private SettingsService settings => Service.Settings;
-
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
@@ -150,12 +146,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ConnectedAnimation animLeft = null, animRight = null;
 			if (animate)
 			{
-				if (Data.ReaderContent.LeftImage != null)
+				if (Data.ReaderContent.LeftImage != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
 				{
 					animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
 					animLeft.Configuration = new BasicConnectedAnimationConfiguration();
 				}
-				if (Data.ReaderContent.RightImage != null)
+				if (Data.ReaderContent.RightImage != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
 				{
 					animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
 					animRight.Configuration = new BasicConnectedAnimationConfiguration();
@@ -362,12 +358,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (pointerPoint.Properties.IsXButton1Pressed)
 				{
 					e.Handled = true;
+					FocusReader();
 					PrevPage();
 					return;
 				}
 				else if (pointerPoint.Properties.IsXButton2Pressed)
 				{
 					e.Handled = true;
+					FocusReader();
 					NextPage();
 					return;
 				}

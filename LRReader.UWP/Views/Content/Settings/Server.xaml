@@ -8,6 +8,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:tools="using:LRReader.UWP.Views.Content.Tools"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
@@ -57,6 +58,7 @@
 							IsHitTestVisible="False" IsTabStop="False" />
 					</StackPanel>
 				</controls:ModernExpander>
+				<!--
 				<controls:ModernInput
 					x:Uid="/Tools/MainPage" Click="PageButton_Click" Glyph="&#xEC7A;"
 					IsButton="True"
@@ -66,10 +68,11 @@
 						<controls:ModernPageTabItem x:Uid="/Tools/MainPage" Page="tools:Main" />
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>
+				-->
 				<controls:ModernExpander
 					x:Uid="/Settings/Server/RegenThumbnails" Glyph="&#xE8B9;"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
-					Visibility="{x:Bind Data.ControlFlags.V077}">
+					Visibility="{x:Bind services:Service.Api.ControlFlags.V077}">
 					<controls:ModernExpander.Input>
 						<Button x:Uid="/Settings/Server/RegenThumb" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 							<Button.Flyout>

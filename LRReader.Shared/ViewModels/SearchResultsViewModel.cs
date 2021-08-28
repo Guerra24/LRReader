@@ -62,7 +62,7 @@ namespace LRReader.Shared.ViewModels
 		}
 
 		public int TotalPages => (int)Math.Max(Math.Ceiling(TotalArchives / (double)Api.ServerInfo.archives_per_page), 1);
-		public bool HasNextPage => Page < TotalPages && ControlsEnabled;
+		public bool HasNextPage => Page < TotalPages - 1 && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
 
 		private bool _newOnly;

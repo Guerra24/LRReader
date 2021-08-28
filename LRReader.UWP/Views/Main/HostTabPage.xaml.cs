@@ -55,7 +55,7 @@ namespace LRReader.UWP.Views.Main
 			TabViewStartHeader.Margin = new Thickness(CoreView.TitleBar.SystemOverlayLeftInset, 0, 0, 0);
 			TabViewEndHeader.Margin = new Thickness(0, 0, CoreView.TitleBar.SystemOverlayRightInset, 0);
 
-			Data.FullScreen = AppView.IsFullScreenMode;
+			Data.Fullscreen = AppView.IsFullScreenMode;
 
 			Window.Current.SetTitleBar(TitleBar);
 
@@ -68,9 +68,8 @@ namespace LRReader.UWP.Views.Main
 				Data.AddTab(new ArchivesTab());
 				if (Settings.OpenBookmarksTab)
 					Data.AddTab(new BookmarksTab(), false);
-				if (Api.ControlFlags.CategoriesEnabled)
-					if (Settings.OpenCategoriesTab)
-						Data.AddTab(new CategoriesTab(), false);
+				if (Settings.OpenCategoriesTab)
+					Data.AddTab(new CategoriesTab(), false);
 			});
 			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
 			if (info != null)
@@ -137,7 +136,7 @@ namespace LRReader.UWP.Views.Main
 
 		private void Tools_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Tools);
 
-		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.FullScreen = AppView.IsFullScreenMode;
+		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.Fullscreen = AppView.IsFullScreenMode;
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{

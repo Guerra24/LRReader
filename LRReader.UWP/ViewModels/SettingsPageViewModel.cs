@@ -17,7 +17,6 @@ namespace LRReader.UWP.ViewModels
 	{
 		private readonly ImagesService Images;
 		private readonly EventsService Events;
-		private readonly ApiService Api;
 		private readonly IPlatformService Platform;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
@@ -83,20 +82,14 @@ namespace LRReader.UWP.ViewModels
 		}
 		public MinionJob thumbnailJob;
 
-		public ControlFlags ControlFlags
-		{
-			get => Api.ControlFlags;
-		}
-
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, ApiService api, IPlatformService platform)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, IPlatformService platform)
 		{
 			SettingsManager = settings;
 			Images = images;
 			Events = events;
-			Api = api;
 			Platform = platform;
 
 			UpdateReleaseData();

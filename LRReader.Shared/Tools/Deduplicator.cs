@@ -56,7 +56,7 @@ namespace LRReader.Shared.Tools
 		private readonly ArchivesService Archives;
 		private readonly IPlatformService Platform;
 
-		public DeduplicationTool(ImagesService images, ArchivesService archives, IPlatformService platform)
+		public DeduplicationTool(ImagesService images, ArchivesService archives, IPlatformService platform) : base(platform)
 		{
 			Images = images;
 			Archives = archives;
@@ -91,23 +91,30 @@ namespace LRReader.Shared.Tools
 			int count = 0;
 			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(() =>
 			{
-				if (earlyExit)
-					return null;
-				// TODO Oh my god
-				Thread.Sleep(delay); // Good ol' Thread.Sleep
-				var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key, ignoreCache: true)).GetAwaiter().GetResult();
-				if (bytes == null)
+				int tries = 5;
+				Image<Rgba32>? image = null;
+				while (tries > 0 && !earlyExit)
 				{
-					earlyExit = true;
-					return null;
+					Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
+					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key, ignoreCache: true)).GetAwaiter().GetResult();
+					if (bytes != null)
+					{
+						image = Image.Load(bytes);
+						image.Mutate(i => i.Resize(width, 0));
+						break;
+					}
+					else
+					{
+						tries--;
+					}
 				}
-				var image = Image.Load(bytes);
-				image.Mutate(i => i.Resize(width, 0));
+				if (image == null)
+					earlyExit = true;
 				int itemCount = Interlocked.Increment(ref count);
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
-				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
+				return new Tuple<string, Image<Rgba32>?>(pair.Key, image);
 			})))).AsEnumerable().ToList();
-			tmp.RemoveAll(pair => pair == null);
+			tmp.RemoveAll(pair => pair.Item2 == null);
 
 			if (earlyExit)
 				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Title"), Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Message"));

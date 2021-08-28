@@ -34,8 +34,6 @@ namespace LRReader.UWP.Views.Items
 
 		private ResourceLoader lang;
 
-		public ControlFlags flags => Service.Api.ControlFlags;
-
 		// Default
 		private Grid Overlay;
 		private TextBlock Title;

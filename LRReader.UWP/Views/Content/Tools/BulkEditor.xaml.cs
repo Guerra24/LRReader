@@ -1,5 +1,4 @@
-﻿using LRReader.Shared.Services;
-using LRReader.Shared.ViewModels.Tools;
+﻿using LRReader.Shared.ViewModels.Tools;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -9,8 +8,6 @@ namespace LRReader.UWP.Views.Content.Tools
 	public sealed partial class BulkEditor : Page
 	{
 		private BulkEditorViewModel Data;
-
-		public ControlFlags flags => Service.Api.ControlFlags;
 
 		public BulkEditor()
 		{

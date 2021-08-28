@@ -12,7 +12,7 @@ namespace LRReader.Shared.Services
 		Archives, Archive, ArchiveEdit, Bookmarks, Categories, CategoryEdit, SearchResults, Settings, Web, Tools
 	}
 
-	public class TabsService : ObservableObject
+	public partial class TabsService : ObservableObject
 	{
 		private readonly ApiService Api;
 		private readonly EventsService Events;
@@ -20,23 +20,14 @@ namespace LRReader.Shared.Services
 
 		public ObservableCollection<ICustomTab> TabItems { get; } = new ObservableCollection<ICustomTab>();
 
-		private ICustomTab _currentTab;
-		public ICustomTab CurrentTab
-		{
-			get => _currentTab;
-			set => SetProperty(ref _currentTab, value);
-		}
+		[ObservableProperty]
+		private ICustomTab? _currentTab;
+
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("Windowed")]
 		private bool _fullscreen = false;
-		public bool FullScreen
-		{
-			get => _fullscreen;
-			set
-			{
-				SetProperty(ref _fullscreen, value);
-				OnPropertyChanged("Windowed");
-			}
-		}
 		public bool Windowed => !_fullscreen;
+
 		public ControlFlags ControlFlags => Api.ControlFlags;
 
 		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
@@ -102,7 +93,7 @@ namespace LRReader.Shared.Services
 
 		public void CloseCurrentTab()
 		{
-			if (!CurrentTab.IsClosable)
+			if (!(CurrentTab?.IsClosable ?? false))
 				return;
 			CloseTab(CurrentTab);
 		}

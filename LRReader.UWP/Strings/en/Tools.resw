@@ -216,6 +216,9 @@
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Deduplicator</value>
   </data>
+  <data name="GenericTool.Error" xml:space="preserve">
+    <value>An unknown error occurred</value>
+  </data>
   <data name="MainPage.Title" xml:space="preserve">
     <value>Tools</value>
   </data>

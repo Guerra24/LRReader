@@ -80,17 +80,7 @@ namespace LRReader.UWP.Views.Items
 			var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
 			if (openLeft != null || openRight != null)
-			{
 				ImagesRoot.SetVisualOpacity(1);
-				// UWP Image.Source is async, right now the layout hasn't updated yet
-				// which causes animation fade to go black.
-				// Wait around 100ms to update layout.
-				//await Task.Delay(100);
-				/*if (_fixLayout)
-				{
-					_fixLayout = false;
-				}*/
-			}
 			else
 				FadeIn.Start(ImagesRoot);
 			openLeft?.TryStart(LeftImage);

@@ -71,7 +71,7 @@
 						<TextBlock Text="Replace tag" />
 					</StackPanel>
 				</Button>-->
-				<Button Visibility="{x:Bind flags.CategoriesEnabledEdit}">
+				<Button>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<muxc:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE8B7;" />
 						<TextBlock x:Uid="/Tools/BulkEditor/ChangeCategory" />

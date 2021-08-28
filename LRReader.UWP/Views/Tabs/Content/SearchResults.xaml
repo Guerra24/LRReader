@@ -9,7 +9,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<controls:ArchiveList x:Name="ArchiveList">
+	<controls:ArchiveList x:Name="ArchiveList" ItemClickEnabled="True" SelectionMode="None">
 		<controls:ArchiveList.ItemDataTemplate>
 			<DataTemplate>
 				<items:GenericArchiveItem />

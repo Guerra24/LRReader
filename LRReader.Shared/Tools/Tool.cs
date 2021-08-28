@@ -1,4 +1,5 @@
-﻿using Microsoft.AppCenter.Crashes;
+﻿using LRReader.Shared.Services;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
@@ -50,15 +51,22 @@ namespace LRReader.Shared.Tools
 	public abstract class Tool<T, P, R> where P : IToolParams
 	{
 
-		private Subject<ToolProgress<T>> progressFilter;
+		private readonly IPlatformService Platform;
+
+		private Subject<ToolProgress<T>>? progressFilter;
 
 		protected volatile bool earlyExit;
 
-		public async Task<ToolResult<R>> Execute(P @params, int threads, IProgress<ToolProgress<T>> progress = null)
+		public Tool(IPlatformService platform)
+		{
+			Platform = platform;
+		}
+
+		public async Task<ToolResult<R>> Execute(P @params, int threads, IProgress<ToolProgress<T>>? progress = null)
 		{
 			progressFilter = new Subject<ToolProgress<T>>();
 			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
-			ToolResult<R> result = new ToolResult<R> { Title = "An unknown error occurred" };
+			ToolResult<R> result = new ToolResult<R> { Title = Platform.GetLocalizedString("Tools/GenericTool/Error") };
 			try
 			{
 				result = await Process(@params, threads);

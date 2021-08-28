@@ -26,6 +26,8 @@ namespace LRReader.Shared.Services
 		private LRUCache<string, byte[]> thumbnailsCache;
 		private DirectoryInfo thumbnailCacheDirectory;
 
+		private static readonly string NoThumbHash = "BE17DA00E485ECAFDCB25101EE4FBA34";
+
 		public ImagesService(IFilesService files, ImageProcessingService imageProcessing)
 		{
 			Files = files;
@@ -81,7 +83,7 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		public async Task<byte[]> GetImageCached(string path)
+		public async Task<byte[]?> GetImageCached(string path)
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
@@ -103,7 +105,7 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		public async Task<byte[]> GetThumbnailCached(string id, bool forced = false, bool ignoreCache = false)
+		public async Task<byte[]?> GetThumbnailCached(string id, bool forced = false, bool ignoreCache = false)
 		{
 			if (string.IsNullOrEmpty(id))
 				return null;
@@ -127,6 +129,10 @@ namespace LRReader.Shared.Services
 						data = await ArchivesProvider.GetThumbnail(id);
 						if (data == null)
 							return null;
+						if (data.Length == 55876) // TODO
+							using (var md5 = System.Security.Cryptography.MD5.Create())
+								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
+									return null;
 						Directory.CreateDirectory(directory);
 						await Files.StoreFile(path, data);
 					}

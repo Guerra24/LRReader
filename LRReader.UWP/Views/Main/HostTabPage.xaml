@@ -62,7 +62,7 @@
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 							</Viewbox>
 						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Categories" Click="Categories_Click" Visibility="{x:Bind Data.ControlFlags.CategoriesEnabled, Converter={StaticResource BoolToVisibility}}">
+						<Button x:Uid="/Pages/HostTabPage/Categories" Click="Categories_Click">
 							<Viewbox MaxWidth="16" MaxHeight="16">
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 							</Viewbox>

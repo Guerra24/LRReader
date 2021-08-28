@@ -21,7 +21,7 @@
 	</UserControl.ContextFlyout>
 
 	<Grid>
-		<Image x:Name="Image" VerticalAlignment="Center"  />
+		<Image x:Name="Image" />
 		<Grid
 			x:Name="PageCountGrid" Margin="0,0,4,4" HorizontalAlignment="Right"
 			VerticalAlignment="Bottom"

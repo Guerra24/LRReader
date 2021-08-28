@@ -2,14 +2,14 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.ArchiveTabContent"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	xmlns:controls1="using:LRReader.UWP.Views.Controls"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:convrt="using:LRReader.Internal"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding ArchivePageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
@@ -37,7 +37,7 @@
 							IsTextSelectionEnabled="True"
 							Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 							TextWrapping="WrapWholeWords" />
-						<controls1:ArchiveTags Margin="0,0,0,8" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
+						<controls:ArchiveTags Margin="0,0,0,8" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
 						<StackPanel Orientation="Horizontal">
 							<ToggleButton x:Uid="/Tabs/Archive/Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<Button
@@ -55,14 +55,14 @@
 							<Button
 								Margin="2,0,0,0" Click="CategoriesButton_Click" Content="Categories"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind flags.CategoriesEnabledEdit}" />
+								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							<Button
 								x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DownloadButton_Click"
 								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource NegateBool}}" />
 							<Button
 								x:Uid="/Tabs/Archive/Delete" Margin="2,0,0,0" Click="DeleteButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind flags.V078Edit}" />
+								Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
 						</StackPanel>
 					</StackPanel>
 				</GridView.Header>
@@ -141,7 +141,7 @@
 				<VisualState x:Name="ThemeBackground" />
 				<VisualState x:Name="UserBackground" >
 					<VisualState.StateTriggers>
-						<StateTrigger IsActive="{x:Bind settings.UseReaderBackground, Mode=OneWay}" />
+						<StateTrigger IsActive="{x:Bind services:Service.Settings.UseReaderBackground, Mode=OneWay}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="ScrollViewer.Background" Value="{StaticResource CustomReaderBackground}" />

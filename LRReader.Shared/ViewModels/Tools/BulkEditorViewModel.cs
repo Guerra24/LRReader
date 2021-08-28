@@ -3,11 +3,9 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
@@ -19,7 +17,7 @@ namespace LRReader.Shared.ViewModels.Tools
 		public ObservableCollection<Category> Categories = new ObservableCollection<Category>();
 
 		[ObservableProperty]
-		private Category _selectedCategory;
+		private Category? _selectedCategory;
 
 		[ObservableProperty]
 		private bool _moveToCategory;
@@ -68,7 +66,7 @@ namespace LRReader.Shared.ViewModels.Tools
 							await CategoriesProvider.RemoveArchiveFromCategory(c.id, a.arcid);
 			}
 			foreach (var a in items)
-				await CategoriesProvider.AddArchiveToCategory(SelectedCategory.id, a.arcid);
+				await CategoriesProvider.AddArchiveToCategory(SelectedCategory?.id ?? "", a.arcid);
 			MoveToCategory = false;
 		}
 	}

@@ -14,8 +14,8 @@
 
 ## Requirements
 
-- Windows 10 1809 (x86, x64 or ARM64)
-- LANraragi v0.7.3
+- Windows 10 1809 (x64 or ARM64)
+- LANraragi v0.7.6
 
 ## Installing
 

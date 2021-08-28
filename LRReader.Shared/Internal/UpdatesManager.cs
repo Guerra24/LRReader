@@ -10,7 +10,7 @@ namespace LRReader.Shared.Internal
 {
 	public class UpdatesManager
 	{
-		public static Version MIN_VERSION = new Version(0, 7, 3);
+		public static Version MIN_VERSION = new Version(0, 7, 6);
 		public static Version MAX_VERSION = new Version(0, 8, 0);
 
 		private RestClient client;

@@ -8,13 +8,14 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
-	xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services">
 
 	<Style BasedOn="{StaticResource DefaultArchiveItem}" TargetType="items:GenericArchiveItem" />
 
 	<Style x:Key="BookmarkedArchiveItem" TargetType="items:GenericArchiveItem">
 		<Setter Property="Width" Value="200" />
-		<Setter Property="Height" Value="150"/>
+		<Setter Property="Height" Value="150" />
 		<Setter Property="DecodePixelWidth" Value="200" />
 		<Setter Property="Template">
 			<Setter.Value>
@@ -43,7 +44,7 @@
 									Click="{x:Bind EditMenuItem_Click}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
@@ -57,7 +58,7 @@
 									x:Uid="/Items/Archive/Delete"
 									Click="{x:Bind DeleteMenuItem_Click}"
 									Icon="Delete"
-									Visibility="{x:Bind flags.V078Edit}" />
+									Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
 							</MenuFlyout>
 						</Grid.ContextFlyout>
 						<muxc:ParallaxView x:Name="Parallax" x:FieldModifier="public" VerticalShift="100">
@@ -273,7 +274,7 @@
 									Click="{x:Bind EditMenuItem_Click}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
@@ -287,7 +288,7 @@
 									x:Uid="/Items/Archive/Delete"
 									Click="{x:Bind DeleteMenuItem_Click}"
 									Icon="Delete"
-									Visibility="{x:Bind flags.V078Edit}" />
+									Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
 							</MenuFlyout>
 						</Grid.ContextFlyout>
 						<Grid.RowDefinitions>
