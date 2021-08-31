@@ -1,16 +1,11 @@
 ﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Internal;
 using LRReader.Shared.Providers;
-using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
-using Microsoft.AppCenter.Crashes;
 using System;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
-using Windows.Services.Store;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -65,7 +60,6 @@ namespace LRReader.UWP.Views.Main
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			await InitServices();
-#if !DEBUG
 			if (Updates.CanAutoUpdate() && Updates.AutoUpdate)
 			{
 				var update = await Updates.CheckForUpdates();
@@ -87,7 +81,6 @@ namespace LRReader.UWP.Views.Main
 					}
 				}
 			}
-#endif
 
 			bool firstRun = Settings.Profile == null;
 			if (firstRun)

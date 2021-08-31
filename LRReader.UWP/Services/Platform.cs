@@ -1,6 +1,7 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.Views;
 using LRReader.UWP.Views.Tabs;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,9 +27,10 @@ namespace LRReader.UWP.Services
 
 		private Root Root;
 
-		public UWPlatformService(TabsService tabs)
+		public UWPlatformService(TabsService tabs, ILoggerFactory loggerFactory, IFilesService files)
 		{
 			Tabs = tabs;
+			loggerFactory.AddFile(files.LocalCache + "/Logs/App.log");
 		}
 
 		public void Init()

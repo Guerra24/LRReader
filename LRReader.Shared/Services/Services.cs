@@ -20,6 +20,8 @@ namespace LRReader.Shared.Services
 		public static void BuildServices(ConfigureServices? services = null)
 		{
 			var collection = new ServiceCollection();
+			collection.AddLogging();
+
 			// Services
 			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
 			collection.AddSingleton<IFilesService, StubFilesService>();

@@ -2,6 +2,7 @@
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using RestSharp;
 using System;
@@ -96,10 +97,13 @@ namespace LRReader.UWP.Services
 
 	public class SideloadUpdatesService : UpdatesService
 	{
+		private readonly ILogger<SideloadUpdatesService> Logger;
+
 		private Package Current;
 
-		public SideloadUpdatesService(IPlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings)
+		public SideloadUpdatesService(IPlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
 		{
+			Logger = logger;
 			Current = Package.Current;
 		}
 
@@ -131,7 +135,11 @@ namespace LRReader.UWP.Services
 		{
 			var pm = new PackageManager();
 			var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
-			downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100f);
+			downloadTask.Progress = (info, prog) =>
+			{
+				progress?.Report(prog.percentage);
+				Logger.LogInformation("Download percent {0}", prog.percentage);
+			};
 			await downloadTask.AsTask();
 			return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UnknownError") };
 		}

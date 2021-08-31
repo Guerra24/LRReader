@@ -71,13 +71,12 @@ namespace LRReader.UWP.Views.Main
 				if (Settings.OpenCategoriesTab)
 					Data.AddTab(new CategoriesTab(), false);
 			});
-#if !DEBUG
+
 			var info = await Updates.CheckForUpdates();
 			if (info.Found)
 				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target), lang.GetString("HostTab/Update2"), 0);
 
 			await ShowWhatsNew();
-#endif
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
