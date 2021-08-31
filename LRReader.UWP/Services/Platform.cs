@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Services;
+using LRReader.UWP.Views;
 using LRReader.UWP.Views.Tabs;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
@@ -21,6 +23,8 @@ namespace LRReader.UWP.Services
 		private readonly Dictionary<Symbols, SymbolIconSource> SymbolToSymbol = new Dictionary<Symbols, SymbolIconSource>();
 
 		private UISettings UISettings;
+
+		private Root Root;
 
 		public UWPlatformService(TabsService tabs)
 		{
@@ -44,6 +48,8 @@ namespace LRReader.UWP.Services
 			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });
 
 			UISettings = new UISettings();
+
+			Root = Window.Current.Content as Root;
 		}
 
 		public Version Version
@@ -59,10 +65,7 @@ namespace LRReader.UWP.Services
 
 		public uint HoverTime => UISettings.MouseHoverTime;
 
-		public Task<bool> OpenInBrowser(Uri uri)
-		{
-			return Launcher.LaunchUriAsync(uri).AsTask();
-		}
+		public Task<bool> OpenInBrowser(Uri uri) => Launcher.LaunchUriAsync(uri).AsTask();
 
 		public object GetSymbol(Symbols symbol)
 		{
@@ -78,10 +81,7 @@ namespace LRReader.UWP.Services
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
-		public string GetPackageFamilyName()
-		{
-			return Package.Current.Id.FamilyName;
-		}
+		public string GetPackageFamilyName() => Package.Current.Id.FamilyName;
 
 		public async Task<bool> CheckAppInstalled(string package)
 		{
@@ -102,5 +102,7 @@ namespace LRReader.UWP.Services
 				return false;
 			}
 		}
+
+		public void ChangeTheme(AppTheme theme) => Root.ChangeTheme(theme);
 	}
 }

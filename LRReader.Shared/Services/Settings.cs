@@ -19,6 +19,7 @@ namespace LRReader.Shared.Services
 	{
 		private readonly ISettingsStorageService SettingsStorage;
 		private readonly IFilesService Files;
+		private readonly IPlatformService Platform;
 
 		[ObservableProperty]
 		private ObservableCollection<ServerProfile> _profiles;
@@ -134,7 +135,11 @@ namespace LRReader.Shared.Services
 		public AppTheme Theme
 		{
 			get => (AppTheme)SettingsStorage.GetObjectLocal("Theme", (int)AppTheme.System);
-			set => SettingsStorage.StoreObjectLocal("Theme", (int)value);
+			set
+			{
+				SettingsStorage.StoreObjectLocal("Theme", (int)value);
+				Platform.ChangeTheme(value);
+			}
 		}
 		public bool CompactBookmarks
 		{
@@ -210,10 +215,11 @@ namespace LRReader.Shared.Services
 
 		private Subject<bool> save = new Subject<bool>();
 
-		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files)
+		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files, IPlatformService platform)
 		{
 			SettingsStorage = settingsStorage;
 			Files = files;
+			Platform = platform;
 			save.Throttle(TimeSpan.FromMilliseconds(500))
 				.Subscribe(async (n) =>
 				{

@@ -26,34 +26,8 @@ namespace LRReader.UWP
 		{
 			AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
 			Init.EarlyInit();
-			switch (Settings.Theme)
-			{
-				case AppTheme.Dark:
-					this.RequestedTheme = ApplicationTheme.Dark;
-					break;
-				case AppTheme.Light:
-					this.RequestedTheme = ApplicationTheme.Light;
-					break;
-				case AppTheme.System:
-					break;
-			}
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
-		}
-
-		private void UpdateButtonsOnThemeChange(ApplicationTheme theme)
-		{
-			var AppView = ApplicationView.GetForCurrentView();
-			var titleBar = AppView.TitleBar;
-			switch (theme)
-			{
-				case ApplicationTheme.Light:
-					titleBar.ButtonForegroundColor = Colors.Black;
-					break;
-				case ApplicationTheme.Dark:
-					titleBar.ButtonForegroundColor = Colors.White;
-					break;
-			}
 		}
 
 		/// <summary>
@@ -77,8 +51,8 @@ namespace LRReader.UWP
 				titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
 				rootFrame = new Root();
-				rootFrame.ActualThemeChanged += (sender, args) => UpdateButtonsOnThemeChange(RequestedTheme);
-				UpdateButtonsOnThemeChange(RequestedTheme);
+				rootFrame.ChangeTheme(Settings.Theme);
+				rootFrame.UpdateThemeColors();
 
 				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");

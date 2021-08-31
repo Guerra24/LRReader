@@ -8,6 +8,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:muxm="using:Microsoft.UI.Xaml.Media"
 	muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+	ActualThemeChanged="{x:Bind UpdateThemeColors}"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<muxm:AcrylicBrush

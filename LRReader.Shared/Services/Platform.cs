@@ -24,6 +24,8 @@ namespace LRReader.Shared.Services
 		object? GetSymbol(Symbols symbol);
 
 		string GetLocalizedString(string key);
+
+		void ChangeTheme(AppTheme theme);
 	}
 
 	public class StubPlatformService : IPlatformService
@@ -47,5 +49,7 @@ namespace LRReader.Shared.Services
 		public object? GetSymbol(Symbols symbol) => null;
 
 		public string GetLocalizedString(string key) => key;
+
+		public void ChangeTheme(AppTheme theme) { }
 	}
 }
