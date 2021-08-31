@@ -20,7 +20,8 @@
 		<Windows10version1903:ThemeShadow x:Name="Shadow" />
 	</UserControl.Resources>
 
-	<Grid x:Name="Root">
+	<Grid>
+		<Grid x:Name="Root" />
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging"
