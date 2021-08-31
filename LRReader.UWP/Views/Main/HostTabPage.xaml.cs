@@ -1,4 +1,4 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
@@ -71,10 +71,11 @@ namespace LRReader.UWP.Views.Main
 				if (Settings.OpenCategoriesTab)
 					Data.AddTab(new CategoriesTab(), false);
 			});
-			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
-			if (info != null)
-				ShowNotification(lang.GetString("HostTab/Update1") + " " + info.name, lang.GetString("HostTab/Update2"), 0);
-#if !SIDELOAD
+#if !DEBUG
+			var info = await Updates.CheckForUpdates();
+			if (info.Found)
+				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target), lang.GetString("HostTab/Update2"), 0);
+
 			await ShowWhatsNew();
 #endif
 		}
@@ -164,14 +165,14 @@ namespace LRReader.UWP.Views.Main
 
 		private async Task ShowWhatsNew()
 		{
-			var version = Version.Parse(SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
-			if (version >= Platform.Version)
+			if (!SettingsStorage.GetObjectLocal("WasUpdated", false))
 				return;
-			var result = await SharedGlobal.UpdatesManager.GetChangelog(Platform.Version);
-			if (result == null)
-				return;
-			SettingsStorage.StoreObjectLocal("_version", Platform.Version.ToString());
-			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), result);
+			SettingsStorage.DeleteObjectLocal("WasUpdated");
+			SettingsStorage.DeleteObjectLocal("_version");
+
+			var log = await Updates.GetChangelog(Platform.Version);
+
+			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log?.Content);
 			await dialog.ShowAsync();
 		}
 

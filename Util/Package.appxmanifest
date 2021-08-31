@@ -5,7 +5,8 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
-  IgnorableNamespaces="uap uap5 mp">
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap5 mp rescap">
 
   <Identity
     Name="Guerra24.LRReader"
@@ -51,6 +52,7 @@
   </Applications>
 
   <Capabilities>
+    <rescap:Capability Name="packageManagement" />
     <Capability Name="internetClient" />
     <Capability Name="privateNetworkClientServer"/>
   </Capabilities>

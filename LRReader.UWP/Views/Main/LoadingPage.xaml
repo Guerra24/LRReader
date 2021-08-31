@@ -35,13 +35,19 @@
 					Maximum="0.8"
 					Visibility="{x:Bind ViewModel.Updating, Mode=OneWay}"
 					Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
-				<StackPanel VerticalAlignment="Top">
-					<TextBlock
-						Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="18"
-						Text="{x:Bind ViewModel.Status, Mode=OneWay}" />
-					<TextBlock
-						Margin="0,5,0,0" HorizontalAlignment="Center" FontSize="17"
-						Text="{x:Bind ViewModel.StatusSub, Mode=OneWay}" />
+				<StackPanel VerticalAlignment="Top" Spacing="5">
+					<TextBlock HorizontalAlignment="Center" FontSize="18" Text="{x:Bind ViewModel.Status, Mode=OneWay}" />
+					<TextBlock HorizontalAlignment="Center" FontSize="17" Text="{x:Bind ViewModel.StatusSub, Mode=OneWay}" />
+					<Grid HorizontalAlignment="Center" Visibility="{x:Bind ViewModel.Retry, Mode=OneWay}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150" />
+							<ColumnDefinition Width="150" />
+						</Grid.ColumnDefinitions>
+						<Button x:Uid="/Pages/LoadingPage/ChangeProfile" HorizontalAlignment="Center" Click="Change_Click" />
+						<Button
+							x:Uid="/Pages/LoadingPage/Retry" Grid.Column="1" HorizontalAlignment="Center"
+							Click="Retry_Click" />
+					</Grid>
 				</StackPanel>
 			</Grid>
 		</Grid>

@@ -80,9 +80,9 @@ namespace LRReader.UWP.Services
 		public override async Task<Size> GetImageSize(byte[] bytes)
 		{
 			if (bytes == null)
-				return new Size(0, 0);
+				return Size.Empty;
 			if (bytes.Length == 0)
-				return new Size(0, 0);
+				return Size.Empty;
 			var size = await base.GetImageSize(bytes);
 			if (size.IsEmpty)
 				using (var stream = new InMemoryRandomAccessStream())

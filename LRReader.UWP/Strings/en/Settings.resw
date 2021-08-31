@@ -486,4 +486,7 @@
   <data name="FeedbackPage.Description" xml:space="preserve">
     <value>Changes and feature requests</value>
   </data>
+  <data name="Updates.AutoUpdates.Title" xml:space="preserve">
+    <value>Auto updates</value>
+  </data>
 </root>

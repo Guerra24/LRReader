@@ -148,7 +148,7 @@
     <value>Release Notes</value>
   </data>
   <data name="HostTab.Update1" xml:space="preserve">
-    <value>New update available!</value>
+    <value>New update available! Release {0}</value>
   </data>
   <data name="HostTab.Update2" xml:space="preserve">
     <value>Check Settings -&gt; Updates for more info</value>
@@ -170,6 +170,9 @@
   </data>
   <data name="HostTabPage.Tools.ToolTipService.ToolTip" xml:space="preserve">
     <value>Tools</value>
+  </data>
+  <data name="LoadingPage.ChangeProfile.Content" xml:space="preserve">
+    <value>Change profile</value>
   </data>
   <data name="LoadingPage.ClientNotSupported" xml:space="preserve">
     <value>Version {0} not supported. Please update the app to a newer version</value>
@@ -194,6 +197,9 @@
   </data>
   <data name="LoadingPage.NoConnectionLocalHostSub" xml:space="preserve">
     <value>Check Profile-&gt;Edit for more information</value>
+  </data>
+  <data name="LoadingPage.Retry.Content" xml:space="preserve">
+    <value>Retry</value>
   </data>
   <data name="LoadingPage.UpdateError" xml:space="preserve">
     <value>An error ocurred while checking for updates</value>

@@ -16,6 +16,11 @@ namespace LRReader.UWP
 				collection.Replace(ServiceDescriptor.Singleton<IFilesService, FilesService>());
 				collection.Replace(ServiceDescriptor.Singleton<IDispatcherService, DispatcherService>());
 				collection.Replace(ServiceDescriptor.Singleton<IPlatformService, UWPlatformService>());
+#if SIDELOAD
+				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, SideloadUpdatesService>());
+#else
+				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, StoreUpdatesService>());
+#endif
 
 				collection.AddSingleton<ImageProcessingService, UWPImageProcessingService>();
 

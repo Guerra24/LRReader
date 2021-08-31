@@ -2,37 +2,19 @@
 
 namespace LRReader.Shared.ViewModels
 {
-	public class LoadingPageViewModel : ObservableObject
+	public partial class LoadingPageViewModel : ObservableObject
 	{
-		private string _status;
-		public string Status
-		{
-			get => _status;
-			set => SetProperty(ref _status, value);
-		}
-		private string _statusSub;
-		public string StatusSub
-		{
-			get => _statusSub;
-			set => SetProperty(ref _statusSub, value);
-		}
+		[ObservableProperty]
+		private string _status = "";
+		[ObservableProperty]
+		private string _statusSub = "";
+		[ObservableProperty]
 		private bool _active;
-		public bool Active
-		{
-			get => _active;
-			set => SetProperty(ref _active, value);
-		}
+		[ObservableProperty]
 		private bool _updating;
-		public bool Updating
-		{
-			get => _updating;
-			set => SetProperty(ref _updating, value);
-		}
+		[ObservableProperty]
 		private double _progress;
-		public double Progress
-		{
-			get => _progress;
-			set => SetProperty(ref _progress, value);
-		}
+		[ObservableProperty]
+		private bool _retry;
 	}
 }

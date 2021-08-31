@@ -42,6 +42,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _focus = true;
 		private bool _changePage;
 
+		private bool _transition;
+
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
 
 		private Subject<double> resizePixel = new Subject<double>();
@@ -106,6 +108,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void OpenReader(int page, object item = null)
 		{
+			if (_transition)
+				return;
+			_transition = true;
 			var readerSet = Data.ArchiveImagesReader.FirstOrDefault(s => s.Page >= page);
 			if (readerSet == null)
 				return;
@@ -134,10 +139,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			_focus = true;
 			FocusReader();
+			_transition = false;
 		}
 
 		public async void CloseReader()
 		{
+			if (_transition)
+				return;
+			_transition = true;
 			var animate = Service.Platform.AnimationsEnabled;
 			var left = ReaderControl.FindDescendant("LeftImage");
 			var right = ReaderControl.FindDescendant("RightImage");
@@ -236,6 +245,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (Service.Api.ControlFlags.ProgressTracking)
 					await Data.SetProgress(currentPage + 1);
 			}
+			_transition = false;
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)

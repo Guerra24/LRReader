@@ -21,10 +21,9 @@ namespace LRReader.Shared.Services
 
 		Task<bool> OpenInBrowser(Uri uri);
 
-		object GetSymbol(Symbols symbol);
+		object? GetSymbol(Symbols symbol);
 
 		string GetLocalizedString(string key);
-
 	}
 
 	public class StubPlatformService : IPlatformService
@@ -45,14 +44,8 @@ namespace LRReader.Shared.Services
 			return Task.Run(() => false);
 		}
 
-		public object GetSymbol(Symbols symbol)
-		{
-			return null;
-		}
+		public object? GetSymbol(Symbols symbol) => null;
 
-		public string GetLocalizedString(string key)
-		{
-			return key;
-		}
+		public string GetLocalizedString(string key) => key;
 	}
 }

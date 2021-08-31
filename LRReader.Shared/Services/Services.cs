@@ -17,7 +17,7 @@ namespace LRReader.Shared.Services
 
 		private static bool Loaded;
 
-		public static void BuildServices(ConfigureServices services = null)
+		public static void BuildServices(ConfigureServices? services = null)
 		{
 			var collection = new ServiceCollection();
 			// Services
@@ -25,6 +25,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<IFilesService, StubFilesService>();
 			collection.AddSingleton<IDispatcherService, StubDispatcherService>();
 			collection.AddSingleton<IPlatformService, StubPlatformService>();
+			collection.AddSingleton<UpdatesService, StubUpdatesService>();
 			collection.AddSingleton<ArchivesService>();
 			collection.AddSingleton<SettingsService>();
 			collection.AddSingleton<ImagesService>();
@@ -74,6 +75,7 @@ namespace LRReader.Shared.Services
 		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
 		public static IDispatcherService Dispatcher => Services.GetRequiredService<IDispatcherService>();
 		public static IPlatformService Platform => Services.GetRequiredService<IPlatformService>();
+		public static UpdatesService Updates => Services.GetRequiredService<UpdatesService>();
 		public static ImageProcessingService ImageProcessing => Services.GetRequiredService<ImageProcessingService>();
 		public static ArchivesService Archives => Services.GetRequiredService<ArchivesService>();
 		public static SettingsService Settings => Services.GetRequiredService<SettingsService>();

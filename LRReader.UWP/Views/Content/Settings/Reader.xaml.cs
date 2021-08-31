@@ -3,6 +3,8 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using ColorPicker = Microsoft.UI.Xaml.Controls.ColorPicker;
+using ColorChangedEventArgs = Microsoft.UI.Xaml.Controls.ColorChangedEventArgs;
 
 namespace LRReader.UWP.Views.Content.Settings
 {

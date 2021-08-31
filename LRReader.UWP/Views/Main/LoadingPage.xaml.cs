@@ -65,8 +65,28 @@ namespace LRReader.UWP.Views.Main
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			await InitServices();
-#if !SIDELOAD && !DEBUG
-			await DownloadUpdateStore();
+#if !DEBUG
+			if (Updates.CanAutoUpdate() && Updates.AutoUpdate)
+			{
+				var update = await Updates.CheckForUpdates();
+				if (update.Found)
+				{
+					ViewModel.Updating = true;
+					// Set wasUpdate in settingstorage
+					SettingsStorage.StoreObjectLocal("WasUpdated", true);
+					var result = await Updates.DownloadAndInstall(new Progress<double>(progress => ViewModel.Progress = progress));
+					ViewModel.Updating = false;
+					if (!result.Result)
+					{
+						SettingsStorage.DeleteObjectLocal("WasUpdated");
+						ViewModel.Status = result.ErrorMessage;
+						ViewModel.StatusSub = lang.GetString("LoadingPage/UpdateErrorCode").AsFormat(result.ErrorCode);
+						await Task.Delay(TimeSpan.FromSeconds(3));
+						ViewModel.Status = "";
+						ViewModel.StatusSub = "";
+					}
+				}
+			}
 #endif
 
 			bool firstRun = Settings.Profile == null;
@@ -79,8 +99,26 @@ namespace LRReader.UWP.Views.Main
 
 			ViewModel.Active = true;
 #if !DEBUG
-			await SharedGlobal.UpdatesManager.UpdateSupportedRange(Platform.Version);
+			await Updates.UpdateSupportedRange();
 #endif
+			await Connect();
+		}
+
+		private async Task Reload()
+		{
+			ViewModel.Active = false;
+			await Task.Delay(TimeSpan.FromSeconds(5));
+			ViewModel.Status = "";
+			ViewModel.StatusSub = "";
+			(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+		}
+
+		private async Task Connect()
+		{
+			ViewModel.Status = "";
+			ViewModel.StatusSub = "";
+			ViewModel.Retry = false;
+			ViewModel.Active = true;
 			Api.RefreshSettings(Settings.Profile);
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
@@ -93,7 +131,9 @@ namespace LRReader.UWP.Views.Main
 				}
 				else
 					ViewModel.Status = lang.GetString("LoadingPage/NoConnection");
-				await Reload();
+				ViewModel.Active = false;
+				await Task.Delay(TimeSpan.FromSeconds(2.5));
+				ViewModel.Retry = true;
 				return;
 			}
 			else if (serverInfo._unauthorized)
@@ -103,16 +143,16 @@ namespace LRReader.UWP.Views.Main
 				return;
 			}
 			Api.ServerInfo = serverInfo;
-			if (serverInfo.version < UpdatesManager.MIN_VERSION)
+			if (serverInfo.version < Updates.MIN_VERSION)
 			{
-				ViewModel.Status = lang.GetString("LoadingPage/InstanceNotSupported").AsFormat(serverInfo.version, UpdatesManager.MIN_VERSION);
+				ViewModel.Status = lang.GetString("LoadingPage/InstanceNotSupported").AsFormat(serverInfo.version, Updates.MIN_VERSION);
 				await Reload();
 				return;
 			}
-			else if (serverInfo.version > UpdatesManager.MAX_VERSION)
+			else if (serverInfo.version > Updates.MAX_VERSION)
 			{
 				ViewModel.Status = lang.GetString("LoadingPage/ClientNotSupported").AsFormat(serverInfo.version);
-				ViewModel.StatusSub = lang.GetString("LoadingPage/ClientRange").AsFormat(UpdatesManager.MIN_VERSION, UpdatesManager.MAX_VERSION);
+				ViewModel.StatusSub = lang.GetString("LoadingPage/ClientRange").AsFormat(Updates.MIN_VERSION, Updates.MAX_VERSION);
 				await Reload();
 				return;
 			}
@@ -128,60 +168,6 @@ namespace LRReader.UWP.Views.Main
 			(Window.Current.Content as Root).Frame.Navigate(typeof(HostTabPage), null, new DrillInNavigationTransitionInfo());
 		}
 
-		private async Task Reload()
-		{
-			ViewModel.Active = false;
-			await Task.Delay(TimeSpan.FromSeconds(5));
-			ViewModel.Status = "";
-			ViewModel.StatusSub = "";
-			(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
-		}
-
-		private async Task DownloadUpdateStore()
-		{
-			if (!NetworkInterface.GetIsNetworkAvailable())
-				return;
-
-			var context = StoreContext.GetDefault();
-			if (!context.CanSilentlyDownloadStorePackageUpdates)
-				return;
-			try
-			{
-				var packageUpdates = await context.GetAppAndOptionalStorePackageUpdatesAsync();
-				if (packageUpdates.Count == 0)
-					return;
-
-				ViewModel.Updating = true;
-
-				var downloadTask = context.TrySilentDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
-				//downloadTask = context.RequestDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
-
-				downloadTask.Progress = async (info, progress) =>
-				{
-					await Service.Dispatcher.RunAsync(() => ViewModel.Progress = progress.TotalDownloadProgress);
-				};
-				var result = await downloadTask.AsTask();
-			}
-			catch (Exception e)
-			{
-				Crashes.TrackError(e);
-
-				ViewModel.Updating = false;
-
-				ViewModel.Status = lang.GetString("LoadingPage/UpdateError");
-				ViewModel.StatusSub = lang.GetString("LoadingPage/UpdateErrorCode").AsFormat(e.HResult);
-
-				await Task.Delay(TimeSpan.FromSeconds(3));
-
-				ViewModel.Status = "";
-				ViewModel.StatusSub = "";
-			}
-			finally
-			{
-				ViewModel.Updating = false;
-			}
-		}
-
 		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			UpdateSplash();
@@ -193,6 +179,17 @@ namespace LRReader.UWP.Views.Main
 			Splash.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Y);
 			Splash.Width = splashScreen.ImageLocation.Width;
 			Splash.Height = splashScreen.ImageLocation.Height;
+		}
+
+		private async void Retry_Click(object sender, RoutedEventArgs e) => await Connect();
+
+		private void Change_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.Status = "";
+			ViewModel.StatusSub = "";
+			ViewModel.Retry = false;
+			ViewModel.Active = false;
+			(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
 		}
 	}
 }

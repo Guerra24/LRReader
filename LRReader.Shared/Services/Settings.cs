@@ -15,22 +15,14 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
-	public class SettingsService : ObservableObject, IService
+	public partial class SettingsService : ObservableObject, IService
 	{
-
 		private readonly ISettingsStorageService SettingsStorage;
 		private readonly IFilesService Files;
 
+		[ObservableProperty]
 		private ObservableCollection<ServerProfile> _profiles;
-		public ObservableCollection<ServerProfile> Profiles
-		{
-			get => _profiles;
-			set
-			{
-				_profiles = value;
-				OnPropertyChanged("Profiles");
-			}
-		}
+
 		private ServerProfile _profile;
 		public ServerProfile Profile
 		{
@@ -196,6 +188,11 @@ namespace LRReader.Shared.Services
 		{
 			get => SettingsStorage.GetObjectLocal("ReaderBackground", "#FF000000");
 			set => SettingsStorage.StoreObjectLocal("ReaderBackground", value);
+		}
+		public bool AutoUpdate
+		{
+			get => SettingsStorage.GetObjectLocal("AutoUpdate", true);
+			set => SettingsStorage.StoreObjectLocal("AutoUpdate", value);
 		}
 
 		public static readonly int CurrentLocalVersion = 4;

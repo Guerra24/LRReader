@@ -117,94 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FirstRunPage.Add.Content" xml:space="preserve">
-    <value>Nuevo</value>
+  <data name="Updater.NoNetwork" xml:space="preserve">
+    <value>Unable to connect</value>
   </data>
-  <data name="FirstRunPage.Continue.Content" xml:space="preserve">
-    <value>Continuar</value>
+  <data name="Updater.NotFound" xml:space="preserve">
+    <value>No updates found</value>
   </data>
-  <data name="FirstRunPage.Edit.Content" xml:space="preserve">
-    <value>Modificar</value>
+  <data name="Updater.UnknownError" xml:space="preserve">
+    <value>An unknown error occurred</value>
   </data>
-  <data name="FirstRunPage.ProfileSelect.PlaceholderText" xml:space="preserve">
-    <value>Seleccionar Perfil</value>
-  </data>
-  <data name="FirstRunPage.Remove.Content" xml:space="preserve">
-    <value>Eliminar</value>
-  </data>
-  <data name="FirstRunPage.RemoveConfirm.Text" xml:space="preserve">
-    <value>Se eliminará el perfil seleccionado. ¿Quieres continuar?</value>
-  </data>
-  <data name="FirstRunPage.RemoveYes.Content" xml:space="preserve">
-    <value>Sí, eliminar</value>
-  </data>
-  <data name="FirstRunPage.Setup.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
-    <value>Bienvenido</value>
-  </data>
-  <data name="HostTab.ChangelogTitle" xml:space="preserve">
-    <value>Notas de versión</value>
-  </data>
-  <data name="HostTab.Update1" xml:space="preserve">
-    <value>¡Nueva actualización disponible! Versión {0}</value>
-  </data>
-  <data name="HostTab.Update2" xml:space="preserve">
-    <value>Ve a Ajustes -&gt; Actualizaciones para obtener más información</value>
-  </data>
-  <data name="HostTabPage.Bookmarks.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Marcadores</value>
-  </data>
-  <data name="HostTabPage.Categories.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Categorías</value>
-  </data>
-  <data name="HostTabPage.EnterFullScreen.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Modo Pantalla Completa</value>
-  </data>
-  <data name="HostTabPage.Search.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Buscar</value>
-  </data>
-  <data name="HostTabPage.Settings.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Ajustes</value>
-  </data>
-  <data name="HostTabPage.Tools.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Herramientas</value>
-  </data>
-  <data name="LoadingPage.ChangeProfile.Content" xml:space="preserve">
-    <value>Cambiar perfil</value>
-  </data>
-  <data name="LoadingPage.ClientNotSupported" xml:space="preserve">
-    <value>Versión {0} no soportada. Actualice la aplicación a la última versión</value>
-  </data>
-  <data name="LoadingPage.ClientRange" xml:space="preserve">
-    <value>Versiones de LANraragi soportadas {0} - {1}</value>
-  </data>
-  <data name="LoadingPage.InstanceNotSupported" xml:space="preserve">
-    <value>Versión {0} no soportada. Actualice su instancia de LANraragi a {1}</value>
-  </data>
-  <data name="LoadingPage.InvalidKey" xml:space="preserve">
-    <value>Falta la clave o no es válida</value>
-  </data>
-  <data name="LoadingPage.MissingKey" xml:space="preserve">
-    <value>Ejecutando en modo No-Fun, clave requerida</value>
-  </data>
-  <data name="LoadingPage.NoConnection" xml:space="preserve">
-    <value>No se pudo conectar... Selecciona otro perfil</value>
-  </data>
-  <data name="LoadingPage.NoConnectionLocalHost" xml:space="preserve">
-    <value>No se pudo conectar... Asegurate de que la aplicación tiene acceso a localhost</value>
-  </data>
-  <data name="LoadingPage.NoConnectionLocalHostSub" xml:space="preserve">
-    <value>Revisa Perfil-&gt;Editar para más información</value>
-  </data>
-  <data name="LoadingPage.Retry.Content" xml:space="preserve">
-    <value>Reintentar</value>
-  </data>
-  <data name="LoadingPage.UpdateError" xml:space="preserve">
-    <value>Se ha producido un error al comprobar las actualizaciones</value>
-  </data>
-  <data name="LoadingPage.UpdateErrorCode" xml:space="preserve">
-    <value>Codigo de error 0x{0:X}</value>
+  <data name="Updater.UpdateError" xml:space="preserve">
+    <value>An error ocurred while updating</value>
   </data>
 </root>

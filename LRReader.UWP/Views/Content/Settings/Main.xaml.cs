@@ -8,9 +8,6 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Main()
 		{
 			this.InitializeComponent();
-#if !SIDELOAD
-			Updates.IsEnabled = false;
-#endif
 		}
 
 	}

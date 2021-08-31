@@ -80,7 +80,9 @@
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseReaderBackground, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
-					<ColorPicker ColorChanged="ColorPicker_ColorChanged" IsMoreButtonVisible="True" Color="{x:Bind Data.SettingsManager.ReaderBackground, Mode=TwoWay}" />
+					<muxc:ColorPicker
+						HorizontalAlignment="Center" ColorChanged="ColorPicker_ColorChanged" Orientation="Horizontal"
+						Color="{x:Bind Data.SettingsManager.ReaderBackground, Mode=TwoWay}" />
 				</controls:ModernExpander>
 				<muxc:InfoBar x:Uid="/Settings/Reader/AV1NoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.AvifMissing, Mode=OneWay}">
 					<muxc:InfoBar.Transitions>

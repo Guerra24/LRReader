@@ -75,7 +75,7 @@ namespace LRReader.Shared.Services
 				{
 					var image = await GetImageCached(path);
 					if (image == null)
-						return new Size(0, 0);
+						return Size.Empty;
 					size = await ImageProcessing.GetImageSize(image);
 					imagesSizeCache.AddReplace(path, size);
 					return size;

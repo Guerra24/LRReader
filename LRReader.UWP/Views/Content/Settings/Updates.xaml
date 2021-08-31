@@ -8,6 +8,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:services="using:LRReader.Shared.Services"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
@@ -20,6 +21,9 @@
 			<controls:ModernGroup>
 				<controls:ModernInput x:Uid="/Settings/Updates/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 					<Button x:Uid="/Settings/Updates/Check" Click="CheckUpdatesButton_Click" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Updates/AutoUpdates" IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}">
+					<ToggleSwitch IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}" IsOn="{x:Bind services:Service.Settings.AutoUpdate, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernExpander
 					Title="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}"

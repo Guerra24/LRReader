@@ -47,7 +47,7 @@ namespace LRReader.Shared.Services
 								var webpdir = webp.OfType<WebPDirectory>().FirstOrDefault();
 								return new Size(webpdir.GetInt32(WebPDirectory.TagImageWidth), webpdir.GetInt32(WebPDirectory.TagImageHeight));
 							default:
-								return new Size(0, 0);
+								return Size.Empty;
 						}
 					}
 				}
@@ -55,7 +55,7 @@ namespace LRReader.Shared.Services
 				{
 					Crashes.TrackError(e);
 				}
-				return new Size(0, 0);
+				return Size.Empty;
 			});
 		}
 	}

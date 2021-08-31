@@ -18,6 +18,7 @@ namespace LRReader.UWP.ViewModels
 		private readonly ImagesService Images;
 		private readonly EventsService Events;
 		private readonly IPlatformService Platform;
+		private readonly UpdatesService Updates;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
 
@@ -25,8 +26,8 @@ namespace LRReader.UWP.ViewModels
 
 		public SettingsService SettingsManager;
 		public Version Version => Platform.Version;
-		public Version MinVersion => UpdatesManager.MIN_VERSION;
-		public Version MaxVersion => UpdatesManager.MAX_VERSION;
+		public Version MinVersion => Updates.MIN_VERSION;
+		public Version MaxVersion => Updates.MAX_VERSION;
 
 		private string _shinobuStatusText;
 		public string ShinobuStatusText
@@ -85,12 +86,13 @@ namespace LRReader.UWP.ViewModels
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, IPlatformService platform)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, IPlatformService platform, UpdatesService updates)
 		{
 			SettingsManager = settings;
 			Images = images;
 			Events = events;
 			Platform = platform;
+			Updates = updates;
 
 			UpdateReleaseData();
 			foreach (var n in archives.Namespaces)
@@ -145,9 +147,10 @@ namespace LRReader.UWP.ViewModels
 			ShinobuPid = pid;
 		}
 
-		public async void UpdateReleaseData()
+		public void UpdateReleaseData()
 		{
-			var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
+			// TODO Updates here
+			/*var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
 			if (info != null)
 			{
 				SetProperty(ref ReleaseInfo, info, nameof(ReleaseInfo));
@@ -157,7 +160,7 @@ namespace LRReader.UWP.ViewModels
 			{
 				ShowReleaseInfo = false;
 				SetProperty(ref ReleaseInfo, null, nameof(ReleaseInfo));
-			}
+			}*/
 		}
 
 		public async Task UpdateServerInfo()

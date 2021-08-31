@@ -5,6 +5,7 @@ using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -108,18 +109,22 @@ namespace LRReader.Shared
 				}
 				catch (Exception e)
 				{
+					var properties = new Dictionary<string, string>
+					{
+						{ "Path", restResponse.ResponseUri?.PathAndQuery ?? "" },
+						{ "Code", restResponse.StatusCode.ToString() }
+					};
 					var json = CompressData(restResponse.Content);
 					if (json == null)
 					{
-						Crashes.TrackError(e);
+						Crashes.TrackError(e, properties);
 						return default;
 					}
-
 					var attachments = new ErrorAttachmentLog[]
 					{
 						ErrorAttachmentLog.AttachmentWithBinary(json, "input.json.bz2", "application/x-bzip2")
 					};
-					Crashes.TrackError(e, attachments: attachments); // We are getting bad data from the instance, send stack trace
+					Crashes.TrackError(e, properties, attachments); // We are getting bad data from the instance, send stack trace
 					return default;
 				}
 			});
@@ -151,11 +156,16 @@ namespace LRReader.Shared
 				}
 				catch (Exception e)
 				{
+					var properties = new Dictionary<string, string>
+					{
+						{ "Path", restResponse.ResponseUri?.PathAndQuery ?? "" },
+						{ "Code", restResponse.StatusCode.ToString() }
+					};
 					var attachments = new ErrorAttachmentLog[]
 					{
 						ErrorAttachmentLog.AttachmentWithText(restResponse.Content, "error-response.txt")
 					};
-					Crashes.TrackError(e, attachments: attachments);
+					Crashes.TrackError(e, properties, attachments);
 					return null;
 				}
 			});
