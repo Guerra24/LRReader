@@ -408,6 +408,9 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.7.0-prerelease.210816001</Version>
     </PackageReference>
+    <PackageReference Include="NReco.Logging.File">
+      <Version>1.1.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj">

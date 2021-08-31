@@ -4,6 +4,7 @@ using LRReader.Shared.ViewModels.Base;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -71,6 +72,7 @@ namespace LRReader.Shared.Services
 			await Settings.Init();
 			await Images.Init();
 			Loaded = true;
+			Logger<Service>().LogInformation("Services initialized");
 		}
 
 		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
@@ -85,6 +87,7 @@ namespace LRReader.Shared.Services
 		public static EventsService Events => Services.GetRequiredService<EventsService>();
 		public static ApiService Api => Services.GetRequiredService<ApiService>();
 		public static TabsService Tabs => Services.GetRequiredService<TabsService>();
+		public static ILogger<T> Logger<T>() => Services.GetRequiredService<ILogger<T>>();
 
 	}
 

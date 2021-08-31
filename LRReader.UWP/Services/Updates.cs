@@ -137,7 +137,7 @@ namespace LRReader.UWP.Services
 			var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 			downloadTask.Progress = (info, prog) =>
 			{
-				progress?.Report(prog.percentage);
+				progress?.Report(prog.percentage / 100d);
 				Logger.LogInformation("Download percent {0}", prog.percentage);
 			};
 			await downloadTask.AsTask();
