@@ -237,13 +237,9 @@ namespace LRReader.Shared.Services
 		public async Task Init()
 		{
 			if (File.Exists(Files.Local + "/Profiles.json"))
-			{
 				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json"));
-			}
-			else
-			{
+			if (Profiles == null)
 				Profiles = new ObservableCollection<ServerProfile>();
-			}
 
 			UpgradeSettings();
 

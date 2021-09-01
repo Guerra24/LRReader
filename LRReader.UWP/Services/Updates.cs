@@ -130,7 +130,10 @@ namespace LRReader.UWP.Services
 			}*/
 			try
 			{
-				var result = await Current.CheckUpdateAvailabilityAsync();
+				// We can't use Current here cause it crashes on 1809...
+				var pm = new PackageManager();
+				var package = pm.FindPackageForUser(string.Empty, Current.Id.FullName);
+				var result = await package.CheckUpdateAvailabilityAsync();
 				Logger.LogInformation("Result: {0}", result.Availability);
 				return new CheckForUpdatesResult { Found = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
 			}
