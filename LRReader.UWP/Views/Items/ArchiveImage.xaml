@@ -40,8 +40,8 @@
 			<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 		</Grid>
 		<muxc:ProgressRing
-			Name="Ring" Width="50" Height="50"
-			IsActive="True" />
+			x:Name="Ring" Width="50" Height="50"
+			IsActive="False" />
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="CommonStates">
 				<VisualState x:Name="Normal" />

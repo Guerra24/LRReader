@@ -2,11 +2,9 @@
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
-using LRReader.UWP.Views.Items;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.Foundation.Metadata;
@@ -30,7 +28,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchivesTabContent()
 		{
 			this.InitializeComponent();
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				Shadow.Receivers.Add(Root);
 			Data = DataContext as ArchivesPageViewModel;
 		}
@@ -180,33 +178,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (loaded && !reloading)
 				await HandleSearch();
-		}
-
-		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-		{
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
-			{
-				var itemShadow = (args.ItemContainer as GridViewItem).Shadow;
-				if (itemShadow == null)
-				{
-					(args.ItemContainer as GridViewItem).Shadow = Shadow;
-					(args.ItemContainer as GridViewItem).Translation = new Vector3(0, 0, 14);
-					(args.ItemContainer as GridViewItem).TranslationTransition = new Vector3Transition();
-					(args.ItemContainer as GridViewItem).TranslationTransition.Duration = TimeSpan.FromMilliseconds(200);
-					(args.ItemContainer as GridViewItem).PointerEntered += ArchiveItem_PointerEntered;
-					(args.ItemContainer as GridViewItem).PointerExited += ArchiveItem_PointerExited;
-				}
-			}
-		}
-
-		private void ArchiveItem_PointerEntered(object sender, PointerRoutedEventArgs e)
-		{
-			(sender as GridViewItem).Translation = new Vector3(0, 0, 32);
-		}
-
-		private void ArchiveItem_PointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			(sender as GridViewItem).Translation = new Vector3(0, 0, 14);
 		}
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)

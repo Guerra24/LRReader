@@ -4,7 +4,6 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Views.Items;
 using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -17,6 +16,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -53,6 +53,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+				Shadow.Receivers.Add(Root);
 			ScrollViewer.SetVisualOpacity(0);
 
 			Data = DataContext as ArchivePageViewModel;

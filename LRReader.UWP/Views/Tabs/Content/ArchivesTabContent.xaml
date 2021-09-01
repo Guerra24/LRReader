@@ -2,8 +2,9 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.ArchivesTabContent"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+	xmlns:contract13Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 13)"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
@@ -17,15 +18,16 @@
 	<UserControl.Resources>
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVis" />
-		<Windows10version1903:ThemeShadow x:Name="Shadow" />
+		<contract13Present:ThemeShadow x:Name="Shadow" />
 	</UserControl.Resources>
 
 	<Grid>
 		<Grid x:Name="Root" />
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				x:Name="ArchivesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging"
-				IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
+				x:Name="ArchivesGrid"
+				ext:ElementsShadow.Shadow="{StaticResource Shadow}"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>

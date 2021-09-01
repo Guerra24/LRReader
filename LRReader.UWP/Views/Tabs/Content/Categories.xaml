@@ -2,7 +2,9 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.Categories"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:contract13Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 13)"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:main="using:LRReader.Shared.Models.Main"
@@ -23,13 +25,16 @@
 			</Grid>
 		</DataTemplate>
 		<local:CategoryTemplateSelector x:Key="CategoryTemplateSelector" AddNewTemplate="{StaticResource AddNewCategoryTemplate}" StaticTemplate="{StaticResource StaticCategoryTemplate}" />
+		<contract13Present:ThemeShadow x:Name="Shadow" />
 	</UserControl.Resources>
 
 	<Grid>
+		<Grid x:Name="Root" />
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
-				Name="CategoriesGrid" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True"
-				ItemClick="CategoriesGrid_ItemClick"
+				x:Name="CategoriesGrid"
+				ext:ElementsShadow.Shadow="{StaticResource Shadow}"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick"
 				ItemTemplateSelector="{StaticResource CategoryTemplateSelector}"
 				ItemsSource="{x:Bind Data.CategoriesList}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
