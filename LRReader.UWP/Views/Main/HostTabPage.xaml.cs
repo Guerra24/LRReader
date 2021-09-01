@@ -170,6 +170,8 @@ namespace LRReader.UWP.Views.Main
 			SettingsStorage.DeleteObjectLocal("_version");
 
 			var log = await Updates.GetChangelog(Platform.Version);
+			if (log == null)
+				return;
 
 			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log?.Content);
 			await dialog.ShowAsync();

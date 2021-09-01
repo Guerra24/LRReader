@@ -111,6 +111,7 @@ namespace LRReader.UWP.Services
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
+			Logger.LogInformation("Checking for updates");
 			/*
 			var rq = new RestRequest("lrr/upgrade/check"); // Implement
 			rq.AddParameter("version", Platform.Version.ToString());
@@ -127,21 +128,42 @@ namespace LRReader.UWP.Services
 			{
 				return new CheckForUpdatesResult { Found = false };
 			}*/
-			var result = await Current.CheckUpdateAvailabilityAsync();
-			return new CheckForUpdatesResult { Found = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
+			try
+			{
+				var result = await Current.CheckUpdateAvailabilityAsync();
+				Logger.LogInformation("Result: {0}", result.Availability);
+				return new CheckForUpdatesResult { Found = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
+			}
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
+				return new CheckForUpdatesResult { Found = false };
+			}
 		}
 
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress)
 		{
-			var pm = new PackageManager();
-			var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
-			downloadTask.Progress = (info, prog) =>
+			Logger.LogInformation("Download and install");
+			try
 			{
-				progress?.Report(prog.percentage / 100d);
-				Logger.LogInformation("Download percent {0}", prog.percentage);
-			};
-			await downloadTask.AsTask();
-			return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UnknownError") };
+				Logger.LogInformation("Source: {0}", Current.GetAppInstallerInfo().Uri);
+				var pm = new PackageManager();
+				var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
+				downloadTask.Progress = (info, prog) =>
+				{
+					progress?.Report(prog.percentage / 100d);
+					Logger.LogInformation("Progress {0}", prog.percentage);
+				};
+				var result = await downloadTask.AsTask();
+				return new UpdateResult { Result = result.IsRegistered };
+			}
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
+				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
+			}
 		}
 	}
 }
