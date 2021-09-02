@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -32,8 +31,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Bookmarks()
 		{
 			this.InitializeComponent();
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-				Shadow.Receivers.Add(Root);
 			Data = DataContext as BookmarksTabViewModel;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 		}

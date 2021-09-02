@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Foundation;
-using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -53,8 +52,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-				Shadow.Receivers.Add(Root);
 			ScrollViewer.SetVisualOpacity(0);
 
 			Data = DataContext as ArchivePageViewModel;

@@ -3,7 +3,6 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using System;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -21,8 +20,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Categories()
 		{
 			this.InitializeComponent();
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-				Shadow.Receivers.Add(Root);
 			Data = DataContext as CategoriesViewModel;
 		}
 

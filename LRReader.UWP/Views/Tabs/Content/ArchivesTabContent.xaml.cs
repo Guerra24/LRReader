@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -28,8 +27,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchivesTabContent()
 		{
 			this.InitializeComponent();
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-				Shadow.Receivers.Add(Root);
 			Data = DataContext as ArchivesPageViewModel;
 		}
 

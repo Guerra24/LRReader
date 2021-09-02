@@ -1,13 +1,17 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Animations;
+﻿using Microsoft.Toolkit.Uwp.UI;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using Microsoft.Toolkit.Uwp.UI.Media;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -28,44 +32,72 @@ namespace LRReader.UWP.Extensions
 
 	}
 
-	public class ElementsShadow : DependencyObject
+	public class Element : DependencyObject
 	{
-		public static readonly DependencyProperty ShadowProperty = DependencyProperty.RegisterAttached("Shadow", typeof(object), typeof(ElementsShadow), new PropertyMetadata(null));
+		public static readonly DependencyProperty ModernShadowProperty = DependencyProperty.RegisterAttached("ModernShadow", typeof(Shadow), typeof(Element), new PropertyMetadata(null));
 
-		public static void SetShadow(UIElement element, object shadow)
+		public static void SetModernShadow(FrameworkElement element, Shadow shadow)
 		{
-			element.SetValue(ShadowProperty, shadow);
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+			element.SetValue(ModernShadowProperty, shadow);
+			if (element is ListViewBase grid)
 			{
-				if (element is GridView grid)
-				{
-					grid.ContainerContentChanging += Grid_ContainerContentChanging;
-				}
-				else if (element.Shadow == null)
-				{
-					element.Shadow = shadow as ThemeShadow;
-					element.Translation = new Vector3(0, 0, 14);
-				}
+				grid.ContainerContentChanging += Grid_ContainerContentChanging;
 			}
 			else
 			{
-				// TODO Shadows non11
+				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+				{
+					element.Shadow = shadow.ThemeShadow;
+					element.Translation = new Vector3(0, 0, 14);
+				}
+				else
+				{
+					Effects.SetShadow(element, shadow.DropShadow);
+				}
 			}
 		}
 
-		public static object GetShadow(UIElement element)
-		{
-			return element.GetValue(ShadowProperty);
-		}
+		public static Shadow GetModernShadow(FrameworkElement element) => element.GetValue(ModernShadowProperty) as Shadow;
 
 		private static void Grid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			var itemShadow = (args.ItemContainer as GridViewItem).Shadow;
-			if (itemShadow == null)
+			var item = args.ItemContainer as GridViewItem;
+			var shadow = sender.GetValue(ModernShadowProperty) as Shadow;
+			if (item.GetValue(ModernShadowProperty) == null)
 			{
-				(args.ItemContainer as GridViewItem).Shadow = sender.GetValue(ShadowProperty) as ThemeShadow;
-				(args.ItemContainer as GridViewItem).Translation = new Vector3(0, 0, 14);
+				item.SetValue(ModernShadowProperty, shadow);
+				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+				{
+					item.Shadow = shadow.ThemeShadow;
+					item.Translation = new Vector3(0, 0, 14);
+					item.TranslationTransition = new Vector3Transition();
+					item.TranslationTransition.Duration = TimeSpan.FromMilliseconds(100);
+					item.PointerEntered += GridViewItem_PointerEntered;
+					item.PointerExited += GridViewItem_PointerExited;
+				}
+				else
+				{
+					Effects.SetShadow(item, shadow.DropShadow);
+				}
 			}
+		}
+
+		private static void GridViewItem_PointerEntered(object sender, PointerRoutedEventArgs e) => (sender as GridViewItem).Translation = new Vector3(0, 0, 32);
+
+		private static void GridViewItem_PointerExited(object sender, PointerRoutedEventArgs e) => (sender as GridViewItem).Translation = new Vector3(0, 0, 14);
+	}
+
+	public class Shadow
+	{
+		internal ThemeShadow ThemeShadow { get; }
+		internal AttachedCardShadow DropShadow { get; }
+
+		public Shadow()
+		{
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+				ThemeShadow = new ThemeShadow();
+			else
+				DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.15 };
 		}
 	}
 

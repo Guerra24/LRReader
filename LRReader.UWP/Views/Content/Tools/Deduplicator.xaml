@@ -5,6 +5,7 @@
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:items1="using:LRReader.UWP.Views.Items"
@@ -19,9 +20,10 @@
 		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
+		<ext:Shadow x:Name="ElementShadow" />
 	</Page.Resources>
 
-	<GridView ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ItemsSource="{x:Bind Data.Items}">
+	<GridView ext:Element.ModernShadow="{StaticResource ElementShadow}" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ItemsSource="{x:Bind Data.Items}">
 		<GridView.Header>
 			<StackPanel MaxWidth="1000">
 				<controls:ModernGroup Margin="0">

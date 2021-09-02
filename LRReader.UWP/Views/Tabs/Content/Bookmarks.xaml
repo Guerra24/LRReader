@@ -2,7 +2,6 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.Bookmarks"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:contract13Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 13)"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:items="using:LRReader.UWP.Views.Items"
@@ -23,15 +22,14 @@
 			<items:GenericArchiveItem />
 		</DataTemplate>
 		<local:BookmarkTemplateSelector x:Key="BookmarkTemplateSelector" CompactTemplate="{StaticResource CompactBookmarkItem}" FullTemplate="{StaticResource FullBookmarkItem}" />
-		<contract13Present:ThemeShadow x:Name="Shadow" />
+		<ext:Shadow x:Name="ElementShadow" />
 	</UserControl.Resources>
 
 	<Grid>
-		<Grid x:Name="Root" />
 		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				x:Name="ArchivesGrid"
-				ext:ElementsShadow.Shadow="{StaticResource Shadow}"
+				ext:Element.ModernShadow="{StaticResource ElementShadow}"
 				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
 				ItemClick="ArchivesGrid_ItemClick"
 				ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}"

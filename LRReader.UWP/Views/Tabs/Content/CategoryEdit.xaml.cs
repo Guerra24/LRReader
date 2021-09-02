@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -24,8 +23,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public CategoryEdit()
 		{
 			this.InitializeComponent();
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-				Shadow.Receivers.Add(Root);
 			ViewModel = DataContext as CategoryEditViewModel;
 			ArchiveList.Data.CustomArchiveCheckEvent = CustomArchiveCheck;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
