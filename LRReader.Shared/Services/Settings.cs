@@ -172,7 +172,7 @@ namespace LRReader.Shared.Services
 		}
 		public bool UseVisualTags
 		{
-			get => SettingsStorage.GetObjectRoamed("UseVisualTags", false);
+			get => SettingsStorage.GetObjectRoamed("UseVisualTags", true);
 			set => SettingsStorage.StoreObjectRoamed("UseVisualTags", value);
 		}
 		public bool ScrollToChangePage

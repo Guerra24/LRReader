@@ -77,7 +77,7 @@ namespace LRReader.Shared.Models.Main
 				if (parts[0].Equals("date_added"))
 					if (long.TryParse(tag, out long unixTime))
 						tag = Util.UnixTimeToDateTime(unixTime).ToString();
-				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag });
+				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag, Namespace = @namespace });
 			}
 			tmp.Sort((a, b) => string.Compare(a.Namespace, b.Namespace));
 			var c = tmp.Find(g => g.Namespace.Equals("other"));
@@ -196,6 +196,7 @@ namespace LRReader.Shared.Models.Main
 	{
 		public string FullTag;
 		public string Tag;
+		public string Namespace;
 	}
 
 	public class ArchiveCategories : GenericApiResult

@@ -162,6 +162,18 @@
   <data name="CreateCategory.SearchQuery.PlaceholderText" xml:space="preserve">
     <value>Search Query</value>
   </data>
+  <data name="OpenLink.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="OpenLink.PrimaryButtonText" xml:space="preserve">
+    <value>Open in browser</value>
+  </data>
+  <data name="OpenLink.SecondaryButtonText" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="OpenLink.Title" xml:space="preserve">
+    <value>The app is trying to open...</value>
+  </data>
   <data name="ProgressConflict.Dialog.PrimaryButtonText" xml:space="preserve">
     <value>Continue</value>
   </data>

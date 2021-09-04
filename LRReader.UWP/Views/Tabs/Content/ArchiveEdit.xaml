@@ -28,15 +28,15 @@
 					<ColumnDefinition />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
-				<TextBox
-					MinWidth="40" MinHeight="0" Padding="4,2"
+				<AutoSuggestBox
 					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
 					CornerRadius="4,0,0,4"
 					Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource StringToColorConverter}}"
 					IsEnabled="{Binding IsEnabled, ElementName=RemoveTag}"
-					IsSpellCheckEnabled="False"
-					Template="{StaticResource EditTagTextBoxTemplate}"
-					Text="{x:Bind Tag, Mode=TwoWay}" />
+					QuerySubmitted="EditTag_QuerySubmitted"
+					Template="{StaticResource EditTagAutoSuggestBox}"
+					Text="{x:Bind Tag, Mode=TwoWay}"
+					TextChanged="EditTag_TextChanged" />
 				<Button
 					x:Name="RemoveTag" x:Uid="/Tabs/ArchiveEdit/RemoveTag" Grid.Column="1"
 					Background="{ThemeResource ControlStrongStrokeColorDisabled}"
@@ -89,31 +89,80 @@
 					Tag="{x:Bind}" />
 			</Grid>
 		</DataTemplate>
+		<ControlTemplate x:Key="EditTagAutoSuggestBox" TargetType="AutoSuggestBox">
+			<Grid x:Name="LayoutRoot">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<TextBox
+					x:Name="TextBox"
+					Width="{TemplateBinding Width}"
+					MinWidth="40" MinHeight="0" Margin="0"
+					Padding="4,2"
+					HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+					VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+					Background="{TemplateBinding Background}"
+					BorderBrush="{TemplateBinding BorderBrush}"
+					BorderThickness="{TemplateBinding BorderThickness}"
+					Canvas.ZIndex="0"
+					CornerRadius="{TemplateBinding CornerRadius}"
+					Description="{TemplateBinding Description}"
+					DesiredCandidateWindowAlignment="BottomEdge"
+					FontFamily="{TemplateBinding FontFamily}"
+					FontSize="{TemplateBinding FontSize}"
+					FontStretch="{TemplateBinding FontStretch}"
+					FontWeight="{TemplateBinding FontWeight}"
+					Foreground="{TemplateBinding Foreground}"
+					Header="{TemplateBinding Header}"
+					PlaceholderText="{TemplateBinding PlaceholderText}"
+					ScrollViewer.BringIntoViewOnFocusChange="False"
+					Template="{StaticResource EditTagTextBoxTemplate}"
+					UseSystemFocusVisuals="{TemplateBinding UseSystemFocusVisuals}" />
+
+				<Popup x:Name="SuggestionsPopup">
+					<Border
+						x:Name="SuggestionsContainer"
+						Padding="{ThemeResource AutoSuggestListMargin}"
+						Background="{ThemeResource AutoSuggestBoxSuggestionsListBackground}"
+						BorderBrush="{ThemeResource AutoSuggestBoxSuggestionsListBorderBrush}"
+						BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
+						CornerRadius="{ThemeResource OverlayCornerRadius}">
+						<ListView
+							x:Name="SuggestionsList"
+							MaxHeight="{ThemeResource AutoSuggestListMaxHeight}"
+							Margin="{ThemeResource AutoSuggestListPadding}"
+							DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+							IsItemClickEnabled="True"
+							ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+							ItemTemplate="{TemplateBinding ItemTemplate}"
+							ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
+					</Border>
+				</Popup>
+
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroup x:Name="Orientation">
+						<VisualState x:Name="Landscape" />
+						<VisualState x:Name="Portrait" />
+					</VisualStateGroup>
+
+				</VisualStateManager.VisualStateGroups>
+			</Grid>
+
+		</ControlTemplate>
 		<!--  Stolen from https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/TextBox_themeresources.xaml  -->
 		<ControlTemplate x:Key="EditTagTextBoxTemplate" TargetType="TextBox">
 			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<ContentPresenter
-					x:Name="HeaderContentPresenter" Grid.Row="0" Grid.Column="0"
-					Grid.ColumnSpan="2"
-					Margin="{ThemeResource TextBoxTopHeaderMargin}"
-					VerticalAlignment="Top" x:DeferLoadStrategy="Lazy"
-					Content="{TemplateBinding Header}"
-					ContentTemplate="{TemplateBinding HeaderTemplate}"
-					FontWeight="Normal"
-					Foreground="{ThemeResource TextControlHeaderForeground}"
-					TextWrapping="Wrap" Visibility="Collapsed" />
 				<Border
-					x:Name="BorderElement" Grid.Row="1" Grid.RowSpan="1"
-					Grid.Column="0" Grid.ColumnSpan="2"
+					x:Name="BorderElement" Grid.Column="0" Grid.ColumnSpan="2"
 					MinWidth="{TemplateBinding MinWidth}"
 					MinHeight="{TemplateBinding MinHeight}"
 					Background="{TemplateBinding Background}"
@@ -122,7 +171,7 @@
 					Control.IsTemplateFocusTarget="True"
 					CornerRadius="{TemplateBinding CornerRadius}" />
 				<ScrollViewer
-					x:Name="ContentElement" Grid.Row="1" Grid.Column="0"
+					x:Name="ContentElement"
 					Margin="{TemplateBinding BorderThickness}"
 					Padding="{TemplateBinding Padding}"
 					AutomationProperties.AccessibilityView="Raw"
@@ -136,29 +185,12 @@
 					VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
 					VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
 					ZoomMode="Disabled" />
-				<TextBlock
-					x:Name="PlaceholderTextContentPresenter" Grid.Row="1" Grid.Column="0"
-					Grid.ColumnSpan="2"
-					Margin="{TemplateBinding BorderThickness}"
-					Padding="{TemplateBinding Padding}"
-					Foreground="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForeground}}"
-					IsHitTestVisible="False"
-					Text="{TemplateBinding PlaceholderText}"
-					TextAlignment="{TemplateBinding TextAlignment}"
-					TextWrapping="{TemplateBinding TextWrapping}" />
-				<ContentPresenter
-					x:Name="DescriptionPresenter" Grid.Row="2" Grid.Column="0"
-					Grid.ColumnSpan="2" x:Load="False" AutomationProperties.AccessibilityView="Raw"
-					Content="{TemplateBinding Description}"
-					Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}" />
+				<Grid x:Name="Padding" Grid.Column="1" />
 				<VisualStateManager.VisualStateGroups>
 					<VisualStateGroup x:Name="CommonStates">
 						<VisualState x:Name="Normal" />
 						<VisualState x:Name="Disabled">
 							<Storyboard>
-								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
-									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlHeaderForegroundDisabled}" />
-								</ObjectAnimationUsingKeyFrames>
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
 									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundDisabled}" />
 								</ObjectAnimationUsingKeyFrames>
@@ -167,9 +199,6 @@
 								</ObjectAnimationUsingKeyFrames>
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
 									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundDisabled}" />
-								</ObjectAnimationUsingKeyFrames>
-								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-									<DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForegroundDisabled}}" />
 								</ObjectAnimationUsingKeyFrames>
 							</Storyboard>
 						</VisualState>
@@ -181,19 +210,16 @@
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
 									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundPointerOver}" />
 								</ObjectAnimationUsingKeyFrames>
-								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-									<DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForegroundPointerOver}}" />
-								</ObjectAnimationUsingKeyFrames>
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
 									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundPointerOver}" />
 								</ObjectAnimationUsingKeyFrames>
 							</Storyboard>
 						</VisualState>
 						<VisualState x:Name="Focused">
+							<VisualState.Setters>
+								<Setter Target="ContentElement.MinWidth" Value="250" />
+							</VisualState.Setters>
 							<Storyboard>
-								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-									<DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={ThemeResource TextControlPlaceholderForegroundFocused}}" />
-								</ObjectAnimationUsingKeyFrames>
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
 									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundFocused}" />
 								</ObjectAnimationUsingKeyFrames>
@@ -214,14 +240,9 @@
 		</ControlTemplate>
 	</UserControl.Resources>
 
-	<ScrollViewer>
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition Width="3*" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="1" Margin="0,20,0,20" Spacing="10">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,10" VerticalScrollBarVisibility="Auto">
+		<Grid Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<StackPanel Spacing="10">
 				<TextBox x:Uid="/Tabs/ArchiveEdit/ID" IsReadOnly="True" Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
 				<TextBox
 					x:Uid="/Tabs/ArchiveEdit/Title"

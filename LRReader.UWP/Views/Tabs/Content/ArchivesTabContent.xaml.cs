@@ -57,7 +57,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (!string.IsNullOrEmpty(sender.Text))
 				{
 					string text;
-					var sQuery = sender.Text.ToUpper();
+					var sQuery = sender.Text.ToLower();
 					if (sender.Text.Length > query.Length)
 					{
 						text = sQuery.Substring(query.Length).TrimStart();
@@ -67,7 +67,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 						text = sQuery.Split(" ").Last();
 						query = sender.Text.Substring(0, Math.Max(0, sQuery.LastIndexOf(" ")));
 					}
-					foreach (var t in Service.Archives.TagStats.Where(t => t.GetNamespacedTag().ToUpper().Contains(text)))
+					foreach (var t in Service.Archives.TagStats.Where(t =>
+					{
+						var names = t.@namespace.ToLower();
+						return t.GetNamespacedTag().ToLower().Contains(text) && !names.Equals("date_added") && !names.Equals("source");
+					}))
 					{
 						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
 					}

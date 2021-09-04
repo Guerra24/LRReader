@@ -13,6 +13,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -44,6 +45,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _transition;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
+		private ResourceLoader dialogs = ResourceLoader.GetForCurrentView("Dialogs");
 
 		private Subject<double> resizePixel = new Subject<double>();
 
@@ -549,7 +551,42 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.UnHook();
 		}
 
-		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.SearchResults, (e.ClickedItem as ArchiveTagsGroupTag).FullTag);
+		private async void Tags_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			var tag = e.ClickedItem as ArchiveTagsGroupTag;
+			if (tag.Namespace.ToLower().Equals("source"))
+			{
+				Uri result;
+				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out result))
+				{
+					var dialog = new ContentDialog
+					{
+						Title = dialogs.GetString("OpenLink/Title"),
+						PrimaryButtonText = dialogs.GetString("OpenLink/PrimaryButtonText"),
+						SecondaryButtonText = dialogs.GetString("OpenLink/SecondaryButtonText"),
+						CloseButtonText = dialogs.GetString("OpenLink/CloseButtonText"),
+						Content = result.AbsoluteUri
+					};
+					var dialogResult = await dialog.ShowAsync();
+					switch (dialogResult)
+					{
+						case ContentDialogResult.Primary:
+							await Service.Platform.OpenInBrowser(result);
+							break;
+						case ContentDialogResult.Secondary:
+							var dataPackage = new DataPackage();
+							dataPackage.RequestedOperation = DataPackageOperation.Copy;
+							dataPackage.SetText(result.AbsoluteUri);
+							Clipboard.SetContent(dataPackage);
+							break;
+					}
+				}
+			}
+			else
+			{
+				Service.Tabs.OpenTab(Tab.SearchResults, tag.FullTag);
+			}
+		}
 
 		private string GetOpenTarget(ReaderImageSet target, int item)
 		{

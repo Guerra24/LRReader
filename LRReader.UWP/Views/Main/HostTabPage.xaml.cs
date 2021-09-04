@@ -169,6 +169,9 @@ namespace LRReader.UWP.Views.Main
 			SettingsStorage.DeleteObjectLocal("WasUpdated");
 			SettingsStorage.DeleteObjectLocal("_version");
 
+			if (Platform.Version.Revision != 0)
+				return;
+
 			var log = await Updates.GetChangelog(Platform.Version);
 			if (log == null)
 				return;

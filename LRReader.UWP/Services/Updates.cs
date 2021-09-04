@@ -1,15 +1,10 @@
-﻿using LRReader.Shared;
-using LRReader.Shared.Models;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
-using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
@@ -153,11 +148,7 @@ namespace LRReader.UWP.Services
 				Logger.LogInformation("Source: {0}", Current.GetAppInstallerInfo().Uri);
 				var pm = new PackageManager();
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
-				downloadTask.Progress = (info, prog) =>
-				{
-					progress?.Report(prog.percentage / 100d);
-					Logger.LogInformation("Progress {0}", prog.percentage);
-				};
+				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
 				var result = await downloadTask.AsTask();
 				return new UpdateResult { Result = result.IsRegistered };
 			}

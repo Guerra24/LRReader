@@ -111,13 +111,13 @@
 							</GridView.ItemTemplate>
 							<GridView.ItemsPanel>
 								<ItemsPanelTemplate>
-									<controls:WrapPanel />
+									<controls:WrapPanel HorizontalSpacing="2" VerticalSpacing="2" />
 								</ItemsPanelTemplate>
 							</GridView.ItemsPanel>
 							<GridView.ItemContainerStyle>
 								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
 									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="1,0" />
+									<Setter Property="Margin" Value="0,0" />
 									<Setter Property="MinWidth" Value="0" />
 									<Setter Property="MinHeight" Value="0" />
 									<Setter Property="BorderThickness" Value="1" />

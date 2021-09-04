@@ -366,6 +366,7 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Strings\es\Shared.resw" />
     <PRIResource Include="Strings\en\Shared.resw" />
     <PRIResource Include="Strings\es\Tools.resw" />
     <PRIResource Include="Strings\en\Tools.resw" />
