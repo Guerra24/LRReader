@@ -1,8 +1,10 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,10 +14,9 @@ namespace LRReader.Shared.ViewModels
 {
 	public delegate bool CustomArchiveCheck(Archive archive);
 
-	public class SearchResultsViewModel : ObservableObject
+	public class SearchResultsViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
 	{
 		protected readonly SettingsService Settings;
-		protected readonly EventsService Events;
 		protected readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
 		private readonly ApiService Api;
@@ -95,10 +96,9 @@ namespace LRReader.Shared.ViewModels
 		}
 		public Order OrderBy = Order.Ascending;
 
-		public SearchResultsViewModel(SettingsService settings, EventsService events, ArchivesService archives, IDispatcherService dispatcher, ApiService api)
+		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api)
 		{
 			Settings = settings;
-			Events = events;
 			Dispatcher = dispatcher;
 			Archives = archives;
 			Api = api;
@@ -107,7 +107,7 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
-			Events.DeleteArchiveEvent += DeleteArchive;
+			WeakReferenceMessenger.Default.RegisterAll(this);
 		}
 
 		public async Task NextPage()
@@ -170,7 +170,7 @@ namespace LRReader.Shared.ViewModels
 							{
 								ErrorAttachmentLog.AttachmentWithBinary(json, "resultPage.json.bz2", "application/x-bzip2")
 							};
-							Events.ShowNotification("API is returning bad data", "An error log has been recorded for analysis", 0);
+							WeakReferenceMessenger.Default.Send(new ShowNotification("API is returning bad data", "An error log has been recorded for analysis", 0));
 							Crashes.TrackError(e, attachments: attachments);
 						}
 						catch (Exception) { } // Just in case
@@ -194,9 +194,9 @@ namespace LRReader.Shared.ViewModels
 			Archives.OpenTab(item.Value);
 		}
 
-		public void DeleteArchive(string id)
+		public void Receive(DeleteArchiveMessage message)
 		{
-			ArchiveList.Remove(Archives.GetArchive(id));
+			ArchiveList.Remove(message.Value);
 		}
 	}
 }

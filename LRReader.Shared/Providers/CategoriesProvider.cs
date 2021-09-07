@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using RestSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,7 +37,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				Events.ShowNotification("Network Error", r.ErrorMessage);
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage));
 				return null;
 			}
 			if (result.OK)
@@ -44,7 +46,7 @@ namespace LRReader.Shared.Providers
 			}
 			else
 			{
-				Events.ShowNotification(result.Error.operation, result.Error.error);
+				WeakReferenceMessenger.Default.Send(new ShowNotification(result.Error.operation, result.Error.error));
 				return null;
 			}
 		}

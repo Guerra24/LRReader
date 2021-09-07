@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.Views;
+using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,7 +16,7 @@ using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
 namespace LRReader.UWP.Services
 {
-	public class UWPlatformService : IPlatformService
+	public class UWPlatformService : PlatformService
 	{
 		private readonly TabsService Tabs;
 
@@ -35,7 +36,7 @@ namespace LRReader.UWP.Services
 #endif
 		}
 
-		public void Init()
+		public override void Init()
 		{
 			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
 			Tabs.MapTabToType(Tab.Archive, typeof(ArchiveTab));
@@ -48,6 +49,8 @@ namespace LRReader.UWP.Services
 			Tabs.MapTabToType(Tab.Web, typeof(WebTab));
 			Tabs.MapTabToType(Tab.Tools, typeof(ToolsTab));
 
+			MapDialogToType(Dialog.CategoryArchive, typeof(CategoryArchive));
+
 			SymbolToSymbol.Add(Symbols.Favorite, new SymbolIconSource { Symbol = Symbol.Favorite });
 			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });
 
@@ -56,7 +59,7 @@ namespace LRReader.UWP.Services
 			Root = Window.Current.Content as Root;
 		}
 
-		public Version Version
+		public override Version Version
 		{
 			get
 			{
@@ -65,13 +68,13 @@ namespace LRReader.UWP.Services
 			}
 		}
 
-		public bool AnimationsEnabled => UISettings.AnimationsEnabled;
+		public override bool AnimationsEnabled => UISettings.AnimationsEnabled;
 
-		public uint HoverTime => UISettings.MouseHoverTime;
+		public override uint HoverTime => UISettings.MouseHoverTime;
 
-		public Task<bool> OpenInBrowser(Uri uri) => Launcher.LaunchUriAsync(uri).AsTask();
+		public override Task<bool> OpenInBrowser(Uri uri) => Launcher.LaunchUriAsync(uri).AsTask();
 
-		public object GetSymbol(Symbols symbol)
+		public override object GetSymbol(Symbols symbol)
 		{
 			SymbolIconSource symb;
 			if (!SymbolToSymbol.TryGetValue(symbol, out symb))
@@ -79,7 +82,7 @@ namespace LRReader.UWP.Services
 			return symb;
 		}
 
-		public string GetLocalizedString(string key)
+		public override string GetLocalizedString(string key)
 		{
 			var split = key.Split(new[] { '/' }, 2);
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
@@ -107,6 +110,6 @@ namespace LRReader.UWP.Services
 			}
 		}
 
-		public void ChangeTheme(AppTheme theme) => Root.ChangeTheme(theme);
+		public override void ChangeTheme(AppTheme theme) => Root.ChangeTheme(theme);
 	}
 }

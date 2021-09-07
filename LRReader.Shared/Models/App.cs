@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Models
 {
@@ -14,6 +15,18 @@ namespace LRReader.Shared.Models
 		void Unload();
 
 		bool BackRequested();
+	}
+
+	public enum IDialogResult
+	{
+		None = 0,
+		Primary = 1,
+		Secondary = 2
+	}
+
+	public interface IDialog
+	{
+		Task<IDialogResult> ShowAsync();
 	}
 
 	public class ReleaseInfo

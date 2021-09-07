@@ -20,7 +20,7 @@ namespace LRReader.UWP.Services
 		private StoreContext Context;
 		private Package Current;
 
-		public StoreUpdatesService(IPlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings)
+		public StoreUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings)
 		{
 			Context = StoreContext.GetDefault();
 			Current = Package.Current;
@@ -96,7 +96,7 @@ namespace LRReader.UWP.Services
 
 		private Package Current;
 
-		public SideloadUpdatesService(IPlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
+		public SideloadUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
 		{
 			Logger = logger;
 			Current = Package.Current;

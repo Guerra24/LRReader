@@ -57,11 +57,13 @@
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Visibility="{x:Bind Data.CanGoNext, Mode=OneWay}" />
 							<Button
-								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0" Click="EditButton_Click"
+								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0"
+								Command="{x:Bind Data.EditArchiveCommand}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Visibility="{x:Bind Data.CanEdit}" />
 							<Button
-								Margin="2,0,0,0" Click="CategoriesButton_Click" Content="Categories"
+								x:Uid="/Tabs/Archive/Categories" Margin="2,0,0,0"
+								Command="{x:Bind Data.ShowCategoriesCommand}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							<Button

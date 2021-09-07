@@ -35,7 +35,7 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		private AsyncRelayCommand<string> DeleteArchiveCommand;
 
-		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives, IPlatformService platform) : base(platform)
+		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives, PlatformService platform) : base(platform)
 		{
 			ToolStatus = DeduplicatorStatus.Ready;
 			Deduplicator = deduplicator;

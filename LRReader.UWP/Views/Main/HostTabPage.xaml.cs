@@ -1,9 +1,10 @@
 ﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
-using LRReader.UWP.Views.Tabs;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ using static LRReader.Shared.Services.Service;
 
 namespace LRReader.UWP.Views.Main
 {
-	public sealed partial class HostTabPage : Page
+	public sealed partial class HostTabPage : Page, IRecipient<ShowNotification>
 	{
 
 		private readonly TabsService Data;
@@ -59,17 +60,15 @@ namespace LRReader.UWP.Views.Main
 
 			Window.Current.SetTitleBar(TitleBar);
 
-			Events.ShowNotificationEvent += ShowNotification;
-
-			Data.Hook();
+			WeakReferenceMessenger.Default.RegisterAll(this);
 
 			await Service.Dispatcher.RunAsync(() =>
 			{
-				Data.AddTab(new ArchivesTab());
+				Data.OpenTab(Tab.Archives);
 				if (Settings.OpenBookmarksTab)
-					Data.AddTab(new BookmarksTab(), false);
+					Data.OpenTab(Tab.Bookmarks, false);
 				if (Settings.OpenCategoriesTab)
-					Data.AddTab(new CategoriesTab(), false);
+					Data.OpenTab(Tab.Categories, false);
 			});
 
 			var info = await Updates.CheckForUpdates();
@@ -91,9 +90,8 @@ namespace LRReader.UWP.Views.Main
 			Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
 
 			Window.Current.SetTitleBar(null);
-			Events.ShowNotificationEvent -= ShowNotification;
 
-			Data.UnHook();
+			WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
 
 		private void HostTabPage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -122,7 +120,9 @@ namespace LRReader.UWP.Views.Main
 				TabViewControl.Margin = new Thickness(0, -40, 0, 0);
 		}
 
-		private void ShowNotification(string title, string content, int duration = 5000) => Notifications.Show(new NotificationItem(title, content), duration);
+		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration);
+
+		private void ShowNotification(string title, string content, int duration) => Notifications.Show(new NotificationItem(title, content), duration);
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
 
@@ -179,6 +179,5 @@ namespace LRReader.UWP.Views.Main
 			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log?.Content);
 			await dialog.ShowAsync();
 		}
-
 	}
 }

@@ -1,8 +1,8 @@
-﻿using LRReader.Shared.Models;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
-using Microsoft.AppCenter.Crashes;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using RestSharp;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -90,7 +90,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				Events.ShowNotification("Network Error", r.ErrorMessage);
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage));
 				return null;
 			}
 			switch (r.StatusCode)
@@ -108,7 +108,7 @@ namespace LRReader.Shared.Providers
 					return download;
 				default:
 					var error = await r.GetError();
-					Events.ShowNotification(error.operation, error.error);
+					WeakReferenceMessenger.Default.Send(new ShowNotification(error.operation, error.error));
 					return null;
 			}
 		}

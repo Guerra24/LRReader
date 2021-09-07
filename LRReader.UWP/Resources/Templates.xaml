@@ -41,10 +41,10 @@
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
-									Click="{x:Bind EditMenuItem_Click}"
+									Command="{x:Bind ViewModel.EditArchiveCommand}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.ShowCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
@@ -133,7 +133,7 @@
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
-									Click="{x:Bind EditMenuItem_Click}"
+									Command="{x:Bind ViewModel.EditArchiveCommand}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
 								<!--<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
@@ -271,10 +271,10 @@
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
-									Click="{x:Bind EditMenuItem_Click}"
+									Command="{x:Bind ViewModel.EditArchiveCommand}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.ShowCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>

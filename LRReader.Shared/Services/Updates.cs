@@ -11,7 +11,7 @@ namespace LRReader.Shared.Services
 {
 	public abstract class UpdatesService
 	{
-		protected readonly IPlatformService Platform;
+		protected readonly PlatformService Platform;
 		protected readonly ISettingsStorageService SettingsStorage;
 		protected readonly SettingsService Settings;
 
@@ -20,7 +20,7 @@ namespace LRReader.Shared.Services
 
 		protected readonly RestClient client;
 
-		public UpdatesService(IPlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings)
+		public UpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings)
 		{
 			Platform = platform;
 			SettingsStorage = settingsStorage;
@@ -98,7 +98,7 @@ namespace LRReader.Shared.Services
 
 	public class StubUpdatesService : UpdatesService
 	{
-		public StubUpdatesService(IPlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings) { }
+		public StubUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings) { }
 
 		public override bool CanAutoUpdate() => false;
 

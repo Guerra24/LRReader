@@ -1,10 +1,11 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,8 +17,7 @@ namespace LRReader.UWP.ViewModels
 	public class SettingsPageViewModel : ObservableObject
 	{
 		private readonly ImagesService Images;
-		private readonly EventsService Events;
-		private readonly IPlatformService Platform;
+		private readonly PlatformService Platform;
 		private readonly UpdatesService Updates;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
@@ -86,11 +86,10 @@ namespace LRReader.UWP.ViewModels
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, EventsService events, ArchivesService archives, IPlatformService platform, UpdatesService updates)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, UpdatesService updates)
 		{
 			SettingsManager = settings;
 			Images = images;
-			Events = events;
 			Platform = platform;
 			Updates = updates;
 
@@ -195,7 +194,7 @@ namespace LRReader.UWP.ViewModels
 			}
 			if (status.state.Equals("finished"))
 			{
-				Events.ShowNotification("Thumbnail generation completed", "");
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Thumbnail generation completed", ""));
 				thumbnailJob = null;
 			}
 		}

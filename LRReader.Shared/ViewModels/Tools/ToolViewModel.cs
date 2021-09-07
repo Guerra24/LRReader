@@ -12,7 +12,7 @@ namespace LRReader.Shared.ViewModels.Tools
 
 	public abstract class ToolViewModel<T> : ObservableObject
 	{
-		protected readonly IPlatformService Platform;
+		protected readonly PlatformService Platform;
 
 		public AsyncRelayCommand ExecuteCommand { get; }
 
@@ -87,7 +87,7 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		protected Progress<ToolProgress<T>> Progress;
 
-		public ToolViewModel(IPlatformService platform)
+		public ToolViewModel(PlatformService platform)
 		{
 			Platform = platform;
 			ExecuteCommand = new AsyncRelayCommand(Execute);

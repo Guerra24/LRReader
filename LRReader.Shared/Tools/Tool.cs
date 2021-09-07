@@ -51,13 +51,13 @@ namespace LRReader.Shared.Tools
 	public abstract class Tool<T, P, R> where P : IToolParams
 	{
 
-		private readonly IPlatformService Platform;
+		private readonly PlatformService Platform;
 
 		private Subject<ToolProgress<T>>? progressFilter;
 
 		protected volatile bool earlyExit;
 
-		public Tool(IPlatformService platform)
+		public Tool(PlatformService platform)
 		{
 			Platform = platform;
 		}

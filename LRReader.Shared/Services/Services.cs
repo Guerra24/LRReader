@@ -27,7 +27,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
 			collection.AddSingleton<IFilesService, StubFilesService>();
 			collection.AddSingleton<IDispatcherService, StubDispatcherService>();
-			collection.AddSingleton<IPlatformService, StubPlatformService>();
+			collection.AddSingleton<PlatformService, StubPlatformService>();
 			collection.AddSingleton<UpdatesService, StubUpdatesService>();
 			collection.AddSingleton<ArchivesService>();
 			collection.AddSingleton<SettingsService>();
@@ -78,7 +78,7 @@ namespace LRReader.Shared.Services
 		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
 		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
 		public static IDispatcherService Dispatcher => Services.GetRequiredService<IDispatcherService>();
-		public static IPlatformService Platform => Services.GetRequiredService<IPlatformService>();
+		public static PlatformService Platform => Services.GetRequiredService<PlatformService>();
 		public static UpdatesService Updates => Services.GetRequiredService<UpdatesService>();
 		public static ImageProcessingService ImageProcessing => Services.GetRequiredService<ImageProcessingService>();
 		public static ArchivesService Archives => Services.GetRequiredService<ArchivesService>();

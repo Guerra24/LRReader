@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,8 @@ namespace LRReader.Shared.ViewModels.Base
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
 		private readonly ApiService Api;
-		private readonly IPlatformService Platform;
+		private readonly PlatformService Platform;
+		private readonly TabsService Tabs;
 
 		[ObservableProperty]
 		private bool _refreshOnErrorButton = false;
@@ -147,12 +149,13 @@ namespace LRReader.Shared.ViewModels.Base
 
 		public bool CanEdit => Settings.Profile.HasApiKey;
 
-		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api, IPlatformService platform)
+		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api, PlatformService platform, TabsService tabs)
 		{
 			Settings = settings;
 			Archives = archives;
 			Api = api;
 			Platform = platform;
+			Tabs = tabs;
 		}
 
 		public async Task LoadArchive()
@@ -185,5 +188,11 @@ namespace LRReader.Shared.ViewModels.Base
 		{
 			await Archives.DeleteArchive(Archive.arcid);
 		}
+
+		[ICommand]
+		public void EditArchive() => Tabs.OpenTab(Tab.ArchiveEdit, Archive);
+
+		[ICommand]
+		public async Task ShowCategories() => await Platform.OpenDialog(Dialog.CategoryArchive, Archive.arcid, Archive.title);
 	}
 }

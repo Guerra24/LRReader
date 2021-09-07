@@ -148,11 +148,6 @@ namespace LRReader.UWP.Views.Items
 
 		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Service.Archives.OpenTab(ViewModel.Archive, false, Group);
 
-		public void EditMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			Service.Tabs.OpenTab(Tab.ArchiveEdit, ViewModel.Archive);
-		}
-
 		public async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.Downloading = true;
@@ -251,12 +246,6 @@ namespace LRReader.UWP.Views.Items
 					e.Handled = true;
 				}
 			}
-		}
-
-		public async void CategoriesButton_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new CategoryArchive(ViewModel.Archive.arcid, ViewModel.Archive.title);
-			await dialog.ShowAsync();
 		}
 
 		public async void DeleteMenuItem_Click(object sender, RoutedEventArgs e)

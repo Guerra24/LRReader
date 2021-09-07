@@ -54,9 +54,9 @@ namespace LRReader.Shared.Tools
 	{
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
-		private readonly IPlatformService Platform;
+		private readonly PlatformService Platform;
 
-		public DeduplicationTool(ImagesService images, ArchivesService archives, IPlatformService platform) : base(platform)
+		public DeduplicationTool(ImagesService images, ArchivesService archives, PlatformService platform) : base(platform)
 		{
 			Images = images;
 			Archives = archives;

@@ -1,9 +1,11 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,7 +15,6 @@ namespace LRReader.Shared.ViewModels
 {
 	public partial class ArchiveEditViewModel : ObservableObject
 	{
-		private readonly EventsService Events;
 
 		public AsyncRelayCommand SaveCommand { get; }
 		public AsyncRelayCommand UsePluginCommand { get; }
@@ -56,10 +57,8 @@ namespace LRReader.Shared.ViewModels
 
 		public string Arg = "";
 
-		public ArchiveEditViewModel(EventsService events, SettingsService settings)
+		public ArchiveEditViewModel(SettingsService settings)
 		{
-			Events = events;
-
 			UseTextTags = !settings.UseVisualTags;
 
 			SaveCommand = new AsyncRelayCommand(SaveArchive, () => !Saving);
@@ -166,7 +165,7 @@ namespace LRReader.Shared.ViewModels
 					}
 					else
 					{
-						Events.ShowNotification("Error while fetching tags", result.error, 0);
+						WeakReferenceMessenger.Default.Send(new ShowNotification("Error while fetching tags", result.error, 0));
 					}
 				}
 				Saving = false;

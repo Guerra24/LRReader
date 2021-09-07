@@ -103,9 +103,10 @@ namespace LRReader.Shared.ViewModels
 			ArchivesService archives,
 			IDispatcherService dispatcher,
 			ApiService api,
-			IPlatformService platform,
+			PlatformService platform,
+			TabsService tabs,
 			ImagesService images,
-			EventsService events) : base(settings, archives, api, platform)
+			EventsService events) : base(settings, archives, api, platform, tabs)
 		{
 			Dispatcher = dispatcher;
 			Images = images;

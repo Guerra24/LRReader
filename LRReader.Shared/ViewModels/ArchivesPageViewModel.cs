@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.Services;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Services;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
@@ -10,11 +12,10 @@ namespace LRReader.Shared.ViewModels
 
 		public ArchivesPageViewModel(
 			SettingsService settings,
-			EventsService events,
 			ArchivesService archives,
 			TabsService tabs,
 			IDispatcherService dispatcher,
-			ApiService api) : base(settings, events, archives, dispatcher, api)
+			ApiService api) : base(settings, archives, dispatcher, api)
 		{
 			Tabs = tabs;
 		}
@@ -54,7 +55,7 @@ namespace LRReader.Shared.ViewModels
 					if (archive != null)
 						Archives.OpenTab(archive, false);
 					else
-						Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+						WeakReferenceMessenger.Default.Send(new ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", ""));
 				}
 		}
 

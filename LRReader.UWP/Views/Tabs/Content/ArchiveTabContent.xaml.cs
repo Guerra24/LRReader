@@ -537,14 +537,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e) => resizePixel.OnNext(ScrollViewer.ExtentHeight);
 
-		private void EditButton_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.ArchiveEdit, Data.Archive);
-
-		private async void CategoriesButton_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new CategoryArchive(Data.Archive.arcid, "Categories");
-			await dialog.ShowAsync();
-		}
-
 		private async void DownloadButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.Downloading = true;

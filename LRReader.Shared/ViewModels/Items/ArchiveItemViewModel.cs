@@ -6,11 +6,10 @@ namespace LRReader.Shared.ViewModels.Items
 {
 	public partial class ArchiveItemViewModel : ArchiveBaseViewModel
 	{
-
 		[ObservableProperty]
 		private bool _missingImage = false;
 
-		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives, ApiService api, IPlatformService platform) : base(settings, archives, api, platform)
+		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives, ApiService api, PlatformService platform, TabsService tabs) : base(settings, archives, api, platform, tabs)
 		{
 		}
 	}

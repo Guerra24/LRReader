@@ -19,7 +19,7 @@ namespace LRReader.Shared.Services
 	{
 		private readonly ISettingsStorageService SettingsStorage;
 		private readonly IFilesService Files;
-		private readonly IPlatformService Platform;
+		private readonly PlatformService Platform;
 
 		[ObservableProperty]
 		private ObservableCollection<ServerProfile> _profiles;
@@ -215,7 +215,7 @@ namespace LRReader.Shared.Services
 
 		private Subject<bool> save = new Subject<bool>();
 
-		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files, IPlatformService platform)
+		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files, PlatformService platform)
 		{
 			SettingsStorage = settingsStorage;
 			Files = files;

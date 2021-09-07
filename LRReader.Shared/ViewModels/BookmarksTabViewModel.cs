@@ -1,14 +1,15 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class BookmarksTabViewModel : ObservableObject
+	public class BookmarksTabViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
 	{
-		private readonly EventsService Events;
 		private readonly SettingsService Settings;
 		private readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
@@ -31,13 +32,12 @@ namespace LRReader.Shared.ViewModels
 
 		public bool Empty => ArchiveList.Count == 0;
 
-		public BookmarksTabViewModel(EventsService events, SettingsService settings, ArchivesService archives, IDispatcherService dispatcher)
+		public BookmarksTabViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher)
 		{
-			Events = events;
 			Settings = settings;
 			Archives = archives;
 			Dispatcher = dispatcher;
-			Events.DeleteArchiveEvent += DeleteArchive;
+			WeakReferenceMessenger.Default.RegisterAll(this);
 		}
 
 		public async Task Refresh()
@@ -74,9 +74,9 @@ namespace LRReader.Shared.ViewModels
 			_internalLoadingArchives = false;
 		}
 
-		public void DeleteArchive(string id)
+		public void Receive(DeleteArchiveMessage message)
 		{
-			ArchiveList.Remove(Archives.GetArchive(id));
+			ArchiveList.Remove(message.Value);
 		}
 
 	}

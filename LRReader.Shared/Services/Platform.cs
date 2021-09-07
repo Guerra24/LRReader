@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LRReader.Shared.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
@@ -9,47 +11,59 @@ namespace LRReader.Shared.Services
 		Favorite, Pictures
 	}
 
-	public interface IPlatformService
+	public enum Dialog
 	{
-		void Init();
-
-		Version Version { get; }
-
-		bool AnimationsEnabled { get; }
-
-		uint HoverTime { get; }
-
-		Task<bool> OpenInBrowser(Uri uri);
-
-		object? GetSymbol(Symbols symbol);
-
-		string GetLocalizedString(string key);
-
-		void ChangeTheme(AppTheme theme);
+		Generic, CategoryArchive, CreateCategory, Markdown, ProgressConflict, ServerProfile
 	}
 
-	public class StubPlatformService : IPlatformService
+	public abstract class PlatformService
+	{
+		public abstract Version Version { get; }
+		public abstract bool AnimationsEnabled { get; }
+		public abstract uint HoverTime { get; }
+
+		public abstract void Init();
+		public abstract void ChangeTheme(AppTheme theme);
+		public abstract string GetLocalizedString(string key);
+		public abstract object? GetSymbol(Symbols symbol);
+		public abstract Task<bool> OpenInBrowser(Uri uri);
+
+		private Dictionary<Dialog, Type> Dialogs = new Dictionary<Dialog, Type>();
+
+		public void MapDialogToType(Dialog tab, Type type) => Dialogs.Add(tab, type);
+
+		public async Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args)
+		{
+			Type type;
+			if (!Dialogs.TryGetValue(dialog, out type))
+				return IDialogResult.None;
+			var newDialog = (IDialog)Activator.CreateInstance(type, args);
+			return await newDialog.ShowAsync();
+		}
+	}
+
+	public class StubPlatformService : PlatformService
 	{
 
-		public void Init()
+		public override void Init()
 		{
 		}
 
-		public Version Version => new Version(0, 0, 0, 0);
+		public override Version Version => new Version(0, 0, 0, 0);
 
-		public bool AnimationsEnabled => false;
+		public override bool AnimationsEnabled => false;
 
-		public uint HoverTime => 300;
+		public override uint HoverTime => 300;
 
-		public Task<bool> OpenInBrowser(Uri uri)
+		public override Task<bool> OpenInBrowser(Uri uri)
 		{
 			return Task.Run(() => false);
 		}
 
-		public object? GetSymbol(Symbols symbol) => null;
+		public override object? GetSymbol(Symbols symbol) => null;
 
-		public string GetLocalizedString(string key) => key;
+		public override string GetLocalizedString(string key) => key;
 
-		public void ChangeTheme(AppTheme theme) { }
+		public override void ChangeTheme(AppTheme theme) { }
 	}
 }

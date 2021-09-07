@@ -1,7 +1,8 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -23,7 +24,7 @@ namespace LRReader.Shared
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
-				Service.Events.ShowNotification("Network Error", request.ErrorMessage);
+				ShowNotification("Network Error", request.ErrorMessage);
 				return false;
 			}
 			if (result.OK)
@@ -32,7 +33,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				Service.Events.ShowNotification(result.Error.operation, result.Error.error);
+				ShowNotification(result.Error.operation, result.Error.error);
 				return false;
 			}
 		}
@@ -53,7 +54,7 @@ namespace LRReader.Shared
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
-				Service.Events.ShowNotification("Network Error", request.ErrorMessage);
+				ShowNotification("Network Error", request.ErrorMessage);
 				return default(T);
 			}
 			if (result.OK)
@@ -62,7 +63,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				Service.Events.ShowNotification(result.Error.operation, result.Error.error);
+				ShowNotification(result.Error.operation, result.Error.error);
 				return default(T);
 			}
 		}
@@ -73,7 +74,7 @@ namespace LRReader.Shared
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
-				Service.Events.ShowNotification("Network Error", request.ErrorMessage);
+				ShowNotification("Network Error", request.ErrorMessage);
 				return null;
 			}
 			if (result.OK)
@@ -82,7 +83,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				Service.Events.ShowNotification(result.Error.operation, result.Error.error);
+				ShowNotification(result.Error.operation, result.Error.error);
 				return null;
 			}
 		}
@@ -198,6 +199,8 @@ namespace LRReader.Shared
 				return compressed.ToArray();
 			}
 		}
+
+		private static void ShowNotification(string title, string content) => WeakReferenceMessenger.Default.Send(new ShowNotification(title, content));
 	}
 
 }

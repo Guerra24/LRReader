@@ -15,7 +15,6 @@ namespace LRReader.Shared.Services
 	public partial class TabsService : ObservableObject
 	{
 		private readonly ApiService Api;
-		private readonly EventsService Events;
 		private readonly IDispatcherService Dispatcher;
 
 		public ObservableCollection<ICustomTab> TabItems { get; } = new ObservableCollection<ICustomTab>();
@@ -32,21 +31,10 @@ namespace LRReader.Shared.Services
 
 		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
 
-		public TabsService(ApiService api, EventsService events, IDispatcherService dispatcher)
+		public TabsService(ApiService api, IDispatcherService dispatcher)
 		{
 			Api = api;
-			Events = events;
 			Dispatcher = dispatcher;
-		}
-
-		public void Hook()
-		{
-			Events.DeleteArchiveEvent += DeleteArchive;
-		}
-
-		public void UnHook()
-		{
-			Events.DeleteArchiveEvent -= DeleteArchive;
 		}
 
 		public void MapTabToType(Tab tab, Type type) => Tabs.Add(tab, type);
@@ -70,22 +58,6 @@ namespace LRReader.Shared.Services
 				TabItems.Add(newTab);
 				if (switchToTab)
 					await Dispatcher.RunAsync(() => CurrentTab = newTab);
-			}
-		}
-
-		public async void AddTab(ICustomTab tab, bool switchToTab = true)
-		{
-			var current = GetTabFromId(tab.CustomTabId);
-			if (current != null)
-			{
-				if (switchToTab)
-					CurrentTab = current;
-			}
-			else
-			{
-				TabItems.Add(tab);
-				if (switchToTab)
-					await Dispatcher.RunAsync(() => CurrentTab = tab);
 			}
 		}
 
@@ -116,12 +88,6 @@ namespace LRReader.Shared.Services
 			foreach (var t in TabItems)
 				t.Unload();
 			TabItems.Clear();
-		}
-
-		public void DeleteArchive(string id)
-		{
-			CloseTabWithId("Edit_" + id);
-			CloseTabWithId("Archive_" + id);
 		}
 
 	}

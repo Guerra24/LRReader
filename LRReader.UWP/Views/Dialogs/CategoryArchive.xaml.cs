@@ -1,11 +1,14 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels;
+using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
 {
-	public sealed partial class CategoryArchive : ContentDialog
+	public sealed partial class CategoryArchive : ContentDialog, IDialog
 	{
 
 		private CategoryArchiveViewModel Data;
@@ -43,5 +46,7 @@ namespace LRReader.UWP.Views.Dialogs
 			Data.Search(sender.Text);
 			_searching = false;
 		}
+
+		public new async Task<IDialogResult> ShowAsync() => (IDialogResult)(int)await base.ShowAsync();
 	}
 }

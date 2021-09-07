@@ -1,5 +1,7 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,6 @@ namespace LRReader.Shared.Services
 		private readonly IFilesService Files;
 		private readonly ISettingsStorageService SettingsStorage;
 		private readonly SettingsService Settings;
-		private readonly EventsService Events;
 		private readonly TabsService Tabs;
 
 		public Dictionary<string, Archive> Archives = new Dictionary<string, Archive>();
@@ -21,12 +22,11 @@ namespace LRReader.Shared.Services
 		public List<string> Namespaces = new List<string>();
 		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
 
-		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, EventsService events, TabsService tabs)
+		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs)
 		{
 			Files = files;
 			SettingsStorage = settingsStorage;
 			Settings = settings;
-			Events = events;
 			Tabs = tabs;
 		}
 
@@ -116,7 +116,7 @@ namespace LRReader.Shared.Services
 			var result = await ArchivesProvider.DeleteArchive(id);
 			if (result == null)
 			{
-				Events.ShowNotification("Unable to delete archive", "", 0);
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to delete archive", "", 0));
 				return false;
 			}
 			if (result.success)
@@ -124,12 +124,14 @@ namespace LRReader.Shared.Services
 				var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(id));
 				if (bookmark != null)
 					Settings.Profile.Bookmarks.Remove(bookmark);
-				Events.DeleteArchive(id);
+				WeakReferenceMessenger.Default.Send(new DeleteArchiveMessage(Archives[id]));
+				Tabs.CloseTabWithId("Edit_" + id);
+				Tabs.CloseTabWithId("Archive_" + id);
 				Archives.Remove(id);
 			}
 			else
 			{
-				Events.ShowNotification("An error ocurred while deleting archive", "Metadata has been deleted, remove file manually.", 0);
+				WeakReferenceMessenger.Default.Send(new ShowNotification("An error ocurred while deleting archive", "Metadata has been deleted, remove file manually.", 0));
 			}
 			return true;
 		}

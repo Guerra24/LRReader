@@ -129,6 +129,9 @@
   <data name="Archive.Bookmark.Content" xml:space="preserve">
     <value>Bookmark</value>
   </data>
+  <data name="Archive.Categories.Content" xml:space="preserve">
+    <value>Categories</value>
+  </data>
   <data name="Archive.Continue.Text" xml:space="preserve">
     <value>Continue</value>
   </data>

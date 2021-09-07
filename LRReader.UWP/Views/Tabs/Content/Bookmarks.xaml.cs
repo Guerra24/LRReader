@@ -1,8 +1,10 @@
 ﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
 using LRReader.UWP.Views.Main;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -84,11 +86,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
 				if (status == FileUpdateStatus.Complete)
 				{
-					Service.Events.ShowNotification(lang.GetString("Bookmarks/ExportComplete"), lang.GetString("Bookmarks/ExportCompleteFile").AsFormat(file.Path), 8000);
+					WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ExportComplete"), lang.GetString("Bookmarks/ExportCompleteFile").AsFormat(file.Path), 8000));
 				}
 				else
 				{
-					Service.Events.ShowNotification(lang.GetString("Bookmarks/ExportError"), lang.GetString("Bookmarks/ExportErrorFile").AsFormat(file.Path), 8000);
+					WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ExportError"), lang.GetString("Bookmarks/ExportErrorFile").AsFormat(file.Path), 8000));
 				}
 			}
 			else
@@ -113,7 +115,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 				catch (Exception e)
 				{
-					Service.Events.ShowNotification(lang.GetString("Bookmarks/ImportError"), e.Message, 0);
+					WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ImportError"), e.Message, 0));
 					return;
 				}
 				var dialog = new ContentDialog()
