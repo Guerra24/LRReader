@@ -53,7 +53,7 @@ namespace LRReader.Shared.Services
 
 		public void OpenTab(Tab tab, params object[] args) => OpenTab(tab, true, args);
 
-		public async void OpenTab(Tab tab, bool switchToTab = true, params object[] args)
+		public async void OpenTab(Tab tab, bool switchToTab = true, params object?[] args)
 		{
 			Type type;
 			if (!Tabs.TryGetValue(tab, out type))

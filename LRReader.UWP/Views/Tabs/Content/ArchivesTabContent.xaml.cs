@@ -2,11 +2,14 @@
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using LRReader.UWP.Views.Items;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -45,7 +48,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			reloading = false;
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.Archive, e.ClickedItem as Archive);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Archives.OpenTab(e.ClickedItem as Archive, (CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, Data.ArchiveList.ToList());
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
@@ -96,16 +99,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				query = args.QueryText;
 				await HandleSearch();
 			}
-		}
-
-		private void RandomButton_Click(object sender, RoutedEventArgs e)
-		{
-			var list = Service.Archives.Archives;
-			if (list.Count <= 1)
-				return;
-			var random = new Random();
-			var item = list.ElementAt(random.Next(list.Count - 1));
-			Service.Tabs.OpenTab(Tab.Archive, item.Value);
 		}
 
 		private async void FilterToggle_Click(object sender, RoutedEventArgs e) => await Data.ReloadSearch();
@@ -185,6 +178,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (sender as RadioMenuFlyoutItem).Tag as string);
 			await HandleSearch();
+		}
+
+		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			if (args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item && item.Group == null)
+				item.Group = Data.ArchiveList.ToList();
 		}
 
 	}

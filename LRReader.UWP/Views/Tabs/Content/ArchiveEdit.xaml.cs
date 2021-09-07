@@ -21,11 +21,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		public async void LoadArchive(Archive archive) => await Data.LoadArchive(archive);
 
-		private void EditTag_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-		{
-
-		}
-
 		private void EditTag_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)

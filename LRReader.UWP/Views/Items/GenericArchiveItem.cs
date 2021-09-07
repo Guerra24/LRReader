@@ -47,6 +47,9 @@ namespace LRReader.UWP.Views.Items
 		private TextBlock Progress;
 		public ParallaxView Parallax;
 
+		// Internal
+		public IList<Archive> Group;
+
 		public GenericArchiveItem()
 		{
 			this.DefaultStyleKey = typeof(GenericArchiveItem);
@@ -143,10 +146,7 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-		{
-			Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
-		}
+		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Service.Archives.OpenTab(ViewModel.Archive, false, Group);
 
 		public void EditMenuItem_Click(object sender, RoutedEventArgs e)
 		{
@@ -247,7 +247,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Service.Tabs.OpenTab(Tab.Archive, false, ViewModel.Archive);
+					Service.Archives.OpenTab(ViewModel.Archive, false, Group);
 					e.Handled = true;
 				}
 			}

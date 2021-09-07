@@ -30,7 +30,9 @@ namespace LRReader.UWP.Services
 		public UWPlatformService(TabsService tabs, ILoggerFactory loggerFactory, IFilesService files)
 		{
 			Tabs = tabs;
+#if DEBUG
 			loggerFactory.AddFile(files.LocalCache + string.Format("/Logs/App-{0:yyyy}-{0:MM}-{0:dd}.log", DateTime.UtcNow));
+#endif
 		}
 
 		public void Init()

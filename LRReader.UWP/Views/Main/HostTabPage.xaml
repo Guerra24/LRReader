@@ -8,6 +8,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:util="using:LRReader.UWP.Util"
 	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
 	NavigationCacheMode="Required"
@@ -16,6 +17,7 @@
 	<Page.KeyboardAccelerators>
 		<KeyboardAccelerator Key="W" Invoked="CloseTab_Invoked" Modifiers="Control" />
 		<KeyboardAccelerator Key="F11" Invoked="FullScreen_Invoked" />
+		<util:IgnoreFocusKeyboardAccelerator Key="F" Invoked="FullScreen_Invoked" />
 	</Page.KeyboardAccelerators>
 
 	<Page.Resources>
@@ -24,7 +26,9 @@
 	</Page.Resources>
 
 	<Grid>
-		<Grid x:Name="TitleBar" Height="40" VerticalAlignment="Top" Background="Transparent" />
+		<Grid
+			x:Name="TitleBar" Height="40" VerticalAlignment="Top"
+			Background="Transparent" />
 		<controls:TabView
 			x:Name="TabViewControl" VerticalAlignment="Stretch" IsAddTabButtonVisible="False"
 			SelectedItem="{x:Bind Data.CurrentTab, Mode=TwoWay}"

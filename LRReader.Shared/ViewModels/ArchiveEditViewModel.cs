@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class ArchiveEditViewModel : ObservableObject
+	public partial class ArchiveEditViewModel : ObservableObject
 	{
 		private readonly EventsService Events;
 
@@ -24,13 +24,10 @@ namespace LRReader.Shared.ViewModels
 
 		public Archive Archive;
 
-		public string Title { get; set; }
+		[ObservableProperty]
+		private string _title;
+		[ObservableProperty]
 		private string _tags;
-		public string Tags
-		{
-			get => _tags;
-			set => SetProperty(ref _tags, value);
-		}
 
 		private bool _saving;
 		public bool Saving
@@ -52,19 +49,10 @@ namespace LRReader.Shared.ViewModels
 
 		public ObservableCollection<EditableTag> PluginTagsList = new ObservableCollection<EditableTag>();
 
+		[ObservableProperty]
 		private Plugin _currentPlugin;
-		public Plugin CurrentPlugin
-		{
-			get => _currentPlugin;
-			set => SetProperty(ref _currentPlugin, value);
-		}
-
+		[ObservableProperty]
 		private bool _useTextTags;
-		public bool UseTextTags
-		{
-			get => _useTextTags;
-			set => SetProperty(ref _useTextTags, value);
-		}
 
 		public string Arg = "";
 

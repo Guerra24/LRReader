@@ -8,19 +8,16 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Base
 {
-	public class ArchiveBaseViewModel : ObservableObject
+	public partial class ArchiveBaseViewModel : ObservableObject
 	{
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
 		private readonly ApiService Api;
 		private readonly IPlatformService Platform;
 
+		[ObservableProperty]
 		private bool _refreshOnErrorButton = false;
-		public bool RefreshOnErrorButton
-		{
-			get => _refreshOnErrorButton;
-			set => SetProperty(ref _refreshOnErrorButton, value);
-		}
+
 		private bool _controlsEnabled;
 		public bool ControlsEnabled
 		{
@@ -54,6 +51,7 @@ namespace LRReader.Shared.ViewModels.Base
 			get => _downloading;
 			set => SetProperty(ref _downloading, value);
 		}
+
 		private BookmarkedArchive _bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
 		public BookmarkedArchive BookmarkedArchive
 		{

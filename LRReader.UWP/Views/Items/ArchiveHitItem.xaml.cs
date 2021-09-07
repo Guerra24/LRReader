@@ -92,7 +92,7 @@ namespace LRReader.UWP.Views.Items
 
 		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
 		{
-			Service.Tabs.OpenTab(Tab.Archive, false, (sender as MenuFlyoutItem).Tag);
+			Service.Archives.OpenTab((sender as MenuFlyoutItem).Tag as Archive, false);
 		}
 
 
@@ -208,7 +208,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Service.Tabs.OpenTab(Tab.Archive, false, LeftViewModel.Archive);
+					Service.Archives.OpenTab(LeftViewModel.Archive, false);
 					e.Handled = true;
 				}
 			}
@@ -221,7 +221,7 @@ namespace LRReader.UWP.Views.Items
 			{
 				if (pointerPoint.Properties.IsMiddleButtonPressed)
 				{
-					Service.Tabs.OpenTab(Tab.Archive, false, RightViewModel.Archive);
+					Service.Archives.OpenTab(RightViewModel.Archive, false);
 					e.Handled = true;
 				}
 			}

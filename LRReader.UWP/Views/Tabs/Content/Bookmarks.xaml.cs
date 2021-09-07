@@ -40,7 +40,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Data.Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Tabs.OpenTab(Tab.Archive, e.ClickedItem as Archive);
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Archives.OpenTab(e.ClickedItem as Archive);
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 

@@ -25,7 +25,8 @@
 			<GridView
 				x:Name="ArchivesGrid"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
-				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="ArchivesGrid_ItemClick"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
+				ItemClick="ArchivesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>
@@ -57,7 +58,7 @@
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<Button
 								x:Uid="/Tabs/Archives/Random" Width="150" Margin="5,0,0,0"
-								Click="RandomButton_Click"
+								Click="{x:Bind Data.OpenRandom}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 						</StackPanel>
 						<StackPanel

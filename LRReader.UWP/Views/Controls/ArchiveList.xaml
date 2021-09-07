@@ -24,7 +24,7 @@
 			<GridView
 				x:Name="ArchivesGrid"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
-				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging"
 				DragItemsStarting="{x:Bind DragItemsStartingI, Mode=OneWay}"
 				DragOver="{x:Bind DragOverI, Mode=OneWay}"
 				Drop="{x:Bind DropI, Mode=OneWay}"
@@ -60,7 +60,7 @@
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 							<Button
 								x:Uid="/Tabs/Archives/Random" Width="150" Margin="5,0,0,0"
-								Click="RandomButton_Click"
+								Click="{x:Bind Data.OpenRandom}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Visibility="{x:Bind RandomVisible, Mode=OneWay}" />
 						</StackPanel>

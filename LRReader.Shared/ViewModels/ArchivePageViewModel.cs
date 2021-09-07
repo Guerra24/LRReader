@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,25 +15,22 @@ namespace LRReader.Shared.ViewModels
 
 	public delegate void ZoomChanged();
 
-	public class ArchivePageViewModel : ArchiveBaseViewModel
+	public partial class ArchivePageViewModel : ArchiveBaseViewModel
 	{
 		private readonly IDispatcherService Dispatcher;
-		private readonly ImageProcessingService ImageProcessing;
 		private readonly ImagesService Images;
 		private readonly EventsService Events;
 
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("CanGoNext")]
+		private IList<Archive> _group = new List<Archive>();
+
+		public bool CanGoNext => Group.Count != 0 && Group.ElementAtOrDefault(Group.IndexOf(Archive) + 1) != null;
+
+		[ObservableProperty]
 		private bool _loadingImages = false;
-		public bool LoadingImages
-		{
-			get => _loadingImages;
-			set => SetProperty(ref _loadingImages, value);
-		}
+		[ObservableProperty]
 		private bool _loadingIndeterminate = false;
-		public bool LoadingIndeterminate
-		{
-			get => _loadingImages;
-			set => SetProperty(ref _loadingIndeterminate, value);
-		}
 		public ObservableCollection<ImagePageSet> ArchiveImages = new ObservableCollection<ImagePageSet>();
 		public ObservableCollection<ReaderImageSet> ArchiveImagesReader = new ObservableCollection<ReaderImageSet>();
 		private bool _showReader = false;
@@ -51,12 +49,8 @@ namespace LRReader.Shared.ViewModels
 			set => SetProperty(ref _downloading, value);
 		}
 		private bool _internalLoadingImages;
+		[ObservableProperty]
 		private ReaderImageSet _readerContent;
-		public ReaderImageSet ReaderContent
-		{
-			get => _readerContent;
-			set => SetProperty(ref _readerContent, value);
-		}
 		private int _readerIndex;
 		public int ReaderIndex
 		{
@@ -97,18 +91,10 @@ namespace LRReader.Shared.ViewModels
 		}
 		public event ZoomChanged ZoomChangedEvent;
 
+		[ObservableProperty]
 		private int _buildProgress;
-		public int BuildProgress
-		{
-			get => _buildProgress;
-			set => SetProperty(ref _buildProgress, value);
-		}
+		[ObservableProperty]
 		private int _buildMax;
-		public int BuildMax
-		{
-			get => _buildMax;
-			set => SetProperty(ref _buildMax, value);
-		}
 
 		private bool _loading, _abort;
 
@@ -118,12 +104,10 @@ namespace LRReader.Shared.ViewModels
 			IDispatcherService dispatcher,
 			ApiService api,
 			IPlatformService platform,
-			ImageProcessingService imageProcessing,
 			ImagesService images,
 			EventsService events) : base(settings, archives, api, platform)
 		{
 			Dispatcher = dispatcher;
-			ImageProcessing = imageProcessing;
 			Images = images;
 			Events = events;
 			_zoomValue = Settings.DefaultZoom;
@@ -149,6 +133,19 @@ namespace LRReader.Shared.ViewModels
 			OnPropertyChanged("Icon");
 			ControlsEnabled = true;
 			_loading = false;
+		}
+
+		public async Task NextArchive()
+		{
+			if (Group.Count == 0)
+				return;
+			int i = Group.IndexOf(Archive);
+			var next = Group.ElementAtOrDefault(i + 1);
+			if (next == null)
+				return;
+			Archive = next;
+			OnPropertyChanged("CanGoNext");
+			await Reload(true);
 		}
 
 		public void ReloadBookmarkedObject()

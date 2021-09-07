@@ -3,7 +3,6 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -169,7 +168,7 @@ namespace LRReader.Shared.ViewModels
 							var json = ApiExtentions.CompressData(resultPage.Json);
 							var attachments = new ErrorAttachmentLog[]
 							{
-							ErrorAttachmentLog.AttachmentWithBinary(json, "resultPage.json.bz2", "application/x-bzip2")
+								ErrorAttachmentLog.AttachmentWithBinary(json, "resultPage.json.bz2", "application/x-bzip2")
 							};
 							Events.ShowNotification("API is returning bad data", "An error log has been recorded for analysis", 0);
 							Crashes.TrackError(e, attachments: attachments);
@@ -183,6 +182,16 @@ namespace LRReader.Shared.ViewModels
 			LoadingArchives = false;
 			_internalLoadingArchives = false;
 			ControlsEnabled = true;
+		}
+
+		public void OpenRandom()
+		{
+			var list = Archives.Archives;
+			if (list.Count <= 1)
+				return;
+			var random = new Random();
+			var item = list.ElementAt(random.Next(list.Count - 1));
+			Archives.OpenTab(item.Value);
 		}
 
 		public void DeleteArchive(string id)

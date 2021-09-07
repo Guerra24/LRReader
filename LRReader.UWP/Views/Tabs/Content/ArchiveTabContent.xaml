@@ -52,6 +52,11 @@
 								</TextBlock>
 							</Button>
 							<Button
+								x:Uid="/Tabs/Archive/Next" Margin="2,0,0,0"
+								Click="{x:Bind NextArchive}"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								Visibility="{x:Bind Data.CanGoNext, Mode=OneWay}" />
+							<Button
 								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0" Click="EditButton_Click"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 								Visibility="{x:Bind Data.CanEdit}" />
@@ -98,21 +103,9 @@
 				</GridView.ItemContainerTransitions>
 			</GridView>
 		</muxc:RefreshContainer>
-		<Button
-			Grid.Row="1" HorizontalAlignment="Center" Click="RefreshButton_Click"
-			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
-			Retry
-		</Button>
-		<muxc:ProgressRing
-			Grid.Row="1" Width="80" Height="80"
-			Background="#4B000000" IsActive="True"
-			IsIndeterminate="{x:Bind Data.LoadingIndeterminate, Mode=OneWay}"
-			Maximum="{x:Bind Data.BuildMax, Mode=OneWay}"
-			Visibility="{x:Bind Data.LoadingImages, Mode=OneWay}"
-			Value="{x:Bind Data.BuildProgress, Mode=OneWay}" />
+		<Border x:Name="ReaderBackground" Grid.RowSpan="2" Background="{ThemeResource ReaderBackground}" Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />
 		<ScrollViewer
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
-			Background="{ThemeResource ReaderBackground}"
 			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ScrollViewer_PointerPressed"
 			RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped"
 			VerticalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged"
@@ -139,6 +132,17 @@
 				<Run Text="{x:Bind Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />
 			</TextBlock>
 		</Grid>
+		<Button
+			x:Uid="/Generic/RetryBtn" Grid.Row="1" HorizontalAlignment="Center"
+			Click="RefreshButton_Click"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+		<muxc:ProgressRing
+			Grid.Row="1" Width="80" Height="80"
+			Background="#4B000000" IsActive="True"
+			IsIndeterminate="{x:Bind Data.LoadingIndeterminate, Mode=OneWay}"
+			Maximum="{x:Bind Data.BuildMax, Mode=OneWay}"
+			Visibility="{x:Bind Data.LoadingImages, Mode=OneWay}"
+			Value="{x:Bind Data.BuildProgress, Mode=OneWay}" />
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="ThemeBackground" />

@@ -144,6 +144,9 @@
   <data name="Archive.Edit.Content" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Archive.Next.Content" xml:space="preserve">
+    <value>Next archive</value>
+  </data>
   <data name="Archive.RemoveBookmark.CloseButtonText" xml:space="preserve">
     <value>No</value>
   </data>

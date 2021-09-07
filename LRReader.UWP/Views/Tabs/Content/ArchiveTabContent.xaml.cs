@@ -54,6 +54,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
+			ReaderBackground.SetVisualOpacity(0);
 			ScrollViewer.SetVisualOpacity(0);
 
 			Data = DataContext as ArchivePageViewModel;
@@ -100,9 +101,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		public async void LoadArchive(Archive archive)
+		public async void LoadArchive(Archive archive, IList<Archive> next)
 		{
 			Data.Archive = archive;
+			if (next != null)
+				Data.Group = next;
 			await Data.Reload(true);
 			_loadSemaphore.Release();
 		}
@@ -134,9 +137,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.Archive.IsNewArchive())
 				_wasNew = true;
 			if (Service.Platform.AnimationsEnabled)
+			{
+				FadeIn.Start(ReaderBackground);
 				await FadeIn.StartAsync(ScrollViewer);
+			}
 			else
+			{
+				ReaderBackground.SetVisualOpacity(1);
 				ScrollViewer.SetVisualOpacity(1);
+			}
 
 			_focus = true;
 			FocusReader();
@@ -193,14 +202,26 @@ namespace LRReader.UWP.Views.Tabs.Content
 					await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
 				if (Data.ReaderContent.RightImage != null & animRight != null)
 					await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
+				FadeOut.Start(ReaderBackground);
 				await FadeOut.StartAsync(ScrollViewer);
 				await Task.Delay(200); // Give it a sec
 			}
 			else
 			{
+				ReaderBackground.SetVisualOpacity(0);
 				ScrollViewer.SetVisualOpacity(0);
 			}
 			Data.ShowReader = false;
+
+			await SaveReaderData();
+
+			_transition = false;
+		}
+
+		private async Task SaveReaderData()
+		{
+			int currentPage = Data.ReaderContent.Page;
+			int count = Data.Pages;
 
 			if (currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
@@ -246,7 +267,37 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (Service.Api.ControlFlags.ProgressTracking)
 					await Data.SetProgress(currentPage + 1);
 			}
-			_transition = false;
+		}
+
+		private async Task NextArchive()
+		{
+			if (!Data.CanGoNext)
+				return;
+			if (Data.ShowReader)
+			{
+				await SaveReaderData();
+				if (Service.Platform.AnimationsEnabled)
+					await FadeOut.StartAsync(ScrollViewer);
+				else
+					ScrollViewer.SetVisualOpacity(0);
+			}
+			await Data.NextArchive();
+			if (Data.ShowReader)
+			{
+				var readerSet = Data.ArchiveImagesReader.FirstOrDefault(s => s.Page >= 0);
+				if (readerSet == null)
+					return;
+				var index = Data.ArchiveImagesReader.IndexOf(readerSet);
+				Data.ReaderIndex = index;
+
+				await ChangePage();
+
+				if (Service.Platform.AnimationsEnabled)
+					await FadeIn.StartAsync(ScrollViewer);
+				else
+					ScrollViewer.SetVisualOpacity(1);
+				FocusReader();
+			}
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -413,24 +464,29 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
 		}
 
-		private void NextPage(bool ignore = false)
+		private async void NextPage(bool ignore = false)
 		{
 			if (Service.Settings.ReadRTL && !ignore)
-				GoLeft();
+				await GoLeft();
 			else
-				GoRight();
+				await GoRight();
 		}
 
-		private void PrevPage(bool ignore = false)
+		private async void PrevPage(bool ignore = false)
 		{
 			if (Service.Settings.ReadRTL && !ignore)
-				GoRight();
+				await GoRight();
 			else
-				GoLeft();
+				await GoLeft();
 		}
 
-		private async void GoRight()
+		private async Task GoRight()
 		{
+			if (Data.ReaderContent.Page + 1 >= Data.Pages)
+			{
+				await NextArchive();
+				return;
+			}
 			if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
 			{
 				++Data.ReaderIndex;
@@ -440,7 +496,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		private async void GoLeft()
+		private async Task GoLeft()
 		{
 			if (Data.ReaderIndex > 0)
 			{
@@ -625,5 +681,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await Data.DeleteArchive();
 			}
 		}
+
 	}
 }

@@ -47,16 +47,15 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
-			if (Settings.OpenBookmarksStart)
-				if (Archives.Archives.Count > 0)
-					foreach (var b in Settings.Profile.Bookmarks)
-					{
-						var archive = Archives.GetArchive(b.archiveID);
-						if (archive != null)
-							Tabs.OpenTab(Tab.Archive, false, archive);
-						else
-							Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
-					}
+			if (Settings.OpenBookmarksStart && Archives.Archives.Count > 0)
+				foreach (var b in Settings.Profile.Bookmarks)
+				{
+					var archive = Archives.GetArchive(b.archiveID);
+					if (archive != null)
+						Archives.OpenTab(archive, false);
+					else
+						Events.ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "");
+				}
 		}
 
 	}

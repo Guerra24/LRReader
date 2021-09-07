@@ -33,7 +33,6 @@
 					CornerRadius="4,0,0,4"
 					Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource StringToColorConverter}}"
 					IsEnabled="{Binding IsEnabled, ElementName=RemoveTag}"
-					QuerySubmitted="EditTag_QuerySubmitted"
 					Template="{StaticResource EditTagAutoSuggestBox}"
 					Text="{x:Bind Tag, Mode=TwoWay}"
 					TextChanged="EditTag_TextChanged" />
