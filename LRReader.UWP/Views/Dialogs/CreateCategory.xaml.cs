@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using LRReader.Shared.Models;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Dialogs
 {
-	public sealed partial class CreateCategory : ContentDialog
+	public sealed partial class CreateCategory : ContentDialog, ICreateCategoryDialog
 	{
 		private ResourceLoader lang;
 
@@ -27,6 +17,12 @@ namespace LRReader.UWP.Views.Dialogs
 			if (edit)
 				PrimaryButtonText = ResourceLoader.GetForCurrentView("Generic").GetString("Save");
 		}
+
+		public new string Name { get => CategoryName.Text; set => CategoryName.Text = value; }
+		public string Query { get => SearchQuery.Text; set => SearchQuery.Text = value; }
+		public bool Pin { get => Pinned.IsOn; set => Pinned.IsOn = value; }
+
+		public new async Task<IDialogResult> ShowAsync() => (IDialogResult)(int)await base.ShowAsync();
 
 		private void CategoryName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
 		{

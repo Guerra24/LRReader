@@ -1,10 +1,7 @@
-﻿using LRReader.Internal;
-using LRReader.Shared.Extensions;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -83,11 +80,6 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void Add_Click(object sender, RoutedEventArgs e)
-		{
-			Service.Tabs.OpenTab(Tab.SearchResults, false, ViewModel.Category);
-		}
-
 		private void UserControl_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(this);
@@ -100,66 +92,5 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private async void Edit_Click(object sender, RoutedEventArgs e)
-		{
-			var listMode = string.IsNullOrEmpty(ViewModel.Category.search);
-
-			if (ViewModel.Category.Unconfigured())
-			{
-				var dialog = new ContentDialog
-				{
-					Title = lang.GetString("ConfigureCategory/Title"),
-					PrimaryButtonText = lang.GetString("ConfigureCategory/PrimaryButtonText"),
-					SecondaryButtonText = lang.GetString("ConfigureCategory/SecondaryButtonText"),
-					CloseButtonText = lang.GetString("ConfigureCategory/CloseButtonText"),
-					Content = lang.GetString("ConfigureCategory/Content").AsFormat("\n")
-				};
-				var result = await dialog.ShowAsync();
-
-				switch (result)
-				{
-					case ContentDialogResult.None:
-						return;
-					case ContentDialogResult.Primary:
-						listMode = true;
-						break;
-					case ContentDialogResult.Secondary:
-						listMode = false;
-						break;
-				}
-			}
-
-			if (listMode)
-				Service.Tabs.OpenTab(Tab.CategoryEdit, ViewModel.Category);
-			else
-			{
-				var dialog = new CreateCategory(true);
-				dialog.CategoryName.Text = ViewModel.Category.name;
-				dialog.SearchQuery.Text = ViewModel.Category.search;
-				dialog.Pinned.IsOn = ViewModel.Category.pinned;
-				var result = await dialog.ShowAsync();
-				if (result == ContentDialogResult.Primary)
-				{
-					await ViewModel.UpdateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
-				}
-			}
-		}
-
-		private async void Remove_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new ContentDialog()
-			{
-				Title = lang.GetString("RemoveCategory/Title").AsFormat(ViewModel.Category.name),
-				Content = lang.GetString("RemoveCategory/Content"),
-				PrimaryButtonText = lang.GetString("RemoveCategory/PrimaryButtonText"),
-				CloseButtonText = lang.GetString("RemoveCategory/CloseButtonText")
-			};
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				if (ViewModel.Category.DeleteCategory != null)
-					await ViewModel.Category.DeleteCategory(ViewModel.Category);
-			}
-		}
 	}
 }

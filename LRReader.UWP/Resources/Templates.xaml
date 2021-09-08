@@ -44,7 +44,7 @@
 									Command="{x:Bind ViewModel.EditArchiveCommand}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.ShowCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>
@@ -274,7 +274,7 @@
 									Command="{x:Bind ViewModel.EditArchiveCommand}"
 									Icon="Edit"
 									Visibility="{x:Bind ViewModel.CanEdit}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.ShowCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>

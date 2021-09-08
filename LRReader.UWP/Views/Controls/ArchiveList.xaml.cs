@@ -165,7 +165,6 @@ namespace LRReader.UWP.Views.Controls
 
 		public void Search(Category category)
 		{
-			SearchBox.Text = this.query = category.search;
 			Data.Category = category;
 		}
 

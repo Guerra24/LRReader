@@ -9,6 +9,11 @@ namespace LRReader.Shared.Messages
 		public DeleteArchiveMessage(Archive id) : base(id) { }
 	}
 
+	public class DeleteCategoryMessage : ValueChangedMessage<Category>
+	{
+		public DeleteCategoryMessage(Category id) : base(id) { }
+	}
+
 	public struct Notification
 	{
 		public string Title { get; }

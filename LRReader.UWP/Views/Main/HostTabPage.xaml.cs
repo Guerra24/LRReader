@@ -60,7 +60,7 @@ namespace LRReader.UWP.Views.Main
 
 			Window.Current.SetTitleBar(TitleBar);
 
-			WeakReferenceMessenger.Default.RegisterAll(this);
+			WeakReferenceMessenger.Default.Register(this);
 
 			await Service.Dispatcher.RunAsync(() =>
 			{

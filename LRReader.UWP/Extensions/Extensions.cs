@@ -4,6 +4,7 @@ using Microsoft.Toolkit.Uwp.UI.Media;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.UI;
@@ -30,6 +31,23 @@ namespace LRReader.UWP.Extensions
 
 		public static void SetVisualOpacity(this UIElement element, float opacity) => ElementCompositionPreview.GetElementVisual(element).Opacity = opacity;
 
+	}
+
+	public class GridViewExt : DependencyObject
+	{
+		public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.RegisterAttached("ItemClickCommand", typeof(ICommand), typeof(GridViewExt), new PropertyMetadata(null));
+
+		public static void SetItemClickCommand(GridView gridView, ICommand command)
+		{
+			gridView.SetValue(ItemClickCommandProperty, command);
+			gridView.ItemClick += (sender, e) =>
+			{
+				if (command.CanExecute(e.ClickedItem))
+					command.Execute(e.ClickedItem);
+			};
+		}
+
+		public static ICommand GetItemClickCommand(GridView gridView) => gridView.GetValue(ItemClickCommandProperty) as ICommand;
 	}
 
 	public class Element : DependencyObject

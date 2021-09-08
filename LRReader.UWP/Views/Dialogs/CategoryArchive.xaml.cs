@@ -10,7 +10,6 @@ namespace LRReader.UWP.Views.Dialogs
 {
 	public sealed partial class CategoryArchive : ContentDialog, IDialog
 	{
-
 		private CategoryArchiveViewModel Data;
 		private bool _searching;
 

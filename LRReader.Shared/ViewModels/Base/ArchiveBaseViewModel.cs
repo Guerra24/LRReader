@@ -193,6 +193,6 @@ namespace LRReader.Shared.ViewModels.Base
 		public void EditArchive() => Tabs.OpenTab(Tab.ArchiveEdit, Archive);
 
 		[ICommand]
-		public async Task ShowCategories() => await Platform.OpenDialog(Dialog.CategoryArchive, Archive.arcid, Archive.title);
+		public async Task EditCategories() => await Platform.OpenDialog(Dialog.CategoryArchive, Archive.arcid, Archive.title);
 	}
 }

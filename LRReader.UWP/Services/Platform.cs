@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Services;
+﻿using LRReader.Shared.Models;
+using LRReader.Shared.Services;
 using LRReader.UWP.Views;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
@@ -32,7 +33,7 @@ namespace LRReader.UWP.Services
 		{
 			Tabs = tabs;
 #if DEBUG
-			loggerFactory.AddFile(files.LocalCache + string.Format("/Logs/App-{0:yyyy}-{0:MM}-{0:dd}.log", DateTime.UtcNow));
+			loggerFactory.AddFile(files.LocalCache + string.Format("/Logs/{0:yyyy}-{0:MM}-{0:dd}.log", DateTime.UtcNow));
 #endif
 		}
 
@@ -50,6 +51,7 @@ namespace LRReader.UWP.Services
 			Tabs.MapTabToType(Tab.Tools, typeof(ToolsTab));
 
 			MapDialogToType(Dialog.CategoryArchive, typeof(CategoryArchive));
+			MapDialogToType(Dialog.CreateCategory, typeof(CreateCategory));
 
 			SymbolToSymbol.Add(Symbols.Favorite, new SymbolIconSource { Symbol = Symbol.Favorite });
 			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });
@@ -86,6 +88,12 @@ namespace LRReader.UWP.Services
 		{
 			var split = key.Split(new[] { '/' }, 2);
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
+		}
+
+		public override async Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object content)
+		{
+			var dialog = new ContentDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
+			return (IDialogResult)(int)await dialog.ShowAsync();
 		}
 
 		public string GetPackageFamilyName() => Package.Current.Id.FamilyName;

@@ -107,7 +107,7 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
-			WeakReferenceMessenger.Default.RegisterAll(this);
+			WeakReferenceMessenger.Default.Register(this);
 		}
 
 		public async Task NextPage()
@@ -143,7 +143,7 @@ namespace LRReader.Shared.ViewModels
 			else
 				sortby = SortBy.ElementAt(SortByIndex);
 			var resultPage = await SearchProvider.Search(
-				Api.ServerInfo.archives_per_page, page, Query, string.IsNullOrEmpty(Category.search) ? Category.id : "", NewOnly, UntaggedOnly, sortby, OrderBy);
+				Api.ServerInfo.archives_per_page, page, Query, Category.id, NewOnly, UntaggedOnly, sortby, OrderBy);
 			if (resultPage != null)
 			{
 				TotalArchives = resultPage.Data.recordsFiltered;

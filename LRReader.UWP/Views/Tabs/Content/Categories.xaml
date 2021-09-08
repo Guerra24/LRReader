@@ -32,7 +32,8 @@
 			<GridView
 				x:Name="CategoriesGrid"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
-				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick"
+				ext:GridViewExt.ItemClickCommand="{x:Bind Data.CategoryClickCommand}"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True"
 				ItemTemplateSelector="{StaticResource CategoryTemplateSelector}"
 				ItemsSource="{x:Bind Data.CategoriesList}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
@@ -61,7 +62,8 @@
 			</GridView>
 		</muxc:RefreshContainer>
 		<Button
-			HorizontalAlignment="Center" Click="Button_Click" Content="Retry"
+			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center"
+			Command="{x:Bind Data.RefreshCommand}"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
 		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingCategories, Mode=OneWay}" />
 	</Grid>

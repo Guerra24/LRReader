@@ -11,10 +11,8 @@
 	Style="{StaticResource DefaultContentDialogStyle}"
 	mc:Ignorable="d">
 
-	<StackPanel>
-		<AutoSuggestBox
-			x:Uid="/Dialogs/CategoryArchive/Search" Margin="0,0,0,5" QueryIcon="Find"
-			TextChanged="AutoSuggestBox_TextChanged" />
+	<StackPanel Spacing="5">
+		<AutoSuggestBox x:Uid="/Dialogs/CategoryArchive/Search" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" />
 		<ListView
 			x:Name="CategoriesList" MaxHeight="400"
 			ItemsSource="{x:Bind Data.Categories}"

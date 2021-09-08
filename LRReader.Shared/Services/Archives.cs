@@ -20,7 +20,7 @@ namespace LRReader.Shared.Services
 		public Dictionary<string, Archive> Archives = new Dictionary<string, Archive>();
 		public List<TagStats> TagStats = new List<TagStats>();
 		public List<string> Namespaces = new List<string>();
-		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
+		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
 
 		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs)
 		{
@@ -35,7 +35,7 @@ namespace LRReader.Shared.Services
 			Archives.Clear();
 			TagStats.Clear();
 			Namespaces.Clear();
-			Categories.Clear();
+			//Categories.Clear();
 
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
@@ -57,7 +57,7 @@ namespace LRReader.Shared.Services
 					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
-					Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
+					//Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
 				}
 				catch (Exception)
 				{
@@ -88,13 +88,13 @@ namespace LRReader.Shared.Services
 				}
 				await Files.StoreFile(Files.LocalCache + "/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
 			}
-			var resultC = await CategoriesProvider.GetCategories();
+			/*var resultC = await CategoriesProvider.GetCategories();
 			if (resultC != null)
 			{
 				var temp = resultC.ToDictionary(c => c.id, c => c);
 				await Files.StoreFile(Files.LocalCache + "/Categories-v1.json", JsonConvert.SerializeObject(temp));
 				Categories = temp;
-			}
+			}*/
 		}
 
 		public Archive GetArchive(string id)

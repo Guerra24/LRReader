@@ -1,38 +1,30 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class CategoriesViewModel : ObservableObject
+	public partial class CategoriesViewModel : ObservableObject, IRecipient<DeleteCategoryMessage>
 	{
 		private readonly SettingsService Settings;
 		private readonly IDispatcherService Dispatcher;
+		private readonly PlatformService Platform;
+		private readonly TabsService Tabs;
 
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("ControlsEnabled")]
 		private bool _loadingCategories = true;
-		public bool LoadingCategories
-		{
-			get => _loadingCategories;
-			set
-			{
-				SetProperty(ref _loadingCategories, value);
-				OnPropertyChanged("ControlsEnabled");
-			}
-		}
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("ControlsEnabled")]
 		private bool _refreshOnErrorButton = false;
-		public bool RefreshOnErrorButton
-		{
-			get => _refreshOnErrorButton;
-			set
-			{
-				SetProperty(ref _refreshOnErrorButton, value);
-				OnPropertyChanged("ControlsEnabled");
-			}
-		}
 		public ObservableCollection<Category> CategoriesList = new ObservableCollection<Category>();
 		private bool _controlsEnabled;
 		public bool ControlsEnabled
@@ -42,33 +34,40 @@ namespace LRReader.Shared.ViewModels
 		}
 		protected bool _internalLoadingCategories;
 
-		public CategoriesViewModel(SettingsService settings, IDispatcherService dispatcher)
+		public CategoriesViewModel(SettingsService settings, IDispatcherService dispatcher, PlatformService platform, TabsService tabs)
 		{
 			Settings = settings;
 			Dispatcher = dispatcher;
+			Platform = platform;
+			Tabs = tabs;
+			WeakReferenceMessenger.Default.Register(this);
 		}
 
-		public async Task<Category> CreateCategory(string name, string search = "", bool pinned = false)
+		[ICommand]
+		public async Task CategoryClick(Category item)
 		{
-			var resultCreate = await CategoriesProvider.CreateCategory(name, search, pinned);
-			if (resultCreate != null)
+			if (item is AddNewCategory)
 			{
-				resultCreate.DeleteCategory += DeleteCategory;
-				CategoriesList.Add(resultCreate);
-				return resultCreate;
+				var dialog = Platform.CreateDialog<ICreateCategoryDialog>(Dialog.CreateCategory, false);
+				var result = await dialog.ShowAsync();
+				if (result == IDialogResult.Primary)
+				{
+					var resultCreate = await CategoriesProvider.CreateCategory(dialog.Name, dialog.Query, dialog.Pin);
+					if (resultCreate != null)
+					{
+						CategoriesList.Add(resultCreate);
+						if (string.IsNullOrEmpty(dialog.Query))
+							Tabs.OpenTab(Tab.CategoryEdit, resultCreate);
+					}
+				}
 			}
-			return null;
+			else
+			{
+				Tabs.OpenTab(Tab.SearchResults, item as Category);
+			}
 		}
 
-		public async Task DeleteCategory(Category category)
-		{
-			var result = await CategoriesProvider.DeleteCategory(category.id);
-			if (result)
-			{
-				CategoriesList.Remove(category);
-			}
-		}
-
+		[ICommand]
 		public async Task Refresh()
 		{
 			if (_internalLoadingCategories)
@@ -86,10 +85,7 @@ namespace LRReader.Shared.ViewModels
 				await Task.Run(async () =>
 				{
 					foreach (var a in result.OrderBy(c => !c.pinned))
-					{
-						a.DeleteCategory += DeleteCategory;
 						await Dispatcher.RunAsync(() => CategoriesList.Add(a));
-					}
 				});
 			}
 			else
@@ -99,5 +95,9 @@ namespace LRReader.Shared.ViewModels
 			ControlsEnabled = true;
 		}
 
+		public void Receive(DeleteCategoryMessage message)
+		{
+			CategoriesList.Remove(message.Value);
+		}
 	}
 }

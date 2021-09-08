@@ -1,8 +1,5 @@
 ﻿using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
-using LRReader.UWP.Views.Dialogs;
-using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -13,7 +10,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class Categories : UserControl
 	{
-		private CategoriesViewModel Data;
+		public CategoriesViewModel Data;
 
 		private bool loaded;
 
@@ -30,26 +27,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			loaded = true;
 			await Data.Refresh();
 		}
-		private async void CategoriesGrid_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			if (e.ClickedItem is AddNewCategory)
-			{
-				var dialog = new CreateCategory(false);
-				var result = await dialog.ShowAsync();
-				if (result == ContentDialogResult.Primary)
-				{
-					var category = await Data.CreateCategory(dialog.CategoryName.Text, dialog.SearchQuery.Text, dialog.Pinned.IsOn);
-					if (category != null && string.IsNullOrEmpty(dialog.SearchQuery.Text))
-						Service.Tabs.OpenTab(Tab.CategoryEdit, category);
-				}
-			}
-			else
-			{
-				Service.Tabs.OpenTab(Tab.SearchResults, e.ClickedItem as Category);
-			}
-		}
-
-		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 
 		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
@@ -60,8 +37,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 		}
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => await Data.Refresh();
-
-		public async void Refresh() => await Data.Refresh();
 
 	}
 

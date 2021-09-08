@@ -32,14 +32,19 @@ namespace LRReader.Shared.Services
 
 		public void MapDialogToType(Dialog tab, Type type) => Dialogs.Add(tab, type);
 
-		public async Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args)
+		public Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args) => OpenDialog<IDialog>(dialog, args);
+
+		public async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[] args) where D : IDialog
 		{
-			Type type;
-			if (!Dialogs.TryGetValue(dialog, out type))
+			var newDialog = CreateDialog<D>(dialog, args);
+			if (newDialog == null)
 				return IDialogResult.None;
-			var newDialog = (IDialog)Activator.CreateInstance(type, args);
 			return await newDialog.ShowAsync();
 		}
+
+		public D CreateDialog<D>(Dialog dialog, params object?[] args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args);
+
+		public abstract Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null);
 	}
 
 	public class StubPlatformService : PlatformService
@@ -65,5 +70,7 @@ namespace LRReader.Shared.Services
 		public override string GetLocalizedString(string key) => key;
 
 		public override void ChangeTheme(AppTheme theme) { }
+
+		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object content) { return Task.Run(() => IDialogResult.None); }
 	}
 }

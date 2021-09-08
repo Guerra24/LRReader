@@ -10,16 +10,10 @@
 	Style="{StaticResource DefaultContentDialogStyle}"
 	mc:Ignorable="d">
 
-	<StackPanel>
-		<TextBox
-			x:Name="CategoryName" x:Uid="/Dialogs/CreateCategory/CategoryName" Margin="0,0,0,10"
-			x:FieldModifier="public" TextChanging="CategoryName_TextChanging" />
-		<TextBox
-			x:Name="SearchQuery" x:Uid="/Dialogs/CreateCategory/SearchQuery" Margin="0,0,0,10"
-			x:FieldModifier="public" />
-		<ToggleSwitch
-			x:Name="Pinned" x:Uid="/Dialogs/CreateCategory/Pinned" Margin="0,0,0,10"
-			x:FieldModifier="public" />
+	<StackPanel Spacing="10">
+		<TextBox x:Name="CategoryName" x:Uid="/Dialogs/CreateCategory/CategoryName" TextChanging="CategoryName_TextChanging" />
+		<TextBox x:Name="SearchQuery" x:Uid="/Dialogs/CreateCategory/SearchQuery" />
+		<ToggleSwitch x:Name="Pinned" x:Uid="/Dialogs/CreateCategory/Pinned" />
 		<TextBlock Name="CategoryError" Foreground="#FF4141" />
 	</StackPanel>
 </ContentDialog>

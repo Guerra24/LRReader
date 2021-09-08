@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Models.Main
 {
-
-	public delegate Task DeleteCategory(Category category);
 
 	public class Category
 	{
@@ -29,13 +25,30 @@ namespace LRReader.Shared.Models.Main
 			return name;
 		}
 
-		[JsonIgnore]
-		public DeleteCategory DeleteCategory;
+		public override bool Equals(object? obj)
+		{
+			if (obj is AddNewCategory)
+				return false;
+			return obj is Category category && id.Equals(category.id);
+		}
+
+		public override int GetHashCode()
+		{
+			return id.GetHashCode();
+		}
 	}
 
 	public class AddNewCategory : Category
 	{
+		public override bool Equals(object? obj)
+		{
+			return false;
+		}
 
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
 	}
 
 }

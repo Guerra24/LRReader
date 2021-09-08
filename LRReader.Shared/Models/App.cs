@@ -17,18 +17,6 @@ namespace LRReader.Shared.Models
 		bool BackRequested();
 	}
 
-	public enum IDialogResult
-	{
-		None = 0,
-		Primary = 1,
-		Secondary = 2
-	}
-
-	public interface IDialog
-	{
-		Task<IDialogResult> ShowAsync();
-	}
-
 	public class ReleaseInfo
 	{
 		public string name { get; set; }

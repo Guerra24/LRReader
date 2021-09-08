@@ -37,7 +37,7 @@ namespace LRReader.Shared.ViewModels
 			Settings = settings;
 			Archives = archives;
 			Dispatcher = dispatcher;
-			WeakReferenceMessenger.Default.RegisterAll(this);
+			WeakReferenceMessenger.Default.Register(this);
 		}
 
 		public async Task Refresh()
