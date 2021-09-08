@@ -32,11 +32,11 @@
 					<StackPanel>
 						<TextBlock x:Uid="/Settings/Server/ApiRequired" Margin="0,0,0,10" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 						<comcontrols:WrapPanel HorizontalSpacing="10" Orientation="Horizontal">
-							<Button x:Uid="/Settings/Server/Upload" Click="UploadArchive_Click" />
-							<Button x:Uid="/Settings/Server/Batch" Click="BatchTagging_Click" />
-							<Button x:Uid="/Settings/Server/Settings" Click="EditSettings_Click" />
-							<Button x:Uid="/Settings/Server/PluginSettings" Click="EditPlugins_Click" />
-							<Button x:Uid="/Settings/Server/Logs" Click="Logs_Click" />
+							<Button x:Uid="/Settings/Server/Upload" Command="{x:Bind Data.OpenUploadArchiveCommand}" />
+							<Button x:Uid="/Settings/Server/Batch" Command="{x:Bind Data.OpenBatchTaggingCommand}" />
+							<Button x:Uid="/Settings/Server/Settings" Command="{x:Bind Data.OpenSettingsCommand}" />
+							<Button x:Uid="/Settings/Server/PluginSettings" Command="{x:Bind Data.OpenPluginsCommand}" />
+							<Button x:Uid="/Settings/Server/Logs" Command="{x:Bind Data.OpenLogsCommand}" />
 						</comcontrols:WrapPanel>
 					</StackPanel>
 					<StackPanel>
@@ -79,7 +79,10 @@
 								<Flyout x:Name="RegenThumbsFlyout">
 									<StackPanel>
 										<TextBlock x:Uid="/Settings/Server/RegenThumbNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-										<Button x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center" Click="RegenThumb_Click" />
+										<Button
+											x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center" Click="RegenThumb_Click"
+											Command="{x:Bind Data.RegenThumbnailsCommand}"
+											CommandParameter="{x:Bind RegenThumbForced.IsChecked}" />
 									</StackPanel>
 								</Flyout>
 							</Button.Flyout>
@@ -95,16 +98,16 @@
 					Glyph="&#xE74C;"
 					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<controls:ModernInput x:Uid="/Settings/Server/WorkerRestart">
-						<Button x:Uid="/Settings/Server/WorkerRestartButton" Click="RestartWorkerButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+						<Button x:Uid="/Settings/Server/WorkerRestartButton" Command="{x:Bind Data.RestartWorkerCommand}" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 					</controls:ModernInput>
 					<controls:ModernInput x:Uid="/Settings/Server/WorkerStop">
-						<Button x:Uid="/Settings/Server/WorkerStopButton" Click="StopWorkerButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+						<Button x:Uid="/Settings/Server/WorkerStopButton" Command="{x:Bind Data.StopWorkerCommand}" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 					</controls:ModernInput>
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Server/Database">
 				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Glyph="&#xE7C5;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
-					<Button x:Uid="/Settings/Server/ResetCacheButton" Click="ResetSearchButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+					<Button x:Uid="/Settings/Server/ResetCacheButton" Command="{x:Bind Data.ResetSearchCommand}" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Glyph="&#xE74E;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/BackupDBButton" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
@@ -115,7 +118,9 @@
 							<Flyout x:Name="ClearNewFlyout">
 								<StackPanel>
 									<TextBlock x:Uid="/Settings/Server/ClearNewNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-									<Button x:Uid="/Settings/Server/ClearNewYes" HorizontalAlignment="Center" Click="ClearAllNewButton_Click" />
+									<Button
+										x:Uid="/Settings/Server/ClearNewYes" HorizontalAlignment="Center" Click="ClearAllNewButton_Click"
+										Command="{x:Bind Data.ClearAllNewCommand}" />
 								</StackPanel>
 							</Flyout>
 						</Button.Flyout>

@@ -248,22 +248,6 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		public async void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new ContentDialog()
-			{
-				Title = lang.GetString("RemoveArchive/Title").AsFormat(ViewModel.Archive.title),
-				Content = lang.GetString("RemoveArchive/Content"),
-				PrimaryButtonText = lang.GetString("RemoveArchive/PrimaryButtonText"),
-				CloseButtonText = lang.GetString("RemoveArchive/CloseButtonText")
-			};
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				await ViewModel.DeleteArchive();
-			}
-		}
-
 		public static readonly DependencyProperty PopupOffsetProperty = DependencyProperty.Register("PopupOffset", typeof(double), typeof(GenericArchiveItem), new PropertyMetadata(null));
 		public static readonly DependencyProperty DecodePixelWidthProperty = DependencyProperty.Register("DecodePixelWidth", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
 		public static readonly DependencyProperty DecodePixelHeightProperty = DependencyProperty.Register("DecodePixelHeight", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));

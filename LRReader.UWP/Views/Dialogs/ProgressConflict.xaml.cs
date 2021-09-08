@@ -1,14 +1,14 @@
 ﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Models.Main;
+using LRReader.Shared.Models;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
 {
-	public sealed partial class ProgressConflict : ContentDialog
+	public sealed partial class ProgressConflict : ContentDialog, IProgressConflictDialog
 	{
-
-		public ConflictMode Mode;
 
 		public ProgressConflict(int local, int remote, int total)
 		{
@@ -23,6 +23,10 @@ namespace LRReader.UWP.Views.Dialogs
 			<x:String>Use remote (5/20)</x:String>
 			*/
 		}
+
+		public ConflictMode Mode { get; set; }
+
+		public new async Task<IDialogResult> ShowAsync() => (IDialogResult)(int)await base.ShowAsync();
 
 	}
 }

@@ -1,7 +1,9 @@
 ﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -9,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
 {
-	public sealed partial class ServerProfileDialog : ContentDialog
+	public sealed partial class ServerProfileDialog : ContentDialog, ICreateProfileDialog
 	{
 		private ResourceLoader lang;
 
@@ -20,6 +22,12 @@ namespace LRReader.UWP.Views.Dialogs
 			if (edit)
 				PrimaryButtonText = ResourceLoader.GetForCurrentView("Generic").GetString("Save");
 		}
+
+		public new string Name { get => ProfileName.Text; set => ProfileName.Text = value; }
+		public string Address { get => ProfileServerAddress.Text; set => ProfileServerAddress.Text = value; }
+		public string ApiKey { get => ProfileServerApiKey.Password; set => ProfileServerApiKey.Password = value; }
+
+		public new async Task<IDialogResult> ShowAsync() => (IDialogResult)(int)await base.ShowAsync();
 
 		private void ProfileName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
 		{
@@ -75,5 +83,6 @@ namespace LRReader.UWP.Views.Dialogs
 			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={(Service.Platform as UWPlatformService).GetPackageFamilyName()}");
 			Clipboard.SetContent(dataPackage);
 		}
+
 	}
 }

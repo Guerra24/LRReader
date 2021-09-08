@@ -41,47 +41,9 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private async void PivotItem_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateThumbnailCacheSize();
 
-		private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new ServerProfileDialog(false);
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				var url = dialog.ProfileServerAddress.Text;
-				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
-					url = "http://" + url;
-				Data.SettingsManager.AddProfile(dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
-			}
-		}
+		private void ButtonRemove_Click(object sender, RoutedEventArgs e) => RemoveFlyout.Hide();
 
-		private async void ButtonEdit_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new ServerProfileDialog(true);
-			var profile = Data.SettingsManager.Profile;
-			dialog.ProfileName.Text = profile.Name;
-			dialog.ProfileServerAddress.Text = profile.ServerAddress;
-			dialog.ProfileServerApiKey.Password = profile.ServerApiKey;
-
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				var url = dialog.ProfileServerAddress.Text;
-				if (!(url.StartsWith("http://") || url.StartsWith("https://")))
-					url = "http://" + url;
-				Data.SettingsManager.ModifyProfile(profile.UID, dialog.ProfileName.Text, url, dialog.ProfileServerApiKey.Password);
-				Service.Api.RefreshSettings(Data.SettingsManager.Profile);
-			}
-		}
-
-		private void ButtonRemove_Click(object sender, RoutedEventArgs e)
-		{
-			var sm = Data.SettingsManager;
-			sm.Profiles.Remove(sm.Profile);
-			sm.Profile = sm.Profiles.FirstOrDefault();
-			ProfileSelection.SelectedItem = sm.Profile;
-			RemoveFlyout.Hide();
-		}
-
+		// TODO Fix this or move to VM layer
 		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
@@ -127,8 +89,6 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			(sender as ToggleSwitch).IsOn = await Crashes.IsEnabledAsync();
 		}
-
-		private async void ButtonClearThumbCache_Click(object sender, RoutedEventArgs e) => await Data.ClearThumbnailCache();
 
 	}
 }

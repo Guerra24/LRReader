@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
@@ -120,6 +121,73 @@ namespace LRReader.Shared.ViewModels
 		{
 			Events.RebuildReaderImagesSetEvent -= CreateImageSets;
 			_abort = true;
+		}
+
+		public async Task HandleConflict()
+		{
+			if (Api.ControlFlags.ProgressTracking && Bookmarked && BookmarkProgress + 1 != Archive.progress && Archive.progress > 0)
+			{
+				var dialog = Platform.CreateDialog<IProgressConflictDialog>(Dialog.ProgressConflict, BookmarkProgress + 1, Archive.progress, Pages);
+				await dialog.ShowAsync();
+				var result = dialog.Mode;
+				switch (result)
+				{
+					case ConflictMode.Local:
+						await SetProgress(BookmarkProgress + 1);
+						break;
+					case ConflictMode.Remote:
+						BookmarkProgress = Archive.progress - 1;
+						break;
+				}
+			}
+		}
+
+		public async Task<bool> SaveReaderData(bool _wasNew)
+		{
+			int currentPage = ReaderContent.Page;
+			int count = Pages;
+
+			if (currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
+			{
+				if (Archive.IsNewArchive())
+				{
+					await ClearNew();
+					Archive.isnew = "false";
+				}
+				if (Bookmarked && Settings.RemoveBookmark)
+				{
+					var result = await Platform.OpenGenericDialog(
+						Platform.GetLocalizedString("Tabs/Archive/RemoveBookmark/Title"),
+						Platform.GetLocalizedString("Tabs/Archive/RemoveBookmark/PrimaryButtonText"),
+						closebutton: Platform.GetLocalizedString("Tabs/Archive/RemoveBookmark/CloseButtonText")
+						);
+					if (result == IDialogResult.Primary)
+						Bookmarked = false;
+				}
+			}
+			else if (!Bookmarked)
+			{
+				var mode = Service.Settings.BookmarkReminderMode;
+				if (Service.Settings.BookmarkReminder &&
+					((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
+				{
+					var result = await Platform.OpenGenericDialog(
+						Platform.GetLocalizedString("Tabs/Archive/AddBookmark/Title"),
+						Platform.GetLocalizedString("Tabs/Archive/AddBookmark/PrimaryButtonText"),
+						closebutton: Platform.GetLocalizedString("Tabs/Archive/AddBookmark/CloseButtonText")
+						);
+					if (result == IDialogResult.Primary)
+						Bookmarked = true;
+					_wasNew = false;
+				}
+			}
+			if (Bookmarked)
+			{
+				BookmarkProgress = currentPage;
+				if (Api.ControlFlags.ProgressTracking)
+					await SetProgress(currentPage + 1);
+			}
+			return _wasNew;
 		}
 
 		public async Task Reload(bool animate)

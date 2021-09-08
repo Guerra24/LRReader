@@ -1,9 +1,11 @@
-﻿using LRReader.Shared.Models;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,8 +15,8 @@ namespace LRReader.Shared.ViewModels.Base
 	{
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
-		private readonly ApiService Api;
-		private readonly PlatformService Platform;
+		protected readonly PlatformService Platform;
+		protected readonly ApiService Api;
 		private readonly TabsService Tabs;
 
 		[ObservableProperty]
@@ -142,9 +144,9 @@ namespace LRReader.Shared.ViewModels.Base
 				}
 			}
 		}
-		public object Icon
+		public object? Icon
 		{
-			get => Platform.GetSymbol(Bookmarked ? Symbols.Favorite : Symbols.Pictures);
+			get => Platform.GetSymbol(Bookmarked ? Symbol.Favorite : Symbol.Pictures);
 		}
 
 		public bool CanEdit => Settings.Profile.HasApiKey;
@@ -184,15 +186,56 @@ namespace LRReader.Shared.ViewModels.Base
 			return await ArchivesProvider.DownloadArchive(Archive.arcid);
 		}
 
-		public async Task DeleteArchive()
+
+		[ICommand]
+		private void Edit() => Tabs.OpenTab(Tab.ArchiveEdit, Archive);
+
+		[ICommand]
+		private async Task EditCategories() => await Platform.OpenDialog(Dialog.CategoryArchive, Archive.arcid, Archive.title);
+
+		[ICommand]
+		private async Task Delete()
 		{
-			await Archives.DeleteArchive(Archive.arcid);
+			var result = await Platform.OpenGenericDialog(
+				Platform.GetLocalizedString("Dialogs/RemoveArchive/Title").AsFormat(Archive.title),
+				Platform.GetLocalizedString("Dialogs/RemoveArchive/PrimaryButtonText"),
+				closebutton: Platform.GetLocalizedString("Dialogs/RemoveArchive/CloseButtonText"),
+				content: Platform.GetLocalizedString("Dialogs/RemoveArchive/Content")
+				);
+			if (result == IDialogResult.Primary)
+				await Archives.DeleteArchive(Archive.arcid);
 		}
 
 		[ICommand]
-		public void EditArchive() => Tabs.OpenTab(Tab.ArchiveEdit, Archive);
-
-		[ICommand]
-		public async Task EditCategories() => await Platform.OpenDialog(Dialog.CategoryArchive, Archive.arcid, Archive.title);
+		private async Task TagClick(ArchiveTagsGroupTag tag)
+		{
+			if (tag.Namespace.ToLower().Equals("source"))
+			{
+				Uri result;
+				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out result))
+				{
+					var dialogResult = await Platform.OpenGenericDialog(
+						Platform.GetLocalizedString("Dialogs/OpenLink/Title"),
+						Platform.GetLocalizedString("Dialogs/OpenLink/PrimaryButtonText"),
+						Platform.GetLocalizedString("Dialogs/OpenLink/SecondaryButtonText"),
+						Platform.GetLocalizedString("Dialogs/OpenLink/CloseButtonText"),
+						result.AbsoluteUri
+						);
+					switch (dialogResult)
+					{
+						case IDialogResult.Primary:
+							await Platform.OpenInBrowser(result);
+							break;
+						case IDialogResult.Secondary:
+							Platform.CopyToClipboard(result.AbsoluteUri);
+							break;
+					}
+				}
+			}
+			else
+			{
+				Tabs.OpenTab(Tab.SearchResults, tag.FullTag);
+			}
+		}
 	}
 }

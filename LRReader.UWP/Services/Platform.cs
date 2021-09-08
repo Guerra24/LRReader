@@ -5,14 +5,15 @@ using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Symbol = LRReader.Shared.Services.Symbol;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
 
 namespace LRReader.UWP.Services
@@ -22,8 +23,6 @@ namespace LRReader.UWP.Services
 		private readonly TabsService Tabs;
 
 		private readonly Uri checkUri = new Uri("check:check");
-
-		private readonly Dictionary<Symbols, SymbolIconSource> SymbolToSymbol = new Dictionary<Symbols, SymbolIconSource>();
 
 		private UISettings UISettings;
 
@@ -52,9 +51,11 @@ namespace LRReader.UWP.Services
 
 			MapDialogToType(Dialog.CategoryArchive, typeof(CategoryArchive));
 			MapDialogToType(Dialog.CreateCategory, typeof(CreateCategory));
+			MapDialogToType(Dialog.ProgressConflict, typeof(ProgressConflict));
+			MapDialogToType(Dialog.ServerProfile, typeof(ServerProfileDialog));
 
-			SymbolToSymbol.Add(Symbols.Favorite, new SymbolIconSource { Symbol = Symbol.Favorite });
-			SymbolToSymbol.Add(Symbols.Pictures, new SymbolIconSource { Symbol = Symbol.Pictures });
+			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
+			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });
 
 			UISettings = new UISettings();
 
@@ -76,14 +77,6 @@ namespace LRReader.UWP.Services
 
 		public override Task<bool> OpenInBrowser(Uri uri) => Launcher.LaunchUriAsync(uri).AsTask();
 
-		public override object GetSymbol(Symbols symbol)
-		{
-			SymbolIconSource symb;
-			if (!SymbolToSymbol.TryGetValue(symbol, out symb))
-				return null;
-			return symb;
-		}
-
 		public override string GetLocalizedString(string key)
 		{
 			var split = key.Split(new[] { '/' }, 2);
@@ -94,6 +87,14 @@ namespace LRReader.UWP.Services
 		{
 			var dialog = new ContentDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
 			return (IDialogResult)(int)await dialog.ShowAsync();
+		}
+
+		public override void CopyToClipboard(string text)
+		{
+			var dataPackage = new DataPackage();
+			dataPackage.RequestedOperation = DataPackageOperation.Copy;
+			dataPackage.SetText(text);
+			Clipboard.SetContent(dataPackage);
 		}
 
 		public string GetPackageFamilyName() => Package.Current.Id.FamilyName;

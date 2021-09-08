@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace LRReader.Shared.Services
 {
 
-	public enum Symbols
+	public enum Symbol
 	{
 		Favorite, Pictures
 	}
@@ -25,10 +25,22 @@ namespace LRReader.Shared.Services
 		public abstract void Init();
 		public abstract void ChangeTheme(AppTheme theme);
 		public abstract string GetLocalizedString(string key);
-		public abstract object? GetSymbol(Symbols symbol);
 		public abstract Task<bool> OpenInBrowser(Uri uri);
+		public abstract void CopyToClipboard(string text);
 
-		private Dictionary<Dialog, Type> Dialogs = new Dictionary<Dialog, Type>();
+		private readonly Dictionary<Dialog, Type> Dialogs = new Dictionary<Dialog, Type>();
+
+		private readonly Dictionary<Symbol, object> SymbolToSymbol = new Dictionary<Symbol, object>();
+
+		public void MapSymbolToSymbol(Symbol symbol, object backing) => SymbolToSymbol.Add(symbol, backing);
+
+		public object? GetSymbol(Symbol symbol)
+		{
+			object symb;
+			if (!SymbolToSymbol.TryGetValue(symbol, out symb))
+				return null;
+			return symb;
+		}
 
 		public void MapDialogToType(Dialog tab, Type type) => Dialogs.Add(tab, type);
 
@@ -65,12 +77,12 @@ namespace LRReader.Shared.Services
 			return Task.Run(() => false);
 		}
 
-		public override object? GetSymbol(Symbols symbol) => null;
-
 		public override string GetLocalizedString(string key) => key;
 
 		public override void ChangeTheme(AppTheme theme) { }
 
-		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object content) { return Task.Run(() => IDialogResult.None); }
+		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content) { return Task.Run(() => IDialogResult.None); }
+
+		public override void CopyToClipboard(string text) { }
 	}
 }

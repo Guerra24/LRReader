@@ -23,4 +23,21 @@ namespace LRReader.Shared.Models
 		string Query { get; set; }
 		bool Pin { get; set; }
 	}
+
+	public interface ICreateProfileDialog : IDialog
+	{
+		string Name { get; set; }
+		string Address { get; set; }
+		string ApiKey { get; set; }
+	}
+
+	public enum ConflictMode
+	{
+		Local, Remote
+	}
+
+	public interface IProgressConflictDialog : IDialog
+	{
+		ConflictMode Mode { get; set; }
+	}
 }

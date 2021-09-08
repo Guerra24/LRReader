@@ -34,10 +34,10 @@ namespace LRReader.Shared.ViewModels.Base
 		}
 
 		[ICommand]
-		public void OpenTab() => Tabs.OpenTab(Tab.SearchResults, false, Category);
+		private void OpenTab() => Tabs.OpenTab(Tab.SearchResults, false, Category);
 
 		[ICommand]
-		public async Task Edit()
+		private async Task Edit()
 		{
 			var listMode = string.IsNullOrEmpty(Category.search);
 
@@ -85,7 +85,7 @@ namespace LRReader.Shared.ViewModels.Base
 		}
 
 		[ICommand]
-		public async Task Delete()
+		private async Task Delete()
 		{
 			var result = await Platform.OpenGenericDialog(
 					Platform.GetLocalizedString("Dialogs/RemoveCategory/Title").AsFormat(Category.name),

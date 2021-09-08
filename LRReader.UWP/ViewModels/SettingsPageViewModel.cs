@@ -1,10 +1,12 @@
-﻿using LRReader.Shared.Messages;
+﻿#nullable enable
+using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
@@ -14,11 +16,13 @@ using Windows.ApplicationModel.Resources;
 
 namespace LRReader.UWP.ViewModels
 {
-	public class SettingsPageViewModel : ObservableObject
+	public partial class SettingsPageViewModel : ObservableObject
 	{
 		private readonly ImagesService Images;
 		private readonly PlatformService Platform;
 		private readonly UpdatesService Updates;
+		private readonly ApiService Api;
+		private readonly TabsService Tabs;
 
 		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
 
@@ -29,33 +33,17 @@ namespace LRReader.UWP.ViewModels
 		public Version MinVersion => Updates.MIN_VERSION;
 		public Version MaxVersion => Updates.MAX_VERSION;
 
+		[ObservableProperty]
 		private string _shinobuStatusText;
-		public string ShinobuStatusText
-		{
-			get => _shinobuStatusText;
-			set => SetProperty(ref _shinobuStatusText, value);
-		}
-
+		[ObservableProperty]
 		private string _shinobuPid;
-		public string ShinobuPid
-		{
-			get => _shinobuPid;
-			set => SetProperty(ref _shinobuPid, value);
-		}
 
 		public ReleaseInfo ReleaseInfo;
+		[ObservableProperty]
 		private bool _showReleaseInfo;
-		public bool ShowReleaseInfo
-		{
-			get => _showReleaseInfo;
-			set => SetProperty(ref _showReleaseInfo, value);
-		}
+		[ObservableProperty]
 		private ServerInfo _serverInfo;
-		public ServerInfo ServerInfo
-		{
-			get => _serverInfo;
-			set => SetProperty(ref _serverInfo, value);
-		}
+
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
 		private int _sortByIndex = -1;
 		public int SortByIndex
@@ -75,23 +63,22 @@ namespace LRReader.UWP.ViewModels
 			}
 		}
 		public string ThumbnailCacheSize;
+		[ObservableProperty]
 		private bool _progressCache;
-		public bool ProgressCache
-		{
-			get => _progressCache;
-			set => SetProperty(ref _progressCache, value);
-		}
+
 		public MinionJob thumbnailJob;
 
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, UpdatesService updates)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, UpdatesService updates, ApiService api, TabsService tabs)
 		{
 			SettingsManager = settings;
 			Images = images;
 			Platform = platform;
 			Updates = updates;
+			Api = api;
+			Tabs = tabs;
 
 			UpdateReleaseData();
 			foreach (var n in archives.Namespaces)
@@ -105,24 +92,10 @@ namespace LRReader.UWP.ViewModels
 			SetProperty(ref HeifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
 		}
 
-		public async Task RestartWorker()
-		{
-			await ShinobuProvider.RestartWorker();
-		}
-
-		public async Task StopWorker()
-		{
-			await ShinobuProvider.StopWorker();
-		}
 
 		public async Task<DownloadPayload> DownloadDB()
 		{
 			return await DatabaseProvider.BackupJSON();
-		}
-
-		public async Task ClearAllNew()
-		{
-			await DatabaseProvider.ClearAllNew();
 		}
 
 		public async Task UpdateShinobuStatus()
@@ -171,17 +144,6 @@ namespace LRReader.UWP.ViewModels
 			}
 		}
 
-		public async Task ResetSearch()
-		{
-			await SearchProvider.DiscardCache();
-		}
-
-		public async Task RegenThumbnails(bool force)
-		{
-			if (thumbnailJob == null)
-				thumbnailJob = await ArchivesProvider.RegenerateThumbnails(force);
-		}
-
 		public async Task CheckThumbnailJob()
 		{
 			if (thumbnailJob == null)
@@ -208,7 +170,69 @@ namespace LRReader.UWP.ViewModels
 			OnPropertyChanged("ThumbnailCacheSize");
 			ProgressCache = false;
 		}
-		public async Task ClearThumbnailCache()
+
+		[ICommand]
+		private async Task AddProfile()
+		{
+			var dialog = Platform.CreateDialog<ICreateProfileDialog>(Dialog.ServerProfile, false);
+			var result = await dialog.ShowAsync();
+			if (result == IDialogResult.Primary)
+			{
+				var address = dialog.Address;
+				if (!(address.StartsWith("http://") || address.StartsWith("https://")))
+					address = "http://" + address;
+				SettingsManager.AddProfile(dialog.Name, address, dialog.ApiKey);
+			}
+		}
+
+		[ICommand]
+		private async Task EditProfile(ServerProfile profile)
+		{
+			var dialog = Platform.CreateDialog<ICreateProfileDialog>(Dialog.ServerProfile, true);
+			dialog.Name = profile.Name;
+			dialog.Address = profile.ServerAddress;
+			dialog.ApiKey = profile.ServerApiKey;
+			var result = await dialog.ShowAsync();
+			if (result == IDialogResult.Primary)
+			{
+				var address = dialog.Address;
+				if (!(address.StartsWith("http://") || address.StartsWith("https://")))
+					address = "http://" + address;
+				SettingsManager.ModifyProfile(profile.UID, dialog.Name, address, dialog.ApiKey);
+				Api.RefreshSettings(profile);
+			}
+		}
+
+		[ICommand]
+		private void RemoveProfile(ServerProfile profile)
+		{
+			SettingsManager.Profiles.Remove(profile);
+
+			// TODO Change this once profiles page is up
+			SettingsManager.Profile = SettingsManager.Profiles.FirstOrDefault();
+		}
+
+		[ICommand]
+		private async Task RestartWorker() => await ShinobuProvider.RestartWorker();
+
+		[ICommand]
+		private async Task StopWorker() => await ShinobuProvider.StopWorker();
+
+		[ICommand]
+		private async Task ClearAllNew() => await DatabaseProvider.ClearAllNew();
+
+		[ICommand]
+		private async Task ResetSearch() => await SearchProvider.DiscardCache();
+
+		[ICommand]
+		private async Task RegenThumbnails(bool force)
+		{
+			if (thumbnailJob == null)
+				thumbnailJob = await ArchivesProvider.RegenerateThumbnails(force);
+		}
+
+		[ICommand]
+		private async Task ClearThumbnailCache()
 		{
 			if (ProgressCache)
 				return;
@@ -218,5 +242,20 @@ namespace LRReader.UWP.ViewModels
 			OnPropertyChanged("ThumbnailCacheSize");
 			ProgressCache = false;
 		}
+
+		[ICommand]
+		private void OpenUploadArchive() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/upload");
+
+		[ICommand]
+		private void OpenBatchTagging() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/batch");
+
+		[ICommand]
+		private void OpenSettings() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/config");
+
+		[ICommand]
+		private void OpenPlugins() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/config/plugins");
+
+		[ICommand]
+		private void OpenLogs() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/logs");
 	}
 }

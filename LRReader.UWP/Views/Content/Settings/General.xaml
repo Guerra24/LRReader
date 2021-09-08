@@ -27,20 +27,25 @@
 							x:Name="ProfileSelection" MinWidth="120"
 							IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 							ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
+							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}"
 							SelectionChanged="ComboBox_SelectionChanged" />
 					</controls:ModernExpander.Input>
-					<StackPanel Orientation="Horizontal">
-						<Button x:Uid="/Settings/General/AddProfile" Margin="0,0,10,0" Click="ButtonAdd_Click" />
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<Button x:Uid="/Settings/General/AddProfile" Command="{x:Bind Data.AddProfileCommand}" />
 						<Button
-							x:Uid="/Settings/General/EditProfile" Margin="0,0,10,0" Click="ButtonEdit_Click"
+							x:Uid="/Settings/General/EditProfile"
+							Command="{x:Bind Data.EditProfileCommand}"
+							CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
 							IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 						<Button x:Uid="/Settings/General/RemoveProfile">
 							<Button.Flyout>
 								<Flyout x:Name="RemoveFlyout">
-									<StackPanel>
-										<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-										<Button x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
+									<StackPanel Spacing="12">
+										<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Style="{ThemeResource BaseTextBlockStyle}" />
+										<Button
+											x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click"
+											Command="{x:Bind Data.RemoveProfileCommand}"
+											CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}" />
 									</StackPanel>
 								</Flyout>
 							</Button.Flyout>
@@ -104,7 +109,7 @@
 							Width="30" Height="30" Margin="0,0,10,0"
 							VerticalAlignment="Center" IsActive="True"
 							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-						<Button x:Uid="/Settings/General/ClearThumbCache" Click="ButtonClearThumbCache_Click" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+						<Button x:Uid="/Settings/General/ClearThumbCache" Command="{x:Bind Data.ClearThumbnailCacheCommand}" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
 					</StackPanel>
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;">

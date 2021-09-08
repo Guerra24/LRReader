@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Models.Main;
 using System.Collections.Generic;
+using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,9 +22,17 @@ namespace LRReader.UWP.Views.Controls
 			Clipboard.SetContent(dataPackage);
 		}
 
-		private void Tags_ItemClick(object sender, ItemClickEventArgs e) => ItemClick?.Invoke(sender, e);
+		private void Tags_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			if (ItemClickCommand?.CanExecute(e.ClickedItem) ?? false)
+				ItemClickCommand.Execute(e.ClickedItem);
+		}
 
-		public event ItemClickEventHandler ItemClick;
+		public ICommand ItemClickCommand
+		{
+			get => GetValue(ItemClickCommandProperty) as ICommand;
+			set => SetValue(ItemClickCommandProperty, value);
+		}
 
 		public ICollection<ArchiveTagsGroup> ItemsSource
 		{
@@ -32,6 +41,7 @@ namespace LRReader.UWP.Views.Controls
 		}
 
 		public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<ArchiveTagsGroup>), typeof(ArchiveTags), new PropertyMetadata(new List<ArchiveTagsGroup>()));
+		public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(ArchiveTags), new PropertyMetadata(null));
 
 	}
 }

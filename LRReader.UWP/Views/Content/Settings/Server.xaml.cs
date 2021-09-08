@@ -1,5 +1,4 @@
-﻿using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
+﻿using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
@@ -8,7 +7,6 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Content.Settings
@@ -58,20 +56,6 @@ namespace LRReader.UWP.Views.Content.Settings
 			return image;
 		}
 
-		private void UploadArchive_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.Web, Service.Settings.Profile.ServerAddressBrowser + "/upload");
-
-		private void BatchTagging_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.Web, Service.Settings.Profile.ServerAddressBrowser + "/batch");
-
-		private void EditSettings_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.Web, Service.Settings.Profile.ServerAddressBrowser + "/config");
-
-		private void EditPlugins_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.Web, Service.Settings.Profile.ServerAddressBrowser + "/config/plugins");
-
-		private void Logs_Click(object sender, RoutedEventArgs e) => Service.Tabs.OpenTab(Tab.Web, Service.Settings.Profile.ServerAddressBrowser + "/logs");
-
-		private async void RestartWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.RestartWorker();
-
-		private async void StopWorkerButton_Click(object sender, RoutedEventArgs e) => await Data.StopWorker();
-
 		private async void DownloadDBButton_Click(object sender, RoutedEventArgs e)
 		{
 			var download = await Data.DownloadDB();
@@ -105,24 +89,14 @@ namespace LRReader.UWP.Views.Content.Settings
 			}
 		}
 
-		private async void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
+		private void ClearAllNewButton_Click(object sender, RoutedEventArgs e)
 		{
 			ClearNewFlyout.Hide();
-			await Data.ClearAllNew();
 		}
 
-		private async void ResetSearchButton_Click(object sender, RoutedEventArgs e)
-		{
-			var btn = sender as Button;
-			btn.IsEnabled = false;
-			await Data.ResetSearch();
-			btn.IsEnabled = true;
-		}
-
-		private async void RegenThumb_Click(object sender, RoutedEventArgs e)
+		private void RegenThumb_Click(object sender, RoutedEventArgs e)
 		{
 			RegenThumbsFlyout.Hide();
-			await Data.RegenThumbnails((bool)RegenThumbForced.IsChecked);
 		}
 	}
 }

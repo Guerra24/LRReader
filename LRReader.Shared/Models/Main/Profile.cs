@@ -40,6 +40,16 @@ namespace LRReader.Shared.Models.Main
 		{
 			return Name;
 		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is ServerProfile profile && UID.Equals(profile.UID);
+		}
+
+		public override int GetHashCode()
+		{
+			return UID.GetHashCode();
+		}
 	}
 
 	public class BookmarkedArchive : ObservableObject
@@ -59,8 +69,4 @@ namespace LRReader.Shared.Models.Main
 		public bool Bookmarked => totalPages >= 0;
 	}
 
-	public enum ConflictMode
-	{
-		Local, Remote
-	}
 }

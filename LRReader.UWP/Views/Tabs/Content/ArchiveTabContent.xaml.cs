@@ -3,7 +3,6 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.Views.Dialogs;
 using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -13,8 +12,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Storage;
@@ -44,9 +41,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private bool _transition;
 
-		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Tabs");
-		private ResourceLoader dialogs = ResourceLoader.GetForCurrentView("Dialogs");
-
 		private Subject<double> resizePixel = new Subject<double>();
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
@@ -74,21 +68,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!_opened)
 			{
 				await _loadSemaphore.WaitAsync();
-				if (Service.Api.ControlFlags.ProgressTracking && Data.Bookmarked && Data.BookmarkProgress + 1 != Data.Archive.progress && Data.Archive.progress > 0)
-				{
-					var conflictDialog = new ProgressConflict(Data.BookmarkProgress + 1, Data.Archive.progress, Data.Pages);
-					await conflictDialog.ShowAsync();
-					var result = conflictDialog.Mode;
-					switch (result)
-					{
-						case ConflictMode.Local:
-							await Data.SetProgress(Data.BookmarkProgress + 1);
-							break;
-						case ConflictMode.Remote:
-							Data.BookmarkProgress = Data.Archive.progress - 1;
-							break;
-					}
-				}
+				await Data.HandleConflict();
 				_loadSemaphore.Release();
 				if (Service.Settings.OpenReader)
 				{
@@ -213,60 +193,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			Data.ShowReader = false;
 
-			await SaveReaderData();
+			_wasNew = await Data.SaveReaderData(_wasNew);
 
 			_transition = false;
-		}
-
-		private async Task SaveReaderData()
-		{
-			int currentPage = Data.ReaderContent.Page;
-			int count = Data.Pages;
-
-			if (currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
-			{
-				if (Data.Archive.IsNewArchive())
-				{
-					await Data.ClearNew();
-					Data.Archive.isnew = "false";
-				}
-				if (Data.Bookmarked && Service.Settings.RemoveBookmark)
-				{
-					var dialog = new ContentDialog
-					{
-						Title = lang.GetString("Archive/RemoveBookmark/Title"),
-						PrimaryButtonText = lang.GetString("Archive/RemoveBookmark/PrimaryButtonText"),
-						CloseButtonText = lang.GetString("Archive/RemoveBookmark/CloseButtonText")
-					};
-					var result = await dialog.ShowAsync();
-					if (result == ContentDialogResult.Primary)
-						Data.Bookmarked = false;
-				}
-			}
-			else if (!Data.Bookmarked)
-			{
-				var mode = Service.Settings.BookmarkReminderMode;
-				if (Service.Settings.BookmarkReminder &&
-					((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
-				{
-					var dialog = new ContentDialog
-					{
-						Title = lang.GetString("Archive/AddBookmark/Title"),
-						PrimaryButtonText = lang.GetString("Archive/AddBookmark/PrimaryButtonText"),
-						CloseButtonText = lang.GetString("Archive/AddBookmark/CloseButtonText")
-					};
-					var result = await dialog.ShowAsync();
-					if (result == ContentDialogResult.Primary)
-						Data.Bookmarked = true;
-					_wasNew = false;
-				}
-			}
-			if (Data.Bookmarked)
-			{
-				Data.BookmarkProgress = currentPage;
-				if (Service.Api.ControlFlags.ProgressTracking)
-					await Data.SetProgress(currentPage + 1);
-			}
 		}
 
 		private async Task NextArchive()
@@ -275,7 +204,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			if (Data.ShowReader)
 			{
-				await SaveReaderData();
+				_wasNew = await Data.SaveReaderData(_wasNew);
 				if (Service.Platform.AnimationsEnabled)
 					await FadeOut.StartAsync(ScrollViewer);
 				else
@@ -599,43 +528,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.UnHook();
 		}
 
-		private async void Tags_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			var tag = e.ClickedItem as ArchiveTagsGroupTag;
-			if (tag.Namespace.ToLower().Equals("source"))
-			{
-				Uri result;
-				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out result))
-				{
-					var dialog = new ContentDialog
-					{
-						Title = dialogs.GetString("OpenLink/Title"),
-						PrimaryButtonText = dialogs.GetString("OpenLink/PrimaryButtonText"),
-						SecondaryButtonText = dialogs.GetString("OpenLink/SecondaryButtonText"),
-						CloseButtonText = dialogs.GetString("OpenLink/CloseButtonText"),
-						Content = result.AbsoluteUri
-					};
-					var dialogResult = await dialog.ShowAsync();
-					switch (dialogResult)
-					{
-						case ContentDialogResult.Primary:
-							await Service.Platform.OpenInBrowser(result);
-							break;
-						case ContentDialogResult.Secondary:
-							var dataPackage = new DataPackage();
-							dataPackage.RequestedOperation = DataPackageOperation.Copy;
-							dataPackage.SetText(result.AbsoluteUri);
-							Clipboard.SetContent(dataPackage);
-							break;
-					}
-				}
-			}
-			else
-			{
-				Service.Tabs.OpenTab(Tab.SearchResults, tag.FullTag);
-			}
-		}
-
 		private string GetOpenTarget(ReaderImageSet target, int item)
 		{
 			var targetAnim = "openL";
@@ -655,23 +547,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 			}
 			return targetAnim;
-		}
-
-		private async void DeleteButton_Click(object sender, RoutedEventArgs e)
-		{
-			var lang = ResourceLoader.GetForCurrentView("Dialogs");
-			var dialog = new ContentDialog()
-			{
-				Title = lang.GetString("RemoveArchive/Title").AsFormat(Data.Archive.title),
-				Content = lang.GetString("RemoveArchive/Content"),
-				PrimaryButtonText = lang.GetString("RemoveArchive/PrimaryButtonText"),
-				CloseButtonText = lang.GetString("RemoveArchive/CloseButtonText")
-			};
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				await Data.DeleteArchive();
-			}
 		}
 
 	}

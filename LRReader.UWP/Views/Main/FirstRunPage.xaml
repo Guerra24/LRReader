@@ -6,7 +6,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	DataContext="{Binding FirstRunPageInstance, Source={StaticResource Locator}}"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	NavigationCacheMode="Required"
 	mc:Ignorable="d">
 
@@ -22,36 +22,39 @@
 		</Grid.RowDefinitions>
 		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource TitlebarBackground}" />
 		<Grid Grid.Row="1">
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-				<TextBlock
-					x:Uid="/Pages/FirstRunPage/Welcome" Margin="0,0,0,10" HorizontalAlignment="Center"
-					FontSize="28" />
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+				<TextBlock x:Uid="/Pages/FirstRunPage/Welcome" HorizontalAlignment="Center" FontSize="28" />
 				<!--
 				<TextBlock
 					x:Uid="/Pages/FirstRunPage/Setup" Margin="0,0,0,10" HorizontalAlignment="Center"
 					Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 				-->
 				<ComboBox
-					x:Uid="/Pages/FirstRunPage/ProfileSelect" Margin="0,0,0,10" HorizontalAlignment="Stretch"
-					IsEnabled="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay}"
-					ItemsSource="{x:Bind ViewModel.SettingsManager.Profiles, Mode=OneWay}"
-					SelectedItem="{x:Bind ViewModel.SettingsManager.Profile, Mode=TwoWay}" />
-				<StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
-					<Button x:Uid="/Pages/FirstRunPage/Add" Margin="0,0,10,0" Click="ButtonAdd_Click" />
+					x:Uid="/Pages/FirstRunPage/ProfileSelect" HorizontalAlignment="Stretch"
+					IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
+					ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
+					SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}" />
+				<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="10">
+					<Button x:Uid="/Pages/FirstRunPage/Add" Command="{x:Bind Data.AddProfileCommand}" />
 					<Button
-						x:Uid="/Pages/FirstRunPage/Edit" Margin="0,0,10,0" Click="ButtonEdit_Click"
-						IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-					<Button x:Uid="/Pages/FirstRunPage/Remove" Margin="0,0,10,0" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}">
+						x:Uid="/Pages/FirstRunPage/Edit"
+						Command="{x:Bind Data.EditProfileCommand}"
+						CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
+						IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+					<Button x:Uid="/Pages/FirstRunPage/Remove" IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}">
 						<Button.Flyout>
 							<Flyout x:Name="RemoveFlyout">
-								<StackPanel>
-									<TextBlock x:Uid="/Pages/FirstRunPage/RemoveConfirm" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-									<Button x:Uid="/Pages/FirstRunPage/RemoveYes" HorizontalAlignment="Center" Click="ButtonRemove_Click" />
+								<StackPanel Spacing="12">
+									<TextBlock x:Uid="/Pages/FirstRunPage/RemoveConfirm" Style="{ThemeResource BaseTextBlockStyle}" />
+									<Button
+										x:Uid="/Pages/FirstRunPage/RemoveYes" HorizontalAlignment="Center" Click="ButtonRemove_Click"
+										Command="{x:Bind Data.RemoveProfileCommand}"
+										CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}" />
 								</StackPanel>
 							</Flyout>
 						</Button.Flyout>
 					</Button>
-					<Button x:Uid="/Pages/FirstRunPage/Continue" Click="ButtonContinue_Click" IsEnabled="{x:Bind ViewModel.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+					<Button x:Uid="/Pages/FirstRunPage/Continue" Click="ButtonContinue_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
 				</StackPanel>
 			</StackPanel>
 		</Grid>

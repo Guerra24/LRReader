@@ -44,7 +44,7 @@ namespace LRReader.Shared.ViewModels
 		}
 
 		[ICommand]
-		public async Task CategoryClick(Category item)
+		private async Task CategoryClick(Category item)
 		{
 			if (item is AddNewCategory)
 			{
