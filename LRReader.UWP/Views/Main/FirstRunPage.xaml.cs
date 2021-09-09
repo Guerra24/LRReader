@@ -1,9 +1,8 @@
-﻿using LRReader.UWP.ViewModels;
+﻿using LRReader.Shared.Services;
+using LRReader.UWP.ViewModels;
 using Windows.ApplicationModel.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Main
@@ -12,7 +11,6 @@ namespace LRReader.UWP.Views.Main
 	public sealed partial class FirstRunPage : Page
 	{
 		private CoreApplicationView CoreView;
-		private ApplicationView AppView;
 
 		private SettingsPageViewModel Data;
 
@@ -21,7 +19,6 @@ namespace LRReader.UWP.Views.Main
 			this.InitializeComponent();
 
 			CoreView = CoreApplication.GetCurrentView();
-			AppView = ApplicationView.GetForCurrentView();
 			Data = DataContext as SettingsPageViewModel;
 		}
 
@@ -42,6 +39,6 @@ namespace LRReader.UWP.Views.Main
 
 		private void ButtonRemove_Click(object sender, RoutedEventArgs e) => RemoveFlyout.Hide();
 
-		private void ButtonContinue_Click(object sender, RoutedEventArgs e) => (Window.Current.Content as Root).Frame.Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
+		private void ButtonContinue_Click(object sender, RoutedEventArgs e) => Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 	}
 }

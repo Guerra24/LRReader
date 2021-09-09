@@ -16,6 +16,16 @@ namespace LRReader.Shared.Services
 		Generic, CategoryArchive, CreateCategory, Markdown, ProgressConflict, ServerProfile
 	}
 
+	public enum Pages
+	{
+		FirstRun, HostTab, Loading
+	}
+
+	public enum PagesTransition
+	{
+		None, DrillIn
+	}
+
 	public abstract class PlatformService
 	{
 		public abstract Version Version { get; }
@@ -30,17 +40,15 @@ namespace LRReader.Shared.Services
 
 		private readonly Dictionary<Dialog, Type> Dialogs = new Dictionary<Dialog, Type>();
 
-		private readonly Dictionary<Symbol, object> SymbolToSymbol = new Dictionary<Symbol, object>();
+		private readonly Dictionary<Symbol, object> Symbols = new Dictionary<Symbol, object>();
 
-		public void MapSymbolToSymbol(Symbol symbol, object backing) => SymbolToSymbol.Add(symbol, backing);
+		private readonly Dictionary<Pages, Type> Pages = new Dictionary<Pages, Type>();
 
-		public object? GetSymbol(Symbol symbol)
-		{
-			object symb;
-			if (!SymbolToSymbol.TryGetValue(symbol, out symb))
-				return null;
-			return symb;
-		}
+		private readonly Dictionary<PagesTransition, Type> Transitions = new Dictionary<PagesTransition, Type>();
+
+		public void MapSymbolToSymbol(Symbol symbol, object backing) => Symbols.Add(symbol, backing);
+
+		public object GetSymbol(Symbol symbol) => Symbols[symbol];
 
 		public void MapDialogToType(Dialog tab, Type type) => Dialogs.Add(tab, type);
 
@@ -57,14 +65,22 @@ namespace LRReader.Shared.Services
 		public D CreateDialog<D>(Dialog dialog, params object?[] args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args);
 
 		public abstract Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null);
+
+		public void MapPageToType(Pages page, Type type) => Pages.Add(page, type);
+
+		public abstract void GoToPage(Pages page, PagesTransition transition, object? parameter = null);
+
+		public Type GetPage(Pages page) => Pages[page];
+
+		public void MapTransitionToType(PagesTransition transition, Type type) => Transitions.Add(transition, type);
+
+		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition]);
 	}
 
 	public class StubPlatformService : PlatformService
 	{
 
-		public override void Init()
-		{
-		}
+		public override void Init() { }
 
 		public override Version Version => new Version(0, 0, 0, 0);
 
@@ -84,5 +100,7 @@ namespace LRReader.Shared.Services
 		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content) { return Task.Run(() => IDialogResult.None); }
 
 		public override void CopyToClipboard(string text) { }
+
+		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) { }
 	}
 }

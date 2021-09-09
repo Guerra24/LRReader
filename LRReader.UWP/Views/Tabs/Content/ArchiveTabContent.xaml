@@ -137,8 +137,12 @@
 		</Grid>
 		<Button
 			x:Uid="/Generic/RetryBtn" Grid.Row="1" HorizontalAlignment="Center"
-			Click="RefreshButton_Click"
-			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+			Command="{x:Bind Data.ReloadCommand}"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" >
+			<Button.CommandParameter>
+				<x:Boolean>True</x:Boolean>
+			</Button.CommandParameter>
+		</Button>
 		<muxc:ProgressRing
 			Grid.Row="1" Width="80" Height="80"
 			Background="#4B000000" IsActive="True"

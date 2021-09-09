@@ -3,8 +3,6 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Controls;
-using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Linq;
@@ -43,14 +41,13 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private void ButtonRemove_Click(object sender, RoutedEventArgs e) => RemoveFlyout.Hide();
 
-		// TODO Fix this or move to VM layer
 		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
 			if (profile == null)
 			{
 				Service.Tabs.CloseAllTabs();
-				(Window.Current.Content as Root).Frame.Navigate(typeof(FirstRunPage), null, new DrillInNavigationTransitionInfo());
+				Service.Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
 				return;
 			}
 			if (profile == Data.SettingsManager.Profile)
@@ -67,7 +64,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			{
 				Data.SettingsManager.Profile = profile;
 				Service.Tabs.CloseAllTabs();
-				(Window.Current.Content as Root).Frame.Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
+				Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 			}
 			else
 			{

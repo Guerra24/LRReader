@@ -3,7 +3,6 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
-using LRReader.UWP.Views.Main;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using System;
@@ -17,8 +16,6 @@ using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Animation;
-using Archive = LRReader.Shared.Models.Main.Archive;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
@@ -26,7 +23,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class Bookmarks : UserControl
 	{
-		private BookmarksTabViewModel Data;
+		public BookmarksTabViewModel Data;
 
 		private ResourceLoader lang;
 
@@ -39,25 +36,21 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			await Data.Refresh();
+			await Data.Reload();
 		}
-
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Archives.OpenTab(e.ClickedItem as Archive);
-
-		private async void Button_Click(object sender, RoutedEventArgs e) => await Data.Refresh();
 
 		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
 		{
 			using (var deferral = args.GetDeferral())
 			{
-				await Data.Refresh(false);
+				await Data.Reload(false);
 			}
 		}
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			args.Handled = true;
-			await Data.Refresh();
+			await Data.Reload();
 		}
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -66,8 +59,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (item.Parallax != null && item.Parallax.Source == null)
 					item.Parallax.Source = ArchivesGrid;
 		}
-
-		public async void Refresh() => await Data.Refresh();
 
 		public async void ExportBookmarks()
 		{
@@ -131,7 +122,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 					Service.Settings.Profile.Bookmarks = bookmarks;
 					Service.Settings.SaveProfiles();
 					Service.Tabs.CloseAllTabs();
-					(Window.Current.Content as Frame).Navigate(typeof(LoadingPage), null, new DrillInNavigationTransitionInfo());
+					Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 				}
 			}
 		}

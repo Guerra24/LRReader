@@ -10,11 +10,6 @@ namespace LRReader.UWP.Views.Tabs
 			this.InitializeComponent();
 		}
 
-		private void RefreshButton_Click(object sender, RoutedEventArgs e)
-		{
-			TabContent.Refresh();
-		}
-
 		private void ExportButton_Click(object sender, RoutedEventArgs e)
 		{
 			TabContent.ExportBookmarks();

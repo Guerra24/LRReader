@@ -19,7 +19,10 @@
 	</muxc:TabViewItem.IconSource>
 	<controls:ModernTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal" Spacing="2">
-			<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
+			<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}">
+				<Button.CommandParameter>
+					<x:Boolean>True</x:Boolean>
+				</Button.CommandParameter>
 				<Viewbox MaxWidth="16" MaxHeight="16">
 					<SymbolIcon Symbol="Refresh" />
 				</Viewbox>

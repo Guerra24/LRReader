@@ -27,7 +27,7 @@
 							x:Name="ProfileSelection" MinWidth="120"
 							IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 							ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}"
+							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
 							SelectionChanged="ComboBox_SelectionChanged" />
 					</controls:ModernExpander.Input>
 					<StackPanel Orientation="Horizontal" Spacing="10">

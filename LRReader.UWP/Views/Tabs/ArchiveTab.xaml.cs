@@ -20,10 +20,5 @@ namespace LRReader.UWP.Views.Tabs
 			base.Unload();
 			TabContent.RemoveEvent();
 		}
-
-		private void RefreshButton_Click(object sender, RoutedEventArgs e)
-		{
-			TabContent.Refresh();
-		}
 	}
 }

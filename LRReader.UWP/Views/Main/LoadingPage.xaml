@@ -43,10 +43,10 @@
 							<ColumnDefinition Width="150" />
 							<ColumnDefinition Width="150" />
 						</Grid.ColumnDefinitions>
-						<Button x:Uid="/Pages/LoadingPage/ChangeProfile" HorizontalAlignment="Center" Click="Change_Click" />
+						<Button x:Uid="/Pages/LoadingPage/ChangeProfile" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ChangeCommand}" />
 						<Button
 							x:Uid="/Pages/LoadingPage/Retry" Grid.Column="1" HorizontalAlignment="Center"
-							Click="Retry_Click" />
+							Command="{x:Bind ViewModel.ConnectCommand}" />
 					</Grid>
 				</StackPanel>
 			</Grid>

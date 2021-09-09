@@ -5,6 +5,7 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -190,7 +191,8 @@ namespace LRReader.Shared.ViewModels
 			return _wasNew;
 		}
 
-		public async Task Reload(bool animate)
+		[ICommand]
+		public async Task Reload(bool animate = true)
 		{
 			if (_loading)
 				return;

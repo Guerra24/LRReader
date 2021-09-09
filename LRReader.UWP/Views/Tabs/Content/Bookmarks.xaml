@@ -30,8 +30,8 @@
 			<GridView
 				x:Name="ArchivesGrid"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
+				ext:GridViewExt.ItemClickCommand="{x:Bind Data.BookmarkClickCommand}"
 				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
-				ItemClick="ArchivesGrid_ItemClick"
 				ItemTemplateSelector="{StaticResource BookmarkTemplateSelector}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
@@ -63,8 +63,13 @@
 			FontSize="22"
 			Visibility="{x:Bind Data.Empty, Mode=OneWay}" />
 		<Button
-			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
-			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center"
+			Command="{x:Bind Data.ReloadCommand}"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
+			<Button.CommandParameter>
+				<x:Boolean>True</x:Boolean>
+			</Button.CommandParameter>
+		</Button>
 		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
 	</Grid>
 </UserControl>

@@ -86,7 +86,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.Archive = archive;
 			if (next != null)
 				Data.Group = next;
-			await Data.Reload(true);
+			await Data.Reload();
 			_loadSemaphore.Release();
 		}
 
@@ -514,13 +514,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
-			await Data.Reload(true);
+			await Data.Reload();
 			args.Handled = true;
 		}
-
-		private async void RefreshButton_Click(object sender, RoutedEventArgs e) => await Data.Reload(true);
-
-		public async void Refresh() => await Data.Reload(true);
 
 		public void RemoveEvent()
 		{

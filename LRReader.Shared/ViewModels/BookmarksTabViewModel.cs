@@ -2,30 +2,24 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class BookmarksTabViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
+	public partial class BookmarksTabViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
 	{
 		private readonly SettingsService Settings;
 		private readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
 
+		[ObservableProperty]
 		private bool _loadingArchives = false;
-		public bool LoadingArchives
-		{
-			get => _loadingArchives;
-			set => SetProperty(ref _loadingArchives, value);
-		}
+		[ObservableProperty]
 		private bool _refreshOnErrorButton = false;
-		public bool RefreshOnErrorButton
-		{
-			get => _refreshOnErrorButton;
-			set => SetProperty(ref _refreshOnErrorButton, value);
-		}
+
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
 
 		private bool _internalLoadingArchives;
@@ -40,12 +34,11 @@ namespace LRReader.Shared.ViewModels
 			WeakReferenceMessenger.Default.Register(this);
 		}
 
-		public async Task Refresh()
-		{
-			await Refresh(true);
-		}
+		[ICommand]
+		public void BookmarkClick(Archive archive) => Archives.OpenTab(archive);
 
-		public async Task Refresh(bool animate)
+		[ICommand]
+		public async Task Reload(bool animate = true)
 		{
 			if (_internalLoadingArchives)
 				return;

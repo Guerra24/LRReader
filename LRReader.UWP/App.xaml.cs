@@ -1,9 +1,8 @@
 ﻿using LRReader.Shared.Services;
+using LRReader.UWP.Services;
 using LRReader.UWP.Views;
-using LRReader.UWP.Views.Main;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
-using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -37,9 +36,9 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			Root rootFrame = Window.Current.Content as Root;
+			Root root = Window.Current.Content as Root;
 
-			if (rootFrame == null)
+			if (root == null)
 			{
 				var CoreView = CoreApplication.GetCurrentView();
 				var AppView = ApplicationView.GetForCurrentView();
@@ -50,9 +49,10 @@ namespace LRReader.UWP
 				titleBar.ButtonBackgroundColor = Colors.Transparent;
 				titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
-				rootFrame = new Root();
-				rootFrame.ChangeTheme(Settings.Theme);
-				rootFrame.UpdateThemeColors();
+				root = new Root();
+				root.ChangeTheme(Settings.Theme);
+				root.UpdateThemeColors();
+				(Service.Platform as UWPlatformService).SetRoot(root);
 
 				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");
@@ -63,14 +63,14 @@ namespace LRReader.UWP
 				{
 					//TODO: Load state from previously suspended application
 				}
-				Window.Current.Content = rootFrame;
+				Window.Current.Content = root;
 			}
 
 			if (!e.PrelaunchActivated)
 			{
 				CoreApplication.EnablePrelaunch(true);
-				if (rootFrame.Frame.Content == null)
-					rootFrame.Frame.Navigate(typeof(LoadingPage), e.SplashScreen, new SuppressNavigationTransitionInfo());
+				if (root.FrameContent.Content == null)
+					Service.Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
 				Window.Current.Activate();
 			}
 			else
