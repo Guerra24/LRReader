@@ -2,16 +2,16 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
     <StartupObject>LRReader.Avalonia.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Aura.UI" Version="0.1.3.1" />
-    <PackageReference Include="Avalonia" Version="0.10.2" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.2" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.2" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
-    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.1" />
+    <PackageReference Include="Avalonia" Version="0.10.7" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.7" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0-rc1" />
    </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
@@ -22,5 +22,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Strings\en\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LRReader.UWP\Strings\en\Dialogs.resw" Link="Strings\en\Dialogs.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Generic.resw" Link="Strings\en\Generic.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Items.resw" Link="Strings\en\Items.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Pages.resw" Link="Strings\en\Pages.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Settings.resw" Link="Strings\en\Settings.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Shared.resw" Link="Strings\en\Shared.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Tabs.resw" Link="Strings\en\Tabs.resw" />
+    <None Include="..\LRReader.UWP\Strings\en\Tools.resw" Link="Strings\en\Tools.resw" />
   </ItemGroup>
 </Project>

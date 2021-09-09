@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRReader.Avalonia", "LRReader.Avalonia\LRReader.Avalonia.csproj", "{B67CC0CC-F705-4628-9DBF-C7F96A53F198}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.UWP.Installer", "LRReader.UWP.Installer\LRReader.UWP.Installer.csproj", "{DEDB38AC-6E51-40B8-A419-E8136C525837}"

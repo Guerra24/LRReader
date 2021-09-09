@@ -26,6 +26,11 @@ namespace LRReader.Avalonia
 		{
 		}
 
+		public virtual bool BackRequested()
+		{
+			return false;
+		}
+
 		public static readonly AvaloniaProperty<object> CustomTabControlProperty = AvaloniaProperty.Register<CustomTab, object>("CustomTabControl");
 		public static readonly AvaloniaProperty<string> CustomTabIdProperty = AvaloniaProperty.Register<CustomTab, string>("CustomTabId");
 	}

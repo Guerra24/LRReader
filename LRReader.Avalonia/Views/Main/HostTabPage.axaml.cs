@@ -2,7 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using LRReader.Avalonia.Views.Tabs;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
+using Microsoft.Toolkit.Mvvm.Messaging;
 
 namespace LRReader.Avalonia.Views.Main
 {
@@ -10,13 +12,10 @@ namespace LRReader.Avalonia.Views.Main
 	{
 		private TabsService Data;
 
-		private ResourceLoader lang;
-
 		public HostTabPage()
 		{
 			InitializeComponent();
 			Data = DataContext as TabsService;
-			lang = ResourceLoader.GetForCurrentView("Pages");
 		}
 
 		private void InitializeComponent()
@@ -28,11 +27,11 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			if (Design.IsDesignMode)
 				return;
-			Data.Hook();
+			//WeakReferenceMessenger.Default.Register(this);
 
 			await Service.Dispatcher.RunAsync(() =>
 			{
-				Data.AddTab(new ArchivesTab());
+				Data.OpenTab(Tab.Archives);
 				/*if (Settings.OpenBookmarksTab)
 					Data.AddTab(new BookmarksTab(), false);
 				if (Api.ControlFlags.CategoriesEnabled)
@@ -45,7 +44,7 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			if (Design.IsDesignMode)
 				return;
-			Data.UnHook();
+			//WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
 	}
 }

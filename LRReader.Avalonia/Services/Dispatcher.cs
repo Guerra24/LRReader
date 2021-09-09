@@ -12,6 +12,14 @@ namespace LRReader.Avalonia.Services
 
 		public void Init() => Dispatcher = Dispatcher.UIThread;
 
+		public bool Run(Action action, int priority = 0)
+		{
+			action.Invoke();
+			return true;
+		}
+
 		public Task RunAsync(Action action) => Dispatcher.InvokeAsync(action);
+
+		public Task RunAsync(Action action, int priority = 0) => Dispatcher.InvokeAsync(action);
 	}
 }

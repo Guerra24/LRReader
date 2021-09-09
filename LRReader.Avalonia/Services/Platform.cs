@@ -1,38 +1,67 @@
-﻿using LRReader.Avalonia.Views.Tabs;
+﻿using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using LRReader.Avalonia.Views.Main;
+using LRReader.Avalonia.Views.Tabs;
+using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using System;
 using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {
-	class AvaloniaPlatformService : IPlatformService
+	class AvaloniaPlatformService : PlatformService
 	{
 		private readonly TabsService Tabs;
 
 		public AvaloniaPlatformService(TabsService tabs)
 		{
 			Tabs = tabs;
+
+			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
+			MapPageToType(Pages.HostTab, typeof(HostTabPage));
+			MapPageToType(Pages.Loading, typeof(LoadingPage));
 		}
 
-		public void Init()
+		public override void Init()
 		{
 			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
 		}
 
-		public Version GetVersion()
+		public override Version Version => throw new NotImplementedException();
+
+		public override bool AnimationsEnabled => throw new NotImplementedException();
+
+		public override uint HoverTime => throw new NotImplementedException();
+
+		public override void ChangeTheme(AppTheme theme)
 		{
-			return new Version(0, 0, 0, 0);
+			throw new NotImplementedException();
 		}
 
-		public Task<bool> OpenInBrowser(Uri uri)
+		public override void CopyToClipboard(string text)
 		{
-			return Task.Run(() => false);
+			throw new NotImplementedException();
 		}
 
-		public object GetSymbol(Symbols symbol)
+		public override string GetLocalizedString(string key)
 		{
-			return null;
+			var split = key.Split(new[] { '/' }, 2);
+			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
+		public override void GoToPage(Pages page, PagesTransition transition, object parameter = null)
+		{
+			(Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow.Content = Activator.CreateInstance(GetPage(page));
+		}
+
+		public override Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object content = null)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override Task<bool> OpenInBrowser(Uri uri)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -27,5 +27,7 @@ namespace LRReader.Avalonia.Services
 		public Task StoreFile(string path, string content) => File.WriteAllTextAsync(path, content);
 
 		public Task StoreFile(string path, byte[] content) => File.WriteAllBytesAsync(path, content);
+
+		public Task StoreFileSafe(string path, string content) => File.WriteAllTextAsync(path, content); // TODO Implement this
 	}
 }
