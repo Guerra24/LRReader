@@ -156,9 +156,6 @@
   <data name="AboutPage.Title" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="General.AddProfile.Content" xml:space="preserve">
-    <value>Add </value>
-  </data>
   <data name="General.App.Title" xml:space="preserve">
     <value>App</value>
   </data>
@@ -192,9 +189,6 @@
   <data name="General.CrashReport.Title" xml:space="preserve">
     <value>Collect error and crash logs</value>
   </data>
-  <data name="General.EditProfile.Content" xml:space="preserve">
-    <value>Edit</value>
-  </data>
   <data name="General.ExpanderProfile.Title" xml:space="preserve">
     <value>Profile</value>
   </data>
@@ -206,15 +200,6 @@
   </data>
   <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
     <value>Select Profile</value>
-  </data>
-  <data name="General.RemoveProfile.Content" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-  <data name="General.RemoveProfileNotice.Text" xml:space="preserve">
-    <value>Selected profile will be removed. Do you want to continue?</value>
-  </data>
-  <data name="General.RemoveProfileYes.Content" xml:space="preserve">
-    <value>Yes, remove select profile</value>
   </data>
   <data name="General.Search.Title" xml:space="preserve">
     <value>Search</value>
@@ -488,5 +473,32 @@
   </data>
   <data name="Updates.AutoUpdates.Title" xml:space="preserve">
     <value>Auto updates</value>
+  </data>
+  <data name="Profiles.AddProfile.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Profiles.Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Profiles.Edit.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Profiles.RemoveDialog.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Content" xml:space="preserve">
+    <value>Do you want to remove "{0}"?</value>
+  </data>
+  <data name="Profiles.RemoveDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Title" xml:space="preserve">
+    <value>Remove profile</value>
+  </data>
+  <data name="Reader.NextArchive.Description" xml:space="preserve">
+    <value>Switch to next archive at the end</value>
+  </data>
+  <data name="Reader.NextArchive.Title" xml:space="preserve">
+    <value>Open next archive</value>
   </data>
 </root>

@@ -173,7 +173,7 @@ namespace LRReader.Shared.Services
 		}
 		public bool ScrollToChangePage
 		{
-			get => SettingsStorage.GetObjectRoamed("ScrollToChangePage", true);
+			get => SettingsStorage.GetObjectRoamed("ScrollToChangePage", false);
 			set => SettingsStorage.StoreObjectRoamed("ScrollToChangePage", value);
 		}
 		public bool UseReaderBackground
@@ -194,6 +194,11 @@ namespace LRReader.Shared.Services
 		{
 			get => SettingsStorage.GetObjectLocal("AutoUpdate", true);
 			set => SettingsStorage.StoreObjectLocal("AutoUpdate", value);
+		}
+		public bool OpenNextArchive
+		{
+			get => SettingsStorage.GetObjectRoamed("OpenNextArchive", true);
+			set => SettingsStorage.StoreObjectRoamed("OpenNextArchive", value);
 		}
 
 		public static readonly int CurrentLocalVersion = 4;

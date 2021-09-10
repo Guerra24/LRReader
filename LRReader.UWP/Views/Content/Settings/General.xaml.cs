@@ -9,7 +9,6 @@ using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -38,8 +37,6 @@ namespace LRReader.UWP.Views.Content.Settings
 		}
 
 		private async void PivotItem_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateThumbnailCacheSize();
-
-		private void ButtonRemove_Click(object sender, RoutedEventArgs e) => RemoveFlyout.Hide();
 
 		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -86,6 +83,5 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			(sender as ToggleSwitch).IsOn = await Crashes.IsEnabledAsync();
 		}
-
 	}
 }

@@ -4,8 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
+	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	NavigationCacheMode="Required"
 	mc:Ignorable="d">
@@ -16,47 +18,115 @@
 	</Page.Resources>
 
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<Grid x:Name="TitleBar" Height="32" Background="{ThemeResource TitlebarBackground}" />
-		<Grid Grid.Row="1">
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-				<TextBlock x:Uid="/Pages/FirstRunPage/Welcome" HorizontalAlignment="Center" FontSize="28" />
-				<!--
-				<TextBlock
-					x:Uid="/Pages/FirstRunPage/Setup" Margin="0,0,0,10" HorizontalAlignment="Center"
-					Visibility="{x:Bind ViewModel.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-				-->
-				<ComboBox
-					x:Uid="/Pages/FirstRunPage/ProfileSelect" HorizontalAlignment="Stretch"
-					IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
-					ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-					SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=TwoWay}" />
-				<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="10">
-					<Button x:Uid="/Pages/FirstRunPage/Add" Command="{x:Bind Data.AddProfileCommand}" />
-					<Button
-						x:Uid="/Pages/FirstRunPage/Edit"
-						Command="{x:Bind Data.EditProfileCommand}"
-						CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-						IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-					<Button x:Uid="/Pages/FirstRunPage/Remove" IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}">
-						<Button.Flyout>
-							<Flyout x:Name="RemoveFlyout">
-								<StackPanel Spacing="12">
-									<TextBlock x:Uid="/Pages/FirstRunPage/RemoveConfirm" Style="{ThemeResource BaseTextBlockStyle}" />
-									<Button
-										x:Uid="/Pages/FirstRunPage/RemoveYes" HorizontalAlignment="Center" Click="ButtonRemove_Click"
-										Command="{x:Bind Data.RemoveProfileCommand}"
-										CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}" />
-								</StackPanel>
-							</Flyout>
-						</Button.Flyout>
-					</Button>
-					<Button x:Uid="/Pages/FirstRunPage/Continue" Click="ButtonContinue_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition Height="16" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Image
+					x:Name="Splash" Width="94" HorizontalAlignment="Right"
+					VerticalAlignment="Bottom" Source="/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+				<StackPanel Grid.Row="2" HorizontalAlignment="Right">
+					<TextBlock x:Uid="/Pages/FirstRunPage/Welcome" HorizontalAlignment="Right" FontSize="28" />
+					<TextBlock x:Uid="/Pages/FirstRunPage/Continue" FontSize="16" Visibility="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}" />
+					<TextBlock x:Uid="/Pages/FirstRunPage/Create" FontSize="16" Visibility="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 				</StackPanel>
-			</StackPanel>
+			</Grid>
+			<Border
+				Grid.Column="1" Margin="16,0"
+				BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+				BorderThickness="1" />
+			<ScrollViewer x:Name="ScrollViewer" Grid.Column="2" Margin="0,32,0,0">
+				<StackPanel
+					Grid.Column="2"
+					Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+					MaxWidth="500" Padding="0,16,16,16" HorizontalAlignment="Left"
+					VerticalAlignment="Center" Spacing="3">
+					<Button
+						x:Uid="/Settings/Profiles/AddProfile"
+						Padding="{StaticResource ExpanderHeaderPadding}"
+						HorizontalAlignment="Stretch"
+						Background="{ThemeResource ExpanderHeaderBackground}"
+						BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+						BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
+						Command="{x:Bind Data.AddProfileCommand}"
+						CornerRadius="{ThemeResource ControlCornerRadius}">
+						<FontIcon
+							Margin="0,16" HorizontalAlignment="Center"
+							FontFamily="{StaticResource SymbolThemeFontFamily}"
+							Glyph="&#xE710;" />
+					</Button>
+					<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}">
+						<muxc:ItemsRepeater.Layout>
+							<muxc:StackLayout DisableVirtualization="True" Spacing="3" />
+						</muxc:ItemsRepeater.Layout>
+						<muxc:ItemsRepeater.ItemTemplate>
+							<DataTemplate x:DataType="items:ServerProfile">
+								<Button
+									Padding="{StaticResource ExpanderHeaderPadding}"
+									HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+									Background="{ThemeResource ExpanderHeaderBackground}"
+									BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+									BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
+									Command="{Binding SettingsPageInstance.ContinueProfileCommand, Source={StaticResource Locator}}"
+									CommandParameter="{x:Bind}"
+									CornerRadius="{ThemeResource ControlCornerRadius}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition />
+											<ColumnDefinition MaxWidth="400" />
+										</Grid.ColumnDefinitions>
+										<FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77b;" />
+										<StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
+											<TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+											<TextBlock FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ServerAddress, Mode=OneWay}" />
+										</StackPanel>
+										<StackPanel
+											Grid.Column="2" Margin="0,0,16,0" HorizontalAlignment="Right"
+											Orientation="Horizontal" Spacing="16">
+											<Button
+												Grid.Column="2" Padding="6,8" Background="Transparent"
+												BorderBrush="Transparent">
+												<Button.Flyout>
+													<MenuFlyout Placement="Bottom">
+														<MenuFlyoutItem
+															x:Uid="/Settings/Profiles/Edit"
+															Command="{Binding SettingsPageInstance.EditProfileCommand, Source={StaticResource Locator}}"
+															CommandParameter="{x:Bind}"
+															Icon="Edit" />
+														<MenuFlyoutItem
+															x:Uid="/Settings/Profiles/Delete"
+															Command="{Binding SettingsPageInstance.RemoveProfileCommand, Source={StaticResource Locator}}"
+															CommandParameter="{x:Bind}"
+															Icon="Delete" />
+													</MenuFlyout>
+												</Button.Flyout>
+												<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
+													<FontIcon.RenderTransform>
+														<RotateTransform Angle="90" CenterX="8" CenterY="8" />
+													</FontIcon.RenderTransform>
+												</FontIcon>
+											</Button>
+											<FontIcon
+												HorizontalAlignment="Right" VerticalAlignment="Center"
+												FontFamily="{StaticResource SymbolThemeFontFamily}"
+												FontSize="14" Glyph="&#xE76C;" />
+										</StackPanel>
+									</Grid>
+								</Button>
+							</DataTemplate>
+						</muxc:ItemsRepeater.ItemTemplate>
+					</muxc:ItemsRepeater>
+				</StackPanel>
+			</ScrollViewer>
 		</Grid>
 	</Grid>
 </Page>

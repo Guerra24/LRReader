@@ -117,29 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FirstRunPage.Add.Content" xml:space="preserve">
-    <value>Add</value>
+  <data name="FirstRunPage.Continue.Text" xml:space="preserve">
+    <value>Click on a profile to continue</value>
   </data>
-  <data name="FirstRunPage.Continue.Content" xml:space="preserve">
-    <value>Continue</value>
-  </data>
-  <data name="FirstRunPage.Edit.Content" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="FirstRunPage.ProfileSelect.PlaceholderText" xml:space="preserve">
-    <value>Select Profile</value>
-  </data>
-  <data name="FirstRunPage.Remove.Content" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-  <data name="FirstRunPage.RemoveConfirm.Text" xml:space="preserve">
-    <value>Selected profile will be removed. Do you want to continue?</value>
-  </data>
-  <data name="FirstRunPage.RemoveYes.Content" xml:space="preserve">
-    <value>Yes, remove select profile</value>
-  </data>
-  <data name="FirstRunPage.Setup.Text" xml:space="preserve">
-    <value />
+  <data name="FirstRunPage.Create.Text" xml:space="preserve">
+    <value>Create a profile to continue</value>
   </data>
   <data name="FirstRunPage.Welcome.Text" xml:space="preserve">
     <value>Welcome</value>

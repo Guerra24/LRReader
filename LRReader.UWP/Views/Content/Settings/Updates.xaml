@@ -16,7 +16,7 @@
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</Page.Resources>
 
-	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
 				<controls:ModernInput x:Uid="/Settings/Updates/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">

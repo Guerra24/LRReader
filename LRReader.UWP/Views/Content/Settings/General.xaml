@@ -18,47 +18,24 @@
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</Page.Resources>
 
-	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/General/Connection">
-				<controls:ModernExpander x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE779;">
-					<controls:ModernExpander.Input>
-						<ComboBox
-							x:Name="ProfileSelection" MinWidth="120"
-							IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
-							ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-							SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-							SelectionChanged="ComboBox_SelectionChanged" />
-					</controls:ModernExpander.Input>
-					<StackPanel Orientation="Horizontal" Spacing="10">
-						<Button x:Uid="/Settings/General/AddProfile" Command="{x:Bind Data.AddProfileCommand}" />
-						<Button
-							x:Uid="/Settings/General/EditProfile"
-							Command="{x:Bind Data.EditProfileCommand}"
-							CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-							IsEnabled="{x:Bind Data.SettingsManager.Profile, Mode=OneWay, Converter={StaticResource NullToBooleanConverter}}" />
-						<Button x:Uid="/Settings/General/RemoveProfile">
-							<Button.Flyout>
-								<Flyout x:Name="RemoveFlyout">
-									<StackPanel Spacing="12">
-										<TextBlock x:Uid="/Settings/General/RemoveProfileNotice" Style="{ThemeResource BaseTextBlockStyle}" />
-										<Button
-											x:Uid="/Settings/General/RemoveProfileYes" HorizontalAlignment="Center" Click="ButtonRemove_Click"
-											Command="{x:Bind Data.RemoveProfileCommand}"
-											CommandParameter="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}" />
-									</StackPanel>
-								</Flyout>
-							</Button.Flyout>
-						</Button>
-					</StackPanel>
-				</controls:ModernExpander>
-				<!--<controls:ModernInput
+				<controls:ModernInput x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE748;">
+					<ComboBox
+						x:Name="ProfileSelection" MinWidth="120"
+						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
+						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
+						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
+						SelectionChanged="ComboBox_SelectionChanged" />
+				</controls:ModernInput>
+				<controls:ModernInput
 					x:Uid="/Settings/ProfilesPage" Click="PageButton_Click" Glyph="&#xE716;"
 					IsButton="True" RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Settings/ProfilesPage" Page="local:Profiles" />
 					</controls:ModernInput.Tag>
-				</controls:ModernInput>-->
+				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
 				<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">

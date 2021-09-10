@@ -2,12 +2,83 @@
 	x:Class="LRReader.UWP.Views.Content.Settings.Profiles"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	x:Name="Root"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
-	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
-		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center" />
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel
+			Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}"
+			MaxWidth="1000" HorizontalAlignment="Center" Spacing="3">
+			<Button
+				x:Uid="/Settings/Profiles/AddProfile"
+				Padding="{StaticResource ExpanderHeaderPadding}"
+				HorizontalAlignment="Stretch"
+				Background="{ThemeResource ExpanderHeaderBackground}"
+				BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+				BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
+				Command="{x:Bind Data.AddProfileCommand}"
+				CornerRadius="{ThemeResource ControlCornerRadius}">
+				<FontIcon
+					Margin="0,16" HorizontalAlignment="Center"
+					FontFamily="{StaticResource SymbolThemeFontFamily}"
+					Glyph="&#xE710;" />
+			</Button>
+			<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}">
+				<muxc:ItemsRepeater.Layout>
+					<muxc:StackLayout DisableVirtualization="True" Spacing="3" />
+				</muxc:ItemsRepeater.Layout>
+				<muxc:ItemsRepeater.ItemTemplate>
+					<DataTemplate x:DataType="items:ServerProfile">
+						<Grid
+							Padding="{StaticResource ExpanderHeaderPadding}"
+							Background="{ThemeResource ExpanderHeaderBackground}"
+							BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+							BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
+							CornerRadius="{ThemeResource ControlCornerRadius}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+								<ColumnDefinition MaxWidth="400" />
+							</Grid.ColumnDefinitions>
+							<FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77b;" />
+							<StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
+								<TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+								<TextBlock FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ServerAddress, Mode=OneWay}" />
+							</StackPanel>
+							<Button
+								Grid.Column="2" Margin="0,0,16,0" Padding="6,8"
+								HorizontalAlignment="Right">
+								<Button.Flyout>
+									<MenuFlyout Placement="Bottom">
+										<MenuFlyoutItem
+											x:Uid="/Settings/Profiles/Edit"
+											Command="{Binding SettingsPageInstance.EditProfileCommand, Source={StaticResource Locator}}"
+											CommandParameter="{x:Bind}"
+											Icon="Edit" />
+										<MenuFlyoutItem
+											x:Uid="/Settings/Profiles/Delete"
+											Command="{Binding SettingsPageInstance.RemoveProfileCommand, Source={StaticResource Locator}}"
+											CommandParameter="{x:Bind}"
+											Icon="Delete" />
+									</MenuFlyout>
+								</Button.Flyout>
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
+									<FontIcon.RenderTransform>
+										<RotateTransform Angle="90" CenterX="8" CenterY="8" />
+									</FontIcon.RenderTransform>
+								</FontIcon>
+							</Button>
+						</Grid>
+					</DataTemplate>
+				</muxc:ItemsRepeater.ItemTemplate>
+			</muxc:ItemsRepeater>
+		</StackPanel>
 	</ScrollViewer>
 </Page>

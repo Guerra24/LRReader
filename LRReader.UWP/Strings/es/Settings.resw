@@ -156,9 +156,6 @@
   <data name="AboutPage.Title" xml:space="preserve">
     <value>Acerca de</value>
   </data>
-  <data name="General.AddProfile.Content" xml:space="preserve">
-    <value>Agregar</value>
-  </data>
   <data name="General.App.Title" xml:space="preserve">
     <value>Aplicación</value>
   </data>
@@ -192,9 +189,6 @@
   <data name="General.CrashReport.Title" xml:space="preserve">
     <value>Recopilar datos de los errores y fallos</value>
   </data>
-  <data name="General.EditProfile.Content" xml:space="preserve">
-    <value>Editar</value>
-  </data>
   <data name="General.ExpanderProfile.Title" xml:space="preserve">
     <value>Perfil</value>
   </data>
@@ -206,15 +200,6 @@
   </data>
   <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
     <value>Seleccionar perfil</value>
-  </data>
-  <data name="General.RemoveProfile.Content" xml:space="preserve">
-    <value>Eliminar</value>
-  </data>
-  <data name="General.RemoveProfileNotice.Text" xml:space="preserve">
-    <value>Se eliminará el perfil seleccionado. ¿Quieres continuar?</value>
-  </data>
-  <data name="General.RemoveProfileYes.Content" xml:space="preserve">
-    <value>Sí, eliminar el perfil seleccionado</value>
   </data>
   <data name="General.Search.Title" xml:space="preserve">
     <value>Buscar</value>
@@ -485,5 +470,26 @@
   </data>
   <data name="FeedbackPage.Description" xml:space="preserve">
     <value>Cambios y solicitudes de características</value>
+  </data>
+  <data name="Profiles.AddProfile.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="Profiles.Delete.Text" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="Profiles.Edit.Text" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Profiles.RemoveDialog.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Content" xml:space="preserve">
+    <value>¿Quiere eliminar "{0}"?</value>
+  </data>
+  <data name="Profiles.RemoveDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Title" xml:space="preserve">
+    <value>Eliminar perfil</value>
   </data>
 </root>

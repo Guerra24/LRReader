@@ -79,6 +79,7 @@
 				</GridView.Header>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind Data.ShowReader, Converter={StaticResource NegateBool}}" />
+					<KeyboardAccelerator Key="N" Invoked="Next_Invoked" IsEnabled="{x:Bind Data.ShowReader, Converter={StaticResource NegateBool}}" />
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>

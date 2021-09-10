@@ -9,7 +9,7 @@
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
-	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
 				<controls:ModernExpander Title="LRReader" IsExpanded="True">

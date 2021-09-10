@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
@@ -204,12 +205,22 @@ namespace LRReader.UWP.ViewModels
 		}
 
 		[ICommand]
-		private void RemoveProfile(ServerProfile profile)
+		private async Task RemoveProfile(ServerProfile profile)
 		{
-			SettingsManager.Profiles.Remove(profile);
+			var result = await Platform.OpenGenericDialog(
+				Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Title"),
+				Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/PrimaryButtonText"),
+				closebutton: Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/CloseButtonText"),
+				content: Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Content").AsFormat(profile.Name));
+			if (result == IDialogResult.Primary)
+				SettingsManager.Profiles.Remove(profile);
+		}
 
-			// TODO Change this once profiles page is up
-			SettingsManager.Profile = SettingsManager.Profiles.FirstOrDefault();
+		[ICommand]
+		private void ContinueProfile(ServerProfile profile)
+		{
+			SettingsManager.Profile = profile;
+			Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 		}
 
 		[ICommand]

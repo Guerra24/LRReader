@@ -15,9 +15,12 @@
 		<internal:EnumToInt x:Key="EnumToInt" />
 	</Page.Resources>
 
-	<ScrollViewer x:Name="ScrollViewer" Padding="10,0" VerticalScrollBarVisibility="Auto">
+	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
+				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
+				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch">
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -40,12 +43,6 @@
 						MinWidth="120" Minimum="1" SmallChange="20"
 						SpinButtonPlacementMode="Inline"
 						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xE8A0;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
@@ -76,6 +73,12 @@
 					</controls:ModernExpander.Input>
 					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
 				</controls:ModernExpander>
+				<controls:ModernInput x:Uid="/Settings/Reader/NextArchive" Glyph="&#xE761;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenNextArchive, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
+				</controls:ModernInput>
 				<controls:ModernExpander x:Uid="/Settings/Reader/CustomBackground" Glyph="&#xE790;">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseReaderBackground, Mode=TwoWay}" />

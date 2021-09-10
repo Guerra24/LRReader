@@ -210,6 +210,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 				else
 					ScrollViewer.SetVisualOpacity(0);
 			}
+			else
+			{
+				if (Service.Platform.AnimationsEnabled)
+					await ImagesGrid.FadeOutAsync();
+				else
+					ImagesGrid.SetVisualOpacity(0);
+			}
 			await Data.NextArchive();
 			if (Data.ShowReader)
 			{
@@ -227,6 +234,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 					ScrollViewer.SetVisualOpacity(1);
 				FocusReader();
 			}
+			else
+			{
+				if (Service.Platform.AnimationsEnabled)
+					await ImagesGrid.FadeInAsync();
+				else
+					ImagesGrid.SetVisualOpacity(1);
+			}
+		}
+
+		private async void Next_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			args.Handled = true;
+			await NextArchive();
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -411,7 +431,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task GoRight()
 		{
-			if (Data.ReaderContent.Page + 1 >= Data.Pages)
+			if (Service.Settings.OpenNextArchive && Data.ReaderContent.Page + 1 >= Data.Pages)
 			{
 				await NextArchive();
 				return;
