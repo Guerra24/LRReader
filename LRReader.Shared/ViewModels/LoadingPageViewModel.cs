@@ -29,6 +29,8 @@ namespace LRReader.Shared.ViewModels
 		private double _progress;
 		[ObservableProperty]
 		private bool _retry;
+		[ObservableProperty]
+		private bool _animate;
 
 		public LoadingPageViewModel(SettingsService settings, PlatformService platform, ApiService api, ArchivesService archives, UpdatesService updates, ISettingsStorageService settingsStorage)
 		{
@@ -43,6 +45,7 @@ namespace LRReader.Shared.ViewModels
 		private async Task Reload()
 		{
 			Active = false;
+			Animate = true;
 			await Task.Delay(TimeSpan.FromSeconds(5));
 			Status = "";
 			StatusSub = "";
@@ -51,6 +54,7 @@ namespace LRReader.Shared.ViewModels
 
 		public async Task Startup()
 		{
+			Animate = false;
 			await Service.InitServices();
 			if (Updates.CanAutoUpdate() && Updates.AutoUpdate)
 			{
@@ -74,13 +78,15 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 
-			bool firstRun = Settings.Profile == null;
+			bool firstRun = Settings.Profile == null || (!Settings.AutoLogin && Settings.FirstStartup);
 			if (firstRun)
 			{
+				Animate = true;
 				await Task.Delay(TimeSpan.FromMilliseconds(500));
 				Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
 				return;
 			}
+			Settings.FirstStartup = false;
 
 			Active = true;
 #if !DEBUG
@@ -152,6 +158,7 @@ namespace LRReader.Shared.ViewModels
 			StatusSub = "";
 			Retry = false;
 			Active = false;
+			Animate = true;
 			Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
 		}
 	}

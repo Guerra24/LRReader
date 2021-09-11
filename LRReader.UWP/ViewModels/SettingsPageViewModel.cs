@@ -220,6 +220,7 @@ namespace LRReader.UWP.ViewModels
 		private void ContinueProfile(ServerProfile profile)
 		{
 			SettingsManager.Profile = profile;
+			SettingsManager.FirstStartup = false;
 			Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 		}
 

@@ -6,16 +6,32 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
-			<controls:ModernGroup x:Name="Pages">
+			<controls:ModernGroup>
+				<controls:ModernInput x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE748;">
+					<ComboBox
+						x:Name="ProfileSelection" MinWidth="120"
+						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
+						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
+						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
+						SelectionChanged="ComboBox_SelectionChanged" />
+				</controls:ModernInput>
 				<controls:ModernInput
 					x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"
 					IsButton="True" RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Settings/GeneralPage" Page="local:General" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/ProfilesPage" Click="PageButton_Click" Glyph="&#xE716;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/ProfilesPage" Page="local:Profiles" />
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>
 				<controls:ModernInput

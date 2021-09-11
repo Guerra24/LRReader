@@ -445,7 +445,7 @@
     <value>Version, support, source code</value>
   </data>
   <data name="GeneralPage.Description" xml:space="preserve">
-    <value>Profiles, tabs, search, theme</value>
+    <value>Tabs, search, theme</value>
   </data>
   <data name="ReaderPage.Description" xml:space="preserve">
     <value>Zoom, two pages, bookmarks</value>
@@ -500,5 +500,14 @@
   </data>
   <data name="Reader.NextArchive.Title" xml:space="preserve">
     <value>Open next archive</value>
+  </data>
+  <data name="Profiles.AutoLogin.Title" xml:space="preserve">
+    <value>Connect on startup</value>
+  </data>
+  <data name="Profiles.ProfileGroup.Title" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="ProfilesPage.Description" xml:space="preserve">
+    <value>Connect on startup, edit, remove</value>
   </data>
 </root>

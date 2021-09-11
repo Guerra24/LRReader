@@ -159,6 +159,18 @@
   <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
     <value>Remove Bookmark?</value>
   </data>
+  <data name="Archive.Settings.Button.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reader</value>
+  </data>
+  <data name="Archive.Settings.FitWidth.Text" xml:space="preserve">
+    <value>Fit pages to width</value>
+  </data>
+  <data name="Archive.Settings.RTL.Text" xml:space="preserve">
+    <value>Read right to left</value>
+  </data>
+  <data name="Archive.Settings.TwoPages.Text" xml:space="preserve">
+    <value>Show two pages</value>
+  </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Add All</value>
   </data>

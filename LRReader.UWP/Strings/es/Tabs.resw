@@ -159,6 +159,18 @@
   <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
     <value>Eliminar Marcador?</value>
   </data>
+  <data name="Archive.Settings.Button.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Lector</value>
+  </data>
+  <data name="Archive.Settings.FitWidth.Text" xml:space="preserve">
+    <value>Ajustar las páginas al ancho</value>
+  </data>
+  <data name="Archive.Settings.RTL.Text" xml:space="preserve">
+    <value>Leer de derecha a izquierda</value>
+  </data>
+  <data name="Archive.Settings.TwoPages.Text" xml:space="preserve">
+    <value>Mostrar dos páginas</value>
+  </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Agregar Todo</value>
   </data>

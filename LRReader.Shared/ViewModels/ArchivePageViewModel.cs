@@ -85,13 +85,80 @@ namespace LRReader.Shared.ViewModels
 			{
 				if (value != _zoomValue)
 				{
-					_zoomValue = value;
-					OnPropertyChanged("ZoomValue");
+					SetProperty(ref _zoomValue, value);
 					ZoomChangedEvent?.Invoke();
 				}
 			}
 		}
 		public event ZoomChanged ZoomChangedEvent;
+
+		private bool _readRTL;
+		public bool ReadRTL
+		{
+			get => _readRTL;
+			set
+			{
+				if (value != _readRTL)
+				{
+					SetProperty(ref _readRTL, value);
+					RebuildReader?.Invoke();
+				}
+			}
+		}
+		private bool _twoPages;
+		public bool TwoPages
+		{
+			get => _twoPages;
+			set
+			{
+				if (value != _twoPages)
+				{
+					SetProperty(ref _twoPages, value);
+					RebuildReader?.Invoke();
+				}
+			}
+		}
+		private bool _setBuilder;
+		public bool SetBuilder
+		{
+			get => _setBuilder;
+			set
+			{
+				if (value != _setBuilder)
+				{
+					SetProperty(ref _setBuilder, value);
+					RebuildReader?.Invoke();
+				}
+			}
+		}
+		private bool _fitToWidth;
+		public bool FitToWidth
+		{
+			get => _fitToWidth;
+			set
+			{
+				if (value != _fitToWidth)
+				{
+					SetProperty(ref _fitToWidth, value);
+					ZoomChangedEvent?.Invoke();
+				}
+			}
+		}
+		private int _fitScaleLimit;
+		public int FitScaleLimit
+		{
+			get => _fitScaleLimit;
+			set
+			{
+				if (value != _fitScaleLimit)
+				{
+					SetProperty(ref _fitScaleLimit, value);
+					ZoomChangedEvent?.Invoke();
+				}
+			}
+		}
+
+		public event Action RebuildReader;
 
 		[ObservableProperty]
 		private int _buildProgress;
@@ -114,13 +181,15 @@ namespace LRReader.Shared.ViewModels
 			Images = images;
 			Events = events;
 			_zoomValue = Settings.DefaultZoom;
-
-			Events.RebuildReaderImagesSetEvent += CreateImageSets;
+			_readRTL = Settings.ReadRTL;
+			_twoPages = Settings.TwoPages;
+			_setBuilder = Settings.ReaderImageSetBuilder;
+			_fitToWidth = Settings.FitToWidth;
+			_fitScaleLimit = Settings.FitScaleLimit;
 		}
 
 		public void UnHook()
 		{
-			Events.RebuildReaderImagesSetEvent -= CreateImageSets;
 			_abort = true;
 		}
 
@@ -200,7 +269,7 @@ namespace LRReader.Shared.ViewModels
 			ControlsEnabled = false;
 			await LoadArchive();
 			await LoadImages(animate);
-			await CreateImageSetsAsync();
+			await CreateImageSets();
 			OnPropertyChanged("Icon");
 			ControlsEnabled = true;
 			_loading = false;
@@ -256,14 +325,12 @@ namespace LRReader.Shared.ViewModels
 			await ArchivesProvider.ClearNewArchive(Archive.arcid);
 		}
 
-		public async void CreateImageSets() => await CreateImageSetsAsync();
-
-		public async Task CreateImageSetsAsync()
+		public async Task CreateImageSets()
 		{
 			ArchiveImagesReader.Clear();
 			var tmp = new List<ReaderImageSet>();
 			BuildMax = ArchiveImages.Count - 1;
-			LoadingImages = Settings.TwoPages && Settings.ReaderImageSetBuilder;
+			LoadingImages = TwoPages && SetBuilder;
 			await Task.Run(async () =>
 			{
 				for (int k = 0; k < ArchiveImages.Count; k++)
@@ -271,9 +338,9 @@ namespace LRReader.Shared.ViewModels
 					if (_abort)
 						return;
 					var i = new ReaderImageSet();
-					if (Settings.TwoPages)
+					if (TwoPages)
 					{
-						if (Settings.ReadRTL)
+						if (ReadRTL)
 						{
 							if (k == 0)
 								i.LeftImage = ArchiveImages.ElementAt(k).Image;
@@ -283,7 +350,7 @@ namespace LRReader.Shared.ViewModels
 							{
 								i.RightImage = ArchiveImages.ElementAt(k).Image;
 
-								if (Settings.ReaderImageSetBuilder)
+								if (SetBuilder)
 								{
 									var leftImage = ArchiveImages.ElementAt(k + 1).Image;
 									var leftSize = await Images.GetImageSizeCached(i.RightImage);
@@ -317,7 +384,7 @@ namespace LRReader.Shared.ViewModels
 							{
 								i.LeftImage = ArchiveImages.ElementAt(k).Image;
 
-								if (Settings.ReaderImageSetBuilder)
+								if (SetBuilder)
 								{
 									var rightImage = ArchiveImages.ElementAt(k + 1).Image;
 									var leftSize = await Images.GetImageSizeCached(i.LeftImage);

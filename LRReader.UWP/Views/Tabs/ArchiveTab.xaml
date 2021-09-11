@@ -24,22 +24,62 @@
 	</muxc:TabViewItem.Header>
 	<controls:ModernTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal" Spacing="2">
-			<Button ToolTipService.ToolTip="Zoom">
+			<Button x:Uid="/Tabs/Archive/Settings/Button">
 				<Button.Flyout>
 					<Flyout>
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="220" />
-								<ColumnDefinition Width="40" />
-							</Grid.ColumnDefinitions>
-							<Slider
-								IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
-								TickFrequency="30" TickPlacement="BottomRight"
-								Value="{x:Bind TabContent.Data.ZoomValue, Mode=TwoWay}" />
-							<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
-								<Run Text="{x:Bind TabContent.Data.ZoomValue, Mode=OneWay}" />%
-							</TextBlock>
-						</Grid>
+						<StackPanel Spacing="4">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="220" />
+									<ColumnDefinition Width="40" />
+								</Grid.ColumnDefinitions>
+								<Slider
+									IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+									TickFrequency="30" TickPlacement="None"
+									Value="{x:Bind TabContent.Data.ZoomValue, Mode=TwoWay}" />
+								<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+									<Run Text="{x:Bind TabContent.Data.ZoomValue, Mode=OneWay}" />%
+								</TextBlock>
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Uid="/Tabs/Archive/Settings/RTL" VerticalAlignment="Center" />
+								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.ReadRTL, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Uid="/Tabs/Archive/Settings/TwoPages" VerticalAlignment="Center" />
+								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.TwoPages, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind TabContent.Data.SetBuilder, Mode=TwoWay}" />
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Uid="/Tabs/Archive/Settings/FitWidth" VerticalAlignment="Center" />
+								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.FitToWidth, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="220" />
+									<ColumnDefinition Width="40" />
+								</Grid.ColumnDefinitions>
+								<Slider
+									IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+									StepFrequency="5" TickFrequency="25.0" TickPlacement="None"
+									Value="{x:Bind TabContent.Data.FitScaleLimit, Mode=TwoWay}" />
+								<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+									<Run Text="{x:Bind TabContent.Data.FitScaleLimit, Mode=OneWay}" />%
+								</TextBlock>
+							</Grid>
+						</StackPanel>
 					</Flyout>
 				</Button.Flyout>
 				<Viewbox MaxWidth="16" MaxHeight="16">

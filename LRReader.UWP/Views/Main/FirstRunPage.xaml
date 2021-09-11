@@ -9,7 +9,9 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
+	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
+	SizeChanged="Page_SizeChanged"
 	mc:Ignorable="d">
 
 	<Page.Resources>
@@ -24,15 +26,17 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
+			<Canvas Grid.ColumnSpan="3">
+				<Image
+					x:Name="Splash" Width="620" Height="300"
+					HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="/Assets/SplashScreen.scale-200.png" />
+			</Canvas>
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
 					<RowDefinition Height="16" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
-				<Image
-					x:Name="Splash" Width="94" HorizontalAlignment="Right"
-					VerticalAlignment="Bottom" Source="/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
 				<StackPanel Grid.Row="2" HorizontalAlignment="Right">
 					<TextBlock x:Uid="/Pages/FirstRunPage/Welcome" HorizontalAlignment="Right" FontSize="28" />
 					<TextBlock x:Uid="/Pages/FirstRunPage/Continue" FontSize="16" Visibility="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}" />

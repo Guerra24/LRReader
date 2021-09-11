@@ -445,7 +445,7 @@
     <value>Versión, soporte, código fuente</value>
   </data>
   <data name="GeneralPage.Description" xml:space="preserve">
-    <value>Perfiles, pestañas, búsqueda, tema</value>
+    <value>Pestañas, búsqueda, tema</value>
   </data>
   <data name="ReaderPage.Description" xml:space="preserve">
     <value>Zoom, modo dos páginas, marcadores</value>
@@ -491,5 +491,14 @@
   </data>
   <data name="Profiles.RemoveDialog.Title" xml:space="preserve">
     <value>Eliminar perfil</value>
+  </data>
+  <data name="Profiles.AutoLogin.Title" xml:space="preserve">
+    <value>Conectarse al inicio</value>
+  </data>
+  <data name="Profiles.ProfileGroup.Title" xml:space="preserve">
+    <value>Perfiles</value>
+  </data>
+  <data name="ProfilesPage.Description" xml:space="preserve">
+    <value>Conectar al inicio, editar, eliminar</value>
   </data>
 </root>

@@ -38,37 +38,6 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private async void PivotItem_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateThumbnailCacheSize();
 
-		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
-			if (profile == null)
-			{
-				Service.Tabs.CloseAllTabs();
-				Service.Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
-				return;
-			}
-			if (profile == Data.SettingsManager.Profile)
-				return;
-			var dialog = new ContentDialog()
-			{
-				Title = lang.GetString("General/SwitchProfile/Title"),
-				Content = lang.GetString("General/SwitchProfile/Content").AsFormat("\n"),
-				PrimaryButtonText = lang.GetString("General/SwitchProfile/PrimaryButtonText"),
-				CloseButtonText = lang.GetString("General/SwitchProfile/CloseButtonText")
-			};
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				Data.SettingsManager.Profile = profile;
-				Service.Tabs.CloseAllTabs();
-				Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
-			}
-			else
-			{
-				ProfileSelection.SelectedItem = Data.SettingsManager.Profile;
-			}
-		}
-
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.SortByIndex = -1;

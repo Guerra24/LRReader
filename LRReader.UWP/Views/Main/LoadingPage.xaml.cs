@@ -3,6 +3,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Main
@@ -29,6 +30,7 @@ namespace LRReader.UWP.Views.Main
 			if (e.Parameter is SplashScreen splash)
 				splashScreen = splash;
 			UpdateSplash();
+			ConnectedAnimationService.GetForCurrentView().GetAnimation("Splash")?.TryStart(Splash);
 			TitleBar.Height = CoreView.TitleBar.Height;
 			CoreView.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
 		}
@@ -37,6 +39,11 @@ namespace LRReader.UWP.Views.Main
 		{
 			base.OnNavigatingFrom(e);
 			CoreView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
+			if (ViewModel.Animate)
+			{
+				var logo = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Splash", Splash);
+				logo.Configuration = new BasicConnectedAnimationConfiguration();
+			}
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)

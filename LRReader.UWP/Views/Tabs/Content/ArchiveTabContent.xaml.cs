@@ -53,12 +53,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			Data = DataContext as ArchivePageViewModel;
 			Data.ZoomChangedEvent += FitImages;
+			Data.RebuildReader += RebuildReader;
 
 			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
 				.Subscribe((height) =>
 				Service.Dispatcher.Run(async () =>
 				await ReaderControl.UpdateDecodedResolution((int)Math.Round(height))));
 			_loadSemaphore.Wait();
+
+			Service.Events.RebuildReaderImagesSetEvent += RebuildReader;
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -167,7 +170,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.ReaderContent.TwoPages)
 			{
 				leftTarget--;
-				if (Service.Settings.ReadRTL)
+				if (Data.ReadRTL)
 				{
 					int tmp = leftTarget;
 					leftTarget = rightTarget;
@@ -202,6 +205,26 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.CanGoNext)
 				return;
+			await HideReader();
+			await Data.NextArchive();
+			await ShowReader();
+		}
+
+		private async void RebuildReader()
+		{
+			int page = 0;
+			if (Data.ShowReader)
+			{
+				page = Data.ReaderContent.Page;
+				await HideReader();
+			}
+			await Data.CreateImageSets();
+			if (Data.ShowReader)
+				await ShowReader(page);
+		}
+
+		private async Task HideReader()
+		{
 			if (Data.ShowReader)
 			{
 				_wasNew = await Data.SaveReaderData(_wasNew);
@@ -217,10 +240,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 				else
 					ImagesGrid.SetVisualOpacity(0);
 			}
-			await Data.NextArchive();
+		}
+
+		private async Task ShowReader(int page = 0)
+		{
 			if (Data.ShowReader)
 			{
-				var readerSet = Data.ArchiveImagesReader.FirstOrDefault(s => s.Page >= 0);
+				var readerSet = Data.ArchiveImagesReader.FirstOrDefault(s => s.Page >= page);
 				if (readerSet == null)
 					return;
 				var index = Data.ArchiveImagesReader.IndexOf(readerSet);
@@ -415,7 +441,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void NextPage(bool ignore = false)
 		{
-			if (Service.Settings.ReadRTL && !ignore)
+			if (Data.ReadRTL && !ignore)
 				await GoLeft();
 			else
 				await GoRight();
@@ -423,7 +449,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void PrevPage(bool ignore = false)
 		{
-			if (Service.Settings.ReadRTL && !ignore)
+			if (Data.ReadRTL && !ignore)
 				await GoRight();
 			else
 				await GoLeft();
@@ -473,9 +499,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 				return;
 			float zoomFactor;
-			if (Service.Settings.FitToWidth)
+			if (Data.FitToWidth)
 			{
-				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Service.Settings.FitScaleLimit * 0.01);
+				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Data.FitScaleLimit * 0.01);
 			}
 			else
 			{
@@ -541,6 +567,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public void RemoveEvent()
 		{
 			Data.ZoomChangedEvent -= FitImages;
+			Data.RebuildReader -= RebuildReader;
+			Service.Events.RebuildReaderImagesSetEvent -= RebuildReader;
 			Data.UnHook();
 		}
 
@@ -549,7 +577,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var targetAnim = "openL";
 			if (target.TwoPages)
 			{
-				if (Service.Settings.ReadRTL)
+				if (Data.ReadRTL)
 				{
 					if (target.Page != item)
 						targetAnim = "openR";

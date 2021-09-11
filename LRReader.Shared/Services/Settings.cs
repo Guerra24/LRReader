@@ -110,6 +110,7 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectLocal("KeyboardScroll", 200);
 			set => SettingsStorage.StoreObjectLocal("KeyboardScroll", value);
 		}
+		// TODO Mirror in reader
 		public bool FitToWidth
 		{
 			get => SettingsStorage.GetObjectRoamed("FitToWidth", false);
@@ -200,6 +201,11 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectRoamed("OpenNextArchive", true);
 			set => SettingsStorage.StoreObjectRoamed("OpenNextArchive", value);
 		}
+		public bool AutoLogin
+		{
+			get => SettingsStorage.GetObjectRoamed("AutoLogin", true);
+			set => SettingsStorage.StoreObjectRoamed("AutoLogin", value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
@@ -215,6 +221,8 @@ namespace LRReader.Shared.Services
 		}
 
 		private Subject<bool> save = new Subject<bool>();
+
+		public bool FirstStartup = true;
 
 		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files, PlatformService platform)
 		{

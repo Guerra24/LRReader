@@ -20,23 +20,6 @@
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
-			<controls:ModernGroup x:Uid="/Settings/General/Connection">
-				<controls:ModernInput x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE748;">
-					<ComboBox
-						x:Name="ProfileSelection" MinWidth="120"
-						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
-						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-						SelectionChanged="ComboBox_SelectionChanged" />
-				</controls:ModernInput>
-				<controls:ModernInput
-					x:Uid="/Settings/ProfilesPage" Click="PageButton_Click" Glyph="&#xE716;"
-					IsButton="True" RightGlyph="&#xE76C;">
-					<controls:ModernInput.Tag>
-						<controls:ModernPageTabItem x:Uid="/Settings/ProfilesPage" Page="local:Profiles" />
-					</controls:ModernInput.Tag>
-				</controls:ModernInput>
-			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
 				<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
