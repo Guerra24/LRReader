@@ -50,6 +50,23 @@ jobs:
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
+  buildInstaller:
+    name: Build Installer
+    runs-on: windows-2019
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Installer
+      run: |
+        Invoke-Expression "./Util/ConfigureInstaller.ps1"
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Installer
+        path: LRReader.UWP.Installer/bin/Release/LRReader.exe
   purgeCache:
     name: Purge cache
     needs: buildAppxBundle

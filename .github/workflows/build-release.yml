@@ -58,6 +58,31 @@ jobs:
         name: LRReader.appinstaller
         path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  buildInstaller:
+    name: Build Installer
+    runs-on: windows-2019
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Installer
+      run: |
+        [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
+        $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
+        Invoke-Expression "./Util/ConfigureInstaller.ps1"
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Installer
+        path: LRReader.UWP.Installer/bin/Release/LRReader.exe
+    - name: Upload to Release
+      uses: Guerra24/upload-to-release@v1
+      with:
+        name: LRReader.exe
+        path: LRReader.UWP.Installer/bin/Release/LRReader.exe
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildStoreBundle:
     name: Build Store Bundle
     runs-on: windows-2019

@@ -193,7 +193,7 @@ namespace LRReader.Shared.Services
 		}
 		public bool AutoUpdate
 		{
-			get => SettingsStorage.GetObjectLocal("AutoUpdate", true);
+			get => SettingsStorage.GetObjectLocal("AutoUpdate", false);
 			set => SettingsStorage.StoreObjectLocal("AutoUpdate", value);
 		}
 		public bool OpenNextArchive

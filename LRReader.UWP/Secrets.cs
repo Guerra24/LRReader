@@ -1,4 +1,4 @@
-﻿namespace LRReader.UWP
+namespace LRReader.UWP
 {
 	static class Secrets
 	{
