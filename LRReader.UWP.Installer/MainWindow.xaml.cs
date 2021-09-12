@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModernWpf;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -52,6 +53,8 @@ namespace LRReader.UWP.Installer
 		[DllImport("user32.dll")]
 		internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
+		private HwndSource hwnd;
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -67,27 +70,14 @@ namespace LRReader.UWP.Installer
 				Error.Text = "LRReader requires Windows 10 1809";
 			else
 				InstallButton.Visibility = Visibility.Visible;
+			if (Environment.OSVersion.Version >= new Version(10, 0, 22000, 0))
+				Icon1.FontFamily = Icon2.FontFamily = Icon3.FontFamily = new FontFamily("Segoe Fluent Icons");
 		}
 
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-			var accent = new AccentPolicy();
-			accent.AccentState = AccentState.ACCENT_ENABLE_ACRYLIC;
-			accent.GradientColor = 0xD92C2C2C;
-
-			var accentStructSize = Marshal.SizeOf(accent);
-
-			var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-			Marshal.StructureToPtr(accent, accentPtr, false);
-
-			var data = new WindowCompositionAttributeData();
-			data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
-			data.SizeOfData = accentStructSize;
-			data.Data = accentPtr;
-
-			SetWindowCompositionAttribute(((HwndSource)sender).Handle, ref data);
-
-			Marshal.FreeHGlobal(accentPtr);
+			hwnd = (HwndSource)sender;
+			SetAcrylic();
 		}
 
 		private async void Install_Click(object sender, RoutedEventArgs e)
@@ -146,6 +136,37 @@ namespace LRReader.UWP.Installer
 			{
 				TitleText.Visibility = Visibility.Collapsed;
 			}
+		}
+
+		private void Window_ActualThemeChanged(object sender, RoutedEventArgs e)
+		{
+			SetAcrylic();
+		}
+
+		private void SetAcrylic()
+		{
+			if (hwnd == null)
+				return;
+			var accent = new AccentPolicy();
+			accent.AccentState = AccentState.ACCENT_ENABLE_ACRYLIC;
+			if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
+				accent.GradientColor = 0xD92C2C2C;
+			else
+				accent.GradientColor = 0xA9FCFCFC;
+
+			var accentStructSize = Marshal.SizeOf(accent);
+
+			var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+			Marshal.StructureToPtr(accent, accentPtr, false);
+
+			var data = new WindowCompositionAttributeData();
+			data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
+			data.SizeOfData = accentStructSize;
+			data.Data = accentPtr;
+
+			SetWindowCompositionAttribute(hwnd.Handle, ref data);
+
+			Marshal.FreeHGlobal(accentPtr);
 		}
 	}
 }

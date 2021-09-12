@@ -9,7 +9,8 @@
 	Title="LRReader"
 	Width="962"
 	Height="514"
-	ui:ThemeManager.RequestedTheme="Dark"
+	ui:ThemeManager.ActualThemeChanged="Window_ActualThemeChanged"
+	ui:ThemeManager.IsThemeAware="True"
 	ui:TitleBar.ExtendViewIntoTitleBar="True"
 	ui:WindowHelper.UseModernWindowStyle="True"
 	Background="Transparent"
@@ -27,7 +28,7 @@
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<Border Padding="41" Background="#CC202020">
+		<Border Padding="41" Background="{DynamicResource GridBackground}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
@@ -44,7 +45,9 @@
 				<Grid Grid.Row="2">
 					<Button
 						x:Name="InstallButton" HorizontalAlignment="Center" Click="Install_Click"
-						Content="Install" Visibility="Collapsed" />
+						Content="Install"
+						Style="{StaticResource AccentButtonStyle}"
+						Visibility="Collapsed" />
 					<TextBlock x:Name="Error" HorizontalAlignment="Center" VerticalAlignment="Center" />
 					<ui:ProgressBar
 						x:Name="Progress" Maximum="1" Minimum="0"
@@ -55,8 +58,30 @@
 		<TextBlock
 			Margin="11,7" HorizontalAlignment="Left" VerticalAlignment="Top"
 			FontSize="13" Text="LRReader" />
-		<Border Grid.Column="1" Padding="41" >
-			
+		<Border Grid.Column="1" Padding="68,41">
+			<ui:SimpleStackPanel VerticalAlignment="Center" Spacing="48">
+				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
+					<ui:FontIcon x:Name="Icon1" FontSize="40" Glyph="&#xE736;" />
+					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
+						<TextBlock FontSize="21" Text="Advanced reader" />
+						<TextBlock FontSize="14" Text="Keyboard or mouse, two pages, right to left, bookmarks and much more." TextWrapping="WrapWithOverflow" />
+					</ui:SimpleStackPanel>
+				</ui:SimpleStackPanel>
+				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
+					<ui:FontIcon x:Name="Icon2" FontSize="40" Glyph="&#xEC7A;" />
+					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
+						<TextBlock FontSize="21" Text="Archive management" />
+						<TextBlock FontSize="14" Text="Manage your archives from one place with tags editor, categories editor, archive deduplicator and batch editing." TextWrapping="WrapWithOverflow" />
+					</ui:SimpleStackPanel>
+				</ui:SimpleStackPanel>
+				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
+					<ui:FontIcon x:Name="Icon3" FontSize="40" Glyph="&#xE895;" />
+					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
+						<TextBlock FontSize="21" Text="Always up to date" />
+						<TextBlock FontSize="14" Text="State of the art UI design with fluid animations and smooth colors." TextWrapping="WrapWithOverflow" />
+					</ui:SimpleStackPanel>
+				</ui:SimpleStackPanel>
+			</ui:SimpleStackPanel>
 		</Border>
 	</Grid>
 </Window>
