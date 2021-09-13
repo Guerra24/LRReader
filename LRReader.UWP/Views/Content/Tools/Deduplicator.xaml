@@ -11,6 +11,7 @@
 	xmlns:items1="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding DeduplicatorToolViewModelInstance, Source={StaticResource Locator}}"
@@ -28,6 +29,17 @@
 			<StackPanel MaxWidth="1000">
 				<controls:ModernGroup Margin="0">
 					<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
+						<controls:ModernExpander.Input>
+							<StackPanel>
+								<Button x:Name="Help" x:Uid="/Tools/Deduplicator/Help" Click="Help_Click" />
+								<muxc:TeachingTip
+									x:Name="HowItWorks" x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True"
+									PreferredPlacement="Left"
+									Target="{x:Bind Help}">
+									<mtuuc:MarkdownTextBlock x:Uid="/Tools/Deduplicator/HowItWorks" Background="Transparent" />
+								</muxc:TeachingTip>
+							</StackPanel>
+						</controls:ModernExpander.Input>
 						<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold">
 							<muxc:NumberBox
 								MinWidth="100"

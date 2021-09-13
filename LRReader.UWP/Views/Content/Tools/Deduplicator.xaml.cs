@@ -15,5 +15,10 @@ namespace LRReader.UWP.Views.Content.Tools
 			for (int i = Environment.ProcessorCount; i > 0; i--)
 				WorkerThreads.Items.Add(i);
 		}
+
+		private void Help_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		{
+			HowItWorks.IsOpen = true;
+		}
 	}
 }

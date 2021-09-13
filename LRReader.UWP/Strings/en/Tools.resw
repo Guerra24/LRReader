@@ -171,6 +171,18 @@
   <data name="Deduplicator.GenerateThumbnails" xml:space="preserve">
     <value>Generating thumbnails</value>
   </data>
+  <data name="Deduplicator.Help.Content" xml:space="preserve">
+    <value>How it works</value>
+  </data>
+  <data name="Deduplicator.HowItWorks.Text" xml:space="preserve">
+    <value>It's a diff-based comparison between all archives thumbnails.
+
+It takes all thumbnails and for each pair applies a per-pixel difference using the Manhattan Distance operation and compares the result against the *Pixel threshold* parameter and counts how many pixels pass this comparison, then this number is compared against the *Image difference* parameter to decide how much of the image is different.
+
+*Resolution* is used to downscale the images before comparing them increasing speed.
+
+*Aspect ratio limit* is used to early-skip images which resolution doesn't match.</value>
+  </data>
   <data name="Deduplicator.ImageDiffLimit.Description" xml:space="preserve">
     <value>Minimum total difference</value>
   </data>
@@ -209,6 +221,9 @@
   </data>
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Step</value>
+  </data>
+  <data name="Deduplicator.TeachingTip.Title" xml:space="preserve">
+    <value>How it works</value>
   </data>
   <data name="Deduplicator.Threads.Title" xml:space="preserve">
     <value>Worker Threads</value>

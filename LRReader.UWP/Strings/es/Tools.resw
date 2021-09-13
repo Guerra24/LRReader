@@ -171,6 +171,18 @@
   <data name="Deduplicator.GenerateThumbnails" xml:space="preserve">
     <value>Generando miniaturas</value>
   </data>
+  <data name="Deduplicator.Help.Content" xml:space="preserve">
+    <value>Cómo funciona</value>
+  </data>
+  <data name="Deduplicator.HowItWorks.Text" xml:space="preserve">
+    <value>Es una comparación basada en la diferencia entre todas las miniaturas de los archivos.
+
+Toma todas las miniaturas y para cada par aplica una diferencia por píxel usando la operación de distancia Manhattan y compara el resultado contra el parámetro *Límite de píxeles* y cuenta cuántos píxeles pasan esta comparación, luego este número se compara contra el parámetro *Diferencia de imagen* para decidir qué parte de la imagen es diferente.
+
+El parámetro *Resolución* se utiliza para reducir la escala de las imágenes antes de compararlas, aumentando la velocidad.
+
+*Límite de la relación de aspecto* se utiliza para omitir anticipadamente las imágenes cuya resolución no coincide.</value>
+  </data>
   <data name="Deduplicator.ImageDiffLimit.Description" xml:space="preserve">
     <value>Diferencia total mínima</value>
   </data>
@@ -209,6 +221,9 @@
   </data>
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Paso</value>
+  </data>
+  <data name="Deduplicator.TeachingTip.Title" xml:space="preserve">
+    <value>Cómo funciona</value>
   </data>
   <data name="Deduplicator.Threads.Title" xml:space="preserve">
     <value>Hilos de trabajo</value>
