@@ -4,6 +4,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="clr-namespace:LRReader.UWP.Installer"
 	xmlns:ui="http://schemas.modernwpf.com/2019"
+	Exit="Application_Exit"
+	Startup="Application_Startup"
 	StartupUri="MainWindow.xaml">
 	<Application.Resources>
 		<ResourceDictionary>

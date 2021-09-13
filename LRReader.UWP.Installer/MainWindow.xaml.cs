@@ -1,13 +1,12 @@
 ﻿using ModernWpf;
 using System;
-using System.IO;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
@@ -55,67 +54,83 @@ namespace LRReader.UWP.Installer
 
 		private HwndSource hwnd;
 
+		private PackageManager pm;
+
+		private bool CertFound;
+
 		public MainWindow()
 		{
 			InitializeComponent();
 			if (Variables.AppInstallerUrl.Equals("{APP_INSTALLER_URL}"))
 				Variables.AppInstallerUrl = "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller";
-		}
+			if (Variables.Version.Equals("{APP_VERSION}"))
+				Variables.Version = "0.0.0.0";
 
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			var presentationSource = PresentationSource.FromVisual((Visual)sender);
-			presentationSource.ContentRendered += Window_ContentRendered;
-			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
-				Error.Text = "LRReader requires Windows 10 1809";
-			else
-				InstallButton.Visibility = Visibility.Visible;
 			if (Environment.OSVersion.Version >= new Version(10, 0, 22000, 0))
+			{
+				Height = 517;
+				LeftBorder.Margin = RightBorder.Margin = new Thickness(0, 0, 0, 3);
+				WindowChrome.SetWindowChrome(this, new WindowChrome { CaptionHeight = 32, GlassFrameThickness = new Thickness(0, 1, 0, 0), NonClientFrameEdges = NonClientFrameEdges.Bottom, UseAeroCaptionButtons = false });
 				Icon1.FontFamily = Icon2.FontFamily = Icon3.FontFamily = new FontFamily("Segoe Fluent Icons");
+			}
+
+			string title;
+			if (Variables.Version.Contains("Nightly"))
+				title = $"LRReader {Variables.Version}";
+			else
+				title = $"LRReader {Variables.Version.Substring(0, Variables.Version.LastIndexOf('.'))}";
+
+			Title = WindowTitle.Text = title;
 		}
 
-		private void Window_ContentRendered(object sender, EventArgs e)
+		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			hwnd = (HwndSource)sender;
-			SetAcrylic();
+			hwnd = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+			SetAcrylic(hwnd.Handle);
+
+			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
+			{
+				Error.Text = "LRReader requires Windows 10 1809";
+			}
+			else
+			{
+				pm = await Task.Run(() => new PackageManager());
+				CertFound = CertUtil.FindCertificate(Variables.CertThumb);
+				if (pm.FindPackagesForUser(string.Empty, "Guerra24.LRReader_3fr0p4qst6948").FirstOrDefault() != null && CertFound)
+					UninstallApp.Visibility = Visibility.Visible;
+				else if (CertFound)
+					UninstallCert.Visibility = InstallApp.Visibility = Visibility.Visible;
+				else
+					InstallApp.Visibility = Visibility;
+			}
 		}
 
 		private async void Install_Click(object sender, RoutedEventArgs e)
 		{
-			(sender as Button).Visibility = Visibility.Collapsed;
+			Buttons.Visibility = Visibility.Collapsed;
 			TitleText.Visibility = Progress.Visibility = Visibility.Visible;
 			Progress.IsIndeterminate = true;
 
-			var valid = await Task.Run(async () =>
+			if (!CertFound)
 			{
-				using (var store = new X509Store(StoreName.TrustedPeople, StoreLocation.LocalMachine))
+				var result = await LaunchAdmin("--install-cert");
+				if (result != 0)
 				{
-					store.Open(OpenFlags.ReadWrite);
-					var col = store.Certificates.Find(X509FindType.FindByThumbprint, Variables.CertThumb.ToUpper(), false);
-					if (!(col != null && col.Count > 0))
-					{
-						var file = Path.GetTempFileName();
-						using (var client = new WebClient())
-							await client.DownloadFileTaskAsync(new Uri(Variables.CertUrl), file);
-						var cert = new X509Certificate2(file);
-						if (!cert.Thumbprint.Equals(Variables.CertThumb.ToUpper()))
-						{
-							return false;
-						}
-						store.Add(cert);
-						File.Delete(file);
-					}
-					return true;
+					TitleText.Visibility = Progress.Visibility = Visibility.Collapsed;
+					Progress.IsIndeterminate = false;
 				}
-			});
-			if (!valid)
-			{
-				Error.Text = "An invalid certificate has been detected";
+				switch (result)
+				{
+					case 1:
+						Error.Text = "An invalid certificate has been detected";
+						return;
+					case -99:
+						Error.Text = "Admin permissions are required for certificate installation";
+						return;
+				}
 			}
-
 			var done = await Task.Run(async () =>
 			{
-				var pm = new PackageManager();
 				var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				Dispatcher.Invoke(() =>
 				{
@@ -136,27 +151,80 @@ namespace LRReader.UWP.Installer
 					await app.LaunchAsync();
 					return true;
 				}
+				else
+				{
+					Dispatcher.Invoke(() =>
+					{
+						TitleText.Visibility = Visibility.Collapsed;
+						Error.Text = result.ErrorText;
+					});
+				}
 				return false;
 			});
 			if (done)
-			{
 				Close();
-			}
+		}
+
+		private async void UninstallCert_Click(object sender, RoutedEventArgs e)
+		{
+			Buttons.Visibility = Visibility.Collapsed;
+			if (await LaunchAdmin("--uninstall-cert") == -99)
+				Error.Text = "Admin permissions are required for certificate removal";
 			else
+				Close();
+		}
+
+		private async void Uninstall_Click(object sender, RoutedEventArgs e)
+		{
+			Buttons.Visibility = Visibility.Collapsed;
+			var pkg = pm.FindPackagesForUser(string.Empty, "Guerra24.LRReader_3fr0p4qst6948").FirstOrDefault();
+			if (pkg != null)
 			{
-				TitleText.Visibility = Visibility.Collapsed;
+				await pm.RemovePackageAsync(pkg.Id.FullName);
 			}
+			if (await LaunchAdmin("--uninstall-cert") == -99)
+				Error.Text = "Admin permissions are required for certificate removal";
+			else
+				Close();
+		}
+
+		private async Task<int> LaunchAdmin(string command)
+		{
+			var process = new Process();
+			process.StartInfo.Verb = "runas";
+			process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
+			process.StartInfo.Arguments = command;
+			try
+			{
+				await process.StartAndWaitForExitAsync();
+				return process.ExitCode;
+			}
+			catch (Win32Exception) { }
+			return -99;
 		}
 
 		private void Window_ActualThemeChanged(object sender, RoutedEventArgs e)
 		{
-			SetAcrylic();
+			if (hwnd != null)
+				SetAcrylic(hwnd.Handle);
 		}
 
-		private void SetAcrylic()
+		private void SetAcrylic(IntPtr hwnd)
 		{
-			if (hwnd == null)
+			if (Environment.OSVersion.Version < new Version(10, 0, 22000, 0))
+			{
+				if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
+				{
+					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#202020"));
+					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2C2C2C"));
+				}
+				else
+				{
+					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F3F3F3"));
+					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F9F9F9"));
+				}
 				return;
+			}
 			var accent = new AccentPolicy();
 			accent.AccentState = AccentState.ACCENT_ENABLE_ACRYLIC;
 			if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
@@ -174,9 +242,10 @@ namespace LRReader.UWP.Installer
 			data.SizeOfData = accentStructSize;
 			data.Data = accentPtr;
 
-			SetWindowCompositionAttribute(hwnd.Handle, ref data);
+			SetWindowCompositionAttribute(hwnd, ref data);
 
 			Marshal.FreeHGlobal(accentPtr);
 		}
+
 	}
 }

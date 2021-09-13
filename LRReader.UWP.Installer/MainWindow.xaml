@@ -5,11 +5,10 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:LRReader.UWP.Installer"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:modern="clr-namespace:ModernWpf.Controls"
 	xmlns:ui="http://schemas.modernwpf.com/2019"
 	Title="LRReader"
 	Width="962"
-	Height="517"
+	Height="514"
 	ui:ThemeManager.ActualThemeChanged="Window_ActualThemeChanged"
 	ui:ThemeManager.IsThemeAware="True"
 	ui:TitleBar.ExtendViewIntoTitleBar="True"
@@ -20,18 +19,6 @@
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
 
-	<Window.Style>
-		<Style BasedOn="{StaticResource DefaultWindowStyle}" TargetType="Window">
-			<Setter Property="WindowChrome.WindowChrome">
-				<Setter.Value>
-					<WindowChrome
-						CaptionHeight="32" GlassFrameThickness="0,1,0,0" NonClientFrameEdges="Bottom"
-						UseAeroCaptionButtons="False" />
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</Window.Style>
-
 	<Window.TaskbarItemInfo>
 		<TaskbarItemInfo x:Name="TaskbarProgress" />
 	</Window.TaskbarItemInfo>
@@ -41,7 +28,7 @@
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<Border Margin="0,0,0,3" Padding="41" Background="{DynamicResource GridBackground}">
+		<Border x:Name="LeftBorder" Padding="41" Background="{DynamicResource GridBackground}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
@@ -60,18 +47,30 @@
 					<ui:ProgressBar
 						x:Name="Progress" MaxWidth="250" Maximum="1"
 						Minimum="0" Visibility="Collapsed" />
-					<Button
-						x:Name="InstallButton" HorizontalAlignment="Center" Click="Install_Click"
-						Content="Install"
-						Style="{StaticResource AccentButtonStyle}"
-						Visibility="Collapsed" />
+					<ui:SimpleStackPanel
+						x:Name="Buttons" HorizontalAlignment="Center" VerticalAlignment="Center"
+						Spacing="4">
+						<Button
+							x:Name="InstallApp" HorizontalAlignment="Center" Click="Install_Click"
+							Content="Install"
+							Style="{StaticResource AccentButtonStyle}"
+							Visibility="Collapsed" />
+						<Button
+							x:Name="UninstallCert" Click="UninstallCert_Click" Content="Remove Certificate"
+							Visibility="Collapsed" />
+						<Button
+							x:Name="UninstallApp" HorizontalAlignment="Center" Click="Uninstall_Click"
+							Content="Uninstall"
+							Style="{StaticResource AccentButtonStyle}"
+							Visibility="Collapsed" />
+					</ui:SimpleStackPanel>
 				</Grid>
 			</Grid>
 		</Border>
 		<TextBlock
-			Margin="11,7" HorizontalAlignment="Left" VerticalAlignment="Top"
-			FontSize="13" Text="LRReader" />
-		<Border Grid.Column="1" Margin="0,0,0,3" Padding="68,41">
+			x:Name="WindowTitle" Margin="11,7" HorizontalAlignment="Left"
+			VerticalAlignment="Top" FontSize="13" Text="LRReader" />
+		<Border x:Name="RightBorder" Grid.Column="1" Padding="68,41">
 			<ui:SimpleStackPanel VerticalAlignment="Center" Spacing="48">
 				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
 					<ui:FontIcon x:Name="Icon1" FontSize="40" Glyph="&#xE736;" />
@@ -91,7 +90,7 @@
 					<ui:FontIcon x:Name="Icon3" FontSize="40" Glyph="&#xE895;" />
 					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
 						<TextBlock FontSize="21" Text="Always up to date" />
-						<TextBlock FontSize="14" Text="State of the art UI design with fluid animations and smooth colors." TextWrapping="WrapWithOverflow" />
+						<TextBlock FontSize="14" Text="Making use of the latest and greatest LANraragi features." TextWrapping="WrapWithOverflow" />
 					</ui:SimpleStackPanel>
 				</ui:SimpleStackPanel>
 			</ui:SimpleStackPanel>

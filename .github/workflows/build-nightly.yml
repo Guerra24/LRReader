@@ -59,6 +59,8 @@ jobs:
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Installer
+      env:
+        APP_VERSION: Nightly
       run: |
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
         MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release

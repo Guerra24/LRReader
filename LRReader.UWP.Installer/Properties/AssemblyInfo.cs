@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LRReader.UWP.Installer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("LRReader")]
+[assembly: AssemblyDescription("Sideload Installer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LRReader.UWP.Installer")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("LRReader")]
+[assembly: AssemblyCopyright("Copyright © Guerra24 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

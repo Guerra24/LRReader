@@ -70,6 +70,7 @@ jobs:
       run: |
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
         $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
+        $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
         MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release
     - name: Upload Artifacts

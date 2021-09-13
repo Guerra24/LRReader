@@ -61,6 +61,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>LRReader.UWP.Installer.EntryPoint</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="netstandard" />
     <Reference Include="System" />
@@ -86,6 +89,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CertUtil.cs" />
+    <Compile Include="EntryPoint.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="Variables.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
