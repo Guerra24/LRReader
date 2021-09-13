@@ -96,7 +96,7 @@ namespace LRReader.UWP.Installer
 			{
 				pm = await Task.Run(() => new PackageManager());
 				CertFound = CertUtil.FindCertificate(Variables.CertThumb);
-				if (pm.FindPackagesForUser(string.Empty, "Guerra24.LRReader_3fr0p4qst6948").FirstOrDefault() != null && CertFound)
+				if (pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault() != null && CertFound)
 					UninstallApp.Visibility = Visibility.Visible;
 				else if (CertFound)
 					UninstallCert.Visibility = InstallApp.Visibility = Visibility.Visible;
@@ -129,40 +129,44 @@ namespace LRReader.UWP.Installer
 						return;
 				}
 			}
-			var done = await Task.Run(async () =>
+			bool done = true;
+			if (pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault() == null)
 			{
-				var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
-				Dispatcher.Invoke(() =>
+				done = await Task.Run(async () =>
 				{
-					Progress.IsIndeterminate = false;
-					TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
-				});
-				installTask.Progress = (asyncInfo, prog) => Dispatcher.Invoke(() => TaskbarProgress.ProgressValue = Progress.Value = prog.percentage / 100d);
-				var result = await installTask.AsTask();
-				Dispatcher.Invoke(() =>
-				{
-					Progress.Visibility = Visibility.Collapsed;
-					TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
-				});
-				if (result.IsRegistered)
-				{
-					var pkg = pm.FindPackagesForUser(string.Empty, "Guerra24.LRReader_3fr0p4qst6948").FirstOrDefault();
-					var app = (await pkg.GetAppListEntriesAsync()).FirstOrDefault();
-					await app.LaunchAsync();
-					return true;
-				}
-				else
-				{
+					var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 					Dispatcher.Invoke(() =>
 					{
-						TitleText.Visibility = Visibility.Collapsed;
-						Error.Text = result.ErrorText;
+						Progress.IsIndeterminate = false;
+						TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
 					});
-				}
-				return false;
-			});
+					installTask.Progress = (asyncInfo, prog) => Dispatcher.Invoke(() => TaskbarProgress.ProgressValue = Progress.Value = prog.percentage / 100d);
+					var result = await installTask.AsTask();
+					Dispatcher.Invoke(() =>
+					{
+						Progress.Visibility = Visibility.Collapsed;
+						TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
+					});
+					if (result.IsRegistered)
+						return true;
+					else
+					{
+						Dispatcher.Invoke(() =>
+						{
+							TitleText.Visibility = Visibility.Collapsed;
+							Error.Text = result.ErrorText;
+						});
+					}
+					return false;
+				});
+			}
 			if (done)
+			{
+				var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
+				var app = (await pkg.GetAppListEntriesAsync()).FirstOrDefault();
+				await app.LaunchAsync();
 				Close();
+			}
 		}
 
 		private async void UninstallCert_Click(object sender, RoutedEventArgs e)
@@ -177,7 +181,7 @@ namespace LRReader.UWP.Installer
 		private async void Uninstall_Click(object sender, RoutedEventArgs e)
 		{
 			Buttons.Visibility = Visibility.Collapsed;
-			var pkg = pm.FindPackagesForUser(string.Empty, "Guerra24.LRReader_3fr0p4qst6948").FirstOrDefault();
+			var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
 			if (pkg != null)
 			{
 				await pm.RemovePackageAsync(pkg.Id.FullName);
