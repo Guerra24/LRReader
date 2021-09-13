@@ -173,7 +173,7 @@ namespace LRReader.UWP.Services
 				var package = pm.FindPackageForUser(string.Empty, Current.Id.FullName);
 				var result = await package.CheckUpdateAvailabilityAsync();
 				Logger.LogInformation("Result: {0}", result.Availability);
-				return new CheckForUpdatesResult { Found = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
+				return new CheckForUpdatesResult { Found = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required, Target = Platform.Version };
 			}
 			catch (Exception e)
 			{
