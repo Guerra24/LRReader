@@ -86,22 +86,32 @@ namespace LRReader.UWP.Installer
 			TitleText.Visibility = Progress.Visibility = Visibility.Visible;
 			Progress.IsIndeterminate = true;
 
-			await Task.Run(async () =>
+			var valid = await Task.Run(async () =>
 			{
 				using (var store = new X509Store(StoreName.TrustedPeople, StoreLocation.LocalMachine))
 				{
 					store.Open(OpenFlags.ReadWrite);
-					var col = store.Certificates.Find(X509FindType.FindByThumbprint, Variables.CertThumb, false);
+					var col = store.Certificates.Find(X509FindType.FindByThumbprint, Variables.CertThumb.ToUpper(), false);
 					if (!(col != null && col.Count > 0))
 					{
-						var cert = Path.GetTempFileName();
+						var file = Path.GetTempFileName();
 						using (var client = new WebClient())
-							await client.DownloadFileTaskAsync(new Uri(Variables.CertUrl), cert);
-						store.Add(new X509Certificate2(cert));
-						File.Delete(cert);
+							await client.DownloadFileTaskAsync(new Uri(Variables.CertUrl), file);
+						var cert = new X509Certificate2(file);
+						if (!cert.Thumbprint.Equals(Variables.CertThumb.ToUpper()))
+						{
+							return false;
+						}
+						store.Add(cert);
+						File.Delete(file);
 					}
+					return true;
 				}
 			});
+			if (!valid)
+			{
+				Error.Text = "An invalid certificate has been detected";
+			}
 
 			var done = await Task.Run(async () =>
 			{

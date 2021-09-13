@@ -44,7 +44,9 @@ namespace LRReader.Shared.Models
 	public struct CheckForUpdatesResult
 	{
 		public bool Found { get; set; }
+		[JsonConverter(typeof(VersionConverter))]
 		public Version Target { get; set; }
+		public string Link { get; set; }
 	}
 
 	public struct UpdateChangelog

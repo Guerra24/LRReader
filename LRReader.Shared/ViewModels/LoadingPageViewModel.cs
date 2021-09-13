@@ -56,7 +56,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			Animate = false;
 			await Service.InitServices();
-			if (Updates.CanAutoUpdate() && Updates.AutoUpdate)
+			if (Updates.CanAutoUpdate() && Settings.AutoUpdate)
 			{
 				var update = await Updates.CheckForUpdates();
 				if (update.Found)
@@ -64,7 +64,7 @@ namespace LRReader.Shared.ViewModels
 					Updating = true;
 					// Set wasUpdate in settingstorage
 					SettingsStorage.StoreObjectLocal("WasUpdated", true);
-					var result = await Updates.DownloadAndInstall(new Progress<double>(progress => Progress = progress));
+					var result = await Updates.DownloadAndInstall(new Progress<double>(progress => Progress = progress), update);
 					Updating = false;
 					if (!result.Result)
 					{

@@ -37,13 +37,11 @@ namespace LRReader.Shared.Services
 
 		public abstract Task<CheckForUpdatesResult> CheckForUpdates();
 
-		public abstract Task<UpdateResult> DownloadAndInstall(IProgress<double> progress);
-
-		public bool AutoUpdate => SettingsStorage.GetObjectLocal("AutoUpdate", true);
+		public abstract Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null);
 
 		public abstract bool CanAutoUpdate();
 
-		public async Task<UpdateChangelog?> GetChangelog(Version version)
+		public async Task<UpdateChangelog> GetChangelog(Version version)
 		{
 			var rq = new RestRequest("lrr/upgrade/changelog");
 			rq.AddParameter("version", version.ToString());
@@ -54,10 +52,10 @@ namespace LRReader.Shared.Services
 			var result = await r.GetResultInternal<UpdateChangelog>();
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
-				return null;
+				return new UpdateChangelog { Name = "", Content = "" };
 			if (result.OK)
 				return result.Data;
-			return null;
+			return new UpdateChangelog { Name = "", Content = "" };
 		}
 
 		public async Task UpdateSupportedRange()
@@ -104,6 +102,6 @@ namespace LRReader.Shared.Services
 
 		public override Task<CheckForUpdatesResult> CheckForUpdates() => Task.Run(() => new CheckForUpdatesResult { Found = false });
 
-		public override Task<UpdateResult> DownloadAndInstall(IProgress<double> progress) => Task.Run(() => new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = "Stub" });
+		public override Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null) => Task.Run(() => new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = "Stub" });
 	}
 }

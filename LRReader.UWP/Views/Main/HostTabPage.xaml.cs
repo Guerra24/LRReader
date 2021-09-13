@@ -124,6 +124,8 @@ namespace LRReader.UWP.Views.Main
 
 		private void ShowNotification(string title, string content, int duration) => Notifications.Show(new NotificationItem(title, content), duration);
 
+
+		// Move all of this to the ViewModel
 		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
@@ -173,10 +175,10 @@ namespace LRReader.UWP.Views.Main
 				return;
 
 			var log = await Updates.GetChangelog(Platform.Version);
-			if (log == null)
+			if (string.IsNullOrEmpty(log.Name) || string.IsNullOrEmpty(log.Content))
 				return;
 
-			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log?.Content);
+			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log.Content);
 			await dialog.ShowAsync();
 		}
 	}

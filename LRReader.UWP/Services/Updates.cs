@@ -1,8 +1,11 @@
-﻿using LRReader.Shared.Models;
+﻿#nullable enable
+using LRReader.Shared;
+using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
+using RestSharp;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,7 +66,7 @@ namespace LRReader.UWP.Services
 			return new CheckForUpdatesResult { Found = false };
 		}
 
-		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress)
+		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
 			if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable || NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
 				return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/NoNetwork") };
@@ -94,9 +97,65 @@ namespace LRReader.UWP.Services
 	{
 		private readonly ILogger<SideloadUpdatesService> Logger;
 
+		public SideloadUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
+		{
+			Logger = logger;
+		}
+
+		public override bool CanAutoUpdate() => true;
+
+		public override async Task<CheckForUpdatesResult> CheckForUpdates()
+		{
+			Logger.LogInformation("Checking for updates");
+
+			var rq = new RestRequest("lrr/upgrade/check");
+			rq.AddParameter("version", Platform.Version.ToString());
+			var r = await client.ExecuteGetAsync(rq);
+			var updatesResult = await r.GetResultInternal<CheckForUpdatesResult>();
+			if (!string.IsNullOrEmpty(r.ErrorMessage))
+			{
+				return new CheckForUpdatesResult { Found = false };
+			}
+			if (updatesResult.OK)
+			{
+				return updatesResult.Data;
+			}
+			return new CheckForUpdatesResult { Found = false };
+		}
+
+		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
+		{
+			if (!check.HasValue)
+			{
+				Logger.LogInformation("Check is null");
+				return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
+			}
+			Logger.LogInformation("Download and install");
+			try
+			{
+				Logger.LogInformation("Source: {0}", check?.Link);
+				var pm = new PackageManager();
+				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check?.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
+				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
+				var result = await downloadTask.AsTask();
+				return new UpdateResult { Result = result.IsRegistered };
+			}
+			catch (Exception e)
+			{
+				Crashes.TrackError(e);
+				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
+				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
+			}
+		}
+	}
+
+	public class NightlyUpdatesService : UpdatesService
+	{
+		private readonly ILogger<SideloadUpdatesService> Logger;
+
 		private Package Current;
 
-		public SideloadUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
+		public NightlyUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
 		{
 			Logger = logger;
 			Current = Package.Current;
@@ -107,22 +166,6 @@ namespace LRReader.UWP.Services
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
 			Logger.LogInformation("Checking for updates");
-			/*
-			var rq = new RestRequest("lrr/upgrade/check"); // Implement
-			rq.AddParameter("version", Platform.Version.ToString());
-
-			var r = await client.ExecuteGetAsync(rq);
-
-			var result = await r.GetResultInternal<bool>();
-
-			if (!string.IsNullOrEmpty(r.ErrorMessage))
-			{
-				return new CheckForUpdatesResult { Found = false }; ;
-			}
-			if (result.OK)
-			{
-				return new CheckForUpdatesResult { Found = false };
-			}*/
 			try
 			{
 				// We can't use Current here cause it crashes on 1809...
@@ -140,7 +183,7 @@ namespace LRReader.UWP.Services
 			}
 		}
 
-		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress)
+		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
 			Logger.LogInformation("Download and install");
 			try

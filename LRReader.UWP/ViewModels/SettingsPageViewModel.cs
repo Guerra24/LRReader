@@ -39,11 +39,20 @@ namespace LRReader.UWP.ViewModels
 		[ObservableProperty]
 		private string _shinobuPid;
 
-		public ReleaseInfo ReleaseInfo;
+		private CheckForUpdatesResult checkResult;
+
 		[ObservableProperty]
-		private bool _showReleaseInfo;
+		private UpdateChangelog _changelog;
+		[ObservableProperty]
+		private bool _showChangelog;
+		[ObservableProperty]
+		private double _updateProgress;
 		[ObservableProperty]
 		private ServerInfo _serverInfo;
+		[ObservableProperty]
+		private string _updateMessage;
+		[ObservableProperty]
+		private string _updateError;
 
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
 		private int _sortByIndex = -1;
@@ -81,7 +90,6 @@ namespace LRReader.UWP.ViewModels
 			Api = api;
 			Tabs = tabs;
 
-			UpdateReleaseData();
 			foreach (var n in archives.Namespaces)
 				SortBy.Add(n);
 			_sortByIndex = SortBy.IndexOf(SettingsManager.SortByDefault);
@@ -120,20 +128,26 @@ namespace LRReader.UWP.ViewModels
 			ShinobuPid = pid;
 		}
 
-		public void UpdateReleaseData()
+		[ICommand]
+		public async Task CheckForUpdates()
 		{
-			// TODO Updates here
-			/*var info = await SharedGlobal.UpdatesManager.CheckUpdates(Platform.Version);
-			if (info != null)
+			checkResult = await Updates.CheckForUpdates();
+			if (checkResult.Found)
 			{
-				SetProperty(ref ReleaseInfo, info, nameof(ReleaseInfo));
-				ShowReleaseInfo = true;
+				Changelog = await Updates.GetChangelog(checkResult.Target);
+				ShowChangelog = true;
 			}
-			else
+		}
+
+		[ICommand]
+		public async Task InstallUpdate()
+		{
+			var result = await Updates.DownloadAndInstall(new Progress<double>(progress => UpdateProgress = progress), checkResult);
+			if (!result.Result)
 			{
-				ShowReleaseInfo = false;
-				SetProperty(ref ReleaseInfo, null, nameof(ReleaseInfo));
-			}*/
+				UpdateMessage = result.ErrorMessage;
+				UpdateError = Platform.GetLocalizedString("Pages/LoadingPage/UpdateErrorCode").AsFormat(result.ErrorCode);
+			}
 		}
 
 		public async Task UpdateServerInfo()

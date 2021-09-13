@@ -4,48 +4,78 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<Page.Resources>
+		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
-				<controls:ModernInput x:Uid="/Settings/Updates/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
-					<Button x:Uid="/Settings/Updates/Check" Click="CheckUpdatesButton_Click" />
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Updates/AutoUpdates" IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}">
+				<controls:ModernInput x:Uid="/Settings/Updates/AutoUpdates" Glyph="&#xE9f3;" IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}">
 					<ToggleSwitch IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}" IsOn="{x:Bind services:Service.Settings.AutoUpdate, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Updates/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+					<Button x:Uid="/Settings/Updates/Check" Command="{x:Bind Data.CheckForUpdatesCommand}" />
+				</controls:ModernInput>
 				<controls:ModernExpander
-					Title="{x:Bind Data.ReleaseInfo.name, Mode=OneWay}"
+					Title="{x:Bind Data.Changelog.Name, Mode=OneWay}"
 					Glyph="&#xE896;" IsExpanded="True"
-					Visibility="{x:Bind Data.ShowReleaseInfo, Mode=OneWay}">
+					Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
 					<comcontrols:MarkdownTextBlock
 						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
 						LinkClicked="MarkdownText_LinkClicked"
-						Text="{x:Bind Data.ReleaseInfo.body, Mode=OneWay}" />
-					<controls:ModernInput>
-						<Button x:Uid="/Settings/Updates/Download">
+						Text="{x:Bind Data.Changelog.Content, Mode=OneWay}" />
+				</controls:ModernExpander>
+				<StackPanel Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
+					<StackPanel Margin="8">
+						<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>
+						<muxc:ProgressBar Margin="0,2" Maximum="0.8" Value="{x:Bind Data.UpdateProgress, Mode=OneWay}" />
+					</StackPanel>
+					<StackPanel Margin="8,2,8,8">
+						<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>
+						<Button x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right">
 							<Button.Flyout>
 								<Flyout x:Name="DownloadFlyout">
-									<StackPanel>
-										<TextBlock x:Uid="/Settings/Updates/DownloadNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
-										<Button x:Uid="/Settings/Updates/DownloadYes" HorizontalAlignment="Center" Click="ButtonDownload_Click" />
+									<StackPanel Spacing="12">
+										<TextBlock x:Uid="/Settings/Updates/DownloadNotice" Style="{ThemeResource BaseTextBlockStyle}" />
+										<Button x:Uid="/Settings/Updates/DownloadYes" HorizontalAlignment="Center" Command="{x:Bind Data.InstallUpdateCommand}" />
 									</StackPanel>
 								</Flyout>
 							</Button.Flyout>
 						</Button>
-					</controls:ModernInput>
-				</controls:ModernExpander>
+					</StackPanel>
+					<muxc:InfoBar
+						Title="{x:Bind Data.UpdateMessage, Mode=OneWay}"
+						IsClosable="False"
+						IsOpen="{x:Bind Data.UpdateMessage, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
+						Message="{x:Bind Data.UpdateError, Mode=OneWay}"
+						Severity="Error">
+						<muxc:InfoBar.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</muxc:InfoBar.Transitions>
+					</muxc:InfoBar>
+				</StackPanel>
 			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>

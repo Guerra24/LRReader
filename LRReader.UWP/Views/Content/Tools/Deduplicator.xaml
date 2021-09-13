@@ -50,8 +50,8 @@
 								<TextBlock
 									Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
 									VerticalAlignment="Center">
-									<Run Text="{x:Bind Data.PercentDifference, Mode=OneWay}" />%
-								</TextBlock>
+									<Run Text="{x:Bind Data.PercentDifference, Mode=OneWay}" />
+									%</TextBlock>
 							</Grid>
 						</controls:ModernInput>
 						<controls:ModernInput x:Uid="/Tools/Deduplicator/Resolution">
@@ -90,13 +90,13 @@
 							Maximum="1000" Minimum="0" SpinButtonPlacementMode="Inline"
 							Value="{x:Bind Data.Delay, Mode=TwoWay}" />
 					</controls:ModernInput>
-					<StackPanel Margin="8">
+					<StackPanel Margin="8" Spacing="10">
 						<StackPanel.Transitions>
 							<TransitionCollection>
 								<RepositionThemeTransition IsStaggeringEnabled="False" />
 							</TransitionCollection>
 						</StackPanel.Transitions>
-						<TextBlock Margin="0,0,0,10">
+						<TextBlock>
 							<Run x:Uid="/Tools/Deduplicator/Step" />
 							<Run Text="{x:Bind Data.CurrentStepPlusOne, Mode=OneWay}" />
 							<Run x:Uid="/Tools/Deduplicator/Of" />
@@ -104,13 +104,13 @@
 						</TextBlock>
 						<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxSteps, Mode=OneWay}" Value="{x:Bind Data.CurrentStep, Mode=OneWay}" />
 					</StackPanel>
-					<StackPanel Margin="8">
+					<StackPanel Margin="8" Spacing="10">
 						<StackPanel.Transitions>
 							<TransitionCollection>
 								<RepositionThemeTransition IsStaggeringEnabled="False" />
 							</TransitionCollection>
 						</StackPanel.Transitions>
-						<StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+						<StackPanel Orientation="Horizontal">
 							<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
 							<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 								<Run />
@@ -131,8 +131,8 @@
 								<RepositionThemeTransition IsStaggeringEnabled="False" />
 							</TransitionCollection>
 						</StackPanel.Transitions>
-						<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-							<TextBlock Margin="0,0,10,0" VerticalAlignment="Center" Visibility="{x:Bind Data.EstimatedTime, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}">
+						<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+							<TextBlock VerticalAlignment="Center" Visibility="{x:Bind Data.EstimatedTime, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}">
 								<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
 								<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
 							</TextBlock>

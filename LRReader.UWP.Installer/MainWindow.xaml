@@ -5,10 +5,11 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:LRReader.UWP.Installer"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:modern="clr-namespace:ModernWpf.Controls"
 	xmlns:ui="http://schemas.modernwpf.com/2019"
 	Title="LRReader"
 	Width="962"
-	Height="514"
+	Height="517"
 	ui:ThemeManager.ActualThemeChanged="Window_ActualThemeChanged"
 	ui:ThemeManager.IsThemeAware="True"
 	ui:TitleBar.ExtendViewIntoTitleBar="True"
@@ -19,6 +20,18 @@
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
 
+	<Window.Style>
+		<Style BasedOn="{StaticResource DefaultWindowStyle}" TargetType="Window">
+			<Setter Property="WindowChrome.WindowChrome">
+				<Setter.Value>
+					<WindowChrome
+						CaptionHeight="32" GlassFrameThickness="0,1,0,0" NonClientFrameEdges="Bottom"
+						UseAeroCaptionButtons="False" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Style>
+
 	<Window.TaskbarItemInfo>
 		<TaskbarItemInfo x:Name="TaskbarProgress" />
 	</Window.TaskbarItemInfo>
@@ -28,7 +41,7 @@
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<Border Padding="41" Background="{DynamicResource GridBackground}">
+		<Border Margin="0,0,0,3" Padding="41" Background="{DynamicResource GridBackground}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
@@ -43,14 +56,14 @@
 					Grid.Row="1" Height="100" Margin="0,-3,0,2"
 					RenderOptions.BitmapScalingMode="Fant" Source="logo.ico" />
 				<Grid Grid.Row="2">
+					<TextBlock x:Name="Error" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<ui:ProgressBar
+						x:Name="Progress" MaxWidth="250" Maximum="1"
+						Minimum="0" Visibility="Collapsed" />
 					<Button
 						x:Name="InstallButton" HorizontalAlignment="Center" Click="Install_Click"
 						Content="Install"
 						Style="{StaticResource AccentButtonStyle}"
-						Visibility="Collapsed" />
-					<TextBlock x:Name="Error" HorizontalAlignment="Center" VerticalAlignment="Center" />
-					<ui:ProgressBar
-						x:Name="Progress" Maximum="1" Minimum="0"
 						Visibility="Collapsed" />
 				</Grid>
 			</Grid>
@@ -58,7 +71,7 @@
 		<TextBlock
 			Margin="11,7" HorizontalAlignment="Left" VerticalAlignment="Top"
 			FontSize="13" Text="LRReader" />
-		<Border Grid.Column="1" Padding="68,41">
+		<Border Grid.Column="1" Margin="0,0,0,3" Padding="68,41">
 			<ui:SimpleStackPanel VerticalAlignment="Center" Spacing="48">
 				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
 					<ui:FontIcon x:Name="Icon1" FontSize="40" Glyph="&#xE736;" />

@@ -19,6 +19,8 @@ namespace LRReader.UWP
 #if !DEBUG
 #if SIDELOAD
 				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, SideloadUpdatesService>());
+#elif NIGHTLY
+				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, NightlyUpdatesService>());
 #else
 				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, StoreUpdatesService>());
 #endif
