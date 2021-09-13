@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI;
+﻿using LRReader.Shared.Extensions;
+using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Media;
 using System;
@@ -7,7 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -42,8 +45,8 @@ namespace LRReader.UWP.Extensions
 			gridView.SetValue(ItemClickCommandProperty, command);
 			gridView.ItemClick += (sender, e) =>
 			{
-				if (command.CanExecute(e.ClickedItem))
-					command.Execute(e.ClickedItem);
+				if (command.CanExecute(new GridViewExtParameter(false, e.ClickedItem)))
+					command.Execute(new GridViewExtParameter((CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, e.ClickedItem));
 			};
 		}
 

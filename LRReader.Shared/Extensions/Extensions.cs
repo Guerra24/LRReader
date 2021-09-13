@@ -16,4 +16,16 @@ namespace LRReader.Shared.Extensions
 			else return val;
 		}
 	}
+
+	public class GridViewExtParameter
+	{
+		public bool Ctrl { get; }
+		public object Item { get; }
+
+		public GridViewExtParameter(bool ctrl, object item)
+		{
+			Ctrl = ctrl;
+			Item = item;
+		}
+	}
 }

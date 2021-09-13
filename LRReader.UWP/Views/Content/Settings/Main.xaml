@@ -48,13 +48,13 @@
 						<controls:ModernPageTabItem x:Uid="/Settings/ServerPage" Page="local:Server" />
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>
-				<controls:ModernInput
+				<!--<controls:ModernInput
 					x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
 					IsButton="True" RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
 					</controls:ModernInput.Tag>
-				</controls:ModernInput>
+				</controls:ModernInput>-->
 				<controls:ModernInput
 					x:Name="Updates" x:Uid="/Settings/UpdatesPage" Click="PageButton_Click"
 					Glyph="&#xE895;" IsButton="True" RightGlyph="&#xE76C;">

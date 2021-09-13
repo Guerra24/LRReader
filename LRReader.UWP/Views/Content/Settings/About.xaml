@@ -48,15 +48,17 @@
 					</StackPanel>
 				</controls:ModernExpander>
 				<controls:ModernInput
-					x:Uid="/Settings/About/Github" Title="Github" Click="WebButton_Click"
-					IsButton="True" RightGlyph="&#xE8A7;" Tag="https://github.com/Guerra24/LRReader">
+					x:Uid="/Settings/About/Github" Title="Github"
+					Command="{x:Bind Data.OpenLinkCommand}"
+					CommandParameter="https://github.com/Guerra24/LRReader" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
 						<muxc:ImageIcon x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 				<controls:ModernInput
-					x:Uid="/Settings/About/KoFi" Title="Ko-Fi" Click="WebButton_Click"
-					IsButton="True" RightGlyph="&#xE8A7;" Tag="https://ko-fi.com/guerra24">
+					x:Uid="/Settings/About/KoFi" Title="Ko-Fi"
+					Command="{x:Bind Data.OpenLinkCommand}"
+					CommandParameter="https://ko-fi.com/guerra24" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
 						<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
 					</controls:ModernInput.Icon>

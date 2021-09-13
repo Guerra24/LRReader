@@ -59,11 +59,6 @@ namespace LRReader.UWP.Views.Content.Settings
 			return image;
 		}
 
-		private async void WebButton_Click(object sender, RoutedEventArgs e)
-		{
-			await Service.Platform.OpenInBrowser(new Uri((sender as ModernInput).Tag as string));
-		}
-
 		private async void License_Click(object sender, RoutedEventArgs e)
 		{
 			var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///LICENSE.md"));

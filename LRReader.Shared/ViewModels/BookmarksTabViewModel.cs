@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Messages;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -35,7 +36,7 @@ namespace LRReader.Shared.ViewModels
 		}
 
 		[ICommand]
-		public void BookmarkClick(Archive archive) => Archives.OpenTab(archive);
+		public void BookmarkClick(GridViewExtParameter archive) => Archives.OpenTab((Archive)archive.Item, archive.Ctrl);
 
 		[ICommand]
 		public async Task Reload(bool animate = true)

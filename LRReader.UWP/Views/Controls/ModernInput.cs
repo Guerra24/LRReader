@@ -1,4 +1,5 @@
-﻿using Windows.System;
+﻿using System.Windows.Input;
+using Windows.System;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -68,6 +69,17 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(RightGlyphProperty, value);
 		}
 
+		public ICommand Command
+		{
+			get => GetValue(CommandProperty) as ICommand;
+			set => SetValue(CommandProperty, value);
+		}
+		public object CommandParameter
+		{
+			get => GetValue(CommandParameterProperty);
+			set => SetValue(CommandParameterProperty, value);
+		}
+
 		public event RoutedEventHandler Click;
 
 		protected override void OnPointerEntered(PointerRoutedEventArgs e)
@@ -102,6 +114,8 @@ namespace LRReader.UWP.Views.Controls
 			base.OnPointerReleased(e);
 			if (IsButton && IsEnabled)
 			{
+				if (Command != null && Command.CanExecute(CommandParameter))
+					Command.Execute(CommandParameter);
 				Click?.Invoke(this, e);
 				VisualStateManager.GoToState(this, "PointerOver", true);
 			}
@@ -140,5 +154,7 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(IconElement), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty IsButtonProperty = DependencyProperty.Register("IsButton", typeof(bool), typeof(ModernInput), new PropertyMetadata(false));
 		public static readonly DependencyProperty RightGlyphProperty = DependencyProperty.Register("RightGlyph", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
 	}
 }

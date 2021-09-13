@@ -11,7 +11,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
-	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI" xmlns:util="using:LRReader.UWP.Util"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	xmlns:util="using:LRReader.UWP.Util"
 	DataContext="{Binding ArchivePageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">

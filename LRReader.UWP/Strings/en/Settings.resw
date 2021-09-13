@@ -330,7 +330,7 @@
   <data name="Server.BackupDBButton.Content" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="Server.Batch.Content" xml:space="preserve">
+  <data name="Server.Batch.Title" xml:space="preserve">
     <value>Batch Tagging</value>
   </data>
   <data name="Server.ClearNew.Title" xml:space="preserve">
@@ -354,13 +354,13 @@
   <data name="Server.Debug.Content" xml:space="preserve">
     <value>Debug Mode</value>
   </data>
-  <data name="Server.Logs.Content" xml:space="preserve">
+  <data name="Server.Logs.Title" xml:space="preserve">
     <value>Logs</value>
   </data>
   <data name="Server.NoFun.Content" xml:space="preserve">
     <value>No-Fun Mode</value>
   </data>
-  <data name="Server.PluginSettings.Content" xml:space="preserve">
+  <data name="Server.PluginSettings.Title" xml:space="preserve">
     <value>Plugin Configuration</value>
   </data>
   <data name="Server.RegenThumb.Content" xml:space="preserve">
@@ -393,10 +393,10 @@
   <data name="Server.ResizedImages.Content" xml:space="preserve">
     <value>Resized Images</value>
   </data>
-  <data name="Server.Settings.Content" xml:space="preserve">
+  <data name="Server.Settings.Title" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="Server.Upload.Content" xml:space="preserve">
+  <data name="Server.Upload.Title" xml:space="preserve">
     <value>Upload Archives</value>
   </data>
   <data name="Server.UsePassword.Content" xml:space="preserve">

@@ -270,18 +270,9 @@ namespace LRReader.UWP.ViewModels
 		}
 
 		[ICommand]
-		private void OpenUploadArchive() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/upload");
+		private void OpenWebTab(string path) => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + path);
 
 		[ICommand]
-		private void OpenBatchTagging() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/batch");
-
-		[ICommand]
-		private void OpenSettings() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/config");
-
-		[ICommand]
-		private void OpenPlugins() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/config/plugins");
-
-		[ICommand]
-		private void OpenLogs() => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + "/logs");
+		private Task OpenLink(string url) => Platform.OpenInBrowser(new Uri(url));
 	}
 }

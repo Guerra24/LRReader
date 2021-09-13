@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Messages;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
@@ -44,9 +45,9 @@ namespace LRReader.Shared.ViewModels
 		}
 
 		[ICommand]
-		private async Task CategoryClick(Category item)
+		private async Task CategoryClick(GridViewExtParameter item)
 		{
-			if (item is AddNewCategory)
+			if (item.Item is AddNewCategory)
 			{
 				var dialog = Platform.CreateDialog<ICreateCategoryDialog>(Dialog.CreateCategory, false);
 				var result = await dialog.ShowAsync();
@@ -63,7 +64,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			else
 			{
-				Tabs.OpenTab(Tab.SearchResults, item as Category);
+				Tabs.OpenTab(Tab.SearchResults, item.Ctrl, item.Item);
 			}
 		}
 

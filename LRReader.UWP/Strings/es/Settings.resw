@@ -330,7 +330,7 @@
   <data name="Server.BackupDBButton.Content" xml:space="preserve">
     <value>Descargar</value>
   </data>
-  <data name="Server.Batch.Content" xml:space="preserve">
+  <data name="Server.Batch.Title" xml:space="preserve">
     <value>Etiquetado por lotes</value>
   </data>
   <data name="Server.ClearNew.Title" xml:space="preserve">
@@ -354,13 +354,13 @@
   <data name="Server.Debug.Content" xml:space="preserve">
     <value>Modo de depuración</value>
   </data>
-  <data name="Server.Logs.Content" xml:space="preserve">
+  <data name="Server.Logs.Title" xml:space="preserve">
     <value>Logs</value>
   </data>
   <data name="Server.NoFun.Content" xml:space="preserve">
     <value>Modo No-Fun</value>
   </data>
-  <data name="Server.PluginSettings.Content" xml:space="preserve">
+  <data name="Server.PluginSettings.Title" xml:space="preserve">
     <value>Configuración de Plugins</value>
   </data>
   <data name="Server.RegenThumb.Content" xml:space="preserve">
@@ -393,10 +393,10 @@
   <data name="Server.ResizedImages.Content" xml:space="preserve">
     <value>Imágenes redimensionadas</value>
   </data>
-  <data name="Server.Settings.Content" xml:space="preserve">
+  <data name="Server.Settings.Title" xml:space="preserve">
     <value>Ajustes</value>
   </data>
-  <data name="Server.Upload.Content" xml:space="preserve">
+  <data name="Server.Upload.Title" xml:space="preserve">
     <value>Subir archivos</value>
   </data>
   <data name="Server.UsePassword.Content" xml:space="preserve">
