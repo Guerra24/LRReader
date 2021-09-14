@@ -30,14 +30,11 @@ If you have troubles accessing the store page. Open this link in your browser:<b
 
 If you don't want to deal with the store this option is and will be supported.
 
-
-You will need to install the cert first, [instructions here](https://github.com/Guerra24/LRReader/wiki/Certificate).
-
 For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases)
 
-For nightly check the [Nightly page](https://s3.guerra24.net/projects/lrr/nightly/index.html)
+For nightly download the installer from the latest [nightly action](https://github.com/Guerra24/LRReader/actions/workflows/build-nightly.yml)
 
-Download the `LRReader.appinstaller` file, run it and follow instructions.
+Download the `LRReader.exe` file, run it and follow instructions.
 
 ## Usage
 
@@ -53,7 +50,7 @@ To enable editing LANraragi needs to be configured without password or with an A
 `Ctrl` + `Tab` change to next tab.<br>
 `Ctrl` + `Shift` + `Tab` change to prev tab.<br>
 
-`F11` enter fullscreen.
+`F11` or `F` enter fullscreen.
 
 ### List
 
@@ -70,6 +67,7 @@ Scrolling at top/bottom changes page accordingly, prev/next.<br>
 `Right`/`Left` to change page.<br>
 `Space` to scroll down.<br>
 `Esc` to close the reader.<br>
+`N` to open next archive.<br>
 
 
 Click on the left/right of the window to change pages.<br>
