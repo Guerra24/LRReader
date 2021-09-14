@@ -121,7 +121,7 @@
     <value>Buscar actualizaciones</value>
   </data>
   <data name="Updates.Download.Content" xml:space="preserve">
-    <value>Descargar</value>
+    <value>Descargar e instalar</value>
   </data>
   <data name="Updates.DownloadNotice.Text" xml:space="preserve">
     <value>La app se cerrará automáticamente</value>

@@ -33,7 +33,8 @@
 					Glyph="&#xE896;" IsExpanded="True"
 					Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
 					<comcontrols:MarkdownTextBlock
-						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="300"
+						Margin="0,0,0,10" Background="Transparent" ImageMaxHeight="350"
+						InlineCodeForeground="{ThemeResource TextFillColorPrimaryBrush}"
 						LinkClicked="MarkdownText_LinkClicked"
 						Text="{x:Bind Data.Changelog.Content, Mode=OneWay}" />
 				</controls:ModernExpander>
@@ -52,16 +53,7 @@
 								<RepositionThemeTransition IsStaggeringEnabled="False" />
 							</TransitionCollection>
 						</StackPanel.Transitions>
-						<Button x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right">
-							<Button.Flyout>
-								<Flyout x:Name="DownloadFlyout">
-									<StackPanel Spacing="12">
-										<TextBlock x:Uid="/Settings/Updates/DownloadNotice" Style="{ThemeResource BaseTextBlockStyle}" />
-										<Button x:Uid="/Settings/Updates/DownloadYes" HorizontalAlignment="Center" Command="{x:Bind Data.InstallUpdateCommand}" />
-									</StackPanel>
-								</Flyout>
-							</Button.Flyout>
-						</Button>
+						<Button x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right" Command="{x:Bind Data.InstallUpdateCommand}" />
 					</StackPanel>
 					<muxc:InfoBar
 						Title="{x:Bind Data.UpdateMessage, Mode=OneWay}"

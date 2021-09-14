@@ -142,6 +142,8 @@ namespace LRReader.UWP.ViewModels
 		[ICommand]
 		public async Task InstallUpdate()
 		{
+			UpdateMessage = "";
+			UpdateError = "";
 			var result = await Updates.DownloadAndInstall(new Progress<double>(progress => UpdateProgress = progress), checkResult);
 			if (!result.Result)
 			{

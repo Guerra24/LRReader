@@ -138,7 +138,10 @@ namespace LRReader.UWP.Services
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check?.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
 				var result = await downloadTask.AsTask();
-				return new UpdateResult { Result = result.IsRegistered };
+				if (result.IsRegistered)
+					return new UpdateResult { Result = true };
+				else
+					return new UpdateResult { Result = false, ErrorCode = result.ExtendedErrorCode.HResult, ErrorMessage = result.ErrorText };
 			}
 			catch (Exception e)
 			{
@@ -193,7 +196,10 @@ namespace LRReader.UWP.Services
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
 				var result = await downloadTask.AsTask();
-				return new UpdateResult { Result = result.IsRegistered };
+				if (result.IsRegistered)
+					return new UpdateResult { Result = true };
+				else
+					return new UpdateResult { Result = false, ErrorCode = result.ExtendedErrorCode.HResult, ErrorMessage = result.ErrorText };
 			}
 			catch (Exception e)
 			{

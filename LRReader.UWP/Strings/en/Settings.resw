@@ -121,7 +121,7 @@
     <value>Check for updates</value>
   </data>
   <data name="Updates.Download.Content" xml:space="preserve">
-    <value>Download</value>
+    <value>Download and install</value>
   </data>
   <data name="Updates.DownloadNotice.Text" xml:space="preserve">
     <value>The app will close automatically</value>
