@@ -69,7 +69,7 @@ namespace LRReader.Shared.ViewModels
 			get
 			{
 				var progress = ReaderIndex;
-				if (Service.Settings.TwoPages)
+				if (TwoPages)
 					if (progress != 0)
 						progress *= 2;
 				progress = progress.Clamp(0, Pages - 1);

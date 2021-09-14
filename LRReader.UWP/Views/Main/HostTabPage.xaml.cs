@@ -166,7 +166,8 @@ namespace LRReader.UWP.Views.Main
 
 		private async Task ShowWhatsNew()
 		{
-			if (!SettingsStorage.GetObjectLocal("WasUpdated", false))
+			var ver = Version.Parse(SettingsStorage.GetObjectLocal("_version", new Version(0, 0, 0, 0).ToString()));
+			if (!SettingsStorage.GetObjectLocal("WasUpdated", false) && ver == new Version(0, 0, 0, 0))
 				return;
 			SettingsStorage.DeleteObjectLocal("WasUpdated");
 			SettingsStorage.DeleteObjectLocal("_version");
