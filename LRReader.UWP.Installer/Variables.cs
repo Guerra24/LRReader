@@ -1,4 +1,4 @@
-﻿namespace LRReader.UWP.Installer
+namespace LRReader.UWP.Installer
 {
 	public static class Variables
 	{
