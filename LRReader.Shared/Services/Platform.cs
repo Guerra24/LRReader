@@ -1,6 +1,7 @@
 ﻿using LRReader.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
@@ -28,6 +29,8 @@ namespace LRReader.Shared.Services
 
 	public abstract class PlatformService
 	{
+		protected SemaphoreSlim DialogSemaphore = new SemaphoreSlim(1);
+
 		public abstract Version Version { get; }
 		public abstract bool AnimationsEnabled { get; }
 		public abstract uint HoverTime { get; }
@@ -56,10 +59,18 @@ namespace LRReader.Shared.Services
 
 		public async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[] args) where D : IDialog
 		{
-			var newDialog = CreateDialog<D>(dialog, args);
-			if (newDialog == null)
-				return IDialogResult.None;
-			return await newDialog.ShowAsync();
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				var newDialog = CreateDialog<D>(dialog, args);
+				if (newDialog == null)
+					return IDialogResult.None;
+				return await newDialog.ShowAsync();
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
 		}
 
 		public D CreateDialog<D>(Dialog dialog, params object?[] args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args);

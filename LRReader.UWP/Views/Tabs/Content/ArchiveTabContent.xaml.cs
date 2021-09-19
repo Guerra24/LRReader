@@ -205,9 +205,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.CanGoNext)
 				return;
+			_transition = true;
 			await HideReader();
 			await Data.NextArchive();
 			await ShowReader();
+			_transition = false;
 		}
 
 		private async void RebuildReader()
@@ -215,12 +217,16 @@ namespace LRReader.UWP.Views.Tabs.Content
 			int page = 0;
 			if (Data.ShowReader)
 			{
+				_transition = true;
 				page = Data.ReaderContent.Page;
 				await HideReader();
 			}
 			await Data.CreateImageSets();
 			if (Data.ShowReader)
+			{
 				await ShowReader(page);
+				_transition = false;
+			}
 		}
 
 		private async Task HideReader()

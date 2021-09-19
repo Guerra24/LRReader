@@ -392,25 +392,25 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
-      <Version>7.1.0-rc1</Version>
+      <Version>7.1.0-rc2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>7.1.0-rc1</Version>
+      <Version>7.1.0-rc2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Core">
-      <Version>7.1.0-rc1</Version>
+      <Version>7.1.0-rc2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Layout">
-      <Version>7.1.0-rc1</Version>
+      <Version>7.1.0-rc2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Markdown">
-      <Version>7.1.0-rc1</Version>
+      <Version>7.1.0-rc2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Media">
-      <Version>7.1.0-rc1</Version>
+      <Version>7.1.0-rc2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.7.0-prerelease.210816001</Version>
+      <Version>2.7.0-prerelease.210913003</Version>
     </PackageReference>
     <PackageReference Include="NReco.Logging.File">
       <Version>1.1.2</Version>

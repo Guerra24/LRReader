@@ -90,8 +90,16 @@ namespace LRReader.UWP.Services
 
 		public override async Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content)
 		{
-			var dialog = new ContentDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
-			return (IDialogResult)(int)await dialog.ShowAsync();
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				var dialog = new ContentDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
+				return (IDialogResult)(int)await dialog.ShowAsync();
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
 		}
 
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) => Root?.FrameContent.Navigate(GetPage(page), parameter, CreateTransition<NavigationTransitionInfo>(transition));

@@ -16,6 +16,7 @@
 
 	<Page.Resources>
 		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
+		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 	</Page.Resources>
 
@@ -53,7 +54,10 @@
 								<RepositionThemeTransition IsStaggeringEnabled="False" />
 							</TransitionCollection>
 						</StackPanel.Transitions>
-						<Button x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right" Command="{x:Bind Data.InstallUpdateCommand}" />
+						<Button
+							x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right"
+							Command="{x:Bind Data.InstallUpdateCommand}"
+							IsEnabled="{x:Bind Data.InstallUpdateCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 					</StackPanel>
 					<muxc:InfoBar
 						Title="{x:Bind Data.UpdateMessage, Mode=OneWay}"
