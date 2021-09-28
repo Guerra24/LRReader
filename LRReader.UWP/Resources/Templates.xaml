@@ -111,7 +111,7 @@
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
 							<Flyout x:Name="TagsFlyout" FlyoutPresenterStyle="{StaticResource TagsFlyoutStylePresenter}">
-								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
+								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" MaxTagsWidth="300" />
 							</Flyout>
 						</Grid.Resources>
 						<Grid.ContextFlyout>
@@ -223,7 +223,7 @@
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
 							<Flyout x:Name="TagsFlyout" FlyoutPresenterStyle="{StaticResource TagsFlyoutStylePresenter}">
-								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
+								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" MaxTagsWidth="300" />
 							</Flyout>
 						</Grid.Resources>
 						<Grid.ContextFlyout>
