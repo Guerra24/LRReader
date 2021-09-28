@@ -39,9 +39,7 @@ namespace LRReader.UWP.Views.Items
 		private TextBlock Title;
 		private Grid TagsGrid;
 		private Image Thumbnail;
-		private Popup TagsPopup;
-		private Storyboard ShowPopup;
-		private Storyboard HidePopup;
+		private Flyout TagsFlyout;
 
 		// Bookmark
 		private TextBlock Progress;
@@ -67,9 +65,7 @@ namespace LRReader.UWP.Views.Items
 			Title = GetTemplateChild("Title") as TextBlock;
 			TagsGrid = GetTemplateChild("TagsGrid") as Grid;
 			Thumbnail = GetTemplateChild("Thumbnail") as Image;
-			TagsPopup = GetTemplateChild("TagsPopup") as Popup;
-			ShowPopup = GetTemplateChild("ShowPopup") as Storyboard;
-			HidePopup = GetTemplateChild("HidePopup") as Storyboard;
+			TagsFlyout = GetTemplateChild("TagsFlyout") as Flyout;
 
 			Progress = GetTemplateChild("Progress") as TextBlock;
 			Parallax = GetTemplateChild("Parallax") as ParallaxView;
@@ -193,13 +189,14 @@ namespace LRReader.UWP.Views.Items
 		{
 			_open = true;
 			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
-			if (_open)
+			if (_open && !TagsFlyout.IsOpen)
 			{
 				_open = false;
-				TagsPopup.ClampPopup(PopupOffset);
-				TagsPopup.IsOpen = true;
-				if (Service.Platform.AnimationsEnabled)
-					ShowPopup.Begin();
+				TagsFlyout.ShowAt(TagsGrid, new FlyoutShowOptions {
+					Position = e.GetCurrentPoint(TagsGrid).Position,
+					Placement = FlyoutPlacementMode.Right,
+					ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway
+				});
 			}
 		}
 
@@ -208,31 +205,14 @@ namespace LRReader.UWP.Views.Items
 			if (_open)
 			{
 				_open = false;
-				TagsPopup.IsOpen = false;
 			}
-			if (TagsPopup.IsOpen)
+			/*if (TagsPopup.IsOpen)
 			{
 				if (Service.Platform.AnimationsEnabled)
 					HidePopup.Begin();
 				else
 					TagsPopup.IsOpen = false;
-			}
-		}
-
-		public void TagsGrid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
-		{
-			if (_open)
-			{
-				_open = false;
-				TagsPopup.IsOpen = false;
-			}
-			if (TagsPopup.IsOpen)
-				HidePopup.Begin();
-		}
-
-		public void HidePopup_Completed(object sender, object e)
-		{
-			TagsPopup.IsOpen = false;
+			}*/
 		}
 
 		private void Control_PointerPressed(object sender, PointerRoutedEventArgs e)

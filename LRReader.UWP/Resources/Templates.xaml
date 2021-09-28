@@ -110,12 +110,9 @@
 						<Grid.Resources>
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
-							<Storyboard x:Name="ShowPopup">
-								<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="TagsPopup" />
-							</Storyboard>
-							<Storyboard x:Name="HidePopup" Completed="{x:Bind HidePopup_Completed}">
-								<PopOutThemeAnimation Storyboard.TargetName="TagsPopup" />
-							</Storyboard>
+							<Flyout x:Name="TagsFlyout" FlyoutPresenterStyle="{StaticResource TagsFlyoutStylePresenter}">
+								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
+							</Flyout>
 						</Grid.Resources>
 						<Grid.ContextFlyout>
 							<MenuFlyout>
@@ -158,28 +155,6 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 						<Grid x:Name="Overlay">
-							<Popup x:Name="TagsPopup" HorizontalOffset="{x:Bind PopupOffset}" IsHitTestVisible="False">
-								<Grid
-									Padding="4" Windows10version1903:Translation="0,0,32"
-									Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-									BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-									BorderThickness="1"
-									CornerRadius="{ThemeResource OverlayCornerRadius}"
-									IsHitTestVisible="False">
-									<Windows10version1903:Grid.Shadow>
-										<Windows10version1903:ThemeShadow />
-									</Windows10version1903:Grid.Shadow>
-									<muxc:ItemsRepeaterScrollHost>
-										<!--
-											For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
-											item display... idk whatever...
-										-->
-										<ScrollViewer>
-											<controls:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
-										</ScrollViewer>
-									</muxc:ItemsRepeaterScrollHost>
-								</Grid>
-							</Popup>
 							<Grid Width="95">
 								<Image
 									x:Name="Thumbnail" Width="100" Height="137.5"
@@ -189,25 +164,23 @@
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 							</Grid>
 							<Grid
-								Margin="2,0,0,2" HorizontalAlignment="Left"
-								VerticalAlignment="Bottom"
-								Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}"
+								Margin="2,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"
 								Background="{ThemeResource GridOverGridBackground}"
 								BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
 								BorderThickness="1"
-								CornerRadius="{ThemeResource ControlCornerRadius}">
+								CornerRadius="{ThemeResource ControlCornerRadius}"
+								Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}">
 								<TextBlock Padding="6,2" FontSize="16">
 									<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.BookmarkedArchive.totalPages, Mode=OneWay}" />
 								</TextBlock>
 							</Grid>
 							<Grid
-								Margin="0,0,2,2" HorizontalAlignment="Right"
-								VerticalAlignment="Bottom"
-								Visibility="{x:Bind ViewModel.IsNew, Mode=OneWay}"
+								Margin="0,0,2,2" HorizontalAlignment="Right" VerticalAlignment="Bottom"
 								Background="{ThemeResource GridOverGridBackground}"
 								BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
 								BorderThickness="1"
-								CornerRadius="{ThemeResource ControlCornerRadius}">
+								CornerRadius="{ThemeResource ControlCornerRadius}"
+								Visibility="{x:Bind ViewModel.IsNew, Mode=OneWay}">
 								<TextBlock x:Uid="/Items/Archive/New" Padding="6,2" FontSize="16" />
 							</Grid>
 						</Grid>
@@ -224,7 +197,8 @@
 								ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
 							<Grid
 								x:Name="TagsGrid" Grid.Row="1" Background="Transparent"
-								PointerEntered="{x:Bind TagsGrid_PointerEntered}" PointerExited="{x:Bind TagsGrid_PointerExited}">
+								PointerEntered="{x:Bind TagsGrid_PointerEntered}"
+								PointerExited="{x:Bind TagsGrid_PointerExited}">
 								<TextBlock
 									HorizontalAlignment="Center" VerticalAlignment="Center"
 									Foreground="{ThemeResource ArchiveTagsLine}"
@@ -248,12 +222,9 @@
 						<Grid.Resources>
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
-							<Storyboard x:Name="ShowPopup">
-								<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="TagsPopup" />
-							</Storyboard>
-							<Storyboard x:Name="HidePopup" Completed="{x:Bind HidePopup_Completed}">
-								<PopOutThemeAnimation Storyboard.TargetName="TagsPopup" />
-							</Storyboard>
+							<Flyout x:Name="TagsFlyout" FlyoutPresenterStyle="{StaticResource TagsFlyoutStylePresenter}">
+								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
+							</Flyout>
 						</Grid.Resources>
 						<Grid.ContextFlyout>
 							<MenuFlyout>
@@ -303,28 +274,6 @@
 							TextTrimming="CharacterEllipsis"
 							ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}" />
 						<Grid x:Name="Overlay" Grid.Row="1">
-							<Popup x:Name="TagsPopup" HorizontalOffset="{x:Bind PopupOffset}" IsHitTestVisible="False">
-								<Grid
-									Padding="4" Windows10version1903:Translation="0,0,32"
-									Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-									BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-									BorderThickness="1"
-									CornerRadius="{ThemeResource OverlayCornerRadius}"
-									IsHitTestVisible="False">
-									<Windows10version1903:Grid.Shadow>
-										<Windows10version1903:ThemeShadow />
-									</Windows10version1903:Grid.Shadow>
-									<muxc:ItemsRepeaterScrollHost>
-										<!--
-											For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
-											item display... idk whatever...
-										-->
-										<ScrollViewer x:Name="TagsPopupScroll">
-											<controls:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" />
-										</ScrollViewer>
-									</muxc:ItemsRepeaterScrollHost>
-								</Grid>
-							</Popup>
 							<Image
 								x:Name="Thumbnail" Width="200" Height="275"
 								HorizontalAlignment="Center" />
@@ -365,7 +314,6 @@
 						</Grid>
 						<Grid
 							x:Name="TagsGrid" Grid.Row="2"
-							PointerCaptureLost="{x:Bind TagsGrid_PointerCaptureLost}"
 							PointerEntered="{x:Bind TagsGrid_PointerEntered}"
 							PointerExited="{x:Bind TagsGrid_PointerExited}">
 							<TextBlock
@@ -556,6 +504,39 @@
 							</muxc:ItemsRepeater.Layout>
 						</muxc:ItemsRepeater>
 					</StackPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="TagsFlyoutStylePresenter" BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+		<Setter Property="Padding" Value="4" />
+		<Setter Property="MinHeight" Value="0" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="FlyoutPresenter">
+					<Border
+						Background="{TemplateBinding Background}"
+						BackgroundSizing="InnerBorderEdge"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						CornerRadius="{TemplateBinding CornerRadius}">
+						<ScrollViewer
+							x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw"
+							HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+							HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+							VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+							VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+							ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+							<ContentPresenter
+								Margin="{TemplateBinding Padding}"
+								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								Content="{TemplateBinding Content}"
+								ContentTemplate="{TemplateBinding ContentTemplate}"
+								ContentTransitions="{TemplateBinding ContentTransitions}" />
+						</ScrollViewer>
+					</Border>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

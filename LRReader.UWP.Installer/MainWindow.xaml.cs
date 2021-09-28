@@ -134,30 +134,40 @@ namespace LRReader.UWP.Installer
 			{
 				done = await Task.Run(async () =>
 				{
-					var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
-					Dispatcher.Invoke(() =>
+					try
 					{
-						Progress.IsIndeterminate = false;
-						TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
-					});
-					installTask.Progress = (asyncInfo, prog) => Dispatcher.Invoke(() => TaskbarProgress.ProgressValue = Progress.Value = prog.percentage / 100d);
-					var result = await installTask.AsTask();
-					Dispatcher.Invoke(() =>
-					{
-						Progress.Visibility = Visibility.Collapsed;
-						TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
-					});
-					if (result.IsRegistered)
-						return true;
-					else
-					{
+						var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 						Dispatcher.Invoke(() =>
 						{
-							TitleText.Visibility = Visibility.Collapsed;
-							Error.Text = result.ErrorText;
+							Progress.IsIndeterminate = false;
+							TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
 						});
+						installTask.Progress = (asyncInfo, prog) => Dispatcher.Invoke(() => TaskbarProgress.ProgressValue = Progress.Value = prog.percentage / 100d);
+						var result = await installTask.AsTask();
+						Dispatcher.Invoke(() =>
+						{
+							Progress.Visibility = Visibility.Collapsed;
+							TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
+						});
+						if (result.IsRegistered)
+							return true;
+						else
+						{
+							Dispatcher.Invoke(() =>
+							{
+								TitleText.Visibility = Visibility.Collapsed;
+								Error.Text = result.ErrorText;
+							});
+						}
+						return false;
 					}
-					return false;
+					catch (Exception)
+					{
+						// Fallback to appinstaller in case of failure for whatever reason...
+						Process.Start($"ms-appinstaller:?source={Variables.AppInstallerUrl}");
+						Dispatcher.Invoke(() => Close());
+						return false;
+					}
 				});
 			}
 			if (done)
@@ -184,7 +194,14 @@ namespace LRReader.UWP.Installer
 			var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
 			if (pkg != null)
 			{
-				await pm.RemovePackageAsync(pkg.Id.FullName);
+				try
+				{
+					await pm.RemovePackageAsync(pkg.Id.FullName);
+				}
+				catch (Exception)
+				{
+					Error.Text = "Unable to uninstall, please uninstall from start menu";
+				}
 			}
 			if (await LaunchAdmin("--uninstall-cert") == -99)
 				Error.Text = "Admin permissions are required for certificate removal";

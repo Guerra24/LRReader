@@ -53,8 +53,8 @@
 							<TextBlock Foreground="{ThemeResource TextFillColorPrimaryBrush}" Text="{x:Bind Namespace}" />
 						</Grid>
 						<GridView
-							Grid.Column="1" Margin="0" Padding="0"
-							IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
+							Grid.Column="1" MaxWidth="300" Margin="0"
+							Padding="0" IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
 							ItemsSource="{x:Bind Tags}"
 							SelectionMode="None">
 							<GridView.ItemTemplate>
