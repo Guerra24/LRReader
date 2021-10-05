@@ -80,7 +80,7 @@ namespace LRReader.Shared.Services
 		{
 			var tab = GetTabFromId(id);
 			if (tab != null)
-				TabItems.Remove(tab);
+				CloseTab(tab);
 		}
 
 		public void CloseAllTabs()

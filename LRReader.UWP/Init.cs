@@ -3,6 +3,9 @@ using LRReader.UWP.Services;
 using LRReader.UWP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Web.WebView2.Core;
+using System;
 
 namespace LRReader.UWP
 {
@@ -30,6 +33,23 @@ namespace LRReader.UWP
 				collection.AddSingleton<SettingsPageViewModel>();
 				collection.AddSingleton<FirstRunPageViewModel>();
 			});
+		}
+
+		public static bool CanUseWebView2()
+		{
+			bool canUseWebView2 = SystemInformation.Instance.DeviceFamily.Equals("Windows.Desktop");
+			if (canUseWebView2)
+			{
+				try
+				{
+					CoreWebView2Environment.GetAvailableBrowserVersionString();
+				}
+				catch (Exception)
+				{
+					canUseWebView2 = false;
+				}
+			}
+			return canUseWebView2;
 		}
 	}
 }

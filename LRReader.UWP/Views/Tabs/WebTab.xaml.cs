@@ -22,9 +22,13 @@ namespace LRReader.UWP.Views.Tabs
 			if (loaded)
 				return;
 			loaded = true;
-			TabContent.LoadPage(page, this.CustomTabId);
+			TabContent.Navigate(page, CustomTabId);
 		}
 
-		private void RefreshButton_Click(object sender, RoutedEventArgs e) => TabContent.RefreshPage();
+		public override void Unload()
+		{
+			base.Unload();
+			TabContent.Close();
+		}
 	}
 }

@@ -33,7 +33,6 @@
 		</Style>
 	</UserControl.Resources>
 
-
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
@@ -53,8 +52,8 @@
 							<TextBlock Foreground="{ThemeResource TextFillColorPrimaryBrush}" Text="{x:Bind Namespace}" />
 						</Grid>
 						<GridView
-							x:Name="TagsList" Grid.Column="1" Margin="0"
-							Padding="0" IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
+							Grid.Column="1" Margin="0" Padding="0"
+							IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
 							ItemsSource="{x:Bind Tags}"
 							Loaded="TagsList_Loaded" SelectionMode="None">
 							<GridView.ItemTemplate>
