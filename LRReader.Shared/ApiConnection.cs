@@ -110,8 +110,7 @@ namespace LRReader.Shared
 				}
 				catch (Exception e)
 				{
-					// Disable until that *clone* is down
-					/*var properties = new Dictionary<string, string>
+					var properties = new Dictionary<string, string>
 					{
 						{ "Path", restResponse.ResponseUri?.PathAndQuery ?? "" },
 						{ "Code", restResponse.StatusCode.ToString() }
@@ -126,7 +125,7 @@ namespace LRReader.Shared
 					{
 						ErrorAttachmentLog.AttachmentWithBinary(json, "input.json.bz2", "application/x-bzip2")
 					};
-					Crashes.TrackError(e, properties, attachments); // We are getting bad data from the instance, send stack trace*/
+					Crashes.TrackError(e, properties, attachments); // We are getting bad data from the instance, send stack trace
 					return default;
 				}
 			});
@@ -158,7 +157,7 @@ namespace LRReader.Shared
 				}
 				catch (Exception e)
 				{
-					/*var properties = new Dictionary<string, string>
+					var properties = new Dictionary<string, string>
 					{
 						{ "Path", restResponse.ResponseUri?.PathAndQuery ?? "" },
 						{ "Code", restResponse.StatusCode.ToString() }
@@ -167,7 +166,7 @@ namespace LRReader.Shared
 					{
 						ErrorAttachmentLog.AttachmentWithText(restResponse.Content, "error-response.txt")
 					};
-					Crashes.TrackError(e, properties, attachments);*/
+					Crashes.TrackError(e, properties, attachments);
 					return null;
 				}
 			});
@@ -186,7 +185,7 @@ namespace LRReader.Shared
 			return error;
 		}
 
-		public static byte[] CompressData(string data)
+		public static byte[]? CompressData(string data)
 		{
 			if (data == null)
 				return null;

@@ -54,8 +54,8 @@ namespace LRReader.UWP
 				root.UpdateThemeColors();
 				(Service.Platform as UWPlatformService).SetRoot(root);
 
-				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");
+				/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");*/
 
 				((SolidColorBrush)this.Resources["CustomReaderBackground"]).Color = ColorHelper.ToColor(Settings.ReaderBackground);
 
