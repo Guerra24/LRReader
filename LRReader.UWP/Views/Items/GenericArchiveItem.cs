@@ -1,9 +1,7 @@
-﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,7 +16,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using ParallaxView = Microsoft.UI.Xaml.Controls.ParallaxView;
 
@@ -192,7 +189,8 @@ namespace LRReader.UWP.Views.Items
 			if (_open && !TagsFlyout.IsOpen)
 			{
 				_open = false;
-				TagsFlyout.ShowAt(TagsGrid, new FlyoutShowOptions {
+				TagsFlyout.ShowAt(TagsGrid, new FlyoutShowOptions
+				{
 					Position = e.GetCurrentPoint(TagsGrid).Position,
 					Placement = FlyoutPlacementMode.Right,
 					ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway
@@ -206,13 +204,6 @@ namespace LRReader.UWP.Views.Items
 			{
 				_open = false;
 			}
-			/*if (TagsPopup.IsOpen)
-			{
-				if (Service.Platform.AnimationsEnabled)
-					HidePopup.Begin();
-				else
-					TagsPopup.IsOpen = false;
-			}*/
 		}
 
 		private void Control_PointerPressed(object sender, PointerRoutedEventArgs e)

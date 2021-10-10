@@ -51,9 +51,10 @@ namespace LRReader.Shared.Services
 						}
 					}
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
-					Crashes.TrackError(e);
+					//Crashes.TrackError(e);
+					// No need to track this
 				}
 				return Size.Empty;
 			});

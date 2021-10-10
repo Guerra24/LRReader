@@ -45,12 +45,15 @@ namespace LRReader.Shared.Services
 
 		public async Task<bool> Validate()
 		{
+			await Crashes.SetEnabledAsync(false); // Disable to prevent false-positive errors
+
 			var archives = await ArchivesProvider.Validate();
 			var categories = await CategoriesProvider.Validate();
 			var database = await DatabaseProvider.Validate();
 
 			if (archives && categories && database)
 			{
+				await Crashes.SetEnabledAsync(Settings.CrashReporting);
 				Settings.Profile.AcceptedDisclaimer = false;
 				Settings.SaveProfiles();
 				return true;

@@ -206,6 +206,11 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectRoamed("AutoLogin", true);
 			set => SettingsStorage.StoreObjectRoamed("AutoLogin", value);
 		}
+		public bool CrashReporting
+		{
+			get => SettingsStorage.GetObjectLocal("CrashReporting", true);
+			set => SettingsStorage.StoreObjectLocal("CrashReporting", value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal

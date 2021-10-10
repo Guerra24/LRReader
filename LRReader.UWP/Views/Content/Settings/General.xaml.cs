@@ -1,11 +1,6 @@
-﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
+﻿using LRReader.UWP.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.AppCenter.Crashes;
-using System;
-using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -45,7 +40,12 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private async void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
 		{
-			await Crashes.SetEnabledAsync((sender as ToggleSwitch).IsOn);
+			if (!Data.SettingsManager.Profile.AcceptedDisclaimer)
+			{
+				var value = (sender as ToggleSwitch).IsOn;
+				Data.SettingsManager.CrashReporting = value;
+				await Crashes.SetEnabledAsync(value);
+			}
 		}
 
 		private async void TrackCrashes_Loading(FrameworkElement sender, object args)

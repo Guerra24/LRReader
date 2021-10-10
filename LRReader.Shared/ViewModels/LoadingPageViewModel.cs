@@ -131,14 +131,6 @@ namespace LRReader.Shared.ViewModels
 				await Reload();
 				return;
 			}
-
-			if (!await Api.Validate())
-			{
-				await Reload(0.5);
-				return;
-			}
-
-			Api.ServerInfo = serverInfo;
 			if (serverInfo.version < Updates.MIN_VERSION)
 			{
 				Status = Platform.GetLocalizedString("Pages/LoadingPage/InstanceNotSupported").AsFormat(serverInfo.version, Updates.MIN_VERSION);
@@ -158,6 +150,14 @@ namespace LRReader.Shared.ViewModels
 				await Reload();
 				return;
 			}
+
+			if (!await Api.Validate())
+			{
+				await Reload(0.5);
+				return;
+			}
+
+			Api.ServerInfo = serverInfo;
 			await Archives.ReloadArchives();
 			Api.ControlFlags.Check(serverInfo);
 			Active = false;
