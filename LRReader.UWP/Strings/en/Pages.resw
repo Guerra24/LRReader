@@ -165,6 +165,12 @@
   <data name="LoadingPage.InstanceNotSupported" xml:space="preserve">
     <value>Version {0} not supported. Please update your LANraragi instance to {1}</value>
   </data>
+  <data name="LoadingPage.InvalidAddress" xml:space="preserve">
+    <value>An invalid address was detected</value>
+  </data>
+  <data name="LoadingPage.InvalidAddressSub" xml:space="preserve">
+    <value>This should never happen</value>
+  </data>
   <data name="LoadingPage.InvalidKey" xml:space="preserve">
     <value>Invalid or missing API key</value>
   </data>

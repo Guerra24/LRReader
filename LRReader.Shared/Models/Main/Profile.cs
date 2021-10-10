@@ -14,6 +14,7 @@ namespace LRReader.Shared.Models.Main
 		public string ServerAddress { get; set; }
 		public string ServerApiKey { get; set; }
 		public List<BookmarkedArchive> Bookmarks { get; set; }
+		public bool AcceptedDisclaimer { get; set; }
 
 		[JsonIgnore]
 		public bool HasApiKey

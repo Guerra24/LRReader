@@ -165,6 +165,12 @@
   <data name="LoadingPage.InstanceNotSupported" xml:space="preserve">
     <value>Versión {0} no soportada. Actualice su instancia de LANraragi a {1}</value>
   </data>
+  <data name="LoadingPage.InvalidAddress" xml:space="preserve">
+    <value>Se ha detectado una dirección no válida</value>
+  </data>
+  <data name="LoadingPage.InvalidAddressSub" xml:space="preserve">
+    <value>Esto no debería ocurrir nunca</value>
+  </data>
   <data name="LoadingPage.InvalidKey" xml:space="preserve">
     <value>Falta la clave o no es válida</value>
   </data>

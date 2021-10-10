@@ -13,6 +13,22 @@ namespace LRReader.Shared.Providers
 	public static class DatabaseProvider
 	{
 
+		public static async Task<bool> Validate()
+		{
+			var client = Api.GetClient();
+
+			var rq = new RestRequest("api/database/stats");
+
+			var r = await client.ExecuteAsync(rq, Method.HEAD);
+
+			if (r.StatusCode != HttpStatusCode.OK)
+				return false;
+
+			var decoded = GetTagStats();
+
+			return decoded != null;
+		}
+
 		public static async Task<List<TagStats>> GetTagStats()
 		{
 			var client = Api.GetClient();

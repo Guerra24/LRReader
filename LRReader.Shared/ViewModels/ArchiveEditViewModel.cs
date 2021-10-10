@@ -229,7 +229,7 @@ namespace LRReader.Shared.ViewModels
 		private void ReloadTagsList(string tags)
 		{
 			TagsList.Clear();
-			foreach (var t in tags.Split(',').OrderByDescending(t => t.Contains(":")).ThenBy(t => t.Trim()))
+			foreach (var t in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).OrderByDescending(t => t.Contains(":")).ThenBy(t => t.Trim()))
 				TagsList.Add(ColorTag(new EditableTag { Tag = t.Trim(), Command = TagCommand }));
 			TagsList.Add(new AddTag { Command = TagCommand });
 			Tags = BuildTags();

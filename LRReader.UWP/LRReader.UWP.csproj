@@ -203,6 +203,9 @@
     <Compile Include="Views\Dialogs\MarkdownDialog.xaml.cs">
       <DependentUpon>MarkdownDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\ValidateApiDialog.xaml.cs">
+      <DependentUpon>ValidateApiDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\ArchiveHitItem.xaml.cs">
       <DependentUpon>ArchiveHitItem.xaml</DependentUpon>
     </Compile>
@@ -498,6 +501,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\MarkdownDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ValidateApiDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

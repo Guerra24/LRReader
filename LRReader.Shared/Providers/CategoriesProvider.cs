@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using RestSharp;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using static LRReader.Shared.Services.Service;
 
@@ -10,6 +11,22 @@ namespace LRReader.Shared.Providers
 {
 	public static class CategoriesProvider
 	{
+
+		public static async Task<bool> Validate()
+		{
+			var client = Api.GetClient();
+
+			var rq = new RestRequest("api/categories");
+
+			var r = await client.ExecuteAsync(rq, Method.HEAD);
+
+			if (r.StatusCode != HttpStatusCode.OK)
+				return false;
+
+			var decoded = GetCategories();
+
+			return decoded != null;
+		}
 
 		public static async Task<List<Category>> GetCategories()
 		{

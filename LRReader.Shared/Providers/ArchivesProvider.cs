@@ -14,6 +14,22 @@ namespace LRReader.Shared.Providers
 	public static class ArchivesProvider
 	{
 
+		public static async Task<bool> Validate()
+		{
+			var client = Api.GetClient();
+
+			var rq = new RestRequest("api/archives");
+
+			var r = await client.ExecuteAsync(rq, Method.HEAD);
+
+			if (r.StatusCode != HttpStatusCode.OK)
+				return false;
+
+			var decoded = GetArchives();
+
+			return decoded != null;
+		}
+
 		public static async Task<List<Archive>> GetArchives()
 		{
 			var client = Api.GetClient();

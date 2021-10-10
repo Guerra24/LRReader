@@ -72,8 +72,8 @@
 						<Button x:Uid="/Settings/General/ClearThumbCache" Command="{x:Bind Data.ClearThumbnailCacheCommand}" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
 					</StackPanel>
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;">
-					<ToggleSwitch Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
+				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;" IsEnabled="{x:Bind Data.SettingsManager.Profile.AcceptedDisclaimer, Converter={StaticResource NegateBoolConverter}}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.Profile.AcceptedDisclaimer, Converter={StaticResource NegateBoolConverter}}" Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
 				</controls:ModernInput>
 			</controls:ModernGroup>
 		</StackPanel>

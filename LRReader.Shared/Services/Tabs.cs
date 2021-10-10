@@ -14,7 +14,6 @@ namespace LRReader.Shared.Services
 
 	public partial class TabsService : ObservableObject
 	{
-		private readonly ApiService Api;
 		private readonly IDispatcherService Dispatcher;
 
 		public ObservableCollection<ICustomTab> TabItems { get; } = new ObservableCollection<ICustomTab>();
@@ -27,13 +26,10 @@ namespace LRReader.Shared.Services
 		private bool _fullscreen = false;
 		public bool Windowed => !_fullscreen;
 
-		public ControlFlags ControlFlags => Api.ControlFlags;
-
 		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
 
-		public TabsService(ApiService api, IDispatcherService dispatcher)
+		public TabsService(IDispatcherService dispatcher)
 		{
-			Api = api;
 			Dispatcher = dispatcher;
 		}
 

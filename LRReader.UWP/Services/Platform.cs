@@ -62,6 +62,7 @@ namespace LRReader.UWP.Services
 			MapDialogToType(Dialog.CreateCategory, typeof(CreateCategory));
 			MapDialogToType(Dialog.ProgressConflict, typeof(ProgressConflict));
 			MapDialogToType(Dialog.ServerProfile, typeof(ServerProfileDialog));
+			MapDialogToType(Dialog.ValidateApi, typeof(ValidateApiDialog));
 
 			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });

@@ -117,6 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApiValidation.Archives.Text" xml:space="preserve">
+    <value>Archivos</value>
+  </data>
+  <data name="ApiValidation.Categories.Text" xml:space="preserve">
+    <value>Categorías</value>
+  </data>
+  <data name="ApiValidation.Database.Text" xml:space="preserve">
+    <value>Base de datos</value>
+  </data>
+  <data name="ApiValidation.Dialog.PrimaryButtonText" xml:space="preserve">
+    <value>Aceptar y continuar</value>
+  </data>
+  <data name="ApiValidation.Dialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ApiValidation.Dialog.Title" xml:space="preserve">
+    <value>Validación de la API</value>
+  </data>
+  <data name="ApiValidation.PassTests.Text" xml:space="preserve">
+    <value>El perfil seleccionado no ha pasado una o más de las siguientes pruebas:</value>
+  </data>
+  <data name="ApiValidation.Terms.Text" xml:space="preserve">
+    <value>Si continúas, aceptas que no se proporcionará asistencia y que los informes de errores estarán desactivados durante la sesión.
+Cualquier crash, error o falta de datos es causado por el sitio web, NO por la aplicación.</value>
+  </data>
   <data name="CategoryArchive.Dialog.PrimaryButtonText" xml:space="preserve">
     <value>Listo</value>
   </data>

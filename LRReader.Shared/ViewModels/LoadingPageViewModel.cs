@@ -42,11 +42,11 @@ namespace LRReader.Shared.ViewModels
 			SettingsStorage = settingsStorage;
 		}
 
-		private async Task Reload()
+		private async Task Reload(double time = 5)
 		{
 			Active = false;
 			Animate = true;
-			await Task.Delay(TimeSpan.FromSeconds(5));
+			await Task.Delay(TimeSpan.FromSeconds(time));
 			Status = "";
 			StatusSub = "";
 			Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
@@ -102,7 +102,13 @@ namespace LRReader.Shared.ViewModels
 			StatusSub = "";
 			Retry = false;
 			Active = true;
-			Api.RefreshSettings(Settings.Profile);
+			if (!Api.RefreshSettings(Settings.Profile))
+			{
+				Status = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddress");
+				StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddressSub");
+				await Reload();
+				return;
+			}
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
@@ -125,6 +131,13 @@ namespace LRReader.Shared.ViewModels
 				await Reload();
 				return;
 			}
+
+			if (!await Api.Validate())
+			{
+				await Reload(0.5);
+				return;
+			}
+
 			Api.ServerInfo = serverInfo;
 			if (serverInfo.version < Updates.MIN_VERSION)
 			{
