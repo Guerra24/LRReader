@@ -230,6 +230,12 @@ namespace LRReader.UWP.ViewModels
 				content: Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Content").AsFormat(profile.Name));
 			if (result == IDialogResult.Primary)
 				SettingsManager.Profiles.Remove(profile);
+
+			if (SettingsManager.Profiles.Count == 0)
+			{
+				Tabs.CloseAllTabs();
+				Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
+			}
 		}
 
 		[ICommand]

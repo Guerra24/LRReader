@@ -17,5 +17,5 @@
 			TintColor="{ThemeResource MicaFallback}" />
 	</Page.Resources>
 
-	<Frame x:Name="FrameContent" x:FieldModifier="public" />
+	<Frame x:Name="FrameContent" x:FieldModifier="public" IsNavigationStackEnabled="False" />
 </Page>

@@ -7,6 +7,8 @@ using LRReader.UWP.ViewModels;
 using Windows.ApplicationModel.Resources;
 using LRReader.Shared.Extensions;
 using System;
+using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -26,6 +28,9 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			// This event is getting called multiple times because the frame is not disposed
+			// causing the event to not unhook and every time a new settings tab is opened a
+			// new event is hooked causing issues due to duplicated page loading
 			var profile = e.AddedItems.FirstOrDefault() as ServerProfile;
 			if (profile == null)
 			{
@@ -55,5 +60,14 @@ namespace LRReader.UWP.Views.Content.Settings
 			}
 		}
 
+		private void ProfileSelection_Loaded(object sender, RoutedEventArgs e)
+		{
+			ProfileSelection.SelectionChanged += ComboBox_SelectionChanged;
+		}
+
+		private void ProfileSelection_Unloaded(object sender, RoutedEventArgs e)
+		{
+			ProfileSelection.SelectionChanged -= ComboBox_SelectionChanged;
+		}
 	}
 }

@@ -17,8 +17,9 @@
 						x:Name="ProfileSelection" MinWidth="120"
 						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
+						Loaded="ProfileSelection_Loaded"
 						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-						SelectionChanged="ComboBox_SelectionChanged" />
+						Unloaded="ProfileSelection_Unloaded" />
 				</controls:ModernInput>
 				<controls:ModernInput
 					x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"
