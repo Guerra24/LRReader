@@ -7,6 +7,8 @@
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
+	Loaded="ModernBasePage_Loaded"
+	Unloaded="ModernBasePage_Unloaded"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -17,9 +19,7 @@
 						x:Name="ProfileSelection" MinWidth="170"
 						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
-						Loaded="ProfileSelection_Loaded"
-						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}"
-						Unloaded="ProfileSelection_Unloaded" />
+						SelectedItem="{x:Bind Data.SettingsManager.Profile, Mode=OneWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput
 					x:Uid="/Settings/GeneralPage" Click="PageButton_Click" Glyph="&#xF8A6;"

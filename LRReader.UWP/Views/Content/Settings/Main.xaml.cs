@@ -1,14 +1,13 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.UWP.Views.Controls;
-using System.Linq;
-using Windows.UI.Xaml.Controls;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.ViewModels;
-using Windows.ApplicationModel.Resources;
-using LRReader.Shared.Extensions;
+using LRReader.UWP.Views.Controls;
 using System;
-using Windows.UI.Xaml.Navigation;
+using System.Linq;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -60,14 +59,8 @@ namespace LRReader.UWP.Views.Content.Settings
 			}
 		}
 
-		private void ProfileSelection_Loaded(object sender, RoutedEventArgs e)
-		{
-			ProfileSelection.SelectionChanged += ComboBox_SelectionChanged;
-		}
+		private void ModernBasePage_Loaded(object sender, RoutedEventArgs e) => ProfileSelection.SelectionChanged += ComboBox_SelectionChanged;
 
-		private void ProfileSelection_Unloaded(object sender, RoutedEventArgs e)
-		{
-			ProfileSelection.SelectionChanged -= ComboBox_SelectionChanged;
-		}
+		private void ModernBasePage_Unloaded(object sender, RoutedEventArgs e) => ProfileSelection.SelectionChanged -= ComboBox_SelectionChanged;
 	}
 }
