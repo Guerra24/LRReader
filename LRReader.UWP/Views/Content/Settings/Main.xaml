@@ -14,7 +14,7 @@
 			<controls:ModernGroup>
 				<controls:ModernInput x:Uid="/Settings/General/ExpanderProfile" Glyph="&#xE748;">
 					<ComboBox
-						x:Name="ProfileSelection" MinWidth="120"
+						x:Name="ProfileSelection" MinWidth="170"
 						IsEnabled="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay}"
 						ItemsSource="{x:Bind Data.SettingsManager.Profiles, Mode=OneWay}"
 						Loaded="ProfileSelection_Loaded"

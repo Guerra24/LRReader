@@ -510,4 +510,16 @@
   <data name="ProfilesPage.Description" xml:space="preserve">
     <value>Connect on startup, edit, remove</value>
   </data>
+  <data name="General.PopupLocation.Bottom" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="General.PopupLocation.Middle" xml:space="preserve">
+    <value>Middle</value>
+  </data>
+  <data name="General.PopupLocation.Top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="General.TagsPopup.Title" xml:space="preserve">
+    <value>Location of the tags pop-up</value>
+  </data>
 </root>

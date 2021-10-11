@@ -29,6 +29,10 @@ namespace LRReader.UWP.Views.Content.Settings
 			var langb = ResourceLoader.GetForCurrentView("Tabs");
 			OrderByComboBox.Items.Add(langb.GetString("Archives/OrderAsc/Text"));
 			OrderByComboBox.Items.Add(langb.GetString("Archives/OrderDesc/Text"));
+
+			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Top"));
+			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Middle"));
+			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Bottom"));
 		}
 
 		private async void PivotItem_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateThumbnailCacheSize();

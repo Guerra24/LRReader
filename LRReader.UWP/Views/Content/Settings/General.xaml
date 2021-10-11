@@ -41,7 +41,7 @@
 				<controls:ModernInput x:Uid="/Settings/General/InputSortBy" Glyph="&#xF168;">
 					<StackPanel Orientation="Horizontal">
 						<ComboBox
-							x:Uid="/Settings/General/SortBy" MinWidth="120"
+							x:Uid="/Settings/General/SortBy" MinWidth="128"
 							ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
 							SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}" />
 						<Button
@@ -52,12 +52,15 @@
 					</StackPanel>
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/OrderBy" Glyph="&#xE8CB;">
-					<ComboBox x:Name="OrderByComboBox" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+					<ComboBox x:Name="OrderByComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/TagsPopup" Glyph="&#xEC42;">
+					<ComboBox x:Name="TagsPopupComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.TagsPopup, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/App">
 				<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">
-					<ComboBox x:Name="ThemeComboBox" MinWidth="120" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+					<ComboBox x:Name="ThemeComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Glyph="&#xE8B9;">
 					<StackPanel Orientation="Horizontal">

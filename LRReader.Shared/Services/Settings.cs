@@ -211,6 +211,11 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectLocal("CrashReporting", true);
 			set => SettingsStorage.StoreObjectLocal("CrashReporting", value);
 		}
+		public TagsPopupLocation TagsPopup
+		{
+			get => (TagsPopupLocation)SettingsStorage.GetObjectRoamed("TagsPopup", (int)TagsPopupLocation.Middle);
+			set => SettingsStorage.StoreObjectRoamed("TagsPopup", (int)value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
@@ -373,5 +378,9 @@ namespace LRReader.Shared.Services
 	public enum AppTheme
 	{
 		System, Dark, Light
+	}
+	public enum TagsPopupLocation
+	{
+		Top, Middle, Bottom
 	}
 }

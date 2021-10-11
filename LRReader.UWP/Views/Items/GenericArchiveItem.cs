@@ -189,10 +189,23 @@ namespace LRReader.UWP.Views.Items
 			if (_open && !TagsFlyout.IsOpen)
 			{
 				_open = false;
+				FlyoutPlacementMode placement = FlyoutPlacementMode.Auto;
+				switch (Service.Settings.TagsPopup)
+				{
+					case TagsPopupLocation.Top:
+						placement = FlyoutPlacementMode.RightEdgeAlignedBottom;
+						break;
+					case TagsPopupLocation.Middle:
+						placement = FlyoutPlacementMode.Right;
+						break;
+					case TagsPopupLocation.Bottom:
+						placement = FlyoutPlacementMode.RightEdgeAlignedTop;
+						break;
+				}
 				TagsFlyout.ShowAt(TagsGrid, new FlyoutShowOptions
 				{
 					Position = e.GetCurrentPoint(TagsGrid).Position,
-					Placement = FlyoutPlacementMode.Right,
+					Placement = placement,
 					ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway
 				});
 			}

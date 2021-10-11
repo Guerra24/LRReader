@@ -501,4 +501,16 @@
   <data name="ProfilesPage.Description" xml:space="preserve">
     <value>Conectar al inicio, editar, eliminar</value>
   </data>
+  <data name="General.PopupLocation.Bottom" xml:space="preserve">
+    <value>Abajo</value>
+  </data>
+  <data name="General.PopupLocation.Middle" xml:space="preserve">
+    <value>Medio</value>
+  </data>
+  <data name="General.PopupLocation.Top" xml:space="preserve">
+    <value>Arriba</value>
+  </data>
+  <data name="General.TagsPopup.Title" xml:space="preserve">
+    <value>Ubicación de la ventana emergente de etiquetas</value>
+  </data>
 </root>
