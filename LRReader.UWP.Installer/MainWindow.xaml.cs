@@ -1,4 +1,5 @@
-﻿using ModernWpf;
+﻿using Microsoft.Win32;
+using ModernWpf;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,52 +16,34 @@ using Windows.Management.Deployment;
 namespace LRReader.UWP.Installer
 {
 
-	internal enum AccentState
-	{
-		ACCENT_DISABLED = 0,
-		ACCENT_ENABLE_GRADIENT = 1,
-		ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
-		ACCENT_ENABLE_BLURBEHIND = 3,
-		ACCENT_ENABLE_ACRYLIC = 4,
-		ACCENT_INVALID_STATE = 5
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct AccentPolicy
-	{
-		public AccentState AccentState;
-		public uint AccentFlags;
-		public uint GradientColor;
-		public uint AnimationId;
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct WindowCompositionAttributeData
-	{
-		public WindowCompositionAttribute Attribute;
-		public IntPtr Data;
-		public int SizeOfData;
-	}
-
-	internal enum WindowCompositionAttribute
-	{
-		WCA_ACCENT_POLICY = 19
-	}
-
 	public partial class MainWindow : Window
 	{
-		[DllImport("user32.dll")]
-		internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
-
 		private HwndSource hwnd;
 
 		private PackageManager pm;
 
 		private bool CertFound;
 
+		private bool IsWin11 = Environment.OSVersion.Version >= new Version(10, 0, 22000, 0);
+
 		public MainWindow()
 		{
+			if (IsWin11)
+				try
+				{
+					RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+					if (registryKey.GetValue("EnableTransparency").ToString().Equals("0"))
+						IsWin11 = false;
+				}
+				catch (Exception) { IsWin11 = false; }
+
 			InitializeComponent();
+			var interop = new WindowInteropHelper(this);
+			interop.EnsureHandle();
+			hwnd = HwndSource.FromHwnd(interop.Handle);
+			SetTheme(hwnd.Handle);
+			EnableMica(hwnd.Handle);
+
 			if (Variables.AppInstallerUrl.Equals("{APP_INSTALLER_URL}"))
 				Variables.AppInstallerUrl = "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller";
 			if (Variables.Version.Equals("{APP_VERSION}"))
@@ -79,15 +62,11 @@ namespace LRReader.UWP.Installer
 				title = $"LRReader {Variables.Version}";
 			else
 				title = $"LRReader {Variables.Version.Substring(0, Variables.Version.LastIndexOf('.'))}";
-
 			Title = WindowTitle.Text = title;
 		}
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			hwnd = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-			SetAcrylic(hwnd.Handle);
-
 			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
 			{
 				Error.Text = "LRReader requires Windows 10 1809";
@@ -227,31 +206,16 @@ namespace LRReader.UWP.Installer
 		private void Window_ActualThemeChanged(object sender, RoutedEventArgs e)
 		{
 			if (hwnd != null)
-				SetAcrylic(hwnd.Handle);
+				SetTheme(hwnd.Handle);
 		}
 
-		private void SetAcrylic(IntPtr hwnd)
+		private void EnableMica(IntPtr hwnd)
 		{
-			if (Environment.OSVersion.Version < new Version(10, 0, 22000, 0))
-			{
-				if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
-				{
-					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#202020"));
-					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2C2C2C"));
-				}
-				else
-				{
-					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F3F3F3"));
-					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F9F9F9"));
-				}
+			if (!IsWin11)
 				return;
-			}
 			var accent = new AccentPolicy();
 			accent.AccentState = AccentState.ACCENT_ENABLE_ACRYLIC;
-			if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
-				accent.GradientColor = 0xD92C2C2C;
-			else
-				accent.GradientColor = 0xA9FCFCFC;
+			accent.GradientColor = 0x00000000;
 
 			var accentStructSize = Marshal.SizeOf(accent);
 
@@ -263,9 +227,38 @@ namespace LRReader.UWP.Installer
 			data.SizeOfData = accentStructSize;
 			data.Data = accentPtr;
 
-			SetWindowCompositionAttribute(hwnd, ref data);
+			User32.SetWindowCompositionAttribute(hwnd, ref data);
 
 			Marshal.FreeHGlobal(accentPtr);
+
+			int trueValue = 0x01;
+			Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+		}
+
+		private void SetTheme(IntPtr hwnd)
+		{
+			if (!IsWin11)
+			{
+				if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
+				{
+					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2B2B2B"));
+					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#202020"));
+				}
+				else
+				{
+					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FBFBFB"));
+					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F3F3F3"));
+				}
+			}
+			else
+			{
+				int trueValue = 0x01;
+				int falseValue = 0x00;
+				if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
+					Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
+				else
+					Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref falseValue, Marshal.SizeOf(typeof(int)));
+			}
 		}
 
 	}

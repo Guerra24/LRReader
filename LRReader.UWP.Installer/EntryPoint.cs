@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LRReader.UWP.Installer
 {
@@ -30,6 +26,8 @@ namespace LRReader.UWP.Installer
 			}
 			else
 			{
+				if (Environment.OSVersion.Version >= new Version(10, 0, 18362, 0))
+					UxTheme.SetPreferredAppMode(1);
 				var app = new App();
 				app.InitializeComponent();
 				app.Run();
