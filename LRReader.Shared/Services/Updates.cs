@@ -2,9 +2,7 @@
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
@@ -100,7 +98,7 @@ namespace LRReader.Shared.Services
 
 		public override bool CanAutoUpdate() => false;
 
-		public override Task<CheckForUpdatesResult> CheckForUpdates() => Task.Run(() => new CheckForUpdatesResult { Found = false });
+		public override Task<CheckForUpdatesResult> CheckForUpdates() => Task.Run(() => new CheckForUpdatesResult { Result = false });
 
 		public override Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null) => Task.Run(() => new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = "Stub" });
 	}

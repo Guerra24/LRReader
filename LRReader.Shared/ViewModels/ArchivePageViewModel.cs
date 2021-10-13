@@ -288,6 +288,14 @@ namespace LRReader.Shared.ViewModels
 			await Reload(true);
 		}
 
+		public async Task OpenArchive(Archive archive)
+		{
+			Group = new List<Archive>();
+			Archive = archive;
+			OnPropertyChanged("CanGoNext");
+			await Reload(true);
+		}
+
 		public void ReloadBookmarkedObject()
 		{
 			BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));

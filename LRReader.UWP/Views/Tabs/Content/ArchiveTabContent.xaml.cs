@@ -18,6 +18,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -212,6 +213,24 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_transition = false;
 		}
 
+		private async void Random_Clicked() => await Random((CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
+
+		[Microsoft.Toolkit.Mvvm.Input.ICommand]
+		private async Task Random(bool newOnly)
+		{
+			var list = Service.Archives.Archives.Where(kv => kv.Value.IsNewArchive() || !newOnly);
+			if (list.Count() <= 1)
+				return;
+			var random = new Random();
+			var item = list.ElementAt(random.Next(list.Count() - 1));
+
+			_transition = true;
+			await HideReader();
+			await Data.OpenArchive(item.Value);
+			await ShowReader();
+			_transition = false;
+		}
+
 		private async void RebuildReader()
 		{
 			int page = 0;
@@ -387,7 +406,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 					case VirtualKeyModifiers.Control:
 						e.Handled = true;
 						Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), 100, 400);
-						FitImages();
 						break;
 				}
 			}

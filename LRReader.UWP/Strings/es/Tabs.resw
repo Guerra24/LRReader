@@ -147,8 +147,14 @@
   <data name="Archive.Edit.Content" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="Archive.New.Content" xml:space="preserve">
+    <value>¡Nuevo!</value>
+  </data>
   <data name="Archive.Next.Content" xml:space="preserve">
     <value>Siguiente archivo</value>
+  </data>
+  <data name="Archive.Random.Content" xml:space="preserve">
+    <value>Aleatorio</value>
   </data>
   <data name="Archive.RemoveBookmark.CloseButtonText" xml:space="preserve">
     <value>No</value>

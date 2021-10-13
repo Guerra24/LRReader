@@ -34,19 +34,18 @@ namespace LRReader.Shared.Models
 		public Version maxSupported { get; set; }
 	}
 
-	public struct UpdateResult
+	public class UpdateResult
 	{
 		public bool Result { get; set; }
 		public int ErrorCode { get; set; }
-		public string ErrorMessage { get; set; }
+		public string? ErrorMessage { get; set; }
 	}
 
-	public struct CheckForUpdatesResult
+	public class CheckForUpdatesResult : UpdateResult
 	{
-		public bool Found { get; set; }
 		[JsonConverter(typeof(VersionConverter))]
-		public Version Target { get; set; }
-		public string Link { get; set; }
+		public Version? Target { get; set; }
+		public string? Link { get; set; }
 	}
 
 	public struct UpdateChangelog

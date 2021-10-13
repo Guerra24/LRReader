@@ -522,4 +522,7 @@
   <data name="General.TagsPopup.Title" xml:space="preserve">
     <value>Location of the tags pop-up</value>
   </data>
+  <data name="Updates.NoChangelog" xml:space="preserve">
+    <value>An update was detected but an error occurred while trying to load the changelog</value>
+  </data>
 </root>

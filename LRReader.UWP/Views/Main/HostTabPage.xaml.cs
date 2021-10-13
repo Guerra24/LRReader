@@ -72,8 +72,9 @@ namespace LRReader.UWP.Views.Main
 			});
 
 			var info = await Updates.CheckForUpdates();
-			if (info.Found)
-				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target), lang.GetString("HostTab/Update2"), 0);
+
+			if (info.Result)
+				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target?.ToString() ?? "Nightly"), lang.GetString("HostTab/Update2"), 0);
 
 			await ShowWhatsNew();
 		}

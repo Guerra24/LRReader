@@ -59,19 +59,19 @@
 							Command="{x:Bind Data.InstallUpdateCommand}"
 							IsEnabled="{x:Bind Data.InstallUpdateCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 					</StackPanel>
-					<muxc:InfoBar
-						Title="{x:Bind Data.UpdateMessage, Mode=OneWay}"
-						IsClosable="False"
-						IsOpen="{x:Bind Data.UpdateMessage, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
-						Message="{x:Bind Data.UpdateError, Mode=OneWay}"
-						Severity="Error">
-						<muxc:InfoBar.Transitions>
-							<TransitionCollection>
-								<RepositionThemeTransition IsStaggeringEnabled="False" />
-							</TransitionCollection>
-						</muxc:InfoBar.Transitions>
-					</muxc:InfoBar>
 				</StackPanel>
+				<muxc:InfoBar
+					Title="{x:Bind Data.UpdateMessage, Mode=OneWay}"
+					IsClosable="False"
+					IsOpen="{x:Bind Data.UpdateMessage, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
+					Message="{x:Bind Data.UpdateError, Mode=OneWay}"
+					Severity="Error">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+				</muxc:InfoBar>
 			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>

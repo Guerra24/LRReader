@@ -53,6 +53,31 @@ namespace LRReader.UWP.Extensions
 		public static ICommand GetItemClickCommand(GridView gridView) => gridView.GetValue(ItemClickCommandProperty) as ICommand;
 	}
 
+	public class KeyboardAcceleratorExt : DependencyObject
+	{
+		public static readonly DependencyProperty CommandProperty = DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(KeyboardAcceleratorExt), new PropertyMetadata(null));
+		public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.RegisterAttached("CommandParameter", typeof(object), typeof(KeyboardAcceleratorExt), new PropertyMetadata(null));
+
+		public static void SetCommand(KeyboardAccelerator ka, ICommand command)
+		{
+			ka.SetValue(CommandProperty, command);
+			ka.Invoked += (sender, e) =>
+			{
+				if (command.CanExecute(GetCommandParameter(ka)))
+				{
+					e.Handled = true;
+					command.Execute(GetCommandParameter(ka));
+				}
+			};
+		}
+
+		public static ICommand GetCommand(KeyboardAccelerator ka) => ka.GetValue(CommandProperty) as ICommand;
+
+		public static void SetCommandParameter(KeyboardAccelerator ka, object parameter) => ka.SetValue(CommandParameterProperty, parameter);
+
+		public static object GetCommandParameter(KeyboardAccelerator ka) => ka.GetValue(CommandParameterProperty);
+	}
+
 	public class Element : DependencyObject
 	{
 		public static readonly DependencyProperty ModernShadowProperty = DependencyProperty.RegisterAttached("ModernShadow", typeof(Shadow), typeof(Element), new PropertyMetadata(null));

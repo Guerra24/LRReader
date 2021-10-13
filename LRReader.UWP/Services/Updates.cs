@@ -45,12 +45,12 @@ namespace LRReader.UWP.Services
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
 			if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable || NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
-				return new CheckForUpdatesResult { Found = false };
+				return new CheckForUpdatesResult { Result = false };
 			try
 			{
 				var result = new CheckForUpdatesResult();
 				var packageUpdates = await Context.GetAppAndOptionalStorePackageUpdatesAsync();
-				result.Found = packageUpdates.Count > 0;
+				result.Result = packageUpdates.Count > 0;
 				var pack = packageUpdates.FirstOrDefault(p => p.Package.Id.FamilyName.Equals(Current.Id.FamilyName));
 				if (pack != null)
 				{
@@ -62,8 +62,8 @@ namespace LRReader.UWP.Services
 			catch (Exception e)
 			{
 				Crashes.TrackError(e);
+				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
-			return new CheckForUpdatesResult { Found = false };
 		}
 
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
@@ -114,18 +114,18 @@ namespace LRReader.UWP.Services
 			var updatesResult = await r.GetResultInternal<CheckForUpdatesResult>();
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				return new CheckForUpdatesResult { Found = false };
+				return new CheckForUpdatesResult { Result = false };
 			}
 			if (updatesResult.OK)
 			{
 				return updatesResult.Data;
 			}
-			return new CheckForUpdatesResult { Found = false };
+			return new CheckForUpdatesResult { Result = false };
 		}
 
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
-			if (!check.HasValue)
+			if (check == null)
 			{
 				Logger.LogInformation("Check is null");
 				return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
@@ -176,13 +176,13 @@ namespace LRReader.UWP.Services
 				var package = pm.FindPackageForUser(string.Empty, Current.Id.FullName);
 				var result = await package.CheckUpdateAvailabilityAsync();
 				Logger.LogInformation("Result: {0}", result.Availability);
-				return new CheckForUpdatesResult { Found = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required, Target = Platform.Version };
+				return new CheckForUpdatesResult { Result = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
 			}
 			catch (Exception e)
 			{
 				Crashes.TrackError(e);
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
-				return new CheckForUpdatesResult { Found = false };
+				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
 		}
 

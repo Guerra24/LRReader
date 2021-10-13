@@ -59,7 +59,7 @@ namespace LRReader.Shared.ViewModels
 			if (Updates.CanAutoUpdate() && Settings.AutoUpdate)
 			{
 				var update = await Updates.CheckForUpdates();
-				if (update.Found)
+				if (update.Result)
 				{
 					Updating = true;
 					// Set wasUpdate in settingstorage
@@ -69,7 +69,8 @@ namespace LRReader.Shared.ViewModels
 					if (!result.Result)
 					{
 						SettingsStorage.DeleteObjectLocal("WasUpdated");
-						Status = result.ErrorMessage;
+						if (result.ErrorMessage != null)
+							Status = result.ErrorMessage;
 						StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/UpdateErrorCode").AsFormat(result.ErrorCode);
 						await Task.Delay(TimeSpan.FromSeconds(3));
 						Status = "";

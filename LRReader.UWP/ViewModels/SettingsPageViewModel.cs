@@ -131,11 +131,21 @@ namespace LRReader.UWP.ViewModels
 		[ICommand]
 		public async Task CheckForUpdates()
 		{
+			UpdateMessage = "";
+			UpdateError = "";
 			checkResult = await Updates.CheckForUpdates();
-			if (checkResult.Found)
+			if (checkResult.Result)
 			{
-				Changelog = await Updates.GetChangelog(checkResult.Target);
+				if (checkResult.Target != null)
+					Changelog = await Updates.GetChangelog(checkResult.Target);
+				else
+					Changelog = new UpdateChangelog { Name = "", Content = Platform.GetLocalizedString("Settings/Updates/NoChangelog") };
 				ShowChangelog = true;
+			}
+			else
+			{
+				UpdateMessage = checkResult.ErrorMessage;
+				UpdateError = Platform.GetLocalizedString("Pages/LoadingPage/UpdateErrorCode").AsFormat(checkResult.ErrorCode);
 			}
 		}
 
