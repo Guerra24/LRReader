@@ -14,16 +14,21 @@
 	ui:TitleBar.ExtendViewIntoTitleBar="True"
 	ui:WindowHelper.UseModernWindowStyle="True"
 	Background="Transparent"
+	BorderThickness="0"
 	Loaded="Window_Loaded"
 	ResizeMode="NoResize"
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
 
+	<WindowChrome.WindowChrome>
+		<WindowChrome CaptionHeight="32" GlassFrameThickness="-1" UseAeroCaptionButtons="False" />
+	</WindowChrome.WindowChrome>
+
 	<Window.TaskbarItemInfo>
 		<TaskbarItemInfo x:Name="TaskbarProgress" />
 	</Window.TaskbarItemInfo>
 
-	<Grid>
+	<Grid Margin="0,1,0,0">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition />
