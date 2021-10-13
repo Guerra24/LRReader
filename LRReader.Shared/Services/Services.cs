@@ -16,7 +16,7 @@ namespace LRReader.Shared.Services
 	{
 		public static IServiceProvider Services { get; set; }
 
-		private static bool Loaded;
+		private static volatile bool Loaded;
 
 		public static void BuildServices(ConfigureServices? services = null)
 		{
@@ -66,12 +66,12 @@ namespace LRReader.Shared.Services
 		{
 			if (Loaded)
 				return;
+			Loaded = true;
 			Dispatcher.Init();
 			Platform.Init();
 			await SettingsStorage.Init();
 			await Settings.Init();
 			await Images.Init();
-			Loaded = true;
 			Logger<Service>().LogInformation("Services initialized");
 		}
 
