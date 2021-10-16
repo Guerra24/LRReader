@@ -25,9 +25,9 @@ namespace LRReader.Shared.Providers
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
 
-			var decoded = GetArchives();
-
-			return decoded != null;
+			//var decoded = GetArchives();
+			//return decoded != null;
+			return true;
 		}
 
 		public static async Task<List<Archive>> GetArchives()

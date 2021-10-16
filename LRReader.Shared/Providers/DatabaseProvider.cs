@@ -24,9 +24,9 @@ namespace LRReader.Shared.Providers
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
 
-			var decoded = GetTagStats();
-
-			return decoded != null;
+			//var decoded = GetTagStats();
+			//return decoded != null;
+			return true;
 		}
 
 		public static async Task<List<TagStats>> GetTagStats()

@@ -381,6 +381,11 @@ namespace LRReader.Shared.Services
 	}
 	public enum TagsPopupLocation
 	{
-		Top, Middle, Bottom
+		[Int(12)]
+		Top,
+		[Int(3)]
+		Middle,
+		[Int(11)]
+		Bottom
 	}
 }

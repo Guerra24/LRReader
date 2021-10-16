@@ -1,10 +1,12 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
@@ -189,19 +191,7 @@ namespace LRReader.UWP.Views.Items
 			if (_open && !TagsFlyout.IsOpen)
 			{
 				_open = false;
-				FlyoutPlacementMode placement = FlyoutPlacementMode.Auto;
-				switch (Service.Settings.TagsPopup)
-				{
-					case TagsPopupLocation.Top:
-						placement = FlyoutPlacementMode.RightEdgeAlignedBottom;
-						break;
-					case TagsPopupLocation.Middle:
-						placement = FlyoutPlacementMode.Right;
-						break;
-					case TagsPopupLocation.Bottom:
-						placement = FlyoutPlacementMode.RightEdgeAlignedTop;
-						break;
-				}
+				var placement = (FlyoutPlacementMode)typeof(TagsPopupLocation).GetMember(Service.Settings.TagsPopup.ToString())[0].GetCustomAttribute<IntAttribute>(false).Value;
 				TagsFlyout.ShowAt(TagsGrid, new FlyoutShowOptions
 				{
 					Position = e.GetCurrentPoint(TagsGrid).Position,

@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
+namespace LRReader.Shared
+{
+	[AttributeUsage(AttributeTargets.All)]
+	public class IntAttribute : Attribute
+	{
+		public int Value { get; private set; }
+
+		public IntAttribute(int value)
+		{
+			this.Value = value;
+		}
+
+	}
+}
+
 namespace LRReader.Shared.Internal
 {
 	internal static class Util
