@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Updates.Check.Content" xml:space="preserve">
+    <value>Проверить наличие обновлений</value>
+  </data>
+  <data name="Updates.Download.Content" xml:space="preserve">
+    <value>Скачать и установить</value>
+  </data>
+  <data name="Updates.DownloadNotice.Text" xml:space="preserve">
+    <value>Приложение закроется автоматически</value>
+  </data>
+  <data name="Updates.DownloadYes.Content" xml:space="preserve">
+    <value>Закрыть и обновить</value>
+  </data>
+  <data name="About.Github.Description" xml:space="preserve">
+    <value>Исходный код, предложения и поддержка</value>
+  </data>
+  <data name="About.KoFi.Description" xml:space="preserve">
+    <value>Пожертвования</value>
+  </data>
+  <data name="About.License.Content" xml:space="preserve">
+    <value>Лицензия</value>
+  </data>
+  <data name="About.Links.Text" xml:space="preserve">
+    <value>Ссылки</value>
+  </data>
+  <data name="Updates.NotFound.Title" xml:space="preserve">
+    <value>Обновлений не найдено</value>
+  </data>
+  <data name="About.Privacy.Content" xml:space="preserve">
+    <value>Политика конфиденциальности</value>
+  </data>
+  <data name="About.Supported.Text" xml:space="preserve">
+    <value>LANraragi</value>
+  </data>
+  <data name="About.Version.Text" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="AboutPage.Title" xml:space="preserve">
+    <value>О</value>
+  </data>
+  <data name="General.App.Title" xml:space="preserve">
+    <value>Приложение</value>
+  </data>
+  <data name="General.AppTheme.Dark" xml:space="preserve">
+    <value>Тёмная тема</value>
+  </data>
+  <data name="General.AppTheme.Light" xml:space="preserve">
+    <value>Светлая тема</value>
+  </data>
+  <data name="General.AppTheme.System" xml:space="preserve">
+    <value>По умолчанию</value>
+  </data>
+  <data name="General.Bookmarked.Title" xml:space="preserve">
+    <value>Открывать архивы с закладками при запуске</value>
+  </data>
+  <data name="General.Bookmarks.Title" xml:space="preserve">
+    <value>Открывать вкладку «Закладки» при запуске</value>
+  </data>
+  <data name="General.Categories.Title" xml:space="preserve">
+    <value>Открывать вкладку «Категории» при запуске</value>
+  </data>
+  <data name="General.ClearThumbCache.Content" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="General.CompactMarks.Title" xml:space="preserve">
+    <value>Использовать компактные закладки</value>
+  </data>
+  <data name="General.Connection.Title" xml:space="preserve">
+    <value>Подключение</value>
+  </data>
+  <data name="General.CrashReport.Title" xml:space="preserve">
+    <value>Собирать журналы сбоев и ошибок</value>
+  </data>
+  <data name="General.ExpanderProfile.Title" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
+  <data name="General.InputSortBy.Title" xml:space="preserve">
+    <value>Сортировать по</value>
+  </data>
+  <data name="General.OrderBy.Title" xml:space="preserve">
+    <value>Упорядочить по</value>
+  </data>
+  <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
+    <value>Выбрать профиль</value>
+  </data>
+  <data name="General.Search.Title" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="General.Size.Text" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="General.SortBy.PlaceholderText" xml:space="preserve">
+    <value>Заголовок</value>
+  </data>
+  <data name="General.SwitchProfile.CloseButtonText" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="General.SwitchProfile.Content" xml:space="preserve">
+    <value>Изменить профиль?{0}Требуется перезагрузка</value>
+  </data>
+  <data name="General.SwitchProfile.PrimaryButtonText" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="General.SwitchProfile.Title" xml:space="preserve">
+    <value>Изменить профиль</value>
+  </data>
+  <data name="General.Tabs.Title" xml:space="preserve">
+    <value>Вкладки</value>
+  </data>
+  <data name="General.Theme.Title" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="General.ThumbCache.Title" xml:space="preserve">
+    <value>Кэш эскизов</value>
+  </data>
+  <data name="General.VisualTags.Title" xml:space="preserve">
+    <value>Редактор визуальных тегов</value>
+  </data>
+  <data name="General.VisualTags.Description" xml:space="preserve">
+    <value>Использует элементы управления для редактирования тегов вместо текстового поля</value>
+  </data>
+  <data name="GeneralPage.Title" xml:space="preserve">
+    <value>Общие</value>
+  </data>
+  <data name="Reader.AutoOpen.Title" xml:space="preserve">
+    <value>Автооткрывать ридер</value>
+  </data>
+  <data name="Reader.AV1Notice.Content" xml:space="preserve">
+    <value>Установить для просмотра содержимого AVIF</value>
+  </data>
+  <data name="Reader.AV1NoticeInfo.Title" xml:space="preserve">
+    <value>Отсутствуют расширения видео AV1</value>
+  </data>
+  <data name="Reader.BookmarksGroup.Title" xml:space="preserve">
+    <value>Закладки</value>
+  </data>
+  <data name="Reader.FitLimit.Title" xml:space="preserve">
+    <value>Предел масштаба</value>
+  </data>
+  <data name="Reader.FitLimit.Description" xml:space="preserve">
+    <value>Максимальное масштабирование, которое может быть применено к странице</value>
+  </data>
+  <data name="Reader.FitWidth.Title" xml:space="preserve">
+    <value>Подгонка страниц по ширине</value>
+  </data>
+  <data name="Reader.FitWidth.Description" xml:space="preserve">
+    <value>Масштабирует страницы на всю ширину окна</value>
+  </data>
+  <data name="Reader.HEIFNotice.Content" xml:space="preserve">
+    <value>Установить для просмотра содержимого HEIF</value>
+  </data>
+  <data name="Reader.HEIFNoticeInfo.Title" xml:space="preserve">
+    <value>Отсутствуют расширения изображений HEIF</value>
+  </data>
+  <data name="Reader.Keyboard.Title" xml:space="preserve">
+    <value>Расстояние прокрутки клавиатуры</value>
+  </data>
+  <data name="Reader.Keyboard.Description" xml:space="preserve">
+    <value>Расстояние в пикселях при использовании клавиатуры</value>
+  </data>
+  <data name="Reader.Reminder.Title" xml:space="preserve">
+    <value>Добавить напоминание закладок</value>
+  </data>
+  <data name="Reader.Reminder.Description" xml:space="preserve">
+    <value>Попросите добавить архив в закладки, если он закрыт на полпути</value>
+  </data>
+  <data name="Reader.ReminderMode.All" xml:space="preserve">
+    <value>Все архивы</value>
+  </data>
+  <data name="Reader.ReminderMode.New" xml:space="preserve">
+    <value>Только "Новые" архивы</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.Title" xml:space="preserve">
+    <value>Удалить напоминание закладок</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.Description" xml:space="preserve">
+    <value>Попросите удалить закладку после завершения работы</value>
+  </data>
+  <data name="Reader.RTL.Title" xml:space="preserve">
+    <value>Читать справа налево</value>
+  </data>
+  <data name="Reader.RTL.Description" xml:space="preserve">
+    <value>Меняет направление чтения страниц</value>
+  </data>
+  <data name="Reader.SetBuilder.Content" xml:space="preserve">
+    <value>Использовать улучшенный порядок чтения</value>
+  </data>
+  <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Использует соотношение сторон при построении порядка страниц. Рекомендуется для архивов с переменным соотношением сторон.</value>
+  </data>
+  <data name="Reader.TwoPages.Title" xml:space="preserve">
+    <value>Показать две страницы</value>
+  </data>
+  <data name="Reader.TwoPages.Description" xml:space="preserve">
+    <value>Одновременно будут отображаться две страницы</value>
+  </data>
+  <data name="Reader.Zoom.Title" xml:space="preserve">
+    <value>Масштаб по умолчанию</value>
+  </data>
+  <data name="ReaderPage.Title" xml:space="preserve">
+    <value>Ридер</value>
+  </data>
+  <data name="Server.ApiRequired.Text" xml:space="preserve">
+    <value>API-ключ, необходимый для использования параметров сервера</value>
+  </data>
+  <data name="Server.BackupDB.Title" xml:space="preserve">
+    <value>Резервное копирование базы данных</value>
+  </data>
+  <data name="Server.BackupDB.Description" xml:space="preserve">
+    <value>Возвращает резервную копию в формате JSON. Эту резервную копию можно импортировать вручную</value>
+  </data>
+  <data name="Server.BackupDBButton.Content" xml:space="preserve">
+    <value>Скачать</value>
+  </data>
+  <data name="Server.Batch.Title" xml:space="preserve">
+    <value>Пакетная маркировка</value>
+  </data>
+  <data name="Server.ClearNew.Title" xml:space="preserve">
+    <value>Убрать метку «Новый»</value>
+  </data>
+  <data name="Server.ClearNew.Description" xml:space="preserve">
+    <value>Снимает метку «Новый» у всех архивов</value>
+  </data>
+  <data name="Server.ClearNewButton.Content" xml:space="preserve">
+    <value>Убрать</value>
+  </data>
+  <data name="Server.ClearNewNotice.Text" xml:space="preserve">
+    <value>Все метки «Новый» у архивов будут сброшены. Do you want to continue?</value>
+  </data>
+  <data name="Server.ClearNewYes.Content" xml:space="preserve">
+    <value>Да, убрать</value>
+  </data>
+  <data name="Server.Database.Title" xml:space="preserve">
+    <value>База данных</value>
+  </data>
+  <data name="Server.Debug.Content" xml:space="preserve">
+    <value>Режим отладки</value>
+  </data>
+  <data name="Server.Logs.Title" xml:space="preserve">
+    <value>Журналы</value>
+  </data>
+  <data name="Server.NoFun.Content" xml:space="preserve">
+    <value>Режим No-Fun</value>
+  </data>
+  <data name="Server.PluginSettings.Title" xml:space="preserve">
+    <value>Конфигурация плагина</value>
+  </data>
+  <data name="Server.RegenThumb.Content" xml:space="preserve">
+    <value>Генерировать</value>
+  </data>
+  <data name="Server.RegenThumbForced.Content" xml:space="preserve">
+    <value>Все принудительно</value>
+  </data>
+  <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Перегенерирует все эскизы</value>
+  </data>
+  <data name="Server.RegenThumbnails.Title" xml:space="preserve">
+    <value>Эскизы</value>
+  </data>
+  <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
+    <value>Генерировать недостающие эскизы, если принудительно перегенерирует все.</value>
+  </data>
+  <data name="Server.RegenThumbYes.Content" xml:space="preserve">
+    <value>Да, генерировать эскизы</value>
+  </data>
+  <data name="Server.ResetCache.Title" xml:space="preserve">
+    <value>Кэш поиска</value>
+  </data>
+  <data name="Server.ResetCache.Description" xml:space="preserve">
+    <value>Результаты сохраняются для повышения производительности. Если есть проблемы с этим, используйте следующее</value>
+  </data>
+  <data name="Server.ResetCacheButton.Content" xml:space="preserve">
+    <value>Сброс</value>
+  </data>
+  <data name="Server.ResizedImages.Content" xml:space="preserve">
+    <value>Смена размера изображений</value>
+  </data>
+  <data name="Server.Settings.Title" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Server.Upload.Title" xml:space="preserve">
+    <value>Загрузить архивы</value>
+  </data>
+  <data name="Server.UsePassword.Content" xml:space="preserve">
+    <value>Использует пароль</value>
+  </data>
+  <data name="Server.Worker.Title" xml:space="preserve">
+    <value>Работает в фоне</value>
+  </data>
+  <data name="Server.WorkerRestart.Title" xml:space="preserve">
+    <value>Перезапустить фоновую работу</value>
+  </data>
+  <data name="Server.WorkerRestartButton.Content" xml:space="preserve">
+    <value>Перезапуск</value>
+  </data>
+  <data name="Server.WorkerRunning.Text" xml:space="preserve">
+    <value> запущено</value>
+  </data>
+  <data name="Server.WorkerStatus.Text" xml:space="preserve">
+    <value>Статус:</value>
+  </data>
+  <data name="Server.WorkerStop.Title" xml:space="preserve">
+    <value>Остановить фоновую работу</value>
+  </data>
+  <data name="Server.WorkerStopButton.Content" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="Server.WorkerStopped.Text" xml:space="preserve">
+    <value> остановленно</value>
+  </data>
+  <data name="Server.WorkerUnknown.Text" xml:space="preserve">
+    <value> неизвестно</value>
+  </data>
+  <data name="ServerPage.Title" xml:space="preserve">
+    <value>Сервер</value>
+  </data>
+  <data name="Reader.ScrollToChange.Description" xml:space="preserve">
+    <value>Смена страницы путем прокрутки в верхней или нижней части страницы</value>
+  </data>
+  <data name="Reader.ScrollToChange.Title" xml:space="preserve">
+    <value>Прокрутите, чтобы сменить страницу</value>
+  </data>
+  <data name="UpdatesPage.Title" xml:space="preserve">
+    <value>Обновления</value>
+  </data>
+  <data name="AboutPage.Description" xml:space="preserve">
+    <value>Версия, поддержка, исходный код</value>
+  </data>
+  <data name="GeneralPage.Description" xml:space="preserve">
+    <value>Вкладки, поиск, тема</value>
+  </data>
+  <data name="ReaderPage.Description" xml:space="preserve">
+    <value>Масштаб, две страницы, закладки</value>
+  </data>
+  <data name="ServerPage.Description" xml:space="preserve">
+    <value>Настройки, инструменты, база данных</value>
+  </data>
+  <data name="UpdatesPage.Description" xml:space="preserve">
+    <value>Проверьте наличие обновлений</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="ProfilesPage.Title" xml:space="preserve">
+    <value>Профили</value>
+  </data>
+  <data name="FeedbackPage.Title" xml:space="preserve">
+    <value>Обратная связь</value>
+  </data>
+  <data name="Reader.CustomBackground.Title" xml:space="preserve">
+    <value>Цвет фона</value>
+  </data>
+  <data name="FeedbackPage.Description" xml:space="preserve">
+    <value>Изменения и пожелания по функциям</value>
+  </data>
+  <data name="Updates.AutoUpdates.Title" xml:space="preserve">
+    <value>Автообновление</value>
+  </data>
+  <data name="Profiles.AddProfile.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Profiles.Delete.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Profiles.Edit.Text" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="Profiles.RemoveDialog.CloseButtonText" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Content" xml:space="preserve">
+    <value>Удалить "{0}"?</value>
+  </data>
+  <data name="Profiles.RemoveDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Title" xml:space="preserve">
+    <value>Удалить профиль</value>
+  </data>
+  <data name="Reader.NextArchive.Description" xml:space="preserve">
+    <value>Переход к следующему архиву в конце</value>
+  </data>
+  <data name="Reader.NextArchive.Title" xml:space="preserve">
+    <value>Открыть следующий архив</value>
+  </data>
+  <data name="Profiles.AutoLogin.Title" xml:space="preserve">
+    <value>Подключить при запуске</value>
+  </data>
+  <data name="Profiles.ProfileGroup.Title" xml:space="preserve">
+    <value>Профили</value>
+  </data>
+  <data name="ProfilesPage.Description" xml:space="preserve">
+    <value>Подключение при запуске, редактирование, удаление</value>
+  </data>
+  <data name="General.PopupLocation.Bottom" xml:space="preserve">
+    <value>Снизу</value>
+  </data>
+  <data name="General.PopupLocation.Middle" xml:space="preserve">
+    <value>В центре</value>
+  </data>
+  <data name="General.PopupLocation.Top" xml:space="preserve">
+    <value>Сверху</value>
+  </data>
+  <data name="General.TagsPopup.Title" xml:space="preserve">
+    <value>Расположение всплывающего окна тегов</value>
+  </data>
+  <data name="Updates.NoChangelog" xml:space="preserve">
+    <value>Обновление было обнаружено, но при попытке загрузить журнал изменений произошла ошибка</value>
+  </data>
+</root>
