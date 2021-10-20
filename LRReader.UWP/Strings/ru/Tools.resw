@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BulkEditor.AddTo.Text" xml:space="preserve">
+    <value>Добавить в</value>
+  </data>
+  <data name="BulkEditor.Apply.Content" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="BulkEditor.ChangeCategory.Text" xml:space="preserve">
+    <value>Изменить категорию</value>
+  </data>
+  <data name="BulkEditor.Delete.Content" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="BulkEditor.DeleteSelected.Text" xml:space="preserve">
+    <value>Удалить выбранное</value>
+  </data>
+  <data name="BulkEditor.DeleteSure.Text" xml:space="preserve">
+    <value>Вы уверены?</value>
+  </data>
+  <data name="BulkEditor.DeleteYes.Content" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="BulkEditor.RemoveOtherCats.Content" xml:space="preserve">
+    <value>Удалить из других категорий</value>
+  </data>
+  <data name="BulkEditor.SelectedArchives.Text" xml:space="preserve">
+    <value>Выбранные архивы</value>
+  </data>
+  <data name="BulkEditorPage.Title" xml:space="preserve">
+    <value>Массовый редактор</value>
+  </data>
+  <data name="Deduplicator.AspectRatio.Description" xml:space="preserve">
+    <value>Максимальная разница в соотношении сторон</value>
+  </data>
+  <data name="Deduplicator.AspectRatio.Title" xml:space="preserve">
+    <value>Ограничение по соотношению сторон</value>
+  </data>
+  <data name="Deduplicator.Comparing" xml:space="preserve">
+    <value>Сравнение эскизов</value>
+  </data>
+  <data name="Deduplicator.Completed" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
+    <value>Предполагаемое время:</value>
+  </data>
+  <data name="Deduplicator.Execute.Content" xml:space="preserve">
+    <value>Выполнить</value>
+  </data>
+  <data name="Deduplicator.Expander.Title" xml:space="preserve">
+    <value>Дедупликатор</value>
+  </data>
+  <data name="Deduplicator.GenerateThumbnails" xml:space="preserve">
+    <value>Генерировать эскизы</value>
+  </data>
+  <data name="Deduplicator.Help.Content" xml:space="preserve">
+    <value>Как это работает</value>
+  </data>
+  <data name="Deduplicator.HowItWorks.Text" xml:space="preserve">
+    <value>Это дифф-сравнение между всеми эскизами архивов.
+
+Он берет все эскизы и для каждой пары применяет попиксельную разницу с помощью операции Manhattan Distance, сравнивает результат с параметром *Pixel threshold* и подсчитывает, сколько пикселей прошли это сравнение, затем это число сравнивается с параметром *Image difference*, чтобы определить, насколько сильно отличается изображение.
+
+*Разрешение* используется для уменьшения масштаба изображений перед их сравнением, увеличивая скорость.
+
+*Ограничение соотношения сторон* используется для раннего отсева изображений, разрешение которых не совпадает.</value>
+  </data>
+  <data name="Deduplicator.ImageDiffLimit.Description" xml:space="preserve">
+    <value>Минимальная суммарная разница</value>
+  </data>
+  <data name="Deduplicator.ImageDiffLimit.Title" xml:space="preserve">
+    <value>Разница в изображениях</value>
+  </data>
+  <data name="Deduplicator.InvalidThumb.Message" xml:space="preserve">
+    <value>Попробуйте увеличить задержку запроса, уменьшить количество рабочих потоков или проверить, что все эскизы действительны.</value>
+  </data>
+  <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
+    <value>Обнаружена недопустимый эскиз</value>
+  </data>
+  <data name="Deduplicator.Of.Text" xml:space="preserve">
+    <value>из</value>
+  </data>
+  <data name="Deduplicator.PixelThreshold.Description" xml:space="preserve">
+    <value>Минимальная разница на пиксель</value>
+  </data>
+  <data name="Deduplicator.PixelThreshold.Title" xml:space="preserve">
+    <value>Пиксельный порог</value>
+  </data>
+  <data name="Deduplicator.PreloadAndDecode" xml:space="preserve">
+    <value>Загрузка и декодирование</value>
+  </data>
+  <data name="Deduplicator.Ready" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Deduplicator.RequestDelay.Description" xml:space="preserve">
+    <value>Время в миллисекундах</value>
+  </data>
+  <data name="Deduplicator.RequestDelay.Title" xml:space="preserve">
+    <value>Задержка запроса на поток</value>
+  </data>
+  <data name="Deduplicator.Resolution.Title" xml:space="preserve">
+    <value>Разрешение</value>
+  </data>
+  <data name="Deduplicator.Step.Text" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
+  <data name="Deduplicator.TeachingTip.Title" xml:space="preserve">
+    <value>Как это работает</value>
+  </data>
+  <data name="Deduplicator.Threads.Title" xml:space="preserve">
+    <value>Рабочие потоки</value>
+  </data>
+  <data name="DeduplicatorPage.Title" xml:space="preserve">
+    <value>Дедупликатор</value>
+  </data>
+  <data name="GenericTool.Error" xml:space="preserve">
+    <value>Произошла неизвестная ошибка</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>Инструменты</value>
+  </data>
+</root>
