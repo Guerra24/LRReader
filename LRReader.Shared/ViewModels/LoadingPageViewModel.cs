@@ -145,12 +145,6 @@ namespace LRReader.Shared.ViewModels
 				await Reload();
 				return;
 			}
-			if (serverInfo.nofun_mode && !Settings.Profile.HasApiKey)
-			{
-				Status = Platform.GetLocalizedString("Pages/LoadingPage/MissingKey");
-				await Reload();
-				return;
-			}
 
 			if (!await Api.Validate())
 			{
