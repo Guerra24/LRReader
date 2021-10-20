@@ -372,6 +372,14 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Strings\ru\Tools.resw" />
+    <PRIResource Include="Strings\ru\Tabs.resw" />
+    <PRIResource Include="Strings\ru\Shared.resw" />
+    <PRIResource Include="Strings\ru\Settings.resw" />
+    <PRIResource Include="Strings\ru\Pages.resw" />
+    <PRIResource Include="Strings\ru\Items.resw" />
+    <PRIResource Include="Strings\ru\Generic.resw" />
+    <PRIResource Include="Strings\ru\Dialogs.resw" />
     <PRIResource Include="Strings\es\Shared.resw" />
     <PRIResource Include="Strings\en\Shared.resw" />
     <PRIResource Include="Strings\es\Tools.resw" />
