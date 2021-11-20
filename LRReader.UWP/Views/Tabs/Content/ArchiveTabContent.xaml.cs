@@ -118,7 +118,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.ReaderIndex = index;
 			await ChangePage();
 
-			if (Data.Archive.IsNewArchive())
+			if (Data.Archive.isnew)
 				_wasNew = true;
 			if (Service.Platform.AnimationsEnabled)
 			{
@@ -218,7 +218,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		[Microsoft.Toolkit.Mvvm.Input.ICommand]
 		private async Task Random(bool newOnly)
 		{
-			var list = Service.Archives.Archives.Where(kv => kv.Value.IsNewArchive() || !newOnly);
+			var list = Service.Archives.Archives.Where(kv => kv.Value.isnew || !newOnly);
 			if (list.Count() <= 1)
 				return;
 			var random = new Random();

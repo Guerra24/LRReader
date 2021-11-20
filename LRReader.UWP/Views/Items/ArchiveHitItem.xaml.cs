@@ -21,7 +21,7 @@ namespace LRReader.UWP.Views.Items
 
 		private ArchiveHitViewModel Data;
 
-		private ArchiveHit _old = new ArchiveHit { Left = new Archive { arcid = "" }, Right = new Archive { arcid = "" } };
+		private ArchiveHit _old = new ArchiveHit { Left = "" , Right =  "" };
 
 		private bool _open;
 
@@ -45,8 +45,8 @@ namespace LRReader.UWP.Views.Items
 			{
 				_old = hit;
 				Data.ArchiveHit = hit;
-				LeftViewModel.Archive = hit.Left;
-				RightViewModel.Archive = hit.Right;
+				LeftViewModel.Archive = Service.Archives.GetArchive(hit.Left);
+				RightViewModel.Archive = Service.Archives.GetArchive(hit.Right);
 
 				LeftGrid.SetVisualOpacity(0);
 				RightGrid.SetVisualOpacity(0);
@@ -90,146 +90,5 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-		{
-			Service.Archives.OpenTab((sender as MenuFlyoutItem).Tag as Archive, false);
-		}
-
-
-		private async void LeftTagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-		{
-			_open = true;
-			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
-			if (_open)
-			{
-				_open = false;
-				LeftTagsPopup.ClampPopup(-57);
-				LeftTagsPopup.IsOpen = true;
-				if (Service.Platform.AnimationsEnabled)
-					ShowLeftPopup.Begin();
-			}
-		}
-
-		private void LeftTagsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			if (_open)
-			{
-				_open = false;
-				LeftTagsPopup.IsOpen = false;
-			}
-			if (LeftTagsPopup.IsOpen)
-			{
-				if (Service.Platform.AnimationsEnabled)
-					HideLeftPopup.Begin();
-				else
-					LeftTagsPopup.IsOpen = false;
-			}
-		}
-
-		private void LeftHidePopup_Completed(object sender, object e)
-		{
-			LeftTagsPopup.IsOpen = false;
-		}
-
-		private async void RightTagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-		{
-			_open = true;
-			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
-			if (_open)
-			{
-				_open = false;
-				RightTagsPopup.ClampPopup(-57);
-				RightTagsPopup.IsOpen = true;
-				if (Service.Platform.AnimationsEnabled)
-					ShowRightPopup.Begin();
-			}
-		}
-
-		private void RightTagsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			if (_open)
-			{
-				_open = false;
-				RightTagsPopup.IsOpen = false;
-			}
-			if (RightTagsPopup.IsOpen)
-			{
-				if (Service.Platform.AnimationsEnabled)
-					HideRightPopup.Begin();
-				else
-					RightTagsPopup.IsOpen = false;
-			}
-		}
-
-		private void LeftGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "PointerOverLeft", true);
-		}
-
-		private void LeftGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "Normal", true);
-		}
-
-		private void RightGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "PointerOverRight", true);
-		}
-
-		private void RightGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "Normal", true);
-		}
-
-		private void LeftDelete_Click(object sender, RoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "LeftConfirm", true);
-		}
-
-		private void RightDelete_Click(object sender, RoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "RightConfirm", true);
-		}
-
-		private void RightCancel_Click(object sender, RoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "PointerOverRight", true);
-		}
-
-		private void LeftCancel_Click(object sender, RoutedEventArgs e)
-		{
-			VisualStateManager.GoToState(this, "PointerOverLeft", true);
-		}
-
-		private void LeftGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
-		{
-			var pointerPoint = e.GetCurrentPoint(LeftGrid);
-			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
-			{
-				if (pointerPoint.Properties.IsMiddleButtonPressed)
-				{
-					Service.Archives.OpenTab(LeftViewModel.Archive, false);
-					e.Handled = true;
-				}
-			}
-		}
-
-		private void RightGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
-		{
-			var pointerPoint = e.GetCurrentPoint(RightGrid);
-			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
-			{
-				if (pointerPoint.Properties.IsMiddleButtonPressed)
-				{
-					Service.Archives.OpenTab(RightViewModel.Archive, false);
-					e.Handled = true;
-				}
-			}
-		}
-
-		private void RightHidePopup_Completed(object sender, object e)
-		{
-			RightTagsPopup.IsOpen = false;
-		}
 	}
 }

@@ -35,9 +35,9 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private async void Reload_Click(object sender, RoutedEventArgs e) => await ReloadImage(_oldUrl);
+		private async void Reload_Click(object sender, RoutedEventArgs e) => await ReloadImage(_oldUrl, true);
 
-		private async Task ReloadImage(ImagePageSet n)
+		private async Task ReloadImage(ImagePageSet n, bool forced = false)
 		{
 			if (_loading)
 				return;
@@ -51,7 +51,7 @@ namespace LRReader.UWP.Views.Items
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
 			image.DecodePixelHeight = 275;
-			image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image), image, n.Image.EndsWith("avif")) as BitmapImage;
+			image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image, forced), image, n.Image.EndsWith("avif")) as BitmapImage;
 			Ring.IsActive = false;
 			/*if (image.PixelHeight != 0 && image.PixelWidth != 0)
 			{

@@ -2,6 +2,7 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -55,12 +56,14 @@ namespace LRReader.Shared.Tools
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
+		private readonly IFilesService Files;
 
-		public DeduplicationTool(ImagesService images, ArchivesService archives, PlatformService platform) : base(platform)
+		public DeduplicationTool(ImagesService images, ArchivesService archives, PlatformService platform, IFilesService files) : base(platform)
 		{
 			Images = images;
 			Archives = archives;
 			Platform = platform;
+			Files = files;
 		}
 
 		protected override async Task<ToolResult<List<ArchiveHit>>> Process(DeduplicatorParams @params, int threads)
@@ -162,7 +165,7 @@ namespace LRReader.Shared.Tools
 							float diffPixels = differences;
 							diffPixels /= source.Width * source.Height;
 							if (diffPixels < percentDifference)
-								hits.Add(new ArchiveHit { Left = Archives.GetArchive(sourcePair.Key), Right = Archives.GetArchive(targetPair.Key) });
+								hits.Add(new ArchiveHit { Left = sourcePair.Key, Right = targetPair.Key });
 						})));
 					}
 					int itemCount = Interlocked.Increment(ref count);
@@ -178,6 +181,7 @@ namespace LRReader.Shared.Tools
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 3, 3);
 			await Task.Delay(1000);
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 0, 0);
+			//await Files.StoreFile(Files.LocalCache + "/Deduplicator-v1.json", JsonConvert.SerializeObject(hits.ToList()));
 			return new ToolResult<List<ArchiveHit>> { Data = hits.ToList(), Ok = true };
 		}
 

@@ -5,6 +5,7 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,12 +23,15 @@ namespace LRReader.Shared.Services
 		public List<string> Namespaces = new List<string>();
 		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
 
+		private DirectoryInfo metadataDirectory;
+
 		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs)
 		{
 			Files = files;
 			SettingsStorage = settingsStorage;
 			Settings = settings;
 			Tabs = tabs;
+			metadataDirectory = Directory.CreateDirectory(Files.LocalCache + "/Metadata");
 		}
 
 		public async Task ReloadArchives()
@@ -36,24 +40,28 @@ namespace LRReader.Shared.Services
 			TagStats.Clear();
 			Namespaces.Clear();
 			//Categories.Clear();
+			foreach (var json in Directory.GetFiles(Files.LocalCache, "*.json", SearchOption.TopDirectoryOnly))
+				File.Delete(json);
 
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 				return;
+
+			var path = $"{metadataDirectory.FullName}/{Settings.Profile.UID}";
 			var currentTimestamp = SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
-			if (currentTimestamp != serverInfo.cache_last_cleared)
+			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(path))
 			{
 				SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
-				await Update();
+				await Update(path);
 			}
 			else
 			{
 				try
 				{
-					var index = Files.GetFile(Files.LocalCache + "/Index-v2.json");
-					var tags = Files.GetFile(Files.LocalCache + "/Tags-v1.json");
-					var namespaces = Files.GetFile(Files.LocalCache + "/Namespaces-v1.json");
-					var categories = Files.GetFile(Files.LocalCache + "/Categories-v1.json");
+					var index = Files.GetFile($"{path}/Index-v3.json");
+					var tags = Files.GetFile($"{path}/Tags-v1.json");
+					var namespaces = Files.GetFile($"{path}/Namespaces-v1.json");
+					var categories = Files.GetFile($"{path}/Categories-v1.json");
 					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
@@ -61,43 +69,43 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception)
 				{
-					await Update();
+					await Update(path);
 				}
 			}
 		}
 
-		private async Task Update()
+		private async Task Update(string path)
 		{
-
+			Directory.CreateDirectory(path);
 			var resultA = await ArchivesProvider.GetArchives();
 			if (resultA != null)
 			{
 				var temp = resultA.ToDictionary(c => c.arcid, c => c);
-				await Files.StoreFile(Files.LocalCache + "/Index-v2.json", JsonConvert.SerializeObject(temp));
+				await Files.StoreFile($"{path}/Index-v3.json", JsonConvert.SerializeObject(temp));
 				Archives = temp;
 			}
 			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
 			{
-				await Files.StoreFile(Files.LocalCache + "/Tags-v1.json", JsonConvert.SerializeObject(resultT));
+				await Files.StoreFile($"{path}/Tags-v1.json", JsonConvert.SerializeObject(resultT));
 				foreach (var t in resultT)
 				{
 					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 						Namespaces.Add(t.@namespace);
 					TagStats.Add(t);
 				}
-				await Files.StoreFile(Files.LocalCache + "/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
+				await Files.StoreFile($"{path}/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
 			}
 			/*var resultC = await CategoriesProvider.GetCategories();
 			if (resultC != null)
 			{
 				var temp = resultC.ToDictionary(c => c.id, c => c);
-				await Files.StoreFile(Files.LocalCache + "/Categories-v1.json", JsonConvert.SerializeObject(temp));
+				await Files.StoreFile($"{path}/Categories-v1.json", JsonConvert.SerializeObject(temp));
 				Categories = temp;
 			}*/
 		}
 
-		public Archive GetArchive(string id)
+		public Archive? GetArchive(string id)
 		{
 			if (Archives.TryGetValue(id, out Archive archive))
 				return archive;

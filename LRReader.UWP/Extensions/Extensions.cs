@@ -94,7 +94,7 @@ namespace LRReader.UWP.Extensions
 				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				{
 					element.Shadow = shadow.ThemeShadow;
-					element.Translation = new Vector3(0, 0, 14);
+					element.Translation = shadow.Translation;
 				}
 				else
 				{
@@ -115,7 +115,7 @@ namespace LRReader.UWP.Extensions
 				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				{
 					item.Shadow = shadow.ThemeShadow;
-					item.Translation = new Vector3(0, 0, 14);
+					item.Translation = shadow.Translation;
 					item.TranslationTransition = new Vector3Transition();
 					item.TranslationTransition.Duration = TimeSpan.FromMilliseconds(100);
 					item.PointerEntered += GridViewItem_PointerEntered;
@@ -137,6 +137,8 @@ namespace LRReader.UWP.Extensions
 	{
 		internal ThemeShadow ThemeShadow { get; }
 		internal AttachedCardShadow DropShadow { get; }
+
+		public Vector3 Translation { get; set; } = new Vector3(0, 0, 14);
 
 		public Shadow()
 		{

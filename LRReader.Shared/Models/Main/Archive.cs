@@ -1,5 +1,4 @@
-﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.Input;
 using Newtonsoft.Json;
@@ -14,7 +13,9 @@ namespace LRReader.Shared.Models.Main
 	public class Archive : IEquatable<Archive>
 	{
 		public string arcid { get; set; }
-		public string isnew { get; set; }
+		[JsonConverter(typeof(ArchiveNewConverter))]
+		public bool isnew { get; set; }
+		public string extension { get; set; }
 		public string tags { get; set; }
 		public string title { get; set; }
 		public int pagecount { get; set; }
@@ -28,17 +29,6 @@ namespace LRReader.Shared.Models.Main
 
 		[OnDeserialized]
 		internal void OnDeserializedMethod(StreamingContext context) => UpdateTags();
-
-		public bool IsNewArchive()
-		{
-			if (string.IsNullOrEmpty(isnew))
-				return false;
-			if (isnew.Equals("none"))
-				return false;
-			if (isnew.Equals("block"))
-				return true;
-			return bool.Parse(isnew);
-		}
 
 		public void UpdateTags()
 		{
@@ -212,9 +202,10 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveHit
 	{
-		public Archive Left { get; set; }
-		public Archive Right { get; set; }
+		public string Left { get; set; }
+		public string Right { get; set; }
 
+		[JsonIgnore]
 		public AsyncRelayCommand<string> Delete { get; set; }
 
 		public override bool Equals(object obj) => obj is ArchiveHit hit &&

@@ -87,10 +87,10 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.GetClient();
 
-			var rq = new RestRequest("api/archives/{id}/extract");
+			var rq = new RestRequest("api/archives/{id}/files");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
-			var r = await client.ExecutePostAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			return await r.GetResult<ArchiveImages>();
 		}

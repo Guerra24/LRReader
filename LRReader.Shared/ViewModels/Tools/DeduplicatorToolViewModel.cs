@@ -73,7 +73,7 @@ namespace LRReader.Shared.ViewModels.Tools
 		private async Task DeleteArchive(string arcid)
 		{
 			if (await Archives.DeleteArchive(arcid))
-				foreach (var item in Items.Where(hit => hit.Left.arcid.Equals(arcid) || hit.Right.arcid.Equals(arcid)).ToList())
+				foreach (var item in Items.Where(hit => hit.Left.Equals(arcid) || hit.Right.Equals(arcid)).ToList())
 					Items.Remove(item);
 		}
 

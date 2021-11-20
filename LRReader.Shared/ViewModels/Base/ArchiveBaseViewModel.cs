@@ -32,7 +32,7 @@ namespace LRReader.Shared.ViewModels.Base
 				OnPropertyChanged("Downloading");
 			}
 		}
-		private Archive _archive = new Archive() { arcid = "", isnew = "" };
+		private Archive _archive = new Archive() { arcid = "", isnew = false };
 		public Archive Archive
 		{
 			get => _archive;
@@ -47,7 +47,7 @@ namespace LRReader.Shared.ViewModels.Base
 		}
 		public bool IsNew
 		{
-			get => _archive != null ? _archive.IsNewArchive() : false;
+			get => _archive != null ? _archive.isnew : false;
 		}
 		protected bool _downloading;
 		public virtual bool Downloading

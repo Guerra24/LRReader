@@ -2,14 +2,10 @@
 	x:Class="LRReader.UWP.Views.Items.ArchiveHitItem"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
-	xmlns:controls1="using:LRReader.UWP.Views.Controls"
 	xmlns:convrt="using:LRReader.Internal"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
-	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	Width="394"
 	d:DesignHeight="318"
 	d:DesignWidth="394"
@@ -19,18 +15,6 @@
 	<UserControl.Resources>
 		<convrt:NegateBoolConverter x:Key="NegateBool" />
 		<convrt:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
-		<Storyboard x:Name="ShowLeftPopup">
-			<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="LeftTagsPopup" />
-		</Storyboard>
-		<Storyboard x:Name="ShowRightPopup">
-			<PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="0" Storyboard.TargetName="RightTagsPopup" />
-		</Storyboard>
-		<Storyboard x:Name="HideLeftPopup" Completed="LeftHidePopup_Completed">
-			<PopOutThemeAnimation Storyboard.TargetName="LeftTagsPopup" />
-		</Storyboard>
-		<Storyboard x:Name="HideRightPopup" Completed="RightHidePopup_Completed">
-			<PopOutThemeAnimation Storyboard.TargetName="RightTagsPopup" />
-		</Storyboard>
 	</UserControl.Resources>
 
 	<Grid>
@@ -39,16 +23,8 @@
 			<ColumnDefinition Width="2" />
 			<ColumnDefinition Width="196" />
 		</Grid.ColumnDefinitions>
-		<Grid x:Name="LeftGrid" PointerPressed="LeftGrid_PointerPressed">
-			<Grid.ContextFlyout>
-				<MenuFlyout>
-					<MenuFlyoutItem
-						x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add"
-						Tag="{x:Bind LeftViewModel.Archive, Mode=OneWay}" />
-				</MenuFlyout>
-			</Grid.ContextFlyout>
+		<Grid x:Name="LeftGrid" >
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
@@ -59,28 +35,6 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1">
-				<Popup x:Name="LeftTagsPopup" HorizontalOffset="-57" IsHitTestVisible="False">
-					<Grid
-						Padding="4" Windows10version1903:Translation="0,0,32"
-						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-						BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-						BorderThickness="1"
-						CornerRadius="{ThemeResource OverlayCornerRadius}"
-						IsHitTestVisible="False">
-						<Windows10version1903:Grid.Shadow>
-							<Windows10version1903:ThemeShadow />
-						</Windows10version1903:Grid.Shadow>
-						<muxc:ItemsRepeaterScrollHost>
-							<!--
-								For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
-								item display... idk whatever...
-							-->
-							<ScrollViewer>
-								<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind LeftViewModel.Archive.TagsGroups, Mode=OneWay}" />
-							</ScrollViewer>
-						</muxc:ItemsRepeaterScrollHost>
-					</Grid>
-				</Popup>
 				<Image
 					x:Name="LeftThumbnail" Width="200" Height="275"
 					HorizontalAlignment="Center" />
@@ -88,65 +42,10 @@
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 				</Grid>
 			</Grid>
-			<Grid Grid.Row="2" PointerEntered="LeftTagsGrid_PointerEntered" PointerExited="LeftTagsGrid_PointerExited">
-				<TextBlock
-					Grid.Row="2" Padding="2,0"
-					Text="{x:Bind LeftViewModel.Archive.TagsClean, Mode=OneWay}"
-					TextTrimming="CharacterEllipsis" />
-			</Grid>
-			<Grid
-				x:Name="LeftFilter" Grid.Row="1" Opacity="0"
-				PointerEntered="LeftGrid_PointerEntered" PointerExited="LeftGrid_PointerExited">
-				<Grid.Background>
-					<media:PipelineBrush Source="{media:BackdropSource}">
-						<media:BlurEffect Amount="16" />
-						<media:GrayscaleEffect />
-						<media:ShadeEffect Intensity="0.75" Color="Black" />
-					</media:PipelineBrush>
-				</Grid.Background>
-				<Grid x:Name="LeftDelete">
-					<Button
-						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"
-						Click="LeftDelete_Click" CornerRadius="0" ToolTipService.Placement="Mouse"
-						ToolTipService.ToolTip="Delete">
-						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="48" Glyph="&#xE74D;" />
-					</Button>
-				</Grid>
-				<Grid x:Name="LeftConfirmGrid" Visibility="Collapsed">
-					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<TextBlock
-						x:Uid="/Items/ArchiveHit/Sure" Grid.ColumnSpan="2" Margin="10"
-						HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"
-						Foreground="White" />
-					<Button
-						x:Uid="/Items/ArchiveHit/SureYes" Grid.Row="1" Margin="10"
-						HorizontalAlignment="Right" VerticalAlignment="Top"
-						Command="{x:Bind Data.ArchiveHit.Delete, Mode=OneWay}"
-						CommandParameter="{x:Bind Data.ArchiveHit.Left.arcid, Mode=OneWay}" />
-					<Button
-						x:Uid="/Items/ArchiveHit/SureNo" Grid.Row="1" Grid.Column="1"
-						Margin="10" VerticalAlignment="Top" Click="LeftCancel_Click" />
-				</Grid>
-			</Grid>
 		</Grid>
 		<Grid Grid.Column="1" />
-		<Grid x:Name="RightGrid" Grid.Column="2" PointerPressed="RightGrid_PointerPressed">
-			<Grid.ContextFlyout>
-				<MenuFlyout>
-					<MenuFlyoutItem
-						x:Uid="/Items/Archive/OpenTab" Click="MenuFlyoutItem_Click" Icon="Add"
-						Tag="{x:Bind RightViewModel.Archive, Mode=OneWay}" />
-				</MenuFlyout>
-			</Grid.ContextFlyout>
+		<Grid x:Name="RightGrid" Grid.Column="2" >
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
@@ -157,28 +56,6 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind RightViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1">
-				<Popup x:Name="RightTagsPopup" HorizontalOffset="-57" IsHitTestVisible="False">
-					<Grid
-						Padding="4" Windows10version1903:Translation="0,0,32"
-						Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-						BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-						BorderThickness="1"
-						CornerRadius="{ThemeResource OverlayCornerRadius}"
-						IsHitTestVisible="False">
-						<Windows10version1903:Grid.Shadow>
-							<Windows10version1903:ThemeShadow />
-						</Windows10version1903:Grid.Shadow>
-						<muxc:ItemsRepeaterScrollHost>
-							<!--
-								For some reason wrapping ItemsRepeater with a ScrollViewer when it's inside a Popup fixed
-								item display... idk whatever...
-							-->
-							<ScrollViewer>
-								<controls1:ArchiveTags Width="300" IsHitTestVisible="False" ItemsSource="{x:Bind RightViewModel.Archive.TagsGroups, Mode=OneWay}" />
-							</ScrollViewer>
-						</muxc:ItemsRepeaterScrollHost>
-					</Grid>
-				</Popup>
 				<Image
 					x:Name="RightThumbnail" Width="200" Height="275"
 					HorizontalAlignment="Center" />
@@ -186,85 +63,6 @@
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 				</Grid>
 			</Grid>
-			<Grid Grid.Row="2" PointerEntered="RightTagsGrid_PointerEntered" PointerExited="RightTagsGrid_PointerExited">
-				<TextBlock
-					Grid.Row="2" Padding="2,0"
-					Text="{x:Bind RightViewModel.Archive.TagsClean, Mode=OneWay}"
-					TextTrimming="CharacterEllipsis" />
-			</Grid>
-			<Grid
-				x:Name="RightFilter" Grid.Row="1" Opacity="0"
-				PointerEntered="RightGrid_PointerEntered" PointerExited="RightGrid_PointerExited">
-				<Grid.Background>
-					<media:PipelineBrush Source="{media:BackdropSource}">
-						<media:BlurEffect Amount="16" />
-						<media:GrayscaleEffect />
-						<media:ShadeEffect Intensity="0.75" Color="Black" />
-					</media:PipelineBrush>
-				</Grid.Background>
-				<Grid x:Name="RightDelete">
-					<Button
-						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"
-						Click="RightDelete_Click" CornerRadius="0" ToolTipService.Placement="Mouse"
-						ToolTipService.ToolTip="Delete">
-						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="48" Glyph="&#xE74D;" />
-					</Button>
-				</Grid>
-				<Grid x:Name="RightConfirmGrid" Visibility="Collapsed">
-					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<TextBlock
-						x:Uid="/Items/ArchiveHit/Sure" Grid.ColumnSpan="2" Margin="10"
-						HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"
-						Foreground="White" />
-					<Button
-						x:Uid="/Items/ArchiveHit/SureYes" Grid.Row="1" Margin="10"
-						HorizontalAlignment="Right" VerticalAlignment="Top"
-						Command="{x:Bind Data.ArchiveHit.Delete, Mode=OneWay}"
-						CommandParameter="{x:Bind Data.ArchiveHit.Right.arcid, Mode=OneWay}" />
-					<Button
-						x:Uid="/Items/ArchiveHit/SureNo" Grid.Row="1" Grid.Column="1"
-						Margin="10" VerticalAlignment="Top" Click="RightCancel_Click" />
-				</Grid>
-			</Grid>
 		</Grid>
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="CommonStates">
-				<VisualState x:Name="Normal" />
-				<VisualState x:Name="PointerOverLeft">
-					<VisualState.Setters>
-						<Setter Target="LeftFilter.Opacity" Value="1" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState x:Name="PointerOverRight">
-					<VisualState.Setters>
-						<Setter Target="RightFilter.Opacity" Value="1" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState x:Name="LeftConfirm">
-					<VisualState.Setters>
-						<Setter Target="LeftFilter.Opacity" Value="1" />
-						<Setter Target="LeftConfirmGrid.Visibility" Value="Visible" />
-						<Setter Target="LeftDelete.Visibility" Value="Collapsed" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState x:Name="RightConfirm">
-					<VisualState.Setters>
-						<Setter Target="RightFilter.Opacity" Value="1" />
-						<Setter Target="RightConfirmGrid.Visibility" Value="Visible" />
-						<Setter Target="RightDelete.Visibility" Value="Collapsed" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualStateGroup.Transitions>
-					<VisualTransition GeneratedDuration="0:0:0.10" />
-				</VisualStateGroup.Transitions>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </UserControl>

@@ -13,7 +13,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI" xmlns:SystemNumerics="using:System.Numerics"
 	DataContext="{Binding DeduplicatorToolViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 	<Page.Resources>
@@ -22,172 +22,208 @@
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 		<ext:Shadow x:Name="ElementShadow" />
+		<ext:Shadow x:Name="PopupShadow" />
 	</Page.Resources>
 
-	<GridView ext:Element.ModernShadow="{StaticResource ElementShadow}" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ItemsSource="{x:Bind Data.Items}">
-		<GridView.Header>
-			<StackPanel MaxWidth="1000">
-				<controls:ModernGroup Margin="0">
-					<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
-						<controls:ModernExpander.Input>
-							<StackPanel>
-								<Button x:Name="Help" x:Uid="/Tools/Deduplicator/Help" Click="Help_Click" />
-								<muxc:TeachingTip
-									x:Name="HowItWorks" x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True"
-									PreferredPlacement="Left"
-									Target="{x:Bind Help}">
-									<mtuuc:MarkdownTextBlock x:Uid="/Tools/Deduplicator/HowItWorks" Background="Transparent" />
-								</muxc:TeachingTip>
-							</StackPanel>
-						</controls:ModernExpander.Input>
-						<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold">
-							<muxc:NumberBox
-								MinWidth="100"
-								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-								LargeChange="10" Maximum="255" Minimum="0"
-								SmallChange="1" SpinButtonPlacementMode="Inline"
-								Value="{x:Bind Data.PixelThreshold, Mode=TwoWay}" />
-						</controls:ModernInput>
-						<controls:ModernInput x:Uid="/Tools/Deduplicator/ImageDiffLimit" InputHorizontalAlignment="Stretch">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="Auto" />
-								</Grid.ColumnDefinitions>
-								<Slider
+	<Grid>
+		<GridView
+			ext:Element.ModernShadow="{StaticResource ElementShadow}"
+			ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="GridView_ItemClick"
+			ItemsSource="{x:Bind Data.Items}"
+			SelectionMode="None">
+			<GridView.Header>
+				<StackPanel MaxWidth="1000" Padding="10,0">
+					<controls:ModernGroup Margin="0">
+						<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
+							<controls:ModernExpander.Input>
+								<StackPanel>
+									<Button x:Name="Help" x:Uid="/Tools/Deduplicator/Help" Click="Help_Click" />
+									<muxc:TeachingTip
+										x:Name="HowItWorks" x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True"
+										PreferredPlacement="Left"
+										Target="{x:Bind Help}">
+										<mtuuc:MarkdownTextBlock x:Uid="/Tools/Deduplicator/HowItWorks" Background="Transparent" />
+									</muxc:TeachingTip>
+								</StackPanel>
+							</controls:ModernExpander.Input>
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold">
+								<muxc:NumberBox
+									MinWidth="100"
 									IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-									IsThumbToolTipEnabled="False" Maximum="100" Minimum="0"
-									TickPlacement="None"
-									Value="{x:Bind Data.PercentDifference, Mode=TwoWay}" />
-								<TextBlock
-									Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
-									VerticalAlignment="Center">
-									<Run Text="{x:Bind Data.PercentDifference, Mode=OneWay}" />%
-								</TextBlock>
-							</Grid>
-						</controls:ModernInput>
-						<controls:ModernInput x:Uid="/Tools/Deduplicator/Resolution">
-							<muxc:NumberBox
-								MinWidth="100"
-								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-								Maximum="500" Minimum="4" SmallChange="1"
-								SpinButtonPlacementMode="Inline"
-								Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
-						</controls:ModernInput>
-						<controls:ModernInput x:Uid="/Tools/Deduplicator/AspectRatio" InputHorizontalAlignment="Stretch">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="Auto" />
-								</Grid.ColumnDefinitions>
-								<Slider
+									LargeChange="10" Maximum="255" Minimum="0"
+									SmallChange="1" SpinButtonPlacementMode="Inline"
+									Value="{x:Bind Data.PixelThreshold, Mode=TwoWay}" />
+							</controls:ModernInput>
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/ImageDiffLimit" InputHorizontalAlignment="Stretch">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<Slider
+										IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+										IsThumbToolTipEnabled="False" Maximum="100" Minimum="0"
+										TickPlacement="None"
+										Value="{x:Bind Data.PercentDifference, Mode=TwoWay}" />
+									<TextBlock
+										Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+										VerticalAlignment="Center">
+										<Run Text="{x:Bind Data.PercentDifference, Mode=OneWay}" />%
+									</TextBlock>
+								</Grid>
+							</controls:ModernInput>
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/Resolution">
+								<muxc:NumberBox
+									MinWidth="100"
 									IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-									IsThumbToolTipEnabled="False" LargeChange="0.1" Maximum="0.5"
-									Minimum="0" SmallChange="0.01" StepFrequency="0.01"
-									TickPlacement="None"
-									Value="{x:Bind Data.AspectRatioLimit, Mode=TwoWay}" />
-								<TextBlock
-									Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
-									VerticalAlignment="Center"
-									Text="{x:Bind Data.AspectRatioLimit, Mode=OneWay}" />
-							</Grid>
+									Maximum="500" Minimum="4" SmallChange="1"
+									SpinButtonPlacementMode="Inline"
+									Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
+							</controls:ModernInput>
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/AspectRatio" InputHorizontalAlignment="Stretch">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<Slider
+										IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+										IsThumbToolTipEnabled="False" LargeChange="0.1" Maximum="0.5"
+										Minimum="0" SmallChange="0.01" StepFrequency="0.01"
+										TickPlacement="None"
+										Value="{x:Bind Data.AspectRatioLimit, Mode=TwoWay}" />
+									<TextBlock
+										Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+										VerticalAlignment="Center"
+										Text="{x:Bind Data.AspectRatioLimit, Mode=OneWay}" />
+								</Grid>
+							</controls:ModernInput>
+						</controls:ModernExpander>
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads">
+							<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
 						</controls:ModernInput>
-					</controls:ModernExpander>
-					<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads">
-						<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
-					</controls:ModernInput>
-					<controls:ModernInput x:Uid="/Tools/Deduplicator/RequestDelay">
-						<muxc:NumberBox
-							IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-							Maximum="1000" Minimum="0" SpinButtonPlacementMode="Inline"
-							Value="{x:Bind Data.Delay, Mode=TwoWay}" />
-					</controls:ModernInput>
-					<StackPanel Margin="8" Spacing="10">
-						<StackPanel.Transitions>
-							<TransitionCollection>
-								<RepositionThemeTransition IsStaggeringEnabled="False" />
-							</TransitionCollection>
-						</StackPanel.Transitions>
-						<TextBlock>
-							<Run x:Uid="/Tools/Deduplicator/Step" />
-							<Run Text="{x:Bind Data.CurrentStepPlusOne, Mode=OneWay}" />
-							<Run x:Uid="/Tools/Deduplicator/Of" />
-							<Run Text="{x:Bind Data.MaxSteps, Mode=OneWay}" />
-						</TextBlock>
-						<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxSteps, Mode=OneWay}" Value="{x:Bind Data.CurrentStep, Mode=OneWay}" />
-					</StackPanel>
-					<StackPanel Margin="8" Spacing="10">
-						<StackPanel.Transitions>
-							<TransitionCollection>
-								<RepositionThemeTransition IsStaggeringEnabled="False" />
-							</TransitionCollection>
-						</StackPanel.Transitions>
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
-							<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
-								<Run />
-								<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/RequestDelay">
+							<muxc:NumberBox
+								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+								Maximum="1000" Minimum="0" SpinButtonPlacementMode="Inline"
+								Value="{x:Bind Data.Delay, Mode=TwoWay}" />
+						</controls:ModernInput>
+						<StackPanel Margin="8" Spacing="10">
+							<StackPanel.Transitions>
+								<TransitionCollection>
+									<RepositionThemeTransition IsStaggeringEnabled="False" />
+								</TransitionCollection>
+							</StackPanel.Transitions>
+							<TextBlock>
+								<Run x:Uid="/Tools/Deduplicator/Step" />
+								<Run Text="{x:Bind Data.CurrentStepPlusOne, Mode=OneWay}" />
 								<Run x:Uid="/Tools/Deduplicator/Of" />
-								<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
+								<Run Text="{x:Bind Data.MaxSteps, Mode=OneWay}" />
 							</TextBlock>
+							<muxc:ProgressBar Margin="0,0,0,5" Maximum="{x:Bind Data.MaxSteps, Mode=OneWay}" Value="{x:Bind Data.CurrentStep, Mode=OneWay}" />
 						</StackPanel>
-						<muxc:ProgressBar
-							Margin="0,0,0,5"
-							IsIndeterminate="{x:Bind Data.Indeterminate, Mode=OneWay}"
-							Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}"
-							Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
-					</StackPanel>
-					<StackPanel Margin="8">
-						<StackPanel.Transitions>
+						<StackPanel Margin="8" Spacing="10">
+							<StackPanel.Transitions>
+								<TransitionCollection>
+									<RepositionThemeTransition IsStaggeringEnabled="False" />
+								</TransitionCollection>
+							</StackPanel.Transitions>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
+								<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+									<Run />
+									<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+									<Run x:Uid="/Tools/Deduplicator/Of" />
+									<Run Text="{x:Bind Data.MaxProgress, Mode=OneWay}" />
+								</TextBlock>
+							</StackPanel>
+							<muxc:ProgressBar
+								Margin="0,0,0,5"
+								IsIndeterminate="{x:Bind Data.Indeterminate, Mode=OneWay}"
+								Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}"
+								Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
+						</StackPanel>
+						<StackPanel Margin="8">
+							<StackPanel.Transitions>
+								<TransitionCollection>
+									<RepositionThemeTransition IsStaggeringEnabled="False" />
+								</TransitionCollection>
+							</StackPanel.Transitions>
+							<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+								<TextBlock VerticalAlignment="Center" Visibility="{x:Bind Data.EstimatedTime, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}">
+									<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
+									<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
+								</TextBlock>
+								<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+							</StackPanel>
+						</StackPanel>
+					</controls:ModernGroup>
+					<muxc:InfoBar
+						Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"
+						IsClosable="False"
+						IsOpen="{x:Bind Data.ErrorTitle, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
+						Message="{x:Bind Data.ErrorDescription, Mode=OneWay}"
+						Severity="Error">
+						<muxc:InfoBar.Transitions>
 							<TransitionCollection>
 								<RepositionThemeTransition IsStaggeringEnabled="False" />
 							</TransitionCollection>
-						</StackPanel.Transitions>
-						<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-							<TextBlock VerticalAlignment="Center" Visibility="{x:Bind Data.EstimatedTime, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}">
-								<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
-								<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
-							</TextBlock>
-							<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-						</StackPanel>
-					</StackPanel>
-				</controls:ModernGroup>
-				<muxc:InfoBar
-					Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"
-					IsClosable="False"
-					IsOpen="{x:Bind Data.ErrorTitle, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
-					Message="{x:Bind Data.ErrorDescription, Mode=OneWay}"
-					Severity="Error">
-					<muxc:InfoBar.Transitions>
-						<TransitionCollection>
-							<RepositionThemeTransition IsStaggeringEnabled="False" />
-						</TransitionCollection>
-					</muxc:InfoBar.Transitions>
-				</muxc:InfoBar>
-			</StackPanel>
-		</GridView.Header>
-		<GridView.ItemTemplate>
-			<DataTemplate x:DataType="items:ArchiveHit">
-				<items1:ArchiveHitItem />
-			</DataTemplate>
-		</GridView.ItemTemplate>
-		<GridView.ItemsPanel>
-			<ItemsPanelTemplate>
-				<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
-			</ItemsPanelTemplate>
-		</GridView.ItemsPanel>
-		<GridView.ItemContainerStyle>
-			<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
-				<Setter Property="Padding" Value="0" />
-				<Setter Property="Margin" Value="5" />
-			</Style>
-		</GridView.ItemContainerStyle>
-		<GridView.ItemContainerTransitions>
-			<TransitionCollection>
-				<PopupThemeTransition FromVerticalOffset="200" />
-				<ReorderThemeTransition />
-				<RepositionThemeTransition />
-			</TransitionCollection>
-		</GridView.ItemContainerTransitions>
-	</GridView>
+						</muxc:InfoBar.Transitions>
+					</muxc:InfoBar>
+				</StackPanel>
+			</GridView.Header>
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="items:ArchiveHit">
+					<items1:ArchiveHitItem />
+				</DataTemplate>
+			</GridView.ItemTemplate>
+			<GridView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</GridView.ItemsPanel>
+			<GridView.ItemContainerStyle>
+				<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+					<Setter Property="Padding" Value="0" />
+					<Setter Property="Margin" Value="5" />
+				</Style>
+			</GridView.ItemContainerStyle>
+			<GridView.ItemContainerTransitions>
+				<TransitionCollection>
+					<PopupThemeTransition FromVerticalOffset="200" />
+					<ReorderThemeTransition />
+					<RepositionThemeTransition />
+				</TransitionCollection>
+			</GridView.ItemContainerTransitions>
+		</GridView>
+		<Grid x:Name="Details" Background="Transparent" Visibility="Collapsed">
+			<Grid
+				MaxWidth="1200" Margin="10,0,10,24"
+				ext:Element.ModernShadow="{StaticResource PopupShadow}"
+				Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+				BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
+				BorderThickness="1"
+				CornerRadius="{ThemeResource OverlayCornerRadius}"
+				Translation="0,0,32">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<Button
+					Width="32" Height="32" Margin="8"
+					Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top"
+					Click="Button_Click">
+					<Viewbox MaxWidth="16" MaxHeight="16">
+						<SymbolIcon Symbol="Cancel" />
+					</Viewbox>
+				</Button>
+				<Grid>
+
+				</Grid>
+				<Grid Grid.Column="1">
+
+				</Grid>
+			</Grid>
+		</Grid>
+	</Grid>
 </Page>

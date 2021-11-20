@@ -35,7 +35,7 @@ namespace LRReader.Shared.Models
 			writer.WriteValue((value as Version).ToString());
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType,object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var cleanedString = onlyDigitOrDot.Replace(reader.Value.ToString(), "");
 			if (cleanedString.Count(s => s == '.') > 4)
@@ -46,6 +46,35 @@ namespace LRReader.Shared.Models
 		public override bool CanConvert(Type objectType)
 		{
 			return objectType == typeof(Version);
+		}
+	}
+
+	public class ArchiveNewConverter : JsonConverter
+	{
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+		{
+			writer.WriteValue(value);
+		}
+
+		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+		{
+			if (reader.ValueType == typeof(string))
+			{
+				if (reader.Value.Equals("none"))
+					return false;
+				if (reader.Value.Equals("block"))
+					return true;
+				if (bool.TryParse(reader.Value as string, out bool result))
+					return result;
+			}
+			if (reader.ValueType == typeof(bool))
+				return reader.Value;
+			throw new JsonReaderException();
+		}
+
+		public override bool CanConvert(Type objectType)
+		{
+			return objectType == typeof(bool);
 		}
 	}
 }

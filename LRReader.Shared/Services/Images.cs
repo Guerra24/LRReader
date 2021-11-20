@@ -83,14 +83,14 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		public async Task<byte[]?> GetImageCached(string path)
+		public async Task<byte[]?> GetImageCached(string path, bool forced = false)
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
 			using (var key = await KeyedSemaphore.LockAsync(path))
 			{
 				byte[] image;
-				if (imagesCache.TryGet(path, out image))
+				if (imagesCache.TryGet(path, out image) && !forced)
 				{
 					return image;
 				}

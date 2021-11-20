@@ -219,10 +219,10 @@ namespace LRReader.Shared.ViewModels
 
 			if (currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
 			{
-				if (Archive.IsNewArchive())
+				if (Archive.isnew)
 				{
 					await ClearNew();
-					Archive.isnew = "false";
+					Archive.isnew = false;
 				}
 				if (Bookmarked && Settings.RemoveBookmark)
 				{
