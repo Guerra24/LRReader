@@ -1,6 +1,8 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
+using LRReader.Shared.ViewModels.Items;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
@@ -33,7 +35,10 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		public ObservableCollection<ArchiveHit> Items = new ObservableCollection<ArchiveHit>();
 
-		private AsyncRelayCommand<string> DeleteArchiveCommand;
+		public ArchiveHitPreviewViewModel LeftArchive, RightArchive;
+
+		[ObservableProperty]
+		private bool _canClosePreviews;
 
 		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives, PlatformService platform) : base(platform)
 		{
@@ -41,7 +46,8 @@ namespace LRReader.Shared.ViewModels.Tools
 			Deduplicator = deduplicator;
 			Dispatcher = dispatcher;
 			Archives = archives;
-			DeleteArchiveCommand = new AsyncRelayCommand<string>(DeleteArchive);
+			LeftArchive = Service.Services.GetRequiredService<ArchiveHitPreviewViewModel>();
+			RightArchive = Service.Services.GetRequiredService<ArchiveHitPreviewViewModel>();
 		}
 
 		protected override async Task Execute()
@@ -56,10 +62,7 @@ namespace LRReader.Shared.ViewModels.Tools
 				await Task.Run(async () =>
 				{
 					foreach (var hit in hits.Data)
-					{
-						hit.Delete = DeleteArchiveCommand;
 						await Dispatcher.RunAsync(() => Items.Add(hit));
-					}
 				});
 				ToolStatus = DeduplicatorStatus.Ready;
 			}
@@ -70,11 +73,24 @@ namespace LRReader.Shared.ViewModels.Tools
 			}
 		}
 
+		[ICommand]
 		private async Task DeleteArchive(string arcid)
 		{
 			if (await Archives.DeleteArchive(arcid))
 				foreach (var item in Items.Where(hit => hit.Left.Equals(arcid) || hit.Right.Equals(arcid)).ToList())
 					Items.Remove(item);
+		}
+
+		public async Task LoadArchives(string left, string right)
+		{
+			CanClosePreviews = false;
+			LeftArchive.Archive = Archives.GetArchive(left);
+			var lTask = LeftArchive.Reload();
+			RightArchive.Archive = Archives.GetArchive(right);
+			var rTask = RightArchive.Reload();
+			await lTask;
+			await rTask;
+			CanClosePreviews = true;
 		}
 
 	}

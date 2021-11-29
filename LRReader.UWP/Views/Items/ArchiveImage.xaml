@@ -21,20 +21,37 @@
 	</UserControl.ContextFlyout>
 
 	<Grid>
-		<Image x:Name="Image" />
-		<Grid
-			x:Name="PageCountGrid" Margin="0,0,4,4" HorizontalAlignment="Right"
-			VerticalAlignment="Bottom"
-			Background="{ThemeResource GridOverGridBackground}"
-			BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-			BorderThickness="1"
-			CornerRadius="{ThemeResource ControlCornerRadius}">
-			<Grid.RenderTransform>
-				<TranslateTransform x:Name="PageCountGridTransform" Y="32" />
-			</Grid.RenderTransform>
-			<TextBlock
-				x:Name="PageCount" Padding="6,2" FontSize="16"
-				Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+		<Grid x:Name="Content">
+			<Image x:Name="Image" />
+			<Grid Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+				<Grid.RenderTransform>
+					<TranslateTransform x:Name="OverlayTransform" Y="32" />
+				</Grid.RenderTransform>
+				<Grid.Resources>
+					<Style x:Key="Overlay" TargetType="StackPanel">
+						<Setter Property="Background" Value="{ThemeResource GridOverGridBackground}" />
+						<Setter Property="BorderBrush" Value="{ThemeResource SurfaceStrokeColorFlyoutBrush}" />
+						<Setter Property="BorderThickness" Value="1" />
+						<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+						<Setter Property="Orientation" Value="Horizontal" />
+					</Style>
+				</Grid.Resources>
+				<StackPanel
+					x:Name="ExtraDetails" Padding="6,2" HorizontalAlignment="Left"
+					x:Load="{x:Bind ShowExtraDetails, Mode=OneWay}"
+					Spacing="4"
+					Style="{StaticResource Overlay}">
+					<TextBlock
+						x:Name="Resolution" Grid.Column="1" FontSize="16"
+						Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+					<TextBlock x:Name="Format" FontSize="16" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Right" Style="{StaticResource Overlay}">
+					<TextBlock
+						x:Name="PageCount" Padding="6,2" FontSize="16"
+						Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+				</StackPanel>
+			</Grid>
 		</Grid>
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
 			<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
@@ -47,7 +64,7 @@
 				<VisualState x:Name="Normal" />
 				<VisualState x:Name="PointerOver">
 					<VisualState.Setters>
-						<Setter Target="PageCountGridTransform.Y" Value="0" />
+						<Setter Target="OverlayTransform.Y" Value="0" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualStateGroup.Transitions>

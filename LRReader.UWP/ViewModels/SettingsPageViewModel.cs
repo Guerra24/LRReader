@@ -240,6 +240,7 @@ namespace LRReader.UWP.ViewModels
 				content: Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Content").AsFormat(profile.Name));
 			if (result == IDialogResult.Primary)
 				SettingsManager.Profiles.Remove(profile);
+			//Delete metadata folder
 
 			if (SettingsManager.Profiles.Count == 0)
 			{

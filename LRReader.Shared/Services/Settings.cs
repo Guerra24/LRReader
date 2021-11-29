@@ -216,6 +216,16 @@ namespace LRReader.Shared.Services
 			get => (TagsPopupLocation)SettingsStorage.GetObjectRoamed("TagsPopup", (int)TagsPopupLocation.Middle);
 			set => SettingsStorage.StoreObjectRoamed("TagsPopup", (int)value);
 		}
+		public bool KeepPageDetailsOpen
+		{
+			get => SettingsStorage.GetObjectRoamed("KeepPageDetailsOpen", false);
+			set => SettingsStorage.StoreObjectRoamed("KeepPageDetailsOpen", value);
+		}
+		public bool ShowExtraPageDetails
+		{
+			get => SettingsStorage.GetObjectRoamed("ShowExtraPageDetails", false);
+			set => SettingsStorage.StoreObjectRoamed("ShowExtraPageDetails", value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal

@@ -113,6 +113,7 @@ namespace LRReader.UWP.Views.Controls
 	{
 		private ModernWebView Modern;
 		private WebView2 WebView;
+		private bool Initialized;
 
 		public EdgeChromeWebView(ModernWebView modern)
 		{
@@ -129,8 +130,13 @@ namespace LRReader.UWP.Views.Controls
 		public async void Navigate(Uri page)
 		{
 			await WebView.EnsureCoreWebView2Async();
-			WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
-			WebView.CoreWebView2.Settings.IsStatusBarEnabled = false;
+			if (!Initialized)
+			{
+				Initialized = true;
+				WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
+				WebView.CoreWebView2.Settings.IsStatusBarEnabled = false;
+				WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+			}
 			WebView.Source = page;
 		}
 
@@ -141,6 +147,11 @@ namespace LRReader.UWP.Views.Controls
 		private void NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args) => args.Cancel = Modern.NavigationStarting(this, new Uri(args.Uri));
 
 		private void NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args) => Modern.NavigationCompleted(this, args.IsSuccess);
+
+		private void CoreWebView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
+		{
+			args.Handled = true;
+		}
 
 	}
 

@@ -23,6 +23,25 @@ namespace LRReader.UWP.Views.Items
 			this.InitializeComponent();
 		}
 
+		public bool KeepOverlayOpen
+		{
+			get => (bool)GetValue(KeepOverlayOpenProperty);
+			set
+			{
+				if (value)
+					VisualStateManager.GoToState(this, "PointerOver", false);
+				else
+					VisualStateManager.GoToState(this, "Normal", false);
+				SetValue(KeepOverlayOpenProperty, value);
+			}
+		}
+
+		public bool ShowExtraDetails
+		{
+			get => (bool)GetValue(ShowExtraDetailsProperty);
+			set => SetValue(ShowExtraDetailsProperty, value);
+		}
+
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)
@@ -42,11 +61,17 @@ namespace LRReader.UWP.Views.Items
 			if (_loading)
 				return;
 			_loading = true;
-			Image.SetVisualOpacity(0);
+			Content.SetVisualOpacity(0);
 			Image.Source = null;
 			Ring.IsActive = true;
 			Data.MissingImage = false;
 			PageCount.Text = n.Page.ToString();
+			if (ShowExtraDetails)
+			{
+				Format.Text = n.Image.Substring(n.Image.LastIndexOf('.') + 1).ToUpper();
+				var size = await Service.Images.GetImageSizeCached(n.Image);
+				Resolution.Text = $"{size.Width}x{size.Height}";
+			}
 
 			var image = new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
@@ -63,7 +88,12 @@ namespace LRReader.UWP.Views.Items
 			Image.Source = image;
 
 			if (image != null)
-				Image.FadeIn();
+			{
+				if (Service.Platform.AnimationsEnabled)
+					Content.FadeIn();
+				else
+					Content.SetVisualOpacity(1);
+			}
 			else
 				Data.MissingImage = true;
 			_loading = false;
@@ -83,11 +113,29 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e) => VisualStateManager.GoToState(this, "PointerOver", true);
+		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			if (KeepOverlayOpen)
+				return;
+			VisualStateManager.GoToState(this, "PointerOver", true);
+		}
 
-		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e) => VisualStateManager.GoToState(this, "Normal", true);
+		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			if (KeepOverlayOpen)
+				return;
+			VisualStateManager.GoToState(this, "Normal", true);
+		}
 
-		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e) => VisualStateManager.GoToState(this, "Normal", true);
+		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+		{
+			if (KeepOverlayOpen)
+				return;
+			VisualStateManager.GoToState(this, "Normal", true);
+		}
+
+		public static readonly DependencyProperty KeepOverlayOpenProperty = DependencyProperty.Register("KeepOverlayOpen", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));
+		public static readonly DependencyProperty ShowExtraDetailsProperty = DependencyProperty.Register("ShowExtraDetails", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));
 	}
 
 }

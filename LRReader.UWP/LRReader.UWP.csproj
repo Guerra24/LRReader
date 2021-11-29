@@ -426,7 +426,7 @@
       <Version>2.8.0-prerelease.210927001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.1020.30</Version>
+      <Version>1.0.1054.31</Version>
     </PackageReference>
     <PackageReference Include="NReco.Logging.File">
       <Version>1.1.2</Version>

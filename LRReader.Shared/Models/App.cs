@@ -53,4 +53,8 @@ namespace LRReader.Shared.Models
 		public string Name { get; set; }
 		public string Content { get; set; }
 	}
+
+	public class DeduplicatorMetadata
+	{
+	}
 }

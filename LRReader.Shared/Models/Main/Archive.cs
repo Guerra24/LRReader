@@ -205,9 +205,6 @@ namespace LRReader.Shared.Models.Main
 		public string Left { get; set; }
 		public string Right { get; set; }
 
-		[JsonIgnore]
-		public AsyncRelayCommand<string> Delete { get; set; }
-
 		public override bool Equals(object obj) => obj is ArchiveHit hit &&
 				   Left.Equals(hit.Left) && Right.Equals(hit.Right);
 

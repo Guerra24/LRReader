@@ -123,13 +123,26 @@ namespace LRReader.Shared.Services
 					var directory = $"{thumbnailCacheDirectory.FullName}/{id.Substring(0, 2)}/";
 					var path = $"{directory}{id}.cache";
 					if (File.Exists(path) && !forced)
+					{
 						data = await Files.GetFileBytes(path);
+						if (data.Length == 55876)
+							using (var md5 = System.Security.Cryptography.MD5.Create())
+								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
+								{
+									File.Delete(path);
+									data = await ArchivesProvider.GetThumbnail(id);
+									if (data == null)
+										return null;
+									Directory.CreateDirectory(directory);
+									await Files.StoreFile(path, data);
+								}
+					}
 					else
 					{
 						data = await ArchivesProvider.GetThumbnail(id);
 						if (data == null)
 							return null;
-						if (data.Length == 55876) // TODO
+						if (data.Length == 55876)
 							using (var md5 = System.Security.Cryptography.MD5.Create())
 								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 									return null;

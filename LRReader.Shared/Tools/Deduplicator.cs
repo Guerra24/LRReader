@@ -99,7 +99,7 @@ namespace LRReader.Shared.Tools
 				while (tries > 0 && !earlyExit)
 				{
 					Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
-					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key, ignoreCache: true)).GetAwaiter().GetResult();
+					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key)).GetAwaiter().GetResult();
 					if (bytes != null)
 					{
 						image = Image.Load(bytes);

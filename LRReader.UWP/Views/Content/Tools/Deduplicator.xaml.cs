@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.ViewModels.Tools;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -30,16 +31,22 @@ namespace LRReader.UWP.Views.Content.Tools
 			HowItWorks.IsOpen = true;
 		}
 
-		private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+		private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
 		{
+			await FadeOut.StartAsync(Results);
 			Details.Visibility = Visibility.Visible;
 			FadeIn.Start(Details);
+			var item = e.ClickedItem as ArchiveHit;
+			await Data.LoadArchives(item.Left, item.Right);
 		}
 
-		private async void Button_Click(object sender, RoutedEventArgs e)
+		private async void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
+			LeftFlyout.Hide();
+			RightFlyout.Hide();
 			await FadeOut.StartAsync(Details);
 			Details.Visibility = Visibility.Collapsed;
+			FadeIn.Start(Results);
 		}
 	}
 }

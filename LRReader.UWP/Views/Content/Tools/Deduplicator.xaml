@@ -13,7 +13,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI" xmlns:SystemNumerics="using:System.Numerics"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding DeduplicatorToolViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 	<Page.Resources>
@@ -22,11 +22,28 @@
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 		<ext:Shadow x:Name="ElementShadow" />
-		<ext:Shadow x:Name="PopupShadow" />
+		<Style x:Key="PropertyTitleStyle" TargetType="Grid">
+			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+			<Setter Property="Padding" Value="4,2" />
+			<Setter Property="Background" Value="{ThemeResource ControlFillColorDefault}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+		</Style>
+		<Style x:Key="PropertyStyle" TargetType="Grid">
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+			<Setter Property="Background" Value="{ThemeResource ControlStrongStrokeColorDisabled}" />
+			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+			<Setter Property="Padding" Value="4,2" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="Margin" Value="4,0" />
+		</Style>
 	</Page.Resources>
 
 	<Grid>
 		<GridView
+			x:Name="Results"
 			ext:Element.ModernShadow="{StaticResource ElementShadow}"
 			ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="GridView_ItemClick"
 			ItemsSource="{x:Bind Data.Items}"
@@ -197,32 +214,226 @@
 			</GridView.ItemContainerTransitions>
 		</GridView>
 		<Grid x:Name="Details" Background="Transparent" Visibility="Collapsed">
-			<Grid
-				MaxWidth="1200" Margin="10,0,10,24"
-				ext:Element.ModernShadow="{StaticResource PopupShadow}"
-				Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-				BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-				BorderThickness="1"
-				CornerRadius="{ThemeResource OverlayCornerRadius}"
-				Translation="0,0,32">
+			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition/>
-					<ColumnDefinition/>
+					<ColumnDefinition Width="64" />
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+					<ColumnDefinition Width="64" />
 				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
 				<Button
-					Width="32" Height="32" Margin="8"
-					Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top"
-					Click="Button_Click">
+					Grid.Column="5" Width="32" Height="32"
+					Margin="0,0,4,0" Padding="0" HorizontalAlignment="Right"
+					VerticalAlignment="Top" Click="CloseButton_Click"
+					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
 					<Viewbox MaxWidth="16" MaxHeight="16">
 						<SymbolIcon Symbol="Cancel" />
 					</Viewbox>
 				</Button>
-				<Grid>
-
+				<Button
+					Grid.Row="5" Margin="4,0,0,0" Padding="0"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
+					<Button.Flyout>
+						<Flyout x:Name="LeftFlyout" Placement="Right">
+							<StackPanel>
+								<TextBlock x:Uid="/Tools/Deduplicator/DeleteArchive" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<Button
+									x:Uid="/Tools/Deduplicator/DeleteArchiveYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
+									Command="{x:Bind Data.DeleteArchiveCommand}"
+									CommandParameter="{x:Bind Data.LeftArchive.Archive.arcid, Mode=OneWay}" />
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE74D;" />
+				</Button>
+				<Button
+					Grid.Row="5" Grid.Column="5" Margin="0,0,4,0"
+					Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
+					<Button.Flyout>
+						<Flyout x:Name="RightFlyout" Placement="Left">
+							<StackPanel>
+								<TextBlock x:Uid="/Tools/Deduplicator/DeleteArchive" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<Button
+									x:Uid="/Tools/Deduplicator/DeleteArchiveYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
+									Command="{x:Bind Data.DeleteArchiveCommand}"
+									CommandParameter="{x:Bind Data.LeftArchive.Archive.arcid, Mode=OneWay}" />
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE74D;" />
+				</Button>
+				<!--    -->
+				<Grid Grid.Row="0" Grid.Column="1" Margin="4,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<TextBlock
+						HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18"
+						IsTextSelectionEnabled="True"
+						Text="{x:Bind Data.LeftArchive.Archive.title, Mode=OneWay}"
+						TextWrapping="WrapWholeWords" />
+					<Button
+						x:Uid="/Tabs/Archive/New" Grid.Column="1" Margin="8,2,0,0"
+						Padding="4,2" IsHitTestVisible="False" IsTabStop="False"
+						Style="{ThemeResource AccentButtonStyle}"
+						Visibility="{x:Bind Data.LeftArchive.IsNew, Mode=OneWay}" />
 				</Grid>
-				<Grid Grid.Column="1">
-
+				<Grid
+					Grid.Row="1" Grid.Column="1" Margin="4,0"
+					HorizontalAlignment="Right"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.LeftArchive.Resolution, Mode=OneWay}" />
 				</Grid>
+				<Grid
+					Grid.Row="3" Grid.Column="1" Margin="4,0"
+					HorizontalAlignment="Right"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.LeftArchive.Pages, Mode=OneWay}" />
+				</Grid>
+				<controls:ArchiveTags
+					Grid.Row="5" Grid.Column="1" Margin="4,0"
+					FlowDirection="RightToLeft"
+					ItemsSource="{x:Bind Data.LeftArchive.Archive.TagsGroups, Mode=OneWay}" />
+				<!--    -->
+				<Grid Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock Text="Title" />
+				</Grid>
+				<Grid Grid.Row="1" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock Text="Resolution" />
+				</Grid>
+				<Grid Grid.Row="3" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock Text="Pages" />
+				</Grid>
+				<Grid Grid.Row="5" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock Text="Tags" />
+				</Grid>
+				<!--    -->
+				<Grid Grid.Column="3" Margin="4,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Button
+						x:Uid="/Tabs/Archive/New" Margin="0,2,8,0" Padding="4,2"
+						IsHitTestVisible="False" IsTabStop="False"
+						Style="{ThemeResource AccentButtonStyle}"
+						Visibility="{x:Bind Data.RightArchive.IsNew, Mode=OneWay}" />
+					<TextBlock
+						Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
+						FontSize="18" IsTextSelectionEnabled="True"
+						Text="{x:Bind Data.RightArchive.Archive.title, Mode=OneWay}"
+						TextWrapping="WrapWholeWords" />
+				</Grid>
+				<Grid
+					Grid.Row="1" Grid.Column="3" Margin="4,0"
+					HorizontalAlignment="Left"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.RightArchive.Resolution, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="3" Grid.Column="3" Margin="4,0"
+					HorizontalAlignment="Left"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.RightArchive.Pages, Mode=OneWay}" />
+				</Grid>
+				<controls:ArchiveTags
+					Grid.Row="5" Grid.Column="3" Margin="4,0"
+					ItemsSource="{x:Bind Data.RightArchive.Archive.TagsGroups, Mode=OneWay}" />
+				<!--    -->
+				<ScrollViewer Grid.Row="7" Grid.ColumnSpan="5">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<GridView
+							ext:Element.ModernShadow="{StaticResource ElementShadow}"
+							ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+							ItemsSource="{x:Bind Data.LeftArchive.ArchiveImages}"
+							KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+							<GridView.Resources>
+								<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+							</GridView.Resources>
+							<GridView.ItemTemplate>
+								<DataTemplate>
+									<items1:ArchiveImage KeepOverlayOpen="True" ShowExtraDetails="True" />
+								</DataTemplate>
+							</GridView.ItemTemplate>
+							<GridView.ItemsPanel>
+								<ItemsPanelTemplate>
+									<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+								</ItemsPanelTemplate>
+							</GridView.ItemsPanel>
+							<GridView.ItemContainerStyle>
+								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+									<Setter Property="Padding" Value="0" />
+									<Setter Property="Margin" Value="5" />
+								</Style>
+							</GridView.ItemContainerStyle>
+							<GridView.ItemContainerTransitions>
+								<TransitionCollection>
+									<PopupThemeTransition FromVerticalOffset="200" />
+									<!--<AddDeleteThemeTransition />-->
+									<ReorderThemeTransition />
+									<RepositionThemeTransition />
+								</TransitionCollection>
+							</GridView.ItemContainerTransitions>
+						</GridView>
+						<Grid Grid.Column="1" Style="{ThemeResource PropertyStyle}">
+							<TextBlock Text="Images" />
+						</Grid>
+						<GridView
+							Grid.Column="2"
+							ext:Element.ModernShadow="{StaticResource ElementShadow}"
+							ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+							ItemsSource="{x:Bind Data.RightArchive.ArchiveImages}"
+							KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+							<GridView.Resources>
+								<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+							</GridView.Resources>
+							<GridView.ItemTemplate>
+								<DataTemplate>
+									<items1:ArchiveImage KeepOverlayOpen="True" ShowExtraDetails="True" />
+								</DataTemplate>
+							</GridView.ItemTemplate>
+							<GridView.ItemsPanel>
+								<ItemsPanelTemplate>
+									<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+								</ItemsPanelTemplate>
+							</GridView.ItemsPanel>
+							<GridView.ItemContainerStyle>
+								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+									<Setter Property="Padding" Value="0" />
+									<Setter Property="Margin" Value="5" />
+								</Style>
+							</GridView.ItemContainerStyle>
+							<GridView.ItemContainerTransitions>
+								<TransitionCollection>
+									<PopupThemeTransition FromVerticalOffset="200" />
+									<!--<AddDeleteThemeTransition />-->
+									<ReorderThemeTransition />
+									<RepositionThemeTransition />
+								</TransitionCollection>
+							</GridView.ItemContainerTransitions>
+						</GridView>
+					</Grid>
+				</ScrollViewer>
+				<!--    -->
 			</Grid>
 		</Grid>
 	</Grid>

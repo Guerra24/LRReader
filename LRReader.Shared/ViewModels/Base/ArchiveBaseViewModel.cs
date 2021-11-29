@@ -42,6 +42,7 @@ namespace LRReader.Shared.ViewModels.Base
 				{
 					BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
 					OnPropertyChanged("IsNew");
+					OnPropertyChanged("Pages");
 				}
 			}
 		}
@@ -169,6 +170,7 @@ namespace LRReader.Shared.ViewModels.Base
 				Archive.tags = result.tags;
 				Archive.pagecount = result.pagecount;
 				Archive.progress = result.progress;
+				Archive.extension = result.extension;
 				Archive.UpdateTags();
 				OnPropertyChanged("Archive");
 			}
@@ -234,7 +236,7 @@ namespace LRReader.Shared.ViewModels.Base
 			}
 			else
 			{
-				Tabs.OpenTab(Tab.SearchResults, tag.FullTag);
+				Tabs.OpenTab(Tab.SearchResults, $"\"{tag.FullTag}\"$");
 			}
 		}
 	}

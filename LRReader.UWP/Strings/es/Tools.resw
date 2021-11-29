@@ -159,6 +159,12 @@
   <data name="Deduplicator.Completed" xml:space="preserve">
     <value>Completado</value>
   </data>
+  <data name="Deduplicator.DeleteArchive.Text" xml:space="preserve">
+    <value>¿Eliminar archivo?</value>
+  </data>
+  <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
+    <value>Sí, eliminar</value>
+  </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Tiempo estimado:</value>
   </data>

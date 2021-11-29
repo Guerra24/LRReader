@@ -86,6 +86,7 @@ namespace LRReader.Shared.Services
 		public bool V077 = false;
 		public bool V078 = false;
 		public bool V079 = false;
+		public bool V082 = false;
 
 		public bool V078Edit => V078 & Service.Settings.Profile.HasApiKey;
 
@@ -94,6 +95,7 @@ namespace LRReader.Shared.Services
 			V077 = serverInfo.version >= new Version(0, 7, 7);
 			V078 = serverInfo.version >= new Version(0, 7, 8);
 			V079 = serverInfo.version >= new Version(0, 7, 9);
+			V082 = serverInfo.version >= new Version(0, 8, 2);
 
 			ProgressTracking = (!V079 && V077) || serverInfo.server_tracks_progress;
 		}

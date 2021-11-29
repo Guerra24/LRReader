@@ -23,6 +23,8 @@ namespace LRReader.Shared.Services
 		public List<string> Namespaces = new List<string>();
 		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
 
+		public string MetadataPath { get; private set; } = "";
+
 		private DirectoryInfo metadataDirectory;
 
 		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs)
@@ -47,21 +49,21 @@ namespace LRReader.Shared.Services
 			if (serverInfo == null)
 				return;
 
-			var path = $"{metadataDirectory.FullName}/{Settings.Profile.UID}";
+			MetadataPath = $"{metadataDirectory.FullName}/{Settings.Profile.UID}";
 			var currentTimestamp = SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
-			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(path))
+			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(MetadataPath))
 			{
 				SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
-				await Update(path);
+				await Update(MetadataPath);
 			}
 			else
 			{
 				try
 				{
-					var index = Files.GetFile($"{path}/Index-v3.json");
-					var tags = Files.GetFile($"{path}/Tags-v1.json");
-					var namespaces = Files.GetFile($"{path}/Namespaces-v1.json");
-					var categories = Files.GetFile($"{path}/Categories-v1.json");
+					var index = Files.GetFile($"{MetadataPath}/Index-v3.json");
+					var tags = Files.GetFile($"{MetadataPath}/Tags-v1.json");
+					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v1.json");
+					var categories = Files.GetFile($"{MetadataPath}/Categories-v1.json");
 					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
 					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
 					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
@@ -69,7 +71,7 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception)
 				{
-					await Update(path);
+					await Update(MetadataPath);
 				}
 			}
 		}
@@ -107,7 +109,7 @@ namespace LRReader.Shared.Services
 
 		public Archive? GetArchive(string id)
 		{
-			if (Archives.TryGetValue(id, out Archive archive))
+			if (Archives.TryGetValue(id, out var archive))
 				return archive;
 			return null;
 		}
