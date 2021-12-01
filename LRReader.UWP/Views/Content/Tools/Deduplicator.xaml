@@ -287,7 +287,7 @@
 						Text="{x:Bind Data.LeftArchive.Archive.title, Mode=OneWay}"
 						TextWrapping="WrapWholeWords" />
 					<Button
-						x:Uid="/Tabs/Archive/New" Grid.Column="1" Margin="8,2,0,0"
+						x:Uid="/Tabs/Archive/New" Grid.Column="1" Margin="8,0,0,0"
 						Padding="4,2" IsHitTestVisible="False" IsTabStop="False"
 						Style="{ThemeResource AccentButtonStyle}"
 						Visibility="{x:Bind Data.LeftArchive.IsNew, Mode=OneWay}" />
@@ -328,7 +328,7 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Button
-						x:Uid="/Tabs/Archive/New" Margin="0,2,8,0" Padding="4,2"
+						x:Uid="/Tabs/Archive/New" Margin="0,0,8,0" Padding="4,2"
 						IsHitTestVisible="False" IsTabStop="False"
 						Style="{ThemeResource AccentButtonStyle}"
 						Visibility="{x:Bind Data.RightArchive.IsNew, Mode=OneWay}" />

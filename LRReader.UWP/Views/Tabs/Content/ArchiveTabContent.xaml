@@ -120,7 +120,7 @@
 				</GridView.KeyboardAccelerators>
 				<GridView.ItemTemplate>
 					<DataTemplate>
-						<items:ArchiveImage KeepOverlayOpen="{x:Bind services:Service.Settings.KeepPageDetailsOpen, Mode=OneWay}" ShowExtraDetails="{x:Bind services:Service.Settings.ShowExtraPageDetails, Mode=OneWay}" />
+						<items:ArchiveImage />
 					</DataTemplate>
 				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>
