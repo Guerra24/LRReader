@@ -46,6 +46,8 @@ namespace LRReader.UWP.Views.Controls
 
 		public void Navigate(string url, string tabId)
 		{
+			if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+				return;
 			TabId = tabId;
 			Page = new Uri(url);
 			WebView.Navigate(Page);

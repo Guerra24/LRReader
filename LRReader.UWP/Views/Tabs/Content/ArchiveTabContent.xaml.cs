@@ -182,9 +182,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			rightTarget = rightTarget.Clamp(0, count - 1);
 			if (animate)
 			{
-				if (Data.ReaderContent.LeftImage != null && animLeft != null)
+				if (Data.ReaderContent.LeftImage != null && animLeft != null && Data.ArchiveImages.Count > leftTarget)
 					await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
-				if (Data.ReaderContent.RightImage != null & animRight != null)
+				if (Data.ReaderContent.RightImage != null & animRight != null && Data.ArchiveImages.Count > rightTarget)
 					await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
 				FadeOut.Start(ReaderBackground);
 				await FadeOut.StartAsync(ScrollViewer);
