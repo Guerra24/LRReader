@@ -6,7 +6,6 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -33,7 +32,7 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				ShowNotification(result.Error.operation, result.Error.error);
+				ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
 				return false;
 			}
 		}
@@ -43,12 +42,12 @@ namespace LRReader.Shared
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 				return false;
 			if (result.OK)
-				return result.Data.success;
+				return result.Data?.success ?? false;
 			else
 				return false;
 		}
 
-		public async static Task<T> GetResult<T>(this IRestResponse request)
+		public async static Task<T?> GetResult<T>(this IRestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
 
@@ -63,12 +62,11 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				ShowNotification(result.Error.operation, result.Error.error);
+				ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
 				return default(T);
 			}
 		}
-
-		public async static Task<GenericApiResponse<T>> GetResultComplete<T>(this IRestResponse request)
+		public async static Task<GenericApiResponse<T>?> GetResultComplete<T>(this IRestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
 
@@ -83,12 +81,12 @@ namespace LRReader.Shared
 			}
 			else
 			{
-				ShowNotification(result.Error.operation, result.Error.error);
+				ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
 				return null;
 			}
 		}
 
-		public async static Task<T> GetResultNoError<T>(this IRestResponse request)
+		public async static Task<T?> GetResultNoError<T>(this IRestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
@@ -108,7 +106,7 @@ namespace LRReader.Shared
 				{
 					return JsonConvert.DeserializeObject<T>(restResponse.Content);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					/*var properties = new Dictionary<string, string>
 					{
@@ -155,7 +153,7 @@ namespace LRReader.Shared
 				{
 					return JsonConvert.DeserializeObject<GenericApiResult>(restResponse.Content);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					/*var properties = new Dictionary<string, string>
 					{
@@ -185,7 +183,7 @@ namespace LRReader.Shared
 			return error;
 		}
 
-		public static byte[]? CompressData(string data)
+		public static byte[]? CompressData(string? data)
 		{
 			if (data == null)
 				return null;

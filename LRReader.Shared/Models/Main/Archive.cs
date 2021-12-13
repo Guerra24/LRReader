@@ -1,10 +1,11 @@
 ﻿using LRReader.Shared.Internal;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.Toolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -12,15 +13,19 @@ namespace LRReader.Shared.Models.Main
 {
 	public class Archive : IEquatable<Archive>
 	{
+		[AllowNull]
 		public string arcid { get; set; }
 		[JsonConverter(typeof(ArchiveNewConverter))]
 		public bool isnew { get; set; }
-		public string extension { get; set; }
+		public string? extension { get; set; }
+		[AllowNull]
 		public string tags { get; set; }
+		[AllowNull]
 		public string title { get; set; }
 		public int pagecount { get; set; }
 		public int progress { get; set; }
 		[JsonIgnore]
+		[AllowNull]
 		public string TagsClean { get; set; }
 		[JsonIgnore]
 		public List<string> TagsList { get; set; } = new List<string>();
@@ -52,15 +57,14 @@ namespace LRReader.Shared.Models.Main
 			{
 				// Drop original collection, can cause more COMExceptions
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 			var tmp = new List<ArchiveTagsGroup>();
 			foreach (var s in separatedTags)
 			{
 				var parts = s.Trim().Split(new char[] { ':' }, 2);
-				ArchiveTagsGroup group = null;
 				var @namespace = parts.Length == 2 ? parts[0] : "other";
-				group = tmp.FirstOrDefault(tg => tg.Namespace.Equals(@namespace));
+				var group = tmp.FirstOrDefault(tg => tg.Namespace.Equals(@namespace));
 				if (group == null)
 					group = AddTagsGroup(tmp, @namespace);
 				var tag = parts[parts.Length - 1];
@@ -87,7 +91,7 @@ namespace LRReader.Shared.Models.Main
 			catch (Exception e)
 			{
 				// Handle damaged collection just in case
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 		}
 
@@ -128,13 +132,15 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveImages
 	{
+		[AllowNull]
 		public List<string> pages { get; set; }
 	}
 
 	public class ReaderImageSet
 	{
+		[AllowNull]
 		public string LeftImage { get; set; }
-		public string RightImage { get; set; }
+		public string? RightImage { get; set; }
 		public int Page { get; set; }
 		public bool TwoPages { get; set; }
 	}
@@ -165,6 +171,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveSearch
 	{
+		[AllowNull]
 		public List<Archive> data { get; set; }
 		public int draw { get; set; }
 		public int recordsFiltered { get; set; }
@@ -173,6 +180,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveTagsGroup
 	{
+		[AllowNull]
 		public string Namespace { get; set; }
 		public List<ArchiveTagsGroupTag> Tags { get; set; }
 
@@ -184,25 +192,33 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveTagsGroupTag
 	{
+		[AllowNull]
 		public string FullTag;
+		[AllowNull]
 		public string Tag;
+		[AllowNull]
 		public string Namespace;
 	}
 
 	public class ArchiveCategories : GenericApiResult
 	{
-		List<Category> categories { get; set; }
+		[AllowNull]
+		public List<Category> categories { get; set; }
 	}
 
 	public class DeleteArchiveResult : GenericApiResult
 	{
+		[AllowNull]
 		public string id { get; set; }
+		[AllowNull]
 		public string filename { get; set; }
 	}
 
 	public class ArchiveHit
 	{
+		[AllowNull]
 		public string Left { get; set; }
+		[AllowNull]
 		public string Right { get; set; }
 
 		public override bool Equals(object obj) => obj is ArchiveHit hit &&

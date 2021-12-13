@@ -9,6 +9,7 @@ using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,6 +53,7 @@ namespace LRReader.Shared.ViewModels
 		}
 		private bool _internalLoadingImages;
 		[ObservableProperty]
+		[AllowNull]
 		private ReaderImageSet _readerContent;
 		private int _readerIndex;
 		public int ReaderIndex
@@ -59,6 +61,8 @@ namespace LRReader.Shared.ViewModels
 			get => _readerIndex;
 			set
 			{
+				if (ArchiveImagesReader.Count <= value)
+					return;
 				ReaderContent = ArchiveImagesReader.ElementAt(value);
 				_readerIndex = value;
 				OnPropertyChanged("ReaderProgress");
@@ -90,7 +94,7 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
-		public event ZoomChanged ZoomChangedEvent;
+		public event ZoomChanged? ZoomChangedEvent;
 
 		private bool _readRTL;
 		public bool ReadRTL
@@ -158,7 +162,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		public event Action RebuildReader;
+		public event Action? RebuildReader;
 
 		[ObservableProperty]
 		private int _buildProgress;

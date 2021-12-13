@@ -392,6 +392,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Ben.Demystifier">
+      <Version>0.4.1</Version>
+    </PackageReference>
     <PackageReference Include="MetadataExtractor">
       <Version>2.7.1</Version>
     </PackageReference>

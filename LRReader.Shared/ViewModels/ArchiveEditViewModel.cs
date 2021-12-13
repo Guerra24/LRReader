@@ -8,6 +8,8 @@ using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,12 +25,13 @@ namespace LRReader.Shared.ViewModels
 		private RelayCommand<EditableTag> TagCommand { get; }
 		public RelayCommand AddAllTags { get; }
 
+		[AllowNull]
 		public Archive Archive;
 
 		[ObservableProperty]
-		private string _title;
+		private string _title = "";
 		[ObservableProperty]
-		private string _tags;
+		private string _tags = "";
 
 		private bool _saving;
 		public bool Saving
@@ -51,7 +54,7 @@ namespace LRReader.Shared.ViewModels
 		public ObservableCollection<EditableTag> PluginTagsList = new ObservableCollection<EditableTag>();
 
 		[ObservableProperty]
-		private Plugin _currentPlugin;
+		private Plugin? _currentPlugin;
 		[ObservableProperty]
 		private bool _useTextTags;
 
@@ -68,6 +71,7 @@ namespace LRReader.Shared.ViewModels
 			TagCommand = new RelayCommand<EditableTag>(HandleTagCommand, (_) => !Saving);
 			AddAllTags = new RelayCommand(AddPluginTags, () => !Saving && Plugins.Count > 0 && PluginTagsList.Count > 0);
 		}
+
 
 		public async Task LoadArchive(Archive archive)
 		{
@@ -96,7 +100,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 		}
 
@@ -129,12 +133,14 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 		}
 
 		private async Task UsePlugin()
 		{
+			if (CurrentPlugin is null)
+				return;
 			try
 			{
 				await SaveArchive();
@@ -172,7 +178,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 		}
 
@@ -209,7 +215,7 @@ namespace LRReader.Shared.ViewModels
 			return result.Trim().TrimEnd(',');
 		}
 
-		private void HandleTagCommand(EditableTag tag)
+		private void HandleTagCommand(EditableTag? tag)
 		{
 			if (tag is AddTag)
 			{
@@ -220,7 +226,7 @@ namespace LRReader.Shared.ViewModels
 				if (!TagsList.Contains(tag))
 					TagsList.Insert(TagsList.Count - 1, ColorTag(new EditableTag { Tag = tag.Tag, Command = TagCommand }));
 			}
-			else
+			else if (tag != null)
 			{
 				TagsList.Remove(tag);
 			}
@@ -240,7 +246,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			if (tag is AddTag)
 				return tag;
-			string color = null;
+			string? color = null;
 			var text = tag.Tag.ToLower();
 			if (text.Contains("artist:"))
 				color = "#22a7f0";
@@ -255,8 +261,10 @@ namespace LRReader.Shared.ViewModels
 
 	public class EditableTag
 	{
+		[AllowNull]
 		public string Tag { get; set; }
-		public string Color { get; set; }
+		public string? Color { get; set; }
+		[AllowNull]
 		public RelayCommand<EditableTag> Command { get; internal set; }
 
 		public override bool Equals(object obj)

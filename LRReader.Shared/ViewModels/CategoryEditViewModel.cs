@@ -4,6 +4,7 @@ using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,9 +15,11 @@ namespace LRReader.Shared.ViewModels
 		private readonly ArchivesService Archives;
 		private readonly ApiService Api;
 
+		[AllowNull]
 		public Category category;
-
+		[AllowNull]
 		public string Name { get; set; }
+		[AllowNull]
 		public string Search { get; set; }
 		public bool Pinned { get; set; }
 
@@ -141,9 +144,13 @@ namespace LRReader.Shared.ViewModels
 			var result = await CategoriesProvider.AddArchiveToCategory(category.id, archiveID);
 			if (result)
 			{
-				category.archives.Add(archiveID);
-				CategoryArchives.Add(Archives.GetArchive(archiveID));
-				OnPropertyChanged("Empty");
+				var item = Archives.GetArchive(archiveID);
+				if (item != null)
+				{
+					category.archives.Add(archiveID);
+					CategoryArchives.Add(item);
+					OnPropertyChanged("Empty");
+				}
 			}
 		}
 
@@ -152,9 +159,13 @@ namespace LRReader.Shared.ViewModels
 			var result = await CategoriesProvider.RemoveArchiveFromCategory(category.id, archiveID);
 			if (result)
 			{
-				category.archives.Remove(archiveID);
-				CategoryArchives.Remove(Archives.GetArchive(archiveID));
-				OnPropertyChanged("Empty");
+				var item = Archives.GetArchive(archiveID);
+				if (item != null)
+				{
+					category.archives.Remove(archiveID);
+					CategoryArchives.Remove(item);
+					OnPropertyChanged("Empty");
+				}
 			}
 		}
 	}

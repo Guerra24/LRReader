@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -22,8 +24,9 @@ namespace LRReader.Shared.Services
 		private readonly PlatformService Platform;
 
 		[ObservableProperty]
-		private ObservableCollection<ServerProfile> _profiles;
+		private ObservableCollection<ServerProfile> _profiles = new ObservableCollection<ServerProfile>();
 
+		[AllowNull]
 		private ServerProfile _profile;
 		public ServerProfile Profile
 		{
@@ -258,7 +261,7 @@ namespace LRReader.Shared.Services
 					}
 					catch (Exception e)
 					{
-						Crashes.TrackError(e);
+						Crashes.TrackError(e.Demystify());
 					}
 				});
 		}
@@ -266,9 +269,7 @@ namespace LRReader.Shared.Services
 		public async Task Init()
 		{
 			if (File.Exists(Files.Local + "/Profiles.json"))
-				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json"));
-			if (Profiles == null)
-				Profiles = new ObservableCollection<ServerProfile>();
+				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json")) ?? new ObservableCollection<ServerProfile>();
 
 			UpgradeSettings();
 
@@ -336,7 +337,7 @@ namespace LRReader.Shared.Services
 						var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
 						if (profiles != null)
 						{
-							Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles);
+							Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles) ?? new ObservableCollection<ServerProfile>();
 						}
 						SettingsStorage.DeleteObjectRoamed("Profiles");
 						break;

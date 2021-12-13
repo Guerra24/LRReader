@@ -201,6 +201,12 @@ It takes all thumbnails and for each pair applies a per-pixel difference using t
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>An invalid thumbnail was detected</value>
   </data>
+  <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
+    <value>Ensure that all archives are valid</value>
+  </data>
+  <data name="Deduplicator.NoThumbTask.Title" xml:space="preserve">
+    <value>Unable to create thumbnail regen task</value>
+  </data>
   <data name="Deduplicator.Of.Text" xml:space="preserve">
     <value>of</value>
   </data>

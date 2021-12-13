@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models
 {
 	public class DownloadPayload
 	{
-		public byte[] Data { get; set; }
-		public string Name { get; set; }
-		public string Type { get; set; }
+		[NotNull]
+		public byte[]? Data { get; set; }
+		[NotNull]
+		public string? Name { get; set; }
+		[NotNull]
+		public string? Type { get; set; }
 	}
 }

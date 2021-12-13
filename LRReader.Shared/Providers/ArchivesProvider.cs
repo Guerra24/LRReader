@@ -16,7 +16,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> Validate()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives");
 
@@ -30,9 +30,9 @@ namespace LRReader.Shared.Providers
 			return true;
 		}
 
-		public static async Task<List<Archive>> GetArchives()
+		public static async Task<List<Archive>?> GetArchives()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives");
 
@@ -41,9 +41,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<List<Archive>>();
 		}
 
-		public static async Task<Archive> GetArchive(string id)
+		public static async Task<Archive?> GetArchive(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/metadata");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -53,9 +53,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<Archive>();
 		}
 
-		public static async Task<ArchiveCategories> GetArchiveCategories(string id)
+		public static async Task<ArchiveCategories?> GetArchiveCategories(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/categories");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -65,9 +65,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<ArchiveCategories>();
 		}
 
-		public static async Task<byte[]> GetThumbnail(string id)
+		public static async Task<byte[]?> GetThumbnail(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/thumbnail");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -83,9 +83,9 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public static async Task<ArchiveImages> ExtractArchive(string id)
+		public static async Task<ArchiveImages?> ExtractArchive(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/" + (Api.ControlFlags.V082 ? "files" : "extract"), Api.ControlFlags.V082 ? Method.GET : Method.POST);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -95,9 +95,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<ArchiveImages>();
 		}
 
-		public static async Task<DownloadPayload> DownloadArchive(string id)
+		public static async Task<DownloadPayload?> DownloadArchive(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/download");
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -113,8 +113,8 @@ namespace LRReader.Shared.Providers
 			{
 				case HttpStatusCode.OK:
 					var download = new DownloadPayload();
-					var header = r.Headers.First(h => h.Name.Equals("Content-Disposition")).Value as string;
-					var parms = header.Split(';').Select(s => s.Trim());
+					var header = r.Headers.First(h => h.Name?.Equals("Content-Disposition") ?? false).Value as string;
+					var parms = header?.Split(';').Select(s => s.Trim());
 					var natr = parms.First(s => s.StartsWith("filename"));
 					var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
 
@@ -131,7 +131,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> ClearNewArchive(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/isnew", Method.DELETE);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -143,7 +143,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> UpdateArchive(string id, string title = "", string tags = "")
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/metadata", Method.PUT);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -155,9 +155,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult();
 		}
 
-		public static async Task<DeleteArchiveResult> DeleteArchive(string id)
+		public static async Task<DeleteArchiveResult?> DeleteArchive(string id)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}", Method.DELETE);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -167,11 +167,11 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<DeleteArchiveResult>();
 		}
 
-		public static async Task<byte[]> GetImage(string path)
+		public static async Task<byte[]?> GetImage(string path)
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest(path);
 
@@ -188,7 +188,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> UpdateProgress(string id, int progress)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/progress/{progress}", Method.PUT);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
@@ -199,9 +199,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult();
 		}
 
-		public static async Task<MinionJob> RegenerateThumbnails(bool force = false)
+		public static async Task<MinionJob?> RegenerateThumbnails(bool force = false)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/regen_thumbs");
 			rq.AddQueryParameter("force", (force ? 1 : 0).ToString());

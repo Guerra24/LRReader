@@ -146,34 +146,16 @@ namespace LRReader.Shared.ViewModels
 				Api.ServerInfo.archives_per_page, page, Query, Category.id, NewOnly, UntaggedOnly, sortby, OrderBy);
 			if (resultPage != null)
 			{
-				TotalArchives = resultPage.Data.recordsFiltered;
+				TotalArchives = resultPage.recordsFiltered;
 				await Task.Run(async () =>
 				{
-					try
+					foreach (var a in resultPage.data)
 					{
-						foreach (var a in resultPage.Data.data)
-						{
-							if (!CustomArchiveCheckEvent(a))
-								continue;
-							var archive = Archives.GetArchive(a.arcid);
-							if (archive != null)
-								await Dispatcher.RunAsync(() => ArchiveList.Add(archive), -10);
-						}
-					}
-					catch (Exception e)
-					{
-						// TODO: Some instances are returning null archives, dump data and send back
-						try
-						{
-							var json = ApiExtentions.CompressData(resultPage.Json);
-							var attachments = new ErrorAttachmentLog[]
-							{
-								ErrorAttachmentLog.AttachmentWithBinary(json, "resultPage.json.bz2", "application/x-bzip2")
-							};
-							WeakReferenceMessenger.Default.Send(new ShowNotification("API is returning bad data", "An error log has been recorded for analysis", 0));
-							Crashes.TrackError(e, attachments: attachments);
-						}
-						catch (Exception) { } // Just in case
+						if (!CustomArchiveCheckEvent(a))
+							continue;
+						var archive = Archives.GetArchive(a.arcid);
+						if (archive != null)
+							await Dispatcher.RunAsync(() => ArchiveList.Add(archive), -10);
 					}
 				});
 			}

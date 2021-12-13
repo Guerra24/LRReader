@@ -5,6 +5,7 @@ using Microsoft.AppCenter.Crashes;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,10 +17,12 @@ namespace LRReader.Shared.Services
 		private readonly PlatformService Platform;
 		private readonly SettingsService Settings;
 
+		[AllowNull]
 		public ServerInfo ServerInfo;
 		public ControlFlags ControlFlags = new ControlFlags();
 
-		private RestClient client;
+		[AllowNull]
+		public RestClient Client { get; private set; }
 
 		public ApiService(PlatformService platform, SettingsService settings)
 		{
@@ -31,14 +34,14 @@ namespace LRReader.Shared.Services
 		{
 			if (!Uri.IsWellFormedUriString(profile.ServerAddress, UriKind.Absolute))
 				return false;
-			client = new RestClient();
-			client.UseNewtonsoftJson();
-			client.BaseUrl = new Uri(profile.ServerAddress);
-			client.UserAgent = "LRReader";
+			Client = new RestClient();
+			Client.UseNewtonsoftJson();
+			Client.BaseUrl = new Uri(profile.ServerAddress);
+			Client.UserAgent = "LRReader";
 			if (!string.IsNullOrEmpty(profile.ServerApiKey))
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
-				client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
+				Client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
 			}
 			return true;
 		}
@@ -73,10 +76,6 @@ namespace LRReader.Shared.Services
 			return result;
 		}
 
-		public RestClient GetClient()
-		{
-			return client;
-		}
 	}
 
 	public class ControlFlags

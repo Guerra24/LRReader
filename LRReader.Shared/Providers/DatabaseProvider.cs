@@ -15,7 +15,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> Validate()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/database/stats");
 
@@ -29,9 +29,9 @@ namespace LRReader.Shared.Providers
 			return true;
 		}
 
-		public static async Task<List<TagStats>> GetTagStats()
+		public static async Task<List<TagStats>?> GetTagStats()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/database/stats");
 
@@ -40,9 +40,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<List<TagStats>>();
 		}
 
-		public static async Task<DatabaseCleanResult> CleanDatabase()
+		public static async Task<DatabaseCleanResult?> CleanDatabase()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/database/clean");
 
@@ -53,7 +53,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> DropDatabase()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/database/drop");
 
@@ -62,9 +62,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult();
 		}
 
-		public static async Task<DownloadPayload> BackupJSON()
+		public static async Task<DownloadPayload?> BackupJSON()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/database/backup");
 
@@ -92,7 +92,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> ClearAllNew()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/database/isnew", Method.DELETE);
 

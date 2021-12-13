@@ -8,9 +8,9 @@ namespace LRReader.Shared.Providers
 	public class ShinobuProvider
 	{
 
-		public static async Task<ShinobuStatus> GetShinobuStatus()
+		public static async Task<ShinobuStatus?> GetShinobuStatus()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/shinobu");
 
@@ -21,7 +21,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> RestartWorker()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/shinobu/restart");
 
@@ -32,7 +32,7 @@ namespace LRReader.Shared.Providers
 
 		public static async Task<bool> StopWorker()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/shinobu/stop");
 

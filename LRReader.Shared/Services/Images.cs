@@ -3,6 +3,8 @@ using KeyedSemaphores;
 using LRReader.Shared.Providers;
 using Microsoft.AppCenter.Crashes;
 using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,7 +14,8 @@ namespace LRReader.Shared.Services
 {
 	public class RawImage
 	{
-		public byte[] Data { get; set; }
+		[NotNull]
+		public byte[]? Data { get; set; }
 		public Size Size { get; set; }
 	}
 
@@ -55,7 +58,7 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception e)
 				{
-					Crashes.TrackError(e);
+					Crashes.TrackError(e.Demystify());
 				}
 			});
 		}
@@ -89,7 +92,7 @@ namespace LRReader.Shared.Services
 				return null;
 			using (var key = await KeyedSemaphore.LockAsync(path))
 			{
-				byte[] image;
+				byte[]? image;
 				if (imagesCache.TryGet(path, out image) && !forced)
 				{
 					return image;
@@ -113,7 +116,7 @@ namespace LRReader.Shared.Services
 				return await ArchivesProvider.GetThumbnail(id);
 			using (var key = await KeyedSemaphore.LockAsync(id))
 			{
-				byte[] data;
+				byte[]? data;
 				if (thumbnailsCache.TryGet(id, out data) && !forced)
 				{
 					return data;

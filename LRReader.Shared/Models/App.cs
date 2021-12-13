@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models
 {
@@ -19,19 +19,24 @@ namespace LRReader.Shared.Models
 
 	public class ReleaseInfo
 	{
-		public string name { get; set; }
-		public string body { get; set; }
+		[NotNull]
+		public string? name { get; set; }
+		[NotNull]
+		public string? body { get; set; }
 		[JsonConverter(typeof(VersionConverter))]
-		public Version version { get; set; }
-		public string link { get; set; }
+		[NotNull]
+		public Version? version { get; set; }
+		public string? link { get; set; }
 	}
 
 	public class VersionSupportedRange
 	{
 		[JsonConverter(typeof(VersionConverter))]
-		public Version minSupported { get; set; }
+		[NotNull]
+		public Version? minSupported { get; set; }
 		[JsonConverter(typeof(VersionConverter))]
-		public Version maxSupported { get; set; }
+		[NotNull]
+		public Version? maxSupported { get; set; }
 	}
 
 	public class UpdateResult

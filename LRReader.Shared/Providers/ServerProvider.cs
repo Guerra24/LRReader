@@ -10,9 +10,9 @@ namespace LRReader.Shared.Providers
 	public static class ServerProvider
 	{
 
-		public static async Task<ServerInfo> GetServerInfo()
+		public static async Task<ServerInfo?> GetServerInfo()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/info");
 
@@ -36,9 +36,9 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
-		public static async Task<List<Plugin>> GetPlugins(PluginType type)
+		public static async Task<List<Plugin>?> GetPlugins(PluginType type)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/plugins/{type}");
 			rq.AddParameter("type", type.ToString().ToLower(), ParameterType.UrlSegment);
@@ -48,9 +48,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<List<Plugin>>();
 		}
 
-		public static async Task<UsePluginResult> UsePlugin(string plugin, string arcid = "", string arg = "")
+		public static async Task<UsePluginResult?> UsePlugin(string plugin, string arcid = "", string arg = "")
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/plugins/use");
 			rq.AddQueryParameter("plugin", plugin);
@@ -62,9 +62,9 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult<UsePluginResult>();
 		}
 
-		public static async Task<MinionStatus> GetMinionStatus(int job)
+		public static async Task<MinionStatus?> GetMinionStatus(int job)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/minion/{job}");
 			rq.AddParameter("job", job, ParameterType.UrlSegment);

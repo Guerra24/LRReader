@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.Services;
+﻿#nullable enable
+using LRReader.Shared.Services;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -11,17 +13,19 @@ namespace LRReader.UWP.Services
 
 		public Task Init() => Task.Delay(1);
 
-		public T GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
+		public T? GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
 
-		public T GetObjectLocal<T>(string key, T def)
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectLocal<T>(string key, T? def)
 		{
 			var val = localSettings.Values[key];
 			return val != null ? (T)val : def;
 		}
 
-		public T GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
+		public T? GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
 
-		public T GetObjectRoamed<T>(string key, T def)
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectRoamed<T>(string key, T? def)
 		{
 			var val = roamedSettings.Values[key];
 			return val != null ? (T)val : def;

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
 	public class TagStats
 	{
+		[AllowNull]
 		public string @namespace { get; set; }
+		[AllowNull]
 		public string text { get; set; }
 		public int weight { get; set; }
 

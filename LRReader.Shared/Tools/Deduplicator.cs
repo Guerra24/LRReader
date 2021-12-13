@@ -79,12 +79,14 @@ namespace LRReader.Shared.Tools
 
 			var archives = Archives.Archives;
 			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
+			if (thumbnailJob is null)
+				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/NoThumbTask/Title"), Platform.GetLocalizedString("Tools/Deduplicator/NoThumbTask/Message"));
 
 			UpdateProgress(DeduplicatorStatus.GenerateThumbnails, archives.Count, -2, 3, 0);
 			while (true)
 			{
 				await Task.Delay(1000);
-				if ((await ServerProvider.GetMinionStatus(thumbnailJob.job)).state.Equals("finished"))
+				if ((await ServerProvider.GetMinionStatus(thumbnailJob.job))?.state?.Equals("finished") ?? true)
 					break;
 			}
 
@@ -115,7 +117,7 @@ namespace LRReader.Shared.Tools
 					earlyExit = true;
 				int itemCount = Interlocked.Increment(ref count);
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
-				return new Tuple<string, Image<Rgba32>?>(pair.Key, image);
+				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
 			})))).AsEnumerable().ToList();
 			tmp.RemoveAll(pair => pair.Item2 == null);
 

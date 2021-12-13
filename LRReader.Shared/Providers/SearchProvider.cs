@@ -7,9 +7,9 @@ namespace LRReader.Shared.Providers
 {
 	public static class SearchProvider
 	{
-		public static async Task<GenericApiResponse<ArchiveSearch>> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged, string sortby = "title", Order order = Order.Ascending)
+		public static async Task<ArchiveSearch?> Search(int archivesPerPage, int page, string query, string category, bool isnew, bool untagged, string sortby = "title", Order order = Order.Ascending)
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/search");
 
@@ -23,12 +23,12 @@ namespace LRReader.Shared.Providers
 
 			var r = await client.ExecuteGetAsync(rq);
 
-			return await r.GetResultComplete<ArchiveSearch>();
+			return await r.GetResult<ArchiveSearch>();
 		}
 
 		public static async Task<bool> DiscardCache()
 		{
-			var client = Api.GetClient();
+			var client = Api.Client;
 
 			var rq = new RestRequest("api/search/cache", Method.DELETE);
 

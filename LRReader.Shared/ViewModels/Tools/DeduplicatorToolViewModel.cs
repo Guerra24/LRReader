@@ -84,13 +84,23 @@ namespace LRReader.Shared.ViewModels.Tools
 		public async Task LoadArchives(string left, string right)
 		{
 			CanClosePreviews = false;
-			LeftArchive.Archive = Archives.GetArchive(left);
-			var lTask = LeftArchive.Reload();
-			RightArchive.Archive = Archives.GetArchive(right);
-			var rTask = RightArchive.Reload();
-			await lTask;
-			await rTask;
-			CanClosePreviews = true;
+			try
+			{
+				var lArchive = Archives.GetArchive(left);
+				var rArchive = Archives.GetArchive(right);
+				if (lArchive is null || rArchive is null)
+					return;
+				LeftArchive.Archive = lArchive;
+				var lTask = LeftArchive.Reload();
+				RightArchive.Archive = rArchive;
+				var rTask = RightArchive.Reload();
+				await lTask;
+				await rTask;
+			}
+			finally
+			{
+				CanClosePreviews = true;
+			}
 		}
 
 	}

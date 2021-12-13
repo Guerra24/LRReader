@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
@@ -10,13 +11,15 @@ namespace LRReader.Shared.Services
 
 		void StoreObjectRoamed(string key, object obj);
 
-		T GetObjectLocal<T>(string key);
+		T? GetObjectLocal<T>(string key);
 
-		T GetObjectLocal<T>(string key, T def);
+		[return: NotNullIfNotNull("def")]
+		T? GetObjectLocal<T>(string key, T? def);
 
-		T GetObjectRoamed<T>(string key);
+		T? GetObjectRoamed<T>(string key);
 
-		T GetObjectRoamed<T>(string key, T def);
+		[return: NotNullIfNotNull("def")]
+		T? GetObjectRoamed<T>(string key, T? def);
 
 		void DeleteObjectLocal(string key);
 
@@ -27,13 +30,15 @@ namespace LRReader.Shared.Services
 	{
 		public Task Init() => Task.Delay(1);
 
-		public T GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
+		public T? GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
 
-		public T GetObjectLocal<T>(string key, T def) => def;
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectLocal<T>(string key, T? def) => def;
 
-		public T GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
+		public T? GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
 
-		public T GetObjectRoamed<T>(string key, T def) => def;
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectRoamed<T>(string key, T? def) => def;
 
 		public void StoreObjectLocal(string key, object obj)
 		{

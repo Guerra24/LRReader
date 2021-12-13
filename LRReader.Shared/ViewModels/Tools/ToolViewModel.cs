@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.ViewModels.Tools
 {
@@ -50,18 +51,20 @@ namespace LRReader.Shared.ViewModels.Tools
 		}
 		public int CurrentStepPlusOne => Math.Min(CurrentStep + 1, MaxSteps);
 		public bool Indeterminate => CurrentProgress == -2;
-		private object _toolStatus;
-		public object ToolStatus
+		private object? _toolStatus;
+		[DisallowNull]
+		public object? ToolStatus
 		{
 			get
 			{
-				return Platform.GetLocalizedString(_toolStatus.GetType().GetMember(_toolStatus.ToString())[0].GetCustomAttribute<DescriptionAttribute>(false).Description);
+				return Platform.GetLocalizedString(_toolStatus?.GetType().GetMember(_toolStatus.ToString())[0].GetCustomAttribute<DescriptionAttribute>(false).Description ?? "");
 			}
 
 			set => SetProperty(ref _toolStatus, value);
 		}
-		private string _estimatedTime;
-		public string EstimatedTime
+		private string? _estimatedTime;
+		[DisallowNull]
+		public string? EstimatedTime
 		{
 			get => _estimatedTime;
 			set => SetProperty(ref _estimatedTime, value);
@@ -72,14 +75,14 @@ namespace LRReader.Shared.ViewModels.Tools
 			get => _threads;
 			set => SetProperty(ref _threads, value);
 		}
-		private string _errorTitle;
-		public string ErrorTitle
+		private string? _errorTitle;
+		public string? ErrorTitle
 		{
 			get => _errorTitle;
 			set => SetProperty(ref _errorTitle, value);
 		}
-		private string _errorDescription;
-		public string ErrorDescription
+		private string? _errorDescription;
+		public string? ErrorDescription
 		{
 			get => _errorDescription;
 			set => SetProperty(ref _errorDescription, value);

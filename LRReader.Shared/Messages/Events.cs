@@ -17,10 +17,10 @@ namespace LRReader.Shared.Messages
 	public struct Notification
 	{
 		public string Title { get; }
-		public string Content { get; }
+		public string? Content { get; }
 		public int Duration { get; }
 
-		public Notification(string title, string content, int duration)
+		public Notification(string title, string? content, int duration)
 		{
 			Title = title;
 			Content = content;
@@ -30,6 +30,6 @@ namespace LRReader.Shared.Messages
 
 	public class ShowNotification : ValueChangedMessage<Notification>
 	{
-		public ShowNotification(string title, string content, int duration = 5000) : base(new Notification(title, content, duration)) { }
+		public ShowNotification(string title, string? content, int duration = 5000) : base(new Notification(title, content, duration)) { }
 	}
 }

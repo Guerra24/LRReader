@@ -4,6 +4,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace LRReader.Shared.ViewModels
 
 		public ObservableCollection<Category> Categories = new ObservableCollection<Category>();
 		private List<Category> Source = new List<Category>();
+		[AllowNull]
 		public IList<object> SelectedCategories;
 
 		public CategoryArchiveViewModel(string archiveID)

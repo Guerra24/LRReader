@@ -183,7 +183,7 @@ namespace LRReader.Shared.ViewModels.Base
 				Archive.progress = progress;
 		}
 
-		public async Task<DownloadPayload> DownloadArchive()
+		public async Task<DownloadPayload?> DownloadArchive()
 		{
 			return await ArchivesProvider.DownloadArchive(Archive.arcid);
 		}

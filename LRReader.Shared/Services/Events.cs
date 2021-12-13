@@ -5,7 +5,7 @@
 
 	public class EventsService
 	{
-		public event RebuildReaderImagesSet RebuildReaderImagesSetEvent;
+		public event RebuildReaderImagesSet? RebuildReaderImagesSetEvent;
 
 		public void RebuildReaderImagesSet() => RebuildReaderImagesSetEvent?.Invoke();
 

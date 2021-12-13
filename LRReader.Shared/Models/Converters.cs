@@ -1,22 +1,22 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LRReader.Shared.Models
 {
 	public class BoolConverter : JsonConverter
 	{
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
-			writer.WriteValue(((bool)value) ? "1" : "0");
+			if (value is not null)
+				writer.WriteValue(((bool)value) ? "1" : "0");
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 		{
-			return reader.Value.ToString() == "1";
+			return reader.Value?.ToString() == "1";
 		}
 
 		public override bool CanConvert(Type objectType)
@@ -30,14 +30,15 @@ namespace LRReader.Shared.Models
 
 		private static readonly Regex onlyDigitOrDot = new Regex(@"[^\d|\.]+");
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
-			writer.WriteValue((value as Version).ToString());
+			writer.WriteValue((value as Version)?.ToString());
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		[return: MaybeNull]
+		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 		{
-			var cleanedString = onlyDigitOrDot.Replace(reader.Value.ToString(), "");
+			var cleanedString = onlyDigitOrDot.Replace(reader.Value?.ToString(), "");
 			if (cleanedString.Count(s => s == '.') > 4)
 				return null;
 			return new Version(cleanedString);
@@ -60,9 +61,9 @@ namespace LRReader.Shared.Models
 		{
 			if (reader.ValueType == typeof(string))
 			{
-				if (reader.Value.Equals("none"))
+				if (reader.Value?.Equals("none") ?? false)
 					return false;
-				if (reader.Value.Equals("block"))
+				if (reader.Value?.Equals("block") ?? false)
 					return true;
 				if (bool.TryParse(reader.Value as string, out bool result))
 					return result;

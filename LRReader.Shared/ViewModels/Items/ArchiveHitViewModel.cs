@@ -1,13 +1,11 @@
-﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +15,7 @@ namespace LRReader.Shared.ViewModels.Items
 
 	public class ArchiveHitViewModel : ObservableObject
 	{
+		[AllowNull]
 		private ArchiveHit _archiveHit;
 		public ArchiveHit ArchiveHit
 		{
@@ -38,7 +37,7 @@ namespace LRReader.Shared.ViewModels.Items
 		private bool _loading;
 
 		[ObservableProperty]
-		private string _resolution;
+		private string _resolution = "???x???";
 
 		public ArchiveHitPreviewViewModel(
 			SettingsService settings,

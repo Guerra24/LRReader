@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Services
 {
@@ -14,7 +15,8 @@ namespace LRReader.Shared.Services
 
 	public class Service
 	{
-		public static IServiceProvider Services { get; set; }
+		[NotNull]
+		public static IServiceProvider? Services { get; set; }
 
 		private static volatile bool Loaded;
 

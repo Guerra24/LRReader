@@ -4,7 +4,6 @@ using MetadataExtractor.Formats.Jpeg;
 using MetadataExtractor.Formats.Png;
 using MetadataExtractor.Formats.WebP;
 using MetadataExtractor.Util;
-using Microsoft.AppCenter.Crashes;
 using System;
 using System.Drawing;
 using System.IO;
@@ -16,7 +15,7 @@ namespace LRReader.Shared.Services
 	public abstract class ImageProcessingService
 	{
 
-		public abstract Task<object> ByteToBitmap(byte[] bytes, object image = default, bool transcode = false);
+		public abstract Task<object?> ByteToBitmap(byte[] bytes, object? image = default, bool transcode = false);
 
 		public virtual Task<Size> GetImageSize(byte[] bytes)
 		{

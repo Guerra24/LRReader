@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Services;
+﻿#nullable enable
+using LRReader.Shared.Services;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -19,7 +20,7 @@ namespace LRReader.UWP.Services
 			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
 		}
 
-		public override async Task<object> ByteToBitmap(byte[] bytes, object image = null, bool transcode = false)
+		public override async Task<object?> ByteToBitmap(byte[] bytes, object? image = null, bool transcode = false)
 		{
 			if (bytes == null)
 				return null;
@@ -47,7 +48,7 @@ namespace LRReader.UWP.Services
 								await encoder.FlushAsync();
 								if (image == null)
 									image = new BitmapImage();
-								(image as BitmapImage).SetSource(converted);
+								(image as BitmapImage)?.SetSource(converted);
 							}
 						}
 					}
@@ -66,7 +67,7 @@ namespace LRReader.UWP.Services
 						image = new BitmapImage();
 					try
 					{
-						await (image as BitmapImage).SetSourceAsync(stream);
+						await (image as BitmapImage)?.SetSourceAsync(stream);
 					}
 					catch (Exception)
 					{

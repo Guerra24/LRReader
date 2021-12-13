@@ -1,14 +1,19 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
 	public class ServerInfo
 	{
+		[AllowNull]
 		public string name { get; set; }
+		[AllowNull]
 		public string motd { get; set; }
 		[JsonConverter(typeof(VersionConverter))]
+		[AllowNull]
 		public Version version { get; set; }
+		[AllowNull]
 		public string version_name { get; set; }
 		[JsonConverter(typeof(BoolConverter))]
 		public bool has_password { get; set; }
@@ -20,7 +25,7 @@ namespace LRReader.Shared.Models.Main
 		[JsonConverter(typeof(BoolConverter))]
 		public bool server_resizes_images { get; set; }
 		public int cache_last_cleared { get; set; }
-		public string version_desc { get; set; }
+		public string? version_desc { get; set; }
 		public int total_pages_read { get; set; }
 		[JsonConverter(typeof(BoolConverter))]
 		public bool server_tracks_progress { get; set; }

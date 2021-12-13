@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using RestSharp;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -37,7 +38,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 			return false;
 		}
@@ -61,7 +62,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
 		}
@@ -87,7 +88,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
 		}
@@ -116,7 +117,7 @@ namespace LRReader.UWP.Services
 			{
 				return new CheckForUpdatesResult { Result = false };
 			}
-			if (updatesResult.OK)
+			if (updatesResult.OK && updatesResult.Data != null)
 			{
 				return updatesResult.Data;
 			}
@@ -145,7 +146,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
@@ -180,7 +181,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
@@ -203,7 +204,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}

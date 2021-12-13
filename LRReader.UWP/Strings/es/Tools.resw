@@ -201,6 +201,12 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>Se ha detectado una miniatura no válida</value>
   </data>
+  <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
+    <value>Asegúrese de que todos los archivos son válidos</value>
+  </data>
+  <data name="Deduplicator.NoThumbTask.Title" xml:space="preserve">
+    <value>No se puede crear la tarea de regeneración de miniaturas</value>
+  </data>
   <data name="Deduplicator.Of.Text" xml:space="preserve">
     <value>de</value>
   </data>

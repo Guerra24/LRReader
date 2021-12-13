@@ -64,9 +64,9 @@ namespace LRReader.Shared.Services
 					var tags = Files.GetFile($"{MetadataPath}/Tags-v1.json");
 					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v1.json");
 					var categories = Files.GetFile($"{MetadataPath}/Categories-v1.json");
-					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index);
-					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags);
-					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces);
+					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index) ?? new Dictionary<string, Archive>();
+					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags) ?? new List<TagStats>();
+					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces) ?? new List<string>();
 					//Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
 				}
 				catch (Exception)

@@ -70,7 +70,7 @@ namespace LRReader.Shared.Services
 				ReadVersion();
 				return;
 			}
-			if (result.OK)
+			if (result.OK && result.Data != null)
 			{
 				var range = result.Data;
 				MIN_VERSION = range.minSupported;

@@ -21,7 +21,7 @@ namespace LRReader.Shared.Services
 		public Task RunAsync(Action action, int priority)
 		{
 			action.Invoke();
-			return null;
+			return Task.Delay(1);
 		}
 
 		public bool Run(Action action, int priority)

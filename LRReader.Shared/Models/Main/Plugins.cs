@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -14,6 +15,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class PluginParameter
 	{
+		[AllowNull]
 		public string desc { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PluginParameterType type { get; set; }
@@ -26,17 +28,25 @@ namespace LRReader.Shared.Models.Main
 
 	public class Plugin
 	{
+		[AllowNull]
 		public string author { get; set; }
+		[AllowNull]
 		public string description { get; set; }
+		[AllowNull]
 		public string icon { get; set; }
+		[AllowNull]
 		public string name { get; set; }
+		[AllowNull]
 		public string @namespace { get; set; }
+		[AllowNull]
 		public string oneshot_arg { get; set; }
+		[AllowNull]
 		public List<PluginParameter> parameters { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PluginType type { get; set; }
+		[AllowNull]
 		public string version { get; set; }
-		public string login_from { get; set; }
+		public string? login_from { get; set; }
 
 		public bool HasArg { get; set; }
 
@@ -56,25 +66,28 @@ namespace LRReader.Shared.Models.Main
 
 	public class PluginResultData
 	{
+		[AllowNull]
 		public string new_tags { get; set; }
 	}
 
 	public class UsePluginResult : GenericApiResult
 	{
+		[AllowNull]
 		public PluginResultData data { get; set; }
+		[AllowNull]
 		public string type { get; set; }
 	}
 
 	public class PluginParameterTypeConverter : JsonConverter
 	{
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 		{
-			switch (reader.Value.ToString())
+			switch (reader.Value?.ToString())
 			{
 				case "string":
 					return PluginParameterType.String;

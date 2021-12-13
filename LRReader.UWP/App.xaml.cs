@@ -3,15 +3,14 @@ using LRReader.UWP.Services;
 using LRReader.UWP.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using static LRReader.Shared.Services.Service;
 using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
 
@@ -27,6 +26,7 @@ namespace LRReader.UWP
 			Init.EarlyInit();
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
+			this.UnhandledException += App_UnhandledException;
 		}
 
 		/// <summary>
@@ -91,6 +91,14 @@ namespace LRReader.UWP
 			var deferral = e.SuspendingOperation.GetDeferral();
 			//TODO: Save application state and stop any background activity
 			deferral.Complete();
+		}
+
+		private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			e.Handled = true;
+			Crashes.TrackError(e.Exception.Demystify());
+			// TODO: Do better
+			await Service.Platform.OpenGenericDialog("Internal Error", "Continue", content: e.Message);
 		}
 	}
 }

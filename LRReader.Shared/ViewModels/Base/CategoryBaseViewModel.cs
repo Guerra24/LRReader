@@ -7,6 +7,7 @@ using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Base
@@ -17,6 +18,7 @@ namespace LRReader.Shared.ViewModels.Base
 		private readonly TabsService Tabs;
 		protected readonly SettingsService Settings;
 
+		[AllowNull]
 		[ObservableProperty]
 		private Category _category;
 		[ObservableProperty]

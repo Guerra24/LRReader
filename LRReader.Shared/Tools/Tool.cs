@@ -2,6 +2,8 @@
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
@@ -12,7 +14,8 @@ namespace LRReader.Shared.Tools
 
 	public struct ToolProgress<T>
 	{
-		public T Status { get; set; }
+		[NotNull]
+		public T? Status { get; set; }
 		public int MaxProgress { get; set; }
 		public int CurrentProgress { get; set; }
 		public int MaxSteps { get; set; }
@@ -73,7 +76,7 @@ namespace LRReader.Shared.Tools
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				Crashes.TrackError(e.Demystify());
 			}
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
@@ -87,7 +90,7 @@ namespace LRReader.Shared.Tools
 		protected ToolResult<R> EarlyExit(string title, string description) => new ToolResult<R> { Title = title, Description = description };
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1) => progressFilter.OnNext(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
+		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1) => progressFilter?.OnNext(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
 	}
 
 	public static class Util
