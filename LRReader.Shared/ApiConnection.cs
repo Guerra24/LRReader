@@ -17,7 +17,7 @@ namespace LRReader.Shared
 	public static class ApiExtentions
 	{
 
-		public async static Task<bool> GetResult(this IRestResponse request)
+		public async static Task<bool> GetResult(this RestResponse request)
 		{
 			var result = await request.GetResultInternal<GenericApiResult>();
 
@@ -36,7 +36,7 @@ namespace LRReader.Shared
 				return false;
 			}
 		}
-		public async static Task<bool> GetResultNoError(this IRestResponse request)
+		public async static Task<bool> GetResultNoError(this RestResponse request)
 		{
 			var result = await request.GetResultInternal<GenericApiResult>();
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
@@ -47,7 +47,7 @@ namespace LRReader.Shared
 				return false;
 		}
 
-		public async static Task<T?> GetResult<T>(this IRestResponse request)
+		public async static Task<T?> GetResult<T>(this RestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
 
@@ -66,7 +66,7 @@ namespace LRReader.Shared
 				return default(T);
 			}
 		}
-		public async static Task<GenericApiResponse<T>?> GetResultComplete<T>(this IRestResponse request)
+		public async static Task<GenericApiResponse<T>?> GetResultComplete<T>(this RestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
 
@@ -86,7 +86,7 @@ namespace LRReader.Shared
 			}
 		}
 
-		public async static Task<T?> GetResultNoError<T>(this IRestResponse request)
+		public async static Task<T?> GetResultNoError<T>(this RestResponse request)
 		{
 			var result = await request.GetResultInternal<T>();
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
@@ -97,16 +97,19 @@ namespace LRReader.Shared
 				return default(T);
 		}
 
-		public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this IRestResponse restResponse)
+		public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this RestResponse restResponse)
 		{
 			var apiResponse = new GenericApiResponse<T>();
 			var data = await Task.Run(() =>
 			{
+				T? value = default;
+				Exception? ex = null;
 				try
 				{
-					return JsonConvert.DeserializeObject<T>(restResponse.Content);
+					if (restResponse.Content != null)
+						value = JsonConvert.DeserializeObject<T>(restResponse.Content);
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
 					/*var properties = new Dictionary<string, string>
 					{
@@ -124,14 +127,15 @@ namespace LRReader.Shared
 						ErrorAttachmentLog.AttachmentWithBinary(json, "input.json.bz2", "application/x-bzip2")
 					};
 					Crashes.TrackError(e, properties, attachments);*/ // We are getting bad data from the instance, send stack trace
-					return default;
+					ex = e;
 				}
+				return new Tuple<T?, Exception?>(value, ex);
 			});
-			if (data != null)
+			if (data.Item1 != null)
 				switch (restResponse.StatusCode)
 				{
 					case HttpStatusCode.OK:
-						apiResponse.Data = data;
+						apiResponse.Data = data.Item1;
 						apiResponse.OK = true;
 						apiResponse.Json = restResponse.Content;
 						break;
@@ -140,18 +144,21 @@ namespace LRReader.Shared
 						break;
 				}
 			else
-				apiResponse.Error = new GenericApiResult { operation = "Error while decoding response" };
+				apiResponse.Error = new GenericApiResult { operation = "Error while decoding response", error = data.Item2?.Message };
 			apiResponse.Code = restResponse.StatusCode;
 			return apiResponse;
 		}
 
-		public static async Task<GenericApiResult> GetError(this IRestResponse restResponse)
+		public static async Task<GenericApiResult> GetError(this RestResponse restResponse)
 		{
 			var error = await Task.Run(() =>
 			{
 				try
 				{
-					return JsonConvert.DeserializeObject<GenericApiResult>(restResponse.Content);
+					if (restResponse.Content != null)
+						return JsonConvert.DeserializeObject<GenericApiResult>(restResponse.Content);
+					else
+						return default;
 				}
 				catch (Exception)
 				{

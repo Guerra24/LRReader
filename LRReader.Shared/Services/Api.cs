@@ -34,10 +34,9 @@ namespace LRReader.Shared.Services
 		{
 			if (!Uri.IsWellFormedUriString(profile.ServerAddress, UriKind.Absolute))
 				return false;
-			Client = new RestClient();
+			var options = new RestClientOptions(profile.ServerAddress) { UserAgent = "LRReader" };
+			Client = new RestClient(options);
 			Client.UseNewtonsoftJson();
-			Client.BaseUrl = new Uri(profile.ServerAddress);
-			Client.UserAgent = "LRReader";
 			if (!string.IsNullOrEmpty(profile.ServerApiKey))
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));

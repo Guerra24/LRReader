@@ -30,7 +30,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/search/cache", Method.DELETE);
+			var rq = new RestRequest("api/search/cache", Method.Delete);
 
 			var r = await client.ExecuteAsync(rq);
 

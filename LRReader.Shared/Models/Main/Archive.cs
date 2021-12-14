@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -57,7 +56,7 @@ namespace LRReader.Shared.Models.Main
 			{
 				// Drop original collection, can cause more COMExceptions
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 			var tmp = new List<ArchiveTagsGroup>();
 			foreach (var s in separatedTags)
@@ -91,7 +90,7 @@ namespace LRReader.Shared.Models.Main
 			catch (Exception e)
 			{
 				// Handle damaged collection just in case
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 		}
 

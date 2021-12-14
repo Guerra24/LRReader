@@ -20,7 +20,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/archives");
 
-			var r = await client.ExecuteAsync(rq, Method.HEAD);
+			var r = await client.ExecuteAsync(rq, Method.Head);
 
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
@@ -87,7 +87,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/" + (Api.ControlFlags.V082 ? "files" : "extract"), Api.ControlFlags.V082 ? Method.GET : Method.POST);
+			var rq = new RestRequest("api/archives/{id}/" + (Api.ControlFlags.V082 ? "files" : "extract"), Api.ControlFlags.V082 ? Method.Get : Method.Post);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteAsync(rq);
@@ -133,7 +133,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/isnew", Method.DELETE);
+			var rq = new RestRequest("api/archives/{id}/isnew", Method.Delete);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteAsync(rq);
@@ -145,7 +145,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/metadata", Method.PUT);
+			var rq = new RestRequest("api/archives/{id}/metadata", Method.Put);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 			rq.AddQueryParameter("title", title);
 			rq.AddQueryParameter("tags", tags);
@@ -159,7 +159,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}", Method.DELETE);
+			var rq = new RestRequest("api/archives/{id}", Method.Delete);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteAsync(rq);
@@ -190,7 +190,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/progress/{progress}", Method.PUT);
+			var rq = new RestRequest("api/archives/{id}/progress/{progress}", Method.Put);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 			rq.AddParameter("progress", progress, ParameterType.UrlSegment);
 

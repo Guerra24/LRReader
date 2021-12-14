@@ -8,7 +8,6 @@ using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -100,7 +99,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 		}
 
@@ -133,7 +132,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 		}
 
@@ -178,7 +177,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 		}
 

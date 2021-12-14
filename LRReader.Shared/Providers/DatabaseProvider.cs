@@ -19,7 +19,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/database/stats");
 
-			var r = await client.ExecuteAsync(rq, Method.HEAD);
+			var r = await client.ExecuteAsync(rq, Method.Head);
 
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
@@ -94,7 +94,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/database/isnew", Method.DELETE);
+			var rq = new RestRequest("api/database/isnew", Method.Delete);
 
 			var r = await client.ExecuteAsync(rq);
 

@@ -18,9 +18,9 @@ namespace LRReader.Shared.Services
 		private readonly SettingsService Settings;
 		private readonly TabsService Tabs;
 
-		public Dictionary<string, Archive> Archives = new Dictionary<string, Archive>();
-		public List<TagStats> TagStats = new List<TagStats>();
-		public List<string> Namespaces = new List<string>();
+		public Dictionary<string, Archive> Archives = new();
+		public List<TagStats> TagStats = new();
+		public List<string> Namespaces = new();
 		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
 
 		public string MetadataPath { get; private set; } = "";
@@ -64,9 +64,9 @@ namespace LRReader.Shared.Services
 					var tags = Files.GetFile($"{MetadataPath}/Tags-v1.json");
 					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v1.json");
 					var categories = Files.GetFile($"{MetadataPath}/Categories-v1.json");
-					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index) ?? new Dictionary<string, Archive>();
-					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags) ?? new List<TagStats>();
-					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces) ?? new List<string>();
+					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index) ?? new();
+					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags) ?? new();
+					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces) ?? new();
 					//Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
 				}
 				catch (Exception)

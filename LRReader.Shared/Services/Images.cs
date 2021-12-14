@@ -3,7 +3,6 @@ using KeyedSemaphores;
 using LRReader.Shared.Providers;
 using Microsoft.AppCenter.Crashes;
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
@@ -58,7 +57,7 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception e)
 				{
-					Crashes.TrackError(e.Demystify());
+					Crashes.TrackError(e);
 				}
 			});
 		}

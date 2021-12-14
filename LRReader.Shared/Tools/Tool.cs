@@ -2,7 +2,6 @@
 using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -76,7 +75,7 @@ namespace LRReader.Shared.Tools
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 			GC.Collect();
 			GC.WaitForPendingFinalizers();

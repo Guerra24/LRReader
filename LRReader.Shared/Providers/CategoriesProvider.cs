@@ -19,7 +19,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/categories");
 
-			var r = await client.ExecuteAsync(rq, Method.HEAD);
+			var r = await client.ExecuteAsync(rq, Method.Head);
 
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
@@ -44,7 +44,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories", Method.PUT);
+			var rq = new RestRequest("api/categories", Method.Put);
 			rq.AddQueryParameter("name", name);
 			rq.AddQueryParameter("search", search);
 			rq.AddQueryParameter("pinned", (pinned ? 1 : 0).ToString());
@@ -73,7 +73,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}", Method.PUT);
+			var rq = new RestRequest("api/categories/{id}", Method.Put);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 			rq.AddQueryParameter("name", name);
 			rq.AddQueryParameter("search", search);
@@ -88,7 +88,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}", Method.DELETE);
+			var rq = new RestRequest("api/categories/{id}", Method.Delete);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteAsync(rq);
@@ -100,7 +100,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}/{archive}", Method.PUT);
+			var rq = new RestRequest("api/categories/{id}/{archive}", Method.Put);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 			rq.AddParameter("archive", archive, ParameterType.UrlSegment);
 
@@ -113,7 +113,7 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}/{archive}", Method.DELETE);
+			var rq = new RestRequest("api/categories/{id}/{archive}", Method.Delete);
 			rq.AddParameter("id", id, ParameterType.UrlSegment);
 			rq.AddParameter("archive", archive, ParameterType.UrlSegment);
 

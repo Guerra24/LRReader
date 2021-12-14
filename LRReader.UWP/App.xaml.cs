@@ -3,7 +3,6 @@ using LRReader.UWP.Services;
 using LRReader.UWP.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
-using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -96,7 +95,7 @@ namespace LRReader.UWP
 		private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			e.Handled = true;
-			Crashes.TrackError(e.Exception.Demystify());
+			Crashes.TrackError(e.Exception);
 			// TODO: Do better
 			await Service.Platform.OpenGenericDialog("Internal Error", "Continue", content: e.Message);
 		}

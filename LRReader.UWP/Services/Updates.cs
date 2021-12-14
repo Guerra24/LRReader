@@ -38,7 +38,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 			}
 			return false;
 		}
@@ -62,7 +62,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
 		}
@@ -88,7 +88,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
 		}
@@ -146,7 +146,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
@@ -181,7 +181,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
@@ -204,7 +204,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e.Demystify());
+				Crashes.TrackError(e);
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}

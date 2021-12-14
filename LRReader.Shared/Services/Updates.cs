@@ -23,14 +23,14 @@ namespace LRReader.Shared.Services
 			Platform = platform;
 			SettingsStorage = settingsStorage;
 			Settings = settings;
-			client = new RestClient();
-			client.UseNewtonsoftJson();
 #if DEBUG
-			client.BaseUrl = new Uri("http://localhost:5000/");
+			var uri  = new Uri("http://localhost:5000/");
 #else
-			client.BaseUrl = new Uri("https://api.guerra24.net/");
+			var uri = new Uri("https://api.guerra24.net/");
 #endif
-			client.UserAgent = "LRReader";
+			var options = new RestClientOptions(uri) { UserAgent = "LRReader" };
+			client = new RestClient(options);
+			client.UseNewtonsoftJson();
 		}
 
 		public abstract Task<CheckForUpdatesResult> CheckForUpdates();
