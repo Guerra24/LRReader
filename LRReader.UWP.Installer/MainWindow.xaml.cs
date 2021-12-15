@@ -64,8 +64,17 @@ namespace LRReader.UWP.Installer
 			{
 				pm = await Task.Run(() => new PackageManager());
 				CertFound = CertUtil.FindCertificate(Variables.CertThumb);
-				if (pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault() != null && CertFound)
+				var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
+				if (pkg != null && CertFound)
+				{
+					var ver = new Version(pkg.Id.Version.Major, pkg.Id.Version.Minor, pkg.Id.Version.Build, pkg.Id.Version.Revision);
+					if (Variables.Version.Contains("Nightly") || new Version(Variables.Version) > ver)
+					{
+						InstallApp.Content = "Upgrade";
+						InstallApp.Visibility = Visibility.Visible;
+					}
 					UninstallApp.Visibility = Visibility.Visible;
+				}
 				else if (CertFound)
 					UninstallCert.Visibility = InstallApp.Visibility = Visibility.Visible;
 				else
@@ -129,11 +138,24 @@ namespace LRReader.UWP.Installer
 						}
 						return false;
 					}
-					catch (Exception)
+					catch (Exception i)
 					{
-						// Fallback to appinstaller in case of failure for whatever reason...
-						Process.Start($"ms-appinstaller:?source={Variables.AppInstallerUrl}");
-						Dispatcher.Invoke(() => Close());
+						Dispatcher.Invoke(() =>
+						{
+							if (i.HResult == -2147009281)
+							{
+								TitleText.Visibility = Visibility.Collapsed;
+								Progress.Visibility = Visibility.Collapsed;
+								Error.Text = "Enable \"Sideload apps\" and rerun the installer";
+								OpenSettings.Visibility = Visibility.Visible;
+							}
+							else
+							{
+								TitleText.Visibility = Visibility.Collapsed;
+								Progress.Visibility = Visibility.Collapsed;
+								Error.Text = string.Format("Unable to install app. Error: 0x{0:X}", i.HResult);
+							}
+						});
 						return false;
 					}
 				});
@@ -269,5 +291,9 @@ namespace LRReader.UWP.Installer
 			return new Point(x, y);
 		}
 
+		private void Hyperlink_Click(object sender, RoutedEventArgs e)
+		{
+			Process.Start("ms-settings:developers");
+		}
 	}
 }

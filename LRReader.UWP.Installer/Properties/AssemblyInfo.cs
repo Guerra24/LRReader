@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LRReader")]
-[assembly: AssemblyCopyright("Copyright © Guerra24 2021")]
+[assembly: AssemblyCopyright("Copyright © Guerra24 2021-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

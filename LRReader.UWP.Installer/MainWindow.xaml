@@ -48,7 +48,16 @@
 					Grid.Row="1" Height="100" Margin="0,-3,0,2"
 					RenderOptions.BitmapScalingMode="Fant" Source="logo.ico" />
 				<Grid Grid.Row="2">
-					<TextBlock x:Name="Error" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<ui:SimpleStackPanel
+						HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical"
+						Spacing="4">
+						<TextBlock x:Name="Error" FontSize="16" />
+						<TextBlock
+							x:Name="OpenSettings" HorizontalAlignment="Center" FontSize="16"
+							Visibility="Collapsed">
+							<Hyperlink Click="Hyperlink_Click">Open Settings</Hyperlink>
+						</TextBlock>
+					</ui:SimpleStackPanel>
 					<ui:ProgressBar
 						x:Name="Progress" MaxWidth="250" Maximum="1"
 						Minimum="0" Visibility="Collapsed" />
@@ -65,9 +74,7 @@
 							Visibility="Collapsed" />
 						<Button
 							x:Name="UninstallApp" HorizontalAlignment="Center" Click="Uninstall_Click"
-							Content="Uninstall"
-							Style="{StaticResource AccentButtonStyle}"
-							Visibility="Collapsed" />
+							Content="Uninstall" Visibility="Collapsed" />
 					</ui:SimpleStackPanel>
 				</Grid>
 			</Grid>

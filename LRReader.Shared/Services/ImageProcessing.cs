@@ -3,6 +3,8 @@ using MetadataExtractor.Formats.Gif;
 using MetadataExtractor.Formats.Jpeg;
 using MetadataExtractor.Formats.Png;
 using MetadataExtractor.Formats.WebP;
+using MetadataExtractor.Formats.Bmp;
+using MetadataExtractor.Formats.Heif;
 using MetadataExtractor.Util;
 using System;
 using System.Drawing;
@@ -45,6 +47,10 @@ namespace LRReader.Shared.Services
 								var webp = WebPMetadataReader.ReadMetadata(stream);
 								var webpdir = webp.OfType<WebPDirectory>().FirstOrDefault();
 								return new Size(webpdir.GetInt32(WebPDirectory.TagImageWidth), webpdir.GetInt32(WebPDirectory.TagImageHeight));
+							case FileType.Bmp:
+								var bmp = BmpMetadataReader.ReadMetadata(stream);
+								var bmpdir = bmp.OfType<BmpHeaderDirectory>().FirstOrDefault();
+								return new Size(bmpdir.GetInt32(BmpHeaderDirectory.TagImageWidth), bmpdir.GetInt32(BmpHeaderDirectory.TagImageHeight));
 							default:
 								return Size.Empty;
 						}

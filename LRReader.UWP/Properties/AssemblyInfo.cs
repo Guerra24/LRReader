@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LRReader")]
-[assembly: AssemblyCopyright("Copyright © Guerra24 2019-2021")]
+[assembly: AssemblyCopyright("Copyright © Guerra24 2019-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
