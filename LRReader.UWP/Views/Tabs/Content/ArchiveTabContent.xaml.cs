@@ -42,8 +42,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private bool _transition;
 
-		private Subject<double> resizePixel = new Subject<double>();
-
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
 		public ArchiveTabContent()
@@ -56,10 +54,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.ZoomChangedEvent += FitImages;
 			Data.RebuildReader += RebuildReader;
 
-			resizePixel.Throttle(TimeSpan.FromMilliseconds(250))
-				.Subscribe((height) =>
-				Service.Dispatcher.Run(async () =>
-				await ReaderControl.UpdateDecodedResolution((int)Math.Round(height))));
 			_loadSemaphore.Wait();
 
 			Service.Events.RebuildReaderImagesSetEvent += RebuildReader;
@@ -544,7 +538,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ScrollViewer.ChangeView(null, null, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim || !Service.Platform.AnimationsEnabled);
 		}
 
-		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e) => resizePixel.OnNext(ScrollViewer.ExtentHeight);
+		private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		{
+			if (e.IsIntermediate)
+				return;
+			await ReaderControl.UpdateDecodedResolution((int)Math.Round(ScrollViewer.ExtentHeight));
+		}
 
 		private async void DownloadButton_Click(object sender, RoutedEventArgs e)
 		{
