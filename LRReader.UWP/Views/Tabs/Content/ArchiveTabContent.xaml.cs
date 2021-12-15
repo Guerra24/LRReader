@@ -333,34 +333,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.ShowReader)
 				return;
+			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space ||
+				 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
+				e.Handled = true;
+
 			double offset = ScrollViewer.VerticalOffset;
 			switch (e.Key)
 			{
 				case VirtualKey.Right:
-					e.Handled = true;
+				case VirtualKey.D:
 					NextPage();
 					break;
 				case VirtualKey.Left:
-					e.Handled = true;
+				case VirtualKey.A:
 					PrevPage();
 					break;
-				case VirtualKey.Up:
-					e.Handled = true;
-					if (Math.Floor(offset) <= 0 && Service.Settings.ScrollToChangePage)
-						PrevPage(true);
-					else
-						ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
-					break;
-				case VirtualKey.Down:
-				case VirtualKey.Space:
-					e.Handled = true;
-					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight && Service.Settings.ScrollToChangePage)
-						NextPage(true);
-					else
-						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
-					break;
 				case VirtualKey.Escape:
-					e.Handled = true;
 					CloseReader();
 					break;
 			}
@@ -368,10 +356,32 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ReaderControl_KeyDown(object sender, KeyRoutedEventArgs e)
 		{
-			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space || e.Key == VirtualKey.Escape)
+			if (!Data.ShowReader)
+				return;
+			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space ||
+				 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
 			{
 				e.Handled = true;
 				FocusReader();
+			}
+			double offset = ScrollViewer.VerticalOffset;
+			switch (e.Key)
+			{
+				case VirtualKey.Up:
+				case VirtualKey.W:
+					if (Math.Floor(offset) <= 0 && Service.Settings.ScrollToChangePage)
+						PrevPage(true);
+					else
+						ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
+					break;
+				case VirtualKey.Down:
+				case VirtualKey.Space:
+				case VirtualKey.S:
+					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight && Service.Settings.ScrollToChangePage)
+						NextPage(true);
+					else
+						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
+					break;
 			}
 		}
 

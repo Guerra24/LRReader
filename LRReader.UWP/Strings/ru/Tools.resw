@@ -159,6 +159,12 @@
   <data name="Deduplicator.Completed" xml:space="preserve">
     <value>Завершено</value>
   </data>
+  <data name="Deduplicator.DeleteArchive.Text" xml:space="preserve">
+    <value>Delete archive?</value>
+  </data>
+  <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
+    <value>Yes, delete</value>
+  </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Предполагаемое время:</value>
   </data>
@@ -194,6 +200,12 @@
   </data>
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>Обнаружена недопустимый эскиз</value>
+  </data>
+  <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
+    <value>Ensure that all archives are valid</value>
+  </data>
+  <data name="Deduplicator.NoThumbTask.Title" xml:space="preserve">
+    <value>Unable to create thumbnail regen task</value>
   </data>
   <data name="Deduplicator.Of.Text" xml:space="preserve">
     <value>из</value>
