@@ -106,60 +106,56 @@ namespace LRReader.UWP.Installer
 						return;
 				}
 			}
-			bool done = true;
-			if (pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault() == null)
+			bool done = await Task.Run(async () =>
 			{
-				done = await Task.Run(async () =>
+				try
 				{
-					try
+					var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
+					Dispatcher.Invoke(() =>
 					{
-						var installTask = pm.AddPackageByAppInstallerFileAsync(new Uri(Variables.AppInstallerUrl), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
+						Progress.IsIndeterminate = false;
+						TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
+					});
+					installTask.Progress = (asyncInfo, prog) => Dispatcher.Invoke(() => TaskbarProgress.ProgressValue = Progress.Value = prog.percentage / 100d);
+					var result = await installTask.AsTask();
+					Dispatcher.Invoke(() =>
+					{
+						Progress.Visibility = Visibility.Collapsed;
+						TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
+					});
+					if (result.IsRegistered)
+						return true;
+					else
+					{
 						Dispatcher.Invoke(() =>
 						{
-							Progress.IsIndeterminate = false;
-							TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
+							TitleText.Visibility = Visibility.Collapsed;
+							Error.Text = result.ErrorText;
 						});
-						installTask.Progress = (asyncInfo, prog) => Dispatcher.Invoke(() => TaskbarProgress.ProgressValue = Progress.Value = prog.percentage / 100d);
-						var result = await installTask.AsTask();
-						Dispatcher.Invoke(() =>
+					}
+					return false;
+				}
+				catch (Exception i)
+				{
+					Dispatcher.Invoke(() =>
+					{
+						if (i.HResult == -2147009281)
 						{
+							TitleText.Visibility = Visibility.Collapsed;
 							Progress.Visibility = Visibility.Collapsed;
-							TaskbarProgress.ProgressState = TaskbarItemProgressState.Normal;
-						});
-						if (result.IsRegistered)
-							return true;
+							Error.Text = "Enable \"Sideload apps\" and rerun the installer";
+							OpenSettings.Visibility = Visibility.Visible;
+						}
 						else
 						{
-							Dispatcher.Invoke(() =>
-							{
-								TitleText.Visibility = Visibility.Collapsed;
-								Error.Text = result.ErrorText;
-							});
+							TitleText.Visibility = Visibility.Collapsed;
+							Progress.Visibility = Visibility.Collapsed;
+							Error.Text = string.Format("Unable to install app. Error: 0x{0:X}", i.HResult);
 						}
-						return false;
-					}
-					catch (Exception i)
-					{
-						Dispatcher.Invoke(() =>
-						{
-							if (i.HResult == -2147009281)
-							{
-								TitleText.Visibility = Visibility.Collapsed;
-								Progress.Visibility = Visibility.Collapsed;
-								Error.Text = "Enable \"Sideload apps\" and rerun the installer";
-								OpenSettings.Visibility = Visibility.Visible;
-							}
-							else
-							{
-								TitleText.Visibility = Visibility.Collapsed;
-								Progress.Visibility = Visibility.Collapsed;
-								Error.Text = string.Format("Unable to install app. Error: 0x{0:X}", i.HResult);
-							}
-						});
-						return false;
-					}
-				});
-			}
+					});
+					return false;
+				}
+			});
 			if (done)
 			{
 				var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
