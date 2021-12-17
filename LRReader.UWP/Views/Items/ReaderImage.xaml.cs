@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
@@ -19,7 +20,7 @@ namespace LRReader.UWP.Views.Items
 		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseOut);
 
 		public bool disableAnimation = true;
-		private int _height;
+		private int _height, _width;
 		private ImageProcessingService imageProcessing = Service.ImageProcessing;
 
 		private SemaphoreSlim decodePixel = new SemaphoreSlim(1);
@@ -39,6 +40,8 @@ namespace LRReader.UWP.Views.Items
 			imageR.DecodePixelType = imageL.DecodePixelType = DecodePixelType.Logical;
 			if (_height != 0)
 				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
+			if (_width != 0)
+				imageR.DecodePixelWidth = imageL.DecodePixelWidth = _width;
 			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, imageL) as BitmapImage;
 			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, imageR) as BitmapImage;
 			var lSize = await Service.Images.GetImageSizeCached(set.LeftImage);
@@ -87,7 +90,7 @@ namespace LRReader.UWP.Views.Items
 			openRight?.TryStart(RightImage);
 		}
 
-		public async Task UpdateDecodedResolution(int height)
+		public async Task ResizeHeight(int height)
 		{
 			if (_height == height)
 				return;
@@ -100,5 +103,23 @@ namespace LRReader.UWP.Views.Items
 			decodePixel.Release();
 		}
 
+		public async Task ResizeWidth(int width)
+		{
+			if (_width == width)
+				return;
+			await decodePixel.WaitAsync();
+			_width = width;
+			if (LeftImage.Source != null)
+				(LeftImage.Source as BitmapImage).DecodePixelWidth = width;
+			if (RightImage.Source != null)
+				(RightImage.Source as BitmapImage).DecodePixelWidth = width;
+			decodePixel.Release();
+		}
+
+		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+		{
+			if (args.NewValue is ReaderImageSet set)
+				await ChangePage(set);
+		}
 	}
 }

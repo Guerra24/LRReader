@@ -13,6 +13,7 @@
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:util="using:LRReader.UWP.Util"
+	xmlns:main="using:LRReader.Shared.Models.Main"
 	DataContext="{Binding ArchivePageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
@@ -144,18 +145,39 @@
 				</GridView.ItemContainerTransitions>
 			</GridView>
 		</muxc:RefreshContainer>
-		<Border x:Name="ReaderBackground" Grid.RowSpan="2" Background="{ThemeResource ReaderBackground}" Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />
+		<Border
+			x:Name="ReaderBackground" Grid.RowSpan="2"
+			Background="{ThemeResource ReaderBackground}"
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />
 		<ScrollViewer
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ScrollViewer_PointerPressed"
 			RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped"
 			VerticalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
-			<items:ReaderImage
+			<ContentControl
 				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
 				IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
 				ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" PointerWheelChanged="ReaderControl_PointerWheelChanged"
-				SizeChanged="ReaderControl_SizeChanged" />
+				SizeChanged="ReaderControl_SizeChanged">
+				<Grid>
+					<items:ReaderImage x:Name="ReaderImage" x:Load="{x:Bind Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource NegateBool}}" />
+					<muxc:ItemsRepeater
+						x:Name="ReaderVertical"
+						x:Load="{x:Bind Data.UseVerticalReader, Mode=OneWay}"
+						ItemsSource="{x:Bind Data.ArchiveImagesReader}"
+						VerticalCacheLength="4">
+						<muxc:ItemsRepeater.ItemTemplate>
+							<DataTemplate x:DataType="main:ReaderImageSet">
+								<items:ReaderImage HorizontalAlignment="Center" />
+							</DataTemplate>
+						</muxc:ItemsRepeater.ItemTemplate>
+						<muxc:ItemsRepeater.Layout>
+							<muxc:StackLayout />
+						</muxc:ItemsRepeater.Layout>
+					</muxc:ItemsRepeater>
+				</Grid>
+			</ContentControl>
 		</ScrollViewer>
 		<Button
 			Grid.RowSpan="2" Width="38" Height="38"

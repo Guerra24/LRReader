@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +14,8 @@
 	<Page.Resources>
 		<internal:EnumConverter x:Key="EnumConverter" />
 		<internal:EnumToInt x:Key="EnumToInt" />
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -28,7 +31,8 @@
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						<Slider
-							IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+							IsThumbToolTipEnabled="False" Maximum="400"
+							Minimum="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource MinZoomConverter}}"
 							TickFrequency="30" TickPlacement="None"
 							Value="{x:Bind Data.SettingsManager.DefaultZoom, Mode=TwoWay}" />
 						<TextBlock
@@ -44,12 +48,18 @@
 						SpinButtonPlacementMode="Inline"
 						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xE8A0;">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
+				<controls:ModernInput x:Uid="/Settings/Reader/VerticalReader" Glyph="&#xF1AD;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernExpander x:Uid="/Settings/Reader/FitWidth" Glyph="&#xE9A6;" IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
+				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xE8A0;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernExpander
+					x:Uid="/Settings/Reader/FitWidth" Glyph="&#xE9A6;"
+					IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+					IsExpanded="{x:Bind Data.SettingsManager.FitToWidth, Mode=OneWay}">
 					<controls:ModernExpander.Input>
-						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
+						<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.FitToWidth, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
 					<controls:ModernInput x:Uid="/Settings/Reader/FitLimit" InputHorizontalAlignment="Stretch">
 						<Grid>
@@ -58,6 +68,7 @@
 								<ColumnDefinition Width="Auto" />
 							</Grid.ColumnDefinitions>
 							<Slider
+								IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 								IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
 								StepFrequency="5" TickFrequency="25.0" TickPlacement="None"
 								Value="{x:Bind Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
@@ -67,17 +78,20 @@
 						</Grid>
 					</controls:ModernInput>
 				</controls:ModernExpander>
-				<controls:ModernExpander x:Uid="/Settings/Reader/TwoPages" Glyph="&#xF57C;" IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
+				<controls:ModernExpander
+					x:Uid="/Settings/Reader/TwoPages" Glyph="&#xF57C;"
+					IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+					IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
 					<controls:ModernExpander.Input>
-						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
+						<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.TwoPages, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
-					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" />
+					<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 				</controls:ModernExpander>
-				<controls:ModernInput x:Uid="/Settings/Reader/NextArchive" Glyph="&#xE761;">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenNextArchive, Mode=TwoWay}" />
+				<controls:ModernInput x:Uid="/Settings/Reader/NextArchive" Glyph="&#xE761;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.OpenNextArchive, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
+				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernExpander x:Uid="/Settings/Reader/CustomBackground" Glyph="&#xE790;">
 					<controls:ModernExpander.Input>

@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
+using LRReader.UWP.Views.Items;
 using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
@@ -98,7 +99,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 
-			if (Service.Platform.AnimationsEnabled && item != null)
+			if (Service.Platform.AnimationsEnabled && item != null && !Data.UseVerticalReader)
 			{
 				var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Image");
 				if (!(image.ActualWidth == 0 || image.ActualHeight == 0))
@@ -110,7 +111,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			Data.ShowReader = true;
 			Data.ReaderIndex = index;
-			await ChangePage();
+			if (Data.UseVerticalReader)
+			{
+				var element = ReaderVertical.GetOrCreateElement(index);
+				element.UpdateLayout();
+				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false });
+			}
+			else
+				await ChangePage();
 
 			if (Data.Archive.isnew)
 				_wasNew = true;
@@ -136,22 +144,26 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			_transition = true;
 			var animate = Service.Platform.AnimationsEnabled;
-			var left = ReaderControl.FindDescendant("LeftImage");
-			var right = ReaderControl.FindDescendant("RightImage");
-			ReaderControl.disableAnimation = true;
-
 			ConnectedAnimation animLeft = null, animRight = null;
-			if (animate)
+
+			if (!Data.UseVerticalReader)
 			{
-				if (Data.ReaderContent.LeftImage != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
+				var left = ReaderImage.FindDescendant("LeftImage");
+				var right = ReaderImage.FindDescendant("RightImage");
+				ReaderImage.disableAnimation = true;
+
+				if (animate)
 				{
-					animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
-					animLeft.Configuration = new BasicConnectedAnimationConfiguration();
-				}
-				if (Data.ReaderContent.RightImage != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
-				{
-					animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
-					animRight.Configuration = new BasicConnectedAnimationConfiguration();
+					if (Data.ReaderContent.LeftImage != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
+					{
+						animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
+						animLeft.Configuration = new BasicConnectedAnimationConfiguration();
+					}
+					if (Data.ReaderContent.RightImage != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
+					{
+						animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
+						animRight.Configuration = new BasicConnectedAnimationConfiguration();
+					}
 				}
 			}
 
@@ -409,7 +421,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 						break;
 					case VirtualKeyModifiers.Control:
 						e.Handled = true;
-						Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), 100, 400);
+						Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
 						break;
 				}
 			}
@@ -485,6 +497,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task GoRight()
 		{
+			if (Data.UseVerticalReader)
+				return;
 			if (Service.Settings.OpenNextArchive && Data.ReaderContent.Page + 1 >= Data.Pages)
 			{
 				await NextArchive();
@@ -493,7 +507,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
 			{
 				++Data.ReaderIndex;
-				await ReaderControl.FadeOutPage();
+				await ReaderImage.FadeOutPage();
 				ScrollViewer.ChangeView(null, 0, null, true);
 				await ChangePage();
 			}
@@ -501,10 +515,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task GoLeft()
 		{
+			if (Data.UseVerticalReader)
+				return;
 			if (Data.ReaderIndex > 0)
 			{
 				--Data.ReaderIndex;
-				await ReaderControl.FadeOutPage();
+				await ReaderImage.FadeOutPage();
 				ScrollViewer.ChangeView(null, 0, null, true);
 				await ChangePage();
 			}
@@ -512,8 +528,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task ChangePage()
 		{
-			await ReaderControl.ChangePage(Data.ReaderContent);
-			ReaderControl.FadeInPage();
+			if (Data.UseVerticalReader)
+				return;
+			await ReaderImage.ChangePage(Data.ReaderContent);
+			ReaderImage.FadeInPage();
 		}
 
 		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(false);
@@ -527,7 +545,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 				return;
 			float zoomFactor;
-			if (Data.FitToWidth)
+			if (Data.UseVerticalReader)
+			{
+				zoomFactor = 1f;
+			}
+			else if (Data.FitToWidth)
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Data.FitScaleLimit * 0.01);
 			}
@@ -542,7 +564,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (e.IsIntermediate)
 				return;
-			await ReaderControl.UpdateDecodedResolution((int)Math.Round(ScrollViewer.ExtentHeight));
+			// Use width instead of height in vertical mode
+			if (Data.UseVerticalReader)
+			{
+				if (ScrollViewer.CurrentAnchor is ReaderImage image)
+				{
+					var index = ReaderVertical.GetElementIndex(ScrollViewer.CurrentAnchor);
+					Data.ReaderIndex = index;
+
+					var width = (int)Math.Round(ScrollViewer.ExtentWidth);
+					await image.ResizeWidth(width);
+					(ReaderVertical.TryGetElement(index + 1) as ReaderImage)?.ResizeWidth(width);
+					(ReaderVertical.TryGetElement(index + 2) as ReaderImage)?.ResizeWidth(width);
+				}
+			}
+			else
+				await ReaderImage.ResizeHeight((int)Math.Round(ScrollViewer.ExtentHeight));
 		}
 
 		private async void DownloadButton_Click(object sender, RoutedEventArgs e)

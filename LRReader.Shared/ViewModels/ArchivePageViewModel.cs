@@ -161,6 +161,8 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
+		[ObservableProperty]
+		private bool _useVerticalReader;
 
 		public event Action? RebuildReader;
 
@@ -190,6 +192,7 @@ namespace LRReader.Shared.ViewModels
 			_setBuilder = Settings.ReaderImageSetBuilder;
 			_fitToWidth = Settings.FitToWidth;
 			_fitScaleLimit = Settings.FitScaleLimit;
+			_useVerticalReader = Settings.UseVerticalReader;
 		}
 
 		public void UnHook()
@@ -350,7 +353,7 @@ namespace LRReader.Shared.ViewModels
 					if (_abort)
 						return;
 					var i = new ReaderImageSet();
-					if (TwoPages)
+					if (TwoPages && !UseVerticalReader)
 					{
 						if (ReadRTL)
 						{

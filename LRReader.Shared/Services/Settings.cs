@@ -228,6 +228,15 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectRoamed("ShowExtraPageDetails", false);
 			set => SettingsStorage.StoreObjectRoamed("ShowExtraPageDetails", value);
 		}
+		public bool UseVerticalReader
+		{
+			get => SettingsStorage.GetObjectRoamed("UseVerticalReader", false);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed("UseVerticalReader", value);
+				OnPropertyChanged("UseVerticalReader");
+			}
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal

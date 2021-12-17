@@ -4,6 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,11 +15,17 @@
 	Template="{StaticResource MicaTabViewItemTemplate}"
 	ToolTipService.ToolTip="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
 	mc:Ignorable="d">
+
+	<controls:ModernTab.Resources>
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+	</controls:ModernTab.Resources>
+
 	<muxc:TabViewItem.Header>
 		<StackPanel Orientation="Horizontal">
 			<TextBlock MaxWidth="200" Text="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}" TextTrimming="WordEllipsis" />
 			<TextBlock Visibility="{x:Bind TabContent.Data.ShowReader, Mode=OneWay}">
-				<Run Text=" "/>(<Run Text="{x:Bind TabContent.Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind TabContent.Data.Pages, Mode=OneWay}" />)
+				<Run Text=" " />(<Run Text="{x:Bind TabContent.Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind TabContent.Data.Pages, Mode=OneWay}" />)
 			</TextBlock>
 		</StackPanel>
 	</muxc:TabViewItem.Header>
@@ -34,7 +41,8 @@
 									<ColumnDefinition Width="40" />
 								</Grid.ColumnDefinitions>
 								<Slider
-									IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
+									IsThumbToolTipEnabled="False" Maximum="400"
+									Minimum="{x:Bind TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource MinZoomConverter}}"
 									TickFrequency="30" TickPlacement="None"
 									Value="{x:Bind TabContent.Data.ZoomValue, Mode=TwoWay}" />
 								<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -47,7 +55,11 @@
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<TextBlock x:Uid="/Tabs/Archive/Settings/RTL" VerticalAlignment="Center" />
-								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.ReadRTL, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+								<ToggleSwitch
+									Grid.Column="1"
+									IsEnabled="{x:Bind TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									IsOn="{x:Bind TabContent.Data.ReadRTL, Mode=TwoWay}"
+									Template="{StaticResource LeftContentToggleSwitch}" />
 							</Grid>
 							<Grid>
 								<Grid.ColumnDefinitions>
@@ -55,16 +67,24 @@
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<TextBlock x:Uid="/Tabs/Archive/Settings/TwoPages" VerticalAlignment="Center" />
-								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.TwoPages, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+								<ToggleSwitch
+									Grid.Column="1"
+									IsEnabled="{x:Bind TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									IsOn="{x:Bind TabContent.Data.TwoPages, Mode=TwoWay}"
+									Template="{StaticResource LeftContentToggleSwitch}" />
 							</Grid>
-							<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind TabContent.Data.SetBuilder, Mode=TwoWay}" />
+							<CheckBox x:Uid="/Settings/Reader/SetBuilder" IsChecked="{x:Bind TabContent.Data.SetBuilder, Mode=TwoWay}" IsEnabled="{x:Bind TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition />
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
 								<TextBlock x:Uid="/Tabs/Archive/Settings/FitWidth" VerticalAlignment="Center" />
-								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.FitToWidth, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+								<ToggleSwitch
+									Grid.Column="1"
+									IsEnabled="{x:Bind TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									IsOn="{x:Bind TabContent.Data.FitToWidth, Mode=TwoWay}"
+									Template="{StaticResource LeftContentToggleSwitch}" />
 							</Grid>
 							<Grid>
 								<Grid.ColumnDefinitions>
@@ -72,6 +92,7 @@
 									<ColumnDefinition Width="40" />
 								</Grid.ColumnDefinitions>
 								<Slider
+									IsEnabled="{x:Bind TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 									IsThumbToolTipEnabled="False" Maximum="400" Minimum="100"
 									StepFrequency="5" TickFrequency="25.0" TickPlacement="None"
 									Value="{x:Bind TabContent.Data.FitScaleLimit, Mode=TwoWay}" />

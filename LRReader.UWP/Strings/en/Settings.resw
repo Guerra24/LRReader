@@ -525,4 +525,10 @@
   <data name="Updates.NoChangelog" xml:space="preserve">
     <value>An update was detected but an error occurred while trying to load the changelog</value>
   </data>
+  <data name="Reader.VerticalReader.Description" xml:space="preserve">
+    <value>Stack pages vertically (Can crash the app)</value>
+  </data>
+  <data name="Reader.VerticalReader.Title" xml:space="preserve">
+    <value>Use vertical reader (Experimental)</value>
+  </data>
 </root>
