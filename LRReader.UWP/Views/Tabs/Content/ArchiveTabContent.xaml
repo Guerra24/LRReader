@@ -151,9 +151,10 @@
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />
 		<ScrollViewer
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
-			HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ScrollViewer_PointerPressed"
-			RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged" Tapped="ScrollViewer_Tapped"
-			VerticalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged"
+			HorizontalAnchorRatio="0.5" HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden"
+			PointerPressed="ScrollViewer_PointerPressed" RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged"
+			Tapped="ScrollViewer_Tapped" VerticalAnchorRatio="0.1" VerticalScrollBarVisibility="Auto"
+			ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<ContentControl
 				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -165,11 +166,10 @@
 					<muxc:ItemsRepeater
 						x:Name="ReaderVertical"
 						x:Load="{x:Bind Data.UseVerticalReader, Mode=OneWay}"
-						ItemsSource="{x:Bind Data.ArchiveImagesReader}"
-						VerticalCacheLength="4">
+						ItemsSource="{x:Bind Data.ArchiveImagesReader}">
 						<muxc:ItemsRepeater.ItemTemplate>
 							<DataTemplate x:DataType="main:ReaderImageSet">
-								<items:ReaderImage HorizontalAlignment="Center" />
+								<items:ReaderImage Height="{x:Bind Height}" DataContext="{x:Bind}" HorizontalAlignment="Center" />
 							</DataTemplate>
 						</muxc:ItemsRepeater.ItemTemplate>
 						<muxc:ItemsRepeater.Layout>

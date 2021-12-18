@@ -9,6 +9,7 @@ using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -40,6 +41,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _opened;
 		private bool _focus = true;
 		private bool _changePage;
+		private float _lastZoom;
+		private double _fitAgainstFixedWidth;
 
 		private bool _transition;
 
@@ -534,7 +537,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ReaderImage.FadeInPage();
 		}
 
-		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(false);
+		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(Data.UseVerticalReader);
 
 		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(true);
 
@@ -547,7 +550,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			float zoomFactor;
 			if (Data.UseVerticalReader)
 			{
-				zoomFactor = 1f;
+				if (_fitAgainstFixedWidth == 0)
+					_fitAgainstFixedWidth = ReaderControl.ActualWidth;
+				zoomFactor = (float)(ScrollViewer.ViewportWidth / _fitAgainstFixedWidth) * 0.5f;
 			}
 			else if (Data.FitToWidth)
 			{
@@ -557,7 +562,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
-			ScrollViewer.ChangeView(null, null, zoomFactor * (Data.ZoomValue * 0.01f), disableAnim || !Service.Platform.AnimationsEnabled);
+			var zoom = zoomFactor * (Data.ZoomValue * 0.01f);
+			double? yOffset = null;
+			if (zoom != _lastZoom)
+			{
+				_lastZoom = zoom;
+				yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
+			}
+			ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Service.Platform.AnimationsEnabled);
 		}
 
 		private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

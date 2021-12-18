@@ -421,7 +421,11 @@ namespace LRReader.Shared.ViewModels
 					}
 					else
 					{
-						i.LeftImage = ArchiveImages.ElementAt(k).Image;
+						var image = ArchiveImages.ElementAt(k).Image;
+						var size = await Images.GetImageSizeCached(image);
+						i.Width = size.Width;
+						i.Height = size.Height;
+						i.LeftImage = image;
 					}
 					i.Page = k;
 					Dispatcher.Run(() => BuildProgress = k);
