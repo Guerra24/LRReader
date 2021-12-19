@@ -354,85 +354,77 @@
 					Grid.Row="5" Grid.Column="3" Margin="4,0"
 					ItemsSource="{x:Bind Data.RightArchive.Archive.TagsGroups, Mode=OneWay}" />
 				<!--    -->
-				<ScrollViewer Grid.Row="7" Grid.ColumnSpan="5">
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition />
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition />
-						</Grid.ColumnDefinitions>
-						<GridView
-							ext:Element.ModernShadow="{StaticResource ElementShadow}"
-							ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
-							ItemsSource="{x:Bind Data.LeftArchive.ArchiveImages}"
-							KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
-							<GridView.Resources>
-								<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
-							</GridView.Resources>
-							<GridView.ItemTemplate>
-								<DataTemplate>
-									<items1:ArchiveImage KeepOverlayOpen="True" ShowExtraDetails="True" />
-								</DataTemplate>
-							</GridView.ItemTemplate>
-							<GridView.ItemsPanel>
-								<ItemsPanelTemplate>
-									<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
-								</ItemsPanelTemplate>
-							</GridView.ItemsPanel>
-							<GridView.ItemContainerStyle>
-								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
-									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="5" />
-								</Style>
-							</GridView.ItemContainerStyle>
-							<GridView.ItemContainerTransitions>
-								<TransitionCollection>
-									<PopupThemeTransition FromVerticalOffset="200" />
-									<!--<AddDeleteThemeTransition />-->
-									<ReorderThemeTransition />
-									<RepositionThemeTransition />
-								</TransitionCollection>
-							</GridView.ItemContainerTransitions>
-						</GridView>
-						<Grid Grid.Column="1" Style="{ThemeResource PropertyStyle}">
-							<TextBlock Text="Images" />
-						</Grid>
-						<GridView
-							Grid.Column="2"
-							ext:Element.ModernShadow="{StaticResource ElementShadow}"
-							ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
-							ItemsSource="{x:Bind Data.RightArchive.ArchiveImages}"
-							KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
-							<GridView.Resources>
-								<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
-							</GridView.Resources>
-							<GridView.ItemTemplate>
-								<DataTemplate>
-									<items1:ArchiveImage KeepOverlayOpen="True" ShowExtraDetails="True" />
-								</DataTemplate>
-							</GridView.ItemTemplate>
-							<GridView.ItemsPanel>
-								<ItemsPanelTemplate>
-									<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
-								</ItemsPanelTemplate>
-							</GridView.ItemsPanel>
-							<GridView.ItemContainerStyle>
-								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
-									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="5" />
-								</Style>
-							</GridView.ItemContainerStyle>
-							<GridView.ItemContainerTransitions>
-								<TransitionCollection>
-									<PopupThemeTransition FromVerticalOffset="200" />
-									<!--<AddDeleteThemeTransition />-->
-									<ReorderThemeTransition />
-									<RepositionThemeTransition />
-								</TransitionCollection>
-							</GridView.ItemContainerTransitions>
-						</GridView>
-					</Grid>
-				</ScrollViewer>
+				<GridView
+					x:Name="LeftPages" Grid.Row="7" Grid.Column="1"
+					ext:Element.ModernShadow="{StaticResource ElementShadow}"
+					ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+					ItemsSource="{x:Bind Data.LeftArchive.ArchiveImages}"
+					KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+					<GridView.Resources>
+						<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+					</GridView.Resources>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<items1:ArchiveImage KeepOverlayOpen="True" ShowExtraDetails="True" />
+						</DataTemplate>
+					</GridView.ItemTemplate>
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemContainerStyle>
+						<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+							<Setter Property="Padding" Value="0" />
+							<Setter Property="Margin" Value="5" />
+						</Style>
+					</GridView.ItemContainerStyle>
+					<GridView.ItemContainerTransitions>
+						<TransitionCollection>
+							<PopupThemeTransition FromVerticalOffset="200" />
+							<!--<AddDeleteThemeTransition />-->
+							<ReorderThemeTransition />
+							<RepositionThemeTransition />
+						</TransitionCollection>
+					</GridView.ItemContainerTransitions>
+				</GridView>
+				<Grid Grid.Row="7" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock Text="Images" />
+				</Grid>
+				<GridView
+					x:Name="RightPages" Grid.Row="7" Grid.Column="3"
+					ext:Element.ModernShadow="{StaticResource ElementShadow}"
+					ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+					ItemsSource="{x:Bind Data.RightArchive.ArchiveImages}"
+					KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+					<GridView.Resources>
+						<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+					</GridView.Resources>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<items1:ArchiveImage KeepOverlayOpen="True" ShowExtraDetails="True" />
+						</DataTemplate>
+					</GridView.ItemTemplate>
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemContainerStyle>
+						<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+							<Setter Property="Padding" Value="0" />
+							<Setter Property="Margin" Value="5" />
+						</Style>
+					</GridView.ItemContainerStyle>
+					<GridView.ItemContainerTransitions>
+						<TransitionCollection>
+							<PopupThemeTransition FromVerticalOffset="200" />
+							<!--<AddDeleteThemeTransition />-->
+							<ReorderThemeTransition />
+							<RepositionThemeTransition />
+						</TransitionCollection>
+					</GridView.ItemContainerTransitions>
+				</GridView>
 				<!--    -->
 			</Grid>
 		</Grid>

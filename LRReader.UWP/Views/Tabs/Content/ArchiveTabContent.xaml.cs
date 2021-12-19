@@ -9,9 +9,7 @@ using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
@@ -568,8 +566,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				_lastZoom = zoom;
 				yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
+				ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Service.Platform.AnimationsEnabled);
 			}
-			ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Service.Platform.AnimationsEnabled);
 		}
 
 		private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
