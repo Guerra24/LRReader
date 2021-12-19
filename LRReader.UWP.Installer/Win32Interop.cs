@@ -8,7 +8,18 @@ namespace LRReader.UWP.Installer
 	{
 		DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
 		DWMWA_WINDOW_CORNER_PREFERENCE = 33,
+		DWMWA_SYSTEMBACKDROP_TYPE = 38,
 		DWMWA_MICA_EFFECT = 1029
+	}
+
+	[Flags]
+	enum DWM_SYSTEMBACKDROP_TYPE
+	{
+		DWMSBT_AUTO = 0,
+		DWMSBT_DISABLE = 1, // None
+		DWMSBT_MAINWINDOW = 2, // Mica
+		DWMSBT_TRANSIENTWINDOW = 3, // Acrylic
+		DWMSBT_TABBEDWINDOW = 4 // Tabbed
 	}
 
 	[StructLayout(LayoutKind.Sequential)]

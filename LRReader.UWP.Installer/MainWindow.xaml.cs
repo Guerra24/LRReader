@@ -24,6 +24,7 @@ namespace LRReader.UWP.Installer
 		private bool CertFound;
 
 		private bool IsWin11 = Environment.OSVersion.Version >= new Version(10, 0, 22000, 0);
+		private bool IsPublicApi = Environment.OSVersion.Version >= new Version(10, 0, 22523, 0);
 
 		public MainWindow()
 		{
@@ -221,7 +222,12 @@ namespace LRReader.UWP.Installer
 			if (!IsWin11)
 				return;
 			int trueValue = 0x01;
-			Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+			if (IsPublicApi) {
+				int flag = (int)DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MAINWINDOW;
+				Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref flag, Marshal.SizeOf(typeof(int)));
+			}
+			else
+				Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
 		}
 
 		private void SetTheme(IntPtr hwnd)
