@@ -526,9 +526,9 @@
     <value>An update was detected but an error occurred while trying to load the changelog</value>
   </data>
   <data name="Reader.VerticalReader.Description" xml:space="preserve">
-    <value>Stack pages vertically (Can crash the app)</value>
+    <value>Stack pages vertically</value>
   </data>
   <data name="Reader.VerticalReader.Title" xml:space="preserve">
-    <value>Use vertical reader (Experimental)</value>
+    <value>Use vertical reader</value>
   </data>
 </root>

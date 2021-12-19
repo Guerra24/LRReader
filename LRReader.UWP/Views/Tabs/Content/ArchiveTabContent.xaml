@@ -163,13 +163,10 @@
 				SizeChanged="ReaderControl_SizeChanged">
 				<Grid>
 					<items:ReaderImage x:Name="ReaderImage" x:Load="{x:Bind Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource NegateBool}}" />
-					<muxc:ItemsRepeater
-						x:Name="ReaderVertical"
-						x:Load="{x:Bind Data.UseVerticalReader, Mode=OneWay}"
-						ItemsSource="{x:Bind Data.ArchiveImagesReader}">
+					<muxc:ItemsRepeater x:Name="ReaderVertical" x:Load="{x:Bind Data.UseVerticalReader, Mode=OneWay}" ItemsSource="{x:Bind Data.ArchiveImagesReader}">
 						<muxc:ItemsRepeater.ItemTemplate>
 							<DataTemplate x:DataType="main:ReaderImageSet">
-								<items:ReaderImage Height="{x:Bind Height}" DataContext="{x:Bind}" HorizontalAlignment="Center" />
+								<items:ReaderImage Height="{x:Bind Height}" HorizontalAlignment="Center" DataContext="{x:Bind}" />
 							</DataTemplate>
 						</muxc:ItemsRepeater.ItemTemplate>
 						<muxc:ItemsRepeater.Layout>

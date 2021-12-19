@@ -525,4 +525,10 @@
   <data name="Updates.NoChangelog" xml:space="preserve">
     <value>Обновление было обнаружено, но при попытке загрузить журнал изменений произошла ошибка</value>
   </data>
+  <data name="Reader.VerticalReader.Description" xml:space="preserve">
+    <value>Stack pages vertically</value>
+  </data>
+  <data name="Reader.VerticalReader.Title" xml:space="preserve">
+    <value>Use vertical reader</value>
+  </data>
 </root>

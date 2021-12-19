@@ -48,7 +48,7 @@
 						SpinButtonPlacementMode="Inline"
 						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/VerticalReader" Glyph="&#xF1AD;">
+				<controls:ModernInput x:Uid="/Settings/Reader/VerticalReader" Glyph="&#xE8C4;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xE8A0;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">

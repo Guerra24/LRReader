@@ -51,7 +51,7 @@ namespace LRReader.UWP.Views.Items
 			if (LeftImage.Source != null)
 			{
 				//LeftImage.Width = size.Width;
-				LeftImage.Height = size.Height;
+				LeftImage.Height = set.Height == 0 ? size.Height : set.Height;
 			}
 			if (RightImage.Source != null)
 			{

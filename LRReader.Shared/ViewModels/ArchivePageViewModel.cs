@@ -346,6 +346,7 @@ namespace LRReader.Shared.ViewModels
 			var tmp = new List<ReaderImageSet>();
 			BuildMax = ArchiveImages.Count - 1;
 			LoadingImages = TwoPages && SetBuilder;
+			double MaxWidth = 0;
 			await Task.Run(async () =>
 			{
 				for (int k = 0; k < ArchiveImages.Count; k++)
@@ -419,13 +420,18 @@ namespace LRReader.Shared.ViewModels
 							}
 						}
 					}
-					else
+					else if (UseVerticalReader)
 					{
 						var image = ArchiveImages.ElementAt(k).Image;
 						var size = await Images.GetImageSizeCached(image);
 						i.Width = size.Width;
 						i.Height = size.Height;
 						i.LeftImage = image;
+						MaxWidth = Math.Max(MaxWidth, i.Width);
+					}
+					else
+					{
+						i.LeftImage = ArchiveImages.ElementAt(k).Image;
 					}
 					i.Page = k;
 					Dispatcher.Run(() => BuildProgress = k);
@@ -435,6 +441,11 @@ namespace LRReader.Shared.ViewModels
 			LoadingImages = false;
 			foreach (var i in tmp)
 			{
+				if (UseVerticalReader)
+				{
+					var aspect = i.Height / i.Width;
+					i.Height = MaxWidth * aspect;
+				}
 				ArchiveImagesReader.Add(i);
 			}
 		}
