@@ -162,6 +162,9 @@
   <data name="Deduplicator.DeleteArchive.Text" xml:space="preserve">
     <value>Delete archive?</value>
   </data>
+  <data name="Deduplicator.DeleteArchiveTT.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete archive</value>
+  </data>
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
     <value>Yes, delete</value>
   </data>
@@ -200,6 +203,15 @@
   </data>
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>Обнаружена недопустимый эскиз</value>
+  </data>
+  <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
+    <value>Mark as non duplicate?</value>
+  </data>
+  <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mark as non duplicate</value>
+  </data>
+  <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
+    <value>Yes, mark as non duplicate</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
     <value>Ensure that all archives are valid</value>

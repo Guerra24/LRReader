@@ -304,6 +304,10 @@ namespace LRReader.Shared.Services
 						p.Version = 1;
 						p.Bookmarks = new List<BookmarkedArchive>();
 						break;
+					case 1:
+						p.Version = 2;
+						p.MarkedAsNonDuplicated = new List<ArchiveHit>();
+						break;
 				}
 			}
 		}

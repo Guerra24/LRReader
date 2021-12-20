@@ -19,6 +19,7 @@ namespace LRReader.Shared.Models.Main
 		public string ServerApiKey { get; set; }
 		public List<BookmarkedArchive> Bookmarks { get; set; }
 		public bool AcceptedDisclaimer { get; set; }
+		public List<ArchiveHit> MarkedAsNonDuplicated { get; set; }
 
 		[JsonIgnore]
 		public bool HasApiKey
@@ -33,7 +34,8 @@ namespace LRReader.Shared.Models.Main
 		{
 			UID = Guid.NewGuid().ToString();
 			Bookmarks = new List<BookmarkedArchive>();
-			Version = 1;
+			MarkedAsNonDuplicated = new List<ArchiveHit>();
+			Version = 2;
 		}
 
 		public void Update()

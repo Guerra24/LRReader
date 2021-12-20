@@ -71,7 +71,7 @@ namespace LRReader.UWP.Views.Content.Tools
 			Details.Visibility = Visibility.Visible;
 			FadeIn.Start(Details);
 			var item = e.ClickedItem as ArchiveHit;
-			await Data.LoadArchives(item.Left, item.Right);
+			await Data.LoadArchives(item);
 			if (RightScroller == null && LeftScroller == null)
 			{
 				var border = VisualTreeHelper.GetChild(RightPages, 0);
@@ -88,6 +88,8 @@ namespace LRReader.UWP.Views.Content.Tools
 		{
 			LeftFlyout.Hide();
 			RightFlyout.Hide();
+			LeftFlyoutN.Hide();
+			RightFlyoutN.Hide();
 			await FadeOut.StartAsync(Details);
 			Details.Visibility = Visibility.Collapsed;
 			FadeIn.Start(Results);

@@ -53,13 +53,15 @@ namespace LRReader.Shared.Tools
 
 	public class DeduplicationTool : Tool<DeduplicatorStatus, DeduplicatorParams, List<ArchiveHit>>
 	{
+		private readonly SettingsService Settings;
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
 		private readonly IFilesService Files;
 
-		public DeduplicationTool(ImagesService images, ArchivesService archives, PlatformService platform, IFilesService files) : base(platform)
+		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, IFilesService files) : base(platform)
 		{
+			Settings = settings;
 			Images = images;
 			Archives = archives;
 			Platform = platform;
@@ -136,6 +138,7 @@ namespace LRReader.Shared.Tools
 			await Task.Delay(1000);
 			var start = DateTime.Now;
 
+			var markedNonDuplicated = Settings.Profile.MarkedAsNonDuplicated;
 			var hits = new ConcurrentBag<ArchiveHit>();
 			int maxItems = decodedThumbnails.Count;
 			await Task.Run(async () =>
@@ -149,7 +152,12 @@ namespace LRReader.Shared.Tools
 						await Task.WhenAll(decodedThumbnails.Select(targetPair => factory.StartNew(() =>
 						{
 							var target = targetPair.Value;
+
 							if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+								return;
+
+							var hit = new ArchiveHit { Left = sourcePair.Key, Right = targetPair.Key };
+							if (markedNonDuplicated.Contains(hit))
 								return;
 
 							int differences = 0;
@@ -167,7 +175,7 @@ namespace LRReader.Shared.Tools
 							float diffPixels = differences;
 							diffPixels /= source.Width * source.Height;
 							if (diffPixels < percentDifference)
-								hits.Add(new ArchiveHit { Left = sourcePair.Key, Right = targetPair.Key });
+								hits.Add(hit);
 						})));
 					}
 					int itemCount = Interlocked.Increment(ref count);

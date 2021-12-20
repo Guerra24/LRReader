@@ -162,6 +162,9 @@
   <data name="Deduplicator.DeleteArchive.Text" xml:space="preserve">
     <value>¿Eliminar archivo?</value>
   </data>
+  <data name="Deduplicator.DeleteArchiveTT.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Eliminar archivo</value>
+  </data>
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
     <value>Sí, eliminar</value>
   </data>
@@ -200,6 +203,15 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
   </data>
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>Se ha detectado una miniatura no válida</value>
+  </data>
+  <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
+    <value>¿Marcar como no duplicado?</value>
+  </data>
+  <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Marcar como no duplicado</value>
+  </data>
+  <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
+    <value>Sí, marque como no duplicado</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
     <value>Asegúrese de que todos los archivos son válidos</value>

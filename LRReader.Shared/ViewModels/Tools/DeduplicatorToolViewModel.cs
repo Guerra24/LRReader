@@ -7,6 +7,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace LRReader.Shared.ViewModels.Tools
 {
 	public partial class DeduplicatorToolViewModel : ToolViewModel<DeduplicatorStatus>
 	{
+		private readonly SettingsService Settings;
 		private readonly DeduplicationTool Deduplicator;
 		private readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
@@ -37,12 +39,16 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		public ArchiveHitPreviewViewModel LeftArchive, RightArchive;
 
+		[AllowNull]
+		private ArchiveHit _current;
+
 		[ObservableProperty]
 		private bool _canClosePreviews;
 
-		public DeduplicatorToolViewModel(DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives, PlatformService platform) : base(platform)
+		public DeduplicatorToolViewModel(SettingsService settings, DeduplicationTool deduplicator, IDispatcherService dispatcher, ArchivesService archives, PlatformService platform) : base(platform)
 		{
 			ToolStatus = DeduplicatorStatus.Ready;
+			Settings = settings;
 			Deduplicator = deduplicator;
 			Dispatcher = dispatcher;
 			Archives = archives;
@@ -81,13 +87,22 @@ namespace LRReader.Shared.ViewModels.Tools
 					Items.Remove(item);
 		}
 
-		public async Task LoadArchives(string left, string right)
+		[ICommand]
+		private void MarkNonDup()
+		{
+			Settings.Profile.MarkedAsNonDuplicated.Add(_current);
+			Items.Remove(_current);
+			Settings.SaveProfiles();
+		}
+
+		public async Task LoadArchives(ArchiveHit hit)
 		{
 			CanClosePreviews = false;
 			try
 			{
-				var lArchive = Archives.GetArchive(left);
-				var rArchive = Archives.GetArchive(right);
+				_current = hit;
+				var lArchive = Archives.GetArchive(hit.Left);
+				var rArchive = Archives.GetArchive(hit.Right);
 				if (lArchive is null || rArchive is null)
 					return;
 				LeftArchive.Archive = lArchive;

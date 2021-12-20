@@ -242,8 +242,42 @@
 					</Viewbox>
 				</Button>
 				<Button
-					Grid.Row="5" Margin="4,0,0,0" Padding="0"
+					x:Uid="/Tools/Deduplicator/MarkNonDupTT" Grid.Row="1" Grid.RowSpan="3"
+					Margin="4,4,0,0" Padding="0" HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
+					<Button.Flyout>
+						<Flyout x:Name="LeftFlyoutN" Placement="Right">
+							<StackPanel>
+								<TextBlock x:Uid="/Tools/Deduplicator/MarkNonDup" HorizontalAlignment="Center" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<Button
+									x:Uid="/Tools/Deduplicator/MarkNonDupYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
+									Command="{x:Bind Data.MarkNonDupCommand}" />
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE8A6;" />
+				</Button>
+				<Button
+					x:Uid="/Tools/Deduplicator/MarkNonDupTT" Grid.Row="1" Grid.RowSpan="3"
+					Grid.Column="5" Margin="0,4,4,0" Padding="0"
 					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
+					<Button.Flyout>
+						<Flyout x:Name="RightFlyoutN" Placement="Left">
+							<StackPanel>
+								<TextBlock x:Uid="/Tools/Deduplicator/MarkNonDup" HorizontalAlignment="Center" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<Button
+									x:Uid="/Tools/Deduplicator/MarkNonDupYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
+									Command="{x:Bind Data.MarkNonDupCommand}" />
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE8A6;" />
+				</Button>
+				<Button
+					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="5" Margin="4,0,0,0"
+					Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
 					<Button.Flyout>
 						<Flyout x:Name="LeftFlyout" Placement="Right">
@@ -259,8 +293,9 @@
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE74D;" />
 				</Button>
 				<Button
-					Grid.Row="5" Grid.Column="5" Margin="0,0,4,0"
-					Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="5" Grid.Column="5"
+					Margin="0,0,4,0" Padding="0" HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
 					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
 					<Button.Flyout>
 						<Flyout x:Name="RightFlyout" Placement="Left">
@@ -269,7 +304,7 @@
 								<Button
 									x:Uid="/Tools/Deduplicator/DeleteArchiveYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
 									Command="{x:Bind Data.DeleteArchiveCommand}"
-									CommandParameter="{x:Bind Data.LeftArchive.Archive.arcid, Mode=OneWay}" />
+									CommandParameter="{x:Bind Data.RightArchive.Archive.arcid, Mode=OneWay}" />
 							</StackPanel>
 						</Flyout>
 					</Button.Flyout>
@@ -321,6 +356,9 @@
 				<Grid Grid.Row="5" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
 					<TextBlock Text="Tags" />
 				</Grid>
+				<Grid Grid.Row="7" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock Text="Images" />
+				</Grid>
 				<!--    -->
 				<Grid Grid.Column="3" Margin="4,0">
 					<Grid.ColumnDefinitions>
@@ -355,7 +393,7 @@
 					ItemsSource="{x:Bind Data.RightArchive.Archive.TagsGroups, Mode=OneWay}" />
 				<!--    -->
 				<GridView
-					x:Name="LeftPages" Grid.Row="7" Grid.Column="1"
+					x:Name="LeftPages" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
 					ext:Element.ModernShadow="{StaticResource ElementShadow}"
 					ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 					ItemsSource="{x:Bind Data.LeftArchive.ArchiveImages}"
@@ -388,11 +426,8 @@
 						</TransitionCollection>
 					</GridView.ItemContainerTransitions>
 				</GridView>
-				<Grid Grid.Row="7" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock Text="Images" />
-				</Grid>
 				<GridView
-					x:Name="RightPages" Grid.Row="7" Grid.Column="3"
+					x:Name="RightPages" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2"
 					ext:Element.ModernShadow="{StaticResource ElementShadow}"
 					ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 					ItemsSource="{x:Bind Data.RightArchive.ArchiveImages}"
