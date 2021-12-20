@@ -100,6 +100,14 @@
 									<Run Text="{x:Bind TabContent.Data.FitScaleLimit, Mode=OneWay}" />%
 								</TextBlock>
 							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Uid="/Tabs/Archive/Settings/VerticalReader" VerticalAlignment="Center" />
+								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.UseVerticalReader, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
 						</StackPanel>
 					</Flyout>
 				</Button.Flyout>

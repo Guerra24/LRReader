@@ -177,6 +177,9 @@
   <data name="Archive.Settings.TwoPages.Text" xml:space="preserve">
     <value>Показать две страницы</value>
   </data>
+  <data name="Archive.Settings.VerticalReader.Text" xml:space="preserve">
+    <value>Use vertical reader</value>
+  </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Добавить все</value>
   </data>

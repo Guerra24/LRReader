@@ -153,7 +153,7 @@
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 			HorizontalAnchorRatio="0.5" HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden"
 			PointerPressed="ScrollViewer_PointerPressed" RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged"
-			Tapped="ScrollViewer_Tapped" VerticalAnchorRatio="0.1" VerticalScrollBarVisibility="Auto"
+			Tapped="ScrollViewer_Tapped" VerticalAnchorRatio="0.01" VerticalScrollBarVisibility="Auto"
 			ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<ContentControl

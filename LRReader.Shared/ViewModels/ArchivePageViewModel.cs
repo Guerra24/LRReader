@@ -161,8 +161,19 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
-		[ObservableProperty]
 		private bool _useVerticalReader;
+		public bool UseVerticalReader
+		{
+			get => _useVerticalReader;
+			set
+			{
+				if (value != _useVerticalReader)
+				{
+					SetProperty(ref _useVerticalReader, value);
+					RebuildReader?.Invoke();
+				}
+			}
+		}
 
 		public event Action? RebuildReader;
 
@@ -345,7 +356,7 @@ namespace LRReader.Shared.ViewModels
 			ArchiveImagesReader.Clear();
 			var tmp = new List<ReaderImageSet>();
 			BuildMax = ArchiveImages.Count - 1;
-			LoadingImages = TwoPages && SetBuilder;
+			LoadingImages = (TwoPages && SetBuilder) || UseVerticalReader;
 			double MaxWidth = 0;
 			await Task.Run(async () =>
 			{

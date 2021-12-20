@@ -114,9 +114,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Data.ReaderIndex = index;
 			if (Data.UseVerticalReader)
 			{
+				await Task.Delay(100);
 				var element = ReaderVertical.GetOrCreateElement(index);
 				element.UpdateLayout();
-				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false });
+				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });
 			}
 			else
 				await ChangePage();
@@ -284,7 +285,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 				var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 				Data.ReaderIndex = index;
 
-				await ChangePage();
+				if (Data.UseVerticalReader)
+				{
+					await Task.Delay(100);
+					var element = ReaderVertical.GetOrCreateElement(index);
+					element.UpdateLayout();
+					element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });
+				}
+				else
+					await ChangePage();
 
 				if (Service.Platform.AnimationsEnabled)
 					await FadeIn.StartAsync(ScrollViewer);

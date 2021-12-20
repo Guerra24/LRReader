@@ -177,6 +177,9 @@
   <data name="Archive.Settings.TwoPages.Text" xml:space="preserve">
     <value>Mostrar dos páginas</value>
   </data>
+  <data name="Archive.Settings.VerticalReader.Text" xml:space="preserve">
+    <value>Utilizar lector vertical</value>
+  </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Agregar Todo</value>
   </data>
