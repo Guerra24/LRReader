@@ -20,7 +20,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="items:GenericArchiveItem">
-					<Grid x:Name="Root">
+                    <Grid x:Name="Root" Background="Transparent">
 						<Grid.Resources>
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
@@ -106,7 +106,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="items:GenericArchiveItem">
-					<Grid x:Name="Root">
+                    <Grid x:Name="Root" Background="Transparent">
 						<Grid.Resources>
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />
@@ -218,7 +218,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="items:GenericArchiveItem">
-					<Grid x:Name="Root">
+					<Grid x:Name="Root" Background="Transparent">
 						<Grid.Resources>
 							<internal:NegateBoolConverter x:Key="NegateBool" />
 							<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolVis" />

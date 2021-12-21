@@ -18,18 +18,18 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<Grid.ContextFlyout>
-			<MenuFlyout>
-				<MenuFlyoutItem
-					x:Uid="/Tools/DeduplicatorHidden/Remove" Click="Remove_Click" Icon="Delete"
-					Visibility="{x:Bind ShowRemove, Mode=OneWay}" />
-			</MenuFlyout>
-		</Grid.ContextFlyout>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="196" />
 			<ColumnDefinition Width="2" />
 			<ColumnDefinition Width="196" />
 		</Grid.ColumnDefinitions>
+		<Grid Grid.ColumnSpan="3" Background="Transparent" Visibility="{x:Bind ShowRemove, Mode=OneWay}">
+			<Grid.ContextFlyout>
+				<MenuFlyout>
+					<MenuFlyoutItem x:Uid="/Tools/DeduplicatorHidden/Remove" Click="Remove_Click" Icon="Delete" />
+				</MenuFlyout>
+			</Grid.ContextFlyout>
+		</Grid>
 		<Grid x:Name="LeftGrid">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
@@ -41,7 +41,7 @@
 				Text="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}"
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}" />
-			<Grid Grid.Row="1">
+			<Grid Grid.Row="1" IsHitTestVisible="False">
 				<Image
 					x:Name="LeftThumbnail" Width="200" Height="275"
 					HorizontalAlignment="Center" />
@@ -62,7 +62,7 @@
 				Text="{x:Bind RightViewModel.Archive.title, Mode=OneWay}"
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind RightViewModel.Archive.title, Mode=OneWay}" />
-			<Grid Grid.Row="1">
+			<Grid Grid.Row="1" IsHitTestVisible="False">
 				<Image
 					x:Name="RightThumbnail" Width="200" Height="275"
 					HorizontalAlignment="Center" />

@@ -58,9 +58,9 @@ namespace LRReader.Shared.Services
 			collection.AddTransient<ArchiveHitPreviewViewModel>();
 
 			// Tool's Pages
-			collection.AddTransient<DeduplicatorToolViewModel>();
+			collection.AddSingleton<DeduplicatorToolViewModel>();
 			collection.AddTransient<DeduplicatorHiddenViewModel>();
-			collection.AddTransient<BulkEditorViewModel>();
+			collection.AddSingleton<BulkEditorViewModel>();
 
 			services?.Invoke(collection);
 			Services = collection.BuildServiceProvider();
