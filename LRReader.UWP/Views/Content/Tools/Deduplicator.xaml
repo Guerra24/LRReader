@@ -299,7 +299,7 @@
 				</Button>
 				<Button
 					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="5" Margin="4,0,0,0"
-					Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					Padding="0,8,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
 					<Button.Flyout>
 						<Flyout x:Name="LeftFlyout" Placement="Right">
@@ -316,7 +316,7 @@
 				</Button>
 				<Button
 					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="5" Grid.Column="5"
-					Margin="0,0,4,0" Padding="0" HorizontalAlignment="Stretch"
+					Margin="0,0,4,0" Padding="0,8,0,8" HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
 					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
 					<Button.Flyout>
