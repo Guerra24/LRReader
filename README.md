@@ -85,6 +85,7 @@ Scroll by clicking and dragging the page or with wheel.<br>
 ![Archive View](https://s3.guerra24.net/projects/lrr/screenshots/03.png)<br>
 ![Reader](https://s3.guerra24.net/projects/lrr/screenshots/04.png)<br>
 ![Reader two pages](https://s3.guerra24.net/projects/lrr/screenshots/04_1.png)<br>
+![Reader vertical mode](https://s3.guerra24.net/projects/lrr/screenshots/04_2.png)<br>
 ![Settings](https://s3.guerra24.net/projects/lrr/screenshots/05.png)<br>
 
 ## [Privacy Policy](Privacy.md)
