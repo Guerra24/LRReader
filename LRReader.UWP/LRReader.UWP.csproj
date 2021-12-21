@@ -165,6 +165,9 @@
     <Compile Include="Views\Content\Settings\Updates.xaml.cs">
       <DependentUpon>Updates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Content\Tools\DeduplicatorHidden.xaml.cs">
+      <DependentUpon>DeduplicatorHidden.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Content\Tools\BulkEditor.xaml.cs">
       <DependentUpon>BulkEditor.xaml</DependentUpon>
     </Compile>
@@ -470,6 +473,10 @@
     <Page Include="Views\Content\Settings\Updates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Content\Tools\DeduplicatorHidden.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Content\Tools\BulkEditor.xaml">
       <SubType>Designer</SubType>

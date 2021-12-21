@@ -1,0 +1,55 @@
+﻿<Page
+	x:Class="LRReader.UWP.Views.Content.Tools.DeduplicatorHidden"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
+	xmlns:items="using:LRReader.Shared.Models.Main"
+	xmlns:items1="using:LRReader.UWP.Views.Items"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	DataContext="{Binding DeduplicatorHiddenViewModelInstance, Source={StaticResource Locator}}"
+	mc:Ignorable="d">
+	<Page.Resources>
+		<ext:Shadow x:Name="ElementShadow" />
+		<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
+	</Page.Resources>
+
+	<Grid x:Name="RootGrid">
+		<GridView
+			x:Name="Results"
+			ext:Element.ModernShadow="{StaticResource ElementShadow}"
+			ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+			ItemsSource="{x:Bind Data.HiddenArchives}"
+			SelectionMode="None">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="items:ArchiveHit">
+					<items1:ArchiveHitItem RemoveCommand="{Binding ElementName=RootGrid, Path=DataContext.RemoveCommand}" ShowRemove="True" />
+				</DataTemplate>
+			</GridView.ItemTemplate>
+			<GridView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</GridView.ItemsPanel>
+			<GridView.ItemContainerStyle>
+				<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+					<Setter Property="Padding" Value="0" />
+					<Setter Property="Margin" Value="5" />
+				</Style>
+			</GridView.ItemContainerStyle>
+			<GridView.ItemContainerTransitions>
+				<TransitionCollection>
+					<PopupThemeTransition FromVerticalOffset="200" />
+					<ReorderThemeTransition />
+					<RepositionThemeTransition />
+				</TransitionCollection>
+			</GridView.ItemContainerTransitions>
+		</GridView>
+		<TextBlock
+			HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"
+			Text="Try marking something as non duplicate"
+			Visibility="{x:Bind Data.HiddenArchives, Converter={StaticResource EmptyCollectionToObjectConverter}}" />
+	</Grid>
+</Page>

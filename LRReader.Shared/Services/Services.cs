@@ -15,8 +15,8 @@ namespace LRReader.Shared.Services
 
 	public class Service
 	{
-		[NotNull]
-		public static IServiceProvider? Services { get; set; }
+		[AllowNull]
+		public static IServiceProvider Services { get; set; }
 
 		private static volatile bool Loaded;
 
@@ -59,6 +59,7 @@ namespace LRReader.Shared.Services
 
 			// Tool's Pages
 			collection.AddTransient<DeduplicatorToolViewModel>();
+			collection.AddTransient<DeduplicatorHiddenViewModel>();
 			collection.AddTransient<BulkEditorViewModel>();
 
 			services?.Invoke(collection);

@@ -252,6 +252,12 @@
   <data name="Deduplicator.Threads.Title" xml:space="preserve">
     <value>Рабочие потоки</value>
   </data>
+  <data name="DeduplicatorHidden.Remove.Text" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
+    <value>Hidden archives</value>
+  </data>
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Дедупликатор</value>
   </data>

@@ -131,9 +131,8 @@ namespace LRReader.Shared.Services
 			}
 			if (result.success)
 			{
-				var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(id));
-				if (bookmark != null)
-					Settings.Profile.Bookmarks.Remove(bookmark);
+				Settings.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(id));
+				Settings.Profile.MarkedAsNonDuplicated.RemoveAll(hit => hit.Left.Equals(id) || hit.Right.Equals(id));
 				WeakReferenceMessenger.Default.Send(new DeleteArchiveMessage(Archives[id]));
 				Tabs.CloseTabWithId("Edit_" + id);
 				Tabs.CloseTabWithId("Archive_" + id);

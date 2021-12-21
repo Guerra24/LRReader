@@ -1,10 +1,9 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Extensions;
-using Microsoft.Toolkit.Uwp.UI;
+using LRReader.UWP.Views.Controls;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
-using System.Numerics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -12,7 +11,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP.Views.Content.Tools
 {
-	public sealed partial class Deduplicator : Page
+	public sealed partial class Deduplicator : ModernBasePage
 	{
 		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseIn);
 		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(200), easingMode: EasingMode.EaseOut);

@@ -124,14 +124,14 @@ namespace LRReader.UWP.Views.Controls
 		protected override void OnKeyDown(KeyRoutedEventArgs e)
 		{
 			base.OnKeyDown(e);
-			if (IsButton && IsEnabled && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
+			if (IsButton && IsEnabled && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Enter))
 				VisualStateManager.GoToState(this, "Pressed", true);
 		}
 
 		protected override void OnKeyUp(KeyRoutedEventArgs e)
 		{
 			base.OnKeyUp(e);
-			if (IsButton && IsEnabled && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Space))
+			if (IsButton && IsEnabled && (e.Key == VirtualKey.Space || e.Key == VirtualKey.Enter))
 			{
 				Click?.Invoke(this, e);
 				VisualStateManager.GoToState(this, "Normal", true);

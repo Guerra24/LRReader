@@ -13,6 +13,28 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
 {
+	public partial class DeduplicatorHiddenViewModel : ObservableObject
+	{
+		private readonly SettingsService Settings;
+
+		public ObservableCollection<ArchiveHit> HiddenArchives = new ObservableCollection<ArchiveHit>();
+
+		public DeduplicatorHiddenViewModel(SettingsService settings)
+		{
+			Settings = settings;
+			foreach (var item in settings.Profile.MarkedAsNonDuplicated)
+				HiddenArchives.Add(item);
+		}
+
+		[ICommand]
+		private void Remove(ArchiveHit item)
+		{
+			HiddenArchives.Remove(item);
+			Settings.Profile.MarkedAsNonDuplicated.Remove(item);
+			Settings.SaveProfiles();
+		}
+	}
+
 	public partial class DeduplicatorToolViewModel : ToolViewModel<DeduplicatorStatus>
 	{
 		private readonly SettingsService Settings;

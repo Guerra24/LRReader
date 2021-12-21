@@ -112,7 +112,6 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectLocal("KeyboardScroll", 200);
 			set => SettingsStorage.StoreObjectLocal("KeyboardScroll", value);
 		}
-		// TODO Mirror in reader
 		public bool FitToWidth
 		{
 			get => SettingsStorage.GetObjectRoamed("FitToWidth", false);

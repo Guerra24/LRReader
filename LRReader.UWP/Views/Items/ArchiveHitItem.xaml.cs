@@ -4,11 +4,9 @@ using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading.Tasks;
-using Windows.Devices.Input;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -21,9 +19,7 @@ namespace LRReader.UWP.Views.Items
 
 		private ArchiveHitViewModel Data;
 
-		private ArchiveHit _old = new ArchiveHit { Left = "" , Right =  "" };
-
-		private bool _open;
+		private ArchiveHit _old = new ArchiveHit { Left = "", Right = "" };
 
 		public ArchiveHitItem()
 		{
@@ -32,6 +28,18 @@ namespace LRReader.UWP.Views.Items
 			LeftViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
 			RightViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
 			Data = Service.Services.GetRequiredService<ArchiveHitViewModel>();
+		}
+
+		public bool ShowRemove
+		{
+			get => (bool)GetValue(ShowRemoveProperty);
+			set => SetValue(ShowRemoveProperty, value);
+		}
+
+		public ICommand RemoveCommand
+		{
+			get => GetValue(RemoveCommandProperty) as ICommand;
+			set => SetValue(RemoveCommandProperty, value);
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -89,6 +97,15 @@ namespace LRReader.UWP.Views.Items
 				}
 			}
 		}
+
+		private void Remove_Click(object sender, RoutedEventArgs e)
+		{
+			if (RemoveCommand.CanExecute(Data.ArchiveHit))
+				RemoveCommand.Execute(Data.ArchiveHit);
+		}
+
+		public static readonly DependencyProperty ShowRemoveProperty = DependencyProperty.Register("ShowRemove", typeof(bool), typeof(ArchiveHitItem), new PropertyMetadata(false));
+		public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.RegisterAttached("RemoveCommand", typeof(ICommand), typeof(ArchiveHitItem), new PropertyMetadata(null));
 
 	}
 }

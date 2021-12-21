@@ -55,6 +55,8 @@ namespace LRReader.UWP.Services
 				var pack = packageUpdates.FirstOrDefault(p => p.Package.Id.FamilyName.Equals(Current.Id.FamilyName));
 				if (pack != null)
 				{
+
+					// TODO: This does not work at all
 					var ver = pack.Package.Id.Version;
 					result.Target = new Version(ver.Major, ver.Minor, ver.Build, 0); // Rev is always 0
 				}

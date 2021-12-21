@@ -18,12 +18,19 @@
 	</UserControl.Resources>
 
 	<Grid>
+		<Grid.ContextFlyout>
+			<MenuFlyout>
+				<MenuFlyoutItem
+					x:Uid="/Tools/DeduplicatorHidden/Remove" Click="Remove_Click" Icon="Delete"
+					Visibility="{x:Bind ShowRemove, Mode=OneWay}" />
+			</MenuFlyout>
+		</Grid.ContextFlyout>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="196" />
 			<ColumnDefinition Width="2" />
 			<ColumnDefinition Width="196" />
 		</Grid.ColumnDefinitions>
-		<Grid x:Name="LeftGrid" >
+		<Grid x:Name="LeftGrid">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
@@ -44,7 +51,7 @@
 			</Grid>
 		</Grid>
 		<Grid Grid.Column="1" />
-		<Grid x:Name="RightGrid" Grid.Column="2" >
+		<Grid x:Name="RightGrid" Grid.Column="2">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />

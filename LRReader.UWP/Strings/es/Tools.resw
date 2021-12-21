@@ -211,7 +211,7 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
     <value>Marcar como no duplicado</value>
   </data>
   <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
-    <value>Sí, marque como no duplicado</value>
+    <value>Sí, marcar como no duplicado</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
     <value>Asegúrese de que todos los archivos son válidos</value>
@@ -251,6 +251,12 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
   </data>
   <data name="Deduplicator.Threads.Title" xml:space="preserve">
     <value>Hilos de trabajo</value>
+  </data>
+  <data name="DeduplicatorHidden.Remove.Text" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
+    <value>Archivos ocultos</value>
   </data>
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Deduplicador</value>

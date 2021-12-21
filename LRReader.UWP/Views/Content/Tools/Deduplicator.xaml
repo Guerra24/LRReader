@@ -1,4 +1,4 @@
-﻿<Page
+﻿<controls:ModernBasePage
 	x:Class="LRReader.UWP.Views.Content.Tools.Deduplicator"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,7 +9,7 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:items1="using:LRReader.UWP.Views.Items"
-	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:local="using:LRReader.UWP.Views.Content.Tools"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -63,7 +63,7 @@
 									</muxc:TeachingTip>
 								</StackPanel>
 							</controls:ModernExpander.Input>
-							<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold">
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 								<muxc:NumberBox
 									MinWidth="100"
 									IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
@@ -71,7 +71,7 @@
 									SmallChange="1" SpinButtonPlacementMode="Inline"
 									Value="{x:Bind Data.PixelThreshold, Mode=TwoWay}" />
 							</controls:ModernInput>
-							<controls:ModernInput x:Uid="/Tools/Deduplicator/ImageDiffLimit" InputHorizontalAlignment="Stretch">
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/ImageDiffLimit" InputHorizontalAlignment="Stretch" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*" />
@@ -89,7 +89,7 @@
 									</TextBlock>
 								</Grid>
 							</controls:ModernInput>
-							<controls:ModernInput x:Uid="/Tools/Deduplicator/Resolution">
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/Resolution" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 								<muxc:NumberBox
 									MinWidth="100"
 									IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
@@ -97,7 +97,7 @@
 									SpinButtonPlacementMode="Inline"
 									Value="{x:Bind Data.Resolution, Mode=TwoWay}" />
 							</controls:ModernInput>
-							<controls:ModernInput x:Uid="/Tools/Deduplicator/AspectRatio" InputHorizontalAlignment="Stretch">
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/AspectRatio" InputHorizontalAlignment="Stretch" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*" />
@@ -116,14 +116,23 @@
 								</Grid>
 							</controls:ModernInput>
 						</controls:ModernExpander>
-						<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads">
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 							<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
 						</controls:ModernInput>
-						<controls:ModernInput x:Uid="/Tools/Deduplicator/RequestDelay">
+						<controls:ModernInput x:Uid="/Tools/Deduplicator/RequestDelay" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 							<muxc:NumberBox
 								IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 								Maximum="1000" Minimum="0" SpinButtonPlacementMode="Inline"
 								Value="{x:Bind Data.Delay, Mode=TwoWay}" />
+						</controls:ModernInput>
+						<controls:ModernInput
+							x:Uid="/Tools/DeduplicatorHiddenPage" Click="PageButton_Click" Glyph="&#xE8A6;"
+							IsButton="True"
+							IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+							RightGlyph="&#xE76C;">
+							<controls:ModernInput.Tag>
+								<controls:ModernPageTabItem x:Uid="/Tools/DeduplicatorHiddenPage" Page="local:DeduplicatorHidden" />
+							</controls:ModernInput.Tag>
 						</controls:ModernInput>
 						<StackPanel Margin="8" Spacing="10">
 							<StackPanel.Transitions>
@@ -242,6 +251,15 @@
 					</Viewbox>
 				</Button>
 				<Button
+					Width="32" Height="32" Margin="4,0,0,0"
+					Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+					Click="CloseButton_Click"
+					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
+					<Viewbox MaxWidth="16" MaxHeight="16">
+						<SymbolIcon Symbol="Cancel" />
+					</Viewbox>
+				</Button>
+				<Button
 					x:Uid="/Tools/Deduplicator/MarkNonDupTT" Grid.Row="1" Grid.RowSpan="3"
 					Margin="4,4,0,0" Padding="0" HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
@@ -249,7 +267,9 @@
 					<Button.Flyout>
 						<Flyout x:Name="LeftFlyoutN" Placement="Right">
 							<StackPanel>
-								<TextBlock x:Uid="/Tools/Deduplicator/MarkNonDup" HorizontalAlignment="Center" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<TextBlock
+									x:Uid="/Tools/Deduplicator/MarkNonDup" Margin="0,0,0,12" HorizontalAlignment="Center"
+									Style="{ThemeResource BaseTextBlockStyle}" />
 								<Button
 									x:Uid="/Tools/Deduplicator/MarkNonDupYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
 									Command="{x:Bind Data.MarkNonDupCommand}" />
@@ -266,7 +286,9 @@
 					<Button.Flyout>
 						<Flyout x:Name="RightFlyoutN" Placement="Left">
 							<StackPanel>
-								<TextBlock x:Uid="/Tools/Deduplicator/MarkNonDup" HorizontalAlignment="Center" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+								<TextBlock
+									x:Uid="/Tools/Deduplicator/MarkNonDup" Margin="0,0,0,12" HorizontalAlignment="Center"
+									Style="{ThemeResource BaseTextBlockStyle}" />
 								<Button
 									x:Uid="/Tools/Deduplicator/MarkNonDupYesNo" HorizontalAlignment="Center" Click="CloseButton_Click"
 									Command="{x:Bind Data.MarkNonDupCommand}" />
@@ -464,4 +486,4 @@
 			</Grid>
 		</Grid>
 	</Grid>
-</Page>
+</controls:ModernBasePage>
