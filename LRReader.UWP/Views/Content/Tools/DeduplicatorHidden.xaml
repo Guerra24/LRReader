@@ -13,7 +13,7 @@
 	mc:Ignorable="d">
 	<Page.Resources>
 		<ext:Shadow x:Name="ElementShadow" />
-        <converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Visible" NotEmptyValue="Collapsed" />
+		<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Visible" NotEmptyValue="Collapsed" />
 	</Page.Resources>
 
 	<Grid x:Name="RootGrid">
@@ -48,8 +48,8 @@
 			</GridView.ItemContainerTransitions>
 		</GridView>
 		<TextBlock
-			HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"
-			Text="Try marking something as non duplicate"
+			x:Uid="/Tools/DeduplicatorHidden/Empty" HorizontalAlignment="Center" VerticalAlignment="Center"
+			FontSize="22"
 			Visibility="{x:Bind Data.HiddenArchives, Converter={StaticResource EmptyCollectionToObjectConverter}}" />
 	</Grid>
 </Page>

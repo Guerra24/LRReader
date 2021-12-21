@@ -246,11 +246,29 @@
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Шаг</value>
   </data>
+  <data name="Deduplicator.SxSImages.Text" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="Deduplicator.SxSPages.Text" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="Deduplicator.SxSResolution.Text" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
+  <data name="Deduplicator.SxSTags.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Deduplicator.SxSTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="Deduplicator.TeachingTip.Title" xml:space="preserve">
     <value>Как это работает</value>
   </data>
   <data name="Deduplicator.Threads.Title" xml:space="preserve">
     <value>Рабочие потоки</value>
+  </data>
+  <data name="DeduplicatorHidden.Empty.Text" xml:space="preserve">
+    <value>Try marking something as non duplicate</value>
   </data>
   <data name="DeduplicatorHidden.Remove.Text" xml:space="preserve">
     <value>Remove</value>

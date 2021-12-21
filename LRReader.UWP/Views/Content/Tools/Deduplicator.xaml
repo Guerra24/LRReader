@@ -367,19 +367,19 @@
 					ItemsSource="{x:Bind Data.LeftArchive.Archive.TagsGroups, Mode=OneWay}" />
 				<!--    -->
 				<Grid Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock Text="Title" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSTitle" />
 				</Grid>
 				<Grid Grid.Row="1" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock Text="Resolution" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSResolution" />
 				</Grid>
 				<Grid Grid.Row="3" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock Text="Pages" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSPages" />
 				</Grid>
 				<Grid Grid.Row="5" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock Text="Tags" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSTags" />
 				</Grid>
 				<Grid Grid.Row="7" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock Text="Images" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSImages" />
 				</Grid>
 				<!--    -->
 				<Grid Grid.Column="3" Margin="4,0">
