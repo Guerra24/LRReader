@@ -105,7 +105,6 @@ namespace LRReader.UWP.Views.Items
 		}
 
 		public static readonly DependencyProperty ShowRemoveProperty = DependencyProperty.Register("ShowRemove", typeof(bool), typeof(ArchiveHitItem), new PropertyMetadata(false));
-
 		public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.RegisterAttached("RemoveCommand", typeof(ICommand), typeof(ArchiveHitItem), new PropertyMetadata(null));
 
 	}
