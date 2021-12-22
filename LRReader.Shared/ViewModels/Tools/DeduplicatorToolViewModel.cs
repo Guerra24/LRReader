@@ -55,7 +55,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			set => SetProperty(ref _aspectRatioLimit, (float)Math.Round(value, 2));
 		}
 		[ObservableProperty]
-		private bool _earlyExit = true;
+		private bool _skipMissing;
 		[ObservableProperty]
 		private int _delay = 25;
 
@@ -89,7 +89,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			Items.Clear();
 			Missing.Clear();
 			OnPropertyChanged("Missing");
-			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Resolution, AspectRatioLimit, Delay, EarlyExit), Threads, Progress);
+			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Resolution, AspectRatioLimit, Delay, SkipMissing), Threads, Progress);
 			if (hits.Ok)
 			{
 				await Task.Run(async () =>

@@ -1,12 +1,4 @@
-﻿using LRReader.Shared.Internal;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
-using LRReader.Shared.Services;
-using Newtonsoft.Json;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +7,13 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using LRReader.Shared.Internal;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace LRReader.Shared.Tools
 {
@@ -40,16 +39,16 @@ namespace LRReader.Shared.Tools
 		public int Width { get; }
 		public float AspectRatioLimit { get; }
 		public int Delay { get; }
-		public bool EarlyExit { get; }
+		public bool SkipMissing { get; }
 
-		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0, bool earlyExit = true)
+		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0, bool skipMissing = false)
 		{
 			PixelThreshold = pixelThreshold;
 			PercentDifference = percentDifference;
 			Width = width;
 			AspectRatioLimit = aspectRatioLimit;
 			Delay = delay;
-			EarlyExit = earlyExit;
+			SkipMissing = skipMissing;
 		}
 	}
 
@@ -77,7 +76,7 @@ namespace LRReader.Shared.Tools
 			int width = @params.Width;
 			float aspectRatioLimit = @params.AspectRatioLimit;
 			int delay = @params.Delay;
-			bool earlyExit = @params.EarlyExit;
+			bool skipMissing = @params.SkipMissing;
 
 			var archives = Archives.Archives;
 			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
@@ -128,7 +127,7 @@ namespace LRReader.Shared.Tools
 				return pair.Item2 == null;
 			});
 
-			if (removed.Count > 0 && earlyExit)
+			if (removed.Count > 0 && !skipMissing)
 				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Title"), Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Message"), removed);
 
 			var decodedThumbnails = tmp.ToDictionary(pair => pair.Item1, pair => pair.Item2);

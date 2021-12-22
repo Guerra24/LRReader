@@ -168,12 +168,6 @@
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
     <value>Yes, delete</value>
   </data>
-  <data name="Deduplicator.EarlyExit.Description" xml:space="preserve">
-    <value>Stop when an invalid thumbnail is detected</value>
-  </data>
-  <data name="Deduplicator.EarlyExit.Title" xml:space="preserve">
-    <value>Early stop</value>
-  </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Предполагаемое время:</value>
   </data>
@@ -254,6 +248,9 @@
   </data>
   <data name="Deduplicator.Resolution.Title" xml:space="preserve">
     <value>Разрешение</value>
+  </data>
+  <data name="Deduplicator.SkipMissing.Title" xml:space="preserve">
+    <value>Skip missing thumbnails</value>
   </data>
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Шаг</value>

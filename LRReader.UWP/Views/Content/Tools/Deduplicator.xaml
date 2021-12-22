@@ -160,8 +160,8 @@
 										Text="{x:Bind Data.AspectRatioLimit, Mode=OneWay}" />
 								</Grid>
 							</controls:ModernInput>
-							<controls:ModernInput x:Uid="/Tools/Deduplicator/EarlyExit" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
-								<ToggleSwitch IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.EarlyExit, Mode=TwoWay}" />
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/SkipMissing" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+								<ToggleSwitch IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SkipMissing, Mode=TwoWay}" />
 							</controls:ModernInput>
 						</controls:ModernExpander>
 						<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
