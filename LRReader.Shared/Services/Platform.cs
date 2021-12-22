@@ -35,6 +35,8 @@ namespace LRReader.Shared.Services
 		public abstract bool AnimationsEnabled { get; }
 		public abstract uint HoverTime { get; }
 
+		public bool Active { get; protected set; }
+
 		public abstract void Init();
 		public abstract void ChangeTheme(AppTheme theme);
 		public abstract string GetLocalizedString(string key);

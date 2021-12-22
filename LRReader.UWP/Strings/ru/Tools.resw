@@ -168,6 +168,12 @@
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
     <value>Yes, delete</value>
   </data>
+  <data name="Deduplicator.EarlyExit.Description" xml:space="preserve">
+    <value>Stop when an invalid thumbnail is detected</value>
+  </data>
+  <data name="Deduplicator.EarlyExit.Title" xml:space="preserve">
+    <value>Early stop</value>
+  </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Предполагаемое время:</value>
   </data>
@@ -212,6 +218,12 @@
   </data>
   <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
     <value>Yes, mark as non duplicate</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.Content" xml:space="preserve">
+    <value>Missing thumbnails</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Archives with missing thumbnails</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
     <value>Ensure that all archives are valid</value>
@@ -274,7 +286,7 @@
     <value>Remove</value>
   </data>
   <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
-    <value>Hidden archives</value>
+    <value>Hidden pairs</value>
   </data>
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Дедупликатор</value>

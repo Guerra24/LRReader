@@ -55,9 +55,12 @@ namespace LRReader.Shared.ViewModels.Tools
 			set => SetProperty(ref _aspectRatioLimit, (float)Math.Round(value, 2));
 		}
 		[ObservableProperty]
+		private bool _earlyExit = true;
+		[ObservableProperty]
 		private int _delay = 25;
 
 		public ObservableCollection<ArchiveHit> Items = new ObservableCollection<ArchiveHit>();
+		public ObservableCollection<Archive> Missing = new ObservableCollection<Archive>();
 
 		public ArchiveHitPreviewViewModel LeftArchive, RightArchive;
 
@@ -84,7 +87,9 @@ namespace LRReader.Shared.ViewModels.Tools
 			ErrorTitle = null;
 			ErrorDescription = null;
 			Items.Clear();
-			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Resolution, AspectRatioLimit, Delay), Threads, Progress);
+			Missing.Clear();
+			OnPropertyChanged("Missing");
+			var hits = await Deduplicator.Execute(new DeduplicatorParams(PixelThreshold, PercentDifference / 100f, Resolution, AspectRatioLimit, Delay, EarlyExit), Threads, Progress);
 			if (hits.Ok)
 			{
 				await Task.Run(async () =>
@@ -98,6 +103,16 @@ namespace LRReader.Shared.ViewModels.Tools
 			{
 				ErrorTitle = hits.Title;
 				ErrorDescription = hits.Description;
+			}
+			if (hits.Error != null)
+			{
+				foreach (var item in hits.Error)
+				{
+					var archive = Archives.GetArchive(item);
+					if (archive != null)
+						Missing.Add(archive);
+				}
+				OnPropertyChanged("Missing");
 			}
 		}
 

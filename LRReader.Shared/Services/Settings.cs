@@ -363,6 +363,18 @@ namespace LRReader.Shared.Services
 		private void ProfilesChanges(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			SaveProfiles();
+			if (e.Action == NotifyCollectionChangedAction.Remove)
+			{
+				foreach (var item in e.OldItems)
+				{
+					if (item is ServerProfile profile)
+					{
+						var path = $"{Files.LocalCache}/Metadata/{profile.UID}/";
+						if (Directory.Exists(path))
+							Directory.Delete(path, true);
+					}
+				}
+			}
 			OnPropertyChanged("ProfilesAvailable");
 			OnPropertyChanged("AtLeastOneProfile");
 		}

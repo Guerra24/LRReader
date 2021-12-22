@@ -432,7 +432,7 @@
       <Version>1.0.1054.31</Version>
     </PackageReference>
     <PackageReference Include="NReco.Logging.File">
-      <Version>1.1.2</Version>
+      <Version>1.1.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

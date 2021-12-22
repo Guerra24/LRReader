@@ -168,6 +168,12 @@
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
     <value>Sí, eliminar</value>
   </data>
+  <data name="Deduplicator.EarlyExit.Description" xml:space="preserve">
+    <value>Detener cuando se detecta una miniatura no válida</value>
+  </data>
+  <data name="Deduplicator.EarlyExit.Title" xml:space="preserve">
+    <value>Cancelación anticipada</value>
+  </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Tiempo estimado:</value>
   </data>
@@ -199,7 +205,8 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
     <value>Diferencia de imagen</value>
   </data>
   <data name="Deduplicator.InvalidThumb.Message" xml:space="preserve">
-    <value>Intenta aumentar el tiempo de espera de las peticiones, reducir los hilos de trabajo o comprobar que todas las miniaturas son válidas</value>
+    <value>Intenta aumentar el tiempo de espera de las peticiones, reducir los hilos de trabajo o comprobar que todas las miniaturas son válidas.
+Por último, desactive la cancelación anticipada e inténtelo de nuevo, omitirá los archivos a los que les falten miniaturas.</value>
   </data>
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>Se ha detectado una miniatura no válida</value>
@@ -212,6 +219,12 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
   </data>
   <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
     <value>Sí, marcar como no duplicado</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.Content" xml:space="preserve">
+    <value>Faltan miniaturas</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Archivos con miniaturas faltantes</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
     <value>Asegúrese de que todos los archivos son válidos</value>
@@ -274,7 +287,7 @@ El parámetro *Resolución* se utiliza para reducir la escala de las imágenes a
     <value>Eliminar</value>
   </data>
   <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
-    <value>Archivos ocultos</value>
+    <value>Pares ocultos</value>
   </data>
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Deduplicador</value>

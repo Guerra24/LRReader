@@ -59,6 +59,8 @@ namespace LRReader.Shared.Models
 
 		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 		{
+			if (reader.ValueType == null || reader.Value == null)
+				return false;
 			if (reader.ValueType == typeof(string))
 			{
 				if (reader.Value?.Equals("none") ?? false)

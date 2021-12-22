@@ -168,6 +168,7 @@ namespace LRReader.Shared.ViewModels.Base
 			{
 				Archive.title = result.title;
 				Archive.tags = result.tags;
+				Archive.isnew = result.isnew;
 				Archive.pagecount = result.pagecount;
 				Archive.progress = result.progress;
 				Archive.extension = result.extension;

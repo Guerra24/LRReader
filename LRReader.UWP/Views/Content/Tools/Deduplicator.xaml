@@ -20,6 +20,7 @@
 		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
 		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+		<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
 		<ext:Shadow x:Name="ElementShadow" />
 		<Style x:Key="PropertyTitleStyle" TargetType="Grid">
@@ -39,6 +40,50 @@
 			<Setter Property="VerticalAlignment" Value="Center" />
 			<Setter Property="Margin" Value="4,0" />
 		</Style>
+		<Style x:Key="ListViewCompact" TargetType="ListView">
+			<Setter Property="Width" Value="422" />
+			<Setter Property="MaxHeight" Value="500" />
+			<Setter Property="SelectionMode" Value="None" />
+			<Setter Property="ItemTemplate">
+				<Setter.Value>
+					<DataTemplate x:DataType="items:Archive">
+						<Grid Padding="4,2" Background="{ThemeResource ControlFillColorDefaultBrush}" CornerRadius="4">
+							<TextBlock IsTextSelectionEnabled="True" Text="{x:Bind title}" TextTrimming="WordEllipsis" />
+						</Grid>
+					</DataTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
+					<ItemsPanelTemplate>
+						<StackPanel Spacing="2" />
+					</ItemsPanelTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="ItemContainerStyle">
+				<Setter.Value>
+					<Style TargetType="ListViewItem">
+						<Setter Property="Margin" Value="0" />
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="MinHeight" Value="0" />
+						<Setter Property="MinWidth" Value="0" />
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="ListViewItem">
+									<ListViewItemPresenter x:Name="Root" ContentMargin="0" CornerRadius="0" />
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="ItemContainerTransitions">
+				<Setter.Value>
+					<TransitionCollection />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Thickness x:Key="FlyoutContentPadding">8,7,8,9</Thickness>
 	</Page.Resources>
 
 	<Grid>
@@ -115,6 +160,9 @@
 										Text="{x:Bind Data.AspectRatioLimit, Mode=OneWay}" />
 								</Grid>
 							</controls:ModernInput>
+							<controls:ModernInput x:Uid="/Tools/Deduplicator/EarlyExit" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+								<ToggleSwitch IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.EarlyExit, Mode=TwoWay}" />
+							</controls:ModernInput>
 						</controls:ModernExpander>
 						<controls:ModernInput x:Uid="/Tools/Deduplicator/Threads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 							<ComboBox x:Name="WorkerThreads" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" SelectedValue="{x:Bind Data.Threads, Mode=TwoWay}" />
@@ -169,12 +217,19 @@
 								Maximum="{x:Bind Data.MaxProgress, Mode=OneWay}"
 								Value="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
 						</StackPanel>
-						<StackPanel Margin="8">
-							<StackPanel.Transitions>
+						<Grid Margin="8">
+							<Grid.Transitions>
 								<TransitionCollection>
 									<RepositionThemeTransition IsStaggeringEnabled="False" />
 								</TransitionCollection>
-							</StackPanel.Transitions>
+							</Grid.Transitions>
+							<Button x:Uid="/Tools/Deduplicator/MissingThumbs" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" Visibility="{x:Bind Data.Missing, Mode=OneWay, Converter={StaticResource EmptyCollectionToObjectConverter}}" >
+								<Button.Flyout>
+									<Flyout Closing="Flyout_Closing" Placement="Right">
+										<ListView ItemsSource="{x:Bind Data.Missing}" Style="{StaticResource ListViewCompact}" />
+									</Flyout>
+								</Button.Flyout>
+							</Button>
 							<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
 								<TextBlock VerticalAlignment="Center" Visibility="{x:Bind Data.EstimatedTime, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}">
 									<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
@@ -182,7 +237,7 @@
 								</TextBlock>
 								<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 							</StackPanel>
-						</StackPanel>
+						</Grid>
 					</controls:ModernGroup>
 					<muxc:InfoBar
 						Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"

@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Controls;
@@ -6,6 +7,7 @@ using Microsoft.Toolkit.Uwp.UI.Animations;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -59,10 +61,7 @@ namespace LRReader.UWP.Views.Content.Tools
 			}
 		}
 
-		private void Help_Click(object sender, RoutedEventArgs e)
-		{
-			HowItWorks.IsOpen = true;
-		}
+		private void Help_Click(object sender, RoutedEventArgs e) => HowItWorks.IsOpen = true;
 
 		private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -82,6 +81,8 @@ namespace LRReader.UWP.Views.Content.Tools
 				LeftScroller.ViewChanged += LeftScroller_ViewChanged;
 			}
 		}
+
+		private void Flyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs e) => e.Cancel = !Service.Platform.Active;
 
 		private async void CloseButton_Click(object sender, RoutedEventArgs e)
 		{

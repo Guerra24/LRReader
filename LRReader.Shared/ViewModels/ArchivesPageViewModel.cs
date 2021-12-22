@@ -57,6 +57,7 @@ namespace LRReader.Shared.ViewModels
 					else
 						WeakReferenceMessenger.Default.Send(new ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", ""));
 				}
+			Settings.Profile.MarkedAsNonDuplicated.RemoveAll(hit => !(Archives.HasArchive(hit.Left) && Archives.HasArchive(hit.Right)));
 		}
 
 	}

@@ -37,12 +37,13 @@ namespace LRReader.Shared.Tools
 		}
 	}
 
-	public struct ToolResult<T>
+	public struct ToolResult<T, E>
 	{
 		public bool Ok { get; set; }
 		public T Data { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
+		public E? Error { get; set; }
 	}
 
 	public interface IToolParams
@@ -50,25 +51,23 @@ namespace LRReader.Shared.Tools
 
 	}
 
-	public abstract class Tool<T, P, R> where P : IToolParams
+	public abstract class Tool<T, P, R, E> where P : IToolParams
 	{
 
 		private readonly PlatformService Platform;
 
 		private Subject<ToolProgress<T>>? progressFilter;
 
-		protected volatile bool earlyExit;
-
 		public Tool(PlatformService platform)
 		{
 			Platform = platform;
 		}
 
-		public async Task<ToolResult<R>> Execute(P @params, int threads, IProgress<ToolProgress<T>>? progress = null)
+		public async Task<ToolResult<R, E>> Execute(P @params, int threads, IProgress<ToolProgress<T>>? progress = null)
 		{
 			progressFilter = new Subject<ToolProgress<T>>();
 			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
-			ToolResult<R> result = new ToolResult<R> { Title = Platform.GetLocalizedString("Tools/GenericTool/Error") };
+			var result = new ToolResult<R, E> { Title = Platform.GetLocalizedString("Tools/GenericTool/Error") };
 			try
 			{
 				result = await Process(@params, threads);
@@ -84,9 +83,9 @@ namespace LRReader.Shared.Tools
 			return result;
 		}
 
-		protected abstract Task<ToolResult<R>> Process(P @params, int threads);
+		protected abstract Task<ToolResult<R, E>> Process(P @params, int threads);
 
-		protected ToolResult<R> EarlyExit(string title, string description) => new ToolResult<R> { Title = title, Description = description };
+		protected ToolResult<R, E> EarlyExit(string title, string description, E? error = default) => new ToolResult<R, E> { Title = title, Description = description, Error = error };
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1) => progressFilter?.OnNext(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));

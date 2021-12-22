@@ -40,44 +40,44 @@ namespace LRReader.Shared.Tools
 		public int Width { get; }
 		public float AspectRatioLimit { get; }
 		public int Delay { get; }
+		public bool EarlyExit { get; }
 
-		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0)
+		public DeduplicatorParams(int pixelThreshold = 30, float percentDifference = 0.2f, int width = 8, float aspectRatioLimit = 0.1f, int delay = 0, bool earlyExit = true)
 		{
 			PixelThreshold = pixelThreshold;
 			PercentDifference = percentDifference;
 			Width = width;
 			AspectRatioLimit = aspectRatioLimit;
 			Delay = delay;
+			EarlyExit = earlyExit;
 		}
 	}
 
-	public class DeduplicationTool : Tool<DeduplicatorStatus, DeduplicatorParams, List<ArchiveHit>>
+	public class DeduplicationTool : Tool<DeduplicatorStatus, DeduplicatorParams, List<ArchiveHit>, List<string>>
 	{
 		private readonly SettingsService Settings;
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
-		private readonly IFilesService Files;
 
-		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, IFilesService files) : base(platform)
+		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform) : base(platform)
 		{
 			Settings = settings;
 			Images = images;
 			Archives = archives;
 			Platform = platform;
-			Files = files;
 		}
 
-		protected override async Task<ToolResult<List<ArchiveHit>>> Process(DeduplicatorParams @params, int threads)
+		protected override async Task<ToolResult<List<ArchiveHit>, List<string>>> Process(DeduplicatorParams @params, int threads)
 		{
 			var factory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(threads));
-			earlyExit = false;
 
 			int pixelThreshold = @params.PixelThreshold;
 			float percentDifference = @params.PercentDifference;
 			int width = @params.Width;
 			float aspectRatioLimit = @params.AspectRatioLimit;
 			int delay = @params.Delay;
+			bool earlyExit = @params.EarlyExit;
 
 			var archives = Archives.Archives;
 			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
@@ -100,7 +100,7 @@ namespace LRReader.Shared.Tools
 			{
 				int tries = 5;
 				Image<Rgba32>? image = null;
-				while (tries > 0 && !earlyExit)
+				while (tries > 0)
 				{
 					Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
 					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key)).GetAwaiter().GetResult();
@@ -115,16 +115,21 @@ namespace LRReader.Shared.Tools
 						tries--;
 					}
 				}
-				if (image == null)
-					earlyExit = true;
 				int itemCount = Interlocked.Increment(ref count);
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
-				return new Tuple<string, Image<Rgba32>>(pair.Key, image);
+				return new Tuple<string, Image<Rgba32>?>(pair.Key, image);
 			})))).AsEnumerable().ToList();
-			tmp.RemoveAll(pair => pair.Item2 == null);
 
-			if (earlyExit)
-				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Title"), Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Message"));
+			List<string> removed = new List<string>();
+			tmp.RemoveAll(pair =>
+			{
+				if (pair.Item2 == null)
+					removed.Add(pair.Item1);
+				return pair.Item2 == null;
+			});
+
+			if (removed.Count > 0 && earlyExit)
+				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Title"), Platform.GetLocalizedString("Tools/Deduplicator/InvalidThumb/Message"), removed);
 
 			var decodedThumbnails = tmp.ToDictionary(pair => pair.Item1, pair => pair.Item2);
 			tmp.Clear();
@@ -191,8 +196,8 @@ namespace LRReader.Shared.Tools
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 3, 3);
 			await Task.Delay(1000);
 			UpdateProgress(DeduplicatorStatus.Completed, 0, 0, 0, 0);
-			//await Files.StoreFile(Files.LocalCache + "/Deduplicator-v1.json", JsonConvert.SerializeObject(hits.ToList()));
-			return new ToolResult<List<ArchiveHit>> { Data = hits.ToList(), Ok = true };
+
+			return new ToolResult<List<ArchiveHit>, List<string>> { Data = hits.ToList(), Ok = true, Error = removed.Count > 0 ? removed : null };
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

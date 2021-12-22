@@ -18,12 +18,12 @@ namespace LRReader.Shared.Services
 		private readonly SettingsService Settings;
 		private readonly TabsService Tabs;
 
-		public Dictionary<string, Archive> Archives = new();
-		public List<TagStats> TagStats = new();
-		public List<string> Namespaces = new();
+		public Dictionary<string, Archive> Archives { get; private set; } = new();
+		public List<TagStats> TagStats { get; private set; } = new();
+		public List<string> Namespaces { get; private set; } = new();
 		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
 
-		public string MetadataPath { get; private set; } = "";
+		private string MetadataPath = "";
 
 		private DirectoryInfo metadataDirectory;
 
@@ -113,6 +113,8 @@ namespace LRReader.Shared.Services
 				return archive;
 			return null;
 		}
+
+		public bool HasArchive(string id) => Archives.ContainsKey(id);
 
 		public void OpenTab(Archive archive, bool switchToTab = true, IList<Archive>? next = null)
 		{

@@ -168,6 +168,12 @@
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
     <value>Yes, delete</value>
   </data>
+  <data name="Deduplicator.EarlyExit.Description" xml:space="preserve">
+    <value>Stop when an invalid thumbnail is detected</value>
+  </data>
+  <data name="Deduplicator.EarlyExit.Title" xml:space="preserve">
+    <value>Early stop</value>
+  </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Estimated time:</value>
   </data>
@@ -199,7 +205,8 @@ It takes all thumbnails and for each pair applies a per-pixel difference using t
     <value>Image difference</value>
   </data>
   <data name="Deduplicator.InvalidThumb.Message" xml:space="preserve">
-    <value>Try increasing request delay, reducing worker threads or check that all thumbnails are valid</value>
+    <value>Try increasing request delay, reducing worker threads or check that all thumbnails are valid.
+At last disable Early stop and try again, it will skip archives with missing thumbnails</value>
   </data>
   <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
     <value>An invalid thumbnail was detected</value>
@@ -212,6 +219,12 @@ It takes all thumbnails and for each pair applies a per-pixel difference using t
   </data>
   <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
     <value>Yes, mark as not duplicate</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.Content" xml:space="preserve">
+    <value>Missing thumbnails</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Archives with missing thumbnails</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
     <value>Ensure that all archives are valid</value>
@@ -274,7 +287,7 @@ It takes all thumbnails and for each pair applies a per-pixel difference using t
     <value>Remove</value>
   </data>
   <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
-    <value>Hidden archives</value>
+    <value>Hidden pairs</value>
   </data>
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Deduplicator</value>

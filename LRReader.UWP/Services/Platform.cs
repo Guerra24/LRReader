@@ -12,7 +12,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Symbol = LRReader.Shared.Services.Symbol;
@@ -66,6 +68,8 @@ namespace LRReader.UWP.Services
 
 			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });
+
+			Window.Current.Activated += Current_Activated;
 		}
 
 		public override Version Version
@@ -138,6 +142,8 @@ namespace LRReader.UWP.Services
 		}
 
 		public void SetRoot(Root root) => this.Root = root;
+
+		private void Current_Activated(object sender, WindowActivatedEventArgs e) => Active = e.WindowActivationState != CoreWindowActivationState.Deactivated;
 
 	}
 }
