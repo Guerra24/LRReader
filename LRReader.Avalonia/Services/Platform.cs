@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {
-	class AvaloniaPlatformService : PlatformService
+	public class AvaloniaPlatformService : PlatformService
 	{
 		private readonly TabsService Tabs;
 
@@ -49,12 +49,12 @@ namespace LRReader.Avalonia.Services
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
-		public override void GoToPage(Pages page, PagesTransition transition, object parameter = null)
+		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null)
 		{
 			(Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow.Content = Activator.CreateInstance(GetPage(page));
 		}
 
-		public override Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object content = null)
+		public override Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null)
 		{
 			throw new NotImplementedException();
 		}

@@ -127,6 +127,12 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
     <SuppressXamlWarnings>1501</SuppressXamlWarnings>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Nightly)' == 'true'">
+    <DefineConstants>$(DefineConstants);NIGHTLY</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Sideload)' == 'true'">
+    <DefineConstants>$(DefineConstants);SIDELOAD</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
@@ -150,9 +156,6 @@
     <Compile Include="Services\Dispatcher.cs" />
     <Compile Include="Services\Updates.cs" />
     <Compile Include="Util\IgnoreFocusKeyboardAccelerator.cs" />
-    <Compile Include="ViewModels\FirstRunPageViewModel.cs" />
-    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\Content\Settings\Feedback.xaml.cs">
       <DependentUpon>Feedback.xaml</DependentUpon>
     </Compile>
@@ -695,4 +698,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <Message Text="Nightly Build" Importance="High" Condition="'$(Nightly)' == 'true'" />
+    <Message Text="Sideload Build" Importance="High" Condition="'$(Sideload)' == 'true'" />
+  </Target>
 </Project>

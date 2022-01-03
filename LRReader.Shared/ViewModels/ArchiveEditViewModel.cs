@@ -2,7 +2,9 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+#if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
+#endif
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -99,7 +101,9 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
+#if WINDOWS_UWP
 				Crashes.TrackError(e);
+#endif
 			}
 		}
 
@@ -132,7 +136,9 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
+#if WINDOWS_UWP
 				Crashes.TrackError(e);
+#endif
 			}
 		}
 
@@ -177,7 +183,9 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
+#if WINDOWS_UWP
 				Crashes.TrackError(e);
+#endif
 			}
 		}
 

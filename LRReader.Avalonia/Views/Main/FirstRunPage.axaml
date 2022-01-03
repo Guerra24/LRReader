@@ -2,7 +2,145 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="1500"
+			 d:DesignHeight="1000"
+			 x:CompileBindings="True"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:items="using:LRReader.Shared.Models.Main"
+             xmlns:loc="using:LRReader.Avalonia"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Main.FirstRunPage">
-  Welcome to Avalonia!
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid Grid.ColumnSpan="2">
+      <Image
+          x:Name="Splash" Width="620" Height="300"
+          HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-226,138" Source="/Assets/SplashScreen.scale-200.png" />
+    </Grid>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="16" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <StackPanel Grid.Row="2" HorizontalAlignment="Right">
+        <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Welcome/Text}" HorizontalAlignment="Right" FontSize="28" />
+        <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Continue/Text}" FontSize="16" IsVisible="{Binding SettingsManager.ProfilesAvailable, Mode=OneWay}" />
+        <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Create/Text}" FontSize="16" IsVisible="{Binding !SettingsManager.ProfilesAvailable, Mode=OneWay}" />
+      </StackPanel>
+    </Grid>
+    <!--BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"-->
+    <Border
+        Grid.Column="1" Margin="16,0"
+        BorderThickness="1" />
+    <ScrollViewer x:Name="ScrollViewer" Grid.Column="2" Margin="0,32,0,0" Padding="0,16,16,16">
+      <StackPanel
+          Grid.Column="2"
+          Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}"
+          MaxWidth="500" HorizontalAlignment="Left"
+          VerticalAlignment="Center" Spacing="3">
+        <!--
+        Background="{ThemeResource ExpanderHeaderBackground}"
+            BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+            BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
+            CornerRadius="{ThemeResource ControlCornerRadius}"
+        -->
+        <Button
+            ToolTip.Tip="{loc:LocalizedString Key=/Settings/Profiles/AddProfile/ToolTipService/ToolTip}"
+            Padding="{StaticResource ExpanderHeaderPadding}"
+            HorizontalAlignment="Stretch"
+            Command="{Binding AddProfileCommand}">
+          Add
+          <!--
+          <FontIcon
+              Margin="0,16" HorizontalAlignment="Center"
+              FontFamily="{StaticResource SymbolThemeFontFamily}"
+              Glyph="&#xE710;" />
+          -->
+        </Button>
+        <ItemsRepeater Items="{Binding SettingsManager.Profiles, Mode=OneWay}">
+          <ItemsRepeater.Layout>
+            <StackLayout DisableVirtualization="True" Spacing="3" />
+          </ItemsRepeater.Layout>
+          <ItemsRepeater.ItemTemplate>
+            <DataTemplate x:DataType="items:ServerProfile">
+              <!--
+              Background="{ThemeResource ExpanderHeaderBackground}"
+                  BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
+                  BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
+                  CornerRadius="{ThemeResource ControlCornerRadius}"
+              -->
+              <Button
+                  Padding="{StaticResource ExpanderHeaderPadding}"
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                  Command="{ReflectionBinding SettingsPageInstance.ContinueProfileCommand, Source={StaticResource Locator}}"
+                  CommandParameter="{Binding}">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition MaxWidth="400" />
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Text="PI"/>
+                  <!--
+                  <FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77b;" />
+                  -->
+                  <StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" />
+                    <!--
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    -->
+                    <TextBlock FontSize="12"  Text="{Binding ServerAddress, Mode=OneWay}" />
+                  </StackPanel>
+                  <StackPanel
+                      Grid.Column="2" Margin="0,0,16,0" HorizontalAlignment="Right"
+                      Orientation="Horizontal" Spacing="16">
+                    <Button
+                        Grid.Column="2" Padding="6,8" Background="Transparent"
+                        BorderBrush="Transparent">
+                      <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                          <MenuItem
+                              Header="{loc:LocalizedString Key=/Settings/Profiles/Edit/Text}"
+                              Command="{ReflectionBinding SettingsPageInstance.EditProfileCommand, Source={StaticResource Locator}}"
+                              CommandParameter="{Binding}"
+                              Icon="Edit" />
+                          <MenuItem
+                              Header="{loc:LocalizedString Key=/Settings/Profiles/Delete/Text}"
+                              Command="{ReflectionBinding SettingsPageInstance.RemoveProfileCommand, Source={StaticResource Locator}}"
+                              CommandParameter="{Binding}"
+                              Icon="Delete" />
+                        </MenuFlyout>
+                      </Button.Flyout>
+                      Opt
+                      <!--
+                      <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
+                        <FontIcon.RenderTransform>
+                          <RotateTransform Angle="90" CenterX="8" CenterY="8" />
+                        </FontIcon.RenderTransform>
+                      </FontIcon>
+                      -->
+                    </Button>
+                    <!--
+                    <FontIcon
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="14" Glyph="&#xE76C;" />
+                    -->
+                    <TextBlock Text="RA"/>
+                  </StackPanel>
+                </Grid>
+              </Button>
+            </DataTemplate>
+          </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
 </UserControl>

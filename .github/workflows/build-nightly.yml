@@ -6,7 +6,7 @@ on:
 jobs:
   buildAppxBundle:
     name: Build AppInstaller
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         Invoke-Expression "./Util/Version.ps1"
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:DefineConstants="TRACE%3BNETFX_CORE%3BWINDOWS_UWP%3BNETSTANDARD2_0%3BNIGHTLY" /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Nightly=true /p:Configuration=Release /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
@@ -52,7 +52,7 @@ jobs:
         path: LRReader.UWP/AppPackages
   buildInstaller:
     name: Build Installer
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - name: Checkout
       uses: actions/checkout@v2

@@ -1,7 +1,9 @@
 ﻿using Caching;
 using KeyedSemaphores;
 using LRReader.Shared.Providers;
+#if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
+#endif
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
@@ -57,7 +59,9 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception e)
 				{
+#if WINDOWS_UWP
 					Crashes.TrackError(e);
+#endif
 				}
 			});
 		}

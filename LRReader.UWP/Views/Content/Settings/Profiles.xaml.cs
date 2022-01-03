@@ -1,4 +1,4 @@
-﻿using LRReader.UWP.ViewModels;
+﻿using LRReader.Shared.ViewModels;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings

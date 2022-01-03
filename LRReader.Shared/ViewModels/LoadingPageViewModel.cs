@@ -146,11 +146,11 @@ namespace LRReader.Shared.ViewModels
 				return;
 			}
 
-			if (!await Api.Validate())
+			/*if (!await Api.Validate())
 			{
 				await Reload(0.5);
 				return;
-			}
+			}*/
 
 			Api.ServerInfo = serverInfo;
 			await Archives.ReloadArchives();

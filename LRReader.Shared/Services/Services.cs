@@ -1,13 +1,13 @@
-﻿using LRReader.Shared.Tools;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
+using LRReader.Shared.Tools;
 using LRReader.Shared.ViewModels;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Services
 {
@@ -46,7 +46,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<BookmarksTabViewModel>();
 			collection.AddSingleton<CategoriesViewModel>();
 			collection.AddSingleton<LoadingPageViewModel>();
-
+			collection.AddSingleton<SettingsPageViewModel>();
 			collection.AddTransient<SearchResultsViewModel>();
 			collection.AddTransient<ArchiveEditViewModel>();
 			collection.AddTransient<ArchivePageViewModel>();

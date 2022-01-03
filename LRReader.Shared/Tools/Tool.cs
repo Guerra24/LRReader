@@ -1,5 +1,7 @@
 ﻿using LRReader.Shared.Services;
+#if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -74,7 +76,9 @@ namespace LRReader.Shared.Tools
 			}
 			catch (Exception e)
 			{
+#if WINDOWS_UWP
 				Crashes.TrackError(e);
+#endif
 			}
 			GC.Collect();
 			GC.WaitForPendingFinalizers();

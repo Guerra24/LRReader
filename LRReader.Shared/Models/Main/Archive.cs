@@ -1,5 +1,7 @@
 ﻿using LRReader.Shared.Internal;
+#if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
+#endif
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -56,7 +58,9 @@ namespace LRReader.Shared.Models.Main
 			{
 				// Drop original collection, can cause more COMExceptions
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
+#if WINDOWS_UWP
 				Crashes.TrackError(e);
+#endif
 			}
 			var tmp = new List<ArchiveTagsGroup>();
 			foreach (var s in separatedTags)
@@ -90,7 +94,9 @@ namespace LRReader.Shared.Models.Main
 			catch (Exception e)
 			{
 				// Handle damaged collection just in case
+#if WINDOWS_UWP
 				Crashes.TrackError(e);
+#endif
 			}
 		}
 

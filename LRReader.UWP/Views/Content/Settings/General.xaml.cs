@@ -1,4 +1,4 @@
-﻿using LRReader.UWP.ViewModels;
+﻿using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.Resources;

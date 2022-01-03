@@ -2,7 +2,6 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;

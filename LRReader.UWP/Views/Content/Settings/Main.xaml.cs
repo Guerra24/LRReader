@@ -1,10 +1,10 @@
-﻿using LRReader.Shared.Extensions;
+﻿using System;
+using System.Linq;
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
+using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
-using System;
-using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

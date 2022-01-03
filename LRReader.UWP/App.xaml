@@ -5,7 +5,7 @@
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 	<Application.Resources>
 		<ResourceDictionary>
-			<ViewModelLocator xmlns="using:LRReader.UWP.ViewModels" x:Key="Locator" />
+			<ViewModelLocator xmlns="using:LRReader.Shared.ViewModels" x:Key="Locator" />
 			<ResourceDictionary.MergedDictionaries>
 				<controls:XamlControlsResources>
 					<controls:XamlControlsResources.MergedDictionaries>

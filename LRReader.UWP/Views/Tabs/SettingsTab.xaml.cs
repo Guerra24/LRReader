@@ -1,8 +1,8 @@
-﻿using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
+﻿using System;
+using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs

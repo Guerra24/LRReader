@@ -3,7 +3,8 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:aura="using:Aura.UI.Controls"
-			 xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
+			 xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:loc="using:LRReader.Avalonia"
 			 mc:Ignorable="d"
 			 d:DesignWidth="1500"
 			 d:DesignHeight="1000"
@@ -12,38 +13,48 @@
 			 x:Class="LRReader.Avalonia.Views.Main.LoadingPage"
 			 AttachedToVisualTree="LoadingPage_AttachedToVisualTree"
 			 DataContext="{ReflectionBinding LoadingPageInstance, Source={StaticResource Locator}}">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition/>
-			<RowDefinition/>
-			<RowDefinition/>
-		</Grid.RowDefinitions>
-		<Image Grid.Row="1"
-			   Width="620"
-			   Height="300"
-			   HorizontalAlignment="Center"
-			   VerticalAlignment="Center"
-			   Source="/Assets/SplashScreen.scale-200.png"/>
-		<Grid Grid.Row="2">
-			<aura:ProgressRing
-				HorizontalAlignment="Center"
-				VerticalAlignment="Top"
-				IsIndeterminate="True"
-				IsVisible="{Binding Active, Mode=OneWay}"/>
-			<ProgressBar Width="200"
-						 Margin="0,18,0,0"
-						 Value="{Binding Progress, Mode=OneWay}"
-						 IsVisible="{Binding Updating, Mode=OneWay}"
-						 VerticalAlignment="Top"/>
-			<StackPanel VerticalAlignment="Top">
-				<TextBlock HorizontalAlignment="Center"
-						   FontSize="18"
-						   Text="{Binding Status, Mode=OneWay}"/>
-				<TextBlock Margin="0,5,0,0"
-						   HorizontalAlignment="Center"
-						   FontSize="17"
-						   Text="{Binding StatusSub, Mode=OneWay}"/>
-			</StackPanel>
-		</Grid>
-	</Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Image Grid.Row="1"
+           Width="620"
+           Height="300"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           Source="/Assets/SplashScreen.scale-200.png"/>
+    <Grid Grid.Row="2">
+      <aura:ProgressRing
+          HorizontalAlignment="Center"
+          VerticalAlignment="Top"
+          IsIndeterminate="True"
+          IsVisible="{Binding Active, Mode=OneWay}"/>
+      <ProgressBar Width="200"
+                   Margin="0,18,0,0"
+                   Value="{Binding Progress, Mode=OneWay}"
+                   IsVisible="{Binding Updating, Mode=OneWay}"
+                   VerticalAlignment="Top"/>
+      <StackPanel VerticalAlignment="Top">
+        <TextBlock HorizontalAlignment="Center"
+                   FontSize="18"
+                   Text="{Binding Status, Mode=OneWay}"/>
+        <TextBlock Margin="0,5,0,0"
+                   HorizontalAlignment="Center"
+                   FontSize="17"
+                   Text="{Binding StatusSub, Mode=OneWay}"/>
+        <Grid HorizontalAlignment="Center" IsVisible="{Binding Retry, Mode=OneWay}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="150" />
+          </Grid.ColumnDefinitions>
+          <Button Content="{loc:LocalizedString Key=/Pages/LoadingPage/ChangeProfile/Content}" HorizontalAlignment="Center" Command="{Binding ChangeCommand}" />
+          <Button
+              Content="{loc:LocalizedString Key=/Pages/LoadingPage/Retry/Content}" Grid.Column="1" HorizontalAlignment="Center"
+              Command="{Binding ConnectCommand}" />
+        </Grid>
+      </StackPanel>
+    </Grid>
+  </Grid>
 </UserControl>

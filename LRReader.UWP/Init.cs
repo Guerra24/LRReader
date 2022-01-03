@@ -1,11 +1,10 @@
-﻿using LRReader.Shared.Services;
+﻿using System;
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
-using LRReader.UWP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Web.WebView2.Core;
-using System;
 
 namespace LRReader.UWP
 {
@@ -29,9 +28,6 @@ namespace LRReader.UWP
 #endif
 #endif
 				collection.AddSingleton<ImageProcessingService, UWPImageProcessingService>();
-
-				collection.AddSingleton<SettingsPageViewModel>();
-				collection.AddSingleton<FirstRunPageViewModel>();
 			});
 		}
 

@@ -1,7 +1,9 @@
 ﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+#if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
+#endif
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
@@ -47,7 +49,9 @@ namespace LRReader.Shared.Services
 
 		public async Task<bool> Validate()
 		{
+#if WINDOWS_UWP
 			await Crashes.SetEnabledAsync(false); // Disable to prevent false-positive errors
+#endif
 
 			var archives = await ArchivesProvider.Validate();
 			var categories = await CategoriesProvider.Validate();
@@ -55,14 +59,18 @@ namespace LRReader.Shared.Services
 
 			if (archives && categories && database)
 			{
+#if WINDOWS_UWP
 				await Crashes.SetEnabledAsync(Settings.CrashReporting);
+#endif
 				Settings.Profile.AcceptedDisclaimer = false;
 				Settings.SaveProfiles();
 				return true;
 			}
 			if (Settings.Profile.AcceptedDisclaimer)
 			{
+#if WINDOWS_UWP
 				await Crashes.SetEnabledAsync(false);
+#endif
 				return true;
 			}
 
@@ -70,7 +78,11 @@ namespace LRReader.Shared.Services
 
 			Settings.Profile.AcceptedDisclaimer = result;
 			if (result)
+			{
+#if WINDOWS_UWP
 				await Crashes.SetEnabledAsync(false);
+#endif
+			}
 			Settings.SaveProfiles();
 			return result;
 		}

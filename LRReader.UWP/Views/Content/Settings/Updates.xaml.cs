@@ -1,7 +1,7 @@
-﻿using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
+﻿using System;
+using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Controls;
-using System;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings

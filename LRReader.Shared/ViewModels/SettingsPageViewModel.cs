@@ -1,11 +1,9 @@
-﻿#nullable enable
-using LRReader.Shared.Extensions;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using LRReader.UWP.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -13,9 +11,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 
-namespace LRReader.UWP.ViewModels
+namespace LRReader.Shared.ViewModels
 {
 	public partial class SettingsPageViewModel : ObservableObject
 	{
@@ -25,11 +22,9 @@ namespace LRReader.UWP.ViewModels
 		private readonly ApiService Api;
 		private readonly TabsService Tabs;
 
-		private ResourceLoader lang = ResourceLoader.GetForCurrentView("Settings");
-
 		public readonly string LRReader = "LRReader";
 
-		public SettingsService SettingsManager;
+		public SettingsService SettingsManager { get; private set; }
 		public Version Version => Platform.Version;
 		public Version MinVersion => Updates.MIN_VERSION;
 		public Version MaxVersion => Updates.MAX_VERSION;
@@ -97,8 +92,8 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task CheckForPackages()
 		{
-			SetProperty(ref AvifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
-			SetProperty(ref HeifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
+			//SetProperty(ref AvifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
+			//SetProperty(ref HeifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
 		}
 
 
@@ -109,8 +104,8 @@ namespace LRReader.UWP.ViewModels
 
 		public async Task UpdateShinobuStatus()
 		{
-			var worker = lang.GetString("Server/WorkerStatus/Text");
-			var status = lang.GetString("Server/WorkerUnknown/Text");
+			var worker = Platform.GetLocalizedString("Settings/Server/WorkerStatus/Text");
+			var status = Platform.GetLocalizedString("Settings/Server/WorkerUnknown/Text");
 			var pid = "";
 			if (SettingsManager.Profile.HasApiKey)
 			{
@@ -118,9 +113,9 @@ namespace LRReader.UWP.ViewModels
 				if (result != null && result.pid != 0)
 				{
 					if (result.is_alive)
-						status = lang.GetString("Server/WorkerRunning/Text");
+						status = Platform.GetLocalizedString("Settings/Server/WorkerRunning/Text");
 					else
-						status = lang.GetString("Server/WorkerStopped/Text");
+						status = Platform.GetLocalizedString("Settings/Server/WorkerStopped/Text");
 					pid = $"PID: {result.pid}";
 				}
 			}

@@ -1,8 +1,8 @@
-﻿using LRReader.UWP.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Toolkit.Uwp.UI.Helpers;
-using System;
-using System.Collections.Generic;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;

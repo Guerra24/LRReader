@@ -1,9 +1,7 @@
-﻿using LRReader.Shared.Services;
-using LRReader.UWP.ViewModels;
-using LRReader.UWP.Views.Controls;
+﻿using System;
+using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using Microsoft.Toolkit.Uwp.UI.Helpers;
-using System;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;

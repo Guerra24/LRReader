@@ -1,7 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using RestSharp;

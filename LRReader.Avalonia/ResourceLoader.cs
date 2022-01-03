@@ -1,13 +1,10 @@
-﻿using Avalonia;
-using Avalonia.Platform;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Resources;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
+using Avalonia.Markup.Xaml;
 
 namespace LRReader.Avalonia
 {
@@ -18,11 +15,11 @@ namespace LRReader.Avalonia
 
 		public ResourceLoader(string file)
 		{
-			var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-			Uri uri = new Uri($"avares://LRReader.Avalonia/Strings/en/{file}.resw");
-			if (assets.Exists(uri))
+			var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var langFile = $"{path}/Strings/en/{file}.resw";
+			if (File.Exists(langFile))
 			{
-				var xml = new XmlTextReader(assets.Open(uri));
+				var xml = new XmlTextReader(langFile);
 				while (xml.Read())
 				{
 					switch (xml.NodeType)
@@ -33,7 +30,7 @@ namespace LRReader.Avalonia
 								var key = xml.GetAttribute("name");
 								xml.Read();
 								xml.Read();
-								Lang.Add(key, xml.ReadString());
+								Lang.Add(key.Replace('.', '/'), xml.ReadString());
 							}
 							break;
 					}
@@ -43,8 +40,7 @@ namespace LRReader.Avalonia
 
 		public string GetString(string key)
 		{
-			string value;
-			if (!Lang.TryGetValue(key, out value))
+			if (!Lang.TryGetValue(key, out var value))
 				return key;
 			return value;
 		}
@@ -53,8 +49,7 @@ namespace LRReader.Avalonia
 
 		public static ResourceLoader GetForCurrentView(string file)
 		{
-			ResourceLoader loader;
-			if (!Resources.TryGetValue(file, out loader))
+			if (!Resources.TryGetValue(file, out var loader))
 			{
 				loader = new ResourceLoader(file);
 				Resources.Add(file, loader);
@@ -62,5 +57,16 @@ namespace LRReader.Avalonia
 			return loader;
 		}
 
+	}
+
+	public sealed class LocalizedString : MarkupExtension
+	{
+		public string Key { get; set; }
+
+		public override object ProvideValue(IServiceProvider serviceProvider)
+		{
+			var split = Regex.Split(Key, @"\/(.*?)\/(.*)");
+			return ResourceLoader.GetForCurrentView(split[1]).GetString(split[2]);
+		}
 	}
 }
