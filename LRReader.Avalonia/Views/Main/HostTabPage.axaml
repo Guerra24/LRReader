@@ -14,48 +14,48 @@
 			 DetachedFromVisualTree="HostTabPage_DetachedToVisualTree"
 			 DataContext="{ReflectionBinding HostTabPageInstance, Source={StaticResource Locator}}">
 
-	<Grid>
-		<aura:AuraTabView
-			AdderButtonIsVisible="False"
-			Items="{Binding TabItems, Mode=OneTime}"
-			Background="Black"
-			SecondaryBackground="#171717"
-			SelectedItem="{Binding CurrentTab, Mode=TwoWay}">
-			<aura:AuraTabView.Footer>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<Grid.Styles>
-						<Style Selector="Button">
-							<Setter Property="Width"
-									Value="34"/>
-							<Setter Property="Height"
-									Value="32" />
-						</Style>
-					</Grid.Styles>
-					<StackPanel Orientation="Horizontal">
-						<Button Content="bkm"/>
-						<Button Content="cte"/>
-						<Button Content="src"/>
-					</StackPanel>
-					<Grid Grid.Column="1"
-						  Background="Transparent"/>
-					<Border
-						Grid.Column="2"
-						Width="1"
-						Margin="3,8,3,8"
-						Background="{DynamicResource TextControlForeground}" />
-					<StackPanel Grid.Column="3"
-								Orientation="Horizontal">
-						<Button Content="full"/>
-						<Button Content="stg"/>
-					</StackPanel>
-				</Grid>
-			</aura:AuraTabView.Footer>
-		</aura:AuraTabView>
-	</Grid>
+  <Grid>
+    <aura:AuraTabView
+        AdderButtonIsVisible="False"
+        Items="{Binding TabItems, Mode=OneTime}"
+        Background="Black"
+        SecondaryBackground="#171717"
+        SelectedItem="{Binding CurrentTab, Mode=TwoWay}">
+      <aura:AuraTabView.Footer>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Grid.Styles>
+            <Style Selector="Button">
+              <Setter Property="Width"
+                      Value="34"/>
+              <Setter Property="Height"
+                      Value="32" />
+            </Style>
+          </Grid.Styles>
+          <StackPanel Orientation="Horizontal">
+            <Button Content="bkm"/>
+            <Button Content="cte"/>
+            <Button Content="src"/>
+          </StackPanel>
+          <Grid Grid.Column="1"
+                Background="Transparent"/>
+          <Border
+              Grid.Column="2"
+              Width="1"
+              Margin="3,8,3,8"
+              Background="{DynamicResource TextControlForeground}" />
+          <StackPanel Grid.Column="3"
+                      Orientation="Horizontal">
+            <Button Content="full"/>
+            <Button Content="stg"/>
+          </StackPanel>
+        </Grid>
+      </aura:AuraTabView.Footer>
+    </aura:AuraTabView>
+  </Grid>
 </UserControl>
