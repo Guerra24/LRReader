@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
@@ -43,9 +44,10 @@ namespace LRReader.Avalonia.Services
 			File.WriteAllText(LocalDataFile, JsonConvert.SerializeObject(localSettings));
 		}
 
-		public T GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
+		public T? GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
 
-		public T GetObjectLocal<T>(string key, T def)
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectLocal<T>(string key, T? def)
 		{
 			if (!localSettings.ContainsKey(key))
 				return def;
@@ -53,9 +55,10 @@ namespace LRReader.Avalonia.Services
 			return val != null ? (T)Convert.ChangeType(val, typeof(T), CultureInfo.InvariantCulture) : def;
 		}
 
-		public T GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
+		public T? GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
 
-		public T GetObjectRoamed<T>(string key, T def)
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectRoamed<T>(string key, T? def)
 		{
 			if (!roamedSettings.ContainsKey(key))
 				return def;

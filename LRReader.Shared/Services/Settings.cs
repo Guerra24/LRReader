@@ -266,7 +266,7 @@ namespace LRReader.Shared.Services
 				{
 					try
 					{
-						await Files.StoreFileSafe(Files.Local + "\\Profiles.json", JsonConvert.SerializeObject(Profiles));
+						await Files.StoreFileSafe(Path.Combine(Files.Local, "Profiles.json"), JsonConvert.SerializeObject(Profiles));
 					}
 					catch (Exception e)
 					{
