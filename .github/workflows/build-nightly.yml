@@ -4,8 +4,8 @@ on:
     branches:
     - develop
 jobs:
-  buildAppxBundle:
-    name: Build AppInstaller
+  buildAvaloniaLinuxX64:
+    name: Build Avalonia Linux X64
     runs-on: windows-2022
     steps:
     - name: Checkout
@@ -14,7 +14,61 @@ jobs:
         fetch-depth: 0
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.0.2
-    - name: Build AppInstaller
+    - name: Build
+      run: |
+        MSBuild LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -r -v:minimal /p:DeployOnBuild=true /p:PublishProfile=linux-x64
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: LRReader.Avalonia.Linux-X64
+        path: LRReader.Avalonia/publish/linux-x64
+  buildAvaloniaMacOSX64:
+    name: Build Avalonia macOS X64
+    runs-on: windows-2022
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build
+      run: |
+        MSBuild LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -r -v:minimal /p:DeployOnBuild=true /p:PublishProfile=macos-x64
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: LRReader.Avalonia.macOS-X64
+        path: LRReader.Avalonia/publish/osx-x64
+  buildAvaloniaWinX64:
+    name: Build Avalonia Windows X64
+    runs-on: windows-2022
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build
+      run: |
+        MSBuild LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -r -v:minimal /p:DeployOnBuild=true /p:PublishProfile=win-x64
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: LRReader.Avalonia.Win-X64
+        path: LRReader.Avalonia/publish/win-x64
+  buildUWP:
+    name: Build UWP
+    runs-on: windows-2022
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
@@ -48,17 +102,17 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: LRReader
+        name: LRReader.UWP
         path: LRReader.UWP/AppPackages
-  buildInstaller:
-    name: Build Installer
+  buildUWPInstaller:
+    name: Build UWP Installer
     runs-on: windows-2022
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.0.2
-    - name: Installer
+    - name: Build
       env:
         APP_VERSION: Nightly
       run: |
@@ -67,11 +121,11 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: Installer
+        name: LRReader.UWP.Installer
         path: LRReader.UWP.Installer/bin/Release/LRReader.exe
-  purgeCache:
-    name: Purge cache
-    needs: buildAppxBundle
+  purgeUWPCache:
+    name: Purge UWP Nightly cache
+    needs: buildUWP
     runs-on: ubuntu-20.04
     steps:
       - name: Purge cache
