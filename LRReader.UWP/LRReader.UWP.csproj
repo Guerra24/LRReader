@@ -27,6 +27,7 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxLogTelemetryFromSideloadingScript>False</AppxLogTelemetryFromSideloadingScript>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
     <Win32Resource>Resources\MiddleClickScrolling-CursorType.res</Win32Resource>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
