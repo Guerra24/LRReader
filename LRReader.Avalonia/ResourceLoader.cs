@@ -15,7 +15,7 @@ namespace LRReader.Avalonia
 
 		public ResourceLoader(string file)
 		{
-			var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var path = AppContext.BaseDirectory;
 			var langFile = $"{path}/Strings/en/{file}.resw";
 			if (File.Exists(langFile))
 			{

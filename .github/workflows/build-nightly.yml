@@ -16,7 +16,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
       run: |
-        MSBuild LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -r -v:minimal /p:DeployOnBuild=true /p:PublishProfile=linux-x64
+        dotnet publish LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=linux-x64
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -34,7 +34,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
       run: |
-        MSBuild LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -r -v:minimal /p:DeployOnBuild=true /p:PublishProfile=macos-x64
+        dotnet publish LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=macos-x64
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -52,7 +52,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build
       run: |
-        MSBuild LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -r -v:minimal /p:DeployOnBuild=true /p:PublishProfile=win-x64
+        dotnet publish LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=win-x64
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
