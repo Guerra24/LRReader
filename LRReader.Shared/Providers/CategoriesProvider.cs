@@ -74,7 +74,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/categories/{id}", Method.Put);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 			rq.AddQueryParameter("name", name);
 			rq.AddQueryParameter("search", search);
 			rq.AddQueryParameter("pinned", (pinned ? 1 : 0).ToString());
@@ -89,7 +89,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/categories/{id}", Method.Delete);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteAsync(rq);
 
@@ -101,8 +101,8 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/categories/{id}/{archive}", Method.Put);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
-			rq.AddParameter("archive", archive, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
+			rq.AddUrlSegment("archive", archive);
 
 			var r = await client.ExecuteAsync(rq);
 
@@ -114,8 +114,8 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/categories/{id}/{archive}", Method.Delete);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
-			rq.AddParameter("archive", archive, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
+			rq.AddUrlSegment("archive", archive);
 
 			var r = await client.ExecuteAsync(rq);
 
@@ -127,7 +127,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/categories/{id}");
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteGetAsync(rq);
 

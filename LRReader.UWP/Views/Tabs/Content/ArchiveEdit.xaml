@@ -8,6 +8,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:viewmodels="using:LRReader.Shared.ViewModels"
 	DataContext="{Binding ArchiveEditInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
@@ -16,6 +17,7 @@
 		<internal:StringToColorConverter x:Key="StringToColorConverter" />
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:DisabledTextConverter x:Key="DisabledTextConverter" />
+		<internal:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
 		<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
 		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
 			<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
@@ -242,6 +244,23 @@
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,10" VerticalScrollBarVisibility="Auto">
 		<Grid Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<StackPanel Spacing="10">
+				<StackPanel>
+					<TextBlock x:Uid="/Tabs/ArchiveEdit/ThumbnailTitle" Margin="{ThemeResource TextBoxTopHeaderMargin}" HorizontalAlignment="Left" />
+					<Button
+						x:Uid="/Tabs/ArchiveEdit/ChangeThumbnail" Padding="0" HorizontalAlignment="Center"
+						Command="{x:Bind Data.ChangeThumbnailCommand}"
+						IsEnabled="{x:Bind services:Service.Api.ControlFlags.V084}">
+						<Grid CornerRadius="{ThemeResource ControlCornerRadius}">
+							<Image x:Name="Thumbnail" Height="275" Source="{x:Bind Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
+							<Border Background="{ThemeResource ThumbnailSmoke}" />
+							<FontIcon
+								Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+								FontFamily="{StaticResource SymbolThemeFontFamily}"
+								FontSize="84" Glyph="&#xE8E6;"
+								Visibility="{x:Bind services:Service.Api.ControlFlags.V084}" />
+						</Grid>
+					</Button>
+				</StackPanel>
 				<TextBox x:Uid="/Tabs/ArchiveEdit/ID" IsReadOnly="True" Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
 				<TextBox
 					x:Uid="/Tabs/ArchiveEdit/Title"

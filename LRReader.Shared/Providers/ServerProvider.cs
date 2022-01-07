@@ -41,7 +41,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/plugins/{type}");
-			rq.AddParameter("type", type.ToString().ToLower(), ParameterType.UrlSegment);
+			rq.AddUrlSegment("type", type.ToString().ToLower());
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -67,11 +67,31 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/minion/{job}");
-			rq.AddParameter("job", job, ParameterType.UrlSegment);
+			rq.AddUrlSegment("job", job);
 
 			var r = await client.ExecuteGetAsync(rq);
 
 			return await r.GetResult<MinionStatus>();
+		}
+
+	}
+
+	public static class MinionExtentions
+	{
+
+		public static async Task<bool> WaitForMinionJob<T>(this T minionJob) where T : MinionJob
+		{
+			while (true)
+			{
+				var job = await ServerProvider.GetMinionStatus(minionJob.job);
+				if (job == null || job.state == null)
+					return false;
+				if (job.state.Equals("finished"))
+					return true;
+				if (job.state.Equals("failed"))
+					return false;
+				await Task.Delay(100);
+			}
 		}
 	}
 }

@@ -20,12 +20,19 @@ namespace LRReader.UWP.Services
 			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
 		}
 
-		public override async Task<object?> ByteToBitmap(byte[] bytes, object? image = null, bool transcode = false)
+		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? img = default)
 		{
 			if (bytes == null)
 				return null;
 			if (bytes.Length == 0)
 				return null;
+
+			BitmapImage image = img as BitmapImage ?? new BitmapImage();
+			image.DecodePixelType = DecodePixelType.Logical;
+			if (decodeWidth > 0)
+				image.DecodePixelWidth = decodeWidth;
+			if (decodeHeight > 0)
+				image.DecodePixelHeight = decodeHeight;
 			using (var stream = new InMemoryRandomAccessStream())
 			{
 				await stream.WriteAsync(bytes.AsBuffer());
@@ -46,9 +53,7 @@ namespace LRReader.UWP.Services
 								var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
 								encoder.SetSoftwareBitmap(softwareBitmap);
 								await encoder.FlushAsync();
-								if (image == null)
-									image = new BitmapImage();
-								(image as BitmapImage)?.SetSource(converted);
+								image.SetSource(converted);
 							}
 						}
 					}
@@ -63,8 +68,6 @@ namespace LRReader.UWP.Services
 				}
 				else
 				{
-					if (image == null)
-						image = new BitmapImage();
 					try
 					{
 						await (image as BitmapImage)?.SetSourceAsync(stream);
@@ -78,7 +81,7 @@ namespace LRReader.UWP.Services
 			return image;
 		}
 
-		public override async Task<Size> GetImageSize(byte[] bytes)
+		public override async Task<Size> GetImageSize(byte[]? bytes)
 		{
 			if (bytes == null)
 				return Size.Empty;

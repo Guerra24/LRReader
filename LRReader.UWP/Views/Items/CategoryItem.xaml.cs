@@ -47,10 +47,7 @@ namespace LRReader.UWP.Views.Items
 				var first = ViewModel.Category.archives.FirstOrDefault();
 				if (first != null)
 				{
-					var image = new BitmapImage();
-					image.DecodePixelType = DecodePixelType.Logical;
-					image.DecodePixelHeight = 275;
-					image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(first), image) as BitmapImage;
+					var image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(first), decodeHeight: 275) as BitmapImage;
 					if (image == null)
 						ViewModel.MissingImage = true;
 					else

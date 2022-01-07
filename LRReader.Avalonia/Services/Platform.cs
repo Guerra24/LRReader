@@ -27,20 +27,22 @@ namespace LRReader.Avalonia.Services
 			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
 		}
 
-		public override Version Version => throw new NotImplementedException();
+		public override Version Version => new Version(1, 7, 5, 0);
 
-		public override bool AnimationsEnabled => throw new NotImplementedException();
+		public override bool AnimationsEnabled => true;
 
-		public override uint HoverTime => throw new NotImplementedException();
+		public override uint HoverTime => 500;
 
 		public override void ChangeTheme(AppTheme theme)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override void CopyToClipboard(string text)
+		public override async void CopyToClipboard(string text)
 		{
-			throw new NotImplementedException();
+			var clipboard = Application.Current?.Clipboard;
+			if (clipboard != null)
+				await clipboard.SetTextAsync(text);
 		}
 
 		public override string GetLocalizedString(string key)

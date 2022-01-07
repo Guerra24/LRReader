@@ -94,6 +94,9 @@ namespace LRReader.UWP
 
 		private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
+			// Let it go down otherwise we get stuck and that's worse
+			if (e.Exception is LayoutCycleException)
+				return;
 			e.Handled = true;
 			Crashes.TrackError(e.Exception);
 			// TODO: Do better

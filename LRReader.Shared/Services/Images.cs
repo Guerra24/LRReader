@@ -1,5 +1,6 @@
 ﻿using Caching;
 using KeyedSemaphores;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
@@ -38,8 +39,7 @@ namespace LRReader.Shared.Services
 			ImageProcessing = imageProcessing;
 			imagesCache = new LRUCache<string, byte[]>(500, 50);
 			imagesSizeCache = new LRUCache<string, Size>(10000, 100);
-			thumbnailsCache = new LRUCache<string, byte[]>(1000, 50);
-			Directory.CreateDirectory(Files.LocalCache + "/Images");
+			thumbnailsCache = new LRUCache<string, byte[]>(5000, 100);
 			thumbnailCacheDirectory = Directory.CreateDirectory(Files.LocalCache + "/Images/Thumbnails");
 		}
 
@@ -52,10 +52,10 @@ namespace LRReader.Shared.Services
 					imagesCache.Clear();
 					imagesSizeCache.Clear();
 					thumbnailsCache.Clear();
-					var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-					files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14)).ToList().ForEach(file => file.Delete());
-					var directories = thumbnailCacheDirectory.GetDirectories();
-					directories.Where(dir => dir.GetFiles().Length == 0).ToList().ForEach(dir => dir.Delete());
+					//var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
+					//files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14)).ToList().ForEach(file => file.Delete());
+					//var directories = thumbnailCacheDirectory.GetDirectories();
+					//directories.Where(dir => dir.GetFiles().Length == 0).ToList().ForEach(dir => dir.Delete());
 				}
 				catch (Exception e)
 				{
@@ -111,23 +111,23 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		public async Task<byte[]?> GetThumbnailCached(string id, bool forced = false, bool ignoreCache = false)
+		public async Task<byte[]?> GetThumbnailCached(string id, int page = 0, bool forced = false, bool ignoreCache = false)
 		{
 			if (string.IsNullOrEmpty(id))
 				return null;
+			var thumbKey = $"{id}.{page}";
 			if (ignoreCache)
-				return await ArchivesProvider.GetThumbnail(id);
-			using (var key = await KeyedSemaphore.LockAsync(id))
+				return await GetThumbnailRaw(id, page);
+			using (var key = await KeyedSemaphore.LockAsync(thumbKey))
 			{
 				byte[]? data;
-				if (thumbnailsCache.TryGet(id, out data) && !forced)
+				if (thumbnailsCache.TryGet(thumbKey, out data) && !forced)
 				{
 					return data;
 				}
 				else
 				{
-					var directory = $"{thumbnailCacheDirectory.FullName}/{id.Substring(0, 2)}/";
-					var path = $"{directory}{id}.cache";
+					var path = $"{thumbnailCacheDirectory.FullName}/{id.Substring(0, 2)}/{id}/{page}.cache";
 					if (File.Exists(path) && !forced)
 					{
 						data = await Files.GetFileBytes(path);
@@ -136,29 +136,41 @@ namespace LRReader.Shared.Services
 								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 								{
 									File.Delete(path);
-									data = await ArchivesProvider.GetThumbnail(id);
+									data = await GetThumbnailRaw(id, page);
 									if (data == null)
 										return null;
-									Directory.CreateDirectory(directory);
+									Directory.CreateDirectory(Path.GetDirectoryName(path));
 									await Files.StoreFile(path, data);
 								}
 					}
 					else
 					{
-						data = await ArchivesProvider.GetThumbnail(id);
+						data = await GetThumbnailRaw(id, page);
 						if (data == null)
 							return null;
 						if (data.Length == 55876)
 							using (var md5 = System.Security.Cryptography.MD5.Create())
 								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 									return null;
-						Directory.CreateDirectory(directory);
+						Directory.CreateDirectory(Path.GetDirectoryName(path));
 						await Files.StoreFile(path, data);
 					}
-					thumbnailsCache.AddReplace(id, data);
+					thumbnailsCache.AddReplace(thumbKey, data);
 					return data;
 				}
 			}
+		}
+
+		private async Task<byte[]?> GetThumbnailRaw(string id, int page = 0)
+		{
+			var data = await ArchivesProvider.GetThumbnail(id, true, page);
+			if (data == null)
+				return null;
+			if (data.Thumbnail != null)
+				return data.Thumbnail;
+			if (data.Job != null && await data.Job.WaitForMinionJob())
+				return await GetThumbnailRaw(id, page);
+			return null;
 		}
 
 		public Task DeleteThumbnailCache()

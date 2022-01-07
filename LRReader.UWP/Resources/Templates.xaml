@@ -75,11 +75,7 @@
 							<Grid Grid.RowSpan="2" Visibility="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 							</Grid>
-							<Rectangle Grid.RowSpan="2">
-								<Rectangle.Fill>
-									<SolidColorBrush Opacity="0.5" Color="{ThemeResource BrushDeepBackgroundColor}" />
-								</Rectangle.Fill>
-							</Rectangle>
+							<Rectangle Grid.RowSpan="2" Fill="{ThemeResource ThumbnailSmoke}"/>
 							<TextBlock
 								x:Name="Title" Padding="5,0,5,0" HorizontalAlignment="Center"
 								VerticalAlignment="Center" FontSize="16" FontWeight="Medium"
@@ -284,11 +280,7 @@
 								<Grid.Background>
 									<media:BackdropBlurBrush Amount="5.0" />
 								</Grid.Background>
-								<Rectangle>
-									<Rectangle.Fill>
-										<SolidColorBrush Opacity="0.4" Color="{ThemeResource BrushDeepBackgroundColor}" />
-									</Rectangle.Fill>
-								</Rectangle>
+								<Rectangle Fill="{ThemeResource ThumbnailSmoke}"/>
 								<muxc:ProgressBar Background="Transparent" IsIndeterminate="True" />
 							</Grid>
 							<Grid

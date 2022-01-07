@@ -1,28 +1,29 @@
-﻿using MetadataExtractor;
-using MetadataExtractor.Formats.Gif;
-using MetadataExtractor.Formats.Jpeg;
-using MetadataExtractor.Formats.Png;
-using MetadataExtractor.Formats.WebP;
-using MetadataExtractor.Formats.Bmp;
-using MetadataExtractor.Formats.Heif;
-using MetadataExtractor.Util;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MetadataExtractor;
+using MetadataExtractor.Formats.Bmp;
+using MetadataExtractor.Formats.Gif;
+using MetadataExtractor.Formats.Jpeg;
+using MetadataExtractor.Formats.Png;
+using MetadataExtractor.Formats.WebP;
+using MetadataExtractor.Util;
 
 namespace LRReader.Shared.Services
 {
 	public abstract class ImageProcessingService
 	{
 
-		public abstract Task<object?> ByteToBitmap(byte[] bytes, object? image = default, bool transcode = false);
+		public abstract Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? image = default);
 
-		public virtual Task<Size> GetImageSize(byte[] bytes)
+		public virtual Task<Size> GetImageSize(byte[]? bytes)
 		{
 			return Task.Run(() =>
 			{
+				if (bytes == null)
+					return Size.Empty;
 				try
 				{
 					using (var stream = new MemoryStream(bytes))

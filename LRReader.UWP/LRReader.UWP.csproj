@@ -201,6 +201,9 @@
     <Compile Include="Views\Dialogs\CreateCategory.xaml.cs">
       <DependentUpon>CreateCategory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\ThumbnailPicker.xaml.cs">
+      <DependentUpon>ThumbnailPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\ProgressConflict.xaml.cs">
       <DependentUpon>ProgressConflict.xaml</DependentUpon>
     </Compile>
@@ -511,6 +514,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\CreateCategory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ThumbnailPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

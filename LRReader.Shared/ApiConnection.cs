@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace LRReader.Shared
 {
 
-	public static class ApiExtentions
+	public static class ApiExtensions
 	{
 
 		public async static Task<bool> GetResult(this RestResponse request)
@@ -133,6 +133,7 @@ namespace LRReader.Shared
 			if (data.Item1 != null)
 				switch (restResponse.StatusCode)
 				{
+					case HttpStatusCode.Accepted:
 					case HttpStatusCode.OK:
 						apiResponse.Data = data.Item1;
 						apiResponse.OK = true;

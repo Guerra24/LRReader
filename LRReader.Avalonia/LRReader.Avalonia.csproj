@@ -20,7 +20,7 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\LRReader.UWP\Strings\**" LinkBase="Strings" >
+    <Content Include="..\LRReader.UWP\Strings\**" LinkBase="Strings">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

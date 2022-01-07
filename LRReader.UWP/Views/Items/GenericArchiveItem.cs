@@ -31,7 +31,6 @@ namespace LRReader.UWP.Views.Items
 
 		private bool _open;
 
-		private ResourceLoader lang;
 
 		// Default
 		private Grid Overlay;
@@ -52,7 +51,6 @@ namespace LRReader.UWP.Views.Items
 			this.DefaultStyleKey = typeof(GenericArchiveItem);
 			// TODO: Proper fix
 			ViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
-			lang = ResourceLoader.GetForCurrentView("Dialogs");
 			DataContextChanged += Control_DataContextChanged;
 			PointerPressed += Control_PointerPressed;
 		}
@@ -106,13 +104,7 @@ namespace LRReader.UWP.Views.Items
 				Thumbnail.Source = null;
 				ViewModel.MissingImage = false;
 
-				var image = new BitmapImage();
-				image.DecodePixelType = DecodePixelType.Logical;
-				if (DecodePixelHeight > 0)
-					image.DecodePixelHeight = DecodePixelHeight;
-				if (DecodePixelWidth > 0)
-					image.DecodePixelWidth = DecodePixelWidth;
-				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), image) as BitmapImage;
+				var image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), DecodePixelWidth, DecodePixelHeight) as BitmapImage;
 
 				if (image == null)
 					ViewModel.MissingImage = true;

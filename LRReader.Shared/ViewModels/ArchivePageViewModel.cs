@@ -217,8 +217,7 @@ namespace LRReader.Shared.ViewModels
 			{
 				var dialog = Platform.CreateDialog<IProgressConflictDialog>(Dialog.ProgressConflict, BookmarkProgress + 1, Archive.progress, Pages);
 				await dialog.ShowAsync();
-				var result = dialog.Mode;
-				switch (result)
+				switch (dialog.Mode)
 				{
 					case ConflictMode.Local:
 						await SetProgress(BookmarkProgress + 1);
@@ -330,6 +329,8 @@ namespace LRReader.Shared.ViewModels
 				LoadingIndeterminate = LoadingImages = true;
 			ArchiveImages.Clear();
 			var result = await ArchivesProvider.ExtractArchive(Archive.arcid);
+			if (result != null && Api.ControlFlags.V084)
+				await result.WaitForMinionJob();
 			if (animate)
 				LoadingIndeterminate = LoadingImages = false;
 			if (result != null)
@@ -337,7 +338,7 @@ namespace LRReader.Shared.ViewModels
 				await Task.Run(async () =>
 				{
 					foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
-						await Dispatcher.RunAsync(() => ArchiveImages.Add(new ImagePageSet(s, index + 1)), -10);
+						await Dispatcher.RunAsync(() => ArchiveImages.Add(new ImagePageSet(Archive.arcid, s, index + 1)), -10);
 				});
 				Pages = ArchiveImages.Count;
 			}

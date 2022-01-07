@@ -35,15 +35,8 @@ namespace LRReader.UWP.Views.Items
 			await decodePixel.WaitAsync();
 			var lImage = Service.Images.GetImageCached(set.LeftImage);
 			var rImage = Service.Images.GetImageCached(set.RightImage);
-			var imageL = new BitmapImage();
-			var imageR = new BitmapImage();
-			imageR.DecodePixelType = imageL.DecodePixelType = DecodePixelType.Logical;
-			if (_height != 0)
-				imageR.DecodePixelHeight = imageL.DecodePixelHeight = _height;
-			if (_width != 0)
-				imageR.DecodePixelWidth = imageL.DecodePixelWidth = _width;
-			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, imageL) as BitmapImage;
-			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, imageR) as BitmapImage;
+			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, _width, _height) as BitmapImage;
+			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, _width, _height) as BitmapImage;
 			var lSize = await Service.Images.GetImageSizeCached(set.LeftImage);
 			var rSize = await Service.Images.GetImageSizeCached(set.RightImage);
 			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));

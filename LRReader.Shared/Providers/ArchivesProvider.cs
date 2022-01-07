@@ -46,7 +46,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/metadata");
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -58,26 +58,30 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/categories");
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteGetAsync(rq);
 
 			return await r.GetResult<ArchiveCategories>();
 		}
 
-		public static async Task<byte[]?> GetThumbnail(string id)
+		public static async Task<ThumbnailRequest?> GetThumbnail(string id, bool noFallback = false, int page = 0)
 		{
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/thumbnail");
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
+			rq.AddQueryParameter("no_fallback", noFallback.ToString().ToLower());
+			rq.AddQueryParameter("page", page.ToString());
 
 			var r = await client.ExecuteGetAsync(rq);
 
 			switch (r.StatusCode)
 			{
+				case HttpStatusCode.Accepted:
+					return new ThumbnailRequest { Job = await r.GetResult<MinionJob>() };
 				case HttpStatusCode.OK:
-					return r.RawBytes;
+					return new ThumbnailRequest { Thumbnail = r.RawBytes };
 				default:
 					return null;
 			}
@@ -88,7 +92,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/" + (Api.ControlFlags.V082 ? "files" : "extract"), Api.ControlFlags.V082 ? Method.Get : Method.Post);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteAsync(rq);
 
@@ -100,7 +104,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/download");
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteGetAsync(rq);
 
@@ -113,7 +117,7 @@ namespace LRReader.Shared.Providers
 			{
 				case HttpStatusCode.OK:
 					var download = new DownloadPayload();
-					var header = r.Headers.First(h => h.Name?.Equals("Content-Disposition") ?? false).Value as string;
+					var header = r.ContentHeaders.First(h => h.Name?.Equals("Content-Disposition") ?? false).Value as string;
 					var parms = header?.Split(';').Select(s => s.Trim());
 					var natr = parms.First(s => s.StartsWith("filename"));
 					var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
@@ -129,12 +133,25 @@ namespace LRReader.Shared.Providers
 			}
 		}
 
+		public static async Task<bool> ChangeThumbnail(string id, int page)
+		{
+			var client = Api.Client;
+
+			var rq = new RestRequest("api/archives/{id}/thumbnail", Method.Put);
+			rq.AddUrlSegment("id", id);
+			rq.AddQueryParameter("page", page);
+
+			var r = await client.ExecuteAsync(rq);
+
+			return await r.GetResult();
+		}
+
 		public static async Task<bool> ClearNewArchive(string id)
 		{
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/isnew", Method.Delete);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteAsync(rq);
 
@@ -146,7 +163,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/metadata", Method.Put);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 			rq.AddQueryParameter("title", title);
 			rq.AddQueryParameter("tags", tags);
 
@@ -160,7 +177,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}", Method.Delete);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 
 			var r = await client.ExecuteAsync(rq);
 
@@ -191,7 +208,7 @@ namespace LRReader.Shared.Providers
 			var client = Api.Client;
 
 			var rq = new RestRequest("api/archives/{id}/progress/{progress}", Method.Put);
-			rq.AddParameter("id", id, ParameterType.UrlSegment);
+			rq.AddUrlSegment("id", id);
 			rq.AddParameter("progress", progress, ParameterType.UrlSegment);
 
 			var r = await client.ExecuteAsync(rq);

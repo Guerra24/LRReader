@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Messages;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
@@ -18,10 +19,14 @@ namespace LRReader.Shared.ViewModels
 {
 	public partial class ArchiveEditViewModel : ObservableObject
 	{
+		private readonly ImageProcessingService ImageProcessing;
+		private readonly ImagesService Images;
+		private readonly PlatformService Platform;
 
 		public AsyncRelayCommand SaveCommand { get; }
 		public AsyncRelayCommand UsePluginCommand { get; }
 		public AsyncRelayCommand ReloadCommand { get; }
+		public AsyncRelayCommand ChangeThumbnailCommand { get; }
 
 		private RelayCommand<EditableTag> TagCommand { get; }
 		public RelayCommand AddAllTags { get; }
@@ -33,6 +38,8 @@ namespace LRReader.Shared.ViewModels
 		private string _title = "";
 		[ObservableProperty]
 		private string _tags = "";
+		[ObservableProperty]
+		private object? _thumbnail;
 
 		private bool _saving;
 		public bool Saving
@@ -61,18 +68,22 @@ namespace LRReader.Shared.ViewModels
 
 		public string Arg = "";
 
-		public ArchiveEditViewModel(SettingsService settings)
+		public ArchiveEditViewModel(SettingsService settings, ImageProcessingService imageProcessing, ImagesService images, PlatformService platformService)
 		{
+			ImageProcessing = imageProcessing;
+			Images = images;
+			Platform = platformService;
+
 			UseTextTags = !settings.UseVisualTags;
 
 			SaveCommand = new AsyncRelayCommand(SaveArchive, () => !Saving);
 			UsePluginCommand = new AsyncRelayCommand(UsePlugin, () => !Saving && Plugins.Count > 0);
 			ReloadCommand = new AsyncRelayCommand(ReloadArchive, () => !Saving);
+			ChangeThumbnailCommand = new AsyncRelayCommand(ChangeThumbnail, () => !Saving);
 
 			TagCommand = new RelayCommand<EditableTag>(HandleTagCommand, (_) => !Saving);
 			AddAllTags = new RelayCommand(AddPluginTags, () => !Saving && Plugins.Count > 0 && PluginTagsList.Count > 0);
 		}
-
 
 		public async Task LoadArchive(Archive archive)
 		{
@@ -80,7 +91,8 @@ namespace LRReader.Shared.ViewModels
 			Title = archive.title;
 			ReloadTagsList(archive.tags);
 
-			OnPropertyChanged("Title");
+			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid), decodeHeight: 275);
+
 			OnPropertyChanged("Archive");
 			await ReloadPlugins();
 		}
@@ -89,13 +101,12 @@ namespace LRReader.Shared.ViewModels
 		{
 			try
 			{
-
 				var result = await ArchivesProvider.GetArchive(Archive.arcid);
 				if (result != null)
 				{
 					Title = result.title;
 					ReloadTagsList(result.tags);
-					OnPropertyChanged("Title");
+					Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid), decodeHeight: 275);
 				}
 				await ReloadPlugins();
 			}
@@ -104,6 +115,19 @@ namespace LRReader.Shared.ViewModels
 #if WINDOWS_UWP
 				Crashes.TrackError(e);
 #endif
+			}
+		}
+
+		private async Task ChangeThumbnail()
+		{
+			var dialog = Platform.CreateDialog<IThumbnailPickerDialog>(Dialog.ThumbnailPicker, Archive.arcid);
+			await dialog.LoadThumbnails();
+			if (await dialog.ShowAsync() == IDialogResult.Primary)
+			{
+				if (await ArchivesProvider.ChangeThumbnail(Archive.arcid, dialog.Page))
+				{
+					Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid, forced: true), decodeHeight: 275);
+				}
 			}
 		}
 

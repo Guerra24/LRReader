@@ -14,7 +14,7 @@ namespace LRReader.Shared.Services
 
 	public enum Dialog
 	{
-		Generic, CategoryArchive, CreateCategory, Markdown, ProgressConflict, ServerProfile, ValidateApi
+		Generic, CategoryArchive, CreateCategory, Markdown, ProgressConflict, ServerProfile, ValidateApi, ThumbnailPicker
 	}
 
 	public enum Pages

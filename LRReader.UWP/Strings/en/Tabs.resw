@@ -186,6 +186,9 @@
   <data name="ArchiveEdit.AddTag.ToolTipService.ToolTip" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="ArchiveEdit.ChangeThumbnail.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ArchiveEdit.ID.Header" xml:space="preserve">
     <value>ID</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="ArchiveEdit.TagsV2.Text" xml:space="preserve">
     <value>Tags</value>
+  </data>
+  <data name="ArchiveEdit.ThumbnailTitle.Text" xml:space="preserve">
+    <value>Thumbnail</value>
   </data>
   <data name="ArchiveEdit.Title.Header" xml:space="preserve">
     <value>Title</value>

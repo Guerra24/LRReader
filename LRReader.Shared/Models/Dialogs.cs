@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace LRReader.Shared.Models
 {
@@ -40,4 +37,12 @@ namespace LRReader.Shared.Models
 	{
 		ConflictMode Mode { get; set; }
 	}
+
+	public interface IThumbnailPickerDialog : IDialog
+	{
+		int Page { get; set; }
+
+		Task LoadThumbnails();
+	}
+
 }

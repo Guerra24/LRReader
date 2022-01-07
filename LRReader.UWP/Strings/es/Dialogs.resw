@@ -268,4 +268,13 @@ Cualquier crash, error o falta de datos es causado por el sitio web, NO por la a
   <data name="ServerProfile.ProfileName.PlaceholderText" xml:space="preserve">
     <value>Nombre</value>
   </data>
+  <data name="ThumbnailPicker.Dialog.CloseButtonText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ThumbnailPicker.Dialog.PrimaryButtonText" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="ThumbnailPicker.Dialog.Title" xml:space="preserve">
+    <value>Selecciona una miniatura</value>
+  </data>
 </root>

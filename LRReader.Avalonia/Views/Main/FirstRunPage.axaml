@@ -35,9 +35,8 @@
         <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Create/Text}" FontSize="16" IsVisible="{Binding !SettingsManager.ProfilesAvailable, Mode=OneWay}" />
       </StackPanel>
     </Grid>
-    <!--BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"-->
     <Border
-        Grid.Column="1" Margin="16,0"
+        Grid.Column="1" Margin="16,0" BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
         BorderThickness="1" />
     <ScrollViewer x:Name="ScrollViewer" Grid.Column="2" Margin="0,32,0,0" Padding="0,16,16,16">
       <StackPanel
@@ -45,18 +44,16 @@
           Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}"
           MaxWidth="500" HorizontalAlignment="Left"
           VerticalAlignment="Center" Spacing="3">
-        <!--
-        Background="{ThemeResource ExpanderHeaderBackground}"
-            BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
-            BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
-            CornerRadius="{ThemeResource ControlCornerRadius}"
-        -->
         <Button
             ToolTip.Tip="{loc:LocalizedString Key=/Settings/Profiles/AddProfile/ToolTipService/ToolTip}"
+            Background="{DynamicResource ExpanderHeaderBackground}"
+            BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+            BorderThickness="{DynamicResource ExpanderHeaderBorderThickness}"
+            CornerRadius="{DynamicResource ControlCornerRadius}"
             Padding="{StaticResource ExpanderHeaderPadding}"
             HorizontalAlignment="Stretch"
             Command="{Binding AddProfileCommand}">
-          Add
+          <TextBlock Text="Add" Margin="0,16" HorizontalAlignment="Center"/>
           <!--
           <FontIcon
               Margin="0,16" HorizontalAlignment="Center"
@@ -70,14 +67,12 @@
           </ItemsRepeater.Layout>
           <ItemsRepeater.ItemTemplate>
             <DataTemplate x:DataType="items:ServerProfile">
-              <!--
-              Background="{ThemeResource ExpanderHeaderBackground}"
-                  BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
-                  BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
-                  CornerRadius="{ThemeResource ControlCornerRadius}"
-              -->
               <Button
                   Padding="{StaticResource ExpanderHeaderPadding}"
+                  Background="{DynamicResource ExpanderHeaderBackground}"
+                  BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+                  BorderThickness="{DynamicResource ExpanderHeaderBorderThickness}"
+                  CornerRadius="{DynamicResource ControlCornerRadius}"
                   HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                   Command="{ReflectionBinding SettingsPageInstance.ContinueProfileCommand, Source={StaticResource Locator}}"
                   CommandParameter="{Binding}">
@@ -93,10 +88,7 @@
                   -->
                   <StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
                     <TextBlock Text="{Binding Name, Mode=OneWay}" />
-                    <!--
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    -->
-                    <TextBlock FontSize="12"  Text="{Binding ServerAddress, Mode=OneWay}" />
+                    <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding ServerAddress, Mode=OneWay}" />
                   </StackPanel>
                   <StackPanel
                       Grid.Column="2" Margin="0,0,16,0" HorizontalAlignment="Right"

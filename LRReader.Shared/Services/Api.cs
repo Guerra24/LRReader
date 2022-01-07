@@ -47,12 +47,12 @@ namespace LRReader.Shared.Services
 			return true;
 		}
 
-		public async Task<bool> Validate()
+		public Task<bool> Validate()
 		{
+#if false
 #if WINDOWS_UWP
 			await Crashes.SetEnabledAsync(false); // Disable to prevent false-positive errors
 #endif
-
 			var archives = await ArchivesProvider.Validate();
 			var categories = await CategoriesProvider.Validate();
 			var database = await DatabaseProvider.Validate();
@@ -85,18 +85,21 @@ namespace LRReader.Shared.Services
 			}
 			Settings.SaveProfiles();
 			return result;
+#else
+			return Task.Run(() => true);
+#endif
 		}
-
 	}
 
 	public class ControlFlags
 	{
 		public bool ProgressTracking = false;
 
-		public bool V077 = false;
-		public bool V078 = false;
-		public bool V079 = false;
-		public bool V082 = false;
+		public bool V077;
+		public bool V078;
+		public bool V079;
+		public bool V082;
+		public bool V084;
 
 		public bool V078Edit => V078 & Service.Settings.Profile.HasApiKey;
 
@@ -106,6 +109,7 @@ namespace LRReader.Shared.Services
 			V078 = serverInfo.version >= new Version(0, 7, 8);
 			V079 = serverInfo.version >= new Version(0, 7, 9);
 			V082 = serverInfo.version >= new Version(0, 8, 2);
+			V084 = serverInfo.version >= new Version(0, 8, 4);
 
 			ProgressTracking = (!V079 && V077) || serverInfo.server_tracks_progress;
 		}

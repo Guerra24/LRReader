@@ -14,7 +14,7 @@ namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ArchiveImage : UserControl
 	{
-		private ImagePageSet _oldUrl = new ImagePageSet("", 0);
+		private ImagePageSet _oldUrl = new ImagePageSet("", "", 0);
 		private Container Data = new Container();
 		private bool _loading;
 
@@ -34,6 +34,12 @@ namespace LRReader.UWP.Views.Items
 					VisualStateManager.GoToState(this, "Normal", false);
 				SetValue(KeepOverlayOpenProperty, value);
 			}
+		}
+
+		public bool HideOverlay
+		{
+			get => (bool)GetValue(HideOverlayProperty);
+			set => SetValue(HideOverlayProperty, value);
 		}
 
 		public bool ShowExtraDetails
@@ -65,7 +71,8 @@ namespace LRReader.UWP.Views.Items
 			Image.Source = null;
 			Ring.IsActive = true;
 			Data.MissingImage = false;
-			PageCount.Text = n.Page.ToString();
+			if (!HideOverlay)
+				PageCount.Text = n.Page.ToString();
 			if (ShowExtraDetails)
 			{
 				Format.Text = n.Image.Substring(n.Image.LastIndexOf('.') + 1).ToUpper();
@@ -73,10 +80,11 @@ namespace LRReader.UWP.Views.Items
 				Resolution.Text = $"{size.Width}x{size.Height}";
 			}
 
-			var image = new BitmapImage();
-			image.DecodePixelType = DecodePixelType.Logical;
-			image.DecodePixelHeight = 275;
-			image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image, forced), image, n.Image.EndsWith("avif")) as BitmapImage;
+			BitmapImage image;
+			if (Service.Api.ControlFlags.V084)
+				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(n.Id, n.Page), decodeHeight: 275) as BitmapImage;
+			else
+				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image, forced), decodeHeight: 275, transcode: n.Image.EndsWith("avif")) as BitmapImage;
 			Ring.IsActive = false;
 			/*if (image.PixelHeight != 0 && image.PixelWidth != 0)
 			{
@@ -115,27 +123,28 @@ namespace LRReader.UWP.Views.Items
 
 		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
-			if (KeepOverlayOpen)
+			if (KeepOverlayOpen || HideOverlay)
 				return;
 			VisualStateManager.GoToState(this, "PointerOver", true);
 		}
 
 		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e)
 		{
-			if (KeepOverlayOpen)
+			if (KeepOverlayOpen || HideOverlay)
 				return;
 			VisualStateManager.GoToState(this, "Normal", true);
 		}
 
 		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
 		{
-			if (KeepOverlayOpen)
+			if (KeepOverlayOpen || HideOverlay)
 				return;
 			VisualStateManager.GoToState(this, "Normal", true);
 		}
 
 		public static readonly DependencyProperty KeepOverlayOpenProperty = DependencyProperty.Register("KeepOverlayOpen", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));
 		public static readonly DependencyProperty ShowExtraDetailsProperty = DependencyProperty.Register("ShowExtraDetails", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));
+		public static readonly DependencyProperty HideOverlayProperty = DependencyProperty.Register("HideOverlay", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));
 	}
 
 }

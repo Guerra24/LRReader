@@ -20,6 +20,7 @@ namespace LRReader.Shared.Models.Main
 		public List<BookmarkedArchive> Bookmarks { get; set; }
 		public bool AcceptedDisclaimer { get; set; }
 		public List<ArchiveHit> MarkedAsNonDuplicated { get; set; }
+		public int CacheTimestamp { get; set; }
 
 		[JsonIgnore]
 		public bool HasApiKey
@@ -30,11 +31,13 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');
 
+
 		public ServerProfile()
 		{
 			UID = Guid.NewGuid().ToString();
 			Bookmarks = new List<BookmarkedArchive>();
 			MarkedAsNonDuplicated = new List<ArchiveHit>();
+			CacheTimestamp = -1;
 			Version = 2;
 		}
 

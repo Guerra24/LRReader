@@ -49,11 +49,17 @@ namespace LRReader.Shared.Services
 			if (serverInfo == null)
 				return;
 
-			MetadataPath = $"{metadataDirectory.FullName}/{Settings.Profile.UID}";
-			var currentTimestamp = SettingsStorage.GetObjectLocal("CacheTimestamp", -1);
+			var profile = Settings.Profile;
+
+			var currentTimestamp = profile.CacheTimestamp;
+			MetadataPath = $"{metadataDirectory.FullName}/{profile.UID}";
+
+			SettingsStorage.DeleteObjectLocal("CacheTimestamp");
+
 			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(MetadataPath))
 			{
-				SettingsStorage.StoreObjectLocal("CacheTimestamp", serverInfo.cache_last_cleared);
+				profile.CacheTimestamp = serverInfo.cache_last_cleared;
+				Settings.SaveProfiles();
 				await Update(MetadataPath);
 			}
 			else

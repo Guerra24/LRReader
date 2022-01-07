@@ -2,11 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:vm="using:LRReader.Shared.ViewModels"
              x:Class="LRReader.Avalonia.App">
-    <Application.Styles>
-        <FluentTheme Mode="Dark"/>
-        <StyleInclude Source="avares://Aura.UI.FluentTheme/AuraUI.xaml"/>
-    </Application.Styles>
-	<Application.Resources>
-		<vm:ViewModelLocator x:Key="Locator" />
-	</Application.Resources>
+  <Application.Styles>
+    <FluentTheme Mode="Dark"/>
+    <StyleInclude Source="avares://Aura.UI.FluentTheme/AuraUI.xaml"/>
+    <StyleInclude Source="/Resources/ThemeDictionary.axaml"/>
+    <StyleInclude Source="/Resources/AvaloniaTemplates.axaml"/>
+  </Application.Styles>
+  <Application.Resources>
+    <ResourceDictionary>
+      <vm:ViewModelLocator x:Key="Locator" />
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

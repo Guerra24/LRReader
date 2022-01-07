@@ -8,14 +8,7 @@
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Light">
 			<Color x:Key="MicaFallback">White</Color>
-			<SolidColorBrush x:Key="BrushText" Color="Black" />
-			<SolidColorBrush x:Key="BrushBaseBackground" Color="White" />
-			<SolidColorBrush x:Key="BrushTextInverted" Color="White" />
-			<SolidColorBrush x:Key="BrushDeepBackground" Color="White" />
 			<Color x:Key="BrushDeepBackgroundColor">White</Color>
-			<SolidColorBrush x:Key="BrushAnimeItemBackground" Color="#E5E5E5" />
-			<SolidColorBrush x:Key="BrushHamburgerBackground" Color="#eaeaea" />
-			<Color x:Key="ColorHamburgerBackground">#eaeaea</Color>
 			<AcrylicBrush
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#E5E5E5"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
@@ -31,17 +24,11 @@
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorLight3}" />
 			<SolidColorBrush x:Key="ReaderBackground" Color="White" />
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393" />
+			<SolidColorBrush x:Key="ThumbnailSmoke" Opacity="0.5" Color="#FFFFFF" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<Color x:Key="MicaFallback">Black</Color>
-			<SolidColorBrush x:Key="BrushText" Color="White" />
-			<SolidColorBrush x:Key="BrushBaseBackground" Color="Black" />
-			<SolidColorBrush x:Key="BrushTextInverted" Color="Black" />
-			<SolidColorBrush x:Key="BrushDeepBackground" Color="#0a0a0a" />
 			<Color x:Key="BrushDeepBackgroundColor">#0a0a0a</Color>
-			<SolidColorBrush x:Key="BrushAnimeItemBackground" Color="#2f2f2f" />
-			<SolidColorBrush x:Key="BrushHamburgerBackground" Color="#1f1f1f" />
-			<Color x:Key="ColorHamburgerBackground">#1f1f1f</Color>
 			<AcrylicBrush
 				x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#1f1f1f"
 				TintColor="{StaticResource BrushDeepBackgroundColor}"
@@ -57,6 +44,7 @@
 			<SolidColorBrush x:Key="UnbookmarkItem" Color="{StaticResource SystemAccentColorDark3}" />
 			<SolidColorBrush x:Key="ReaderBackground" Color="Black" />
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#7C7C7C" />
+			<SolidColorBrush x:Key="ThumbnailSmoke" Opacity="0.5" Color="#000000" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

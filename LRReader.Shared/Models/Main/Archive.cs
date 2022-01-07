@@ -135,7 +135,7 @@ namespace LRReader.Shared.Models.Main
 		}
 	}
 
-	public class ArchiveImages
+	public class ArchiveImages : MinionJob
 	{
 		[AllowNull]
 		public List<string> pages { get; set; }
@@ -154,12 +154,13 @@ namespace LRReader.Shared.Models.Main
 
 	public class ImagePageSet
 	{
-
-		public string Image { get; set; }
+		public string Id { get; set; }
+		public string? Image { get; set; }
 		public int Page { get; set; }
 
-		public ImagePageSet(string image, int page)
+		public ImagePageSet(string id, string? image, int page)
 		{
+			this.Id = id;
 			this.Image = image;
 			this.Page = page;
 		}
@@ -167,12 +168,12 @@ namespace LRReader.Shared.Models.Main
 		public override bool Equals(object obj)
 		{
 			return obj is ImagePageSet set &&
-				   Image.Equals(set.Image);
+				   (Image?.Equals(set.Image) ?? Page == set.Page);
 		}
 
 		public override int GetHashCode()
 		{
-			return Image.GetHashCode();
+			return Image?.GetHashCode() ?? Page;
 		}
 	}
 
@@ -232,5 +233,11 @@ namespace LRReader.Shared.Models.Main
 				   Left.Equals(hit.Left) && Right.Equals(hit.Right);
 
 		public override int GetHashCode() => Left.GetHashCode() + Right.GetHashCode();
+	}
+
+	public class ThumbnailRequest
+	{
+		public MinionJob? Job;
+		public byte[]? Thumbnail;
 	}
 }
