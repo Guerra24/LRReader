@@ -28,33 +28,27 @@
 	<Grid>
 		<Grid x:Name="Content">
 			<Image x:Name="Image" />
-			<Grid Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+			<Grid
+				x:Name="Overlay" Margin="4" HorizontalAlignment="Stretch"
+				VerticalAlignment="Bottom" >
 				<Grid.RenderTransform>
-					<TranslateTransform x:Name="OverlayTransform" Y="32" />
+					<TranslateTransform x:Name="OverlayTransform" />
 				</Grid.RenderTransform>
-				<Grid.Resources>
-					<Style x:Key="Overlay" TargetType="StackPanel">
-						<Setter Property="Background" Value="{ThemeResource GridOverGridBackground}" />
-						<Setter Property="BorderBrush" Value="{ThemeResource SurfaceStrokeColorFlyoutBrush}" />
-						<Setter Property="BorderThickness" Value="1" />
-						<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
-						<Setter Property="Orientation" Value="Horizontal" />
-					</Style>
-				</Grid.Resources>
 				<StackPanel
 					x:Name="ExtraDetails" Padding="6,2" HorizontalAlignment="Left"
 					x:Load="{x:Bind ShowExtraDetails, Mode=OneWay}"
-					Spacing="4"
-					Style="{StaticResource Overlay}">
+					Orientation="Horizontal" Spacing="4"
+					Style="{StaticResource ItemOverlayStackPanel}">
 					<TextBlock
 						x:Name="Resolution" Grid.Column="1" FontSize="16"
 						Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
 					<TextBlock x:Name="Format" FontSize="16" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
 				</StackPanel>
 				<StackPanel
-					x:Name="Overlay" HorizontalAlignment="Right"
+					x:Name="Pages" HorizontalAlignment="Right"
 					x:Load="{x:Bind HideOverlay, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-					Style="{StaticResource Overlay}">
+					Orientation="Horizontal"
+					Style="{StaticResource ItemOverlayStackPanel}">
 					<TextBlock
 						x:Name="PageCount" Padding="6,2" FontSize="16"
 						Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
@@ -64,15 +58,13 @@
 		<Grid x:Name="MissingImageGrid" x:Load="{x:Bind Data.MissingImage, Mode=OneWay}">
 			<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 		</Grid>
-		<muxc:ProgressRing
-			x:Name="Ring" Width="50" Height="50"
-			IsActive="False" />
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="CommonStates">
-				<VisualState x:Name="Normal" />
-				<VisualState x:Name="PointerOver">
+				<VisualState x:Name="Visible"/>
+				<VisualState x:Name="Hidden" >
 					<VisualState.Setters>
-						<Setter Target="OverlayTransform.Y" Value="0" />
+						<Setter Target="Overlay.Visibility" Value="Collapsed" />
+						<Setter Target="OverlayTransform.Y" Value="32" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualStateGroup.Transitions>

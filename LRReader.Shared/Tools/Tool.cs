@@ -4,7 +4,6 @@ using Microsoft.AppCenter.Crashes;
 #endif
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
@@ -15,8 +14,7 @@ namespace LRReader.Shared.Tools
 
 	public struct ToolProgress<T>
 	{
-		[NotNull]
-		public T? Status { get; set; }
+		public T Status { get; set; }
 		public int MaxProgress { get; set; }
 		public int CurrentProgress { get; set; }
 		public int MaxSteps { get; set; }

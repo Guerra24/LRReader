@@ -485,7 +485,7 @@
 					</GridView.ItemTemplate>
 					<GridView.ItemsPanel>
 						<ItemsPanelTemplate>
-							<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+							<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" CacheLength="1" />
 						</ItemsPanelTemplate>
 					</GridView.ItemsPanel>
 					<GridView.ItemContainerStyle>
@@ -519,7 +519,7 @@
 					</GridView.ItemTemplate>
 					<GridView.ItemsPanel>
 						<ItemsPanelTemplate>
-							<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+							<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" CacheLength="1" />
 						</ItemsPanelTemplate>
 					</GridView.ItemsPanel>
 					<GridView.ItemContainerStyle>

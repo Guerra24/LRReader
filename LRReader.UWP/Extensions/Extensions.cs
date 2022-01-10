@@ -34,6 +34,8 @@ namespace LRReader.UWP.Extensions
 
 		public static void SetVisualOpacity(this UIElement element, float opacity) => ElementCompositionPreview.GetElementVisual(element).Opacity = opacity;
 
+		public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
+
 	}
 
 	public class GridViewExt : DependencyObject

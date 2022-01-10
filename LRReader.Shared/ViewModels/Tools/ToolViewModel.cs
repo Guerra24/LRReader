@@ -96,7 +96,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			ExecuteCommand = new AsyncRelayCommand(Execute);
 			Progress = new Progress<ToolProgress<T>>(p =>
 			{
-				ToolStatus = p.Status;
+				ToolStatus = p.Status!;
 				MaxProgress = p.MaxProgress;
 				CurrentProgress = p.CurrentProgress;
 				MaxSteps = p.MaxSteps;

@@ -1,14 +1,14 @@
-﻿using LRReader.Shared;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
+using LRReader.Shared;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.Devices.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using ParallaxView = Microsoft.UI.Xaml.Controls.ParallaxView;
 
@@ -25,12 +26,13 @@ namespace LRReader.UWP.Views.Items
 {
 	public sealed class GenericArchiveItem : Control
 	{
+		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseIn);
+
 		public ArchiveItemViewModel ViewModel { get; }
 
 		private string _oldID;
 
 		private bool _open;
-
 
 		// Default
 		private Grid Overlay;
@@ -118,10 +120,10 @@ namespace LRReader.UWP.Views.Items
 
 				if (Service.Platform.AnimationsEnabled)
 				{
-					Overlay?.FadeIn();
-					Title?.FadeIn();
-					Progress?.FadeIn();
-					TagsGrid?.FadeIn();
+					Overlay?.Start(FadeIn);
+					Title?.Start(FadeIn);
+					Progress?.Start(FadeIn);
+					TagsGrid?.Start(FadeIn);
 				}
 				else
 				{

@@ -246,6 +246,12 @@ namespace LRReader.UWP.Views.Controls
 			set => ArchivesGrid.ItemTemplate = value;
 		}
 
+		public DataTemplateSelector ItemTemplateSelector
+		{
+			get => ArchivesGrid.ItemTemplateSelector;
+			set => ArchivesGrid.ItemTemplateSelector = value;
+		}
+
 		public bool HandleF5
 		{
 			get => (bool)GetValue(HandleF5Property);

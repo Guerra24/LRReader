@@ -13,7 +13,7 @@ namespace LRReader.Shared.ViewModels
 {
 	public delegate bool CustomArchiveCheck(Archive archive);
 
-	public class SearchResultsViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
+	public partial class SearchResultsViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
 	{
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
@@ -22,60 +22,28 @@ namespace LRReader.Shared.ViewModels
 
 		public CustomArchiveCheck CustomArchiveCheckEvent = (a) => true;
 
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("ControlsEnabled")]
 		private bool _loadingArchives = true;
-		public bool LoadingArchives
-		{
-			get => _loadingArchives;
-			set
-			{
-				SetProperty(ref _loadingArchives, value);
-				OnPropertyChanged("ControlsEnabled");
-			}
-		}
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("ControlsEnabled")]
 		private bool _refreshOnErrorButton = false;
-		public bool RefreshOnErrorButton
-		{
-			get => _refreshOnErrorButton;
-			set
-			{
-				SetProperty(ref _refreshOnErrorButton, value);
-				OnPropertyChanged("ControlsEnabled");
-			}
-		}
 		public ObservableCollection<Archive> ArchiveList { get; } = new ObservableCollection<Archive>();
+		[ObservableProperty]
 		private int _page = 0;
-		public int Page
-		{
-			get => _page;
-			set => SetProperty(ref _page, value);
-		}
+		[ObservableProperty]
+		[AlsoNotifyChangeFor("TotalPages")]
 		private int _totalArchives;
-		public int TotalArchives
-		{
-			get => _totalArchives;
-			set
-			{
-				SetProperty(ref _totalArchives, value);
-				OnPropertyChanged("TotalPages");
-			}
-		}
 
 		public int TotalPages => (int)Math.Max(Math.Ceiling(TotalArchives / (double)Api.ServerInfo.archives_per_page), 1);
 		public bool HasNextPage => Page < TotalPages - 1 && ControlsEnabled;
 		public bool HasPrevPage => Page > 0 && ControlsEnabled;
 
+		[ObservableProperty]
 		private bool _newOnly;
-		public bool NewOnly
-		{
-			get => _newOnly;
-			set => SetProperty(ref _newOnly, value);
-		}
+		[ObservableProperty]
 		private bool _untaggedOnly;
-		public bool UntaggedOnly
-		{
-			get => _untaggedOnly;
-			set => SetProperty(ref _untaggedOnly, value);
-		}
+
 		public string Query = "";
 		public Category Category = new Category() { id = "", search = "" };
 		private bool _controlsEnabled;
@@ -87,12 +55,8 @@ namespace LRReader.Shared.ViewModels
 		protected bool _internalLoadingArchives;
 		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
+		[ObservableProperty]
 		private int _sortByIndex = -1;
-		public int SortByIndex
-		{
-			get => _sortByIndex;
-			set => SetProperty(ref _sortByIndex, value);
-		}
 		public Order OrderBy = Order.Ascending;
 
 		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api)

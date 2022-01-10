@@ -9,11 +9,16 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<controls:ArchiveList x:Name="ArchiveList" ItemClickEnabled="True" SelectionMode="None">
-		<controls:ArchiveList.ItemDataTemplate>
-			<DataTemplate>
-				<items:GenericArchiveItem />
-			</DataTemplate>
-		</controls:ArchiveList.ItemDataTemplate>
-	</controls:ArchiveList>
+	<UserControl.Resources>
+		<DataTemplate x:Key="Compact">
+			<items:GenericArchiveItem Style="{StaticResource CompactArchiveItem}" />
+		</DataTemplate>
+		<DataTemplate x:Key="Full">
+			<items:GenericArchiveItem />
+		</DataTemplate>
+		<local:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource Compact}" FullTemplate="{StaticResource Full}" />
+	</UserControl.Resources>
+
+	<controls:ArchiveList x:Name="ArchiveList" ItemClickEnabled="True" SelectionMode="None" ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}"/>
+
 </UserControl>

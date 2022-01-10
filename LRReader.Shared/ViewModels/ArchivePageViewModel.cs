@@ -381,8 +381,8 @@ namespace LRReader.Shared.ViewModels
 								if (SetBuilder)
 								{
 									var leftImage = ArchiveImages.ElementAt(k + 1).Image;
-									var leftSize = await Images.GetImageSizeCached(i.RightImage);
-									var rightSize = await Images.GetImageSizeCached(leftImage);
+									var leftSize = await Images.GetImageSizeCached(i.RightImage!);
+									var rightSize = await Images.GetImageSizeCached(leftImage!);
 									if (Math.Abs(leftSize.Width / (double)leftSize.Height - rightSize.Width / (double)rightSize.Height) <= 0.1)
 									{
 										i.LeftImage = leftImage;
@@ -416,7 +416,7 @@ namespace LRReader.Shared.ViewModels
 								{
 									var rightImage = ArchiveImages.ElementAt(k + 1).Image;
 									var leftSize = await Images.GetImageSizeCached(i.LeftImage);
-									var rightSize = await Images.GetImageSizeCached(rightImage);
+									var rightSize = await Images.GetImageSizeCached(rightImage!);
 									if (Math.Abs(leftSize.Width / (double)leftSize.Height - rightSize.Width / (double)rightSize.Height) <= 0.1)
 									{
 										i.RightImage = rightImage;
@@ -435,7 +435,7 @@ namespace LRReader.Shared.ViewModels
 					else if (UseVerticalReader)
 					{
 						var image = ArchiveImages.ElementAt(k).Image;
-						var size = await Images.GetImageSizeCached(image);
+						var size = await Images.GetImageSizeCached(image!);
 						i.Width = size.Width;
 						i.Height = size.Height;
 						i.LeftImage = image;

@@ -11,10 +11,12 @@ namespace LRReader.Avalonia.Services
 {
 	public class AvaloniaImageProcessingService : ImageProcessingService
 	{
-		public override Task<object> ByteToBitmap(byte[] bytes, object image = null, bool transcode = false)
+		public override Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? image = default)
 		{
 			return Task.Run(() =>
 			{
+				if (bytes == null)
+					return null;
 				using (var stream = new MemoryStream(bytes))
 				{
 					return (object)new Bitmap(stream);

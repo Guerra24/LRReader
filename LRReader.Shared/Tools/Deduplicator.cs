@@ -140,7 +140,6 @@ namespace LRReader.Shared.Tools
 
 			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 3, 2);
 			await Task.Delay(1000);
-			var start = DateTime.Now;
 
 			var markedNonDuplicated = Settings.Profile.MarkedAsNonDuplicated;
 			var hits = new ConcurrentBag<ArchiveHit>();
@@ -149,6 +148,7 @@ namespace LRReader.Shared.Tools
 			{
 				while (decodedThumbnails.Count != 0)
 				{
+					var start = DateTime.Now;
 					var sourcePair = decodedThumbnails.First();
 					decodedThumbnails.Remove(sourcePair.Key);
 					using (var source = sourcePair.Value)
@@ -157,7 +157,7 @@ namespace LRReader.Shared.Tools
 						{
 							var target = targetPair.Value;
 
-							if (Math.Abs((float)source.Height / source.Width - (float)target.Height / target.Width) > aspectRatioLimit)
+							if (Math.Abs((float)source!.Height / source.Width - (float)target!.Height / target.Width) > aspectRatioLimit)
 								return;
 
 							var hit = new ArchiveHit { Left = sourcePair.Key, Right = targetPair.Key };
@@ -184,9 +184,8 @@ namespace LRReader.Shared.Tools
 					}
 					int itemCount = Interlocked.Increment(ref count);
 
-					// Inaccurate AF
-					var delta = DateTime.Now.Subtract(start);
-					long time = (maxItems - itemCount) * (delta.Ticks / Math.Max(itemCount, 1));
+					var delta = DateTime.Now.Subtract(start).Ticks;
+					long time = (maxItems - itemCount) * delta;
 					UpdateProgress(DeduplicatorStatus.Comparing, maxItems, itemCount, time: time);
 				}
 			});

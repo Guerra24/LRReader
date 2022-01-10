@@ -18,6 +18,13 @@
 		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
 		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVis" />
 		<ext:Shadow x:Name="ElementShadow" />
+		<DataTemplate x:Key="Compact">
+			<items:GenericArchiveItem Style="{StaticResource CompactArchiveItem}" />
+		</DataTemplate>
+		<DataTemplate x:Key="Full">
+			<items:GenericArchiveItem />
+		</DataTemplate>
+		<local:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource Compact}" FullTemplate="{StaticResource Full}" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -27,6 +34,7 @@
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
 				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
 				ItemClick="ArchivesGrid_ItemClick"
+				ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>
@@ -137,11 +145,6 @@
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
 				</GridView.KeyboardAccelerators>
-				<GridView.ItemTemplate>
-					<DataTemplate>
-						<items:GenericArchiveItem />
-					</DataTemplate>
-				</GridView.ItemTemplate>
 				<GridView.ItemsPanel>
 					<ItemsPanelTemplate>
 						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />

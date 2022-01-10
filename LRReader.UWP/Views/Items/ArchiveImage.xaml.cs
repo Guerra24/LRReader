@@ -1,19 +1,22 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using System;
+using System.Threading.Tasks;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System;
-using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
 {
 	public sealed partial class ArchiveImage : UserControl
 	{
+		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseIn);
+
 		private ImagePageSet _oldUrl = new ImagePageSet("", "", 0);
 		private Container Data = new Container();
 		private bool _loading;
@@ -21,6 +24,7 @@ namespace LRReader.UWP.Views.Items
 		public ArchiveImage()
 		{
 			this.InitializeComponent();
+			VisualStateManager.GoToState(this, "Hidden", false);
 		}
 
 		public bool KeepOverlayOpen
@@ -29,9 +33,9 @@ namespace LRReader.UWP.Views.Items
 			set
 			{
 				if (value)
-					VisualStateManager.GoToState(this, "PointerOver", false);
+					VisualStateManager.GoToState(this, "Visible", false);
 				else
-					VisualStateManager.GoToState(this, "Normal", false);
+					VisualStateManager.GoToState(this, "Hidden", false);
 				SetValue(KeepOverlayOpenProperty, value);
 			}
 		}
@@ -69,7 +73,6 @@ namespace LRReader.UWP.Views.Items
 			_loading = true;
 			Content.SetVisualOpacity(0);
 			Image.Source = null;
-			Ring.IsActive = true;
 			Data.MissingImage = false;
 			if (!HideOverlay)
 				PageCount.Text = n.Page.ToString();
@@ -85,7 +88,6 @@ namespace LRReader.UWP.Views.Items
 				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(n.Id, n.Page), decodeHeight: 275) as BitmapImage;
 			else
 				image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetImageCached(n.Image, forced), decodeHeight: 275, transcode: n.Image.EndsWith("avif")) as BitmapImage;
-			Ring.IsActive = false;
 			/*if (image.PixelHeight != 0 && image.PixelWidth != 0)
 			{
 				if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
@@ -98,7 +100,7 @@ namespace LRReader.UWP.Views.Items
 			if (image != null)
 			{
 				if (Service.Platform.AnimationsEnabled)
-					Content.FadeIn();
+					Content.Start(FadeIn);
 				else
 					Content.SetVisualOpacity(1);
 			}
@@ -107,39 +109,32 @@ namespace LRReader.UWP.Views.Items
 			_loading = false;
 		}
 
-		private class Container : ObservableObject
+		[ObservableObject]
+		private partial class Container
 		{
+			[ObservableProperty]
 			private bool _missingImage;
-			public bool MissingImage
-			{
-				get => _missingImage;
-				set
-				{
-					_missingImage = value;
-					OnPropertyChanged("MissingImage");
-				}
-			}
 		}
 
 		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
 			if (KeepOverlayOpen || HideOverlay)
 				return;
-			VisualStateManager.GoToState(this, "PointerOver", true);
+			VisualStateManager.GoToState(this, "Visible", true);
 		}
 
 		private void UserControl_PointerExited(object sender, PointerRoutedEventArgs e)
 		{
 			if (KeepOverlayOpen || HideOverlay)
 				return;
-			VisualStateManager.GoToState(this, "Normal", true);
+			VisualStateManager.GoToState(this, "Hidden", true);
 		}
 
 		private void UserControl_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
 		{
 			if (KeepOverlayOpen || HideOverlay)
 				return;
-			VisualStateManager.GoToState(this, "Normal", true);
+			VisualStateManager.GoToState(this, "Hidden", true);
 		}
 
 		public static readonly DependencyProperty KeepOverlayOpenProperty = DependencyProperty.Register("KeepOverlayOpen", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));

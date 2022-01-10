@@ -187,4 +187,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 		}
 
 	}
+
+	public class ArchiveTemplateSelector : DataTemplateSelector
+	{
+		public DataTemplate CompactTemplate { get; set; }
+		public DataTemplate FullTemplate { get; set; }
+
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (false)
+				return CompactTemplate;
+			else
+				return FullTemplate;
+		}
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		{
+			return SelectTemplateCore(item);
+		}
+	}
 }
