@@ -1,15 +1,22 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
-using LRReader.Shared.ViewModels;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
+using LRReader.UWP.Extensions;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {
 	public sealed partial class ArchiveEdit : UserControl
 	{
+		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseIn);
+		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseOut);
 
 		public ArchiveEditViewModel Data;
 
@@ -17,6 +24,25 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			this.InitializeComponent();
 			Data = DataContext as ArchiveEditViewModel;
+			Data.Show += Show;
+			Data.Hide += Hide;
+		}
+
+		private Task Show(bool animate)
+		{
+			if (animate)
+				Thumbnail.Start(FadeIn);
+			else
+				Thumbnail.SetVisualOpacity(1);
+			return Task.FromResult(0);
+		}
+
+		private async Task Hide(bool animate)
+		{
+			if (animate)
+				await Thumbnail.StartAsync(FadeOut);
+			else
+				Thumbnail.SetVisualOpacity(0);
 		}
 
 		public async void LoadArchive(Archive archive) => await Data.LoadArchive(archive);

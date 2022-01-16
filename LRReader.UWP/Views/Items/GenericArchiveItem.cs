@@ -35,14 +35,12 @@ namespace LRReader.UWP.Views.Items
 		private bool _open;
 
 		// Default
-		private Grid Overlay;
-		private TextBlock Title;
-		private Grid TagsGrid;
+		private Grid Root;
 		private Image Thumbnail;
+		private Grid TagsGrid;
 		private Flyout TagsFlyout;
 
 		// Bookmark
-		private TextBlock Progress;
 		public ParallaxView Parallax;
 
 		// Internal
@@ -60,20 +58,12 @@ namespace LRReader.UWP.Views.Items
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			Overlay = GetTemplateChild("Overlay") as Grid;
-			Title = GetTemplateChild("Title") as TextBlock;
-			TagsGrid = GetTemplateChild("TagsGrid") as Grid;
+			Root = GetTemplateChild("Root") as Grid;
 			Thumbnail = GetTemplateChild("Thumbnail") as Image;
+			TagsGrid = GetTemplateChild("TagsGrid") as Grid;
 			TagsFlyout = GetTemplateChild("TagsFlyout") as Flyout;
 
-			Progress = GetTemplateChild("Progress") as TextBlock;
 			Parallax = GetTemplateChild("Parallax") as ParallaxView;
-		}
-
-		public double PopupOffset
-		{
-			get => (double)GetValue(PopupOffsetProperty);
-			set => SetValue(PopupOffsetProperty, value);
 		}
 
 		public int DecodePixelWidth
@@ -99,10 +89,7 @@ namespace LRReader.UWP.Views.Items
 				_oldID = archive.arcid;
 				ViewModel.Archive = archive;
 
-				Overlay?.SetVisualOpacity(0);
-				Title?.SetVisualOpacity(0);
-				Progress?.SetVisualOpacity(0);
-				TagsGrid?.SetVisualOpacity(0);
+				Root?.SetVisualOpacity(0);
 				Thumbnail.Source = null;
 				ViewModel.MissingImage = false;
 
@@ -120,17 +107,11 @@ namespace LRReader.UWP.Views.Items
 
 				if (Service.Platform.AnimationsEnabled)
 				{
-					Overlay?.Start(FadeIn);
-					Title?.Start(FadeIn);
-					Progress?.Start(FadeIn);
-					TagsGrid?.Start(FadeIn);
+					Root?.Start(FadeIn);
 				}
 				else
 				{
-					Overlay?.SetVisualOpacity(1);
-					Title?.SetVisualOpacity(1);
-					Progress?.SetVisualOpacity(1);
-					TagsGrid?.SetVisualOpacity(1);
+					Root?.SetVisualOpacity(1);
 				}
 			}
 		}
@@ -216,7 +197,6 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		public static readonly DependencyProperty PopupOffsetProperty = DependencyProperty.Register("PopupOffset", typeof(double), typeof(GenericArchiveItem), new PropertyMetadata(null));
 		public static readonly DependencyProperty DecodePixelWidthProperty = DependencyProperty.Register("DecodePixelWidth", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
 		public static readonly DependencyProperty DecodePixelHeightProperty = DependencyProperty.Register("DecodePixelHeight", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
 	}

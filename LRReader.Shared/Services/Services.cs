@@ -53,6 +53,7 @@ namespace LRReader.Shared.Services
 			collection.AddTransient<CategoryEditViewModel>();
 			collection.AddTransient<ArchiveItemViewModel>();
 			collection.AddTransient<CategoryBaseViewModel>();
+			collection.AddTransient<ArchiveImageViewModel>();
 
 			collection.AddTransient<ArchiveHitViewModel>();
 			collection.AddTransient<ArchiveHitPreviewViewModel>();

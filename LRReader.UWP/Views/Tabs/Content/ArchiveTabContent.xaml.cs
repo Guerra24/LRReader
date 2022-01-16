@@ -102,10 +102,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			if (Service.Platform.AnimationsEnabled && item != null && !Data.UseVerticalReader)
 			{
-				var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Image");
+				var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Thumbnail");
 				if (!(image.ActualWidth == 0 || image.ActualHeight == 0))
 				{
-					var anim = ImagesGrid.PrepareConnectedAnimation(GetOpenTarget(readerSet, page), item, "Image");
+					var anim = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate(GetOpenTarget(readerSet, page), image);
 					anim.Configuration = new BasicConnectedAnimationConfiguration();
 				}
 			}
@@ -191,9 +191,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (animate)
 			{
 				if (Data.ReaderContent.LeftImage != null && animLeft != null && Data.ArchiveImages.Count > leftTarget)
-					await ImagesGrid.TryStartConnectedAnimationAsync(animLeft, Data.ArchiveImages.ElementAt(leftTarget), "Image");
+					animLeft.TryStart(ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail"));
 				if (Data.ReaderContent.RightImage != null & animRight != null && Data.ArchiveImages.Count > rightTarget)
-					await ImagesGrid.TryStartConnectedAnimationAsync(animRight, Data.ArchiveImages.ElementAt(rightTarget), "Image");
+					animRight.TryStart(ImagesGrid.ContainerFromIndex(rightTarget).FindDescendant("Thumbnail"));
 				FadeOut.Start(ReaderBackground);
 				await FadeOut.StartAsync(ScrollViewer);
 				await Task.Delay(200); // Give it a sec

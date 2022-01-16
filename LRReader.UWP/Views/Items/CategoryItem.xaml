@@ -6,7 +6,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Width="196"
+	Width="200"
 	d:DesignHeight="296"
 	d:DesignWidth="200"
 	DataContextChanged="UserControl_DataContextChanged"
@@ -32,7 +32,7 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
+			<RowDefinition Height="275" />
 		</Grid.RowDefinitions>
 		<TextBlock
 			x:Name="Title" Padding="5,0" HorizontalAlignment="Center"
@@ -40,10 +40,12 @@
 			Text="{x:Bind ViewModel.Category.name, Mode=OneWay}"
 			TextTrimming="CharacterEllipsis"
 			ToolTipService.ToolTip="{x:Bind ViewModel.Category.name, Mode=OneWay}" />
+		<Border
+			Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+			CornerRadius="{ThemeResource ControlCornerRadius}">
+			<Image x:Name="Thumbnail" MaxHeight="275" />
+		</Border>
 		<Grid x:Name="Overlay" Grid.Row="1">
-			<Image
-				x:Name="Thumbnail" Width="200" Height="275"
-				HorizontalAlignment="Center" />
 			<Grid x:Name="MissingImage" x:Load="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
 				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 			</Grid>

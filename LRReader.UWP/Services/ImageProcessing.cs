@@ -27,7 +27,7 @@ namespace LRReader.UWP.Services
 			if (bytes.Length == 0)
 				return null;
 
-			BitmapImage image = img as BitmapImage ?? new BitmapImage();
+			var image = img as BitmapImage ?? new BitmapImage();
 			image.DecodePixelType = DecodePixelType.Logical;
 			if (decodeWidth > 0)
 				image.DecodePixelWidth = decodeWidth;
@@ -53,7 +53,7 @@ namespace LRReader.UWP.Services
 								var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
 								encoder.SetSoftwareBitmap(softwareBitmap);
 								await encoder.FlushAsync();
-								image.SetSource(converted);
+								await image.SetSourceAsync(converted);
 							}
 						}
 					}

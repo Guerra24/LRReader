@@ -19,7 +19,7 @@
 			<items:CategoryItem />
 		</DataTemplate>
 		<DataTemplate x:Key="AddNewCategoryTemplate" x:DataType="main:AddNewCategory">
-			<Grid Width="196" Height="297">
+			<Grid Width="200" Height="297">
 				<SymbolIcon Symbol="NewFolder" />
 			</Grid>
 		</DataTemplate>

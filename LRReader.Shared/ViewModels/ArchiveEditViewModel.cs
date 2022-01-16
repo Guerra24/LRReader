@@ -66,6 +66,9 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private bool _useTextTags;
 
+		public event AsyncAction<bool>? Show;
+		public event AsyncAction<bool>? Hide;
+
 		public string Arg = "";
 
 		public ArchiveEditViewModel(SettingsService settings, ImageProcessingService imageProcessing, ImagesService images, PlatformService platformService)
@@ -91,7 +94,9 @@ namespace LRReader.Shared.ViewModels
 			Title = archive.title;
 			ReloadTagsList(archive.tags);
 
+			await Hide.InvokeAsync(false);
 			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid), decodeHeight: 275);
+			await Show.InvokeAsync(Platform.AnimationsEnabled);
 
 			OnPropertyChanged("Archive");
 			await ReloadPlugins();
@@ -123,7 +128,11 @@ namespace LRReader.Shared.ViewModels
 			var dialog = Platform.CreateDialog<IThumbnailPickerDialog>(Dialog.ThumbnailPicker, Archive.arcid);
 			await dialog.LoadThumbnails();
 			if (await dialog.ShowAsync() == IDialogResult.Primary && await ArchivesProvider.ChangeThumbnail(Archive.arcid, dialog.Page))
+			{
+				await Hide.InvokeAsync(Platform.AnimationsEnabled);
 				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid, forced: true), decodeHeight: 275);
+				await Show.InvokeAsync(Platform.AnimationsEnabled);
+			}
 		}
 
 		private async Task SaveArchive()
