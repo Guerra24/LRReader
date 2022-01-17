@@ -12,10 +12,7 @@
 	mc:Ignorable="d">
 
 	<Page.Resources>
-		<internal:EnumConverter x:Key="EnumConverter" />
-		<internal:EnumToInt x:Key="EnumToInt" />
 		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
-		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">

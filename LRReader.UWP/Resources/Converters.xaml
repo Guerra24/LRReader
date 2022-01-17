@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:converters2="using:LRReader.Converters">
+
+	<converters:BoolToVisibilityConverter x:Name="BoolToVisibilityConverter" />
+	<converters:BoolToVisibilityConverter x:Name="NegateBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible" />
+	<converters:BoolNegationConverter x:Name="BoolNegationConverter" />
+	<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+	<converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
+	<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
+	<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
+
+	<converters2:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
+	<converters2:EnumConverter x:Key="EnumConverter" />
+	<converters2:EnumToInt x:Key="EnumToInt" />
+
+</ResourceDictionary>

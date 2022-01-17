@@ -17,9 +17,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Media.Imaging;
 using ParallaxView = Microsoft.UI.Xaml.Controls.ParallaxView;
 
 namespace LRReader.UWP.Views.Items
@@ -51,6 +49,8 @@ namespace LRReader.UWP.Views.Items
 			this.DefaultStyleKey = typeof(GenericArchiveItem);
 			// TODO: Proper fix
 			ViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
+			ViewModel.Show += Show;
+			ViewModel.Hide += Hide;
 			DataContextChanged += Control_DataContextChanged;
 			PointerPressed += Control_PointerPressed;
 		}
@@ -78,42 +78,26 @@ namespace LRReader.UWP.Views.Items
 			set => SetValue(DecodePixelHeightProperty, value);
 		}
 
+		private Task Show(bool animate)
+		{
+			if (animate)
+				Root.Start(FadeIn);
+			else
+				Root.SetVisualOpacity(1);
+			return Task.FromResult(0);
+		}
+
+		private Task Hide(bool animate)
+		{
+			Root.SetVisualOpacity(0);
+			return Task.FromResult(0);
+		}
+
 		private async void Control_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)
 				return;
-			var archive = args.NewValue as Archive;
-
-			if (!archive.arcid.Equals(_oldID))
-			{
-				_oldID = archive.arcid;
-				ViewModel.Archive = archive;
-
-				Root?.SetVisualOpacity(0);
-				Thumbnail.Source = null;
-				ViewModel.MissingImage = false;
-
-				var image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid), DecodePixelWidth, DecodePixelHeight) as BitmapImage;
-
-				if (image == null)
-					ViewModel.MissingImage = true;
-				else
-				{
-					if (image.PixelHeight != 0 && image.PixelWidth != 0)
-						if (Math.Abs(ActualHeight / ActualWidth - image.PixelHeight / image.PixelWidth) > .65)
-							Thumbnail.Stretch = Stretch.Uniform;
-					Thumbnail.Source = image;
-				}
-
-				if (Service.Platform.AnimationsEnabled)
-				{
-					Root?.Start(FadeIn);
-				}
-				else
-				{
-					Root?.SetVisualOpacity(1);
-				}
-			}
+			await ViewModel.Load(args.NewValue as Archive, DecodePixelWidth, DecodePixelHeight);
 		}
 
 		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Service.Archives.OpenTab(ViewModel.Archive, false, Group);

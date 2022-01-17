@@ -7,7 +7,6 @@
 	xmlns:controls1="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:ext="using:LRReader.UWP.Extensions"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,8 +15,6 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
-		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVis" />
 		<ext:Shadow x:Name="ElementShadow" />
 	</UserControl.Resources>
 

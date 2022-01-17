@@ -5,66 +5,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LRReader.Internal
+namespace LRReader.Converters
 {
-	public class BooleanToVisibilityConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, string language)
-		{
-			if (value is bool && (bool)value)
-			{
-				return Visibility.Visible;
-			}
-			return Visibility.Collapsed;
-		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, string language)
-		{
-			return (value is Visibility && (Visibility)value == Visibility.Visible);
-		}
-	}
-
-	public class NullToBooleanConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, string language)
-		{
-			return value != null;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, string language)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public class NegateBoolConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, string language)
-		{
-			return !(bool)value;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, string language)
-		{
-			throw new NotImplementedException();
-		}
-	}
-	public class NegateBoolToVisibilityConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, string language)
-		{
-			if (value is bool && (bool)value)
-			{
-				return Visibility.Collapsed;
-			}
-			return Visibility.Visible;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, string language)
-		{
-			return (value is Visibility && (Visibility)value == Visibility.Collapsed);
-		}
-	}
 	public class EnumConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
@@ -85,6 +28,7 @@ namespace LRReader.Internal
 			return Enum.Parse(targetType, parameterString);
 		}
 	}
+
 	public class EnumToInt : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
@@ -97,6 +41,7 @@ namespace LRReader.Internal
 			return Enum.ToObject(targetType, value);
 		}
 	}
+
 	public class DisabledTextConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
@@ -109,6 +54,7 @@ namespace LRReader.Internal
 			throw new NotImplementedException();
 		}
 	}
+
 	public class StringToColorConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
@@ -132,6 +78,7 @@ namespace LRReader.Internal
 			throw new NotImplementedException();
 		}
 	}
+
 	public class ObjectToBitmapImage : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)

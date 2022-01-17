@@ -17,9 +17,6 @@
 	mc:Ignorable="d">
 	<muxc:Expander.Resources>
 		<Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
-		<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
-		<converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
-		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 		<converters:BoolToObjectConverter x:Key="DescriptionDisabled" TrueValue="{ThemeResource TextFillColorSecondaryBrush}" FalseValue="{ThemeResource ExpanderHeaderDisabledForeground}" />
 		<DataTemplate x:Key="OtherItem" x:DataType="UIElement">
 			<Grid

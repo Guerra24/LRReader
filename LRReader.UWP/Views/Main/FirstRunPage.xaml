@@ -3,7 +3,6 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,11 +12,6 @@
 	NavigationCacheMode="Required"
 	SizeChanged="Page_SizeChanged"
 	mc:Ignorable="d">
-
-	<Page.Resources>
-		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
-		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-	</Page.Resources>
 
 	<Grid>
 		<Grid.ColumnDefinitions>

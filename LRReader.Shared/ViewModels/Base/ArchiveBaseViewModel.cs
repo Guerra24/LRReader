@@ -145,7 +145,7 @@ namespace LRReader.Shared.ViewModels.Base
 				}
 			}
 		}
-		public object? Icon
+		public object Icon
 		{
 			get => Platform.GetSymbol(Bookmarked ? Symbol.Favorite : Symbol.Pictures);
 		}
@@ -189,7 +189,6 @@ namespace LRReader.Shared.ViewModels.Base
 			return await ArchivesProvider.DownloadArchive(Archive.arcid);
 		}
 
-
 		[ICommand]
 		private void Edit() => Tabs.OpenTab(Tab.ArchiveEdit, Archive);
 
@@ -212,7 +211,7 @@ namespace LRReader.Shared.ViewModels.Base
 		[ICommand]
 		private async Task TagClick(ArchiveTagsGroupTag tag)
 		{
-			if (tag.Namespace.ToLower().Equals("source"))
+			if (tag.Namespace.Equals("source", StringComparison.OrdinalIgnoreCase))
 			{
 				Uri result;
 				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out result))

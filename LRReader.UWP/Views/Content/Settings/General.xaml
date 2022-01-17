@@ -4,19 +4,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Loaded="PivotItem_Loaded"
 	mc:Ignorable="d">
-
-	<Page.Resources>
-		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
-		<internal:NullToBooleanConverter x:Key="NullToBooleanConverter" />
-		<internal:EnumToInt x:Key="EnumToInt" />
-	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
@@ -72,11 +65,11 @@
 							Width="30" Height="30" Margin="0,0,10,0"
 							VerticalAlignment="Center" IsActive="True"
 							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-						<Button x:Uid="/Settings/General/ClearThumbCache" Command="{x:Bind Data.ClearThumbnailCacheCommand}" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+						<Button x:Uid="/Settings/General/ClearThumbCache" Command="{x:Bind Data.ClearThumbnailCacheCommand}" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 					</StackPanel>
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;" IsEnabled="{x:Bind Data.SettingsManager.Profile.AcceptedDisclaimer, Converter={StaticResource NegateBoolConverter}}">
-					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.Profile.AcceptedDisclaimer, Converter={StaticResource NegateBoolConverter}}" Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
+				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;" IsEnabled="{x:Bind Data.SettingsManager.Profile.AcceptedDisclaimer, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.Profile.AcceptedDisclaimer, Converter={StaticResource BoolNegationConverter}}" Loading="TrackCrashes_Loading" Toggled="TrackCrashes_Toggled" />
 				</controls:ModernInput>
 			</controls:ModernGroup>
 		</StackPanel>

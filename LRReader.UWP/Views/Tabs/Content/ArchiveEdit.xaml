@@ -2,9 +2,8 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.ArchiveEdit"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:converters="using:LRReader.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -14,11 +13,9 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<internal:StringToColorConverter x:Key="StringToColorConverter" />
-		<internal:NegateBoolConverter x:Key="NegateBoolConverter" />
-		<internal:DisabledTextConverter x:Key="DisabledTextConverter" />
-		<internal:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
-		<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
+		<converters:StringToColorConverter x:Key="StringToColorConverter" />
+		<converters:DisabledTextConverter x:Key="DisabledTextConverter" />
+		<converters:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
 		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
 			<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
 			<Setter Property="FontSize" Value="12" />
@@ -264,7 +261,7 @@
 				<TextBox x:Uid="/Tabs/ArchiveEdit/ID" IsReadOnly="True" Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
 				<TextBox
 					x:Uid="/Tabs/ArchiveEdit/Title"
-					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Title, Mode=TwoWay}" />
 				<Grid>
@@ -273,10 +270,10 @@
 						Content="&#xE8AB;"
 						FontFamily="{StaticResource SymbolThemeFontFamily}"
 						IsChecked="{x:Bind Data.UseTextTags, Mode=TwoWay}"
-						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}" />
+						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 					<TextBox
 						x:Name="TextTags" x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="80"
-						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 						IsSpellCheckEnabled="False"
 						Text="{x:Bind Data.Tags, Mode=TwoWay}"
 						TextWrapping="Wrap" Visibility="Collapsed" />
@@ -296,7 +293,7 @@
 				<StackPanel Orientation="Horizontal">
 					<ComboBox
 						x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,10,0"
-						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 						ItemsSource="{x:Bind Data.Plugins}"
 						SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
 					<Button x:Uid="/Tabs/ArchiveEdit/RunPlugin" VerticalAlignment="Bottom" Command="{x:Bind Data.UsePluginCommand}" />
@@ -323,7 +320,7 @@
 				</Grid>
 				<TextBox
 					Header="{x:Bind Data.CurrentPlugin.oneshot_arg, Mode=OneWay}"
-					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource NegateBoolConverter}}"
+					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 					IsSpellCheckEnabled="False"
 					Text="{x:Bind Data.Arg, Mode=TwoWay}"
 					Visibility="{x:Bind Data.CurrentPlugin.HasArg, Mode=OneWay}" />

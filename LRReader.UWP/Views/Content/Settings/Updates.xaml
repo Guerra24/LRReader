@@ -4,21 +4,13 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
-	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:internal="using:LRReader.Internal"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
-
-	<Page.Resources>
-		<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
-		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
-		<internal:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" />
-	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">

@@ -230,7 +230,7 @@ namespace LRReader.Shared.Models.Main
 		public string Right { get; set; }
 
 		public override bool Equals(object obj) => obj is ArchiveHit hit &&
-				   Left.Equals(hit.Left) && Right.Equals(hit.Right);
+			((Left.Equals(hit.Left) && Right.Equals(hit.Right)) || (Left.Equals(hit.Right) && Right.Equals(hit.Left)));
 
 		public override int GetHashCode() => Left.GetHashCode() + Right.GetHashCode();
 	}
