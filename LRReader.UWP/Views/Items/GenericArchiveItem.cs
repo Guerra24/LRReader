@@ -28,8 +28,6 @@ namespace LRReader.UWP.Views.Items
 
 		public ArchiveItemViewModel ViewModel { get; }
 
-		private string _oldID;
-
 		private bool _open;
 
 		// Default

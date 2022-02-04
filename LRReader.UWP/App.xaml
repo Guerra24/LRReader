@@ -9,10 +9,10 @@
 			<ResourceDictionary.MergedDictionaries>
 				<controls:XamlControlsResources>
 					<controls:XamlControlsResources.MergedDictionaries>
+						<ResourceDictionary Source="/Resources/ThemeDictionary.xaml" />
 						<ResourceDictionary Source="/Resources/Converters.xaml" />
 						<ResourceDictionary Source="/Resources/NotificationStyle.xaml" />
 						<ResourceDictionary Source="/Resources/WinUITemplates.xaml" />
-						<ResourceDictionary Source="/Resources/ThemeDictionary.xaml" />
 						<Templates xmlns="using:LRReader.UWP.Resources" />
 					</controls:XamlControlsResources.MergedDictionaries>
 				</controls:XamlControlsResources>

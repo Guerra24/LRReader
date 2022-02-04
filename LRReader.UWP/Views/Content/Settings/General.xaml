@@ -14,6 +14,11 @@
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
+				<!--
+				<controls:ModernInput Title="Use Vertical Tabs" Glyph="&#xE8B7;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVerticalTabs, Mode=TwoWay}" />
+				</controls:ModernInput>
+				-->
 				<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
 				</controls:ModernInput>

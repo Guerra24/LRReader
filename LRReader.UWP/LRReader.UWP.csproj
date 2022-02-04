@@ -431,13 +431,13 @@
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.0-prerelease.210927001</Version>
+      <Version>2.8.0-prerelease.220118001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
       <Version>1.0.1072.54</Version>
     </PackageReference>
     <PackageReference Include="NReco.Logging.File">
-      <Version>1.1.3</Version>
+      <Version>1.1.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

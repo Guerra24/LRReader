@@ -3,10 +3,10 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:util="using:LRReader.UWP.Util"
 	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
@@ -27,22 +27,22 @@
 		<Grid
 			x:Name="TitleBar" Height="40" VerticalAlignment="Top"
 			Background="Transparent" />
-		<controls:TabView
-			x:Name="TabViewControl" VerticalAlignment="Stretch" IsAddTabButtonVisible="False"
+		<muxc:TabView
+			x:Name="TabViewControl" VerticalAlignment="Stretch"
 			SelectedItem="{x:Bind Data.CurrentTab, Mode=TwoWay}"
 			TabCloseRequested="TabView_TabCloseRequested"
 			TabItemsSource="{x:Bind Data.TabItems}"
 			TabWidthMode="SizeToContent"
 			Template="{StaticResource MicaTabViewTemplate}">
-			<controls:TabView.Transitions>
+			<muxc:TabView.Transitions>
 				<TransitionCollection>
 					<RepositionThemeTransition />
 				</TransitionCollection>
-			</controls:TabView.Transitions>
-			<controls:TabView.TabStripHeader>
+			</muxc:TabView.Transitions>
+			<muxc:TabView.TabStripHeader>
 				<Grid x:Name="TabViewStartHeader" />
-			</controls:TabView.TabStripHeader>
-			<controls:TabView.TabStripFooter>
+			</muxc:TabView.TabStripHeader>
+			<muxc:TabView.TabStripFooter>
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -108,12 +108,25 @@
 						</Button>
 					</StackPanel>
 				</Grid>
-			</controls:TabView.TabStripFooter>
-		</controls:TabView>
+			</muxc:TabView.TabStripFooter>
+		</muxc:TabView>
 		<comcontrols:InAppNotification
 			x:Name="Notifications"
 			Background="{ThemeResource GridOverGridBackground}"
 			ShowDismissButton="True" StackMode="QueueBehind"
 			Style="{StaticResource CustomNotificationStyle}" />
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="Default" />
+				<VisualState x:Name="Vertical">
+					<VisualState.StateTriggers>
+						<StateTrigger IsActive="{x:Bind Settings.UseVerticalTabs, Mode=OneWay}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="TabViewControl.Template" Value="{StaticResource MicaTabViewVerticalTemplate}" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </Page>
