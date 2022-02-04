@@ -1,6 +1,5 @@
 ﻿using Caching;
 using KeyedSemaphores;
-using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
@@ -52,10 +51,15 @@ namespace LRReader.Shared.Services
 					imagesCache.Clear();
 					imagesSizeCache.Clear();
 					thumbnailsCache.Clear();
-					//var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-					//files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14)).ToList().ForEach(file => file.Delete());
-					//var directories = thumbnailCacheDirectory.GetDirectories();
-					//directories.Where(dir => dir.GetFiles().Length == 0).ToList().ForEach(dir => dir.Delete());
+					var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
+					files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14)).ToList().ForEach(file => file.Delete());
+					var directories = thumbnailCacheDirectory.GetDirectories();
+					foreach (var dir in directories)
+					{
+						var archives = dir.GetDirectories();
+						archives.Where(dir => dir.GetFiles().Length == 0).ToList().ForEach(dir => dir.Delete());
+					}
+					directories.Where(dir => dir.GetDirectories().Length == 0).ToList().ForEach(dir => dir.Delete());
 				}
 				catch (Exception e)
 				{
