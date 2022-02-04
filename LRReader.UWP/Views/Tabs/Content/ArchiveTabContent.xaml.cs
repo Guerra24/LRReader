@@ -353,7 +353,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
 				e.Handled = true;
 
-			double offset = ScrollViewer.VerticalOffset;
 			switch (e.Key)
 			{
 				case VirtualKey.Right:
@@ -542,6 +541,18 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			await ReaderImage.ChangePage(Data.ReaderContent);
 			ReaderImage.FadeInPage();
+
+			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 1));
+			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 2));
+			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 3));
+		}
+
+		private async void Preload(ReaderImageSet set)
+		{
+			if (set == null)
+				return;
+			await Service.Images.GetImageCached(set.LeftImage);
+			await Service.Images.GetImageCached(set.RightImage);
 		}
 
 		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(Data.UseVerticalReader);

@@ -11,7 +11,7 @@ $content = [System.IO.File]::ReadAllText($installer).Replace($text, "")
 [System.IO.File]::WriteAllText($installer, $content)
 
 Set-Location "./LRReader.UWP"
-Remote-Item -Path $html
+Remove-Item -Path $html
 Remove-Item -Path "./Install.ps1","./Add-AppDevPackage.ps1"
 Remove-Item -Path "./Add-AppDevPackage.resources" –recurse
 Set-Location "./Dependencies/"
