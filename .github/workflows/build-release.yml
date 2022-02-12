@@ -10,7 +10,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build AppInstaller
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -65,7 +65,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Installer
       run: |
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"

@@ -373,6 +373,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.ShowReader)
 				return;
+
+			var ctrl = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
+			var alt = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Menu);
+
+			if ((ctrl & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down || (alt & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
+				return;
+
 			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space ||
 				 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
 			{

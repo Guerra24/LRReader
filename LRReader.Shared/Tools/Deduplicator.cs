@@ -98,14 +98,14 @@ namespace LRReader.Shared.Tools
 			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(() =>
 			{
 				int tries = 5;
-				Image<Rgba32>? image = null;
+				Image<Rgb24>? image = null;
 				while (tries > 0)
 				{
 					Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
 					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key)).GetAwaiter().GetResult();
 					if (bytes != null)
 					{
-						image = Image.Load(bytes);
+						image = Image.Load<Rgb24>(bytes);
 						image.Mutate(i => i.Resize(width, 0));
 						break;
 					}
@@ -116,7 +116,7 @@ namespace LRReader.Shared.Tools
 				}
 				int itemCount = Interlocked.Increment(ref count);
 				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
-				return new Tuple<string, Image<Rgba32>?>(pair.Key, image);
+				return new Tuple<string, Image<Rgb24>?>(pair.Key, image);
 			})))).AsEnumerable().ToList();
 
 			List<string> removed = new List<string>();
@@ -165,17 +165,22 @@ namespace LRReader.Shared.Tools
 								return;
 
 							int differences = 0;
-							for (int y = 0; y < Math.Min(source.Height, target.Height); y++)
+
+							source.ProcessPixelRows(target, (sourceAcc, targetAcc) =>
 							{
-								Span<Rgba32> sourcePixelRow = source.GetPixelRowSpan(y);
-								Span<Rgba32> targetPixelRow = target.GetPixelRowSpan(y);
-								for (int x = 0; x < source.Width; x++)
+								for (int y = 0; y < Math.Min(sourceAcc.Height, targetAcc.Height); y++)
 								{
-									float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
-									if (diff > pixelThreshold / 765f)
-										differences++;
+									Span<Rgb24> sourcePixelRow = sourceAcc.GetRowSpan(y);
+									Span<Rgb24> targetPixelRow = targetAcc.GetRowSpan(y);
+									for (int x = 0; x < sourceAcc.Width; x++)
+									{
+										float diff = GetManhattanDistanceInRgbSpace(ref sourcePixelRow[x], ref targetPixelRow[x]) / 765f; //255+255+255
+										if (diff > pixelThreshold / 765f)
+											differences++;
+									}
 								}
-							}
+							});
+
 							float diffPixels = differences;
 							diffPixels /= source.Width * source.Height;
 							if (diffPixels < percentDifference)
@@ -199,7 +204,7 @@ namespace LRReader.Shared.Tools
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static int GetManhattanDistanceInRgbSpace(ref Rgba32 a, ref Rgba32 b)
+		private static int GetManhattanDistanceInRgbSpace(ref Rgb24 a, ref Rgb24 b)
 		{
 			return Diff(a.R, b.R) + Diff(a.G, b.G) + Diff(a.B, b.B);
 		}

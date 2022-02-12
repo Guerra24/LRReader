@@ -1,15 +1,6 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using MetadataExtractor;
-using MetadataExtractor.Formats.Bmp;
-using MetadataExtractor.Formats.Gif;
-using MetadataExtractor.Formats.Jpeg;
-using MetadataExtractor.Formats.Png;
-using MetadataExtractor.Formats.WebP;
-using MetadataExtractor.Util;
+﻿using System.Threading.Tasks;
+using SixLabors.ImageSharp;
+using Size = System.Drawing.Size;
 
 namespace LRReader.Shared.Services
 {
@@ -24,44 +15,9 @@ namespace LRReader.Shared.Services
 			{
 				if (bytes == null)
 					return Size.Empty;
-				try
-				{
-					using (var stream = new MemoryStream(bytes))
-					{
-						var type = FileTypeDetector.DetectFileType(stream);
-						stream.Seek(0, SeekOrigin.Begin);
-						switch (type)
-						{
-							case FileType.Jpeg:
-								var jpeg = JpegMetadataReader.ReadMetadata(stream);
-								var jpegdir = jpeg.OfType<JpegDirectory>().FirstOrDefault();
-								return new Size(jpegdir.GetImageWidth(), jpegdir.GetImageHeight());
-							case FileType.Png:
-								var png = PngMetadataReader.ReadMetadata(stream);
-								var pngdir = png.OfType<PngDirectory>().FirstOrDefault();
-								return new Size(pngdir.GetInt32(PngDirectory.TagImageWidth), pngdir.GetInt32(PngDirectory.TagImageHeight));
-							case FileType.Gif:
-								var gif = GifMetadataReader.ReadMetadata(stream);
-								var gifdir = gif.OfType<GifHeaderDirectory>().FirstOrDefault();
-								return new Size(gifdir.GetInt32(GifHeaderDirectory.TagImageWidth), gifdir.GetInt32(GifHeaderDirectory.TagImageHeight));
-							case FileType.WebP:
-								var webp = WebPMetadataReader.ReadMetadata(stream);
-								var webpdir = webp.OfType<WebPDirectory>().FirstOrDefault();
-								return new Size(webpdir.GetInt32(WebPDirectory.TagImageWidth), webpdir.GetInt32(WebPDirectory.TagImageHeight));
-							case FileType.Bmp:
-								var bmp = BmpMetadataReader.ReadMetadata(stream);
-								var bmpdir = bmp.OfType<BmpHeaderDirectory>().FirstOrDefault();
-								return new Size(bmpdir.GetInt32(BmpHeaderDirectory.TagImageWidth), bmpdir.GetInt32(BmpHeaderDirectory.TagImageHeight));
-							default:
-								return Size.Empty;
-						}
-					}
-				}
-				catch (Exception)
-				{
-					//Crashes.TrackError(e);
-					// No need to track this
-				}
+				var info = Image.Identify(bytes);
+				if (info != null)
+					return new Size(info.Width, info.Height);
 				return Size.Empty;
 			});
 		}

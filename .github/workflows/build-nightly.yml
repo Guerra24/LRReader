@@ -10,10 +10,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
       env:
         DOTNET_NOLOGO: true
@@ -30,10 +28,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
       env:
         DOTNET_NOLOGO: true
@@ -50,10 +46,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
       env:
         DOTNET_NOLOGO: true
@@ -70,21 +64,20 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
         CERT_BASE64: ${{ secrets.CERT_BASE64 }}
         APPCENTER_APP_ID: ${{ secrets.APPCENTER_APP_ID }}
+        BUILD_NUMBER: ${{ github.run_number }}
       run: |
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "$(Get-Location)/LRReader.UWP/Package.appxmanifest" -Force
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
-        Invoke-Expression "./Util/Version.ps1"
+        Invoke-Expression "./Util/Version.ps1 ${env:BUILD_NUMBER}"
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Nightly=true /p:Configuration=Release /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
@@ -117,7 +110,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
       env:
         APP_VERSION: Nightly
