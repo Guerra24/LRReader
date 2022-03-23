@@ -34,7 +34,7 @@ namespace LRReader.Shared.ViewModels.Items
 
 				MissingImage = false;
 
-				Thumbnail = await ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(Archive.arcid), decodePixelWidth, decodePixelHeight);
+				Thumbnail = await ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(Archive.arcid), decodePixelWidth, decodePixelHeight, image: Thumbnail);
 
 				if (Thumbnail != null)
 					await Show.InvokeAsync(Platform.AnimationsEnabled);

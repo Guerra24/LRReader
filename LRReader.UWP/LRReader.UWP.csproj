@@ -431,7 +431,7 @@
       <Version>2.8.0-prerelease.220118001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.1108.44</Version>
+      <Version>1.0.1150.38</Version>
     </PackageReference>
     <PackageReference Include="NReco.Logging.File">
       <Version>1.1.4</Version>

@@ -74,9 +74,9 @@ namespace LRReader.Shared.ViewModels.Items
 			}
 
 			if (Api.ControlFlags.V084)
-				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275);
+				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275, image: Thumbnail);
 			else
-				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetImageCached(Set.Image!, forced), decodeHeight: 275, transcode: Set.Image!.EndsWith("avif"));
+				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetImageCached(Set.Image!, forced), decodeHeight: 275, transcode: Set.Image!.EndsWith("avif"), image: Thumbnail);
 
 			if (Thumbnail != null)
 				await Show.InvokeAsync(Platform.AnimationsEnabled);

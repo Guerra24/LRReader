@@ -241,11 +241,7 @@ namespace LRReader.Shared.Services
 		public bool UseVerticalTabs
 		{
 			get => SettingsStorage.GetObjectLocal("UseVerticalTabs", false);
-			set
-			{
-				SettingsStorage.StoreObjectLocal("UseVerticalTabs", value);
-				OnPropertyChanged("UseVerticalTabs");
-			}
+			set => SettingsStorage.StoreObjectLocal("UseVerticalTabs", value);
 		}
 
 		public static readonly int CurrentLocalVersion = 4;

@@ -1118,8 +1118,10 @@
 
 			<ContentPresenter
 				x:Name="TabContentPresenter" Grid.Column="1"
-				BorderBrush="{TemplateBinding BorderBrush}"
-				BorderThickness="{TemplateBinding BorderThickness}" />
+				Background="{ThemeResource NavigationViewContentBackground}"
+				BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
+				BorderThickness="{ThemeResource NavigationViewContentGridBorderThickness}"
+				CornerRadius="{ThemeResource NavigationViewContentGridCornerRadius}" />
 		</Grid>
 	</ControlTemplate>
 

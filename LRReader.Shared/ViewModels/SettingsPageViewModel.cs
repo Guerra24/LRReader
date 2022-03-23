@@ -71,7 +71,7 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private bool _progressCache;
 
-		public MinionJob thumbnailJob;
+		public MinionJob? thumbnailJob;
 
 		public bool AvifMissing;
 		public bool HeifMissing;
@@ -228,19 +228,22 @@ namespace LRReader.Shared.ViewModels
 		[ICommand]
 		private async Task RemoveProfile(ServerProfile profile)
 		{
+			var shouldRestart = SettingsManager.Profile.Equals(profile);
+
 			var result = await Platform.OpenGenericDialog(
 				Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Title"),
 				Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/PrimaryButtonText"),
 				closebutton: Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/CloseButtonText"),
 				content: Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Content").AsFormat(profile.Name));
 			if (result == IDialogResult.Primary)
-				SettingsManager.Profiles.Remove(profile);
-			//Delete metadata folder
-
-			if (SettingsManager.Profiles.Count == 0)
 			{
-				Tabs.CloseAllTabs();
-				Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
+				SettingsManager.Profiles.Remove(profile);
+				if (SettingsManager.Profiles.Count == 0 || shouldRestart)
+				{
+					//Delete metadata folder
+					Tabs.CloseAllTabs();
+					Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
+				}
 			}
 		}
 

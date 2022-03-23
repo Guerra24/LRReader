@@ -116,9 +116,9 @@ namespace LRReader.UWP.Views.Main
 		private void TitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
 		{
 			if (sender.IsVisible)
-				TabViewControl.Margin = new Thickness(0, 0, 0, 0);
+				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 32 : 0, 0, 0);
 			else
-				TabViewControl.Margin = new Thickness(0, -40, 0, 0);
+				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 0 : -40, 0, 0);
 		}
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration);

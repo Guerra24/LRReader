@@ -120,10 +120,12 @@
 				<VisualState x:Name="Default" />
 				<VisualState x:Name="Vertical">
 					<VisualState.StateTriggers>
-						<StateTrigger IsActive="{x:Bind Settings.UseVerticalTabs, Mode=OneWay}" />
+						<StateTrigger IsActive="{x:Bind Settings.UseVerticalTabs}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="TabViewControl.Template" Value="{StaticResource MicaTabViewVerticalTemplate}" />
+						<Setter Target="TitleBar.Height" Value="32" />
+						<Setter Target="TabViewControl.Margin" Value="0,32,0,0" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

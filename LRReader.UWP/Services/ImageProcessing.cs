@@ -28,6 +28,7 @@ namespace LRReader.UWP.Services
 				return null;
 
 			var image = img as BitmapImage ?? new BitmapImage();
+
 			image.DecodePixelType = DecodePixelType.Logical;
 			if (decodeWidth > 0)
 				image.DecodePixelWidth = decodeWidth;
@@ -70,7 +71,7 @@ namespace LRReader.UWP.Services
 				{
 					try
 					{
-						await (image as BitmapImage)?.SetSourceAsync(stream);
+						await image.SetSourceAsync(stream);
 					}
 					catch (Exception)
 					{

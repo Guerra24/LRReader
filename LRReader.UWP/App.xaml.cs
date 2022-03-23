@@ -65,17 +65,10 @@ namespace LRReader.UWP
 				Window.Current.Content = root;
 			}
 
-			if (!e.PrelaunchActivated)
-			{
-				CoreApplication.EnablePrelaunch(true);
-				if (root.FrameContent.Content == null)
-					Service.Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
-				Window.Current.Activate();
-			}
-			else
-			{
-				await InitServices();
-			}
+			CoreApplication.EnablePrelaunch(true);
+			if (root.FrameContent.Content == null)
+				Service.Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
+			Window.Current.Activate();
 		}
 
 		/// <summary>
