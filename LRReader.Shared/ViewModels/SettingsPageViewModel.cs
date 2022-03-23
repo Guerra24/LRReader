@@ -262,6 +262,9 @@ namespace LRReader.Shared.ViewModels
 		private async Task StopWorker() => await ShinobuProvider.StopWorker();
 
 		[ICommand]
+		private async Task RescanContent() => await ShinobuProvider.Rescan();
+
+		[ICommand]
 		private async Task ClearAllNew() => await DatabaseProvider.ClearAllNew();
 
 		[ICommand]

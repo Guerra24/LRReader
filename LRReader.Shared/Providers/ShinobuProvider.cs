@@ -41,6 +41,17 @@ namespace LRReader.Shared.Providers
 			return await r.GetResult();
 		}
 
+		public static async Task<ShinobuRescan?> Rescan()
+		{
+			var client = Api.Client;
+
+			var rq = new RestRequest("api/shinobu/rescan");
+
+			var r = await client.ExecutePostAsync(rq);
+
+			return await r.GetResultNoError<ShinobuRescan>();
+		}
+
 	}
 
 }

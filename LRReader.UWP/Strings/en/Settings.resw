@@ -531,4 +531,14 @@
   <data name="Reader.VerticalReader.Title" xml:space="preserve">
     <value>Use vertical reader</value>
   </data>
+  <data name="Server.RescanContent.Description" xml:space="preserve">
+    <value>Rescan content directory in case of missing files or page counts</value>
+  </data>
+  <data name="Server.RescanContent.Title" xml:space="preserve">
+    <value>Content directory</value>
+  </data>
+  <data name="Server.RescanContentButton.Content" xml:space="preserve">
+    <value>Rescan</value>
+    <comment>n</comment>
+  </data>
 </root>
