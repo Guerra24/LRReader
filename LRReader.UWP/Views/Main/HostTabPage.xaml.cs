@@ -123,8 +123,7 @@ namespace LRReader.UWP.Views.Main
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration);
 
-		private void ShowNotification(string title, string content, int duration) => Notifications.Show(new NotificationItem(title, content), duration);
-
+		private void ShowNotification(string title, string content, int duration) => Service.Dispatcher.Run(() => Notifications.Show(new NotificationItem(title, content), duration), 0);
 
 		// Move all of this to the ViewModel
 		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);

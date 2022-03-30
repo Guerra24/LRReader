@@ -6,6 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="LRReader.Avalonia.Views.MainWindow"
         Title="LRReader"
+        FontFamily="Segoe UI Variable"
 		Icon="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png">
   <main:LoadingPage/>
 </Window>

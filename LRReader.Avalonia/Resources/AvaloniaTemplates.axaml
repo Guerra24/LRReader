@@ -5,4 +5,11 @@
     <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBase}"/>
   </Style>
 
+  <Style Selector="Border.ItemOverlay">
+    <Setter Property="Background" Value="#1f1f1f" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SurfaceStrokeColorFlyoutBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+  </Style>
+
 </Styles>

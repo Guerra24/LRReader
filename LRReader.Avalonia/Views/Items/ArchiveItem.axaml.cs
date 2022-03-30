@@ -45,11 +45,11 @@ namespace LRReader.Avalonia.Views.Items
 				return;
 			if (DataContext is Archive archive)
 			{
-				ViewModel.Archive = archive;
+				await ViewModel.Load(archive);
 				DataContext = ViewModel;
 				return;
 			}
-			if (!_oldID.Equals(ViewModel.Archive.arcid))
+			/*if (!_oldID.Equals(ViewModel.Archive.arcid))
 			{
 				/*Overlay.SetVisualOpacity(0);
 				Title.SetVisualOpacity(0);
@@ -75,7 +75,7 @@ namespace LRReader.Avalonia.Views.Items
 				Overlay.FadeIn();
 				Title.FadeIn();
 				TagsGrid.FadeIn();*/
-
+			/*
 				var Thumbnail = this.FindControl<Image>("Thumbnail");
 				var bytes = await Service.Images.GetThumbnailCached(ViewModel.Archive.arcid);
 				if (bytes == null)
@@ -91,7 +91,7 @@ namespace LRReader.Avalonia.Views.Items
 					}
 
 				_oldID = ViewModel.Archive.arcid;
-			}
+			}*/
 		}
 
 	}

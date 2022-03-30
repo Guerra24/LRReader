@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using LRReader.Avalonia.Views.Dialogs;
 using LRReader.Avalonia.Views.Main;
 using LRReader.Avalonia.Views.Tabs;
 using LRReader.Shared.Models;
@@ -27,7 +28,7 @@ namespace LRReader.Avalonia.Services
 			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
 		}
 
-		public override Version Version => new Version(1, 7, 5, 0);
+		public override Version Version => new Version(1, 7, 6, 0);
 
 		public override bool AnimationsEnabled => true;
 
@@ -56,9 +57,11 @@ namespace LRReader.Avalonia.Services
 			(Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow.Content = Activator.CreateInstance(GetPage(page));
 		}
 
-		public override Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null)
+		public override async Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null)
 		{
-			throw new NotImplementedException();
+			var dialog = new GenericDialog();
+			dialog.SetData(title, primarybutton, secondarybutton, closebutton, content);
+			return await dialog.ShowAsync();
 		}
 
 		public override Task<bool> OpenInBrowser(Uri uri)

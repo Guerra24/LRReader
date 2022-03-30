@@ -6,53 +6,58 @@
 			 d:DesignWidth="196"
 			 d:DesignHeight="318"
 			 x:Class="LRReader.Avalonia.Views.Items.ArchiveItem"
-			 Width="196"
-			 DataContextChanged="ArchiveItem_DataContextChanged">
-	<Grid Background="#1f1f1f">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
-		<TextBlock
-			x:Name="Title"
-			Grid.Row="0"
-			Padding="5,0"
-			HorizontalAlignment="Center"
-			FontSize="16"
-			Text="{Binding Archive.title, Mode=OneWay}"
-			TextTrimming="CharacterEllipsis"
-			ToolTip.Tip="{Binding Archive.title, Mode=OneWay}" />
-		<Grid x:Name="Overlay"
-			  Grid.Row="1">
-			<Image x:Name="Thumbnail"
-				   Width="200"
-				   Height="275"
-				   HorizontalAlignment="Center"/>
-			<Grid IsVisible="{Binding MissingImage, Mode=OneWay}">
-				<TextBlock Text="No Image"/>
-			</Grid>
-			<Grid HorizontalAlignment="Left"
-				  VerticalAlignment="Bottom"
-				  Background="#1f1f1f"
-				  IsVisible="{Binding Bookmarked, Mode=OneWay}">
-				<TextBlock Padding="6,2"
-						   FontSize="16"
-						   Text="{Binding BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}"/>
-			</Grid>
-			<Grid HorizontalAlignment="Right"
-				  VerticalAlignment="Bottom"
-				  Background="#1f1f1f"
-				  IsVisible="{Binding IsNew}">
-				<TextBlock Text="New!"
-						   Padding="6,2"
-						   FontSize="16"/>
-			</Grid>
-		</Grid>
-		<Grid Grid.Row="2">
-			<TextBlock Padding="2,2"
-					   Text="{Binding Archive.TagsClean, Mode=OneWay}"
-					   TextTrimming="CharacterEllipsis"/>
-		</Grid>
-	</Grid>
+			 Width="200"
+			 DataContextChanged="ArchiveItem_DataContextChanged" ClipToBounds="False">
+  <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
+          BoxShadow="0 2 8 2 #26000000">
+    <Grid x:Name="Root">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="275"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <TextBlock
+          x:Name="Title"
+          Grid.Row="0"
+          Padding="5,0"
+          HorizontalAlignment="Center"
+          FontSize="16"
+          Text="{Binding Archive.title, Mode=OneWay}"
+          TextTrimming="CharacterEllipsis"
+          ToolTip.Tip="{Binding Archive.title, Mode=OneWay}" />
+      <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
+        <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding Thumbnail}" />
+      </Border>
+      <Grid Grid.Row="1">
+        <Grid IsVisible="{Binding MissingImage, Mode=OneWay}">
+          <TextBlock Text="No Image"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left"
+              VerticalAlignment="Bottom"
+              Margin="4,0,0,4"
+              IsVisible="{Binding Bookmarked, Mode=OneWay}">
+          <Border Classes="ItemOverlay">
+            <TextBlock Padding="6,2"
+                       FontSize="16"
+                       Text="{Binding BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}"/>
+          </Border>
+        </Grid>
+        <Grid HorizontalAlignment="Right"
+              VerticalAlignment="Bottom"
+              Margin="0,0,4,4"
+              IsVisible="{Binding IsNew}">
+          <Border Classes="ItemOverlay">
+            <TextBlock Text="New!"
+                       Padding="6,2"
+                       FontSize="16"/>
+          </Border>
+        </Grid>
+      </Grid>
+      <Grid Grid.Row="2">
+        <TextBlock Padding="2,2"
+                   Text="{Binding Archive.TagsClean, Mode=OneWay}"
+                   TextTrimming="CharacterEllipsis"/>
+      </Grid>
+    </Grid>
+  </Border>
 </UserControl>
