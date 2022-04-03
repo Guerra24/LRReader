@@ -1,10 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
 namespace LRReader.Avalonia.Views
 {
-	public class MainWindow : Window
+	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
@@ -14,9 +13,5 @@ namespace LRReader.Avalonia.Views
 #endif
 		}
 
-		private void InitializeComponent()
-		{
-			AvaloniaXamlLoader.Load(this);
-		}
 	}
 }

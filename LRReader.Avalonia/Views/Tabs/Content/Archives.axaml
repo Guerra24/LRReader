@@ -6,6 +6,7 @@
 			 xmlns:models="using:LRReader.Shared.Models.Main"
 			 xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
 			 xmlns:items="using:LRReader.Avalonia.Views.Items"
+             xmlns:loc="using:LRReader.Avalonia"
 			 mc:Ignorable="d"
 			 d:DesignWidth="800"
 			 d:DesignHeight="450"
@@ -29,7 +30,7 @@
         </ItemsRepeater.Layout>
       </ItemsRepeater>
     </ScrollViewer>
-    <Button Content="Retry"
+    <Button Content="{loc:LocalizedString Key=/Generic/RetryBtn/Content}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             IsVisible="{Binding RefreshOnErrorButton, Mode=OneWay}"/>

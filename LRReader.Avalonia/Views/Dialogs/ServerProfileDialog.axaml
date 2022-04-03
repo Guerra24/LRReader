@@ -1,0 +1,21 @@
+<dialogs:GenericDialog xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:loc="using:LRReader.Avalonia"
+                       mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                       xmlns:dialogs="using:LRReader.Avalonia.Views.Dialogs"
+                       x:Class="LRReader.Avalonia.Views.Dialogs.ServerProfileDialog"
+                       PrimaryButtonText="{loc:LocalizedString Key=/Dialogs/ServerProfile/Dialog/PrimaryButtonText}"
+                       CloseButtonText="{loc:LocalizedString Key=/Dialogs/ServerProfile/Dialog/CloseButtonText}"
+                       DialogTitle="{loc:LocalizedString Key=/Dialogs/ServerProfile/Dialog/Title}">
+                       <!--IsPrimaryButtonEnabled="False"-->
+  <dialogs:GenericDialog.DialogContent>
+    <StackPanel Spacing="10">
+      <TextBox x:Name="ProfileName" Watermark="{loc:LocalizedString Key=/Dialogs/ServerProfile/ProfileName/PlaceholderText}" />
+      <TextBox x:Name="ProfileServerAddress" Watermark="{loc:LocalizedString Key=/Dialogs/ServerProfile/ProfileAddress/PlaceholderText}" Text="http://" />
+      <TextBox x:Name="ProfileServerApiKey" PasswordChar="*" Watermark="{loc:LocalizedString Key=/Dialogs/ServerProfile/ProfileApiKey/PlaceholderText}" />
+      <TextBlock x:Name="ProfileError" Foreground="#FF4141" />
+    </StackPanel>
+  </dialogs:GenericDialog.DialogContent>
+</dialogs:GenericDialog>

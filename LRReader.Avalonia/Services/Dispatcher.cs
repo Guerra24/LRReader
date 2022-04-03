@@ -8,7 +8,7 @@ namespace LRReader.Avalonia.Services
 
 	public class DispatcherService : IDispatcherService
 	{
-		private Dispatcher Dispatcher;
+		private Dispatcher Dispatcher = null!;
 
 		public void Init() => Dispatcher = Dispatcher.UIThread;
 

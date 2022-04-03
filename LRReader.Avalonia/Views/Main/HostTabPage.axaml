@@ -3,7 +3,10 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:aura="using:Aura.UI.Controls"
-			 xmlns:vm="clr-namespace:LRReader.Shared.Services;assembly=LRReader.Shared"
+			 xmlns:vm="using:LRReader.Shared.Services"
+             xmlns:loc="using:LRReader.Avalonia"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
 			 mc:Ignorable="d"
 			 d:DesignWidth="1500"
 			 d:DesignHeight="1000"
@@ -31,16 +34,36 @@
           </Grid.ColumnDefinitions>
           <Grid.Styles>
             <Style Selector="Button">
-              <Setter Property="Width"
-                      Value="34"/>
-              <Setter Property="Height"
-                      Value="32" />
+              <Setter Property="Width" Value="34"/>
+              <Setter Property="Height" Value="32" />
+              <Setter Property="Padding" Value="0" />
+            </Style>
+            <Style Selector="Viewbox">
+              <Setter Property="MaxWidth" Value="18" />
+              <Setter Property="MaxHeight" Value="18" />
             </Style>
           </Grid.Styles>
           <StackPanel Orientation="Horizontal">
-            <Button Content="bkm"/>
-            <Button Content="cte"/>
-            <Button Content="src"/>
+            <Button ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Click="Bookmarks_Click">
+              <Viewbox>
+                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+              </Viewbox>
+            </Button>
+            <Button ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/Categories/ToolTipService/ToolTip}" Click="Categories_Click">
+              <Viewbox>
+                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
+              </Viewbox>
+            </Button>
+            <Button ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/Search/ToolTipService/ToolTip}" Click="Search_Click">
+              <Viewbox>
+                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
+              </Viewbox>
+            </Button>
+            <Button ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/Tools/ToolTipService/ToolTip}" Click="Tools_Click">
+              <Viewbox>
+                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
+              </Viewbox>
+            </Button>
           </StackPanel>
           <Grid Grid.Column="1"
                 Background="Transparent"/>
@@ -51,8 +74,16 @@
               Background="{DynamicResource TextControlForeground}" />
           <StackPanel Grid.Column="3"
                       Orientation="Horizontal">
-            <Button Content="full"/>
-            <Button Content="stg"/>
+            <Button x:Name="EnterFullScreen" ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
+              <Viewbox>
+                <ui:SymbolIcon Symbol="FullScreen" />
+              </Viewbox>
+            </Button>
+            <Button x:Name="SettingsButton" ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/Settings/ToolTipService/ToolTip}" Click="SettingsButton_Click">
+              <Viewbox>
+                <ui:SymbolIcon Symbol="Setting" />
+              </Viewbox>
+            </Button>
           </StackPanel>
         </Grid>
       </aura:AuraTabView.Footer>

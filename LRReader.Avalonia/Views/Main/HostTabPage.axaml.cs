@@ -1,14 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using LRReader.Avalonia.Views.Tabs;
-using LRReader.Shared.Messages;
+using Avalonia.Interactivity;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.Messaging;
 
 namespace LRReader.Avalonia.Views.Main
 {
-	public class HostTabPage : UserControl
+	public partial class HostTabPage : UserControl
 	{
 		private TabsService Data;
 
@@ -16,11 +13,6 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			InitializeComponent();
 			Data = DataContext as TabsService;
-		}
-
-		private void InitializeComponent()
-		{
-			AvaloniaXamlLoader.Load(this);
 		}
 
 		private async void HostTabPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
@@ -39,12 +31,24 @@ namespace LRReader.Avalonia.Views.Main
 						Data.AddTab(new CategoriesTab(), false);*/
 			});
 		}
-		
+
 		private void HostTabPage_DetachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
 		{
 			if (Design.IsDesignMode)
 				return;
 			//WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
+
+		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
+
+		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) { }
+
+		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Bookmarks);
+
+		private void Categories_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Categories);
+
+		private void Search_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.SearchResults);
+
+		private void Tools_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Tools);
 	}
 }

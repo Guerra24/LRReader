@@ -1,12 +1,11 @@
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using LRReader.Shared.ViewModels;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Views.Tabs.Content
 {
-	public class Archives : UserControl
+	public partial class Archives : UserControl
 	{
 
 		private ArchivesPageViewModel Data;
@@ -19,11 +18,6 @@ namespace LRReader.Avalonia.Views.Tabs.Content
 		{
 			InitializeComponent();
 			Data = DataContext as ArchivesPageViewModel;
-		}
-
-		private void InitializeComponent()
-		{
-			AvaloniaXamlLoader.Load(this);
 		}
 
 		private async void Archives_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

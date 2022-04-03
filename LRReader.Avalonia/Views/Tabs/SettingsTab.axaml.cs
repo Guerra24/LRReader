@@ -1,8 +1,8 @@
 namespace LRReader.Avalonia.Views.Tabs
 {
-	public partial class ArchivesTab : CustomTab
+	public partial class SettingsTab : CustomTab
 	{
-		public ArchivesTab()
+		public SettingsTab()
 		{
 			InitializeComponent();
 		}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -15,11 +14,12 @@ namespace LRReader.Avalonia
 
 		public ResourceLoader(string file)
 		{
-			var path = AppContext.BaseDirectory;
-			var langFile = $"{path}/Strings/en/{file}.resw";
-			if (File.Exists(langFile))
+			var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"LRReader.Avalonia.Strings.en.{file}.resw");
+			if (stream == null)
+				return;
+			using (stream)
 			{
-				var xml = new XmlTextReader(langFile);
+				var xml = new XmlTextReader(stream);
 				while (xml.Read())
 				{
 					switch (xml.NodeType)
@@ -30,7 +30,7 @@ namespace LRReader.Avalonia
 								var key = xml.GetAttribute("name");
 								xml.Read();
 								xml.Read();
-								Lang.Add(key.Replace('.', '/'), xml.ReadString());
+								Lang.Add(key!.Replace('.', '/'), xml.ReadString());
 							}
 							break;
 					}
@@ -61,7 +61,7 @@ namespace LRReader.Avalonia
 
 	public sealed class LocalizedString : MarkupExtension
 	{
-		public string Key { get; set; }
+		public string Key { get; set; } = null!;
 
 		public override object ProvideValue(IServiceProvider serviceProvider)
 		{

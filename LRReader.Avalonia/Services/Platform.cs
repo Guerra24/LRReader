@@ -1,12 +1,13 @@
-﻿using Avalonia;
+﻿using System;
+using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using LRReader.Avalonia.Views;
 using LRReader.Avalonia.Views.Dialogs;
 using LRReader.Avalonia.Views.Main;
 using LRReader.Avalonia.Views.Tabs;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
-using System;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {
@@ -26,6 +27,9 @@ namespace LRReader.Avalonia.Services
 		public override void Init()
 		{
 			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
+			Tabs.MapTabToType(Tab.Settings, typeof(SettingsTab));
+
+			MapDialogToType(Dialog.ServerProfile, typeof(ServerProfileDialog));
 		}
 
 		public override Version Version => new Version(1, 7, 6, 0);
@@ -54,7 +58,16 @@ namespace LRReader.Avalonia.Services
 
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null)
 		{
-			(Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow.Content = Activator.CreateInstance(GetPage(page));
+			MainView main = null!;
+			if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
+				main = (MainView) desktop!.MainWindow!.Content!;
+			}
+			else if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime singleView)
+			{
+				main = (MainView) singleView.MainView!;
+			}
+			main.Content = Activator.CreateInstance(GetPage(page));
 		}
 
 		public override async Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null)

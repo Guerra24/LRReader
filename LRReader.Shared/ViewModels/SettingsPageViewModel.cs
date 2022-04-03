@@ -228,7 +228,7 @@ namespace LRReader.Shared.ViewModels
 		[ICommand]
 		private async Task RemoveProfile(ServerProfile profile)
 		{
-			var shouldRestart = SettingsManager.Profile.Equals(profile);
+			var shouldRestart = SettingsManager.Profile?.Equals(profile) ?? false;
 
 			var result = await Platform.OpenGenericDialog(
 				Platform.GetLocalizedString("Settings/Profiles/RemoveDialog/Title"),

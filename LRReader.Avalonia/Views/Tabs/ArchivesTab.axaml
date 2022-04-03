@@ -4,11 +4,12 @@
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:tabs="using:LRReader.Avalonia"
 				xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
+                xmlns:loc="using:LRReader.Avalonia"
 				mc:Ignorable="d"
 				d:DesignWidth="800"
 				d:DesignHeight="450"
 				x:Class="LRReader.Avalonia.Views.Tabs.ArchivesTab"
-				Header="Archives"
+				Header="{loc:LocalizedString Key=/Tabs/Archives/Tab/Header}"
 				CustomTabId="Archives"
 				Height="34">
 	<content:Archives />

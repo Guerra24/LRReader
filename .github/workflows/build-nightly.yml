@@ -16,12 +16,12 @@ jobs:
       env:
         DOTNET_NOLOGO: true
       run: |
-        dotnet publish LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=linux-x64
+        dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=linux-x64
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: LRReader.Avalonia.Linux-X64
-        path: LRReader.Avalonia/publish/linux-x64
+        name: LRReader.Avalonia.Desktop.Linux-X64
+        path: LRReader.Avalonia.Desktop/publish/linux-x64
   buildAvaloniaMacOSX64:
     name: Build Avalonia macOS X64
     runs-on: windows-2022
@@ -34,12 +34,12 @@ jobs:
       env:
         DOTNET_NOLOGO: true
       run: |
-        dotnet publish LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=macos-x64
+        dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=macos-x64
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: LRReader.Avalonia.macOS-X64
-        path: LRReader.Avalonia/publish/macos-x64
+        name: LRReader.Avalonia.Desktop.macOS-X64
+        path: LRReader.Avalonia.Desktop/publish/macos-x64
   buildAvaloniaWinX64:
     name: Build Avalonia Windows X64
     runs-on: windows-2022
@@ -52,12 +52,12 @@ jobs:
       env:
         DOTNET_NOLOGO: true
       run: |
-        dotnet publish LRReader.Avalonia\LRReader.Avalonia.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=win-x64
+        dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=win-x64
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: LRReader.Avalonia.Win-X64
-        path: LRReader.Avalonia/publish/win-x64
+        name: LRReader.Avalonia.Desktop.Win-X64
+        path: LRReader.Avalonia.Desktop/publish/win-x64
   buildUWP:
     name: Build UWP
     runs-on: windows-2022

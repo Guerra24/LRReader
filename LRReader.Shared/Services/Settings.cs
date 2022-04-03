@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -27,9 +26,8 @@ namespace LRReader.Shared.Services
 		[ObservableProperty]
 		private ObservableCollection<ServerProfile> _profiles = new ObservableCollection<ServerProfile>();
 
-		[AllowNull]
-		private ServerProfile _profile;
-		public ServerProfile Profile
+		private ServerProfile? _profile;
+		public ServerProfile? Profile
 		{
 			get => _profile;
 			set

@@ -2,6 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
              mc:Ignorable="d"
              d:DesignWidth="1500"
 			 d:DesignHeight="1000"
@@ -53,13 +55,7 @@
             Padding="{StaticResource ExpanderHeaderPadding}"
             HorizontalAlignment="Stretch"
             Command="{Binding AddProfileCommand}">
-          <TextBlock Text="Add" Margin="0,16" HorizontalAlignment="Center"/>
-          <!--
-          <FontIcon
-              Margin="0,16" HorizontalAlignment="Center"
-              FontFamily="{StaticResource SymbolThemeFontFamily}"
-              Glyph="&#xE710;" />
-          -->
+          <ui:FontIcon Margin="0,16" HorizontalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE710;" FontSize="22" />
         </Button>
         <ItemsRepeater Items="{Binding SettingsManager.Profiles, Mode=OneWay}">
           <ItemsRepeater.Layout>
@@ -82,10 +78,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition MaxWidth="400" />
                   </Grid.ColumnDefinitions>
-                  <TextBlock Text="PI"/>
-                  <!--
-                  <FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77b;" />
-                  -->
+                  <ui:FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77b;" FontSize="24" />
                   <StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
                     <TextBlock Text="{Binding Name, Mode=OneWay}" />
                     <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding ServerAddress, Mode=OneWay}" />
@@ -110,22 +103,16 @@
                               Icon="Delete" />
                         </MenuFlyout>
                       </Button.Flyout>
-                      Opt
-                      <!--
-                      <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
-                        <FontIcon.RenderTransform>
-                          <RotateTransform Angle="90" CenterX="8" CenterY="8" />
-                        </FontIcon.RenderTransform>
-                      </FontIcon>
-                      -->
+                      <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="22" Glyph="&#xE712;">
+                        <ui:FontIcon.RenderTransform>
+                          <RotateTransform Angle="90" CenterX="0" CenterY="0" />
+                        </ui:FontIcon.RenderTransform>
+                      </ui:FontIcon>
                     </Button>
-                    <!--
-                    <FontIcon
+                    <ui:FontIcon
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
-                        FontSize="14" Glyph="&#xE76C;" />
-                    -->
-                    <TextBlock Text="RA"/>
+                        FontSize="20" Glyph="&#xE76C;" />
                   </StackPanel>
                 </Grid>
               </Button>

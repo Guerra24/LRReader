@@ -1,11 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using LRReader.Shared.ViewModels;
 
 namespace LRReader.Avalonia.Views.Main
 {
-	public class LoadingPage : UserControl
+	public partial class LoadingPage : UserControl
 	{
 		private LoadingPageViewModel ViewModel;
 
@@ -13,11 +12,6 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			InitializeComponent();
 			ViewModel = DataContext as LoadingPageViewModel;
-		}
-
-		private void InitializeComponent()
-		{
-			AvaloniaXamlLoader.Load(this);
 		}
 
 		private async void LoadingPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

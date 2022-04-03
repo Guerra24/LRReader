@@ -57,25 +57,29 @@
 							<Setter Property="Padding" Value="0" />
 							<Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
 						</Style>
+						<Style TargetType="Viewbox">
+							<Setter Property="MaxWidth" Value="16"/>
+							<Setter Property="MaxHeight" Value="16"/>
+						</Style>
 					</Grid.Resources>
 					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" Spacing="2">
 						<Button x:Uid="/Pages/HostTabPage/Bookmarks" Click="Bookmarks_Click">
-							<Viewbox MaxWidth="16" MaxHeight="16">
+							<Viewbox>
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 							</Viewbox>
 						</Button>
 						<Button x:Uid="/Pages/HostTabPage/Categories" Click="Categories_Click">
-							<Viewbox MaxWidth="16" MaxHeight="16">
+							<Viewbox>
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 							</Viewbox>
 						</Button>
 						<Button x:Uid="/Pages/HostTabPage/Search" Click="Search_Click">
-							<Viewbox MaxWidth="16" MaxHeight="16">
+							<Viewbox>
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 							</Viewbox>
 						</Button>
 						<Button x:Uid="/Pages/HostTabPage/Tools" Click="Tools_Click" Visibility="{x:Bind Settings.Profile.HasApiKey, Mode=OneWay}">
-							<Viewbox MaxWidth="16" MaxHeight="16">
+							<Viewbox>
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 							</Viewbox>
 						</Button>
@@ -97,12 +101,12 @@
 						<Button
 							x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
 							Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
-							<Viewbox MaxWidth="16" MaxHeight="16">
+							<Viewbox>
 								<SymbolIcon Symbol="FullScreen" />
 							</Viewbox>
 						</Button>
 						<Button x:Name="SettingsButton" x:Uid="/Pages/HostTabPage/Settings" Click="SettingsButton_Click">
-							<Viewbox MaxWidth="16" MaxHeight="16">
+							<Viewbox>
 								<SymbolIcon Symbol="Setting" />
 							</Viewbox>
 						</Button>

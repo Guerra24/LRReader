@@ -13,7 +13,6 @@
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaTitleBarHeightHint="-1"
-        FontFamily="Segoe UI Variable"
         Icon="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png">
   <Grid>
     <Grid.RowDefinitions>
@@ -22,8 +21,8 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
     <StackPanel Background="{DynamicResource LayerFillColorAltBrush}">
-      <TextBlock x:Name="DialogTitle" Margin="24,24,24,12" FontSize="20" FontWeight="SemiBold"/>
-      <ContentControl x:Name="ContentControl" Margin="24,0,24,24" />
+      <TextBlock x:Name="DialogTitleTextBlock" Margin="24,24,24,12" FontSize="20" FontWeight="SemiBold"/>
+      <ContentPresenter x:Name="ContentPresenter" Margin="24,0,24,24" x:FieldModifier="protected" />
     </StackPanel>
     <Border Grid.Row="1" Background="{DynamicResource CardStrokeColorDefaultBrush}"/>
     <Grid Grid.Row="2" Margin="24">

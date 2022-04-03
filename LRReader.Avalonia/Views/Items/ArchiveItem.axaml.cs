@@ -12,7 +12,7 @@ using System.IO;
 
 namespace LRReader.Avalonia.Views.Items
 {
-	public class ArchiveItem : UserControl
+	public partial class ArchiveItem : UserControl
 	{
 
 		private ArchiveItemViewModel ViewModel { get; }
@@ -32,11 +32,6 @@ namespace LRReader.Avalonia.Views.Items
 			ViewModel = Service.Services.GetRequiredService<ArchiveItemViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
 			flags = Service.Api.ControlFlags;
-		}
-
-		private void InitializeComponent()
-		{
-			AvaloniaXamlLoader.Load(this);
 		}
 
 		private async void ArchiveItem_DataContextChanged(object sender, EventArgs e)
