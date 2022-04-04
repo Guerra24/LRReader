@@ -37,13 +37,14 @@
               <Setter Property="Width" Value="34"/>
               <Setter Property="Height" Value="32" />
               <Setter Property="Padding" Value="0" />
+              <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
             </Style>
             <Style Selector="Viewbox">
               <Setter Property="MaxWidth" Value="18" />
               <Setter Property="MaxHeight" Value="18" />
             </Style>
           </Grid.Styles>
-          <StackPanel Orientation="Horizontal">
+          <StackPanel Orientation="Horizontal" Spacing="2">
             <Button ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Click="Bookmarks_Click">
               <Viewbox>
                 <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
@@ -71,8 +72,8 @@
               Grid.Column="2"
               Width="1"
               Margin="3,8,3,8"
-              Background="{DynamicResource TextControlForeground}" />
-          <StackPanel Grid.Column="3"
+              Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+          <StackPanel Grid.Column="3" Spacing="2"
                       Orientation="Horizontal">
             <Button x:Name="EnterFullScreen" ToolTip.Tip="{loc:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
               <Viewbox>
