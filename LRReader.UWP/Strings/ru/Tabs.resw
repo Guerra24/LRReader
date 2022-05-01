@@ -178,7 +178,7 @@
     <value>Показать две страницы</value>
   </data>
   <data name="Archive.Settings.VerticalReader.Text" xml:space="preserve">
-    <value>Use vertical reader</value>
+    <value>Использовать вертикальный ридер</value>
   </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Добавить все</value>
@@ -187,7 +187,7 @@
     <value>Новый</value>
   </data>
   <data name="ArchiveEdit.ChangeThumbnail.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Change</value>
+    <value>Изменить</value>
   </data>
   <data name="ArchiveEdit.ID.Header" xml:space="preserve">
     <value>ID</value>
@@ -217,7 +217,7 @@
     <value>Теги</value>
   </data>
   <data name="ArchiveEdit.ThumbnailTitle.Text" xml:space="preserve">
-    <value>Thumbnail</value>
+    <value>Эскиз</value>
   </data>
   <data name="ArchiveEdit.Title.Header" xml:space="preserve">
     <value>Заголовок</value>
