@@ -8,6 +8,7 @@
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:Class="LRReader.Avalonia.Views.Tabs.SettingsTab"
                 CustomTabId="Settings"
+                CustomTabIcon="Settings"
                 Header="{loc:LocalizedString Key=/Tabs/Settings/Tab/Header}">
   
 </tabs:CustomTab>

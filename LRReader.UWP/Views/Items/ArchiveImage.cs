@@ -56,7 +56,8 @@ namespace LRReader.UWP.Views.Items
 		{
 			base.OnApplyTemplate();
 			Root = GetTemplateChild("Root") as Grid;
-			VisualStateManager.GoToState(this, "Hidden", false);
+			if (!KeepOverlayOpen)
+				VisualStateManager.GoToState(this, "Hidden", false);
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

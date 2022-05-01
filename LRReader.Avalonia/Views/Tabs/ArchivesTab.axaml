@@ -11,6 +11,8 @@
 				x:Class="LRReader.Avalonia.Views.Tabs.ArchivesTab"
 				Header="{loc:LocalizedString Key=/Tabs/Archives/Tab/Header}"
 				CustomTabId="Archives"
+                CustomTabIcon="Library"
+                CustomTabIsClosable="False"
 				Height="34">
 	<content:Archives />
 </tabs:CustomTab>
