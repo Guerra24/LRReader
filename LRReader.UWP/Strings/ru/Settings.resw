@@ -526,19 +526,19 @@
     <value>Обновление было обнаружено, но при попытке загрузить журнал изменений произошла ошибка</value>
   </data>
   <data name="Reader.VerticalReader.Description" xml:space="preserve">
-    <value>Stack pages vertically</value>
+    <value>Размещение страниц по вертикали</value>
   </data>
   <data name="Reader.VerticalReader.Title" xml:space="preserve">
-    <value>Use vertical reader</value>
+    <value>Использовать вертикальный ридер</value>
   </data>
   <data name="Server.RescanContent.Description" xml:space="preserve">
-    <value>Rescan content directory in case of missing files or page counts</value>
+    <value>Повторное сканирование содержимого папки в случае отсутствия файлов или количества страниц</value>
   </data>
   <data name="Server.RescanContent.Title" xml:space="preserve">
-    <value>Content directory</value>
+    <value>Содержимое папки</value>
   </data>
   <data name="Server.RescanContentButton.Content" xml:space="preserve">
-    <value>Rescan</value>
+    <value>Сканировать повторно</value>
     <comment>n</comment>
   </data>
 </root>
