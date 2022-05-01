@@ -269,12 +269,12 @@
     <value>Имя профиля</value>
   </data>
   <data name="ThumbnailPicker.Dialog.CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмена</value>
   </data>
   <data name="ThumbnailPicker.Dialog.PrimaryButtonText" xml:space="preserve">
-    <value>Apply</value>
+    <value>Применить</value>
   </data>
   <data name="ThumbnailPicker.Dialog.Title" xml:space="preserve">
-    <value>Pick a thumbnail</value>
+    <value>Выберите уменьшенное изображение</value>
   </data>
 </root>
