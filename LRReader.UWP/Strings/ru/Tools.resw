@@ -160,13 +160,13 @@
     <value>Завершено</value>
   </data>
   <data name="Deduplicator.DeleteArchive.Text" xml:space="preserve">
-    <value>Delete archive?</value>
+    <value>Удалить архив?</value>
   </data>
   <data name="Deduplicator.DeleteArchiveTT.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Delete archive</value>
+    <value>Удалить архив</value>
   </data>
   <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
-    <value>Yes, delete</value>
+    <value>Удалить</value>
   </data>
   <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
     <value>Предполагаемое время:</value>
@@ -205,25 +205,25 @@
     <value>Обнаружена недопустимый эскиз</value>
   </data>
   <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
-    <value>Mark as non duplicate?</value>
+    <value>Пометить как не дубликат?</value>
   </data>
   <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Mark as non duplicate</value>
+    <value>Пометить как не дубликат</value>
   </data>
   <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
-    <value>Yes, mark as non duplicate</value>
+    <value>Пометить</value>
   </data>
   <data name="Deduplicator.MissingThumbs.Content" xml:space="preserve">
-    <value>Missing thumbnails</value>
+    <value>Отсутствующие эскизы</value>
   </data>
   <data name="Deduplicator.MissingThumbs.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Archives with missing thumbnails</value>
+    <value>Архивы с отсутствующими эскизами</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
-    <value>Ensure that all archives are valid</value>
+    <value>Убедитесь, что все архивы действительны</value>
   </data>
   <data name="Deduplicator.NoThumbTask.Title" xml:space="preserve">
-    <value>Unable to create thumbnail regen task</value>
+    <value>Невозможно создать задачу регенерации эскизов</value>
   </data>
   <data name="Deduplicator.Of.Text" xml:space="preserve">
     <value>из</value>
@@ -250,25 +250,25 @@
     <value>Разрешение</value>
   </data>
   <data name="Deduplicator.SkipMissing.Title" xml:space="preserve">
-    <value>Skip missing thumbnails</value>
+    <value>Пропустить отсутствующие эскизы</value>
   </data>
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Шаг</value>
   </data>
   <data name="Deduplicator.SxSImages.Text" xml:space="preserve">
-    <value>Images</value>
+    <value>Изображения</value>
   </data>
   <data name="Deduplicator.SxSPages.Text" xml:space="preserve">
-    <value>Pages</value>
+    <value>Страницы</value>
   </data>
   <data name="Deduplicator.SxSResolution.Text" xml:space="preserve">
-    <value>Resolution</value>
+    <value>Разрешение</value>
   </data>
   <data name="Deduplicator.SxSTags.Text" xml:space="preserve">
-    <value>Tags</value>
+    <value>Теги</value>
   </data>
   <data name="Deduplicator.SxSTitle.Text" xml:space="preserve">
-    <value>Title</value>
+    <value>Название</value>
   </data>
   <data name="Deduplicator.TeachingTip.Title" xml:space="preserve">
     <value>Как это работает</value>
@@ -277,13 +277,13 @@
     <value>Рабочие потоки</value>
   </data>
   <data name="DeduplicatorHidden.Empty.Text" xml:space="preserve">
-    <value>Try marking something as non duplicate</value>
+    <value>Попробуйте пометить что-то как не дубликат</value>
   </data>
   <data name="DeduplicatorHidden.Remove.Text" xml:space="preserve">
-    <value>Remove</value>
+    <value>Убрать</value>
   </data>
   <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
-    <value>Hidden pairs</value>
+    <value>Скрытые пары</value>
   </data>
   <data name="DeduplicatorPage.Title" xml:space="preserve">
     <value>Дедупликатор</value>
