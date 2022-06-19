@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Updates.Check.Content" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="Updates.Download.Content" xml:space="preserve">
+    <value>下载并安装</value>
+  </data>
+  <data name="Updates.DownloadNotice.Text" xml:space="preserve">
+    <value>该应用程序将自动关闭</value>
+  </data>
+  <data name="Updates.DownloadYes.Content" xml:space="preserve">
+    <value>关闭并更新</value>
+  </data>
+  <data name="About.Github.Description" xml:space="preserve">
+    <value>源代码、建议和支持</value>
+  </data>
+  <data name="About.KoFi.Description" xml:space="preserve">
+    <value>捐赠</value>
+  </data>
+  <data name="About.License.Content" xml:space="preserve">
+    <value>许可</value>
+  </data>
+  <data name="About.Links.Text" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="Updates.NotFound.Title" xml:space="preserve">
+    <value>未找到更新</value>
+  </data>
+  <data name="About.Privacy.Content" xml:space="preserve">
+    <value>隐私政策</value>
+  </data>
+  <data name="About.Supported.Text" xml:space="preserve">
+    <value>LANraragi</value>
+  </data>
+  <data name="About.Version.Text" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="AboutPage.Title" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="General.App.Title" xml:space="preserve">
+    <value>应用程序</value>
+  </data>
+  <data name="General.AppTheme.Dark" xml:space="preserve">
+    <value>暗</value>
+  </data>
+  <data name="General.AppTheme.Light" xml:space="preserve">
+    <value>亮</value>
+  </data>
+  <data name="General.AppTheme.System" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="General.Bookmarked.Title" xml:space="preserve">
+    <value>在启动时打开已添加书签的档案</value>
+  </data>
+  <data name="General.Bookmarks.Title" xml:space="preserve">
+    <value>在启动时打开书签选项卡</value>
+  </data>
+  <data name="General.Categories.Title" xml:space="preserve">
+    <value>在启动时打开分类选项卡</value>
+  </data>
+  <data name="General.ClearThumbCache.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="General.CompactMarks.Title" xml:space="preserve">
+    <value>使用简洁的书签</value>
+  </data>
+  <data name="General.Connection.Title" xml:space="preserve">
+    <value>连接</value>
+  </data>
+  <data name="General.CrashReport.Title" xml:space="preserve">
+    <value>收集错误和崩溃日志</value>
+  </data>
+  <data name="General.ExpanderProfile.Title" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="General.InputSortBy.Title" xml:space="preserve">
+    <value>排列</value>
+  </data>
+  <data name="General.OrderBy.Title" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="General.ProfileSelection.PlaceholderText" xml:space="preserve">
+    <value>选择配置</value>
+  </data>
+  <data name="General.Search.Title" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="General.Size.Text" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="General.SortBy.PlaceholderText" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="General.SwitchProfile.CloseButtonText" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="General.SwitchProfile.Content" xml:space="preserve">
+    <value>您确定要更改个人配置吗?{0}重载以生效</value>
+  </data>
+  <data name="General.SwitchProfile.PrimaryButtonText" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="General.SwitchProfile.Title" xml:space="preserve">
+    <value>修改配置</value>
+  </data>
+  <data name="General.Tabs.Title" xml:space="preserve">
+    <value>选项卡</value>
+  </data>
+  <data name="General.Theme.Title" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="General.ThumbCache.Title" xml:space="preserve">
+    <value>缩略图缓存</value>
+  </data>
+  <data name="General.VisualTags.Title" xml:space="preserve">
+    <value>可视化标签编辑器</value>
+  </data>
+  <data name="General.VisualTags.Description" xml:space="preserve">
+    <value>使用控件来编辑标签而不是文本框</value>
+  </data>
+  <data name="GeneralPage.Title" xml:space="preserve">
+    <value>一般</value>
+  </data>
+  <data name="Reader.AutoOpen.Title" xml:space="preserve">
+    <value>自动打开阅读器</value>
+  </data>
+  <data name="Reader.AV1Notice.Content" xml:space="preserve">
+    <value>安装以查看 AVIF 内容</value>
+  </data>
+  <data name="Reader.AV1NoticeInfo.Title" xml:space="preserve">
+    <value>缺少 AV1 视频扩展</value>
+  </data>
+  <data name="Reader.BookmarksGroup.Title" xml:space="preserve">
+    <value>书签</value>
+  </data>
+  <data name="Reader.FitLimit.Title" xml:space="preserve">
+    <value>比例限制</value>
+  </data>
+  <data name="Reader.FitLimit.Description" xml:space="preserve">
+    <value>可应用于页面的最大缩放比例</value>
+  </data>
+  <data name="Reader.FitWidth.Title" xml:space="preserve">
+    <value>适合宽度</value>
+  </data>
+  <data name="Reader.FitWidth.Description" xml:space="preserve">
+    <value>将页面缩放到窗口的整个宽度</value>
+  </data>
+  <data name="Reader.HEIFNotice.Content" xml:space="preserve">
+    <value>安装以查看 HEIF 内容</value>
+  </data>
+  <data name="Reader.HEIFNoticeInfo.Title" xml:space="preserve">
+    <value>缺少 HEIF 图像扩展</value>
+  </data>
+  <data name="Reader.Keyboard.Title" xml:space="preserve">
+    <value>键盘滚动距离</value>
+  </data>
+  <data name="Reader.Keyboard.Description" xml:space="preserve">
+    <value>使用键盘操作时的距离（以像素为单位）</value>
+  </data>
+  <data name="Reader.Reminder.Title" xml:space="preserve">
+    <value>添加书签提醒</value>
+  </data>
+  <data name="Reader.Reminder.Description" xml:space="preserve">
+    <value>如果中途关闭，询问是否为存档添加书签</value>
+  </data>
+  <data name="Reader.ReminderMode.All" xml:space="preserve">
+    <value>全部档案</value>
+  </data>
+  <data name="Reader.ReminderMode.New" xml:space="preserve">
+    <value>仅标记为"New"的档案</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.Title" xml:space="preserve">
+    <value>移除书签提示</value>
+  </data>
+  <data name="Reader.RemoveBookmarkReminder.Description" xml:space="preserve">
+    <value>阅读完后询问是否删除书签</value>
+  </data>
+  <data name="Reader.RTL.Title" xml:space="preserve">
+    <value>从右到左阅读</value>
+  </data>
+  <data name="Reader.RTL.Description" xml:space="preserve">
+    <value>反转页面读取方向</value>
+  </data>
+  <data name="Reader.SetBuilder.Content" xml:space="preserve">
+    <value>使用改进的阅读顺序</value>
+  </data>
+  <data name="Reader.SetBuilder.ToolTipService.ToolTip" xml:space="preserve">
+    <value>构建页面顺序时使用纵横比。 推荐用于具有可变纵横比的档案.</value>
+  </data>
+  <data name="Reader.TwoPages.Title" xml:space="preserve">
+    <value>显示两页</value>
+  </data>
+  <data name="Reader.TwoPages.Description" xml:space="preserve">
+    <value>将同时显示两个页面</value>
+  </data>
+  <data name="Reader.Zoom.Title" xml:space="preserve">
+    <value>默认缩放</value>
+  </data>
+  <data name="ReaderPage.Title" xml:space="preserve">
+    <value>阅读器</value>
+  </data>
+  <data name="Server.ApiRequired.Text" xml:space="preserve">
+    <value>使用服务器选项所需的 API 密钥</value>
+  </data>
+  <data name="Server.BackupDB.Title" xml:space="preserve">
+    <value>备份数据库</value>
+  </data>
+  <data name="Server.BackupDB.Description" xml:space="preserve">
+    <value>已返回 JSON 备份。 此备份可以手动导入</value>
+  </data>
+  <data name="Server.BackupDBButton.Content" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="Server.Batch.Title" xml:space="preserve">
+    <value>批量标记</value>
+  </data>
+  <data name="Server.ClearNew.Title" xml:space="preserve">
+    <value>清理"New"标记</value>
+  </data>
+  <data name="Server.ClearNew.Description" xml:space="preserve">
+    <value>清除所有档案上的"New"标记</value>
+  </data>
+  <data name="Server.ClearNewButton.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Server.ClearNewNotice.Text" xml:space="preserve">
+    <value>所有档案的"New"标记将被清除。 你想继续吗?</value>
+  </data>
+  <data name="Server.ClearNewYes.Content" xml:space="preserve">
+    <value>是的，清除所有</value>
+  </data>
+  <data name="Server.Database.Title" xml:space="preserve">
+    <value>数据库</value>
+  </data>
+  <data name="Server.Debug.Content" xml:space="preserve">
+    <value>调试模式</value>
+  </data>
+  <data name="Server.Logs.Title" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="Server.NoFun.Content" xml:space="preserve">
+    <value>自闭模式</value>
+  </data>
+  <data name="Server.PluginSettings.Title" xml:space="preserve">
+    <value>插件配置</value>
+  </data>
+  <data name="Server.RegenThumb.Content" xml:space="preserve">
+    <value>生成</value>
+  </data>
+  <data name="Server.RegenThumbForced.Content" xml:space="preserve">
+    <value>强制全部</value>
+  </data>
+  <data name="Server.RegenThumbForced.ToolTipService.ToolTip" xml:space="preserve">
+    <value>重新生成所有缩略图</value>
+  </data>
+  <data name="Server.RegenThumbnails.Title" xml:space="preserve">
+    <value>缩略图</value>
+  </data>
+  <data name="Server.RegenThumbNotice.Text" xml:space="preserve">
+    <value>如果强制重新生成所有缩略图，则会生成丢失的缩略图文件</value>
+  </data>
+  <data name="Server.RegenThumbYes.Content" xml:space="preserve">
+    <value>是的，生成缩略图</value>
+  </data>
+  <data name="Server.ResetCache.Title" xml:space="preserve">
+    <value>搜索缓存</value>
+  </data>
+  <data name="Server.ResetCache.Description" xml:space="preserve">
+    <value>结果将被存储以提高性能。 如果有需要请使用</value>
+  </data>
+  <data name="Server.ResetCacheButton.Content" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="Server.ResizedImages.Content" xml:space="preserve">
+    <value>调整图像大小</value>
+  </data>
+  <data name="Server.Settings.Title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Server.Upload.Title" xml:space="preserve">
+    <value>上传档案</value>
+  </data>
+  <data name="Server.UsePassword.Content" xml:space="preserve">
+    <value>使用密码</value>
+  </data>
+  <data name="Server.Worker.Title" xml:space="preserve">
+    <value>后台工作</value>
+  </data>
+  <data name="Server.WorkerRestart.Title" xml:space="preserve">
+    <value>重启后台工作</value>
+  </data>
+  <data name="Server.WorkerRestartButton.Content" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="Server.WorkerRunning.Text" xml:space="preserve">
+    <value> 运行中</value>
+  </data>
+  <data name="Server.WorkerStatus.Text" xml:space="preserve">
+    <value>状态:</value>
+  </data>
+  <data name="Server.WorkerStop.Title" xml:space="preserve">
+    <value>停止后台工作</value>
+  </data>
+  <data name="Server.WorkerStopButton.Content" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="Server.WorkerStopped.Text" xml:space="preserve">
+    <value> 已停止</value>
+  </data>
+  <data name="Server.WorkerUnknown.Text" xml:space="preserve">
+    <value> 未知</value>
+  </data>
+  <data name="ServerPage.Title" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="Reader.ScrollToChange.Description" xml:space="preserve">
+    <value>通过在页面顶部或底部滚动来更改页面</value>
+  </data>
+  <data name="Reader.ScrollToChange.Title" xml:space="preserve">
+    <value>滚动以更改页面</value>
+  </data>
+  <data name="UpdatesPage.Title" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="AboutPage.Description" xml:space="preserve">
+    <value>版本, 支持, 源代码</value>
+  </data>
+  <data name="GeneralPage.Description" xml:space="preserve">
+    <value>标签, 搜索, 主题</value>
+  </data>
+  <data name="ReaderPage.Description" xml:space="preserve">
+    <value>缩放, 两页, 书签</value>
+  </data>
+  <data name="ServerPage.Description" xml:space="preserve">
+    <value>设置, 工具, 数据库</value>
+  </data>
+  <data name="UpdatesPage.Description" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="ProfilesPage.Title" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="FeedbackPage.Title" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="Reader.CustomBackground.Title" xml:space="preserve">
+    <value>背景颜色</value>
+  </data>
+  <data name="FeedbackPage.Description" xml:space="preserve">
+    <value>更改和功能请求</value>
+  </data>
+  <data name="Updates.AutoUpdates.Title" xml:space="preserve">
+    <value>自动更新</value>
+  </data>
+  <data name="Profiles.AddProfile.ToolTipService.ToolTip" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Profiles.Delete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Profiles.Edit.Text" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Profiles.RemoveDialog.CloseButtonText" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Content" xml:space="preserve">
+    <value>是否要删除 "{0}"?</value>
+  </data>
+  <data name="Profiles.RemoveDialog.PrimaryButtonText" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Profiles.RemoveDialog.Title" xml:space="preserve">
+    <value>移除配置文件</value>
+  </data>
+  <data name="Reader.NextArchive.Description" xml:space="preserve">
+    <value>最后切换到下一个存档</value>
+  </data>
+  <data name="Reader.NextArchive.Title" xml:space="preserve">
+    <value>打开下一个存档</value>
+  </data>
+  <data name="Profiles.AutoLogin.Title" xml:space="preserve">
+    <value>启动时连接</value>
+  </data>
+  <data name="Profiles.ProfileGroup.Title" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="ProfilesPage.Description" xml:space="preserve">
+    <value>启动时连接, 编辑, 删除</value>
+  </data>
+  <data name="General.PopupLocation.Bottom" xml:space="preserve">
+    <value>底部</value>
+  </data>
+  <data name="General.PopupLocation.Middle" xml:space="preserve">
+    <value>中间</value>
+  </data>
+  <data name="General.PopupLocation.Top" xml:space="preserve">
+    <value>顶部</value>
+  </data>
+  <data name="General.TagsPopup.Title" xml:space="preserve">
+    <value>标签弹出的位置</value>
+  </data>
+  <data name="Updates.NoChangelog" xml:space="preserve">
+    <value>检测到更新，但尝试加载更改日志时出错</value>
+  </data>
+  <data name="Reader.VerticalReader.Description" xml:space="preserve">
+    <value>垂直叠放页面</value>
+  </data>
+  <data name="Reader.VerticalReader.Title" xml:space="preserve">
+    <value>使用垂直阅读器</value>
+  </data>
+  <data name="Server.RescanContent.Description" xml:space="preserve">
+    <value>在丢失文件或页数的情况下重新扫描内容目录</value>
+  </data>
+  <data name="Server.RescanContent.Title" xml:space="preserve">
+    <value>内容目录</value>
+  </data>
+  <data name="Server.RescanContentButton.Content" xml:space="preserve">
+    <value>重新扫描</value>
+    <comment>n</comment>
+  </data>
+</root>
