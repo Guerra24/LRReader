@@ -48,7 +48,7 @@ namespace LRReader.Shared.ViewModels.Tools
 		{
 			if (archives.Count == 0)
 				return;
-			foreach (var a in archives.Cast<Archive>())
+			foreach (var a in archives.ToList().Cast<Archive>())
 				await Archives.DeleteArchive(a.arcid);
 		}
 
@@ -57,7 +57,7 @@ namespace LRReader.Shared.ViewModels.Tools
 		{
 			if (archives.Count == 0)
 				return;
-			var items = archives.Cast<Archive>();
+			var items = archives.ToList().Cast<Archive>();
 			if (MoveToCategory)
 			{
 				foreach (var a in items)
