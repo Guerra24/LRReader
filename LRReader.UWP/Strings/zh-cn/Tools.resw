@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BulkEditor.AddTo.Text" xml:space="preserve">
+    <value>添加到</value>
+  </data>
+  <data name="BulkEditor.Apply.Content" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="BulkEditor.ChangeCategory.Text" xml:space="preserve">
+    <value>更改分类</value>
+  </data>
+  <data name="BulkEditor.Delete.Content" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="BulkEditor.DeleteSelected.Text" xml:space="preserve">
+    <value>删除所选</value>
+  </data>
+  <data name="BulkEditor.DeleteSure.Text" xml:space="preserve">
+    <value>你确定吗?</value>
+  </data>
+  <data name="BulkEditor.DeleteYes.Content" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="BulkEditor.RemoveOtherCats.Content" xml:space="preserve">
+    <value>从其他分类中移除</value>
+  </data>
+  <data name="BulkEditor.SelectedArchives.Text" xml:space="preserve">
+    <value>选定的档案</value>
+  </data>
+  <data name="BulkEditorPage.Title" xml:space="preserve">
+    <value>批量编辑器</value>
+  </data>
+  <data name="Deduplicator.AspectRatio.Description" xml:space="preserve">
+    <value>最大长宽比</value>
+  </data>
+  <data name="Deduplicator.AspectRatio.Title" xml:space="preserve">
+    <value>长宽比限制</value>
+  </data>
+  <data name="Deduplicator.Comparing" xml:space="preserve">
+    <value>比较缩略图</value>
+  </data>
+  <data name="Deduplicator.Completed" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="Deduplicator.DeleteArchive.Text" xml:space="preserve">
+    <value>删除档案?</value>
+  </data>
+  <data name="Deduplicator.DeleteArchiveTT.ToolTipService.ToolTip" xml:space="preserve">
+    <value>删除存档</value>
+  </data>
+  <data name="Deduplicator.DeleteArchiveYesNo.Content" xml:space="preserve">
+    <value>是的，删除</value>
+  </data>
+  <data name="Deduplicator.EstimatedTime.Text" xml:space="preserve">
+    <value>预计时间:</value>
+  </data>
+  <data name="Deduplicator.Execute.Content" xml:space="preserve">
+    <value>执行</value>
+  </data>
+  <data name="Deduplicator.Expander.Title" xml:space="preserve">
+    <value>去重器</value>
+  </data>
+  <data name="Deduplicator.GenerateThumbnails" xml:space="preserve">
+    <value>生成缩略图</value>
+  </data>
+  <data name="Deduplicator.Help.Content" xml:space="preserve">
+    <value>工作原理</value>
+  </data>
+  <data name="Deduplicator.HowItWorks.Text" xml:space="preserve">
+    <value>这是所有档案缩略图之间基于差异的比较.
+
+它采用所有缩略图，并使用曼哈顿距离运算为每一对应用每个像素的差异，并将结果与 *像素阈值* 参数进行比较，并计算有多少像素通过了此比较，然后将此数字与 *图像差异* 进行比较 决定图像有多少不同的参数.
+
+*分辨率*用于在比较它们增加速度之前缩小图像.
+
+*宽高比限制*用于提前跳过分辨率不匹配的图像.</value>
+  </data>
+  <data name="Deduplicator.ImageDiffLimit.Description" xml:space="preserve">
+    <value>最小总差异</value>
+  </data>
+  <data name="Deduplicator.ImageDiffLimit.Title" xml:space="preserve">
+    <value>图像差异</value>
+  </data>
+  <data name="Deduplicator.InvalidThumb.Message" xml:space="preserve">
+    <value>尝试增加请求延迟、减少工作线程或检查所有缩略图是否有效.
+最后启用跳过丢失的缩略图并重试</value>
+  </data>
+  <data name="Deduplicator.InvalidThumb.Title" xml:space="preserve">
+    <value>检测到无效缩略图</value>
+  </data>
+  <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
+    <value>标记为非重复?</value>
+  </data>
+  <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
+    <value>标记为非重复</value>
+  </data>
+  <data name="Deduplicator.MarkNonDupYesNo.Content" xml:space="preserve">
+    <value>是的，标记为不重复</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.Content" xml:space="preserve">
+    <value>缺少缩略图</value>
+  </data>
+  <data name="Deduplicator.MissingThumbs.ToolTipService.ToolTip" xml:space="preserve">
+    <value>缺少缩略图的档案</value>
+  </data>
+  <data name="Deduplicator.NoThumbTask.Message" xml:space="preserve">
+    <value>确保所有存档都有效</value>
+  </data>
+  <data name="Deduplicator.NoThumbTask.Title" xml:space="preserve">
+    <value>无法创建缩略图重新生成任务</value>
+  </data>
+  <data name="Deduplicator.Of.Text" xml:space="preserve">
+    <value>在</value>
+  </data>
+  <data name="Deduplicator.PixelThreshold.Description" xml:space="preserve">
+    <value>最小像素差</value>
+  </data>
+  <data name="Deduplicator.PixelThreshold.Title" xml:space="preserve">
+    <value>像素阈值</value>
+  </data>
+  <data name="Deduplicator.PreloadAndDecode" xml:space="preserve">
+    <value>加载和解码</value>
+  </data>
+  <data name="Deduplicator.Ready" xml:space="preserve">
+    <value>就绪</value>
+  </data>
+  <data name="Deduplicator.RequestDelay.Description" xml:space="preserve">
+    <value>以毫秒为单位</value>
+  </data>
+  <data name="Deduplicator.RequestDelay.Title" xml:space="preserve">
+    <value>每个线程的请求延迟</value>
+  </data>
+  <data name="Deduplicator.Resolution.Title" xml:space="preserve">
+    <value>分辨率</value>
+  </data>
+  <data name="Deduplicator.SkipMissing.Title" xml:space="preserve">
+    <value>跳过丢失的缩略图</value>
+  </data>
+  <data name="Deduplicator.Step.Text" xml:space="preserve">
+    <value>步骤</value>
+  </data>
+  <data name="Deduplicator.SxSImages.Text" xml:space="preserve">
+    <value>图片</value>
+  </data>
+  <data name="Deduplicator.SxSPages.Text" xml:space="preserve">
+    <value>页数</value>
+  </data>
+  <data name="Deduplicator.SxSResolution.Text" xml:space="preserve">
+    <value>分辨率</value>
+  </data>
+  <data name="Deduplicator.SxSTags.Text" xml:space="preserve">
+    <value>标签</value>
+  </data>
+  <data name="Deduplicator.SxSTitle.Text" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="Deduplicator.TeachingTip.Title" xml:space="preserve">
+    <value>工作原理</value>
+  </data>
+  <data name="Deduplicator.Threads.Title" xml:space="preserve">
+    <value>工作线程</value>
+  </data>
+  <data name="DeduplicatorHidden.Empty.Text" xml:space="preserve">
+    <value>尝试将某些内容标记为不重复</value>
+  </data>
+  <data name="DeduplicatorHidden.Remove.Text" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="DeduplicatorHiddenPage.Title" xml:space="preserve">
+    <value>隐藏的配对</value>
+  </data>
+  <data name="DeduplicatorPage.Title" xml:space="preserve">
+    <value>去重器</value>
+  </data>
+  <data name="GenericTool.Error" xml:space="preserve">
+    <value>出现未知错误</value>
+  </data>
+  <data name="MainPage.Title" xml:space="preserve">
+    <value>工具</value>
+  </data>
+</root>
