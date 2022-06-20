@@ -380,6 +380,14 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Strings\zh-cn\Tools.resw" />
+    <PRIResource Include="Strings\zh-cn\Tabs.resw" />
+    <PRIResource Include="Strings\zh-cn\Shared.resw" />
+    <PRIResource Include="Strings\zh-cn\Settings.resw" />
+    <PRIResource Include="Strings\zh-cn\Pages.resw" />
+    <PRIResource Include="Strings\zh-cn\Items.resw" />
+    <PRIResource Include="Strings\zh-cn\Generic.resw" />
+    <PRIResource Include="Strings\zh-cn\Dialogs.resw" />
     <PRIResource Include="Strings\ru\Tools.resw" />
     <PRIResource Include="Strings\ru\Tabs.resw" />
     <PRIResource Include="Strings\ru\Shared.resw" />
