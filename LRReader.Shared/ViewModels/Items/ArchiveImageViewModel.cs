@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -9,7 +8,6 @@ namespace LRReader.Shared.ViewModels.Items
 {
 	public partial class ArchiveImageViewModel : ObservableObject
 	{
-		private readonly ApiService Api;
 		private readonly PlatformService Platform;
 		private readonly ImagesService Images;
 		private readonly ImageProcessingService ImageProcessing;
@@ -37,9 +35,8 @@ namespace LRReader.Shared.ViewModels.Items
 		public event AsyncAction<bool>? Show;
 		public event AsyncAction<bool>? Hide;
 
-		public ArchiveImageViewModel(ApiService api, PlatformService platform, ImagesService images, ImageProcessingService imageProcessing)
+		public ArchiveImageViewModel(PlatformService platform, ImagesService images, ImageProcessingService imageProcessing)
 		{
-			Api = api;
 			Platform = platform;
 			Images = images;
 			ImageProcessing = imageProcessing;
@@ -73,10 +70,7 @@ namespace LRReader.Shared.ViewModels.Items
 				Resolution = $"{size.Width}x{size.Height}";
 			}
 
-			if (Api.ControlFlags.V084)
-				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275, image: Thumbnail);
-			else
-				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetImageCached(Set.Image!, forced), decodeHeight: 275, transcode: Set.Image!.EndsWith("avif"), image: Thumbnail);
+			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275, image: Thumbnail);
 
 			if (Thumbnail != null)
 				await Show.InvokeAsync(Platform.AnimationsEnabled);

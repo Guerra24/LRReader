@@ -62,9 +62,9 @@ namespace LRReader.UWP.Views.Items
 				RightThumbnail.Source = null;
 				LeftViewModel.MissingImage = RightViewModel.MissingImage = false;
 
-				var leftImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(LeftViewModel.Archive.arcid), decodeHeight: 275) as BitmapImage;
+				var leftImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(LeftViewModel.Archive?.arcid), decodeHeight: 275) as BitmapImage;
 
-				var rightImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(RightViewModel.Archive.arcid), decodeHeight: 275) as BitmapImage;
+				var rightImage = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(RightViewModel.Archive?.arcid), decodeHeight: 275) as BitmapImage;
 				if (leftImage != null && rightImage != null)
 				{
 					if (leftImage.PixelHeight != 0 && leftImage.PixelWidth != 0)

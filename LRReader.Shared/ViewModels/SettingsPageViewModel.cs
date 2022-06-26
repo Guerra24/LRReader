@@ -30,24 +30,24 @@ namespace LRReader.Shared.ViewModels
 		public Version MaxVersion => Updates.MAX_VERSION;
 
 		[ObservableProperty]
-		private string _shinobuStatusText;
+		private string? _shinobuStatusText;
 		[ObservableProperty]
-		private string _shinobuPid;
+		private string? _shinobuPid;
 
-		private CheckForUpdatesResult checkResult;
+		private CheckForUpdatesResult? checkResult;
 
 		[ObservableProperty]
-		private UpdateChangelog _changelog;
+		private UpdateChangelog _changelog = default!;
 		[ObservableProperty]
 		private bool _showChangelog;
 		[ObservableProperty]
 		private double _updateProgress;
 		[ObservableProperty]
-		private ServerInfo _serverInfo;
+		private ServerInfo? _serverInfo;
 		[ObservableProperty]
-		private string _updateMessage;
+		private string? _updateMessage;
 		[ObservableProperty]
-		private string _updateError;
+		private string? _updateError;
 
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
 		private int _sortByIndex = -1;
@@ -67,7 +67,7 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
-		public string ThumbnailCacheSize;
+		public string ThumbnailCacheSize = "";
 		[ObservableProperty]
 		private bool _progressCache;
 
@@ -94,10 +94,11 @@ namespace LRReader.Shared.ViewModels
 		{
 			//SetProperty(ref AvifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
 			//SetProperty(ref HeifMissing, !await (Platform as UWPlatformService).CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
+			await Task.FromResult(0);
 		}
 
 
-		public async Task<DownloadPayload> DownloadDB()
+		public async Task<DownloadPayload?> DownloadDB()
 		{
 			return await DatabaseProvider.BackupJSON();
 		}
@@ -119,7 +120,7 @@ namespace LRReader.Shared.ViewModels
 					pid = $"PID: {result.pid}";
 				}
 			}
-			ShinobuStatusText = $"{worker}{status}";
+			ShinobuStatusText = worker + status;
 			ShinobuPid = pid;
 		}
 
@@ -139,7 +140,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			else
 			{
-				UpdateMessage = checkResult.ErrorMessage;
+				UpdateMessage = checkResult.ErrorMessage!;
 				UpdateError = Platform.GetLocalizedString("Pages/LoadingPage/UpdateErrorCode").AsFormat(checkResult.ErrorCode);
 			}
 		}
@@ -152,18 +153,14 @@ namespace LRReader.Shared.ViewModels
 			var result = await Updates.DownloadAndInstall(new Progress<double>(progress => UpdateProgress = progress), checkResult);
 			if (!result.Result)
 			{
-				UpdateMessage = result.ErrorMessage;
+				UpdateMessage = result.ErrorMessage!;
 				UpdateError = Platform.GetLocalizedString("Pages/LoadingPage/UpdateErrorCode").AsFormat(result.ErrorCode);
 			}
 		}
 
 		public async Task UpdateServerInfo()
 		{
-			var info = await ServerProvider.GetServerInfo();
-			if (info != null)
-			{
-				ServerInfo = info;
-			}
+			ServerInfo = await ServerProvider.GetServerInfo();
 		}
 
 		public async Task CheckThumbnailJob()
@@ -176,7 +173,7 @@ namespace LRReader.Shared.ViewModels
 				thumbnailJob = null;
 				return;
 			}
-			if (status.state.Equals("finished"))
+			if (status.state!.Equals("finished"))
 			{
 				WeakReferenceMessenger.Default.Send(new ShowNotification("Thumbnail generation completed", ""));
 				thumbnailJob = null;

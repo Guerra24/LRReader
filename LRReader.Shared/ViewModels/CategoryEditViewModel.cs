@@ -78,29 +78,15 @@ namespace LRReader.Shared.ViewModels
 				return;
 			_loading = true;
 			CategoryArchives.Clear();
-			if (Api.ControlFlags.V077)
-			{
-				var result = await CategoriesProvider.GetCategory(category.id);
-				if (result == null)
-					return;
-				category.name = result.name;
-				category.last_used = result.last_used;
-				category.pinned = result.pinned;
-				category.search = result.search;
-				category.archives = result.archives;
-			}
-			else
-			{
-				var result = await CategoriesProvider.GetCategories();
-				if (result == null)
-					return;
-				var tmp = result.FirstOrDefault(c => c.id.Equals(category.id));
-				category.name = tmp.name;
-				category.last_used = tmp.last_used;
-				category.pinned = tmp.pinned;
-				category.search = tmp.search;
-				category.archives = tmp.archives;
-			}
+
+			var result = await CategoriesProvider.GetCategory(category.id);
+			if (result == null)
+				return;
+			category.name = result.name;
+			category.last_used = result.last_used;
+			category.pinned = result.pinned;
+			category.search = result.search;
+			category.archives = result.archives;
 			Name = category.name;
 			Search = category.search;
 			Pinned = category.pinned;

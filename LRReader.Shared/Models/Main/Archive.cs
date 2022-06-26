@@ -14,20 +14,16 @@ namespace LRReader.Shared.Models.Main
 {
 	public class Archive : IEquatable<Archive>
 	{
-		[AllowNull]
-		public string arcid { get; set; }
+		public string arcid { get; set; } = null!;
 		[JsonConverter(typeof(ArchiveNewConverter))]
 		public bool isnew { get; set; }
 		public string? extension { get; set; }
-		[AllowNull]
-		public string tags { get; set; }
-		[AllowNull]
-		public string title { get; set; }
+		public string tags { get; set; } = null!;
+		public string title { get; set; } = null!;
 		public int pagecount { get; set; }
 		public int progress { get; set; }
 		[JsonIgnore]
-		[AllowNull]
-		public string TagsClean { get; set; }
+		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]
 		public List<string> TagsList { get; set; } = new List<string>();
 		[JsonIgnore]
@@ -137,14 +133,13 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveImages : MinionJob
 	{
-		[AllowNull]
-		public List<string> pages { get; set; }
+		public List<string> pages { get; set; } = null!;
 	}
 
 	public class ReaderImageSet
 	{
-		[AllowNull]
-		public string LeftImage { get; set; }
+
+		public string LeftImage { get; set; } = null!;
 		public string? RightImage { get; set; }
 		public int Page { get; set; }
 		public bool TwoPages { get; set; }
@@ -155,10 +150,10 @@ namespace LRReader.Shared.Models.Main
 	public class ImagePageSet
 	{
 		public string Id { get; set; }
-		public string? Image { get; set; }
+		public string Image { get; set; }
 		public int Page { get; set; }
 
-		public ImagePageSet(string id, string? image, int page)
+		public ImagePageSet(string id, string image, int page)
 		{
 			this.Id = id;
 			this.Image = image;
@@ -179,8 +174,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveSearch
 	{
-		[AllowNull]
-		public List<Archive> data { get; set; }
+		public List<Archive> data { get; set; } = null!;
 		public int draw { get; set; }
 		public int recordsFiltered { get; set; }
 		public int recordsTotal { get; set; }
@@ -188,8 +182,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveTagsGroup
 	{
-		[AllowNull]
-		public string Namespace { get; set; }
+		public string Namespace { get; set; } = null!;
 		public List<ArchiveTagsGroupTag> Tags { get; set; }
 
 		public ArchiveTagsGroup()
@@ -200,12 +193,11 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveTagsGroupTag
 	{
-		[AllowNull]
-		public string FullTag;
-		[AllowNull]
-		public string Tag;
-		[AllowNull]
-		public string Namespace;
+		public string FullTag = null!;
+
+		public string Tag = null!;
+
+		public string Namespace = null!;
 	}
 
 	public class ArchiveCategories : GenericApiResult
@@ -216,18 +208,18 @@ namespace LRReader.Shared.Models.Main
 
 	public class DeleteArchiveResult : GenericApiResult
 	{
-		[AllowNull]
-		public string id { get; set; }
-		[AllowNull]
-		public string filename { get; set; }
+
+		public string id { get; set; } = null!;
+
+		public string filename { get; set; } = null!;
 	}
 
 	public class ArchiveHit
 	{
-		[AllowNull]
-		public string Left { get; set; }
-		[AllowNull]
-		public string Right { get; set; }
+
+		public string Left { get; set; } = null!;
+
+		public string Right { get; set; } = null!;
 
 		public override bool Equals(object obj) => obj is ArchiveHit hit &&
 			((Left.Equals(hit.Left) && Right.Equals(hit.Right)) || (Left.Equals(hit.Right) && Right.Equals(hit.Left)));

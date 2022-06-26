@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models
 {
@@ -19,24 +18,19 @@ namespace LRReader.Shared.Models
 
 	public class ReleaseInfo
 	{
-		[NotNull]
-		public string? name { get; set; }
-		[NotNull]
-		public string? body { get; set; }
+		public string name { get; set; } = null!;
+		public string body { get; set; } = null!;
 		[JsonConverter(typeof(VersionConverter))]
-		[NotNull]
-		public Version? version { get; set; }
-		public string? link { get; set; }
+		public Version version { get; set; } = null!;
+		public string link { get; set; } = null!;
 	}
 
 	public class VersionSupportedRange
 	{
 		[JsonConverter(typeof(VersionConverter))]
-		[NotNull]
-		public Version? minSupported { get; set; }
+		public Version minSupported { get; set; } = null!;
 		[JsonConverter(typeof(VersionConverter))]
-		[NotNull]
-		public Version? maxSupported { get; set; }
+		public Version maxSupported { get; set; } = null!;
 	}
 
 	public class UpdateResult
@@ -49,8 +43,8 @@ namespace LRReader.Shared.Models
 	public class CheckForUpdatesResult : UpdateResult
 	{
 		[JsonConverter(typeof(VersionConverter))]
-		public Version? Target { get; set; }
-		public string? Link { get; set; }
+		public Version Target { get; set; } = null!;
+		public string Link { get; set; } = null!;
 	}
 
 	public struct UpdateChangelog

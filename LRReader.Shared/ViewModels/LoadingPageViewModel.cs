@@ -103,7 +103,7 @@ namespace LRReader.Shared.ViewModels
 			StatusSub = "";
 			Retry = false;
 			Active = true;
-			if (!Api.RefreshSettings(Settings.Profile!))
+			if (!Api.RefreshSettings(Settings.Profile))
 			{
 				Status = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddress");
 				StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddressSub");
@@ -113,7 +113,7 @@ namespace LRReader.Shared.ViewModels
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
-				var address = Settings.Profile!.ServerAddress;
+				var address = Settings.Profile.ServerAddress;
 				if (address.Contains("127.0.0.") || address.Contains("localhost"))
 				{
 					Status = Platform.GetLocalizedString("Pages/LoadingPage/NoConnectionLocalHost");

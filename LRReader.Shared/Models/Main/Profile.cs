@@ -3,7 +3,6 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -11,11 +10,8 @@ namespace LRReader.Shared.Models.Main
 	{
 		public int Version { get; set; }
 		public string UID { get; set; }
-		[AllowNull]
 		public string Name { get; set; }
-		[AllowNull]
 		public string ServerAddress { get; set; }
-		[AllowNull]
 		public string ServerApiKey { get; set; }
 		public List<BookmarkedArchive> Bookmarks { get; set; }
 		public bool AcceptedDisclaimer { get; set; }
@@ -32,8 +28,11 @@ namespace LRReader.Shared.Models.Main
 		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');
 
 
-		public ServerProfile()
+		public ServerProfile(string name, string address, string key)
 		{
+			Name = name;
+			ServerAddress = address;
+			ServerApiKey = key;
 			UID = Guid.NewGuid().ToString();
 			Bookmarks = new List<BookmarkedArchive>();
 			MarkedAsNonDuplicated = new List<ArchiveHit>();
@@ -64,10 +63,14 @@ namespace LRReader.Shared.Models.Main
 
 	public class BookmarkedArchive : ObservableObject
 	{
-		[AllowNull]
 		public string archiveID { get; set; }
 		public int page { get; set; }
 		public int totalPages { get; set; }
+
+		public BookmarkedArchive(string id)
+		{
+			archiveID = id;
+		}
 
 		public void Update()
 		{

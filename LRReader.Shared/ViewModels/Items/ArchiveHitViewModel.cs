@@ -78,7 +78,7 @@ namespace LRReader.Shared.ViewModels.Items
 			if (animate)
 				LoadingImages = true;
 			var result = await ArchivesProvider.ExtractArchive(Archive.arcid);
-			if (result != null && Api.ControlFlags.V084)
+			if (result != null)
 				await result.WaitForMinionJob();
 			if (animate)
 				LoadingImages = false;

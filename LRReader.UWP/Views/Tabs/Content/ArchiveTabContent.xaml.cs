@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.Extensions;
+﻿#nullable enable
+
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
@@ -52,7 +54,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ReaderBackground.SetVisualOpacity(0);
 			ScrollViewer.SetVisualOpacity(0);
 
-			Data = DataContext as ArchivePageViewModel;
+			Data = (ArchivePageViewModel)DataContext;
 			Data.ZoomChangedEvent += FitImages;
 			Data.RebuildReader += RebuildReader;
 
@@ -90,7 +92,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_loadSemaphore.Release();
 		}
 
-		private async void OpenReader(int page, object item = null)
+		private async void OpenReader(int page, object? item = null)
 		{
 			if (_transition)
 				return;
@@ -103,7 +105,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Service.Platform.AnimationsEnabled && item != null && !Data.UseVerticalReader)
 			{
 				var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Thumbnail");
-				if (!(image.ActualWidth == 0 || image.ActualHeight == 0))
+				if (image != null && !(image.ActualWidth == 0 || image.ActualHeight == 0))
 				{
 					var anim = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate(GetOpenTarget(readerSet, page), image);
 					anim.Configuration = new BasicConnectedAnimationConfiguration();
@@ -146,7 +148,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			_transition = true;
 			var animate = Service.Platform.AnimationsEnabled;
-			ConnectedAnimation animLeft = null, animRight = null;
+			ConnectedAnimation? animLeft = null, animRight = null;
 
 			if (!Data.UseVerticalReader)
 			{
@@ -156,12 +158,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 				if (animate)
 				{
-					if (Data.ReaderContent.LeftImage != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
+					if (Data.ReaderContent.LeftImage != null && left != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
 					{
 						animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
 						animLeft.Configuration = new BasicConnectedAnimationConfiguration();
 					}
-					if (Data.ReaderContent.RightImage != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
+					if (Data.ReaderContent.RightImage != null && right != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
 					{
 						animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
 						animRight.Configuration = new BasicConnectedAnimationConfiguration();
@@ -190,10 +192,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 			rightTarget = rightTarget.Clamp(0, count - 1);
 			if (animate)
 			{
-				if (Data.ReaderContent.LeftImage != null && animLeft != null && Data.ArchiveImages.Count > leftTarget)
-					animLeft.TryStart(ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail"));
-				if (Data.ReaderContent.RightImage != null & animRight != null && Data.ArchiveImages.Count > rightTarget)
-					animRight.TryStart(ImagesGrid.ContainerFromIndex(rightTarget).FindDescendant("Thumbnail"));
+				var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail");
+				var rightThumb = ImagesGrid.ContainerFromIndex(rightTarget).FindDescendant("Thumbnail");
+				if (Data.ReaderContent.LeftImage != null && leftThumb != null && Data.ArchiveImages.Count > leftTarget)
+					animLeft?.TryStart(leftThumb);
+				if (Data.ReaderContent.RightImage != null && rightThumb != null && Data.ArchiveImages.Count > rightTarget)
+					animRight?.TryStart(rightThumb);
 				FadeOut.Start(ReaderBackground);
 				await FadeOut.StartAsync(ScrollViewer);
 				await Task.Delay(200); // Give it a sec
@@ -320,7 +324,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.ControlsEnabled)
 				return;
-			OpenReader(Data.ArchiveImages.IndexOf(e.ClickedItem as ImagePageSet), e.ClickedItem);
+			OpenReader(Data.ArchiveImages.IndexOf((ImagePageSet)e.ClickedItem), e.ClickedItem);
 		}
 
 		private void Continue_Click(object sender, RoutedEventArgs e)

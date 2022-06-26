@@ -329,7 +329,7 @@ namespace LRReader.Shared.ViewModels
 				LoadingIndeterminate = LoadingImages = true;
 			ArchiveImages.Clear();
 			var result = await ArchivesProvider.ExtractArchive(Archive.arcid);
-			if (result != null && Api.ControlFlags.V084)
+			if (result != null)
 				await result.WaitForMinionJob();
 			if (animate)
 				LoadingIndeterminate = LoadingImages = false;

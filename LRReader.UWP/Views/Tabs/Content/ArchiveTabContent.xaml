@@ -65,7 +65,7 @@
 								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0"
 								Command="{x:Bind Data.EditCommand}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind Data.CanEdit}" />
+								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							<Button
 								x:Uid="/Tabs/Archive/Categories" Margin="2,0,0,0"
 								Command="{x:Bind Data.EditCategoriesCommand}"
@@ -78,7 +78,7 @@
 								x:Uid="/Tabs/Archive/Delete" Margin="2,0,0,0"
 								Command="{x:Bind Data.DeleteCommand}"
 								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
+								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							<Border
 								Grid.Column="2" Width="1" Margin="8,4,8,4"
 								Background="{ThemeResource DividerStrokeColorDefaultBrush}" />

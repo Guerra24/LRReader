@@ -91,10 +91,10 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/" + (Api.ControlFlags.V082 ? "files" : "extract"), Api.ControlFlags.V082 ? Method.Get : Method.Post);
+			var rq = new RestRequest("api/archives/{id}/files");
 			rq.AddUrlSegment("id", id);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecuteGetAsync(rq);
 
 			return await r.GetResult<ArchiveImages>();
 		}
@@ -122,7 +122,7 @@ namespace LRReader.Shared.Providers
 					var natr = parms.First(s => s.StartsWith("filename"));
 					var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
 
-					download.Data = r.RawBytes;
+					download.Data = r.RawBytes!;
 					download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
 					download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
 					return download;

@@ -7,7 +7,6 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:viewmodels="using:LRReader.Shared.ViewModels"
 	DataContext="{Binding ArchiveEditInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
@@ -245,16 +244,14 @@
 					<TextBlock x:Uid="/Tabs/ArchiveEdit/ThumbnailTitle" Margin="{ThemeResource TextBoxTopHeaderMargin}" HorizontalAlignment="Left" />
 					<Button
 						x:Uid="/Tabs/ArchiveEdit/ChangeThumbnail" Padding="0" HorizontalAlignment="Center"
-						Command="{x:Bind Data.ChangeThumbnailCommand}"
-						IsEnabled="{x:Bind services:Service.Api.ControlFlags.V084}">
+						Command="{x:Bind Data.ChangeThumbnailCommand}" >
 						<Grid CornerRadius="{ThemeResource ControlCornerRadius}">
 							<Image x:Name="Thumbnail" Height="275" Source="{x:Bind Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
 							<Border Background="{ThemeResource ThumbnailSmoke}" />
 							<FontIcon
 								Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
 								FontFamily="{StaticResource SymbolThemeFontFamily}"
-								FontSize="84" Glyph="&#xE8E6;"
-								Visibility="{x:Bind services:Service.Api.ControlFlags.V084}" />
+								FontSize="84" Glyph="&#xE8E6;" />
 						</Grid>
 					</Button>
 				</StackPanel>

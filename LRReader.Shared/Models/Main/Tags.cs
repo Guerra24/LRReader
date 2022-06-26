@@ -1,13 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
+﻿
 namespace LRReader.Shared.Models.Main
 {
 	public class TagStats
 	{
-		[AllowNull]
-		public string @namespace { get; set; }
-		[AllowNull]
-		public string text { get; set; }
+		public string @namespace { get; set; } = null!;
+		public string text { get; set; } = null!;
 		public int weight { get; set; }
 
 		public string GetNamespacedTag()

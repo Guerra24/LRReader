@@ -1,24 +1,19 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
 
 	public class Category
 	{
-		[AllowNull]
-		public List<string> archives { get; set; }
-		[AllowNull]
-		public string id { get; set; }
-		[AllowNull]
-		public string last_used { get; set; }
-		[AllowNull]
-		public string name { get; set; }
+
+		public List<string> archives { get; set; } = null!;
+		public string id { get; set; } = null!;
+		public string last_used { get; set; } = null!;
+		public string name { get; set; } = null!;
 		[JsonConverter(typeof(BoolConverter))]
 		public bool pinned { get; set; }
-		[AllowNull]
-		public string search { get; set; }
+		public string search { get; set; } = null!;
 
 		public bool Unconfigured()
 		{

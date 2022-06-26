@@ -64,8 +64,7 @@ namespace LRReader.Shared.ViewModels.Tools
 
 		public ArchiveHitPreviewViewModel LeftArchive, RightArchive;
 
-		[AllowNull]
-		private ArchiveHit _current;
+		private ArchiveHit _current = null!;
 
 		[ObservableProperty]
 		private bool _canClosePreviews;
@@ -143,12 +142,10 @@ namespace LRReader.Shared.ViewModels.Tools
 				if (lArchive is null || rArchive is null)
 					return;
 				LeftArchive.Archive = lArchive;
-				var lTask = LeftArchive.Reload();
 				RightArchive.Archive = rArchive;
-				var rTask = RightArchive.Reload();
-				await lTask;
-				await rTask;
+				await Task.WhenAll(LeftArchive.Reload(), RightArchive.Reload());
 			}
+			catch { }
 			finally
 			{
 				CanClosePreviews = true;

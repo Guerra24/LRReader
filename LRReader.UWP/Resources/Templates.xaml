@@ -125,7 +125,7 @@
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
 									Icon="Edit"
-									Visibility="{x:Bind ViewModel.CanEdit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
@@ -140,7 +140,7 @@
 									x:Uid="/Items/Archive/Delete"
 									Command="{x:Bind ViewModel.DeleteCommand}"
 									Icon="Delete"
-									Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							</MenuFlyout>
 						</Grid.ContextFlyout>
 						<muxc:ParallaxView x:Name="Parallax" x:FieldModifier="public" VerticalShift="100">
@@ -207,7 +207,7 @@
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
 									Icon="Edit"
-									Visibility="{x:Bind ViewModel.CanEdit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 								<!--<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Click="{x:Bind CategoriesButton_Click}" Visibility="{x:Bind flags.CategoriesEnabledEdit}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
@@ -311,7 +311,7 @@
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
 									Icon="Edit"
-									Visibility="{x:Bind ViewModel.CanEdit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
@@ -326,7 +326,7 @@
 									x:Uid="/Items/Archive/Delete"
 									Command="{x:Bind ViewModel.DeleteCommand}"
 									Icon="Delete"
-									Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							</MenuFlyout>
 						</Grid.ContextFlyout>
 						<Grid.ColumnDefinitions>
@@ -414,7 +414,7 @@
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
 									Icon="Edit"
-									Visibility="{x:Bind ViewModel.CanEdit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
@@ -429,7 +429,7 @@
 									x:Uid="/Items/Archive/Delete"
 									Command="{x:Bind ViewModel.DeleteCommand}"
 									Icon="Delete"
-									Visibility="{x:Bind services:Service.Api.ControlFlags.V078Edit}" />
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
 							</MenuFlyout>
 						</Grid.ContextFlyout>
 						<Grid.RowDefinitions>

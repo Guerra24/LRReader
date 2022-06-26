@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
 	public class GenericApiResult
 	{
-		[AllowNull]
-		public string operation { get; set; }
+		public string operation { get; set; } = null!;
 		[JsonConverter(typeof(BoolConverter))]
 		public bool success { get; set; }
 		public string? error { get; set; }

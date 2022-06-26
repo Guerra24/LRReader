@@ -80,8 +80,7 @@
 				-->
 				<controls:ModernExpander
 					x:Uid="/Settings/Server/RegenThumbnails" Glyph="&#xE8B9;"
-					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
-					Visibility="{x:Bind services:Service.Api.ControlFlags.V077}">
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<controls:ModernExpander.Input>
 						<Button x:Uid="/Settings/Server/RegenThumb" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 							<Button.Flyout>

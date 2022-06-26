@@ -57,7 +57,7 @@ namespace LRReader.Shared.ViewModels.Base
 			set => SetProperty(ref _downloading, value);
 		}
 
-		private BookmarkedArchive _bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+		private BookmarkedArchive _bookmarkedArchive = new BookmarkedArchive("") { totalPages = -1 };
 		public BookmarkedArchive BookmarkedArchive
 		{
 			get => _bookmarkedArchive;
@@ -69,7 +69,7 @@ namespace LRReader.Shared.ViewModels.Base
 				}
 				else
 				{
-					_bookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+					_bookmarkedArchive = new BookmarkedArchive("") { totalPages = -1 };
 				}
 				OnPropertyChanged("Bookmarked");
 				OnPropertyChanged("Pages");
@@ -95,13 +95,13 @@ namespace LRReader.Shared.ViewModels.Base
 						}
 						else
 						{
-							Settings.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive() { archiveID = Archive.arcid, totalPages = Pages });
+							Settings.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive(Archive.arcid) { totalPages = Pages });
 						}
 					}
 					else
 					{
 						Settings.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
-						BookmarkedArchive = new BookmarkedArchive() { totalPages = -1 };
+						BookmarkedArchive = new BookmarkedArchive("") { totalPages = -1 };
 					}
 					Settings.SaveProfiles();
 					OnPropertyChanged("Icon");
@@ -116,7 +116,7 @@ namespace LRReader.Shared.ViewModels.Base
 				int pages = _pages;
 				if (Bookmarked)
 					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
-				if (Api.ControlFlags.V077 && pages == 0)
+				if (pages == 0)
 					pages = Archive.pagecount;
 				_pages = pages;
 				return _pages;
@@ -149,8 +149,6 @@ namespace LRReader.Shared.ViewModels.Base
 		{
 			get => Platform.GetSymbol(Bookmarked ? Symbol.Favorite : Symbol.Pictures);
 		}
-
-		public bool CanEdit => Settings.Profile.HasApiKey;
 
 		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api, PlatformService platform, TabsService tabs)
 		{

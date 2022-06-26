@@ -79,7 +79,7 @@ namespace LRReader.Shared.Providers
 			{
 				case HttpStatusCode.OK:
 					var download = new DownloadPayload();
-					download.Data = r.RawBytes;
+					download.Data = r.RawBytes!;
 					download.Name = "database_backup.json";
 					download.Type = ".json";
 					return download;

@@ -3,7 +3,6 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -15,8 +14,8 @@ namespace LRReader.Shared.Models.Main
 
 	public class PluginParameter
 	{
-		[AllowNull]
-		public string desc { get; set; }
+
+		public string desc { get; set; } = null!;
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PluginParameterType type { get; set; }
 	}
@@ -28,24 +27,17 @@ namespace LRReader.Shared.Models.Main
 
 	public class Plugin
 	{
-		[AllowNull]
-		public string author { get; set; }
-		[AllowNull]
-		public string description { get; set; }
-		[AllowNull]
-		public string icon { get; set; }
-		[AllowNull]
-		public string name { get; set; }
-		[AllowNull]
-		public string @namespace { get; set; }
-		[AllowNull]
-		public string oneshot_arg { get; set; }
-		[AllowNull]
-		public List<PluginParameter> parameters { get; set; }
+
+		public string author { get; set; } = null!;
+		public string description { get; set; } = null!;
+		public string icon { get; set; } = null!;
+		public string name { get; set; } = null!;
+		public string @namespace { get; set; } = null!;
+		public string oneshot_arg { get; set; } = null!;
+		public List<PluginParameter> parameters { get; set; } = null!;
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PluginType type { get; set; }
-		[AllowNull]
-		public string version { get; set; }
+		public string version { get; set; } = null!;
 		public string? login_from { get; set; }
 
 		public bool HasArg { get; set; }
@@ -66,16 +58,13 @@ namespace LRReader.Shared.Models.Main
 
 	public class PluginResultData
 	{
-		[AllowNull]
-		public string new_tags { get; set; }
+		public string new_tags { get; set; } = null!;
 	}
 
 	public class UsePluginResult : GenericApiResult
 	{
-		[AllowNull]
-		public PluginResultData data { get; set; }
-		[AllowNull]
-		public string type { get; set; }
+		public PluginResultData data { get; set; } = null!;
+		public string type { get; set; } = null!;
 	}
 
 	public class PluginParameterTypeConverter : JsonConverter

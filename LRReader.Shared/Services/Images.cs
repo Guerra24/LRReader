@@ -70,14 +70,14 @@ namespace LRReader.Shared.Services
 			});
 		}
 
-		public async Task<Size> GetImageSizeCached(string path)
+		public async Task<Size> GetImageSizeCached(string? path)
 		{
 			if (string.IsNullOrEmpty(path))
 				return new Size(0, 0);
 			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
 			{
 				Size size;
-				if (imagesSizeCache.TryGet(path, out size))
+				if (imagesSizeCache.TryGet(path!, out size))
 				{
 					return size;
 				}
@@ -87,41 +87,41 @@ namespace LRReader.Shared.Services
 					if (image == null)
 						return Size.Empty;
 					size = await ImageProcessing.GetImageSize(image);
-					imagesSizeCache.AddReplace(path, size);
+					imagesSizeCache.AddReplace(path!, size);
 					return size;
 				}
 			}
 		}
 
-		public async Task<byte[]?> GetImageCached(string path, bool forced = false)
+		public async Task<byte[]?> GetImageCached(string? path, bool forced = false)
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
-			using (var key = await KeyedSemaphore.LockAsync(path))
+			using (var key = await KeyedSemaphore.LockAsync(path!))
 			{
 				byte[]? image;
-				if (imagesCache.TryGet(path, out image) && !forced)
+				if (imagesCache.TryGet(path!, out image) && !forced)
 				{
 					return image;
 				}
 				else
 				{
-					image = await ArchivesProvider.GetImage(path);
+					image = await ArchivesProvider.GetImage(path!);
 					if (image == null)
 						return null;
-					imagesCache.AddReplace(path, image);
+					imagesCache.AddReplace(path!, image);
 					return image;
 				}
 			}
 		}
 
-		public async Task<byte[]?> GetThumbnailCached(string id, int page = 0, bool forced = false, bool ignoreCache = false)
+		public async Task<byte[]?> GetThumbnailCached(string? id, int page = 0, bool forced = false, bool ignoreCache = false)
 		{
 			if (string.IsNullOrEmpty(id))
 				return null;
 			var thumbKey = $"{id}.{page}";
 			if (ignoreCache)
-				return await GetThumbnailRaw(id, page);
+				return await GetThumbnailRaw(id!, page);
 			using (var key = await KeyedSemaphore.LockAsync(thumbKey))
 			{
 				byte[]? data;
@@ -131,7 +131,7 @@ namespace LRReader.Shared.Services
 				}
 				else
 				{
-					var path = $"{thumbnailCacheDirectory.FullName}/{id.Substring(0, 2)}/{id}/{page}.cache";
+					var path = $"{thumbnailCacheDirectory.FullName}/{id!.Substring(0, 2)}/{id}/{page}.cache";
 					if (File.Exists(path) && !forced)
 					{
 						data = await Files.GetFileBytes(path);

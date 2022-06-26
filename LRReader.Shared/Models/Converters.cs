@@ -63,9 +63,9 @@ namespace LRReader.Shared.Models
 				return false;
 			if (reader.ValueType == typeof(string))
 			{
-				if (reader.Value?.Equals("none") ?? false)
+				if (reader.Value!.Equals("none"))
 					return false;
-				if (reader.Value?.Equals("block") ?? false)
+				if (reader.Value!.Equals("block"))
 					return true;
 				if (bool.TryParse(reader.Value as string, out bool result))
 					return result;

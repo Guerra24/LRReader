@@ -3,7 +3,6 @@ using LRReader.Shared.Models.Main;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using RestSharp;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
 using static LRReader.Shared.Services.Service;
@@ -60,7 +59,7 @@ namespace LRReader.Shared.Providers
 			}
 			if (result.OK)
 			{
-				return new Category() { id = result.Data?.category_id, name = name, search = search, pinned = pinned, archives = new List<string>() };
+				return new Category() { id = result.Data!.category_id, name = name, search = search, pinned = pinned, archives = new List<string>() };
 			}
 			else
 			{
@@ -138,7 +137,6 @@ namespace LRReader.Shared.Providers
 
 	public class CategoryCreatedApiResult : GenericApiResult
 	{
-		[NotNull]
-		public string? category_id { get; set; }
+		public string category_id { get; set; } = null!;
 	}
 }

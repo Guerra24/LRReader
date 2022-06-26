@@ -51,7 +51,7 @@ namespace LRReader.Shared.Services
 
 			var profile = Settings.Profile;
 
-			var currentTimestamp = profile!.CacheTimestamp;
+			var currentTimestamp = profile.CacheTimestamp;
 			MetadataPath = $"{metadataDirectory.FullName}/{profile.UID}";
 
 			SettingsStorage.DeleteObjectLocal("CacheTimestamp");
@@ -139,7 +139,7 @@ namespace LRReader.Shared.Services
 			}
 			if (result.success)
 			{
-				Settings.Profile!.Bookmarks.RemoveAll(b => b.archiveID.Equals(id));
+				Settings.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(id));
 				Settings.Profile.MarkedAsNonDuplicated.RemoveAll(hit => hit.Left.Equals(id) || hit.Right.Equals(id));
 				WeakReferenceMessenger.Default.Send(new DeleteArchiveMessage(Archives[id]));
 				Tabs.CloseTabWithId("Edit_" + id);

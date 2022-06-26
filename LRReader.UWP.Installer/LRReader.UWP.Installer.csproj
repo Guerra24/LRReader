@@ -144,7 +144,7 @@
       <Version>10.0.22621.1</Version>
     </PackageReference>
     <PackageReference Include="ModernWpfUI">
-      <Version>0.9.5</Version>
+      <Version>0.9.6</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

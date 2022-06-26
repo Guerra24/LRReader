@@ -1,20 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.Models.Main
 {
 	public class ServerInfo
 	{
-		[AllowNull]
-		public string name { get; set; }
-		[AllowNull]
-		public string motd { get; set; }
+		public string name { get; set; } = null!;
+		public string motd { get; set; } = null!;
 		[JsonConverter(typeof(VersionConverter))]
-		[AllowNull]
-		public Version version { get; set; }
-		[AllowNull]
-		public string version_name { get; set; }
+		public Version version { get; set; } = null!;
+		public string version_name { get; set; } = null!;
 		[JsonConverter(typeof(BoolConverter))]
 		public bool has_password { get; set; }
 		[JsonConverter(typeof(BoolConverter))]

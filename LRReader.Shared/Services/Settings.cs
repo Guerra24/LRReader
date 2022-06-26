@@ -27,9 +27,9 @@ namespace LRReader.Shared.Services
 		private ObservableCollection<ServerProfile> _profiles = new ObservableCollection<ServerProfile>();
 
 		private ServerProfile? _profile;
-		public ServerProfile? Profile
+		public ServerProfile Profile
 		{
-			get => _profile;
+			get => _profile!;
 			set
 			{
 				if (value != null)
@@ -388,10 +388,7 @@ namespace LRReader.Shared.Services
 
 		public ServerProfile AddProfile(string name, string address, string apikey)
 		{
-			ServerProfile profile = new ServerProfile();
-			profile.Name = name;
-			profile.ServerAddress = address;
-			profile.ServerApiKey = apikey;
+			ServerProfile profile = new ServerProfile(name, address, apikey);
 			Profiles.Add(profile);
 			return profile;
 		}

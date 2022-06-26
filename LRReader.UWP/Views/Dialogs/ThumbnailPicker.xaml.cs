@@ -6,7 +6,6 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
@@ -32,7 +31,7 @@ namespace LRReader.UWP.Views.Dialogs
 			var archive = Service.Archives.GetArchive(id);
 			if (archive != null)
 			{
-				if (archive.pagecount > 0 && Service.Api.ControlFlags.V084)
+				if (archive.pagecount > 0)
 				{
 					for (int i = 1; i <= archive.pagecount; i++)
 						Thumbnails.Add(new ImagePageSet(id, null, i));
@@ -40,7 +39,7 @@ namespace LRReader.UWP.Views.Dialogs
 				else
 				{
 					var result = await ArchivesProvider.ExtractArchive(id);
-					if (result != null && Service.Api.ControlFlags.V084)
+					if (result != null)
 						await result.WaitForMinionJob();
 					if (result != null)
 					{
