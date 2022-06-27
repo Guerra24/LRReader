@@ -15,7 +15,7 @@
 ## Requirements
 
 - Windows 10 1809 (x64 or ARM64)
-- LANraragi v0.7.6
+- LANraragi v0.8.4
 
 ## Installing
 
@@ -32,7 +32,7 @@ If you don't want to deal with the store this option is and will be supported.
 
 For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases)
 
-For nightly download the installer from the latest [nightly action](https://github.com/Guerra24/LRReader/actions/workflows/build-nightly.yml)
+For nightly download the installer from the [latest build](https://nightly.link/Guerra24/LRReader/workflows/build-nightly/develop)
 
 Download the `LRReader.exe` file, run it and follow instructions.
 
