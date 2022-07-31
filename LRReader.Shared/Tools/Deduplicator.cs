@@ -105,8 +105,12 @@ namespace LRReader.Shared.Tools
 					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key)).GetAwaiter().GetResult();
 					if (bytes != null)
 					{
-						image = Image.Load<Rgb24>(bytes);
-						image.Mutate(i => i.Resize(width, 0));
+						try
+						{
+							image = Image.Load<Rgb24>(bytes);
+							image.Mutate(i => i.Resize(width, 0));
+						}
+						catch { }
 						break;
 					}
 					else
