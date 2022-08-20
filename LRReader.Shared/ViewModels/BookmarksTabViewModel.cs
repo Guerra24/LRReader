@@ -2,9 +2,9 @@
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -35,10 +35,10 @@ namespace LRReader.Shared.ViewModels
 			WeakReferenceMessenger.Default.Register(this);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public void BookmarkClick(GridViewExtParameter archive) => Archives.OpenTab((Archive)archive.Item, archive.Ctrl);
 
-		[ICommand]
+		[RelayCommand]
 		public async Task Reload(bool animate = true)
 		{
 			if (_internalLoadingArchives)

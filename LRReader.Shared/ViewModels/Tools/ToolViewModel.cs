@@ -1,7 +1,7 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.ComponentModel;
 using System.Reflection;

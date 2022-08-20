@@ -4,9 +4,9 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -35,10 +35,10 @@ namespace LRReader.Shared.ViewModels.Base
 			Settings = settings;
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void OpenTab() => Tabs.OpenTab(Tab.SearchResults, false, Category);
 
-		[ICommand]
+		[RelayCommand]
 		private async Task Edit()
 		{
 			var listMode = string.IsNullOrEmpty(Category.search);
@@ -86,7 +86,7 @@ namespace LRReader.Shared.ViewModels.Base
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task Delete()
 		{
 			var result = await Platform.OpenGenericDialog(

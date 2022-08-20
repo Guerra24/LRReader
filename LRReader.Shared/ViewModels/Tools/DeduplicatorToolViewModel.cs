@@ -3,8 +3,8 @@ using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
 using LRReader.Shared.ViewModels.Items;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -26,7 +26,7 @@ namespace LRReader.Shared.ViewModels.Tools
 				HiddenArchives.Add(item);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void Remove(ArchiveHit item)
 		{
 			HiddenArchives.Remove(item);
@@ -115,7 +115,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task DeleteArchive(string arcid)
 		{
 			if (await Archives.DeleteArchive(arcid))
@@ -123,7 +123,7 @@ namespace LRReader.Shared.ViewModels.Tools
 					Items.Remove(item);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void MarkNonDup()
 		{
 			Settings.Profile.MarkedAsNonDuplicated.Add(_current);

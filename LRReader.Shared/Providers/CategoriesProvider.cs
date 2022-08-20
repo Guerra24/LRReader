@@ -1,6 +1,6 @@
 ﻿using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using RestSharp;
 using System.Collections.Generic;
 using System.Net;

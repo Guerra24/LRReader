@@ -3,8 +3,8 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -187,13 +187,13 @@ namespace LRReader.Shared.ViewModels.Base
 			return await ArchivesProvider.DownloadArchive(Archive.arcid);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void Edit() => Tabs.OpenTab(Tab.ArchiveEdit, Archive);
 
-		[ICommand]
+		[RelayCommand]
 		private async Task EditCategories() => await Platform.OpenDialog(Dialog.CategoryArchive, Archive.arcid, Archive.title);
 
-		[ICommand]
+		[RelayCommand]
 		private async Task Delete()
 		{
 			var result = await Platform.OpenGenericDialog(
@@ -206,7 +206,7 @@ namespace LRReader.Shared.ViewModels.Base
 				await Archives.DeleteArchive(Archive.arcid);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task TagClick(ArchiveTagsGroupTag tag)
 		{
 			if (tag.Namespace.Equals("source", StringComparison.OrdinalIgnoreCase))

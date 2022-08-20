@@ -6,9 +6,9 @@ using LRReader.Shared.Services;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
 #endif
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -31,8 +31,7 @@ namespace LRReader.Shared.ViewModels
 		private RelayCommand<EditableTag> TagCommand { get; }
 		public RelayCommand AddAllTags { get; }
 
-		[AllowNull]
-		public Archive Archive;
+		public Archive Archive = null!;
 
 		[ObservableProperty]
 		private string _title = "";
@@ -41,20 +40,13 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private object? _thumbnail;
 
+		[ObservableProperty]
+		[NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+		[NotifyCanExecuteChangedFor(nameof(TagCommand))]
+		[NotifyCanExecuteChangedFor(nameof(UsePluginCommand))]
+		[NotifyCanExecuteChangedFor(nameof(ReloadCommand))]
+		[NotifyCanExecuteChangedFor(nameof(AddAllTags))]
 		private bool _saving;
-		public bool Saving
-		{
-			get => _saving;
-			set
-			{
-				SetProperty(ref _saving, value);
-				TagCommand.NotifyCanExecuteChanged();
-				SaveCommand.NotifyCanExecuteChanged();
-				UsePluginCommand.NotifyCanExecuteChanged();
-				ReloadCommand.NotifyCanExecuteChanged();
-				AddAllTags.NotifyCanExecuteChanged();
-			}
-		}
 
 		public ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
 		public ObservableCollection<EditableTag> TagsList = new ObservableCollection<EditableTag>();
@@ -296,11 +288,9 @@ namespace LRReader.Shared.ViewModels
 
 	public class EditableTag
 	{
-		[AllowNull]
-		public string Tag { get; set; }
+		public string Tag { get; set; } = null!;
 		public string? Color { get; set; }
-		[AllowNull]
-		public RelayCommand<EditableTag> Command { get; internal set; }
+		public RelayCommand<EditableTag> Command { get; internal set; } = null!;
 
 		public override bool Equals(object obj)
 		{

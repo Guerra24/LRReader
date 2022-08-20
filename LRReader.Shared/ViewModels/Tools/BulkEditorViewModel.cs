@@ -1,8 +1,8 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -43,7 +43,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task DeleteArchives(IList<object> archives)
 		{
 			if (archives.Count == 0)
@@ -52,7 +52,7 @@ namespace LRReader.Shared.ViewModels.Tools
 				await Archives.DeleteArchive(a.arcid);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task ChangeCategory(IList<object> archives)
 		{
 			if (archives.Count == 0)

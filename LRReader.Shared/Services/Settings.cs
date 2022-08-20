@@ -3,7 +3,7 @@ using LRReader.Shared.Providers;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
 #endif
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

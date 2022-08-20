@@ -4,8 +4,8 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +25,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly EventsService Events;
 
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("CanGoNext")]
+		[NotifyPropertyChangedFor("CanGoNext")]
 		private IList<Archive> _group = new List<Archive>();
 
 		public bool CanGoNext => Group.Count != 0 && Group.ElementAtOrDefault(Group.IndexOf(Archive) + 1) != null;
@@ -277,7 +277,7 @@ namespace LRReader.Shared.ViewModels
 			return _wasNew;
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task Reload(bool animate = true)
 		{
 			if (_loading)

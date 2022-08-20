@@ -2,8 +2,8 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,16 +23,16 @@ namespace LRReader.Shared.ViewModels
 		public CustomArchiveCheck CustomArchiveCheckEvent = (a) => true;
 
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("ControlsEnabled")]
+		[NotifyPropertyChangedFor("ControlsEnabled")]
 		private bool _loadingArchives = true;
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("ControlsEnabled")]
+		[NotifyPropertyChangedFor("ControlsEnabled")]
 		private bool _refreshOnErrorButton = false;
 		public ObservableCollection<Archive> ArchiveList { get; } = new ObservableCollection<Archive>();
 		[ObservableProperty]
 		private int _page = 0;
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("TotalPages")]
+		[NotifyPropertyChangedFor("TotalPages")]
 		private int _totalArchives;
 
 		public int TotalPages => (int)Math.Max(Math.Ceiling(TotalArchives / (double)Api.ServerInfo.archives_per_page), 1);

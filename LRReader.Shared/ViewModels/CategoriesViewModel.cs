@@ -4,9 +4,9 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,10 +21,10 @@ namespace LRReader.Shared.ViewModels
 		private readonly TabsService Tabs;
 
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("ControlsEnabled")]
+		[NotifyPropertyChangedFor("ControlsEnabled")]
 		private bool _loadingCategories = true;
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("ControlsEnabled")]
+		[NotifyPropertyChangedFor("ControlsEnabled")]
 		private bool _refreshOnErrorButton = false;
 		public ObservableCollection<Category> CategoriesList = new ObservableCollection<Category>();
 		private bool _controlsEnabled;
@@ -44,7 +44,7 @@ namespace LRReader.Shared.ViewModels
 			WeakReferenceMessenger.Default.Register(this);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task CategoryClick(GridViewExtParameter item)
 		{
 			if (item.Item is AddNewCategory)
@@ -68,7 +68,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task Refresh()
 		{
 			if (_internalLoadingCategories)

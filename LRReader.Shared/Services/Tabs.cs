@@ -1,5 +1,5 @@
 ﻿using LRReader.Shared.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +22,7 @@ namespace LRReader.Shared.Services
 		private ICustomTab? _currentTab;
 
 		[ObservableProperty]
-		[AlsoNotifyChangeFor("Windowed")]
+		[NotifyPropertyChangedFor("Windowed")]
 		private bool _fullscreen = false;
 		public bool Windowed => !_fullscreen;
 

@@ -4,9 +4,9 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -124,7 +124,7 @@ namespace LRReader.Shared.ViewModels
 			ShinobuPid = pid;
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task CheckForUpdates()
 		{
 			UpdateMessage = "";
@@ -145,7 +145,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task InstallUpdate()
 		{
 			UpdateMessage = "";
@@ -190,7 +190,7 @@ namespace LRReader.Shared.ViewModels
 			ProgressCache = false;
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task AddProfile()
 		{
 			var dialog = Platform.CreateDialog<ICreateProfileDialog>(Dialog.ServerProfile, false);
@@ -204,7 +204,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task EditProfile(ServerProfile profile)
 		{
 			var dialog = Platform.CreateDialog<ICreateProfileDialog>(Dialog.ServerProfile, true);
@@ -222,7 +222,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task RemoveProfile(ServerProfile profile)
 		{
 			var shouldRestart = SettingsManager.Profile?.Equals(profile) ?? false;
@@ -244,7 +244,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void ContinueProfile(ServerProfile profile)
 		{
 			SettingsManager.Profile = profile;
@@ -252,29 +252,29 @@ namespace LRReader.Shared.ViewModels
 			Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task RestartWorker() => await ShinobuProvider.RestartWorker();
 
-		[ICommand]
+		[RelayCommand]
 		private async Task StopWorker() => await ShinobuProvider.StopWorker();
 
-		[ICommand]
+		[RelayCommand]
 		private async Task RescanContent() => await ShinobuProvider.Rescan();
 
-		[ICommand]
+		[RelayCommand]
 		private async Task ClearAllNew() => await DatabaseProvider.ClearAllNew();
 
-		[ICommand]
+		[RelayCommand]
 		private async Task ResetSearch() => await SearchProvider.DiscardCache();
 
-		[ICommand]
+		[RelayCommand]
 		private async Task RegenThumbnails(bool force)
 		{
 			if (thumbnailJob == null)
 				thumbnailJob = await ArchivesProvider.RegenerateThumbnails(force);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task ClearThumbnailCache()
 		{
 			if (ProgressCache)
@@ -286,10 +286,10 @@ namespace LRReader.Shared.ViewModels
 			ProgressCache = false;
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void OpenWebTab(string path) => Tabs.OpenTab(Tab.Web, SettingsManager.Profile.ServerAddressBrowser + path);
 
-		[ICommand]
+		[RelayCommand]
 		private Task OpenLink(string url) => Platform.OpenInBrowser(new Uri(url));
 	}
 }

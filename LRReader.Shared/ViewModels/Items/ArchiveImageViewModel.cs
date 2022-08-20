@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace LRReader.Shared.ViewModels.Items
 {
@@ -51,7 +51,7 @@ namespace LRReader.Shared.ViewModels.Items
 			}
 		}
 
-		[ICommand]
+		[RelayCommand]
 		public async Task Reload(bool forced = false)
 		{
 			if (_loading)

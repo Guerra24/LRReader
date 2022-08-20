@@ -65,7 +65,7 @@ namespace LRReader.UWP.Services
 			}
 			catch (Exception e)
 			{
-				Crashes.TrackError(e);
+				//Crashes.TrackError(e);
 				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
 		}

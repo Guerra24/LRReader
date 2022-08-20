@@ -2,8 +2,8 @@
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
@@ -53,7 +53,7 @@ namespace LRReader.Shared.ViewModels.Items
 		}
 
 
-		[ICommand]
+		[RelayCommand]
 		public async Task Reload(bool animate = true)
 		{
 			if (_loading)

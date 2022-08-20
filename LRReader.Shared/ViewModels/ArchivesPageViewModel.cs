@@ -1,6 +1,6 @@
 ﻿using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels

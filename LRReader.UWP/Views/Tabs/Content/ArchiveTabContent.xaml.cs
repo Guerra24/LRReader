@@ -27,6 +27,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
+using CommunityToolkit.Mvvm.Input;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {
@@ -227,7 +228,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void Random_Clicked() => await Random((CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
 
-		[Microsoft.Toolkit.Mvvm.Input.ICommand]
+		[RelayCommand]
 		private async Task Random(bool newOnly)
 		{
 			var list = Service.Archives.Archives.Where(kv => kv.Value.isnew || !newOnly);

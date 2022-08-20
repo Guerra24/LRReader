@@ -1,8 +1,8 @@
 ﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
 
@@ -96,7 +96,7 @@ namespace LRReader.Shared.ViewModels
 			await Connect();
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private async Task Connect()
 		{
 			Status = "";
@@ -159,7 +159,7 @@ namespace LRReader.Shared.ViewModels
 			Platform.GoToPage(Pages.HostTab, PagesTransition.DrillIn);
 		}
 
-		[ICommand]
+		[RelayCommand]
 		private void Change()
 		{
 			Status = "";
