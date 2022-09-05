@@ -5,7 +5,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Width="394"
 	d:DesignHeight="318"
 	d:DesignWidth="394"
 	DataContextChanged="UserControl_DataContextChanged"
@@ -13,9 +12,9 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="196" />
+			<ColumnDefinition Width="200" />
 			<ColumnDefinition Width="2" />
-			<ColumnDefinition Width="196" />
+			<ColumnDefinition Width="200" />
 		</Grid.ColumnDefinitions>
 		<Grid Grid.ColumnSpan="3" Background="Transparent" Visibility="{x:Bind ShowRemove, Mode=OneWay}">
 			<Grid.ContextFlyout>
@@ -27,7 +26,7 @@
 		<Grid x:Name="LeftGrid">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
+				<RowDefinition Height="275" />
 			</Grid.RowDefinitions>
 			<TextBlock
 				Grid.Row="0" Padding="5,0" HorizontalAlignment="Center"
@@ -36,9 +35,11 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind LeftViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1" IsHitTestVisible="False">
-				<Image
-					x:Name="LeftThumbnail" Width="200" Height="275"
-					HorizontalAlignment="Center" />
+				<Border
+					Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+					CornerRadius="{ThemeResource ControlCornerRadius}">
+					<Image x:Name="LeftThumbnail" MaxHeight="275" />
+				</Border>
 				<Grid x:Name="LeftMissingImage" x:Load="{x:Bind LeftViewModel.MissingImage, Mode=OneWay}">
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 				</Grid>
@@ -48,7 +49,7 @@
 		<Grid x:Name="RightGrid" Grid.Column="2">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
+				<RowDefinition Height="275" />
 			</Grid.RowDefinitions>
 			<TextBlock
 				Grid.Row="0" Padding="5,0" HorizontalAlignment="Center"
@@ -57,9 +58,11 @@
 				TextTrimming="CharacterEllipsis"
 				ToolTipService.ToolTip="{x:Bind RightViewModel.Archive.title, Mode=OneWay}" />
 			<Grid Grid.Row="1" IsHitTestVisible="False">
-				<Image
-					x:Name="RightThumbnail" Width="200" Height="275"
-					HorizontalAlignment="Center" />
+				<Border
+					Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+					CornerRadius="{ThemeResource ControlCornerRadius}">
+					<Image x:Name="RightThumbnail" MaxHeight="275" />
+				</Border>
 				<Grid x:Name="RightMissingImage" x:Load="{x:Bind RightViewModel.MissingImage, Mode=OneWay}">
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
 				</Grid>
