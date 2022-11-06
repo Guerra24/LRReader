@@ -29,7 +29,7 @@
 				<AutoSuggestBox
 					BorderBrush="{ThemeResource ControlElevationBorderBrush}"
 					CornerRadius="4,0,0,4"
-					Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource StringToColorConverter}}"
+					Foreground="{x:Bind Color, Converter={StaticResource StringToColorConverter}}"
 					IsEnabled="{Binding IsEnabled, ElementName=RemoveTag}"
 					Template="{StaticResource EditTagAutoSuggestBox}"
 					Text="{x:Bind Tag, Mode=TwoWay}"
@@ -71,7 +71,7 @@
 					BorderThickness="1" CornerRadius="4,0,0,4">
 					<TextBlock
 						Padding="4,2" VerticalAlignment="Bottom"
-						Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource StringToColorConverter}}"
+						Foreground="{x:Bind Color, Converter={StaticResource StringToColorConverter}}"
 						Text="{x:Bind Tag, Mode=TwoWay}" />
 				</Border>
 				<Button

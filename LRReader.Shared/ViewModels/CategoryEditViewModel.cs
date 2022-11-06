@@ -4,8 +4,6 @@ using LRReader.Shared.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
@@ -15,12 +13,9 @@ namespace LRReader.Shared.ViewModels
 		private readonly ArchivesService Archives;
 		private readonly ApiService Api;
 
-		[AllowNull]
-		public Category category;
-		[AllowNull]
-		public string Name { get; set; }
-		[AllowNull]
-		public string Search { get; set; }
+		public Category category = null!;
+		public string Name { get; set; } = string.Empty;
+		public string Search { get; set; } = null!;
 		public bool Pinned { get; set; }
 
 		private bool _canSave;

@@ -23,7 +23,7 @@ namespace LRReader.Shared.Services
 
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("Windowed")]
-		private bool _fullscreen = false;
+		private bool _fullscreen;
 		public bool Windowed => !_fullscreen;
 
 		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
@@ -57,7 +57,7 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		private ICustomTab GetTabFromId(string id) => TabItems.FirstOrDefault(t => t.CustomTabId.Equals(id));
+		private ICustomTab? GetTabFromId(string? id) => TabItems.FirstOrDefault(t => t.CustomTabId.Equals(id));
 
 		public void CloseCurrentTab()
 		{
@@ -72,7 +72,7 @@ namespace LRReader.Shared.Services
 			TabItems.Remove(tab);
 		}
 
-		public void CloseTabWithId(string id)
+		public void CloseTabWithId(string? id)
 		{
 			var tab = GetTabFromId(id);
 			if (tab != null)

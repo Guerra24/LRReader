@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -31,16 +32,16 @@ namespace LRReader.UWP.Views.Items
 		private bool _open;
 
 		// Default
-		private Grid Root;
-		private Image Thumbnail;
-		private Grid TagsGrid;
-		private Flyout TagsFlyout;
+		private Grid Root = null!;
+		private Image Thumbnail = null!;
+		private Grid TagsGrid = null!;
+		private Flyout TagsFlyout = null!;
 
 		// Bookmark
-		public ParallaxView Parallax;
+		public ParallaxView? Parallax;
 
 		// Internal
-		public IList<Archive> Group;
+		public IList<Archive> Group = null!;
 
 		public GenericArchiveItem()
 		{
@@ -56,10 +57,10 @@ namespace LRReader.UWP.Views.Items
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			Root = GetTemplateChild("Root") as Grid;
-			Thumbnail = GetTemplateChild("Thumbnail") as Image;
-			TagsGrid = GetTemplateChild("TagsGrid") as Grid;
-			TagsFlyout = GetTemplateChild("TagsFlyout") as Flyout;
+			Root = (Grid)GetTemplateChild("Root");
+			Thumbnail = (Image)GetTemplateChild("Thumbnail");
+			TagsGrid = (Grid)GetTemplateChild("TagsGrid");
+			TagsFlyout = (Flyout)GetTemplateChild("TagsFlyout");
 
 			Parallax = GetTemplateChild("Parallax") as ParallaxView;
 		}
@@ -95,7 +96,7 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			await ViewModel.Load(args.NewValue as Archive, DecodePixelWidth, DecodePixelHeight);
+			await ViewModel.Load((Archive)args.NewValue, DecodePixelWidth, DecodePixelHeight);
 		}
 
 		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Service.Archives.OpenTab(ViewModel.Archive, false, Group);

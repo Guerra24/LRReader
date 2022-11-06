@@ -3,7 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace LRReader.UWP.Installer
 {
-	public class EntryPoint
+	public static class EntryPoint
 	{
 		[STAThread]
 		public static int Main(string[] args)

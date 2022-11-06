@@ -139,7 +139,7 @@ namespace LRReader.Shared.Models.Main
 	public class ReaderImageSet
 	{
 
-		public string LeftImage { get; set; } = null!;
+		public string? LeftImage { get; set; }
 		public string? RightImage { get; set; }
 		public int Page { get; set; }
 		public bool TwoPages { get; set; }
@@ -150,10 +150,10 @@ namespace LRReader.Shared.Models.Main
 	public class ImagePageSet
 	{
 		public string Id { get; set; }
-		public string Image { get; set; }
+		public string? Image { get; set; }
 		public int Page { get; set; }
 
-		public ImagePageSet(string id, string image, int page)
+		public ImagePageSet(string id, string? image, int page)
 		{
 			this.Id = id;
 			this.Image = image;

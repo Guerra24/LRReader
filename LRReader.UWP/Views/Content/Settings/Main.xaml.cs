@@ -21,7 +21,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Main()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SettingsPageViewModel;
+			Data = (SettingsPageViewModel)DataContext;
 			lang = ResourceLoader.GetForCurrentView("Settings");
 		}
 

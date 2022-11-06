@@ -215,7 +215,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_transition = false;
 		}
 
-		private async Task NextArchive()
+		private async void NextArchive() => await NextArchiveAsync();
+
+		private async Task NextArchiveAsync()
 		{
 			if (!Data.CanGoNext)
 				return;
@@ -318,7 +320,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private async void Next_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			args.Handled = true;
-			await NextArchive();
+			await NextArchiveAsync();
 		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -522,7 +524,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			if (Service.Settings.OpenNextArchive && Data.ReaderContent.Page + 1 >= Data.Pages)
 			{
-				await NextArchive();
+				await NextArchiveAsync();
 				return;
 			}
 			if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)

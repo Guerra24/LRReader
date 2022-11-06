@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,7 +18,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Categories()
 		{
 			this.InitializeComponent();
-			Data = DataContext as CategoriesViewModel;
+			Data = (CategoriesViewModel)DataContext;
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -42,9 +43,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 	public class CategoryTemplateSelector : DataTemplateSelector
 	{
-		public DataTemplate StaticTemplate { get; set; }
-		public DataTemplate DynamicTemplate { get; set; }
-		public DataTemplate AddNewTemplate { get; set; }
+		public DataTemplate StaticTemplate { get; set; } = null!;
+		public DataTemplate DynamicTemplate { get; set; } = null!;
+		public DataTemplate AddNewTemplate { get; set; } = null!;
+
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
 			if (item is AddNewCategory)

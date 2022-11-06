@@ -11,7 +11,7 @@ namespace LRReader.UWP.Views.Content.Tools
 		public DeduplicatorHidden()
 		{
 			this.InitializeComponent();
-			Data = DataContext as DeduplicatorHiddenViewModel;
+			Data = (DeduplicatorHiddenViewModel)DataContext;
 		}
 
 	}

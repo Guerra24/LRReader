@@ -15,7 +15,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Reader()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SettingsPageViewModel;
+			Data = (SettingsPageViewModel)DataContext;
 
 			var lang = ResourceLoader.GetForCurrentView("Settings");
 			ReminderModeRadio.Items.Add(lang.GetString("Reader/ReminderMode/All"));

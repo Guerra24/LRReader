@@ -15,13 +15,13 @@ namespace LRReader.UWP.Views.Main
 
 		private LoadingPageViewModel ViewModel;
 
-		private static SplashScreen splashScreen;
+		private static SplashScreen splashScreen = null!;
 
 		public LoadingPage()
 		{
 			this.InitializeComponent();
 			CoreView = CoreApplication.GetCurrentView();
-			ViewModel = DataContext as LoadingPageViewModel;
+			ViewModel = (LoadingPageViewModel)DataContext;
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)

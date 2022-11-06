@@ -12,12 +12,9 @@ namespace LRReader.UWP.Views.Content.Tools
 		public BulkEditor()
 		{
 			this.InitializeComponent();
-			Data = DataContext as BulkEditorViewModel;
+			Data = (BulkEditorViewModel)DataContext;
 		}
 
-		private void HideFlyout_Click(object sender, RoutedEventArgs e)
-		{
-			((sender as Button).Tag as Flyout).Hide();
-		}
+		private void HideFlyout_Click(object sender, RoutedEventArgs e) => ((Flyout)((Button)sender).Tag).Hide();
 	}
 }

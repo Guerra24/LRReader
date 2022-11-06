@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿#nullable enable
+using System.Windows.Input;
 using Windows.System;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
@@ -24,12 +25,12 @@ namespace LRReader.UWP.Views.Controls
 
 		public string Title
 		{
-			get => GetValue(TitleProperty) as string;
+			get => (string)GetValue(TitleProperty);
 			set => SetValue(TitleProperty, value);
 		}
 		public string Description
 		{
-			get => GetValue(DescriptionProperty) as string;
+			get => (string)GetValue(DescriptionProperty);
 			set => SetValue(DescriptionProperty, value);
 		}
 
@@ -47,7 +48,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public string Glyph
 		{
-			get => GetValue(GlyphProperty) as string;
+			get => (string)GetValue(GlyphProperty);
 			set => SetValue(GlyphProperty, value);
 		}
 
@@ -65,13 +66,13 @@ namespace LRReader.UWP.Views.Controls
 
 		public string RightGlyph
 		{
-			get => GetValue(RightGlyphProperty) as string;
+			get => (string)GetValue(RightGlyphProperty);
 			set => SetValue(RightGlyphProperty, value);
 		}
 
 		public ICommand Command
 		{
-			get => GetValue(CommandProperty) as ICommand;
+			get => (ICommand)GetValue(CommandProperty);
 			set => SetValue(CommandProperty, value);
 		}
 		public object CommandParameter
@@ -80,7 +81,7 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(CommandParameterProperty, value);
 		}
 
-		public event RoutedEventHandler Click;
+		public event RoutedEventHandler? Click;
 
 		protected override void OnPointerEntered(PointerRoutedEventArgs e)
 		{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchiveEdit()
 		{
 			this.InitializeComponent();
-			Data = DataContext as ArchiveEditViewModel;
+			Data = (ArchiveEditViewModel)DataContext;
 			Data.Show += Show;
 			Data.Hide += Hide;
 		}
@@ -71,8 +72,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 	public class TagTemplateSelector : DataTemplateSelector
 	{
-		public DataTemplate EditableTemplate { get; set; }
-		public DataTemplate AddTemplate { get; set; }
+		public DataTemplate EditableTemplate { get; set; } = null!;
+		public DataTemplate AddTemplate { get; set; } = null!;
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
 			if (item is AddTag)

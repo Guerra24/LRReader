@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
@@ -38,7 +39,7 @@ namespace LRReader.UWP.Views.Items
 
 		public ICommand RemoveCommand
 		{
-			get => GetValue(RemoveCommandProperty) as ICommand;
+			get => (ICommand)GetValue(RemoveCommandProperty);
 			set => SetValue(RemoveCommandProperty, value);
 		}
 
@@ -47,14 +48,14 @@ namespace LRReader.UWP.Views.Items
 			if (args.NewValue == null)
 				return;
 			VisualStateManager.GoToState(this, "Normal", true);
-			var hit = args.NewValue as ArchiveHit;
+			var hit = (ArchiveHit)args.NewValue;
 
 			if (!hit.Equals(_old))
 			{
 				_old = hit;
 				Data.ArchiveHit = hit;
-				LeftViewModel.Archive = Service.Archives.GetArchive(hit.Left);
-				RightViewModel.Archive = Service.Archives.GetArchive(hit.Right);
+				LeftViewModel.Archive = Service.Archives.GetArchive(hit.Left)!;
+				RightViewModel.Archive = Service.Archives.GetArchive(hit.Right)!;
 
 				LeftGrid.SetVisualOpacity(0);
 				RightGrid.SetVisualOpacity(0);

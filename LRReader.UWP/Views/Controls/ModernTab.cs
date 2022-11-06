@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models;
+﻿#nullable enable
+using LRReader.Shared.Models;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 
@@ -22,11 +23,11 @@ namespace LRReader.UWP.Views.Controls
 
 		public string CustomTabId
 		{
-			get => GetValue(CustomTabIdProperty) as string;
+			get => (string)GetValue(CustomTabIdProperty);
 			set => SetValue(CustomTabIdProperty, value);
 		}
 
-		public event GoBackTabEvent GoBack;
+		public event GoBackTabEvent? GoBack;
 
 		public virtual void Unload()
 		{

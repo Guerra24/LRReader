@@ -13,7 +13,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Updates()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SettingsPageViewModel;
+			Data = (SettingsPageViewModel)DataContext;
 		}
 
 		private async void MarkdownText_LinkClicked(object sender, LinkClickedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -12,7 +13,7 @@ namespace LRReader.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			string parameterString = parameter as string;
+			string? parameterString = parameter as string;
 			if (parameterString == null || !Enum.IsDefined(value.GetType(), value))
 				return DependencyProperty.UnsetValue;
 			object parameterValue = Enum.Parse(value.GetType(), parameterString);
@@ -22,7 +23,7 @@ namespace LRReader.Converters
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
-			string parameterString = parameter as string;
+			string? parameterString = parameter as string;
 			if (parameterString == null)
 				return DependencyProperty.UnsetValue;
 			return Enum.Parse(targetType, parameterString);
@@ -85,7 +86,7 @@ namespace LRReader.Converters
 		{
 			if (value is BitmapImage image)
 				return image;
-			return null;
+			return null!;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)

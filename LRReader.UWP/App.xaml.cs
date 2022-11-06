@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Services;
+﻿#nullable enable
+using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views;
 using Microsoft.AppCenter;
@@ -35,7 +36,7 @@ namespace LRReader.UWP
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			Root root = Window.Current.Content as Root;
+			Root? root = Window.Current.Content as Root;
 
 			if (root == null)
 			{
@@ -51,7 +52,7 @@ namespace LRReader.UWP
 				root = new Root();
 				root.ChangeTheme(Settings.Theme);
 				root.UpdateThemeColors();
-				(Service.Platform as UWPlatformService).SetRoot(root);
+				((UWPlatformService)Platform).SetRoot(root);
 
 				/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");*/
@@ -67,7 +68,7 @@ namespace LRReader.UWP
 
 			CoreApplication.EnablePrelaunch(true);
 			if (root.FrameContent.Content == null)
-				Service.Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
+				Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
 			Window.Current.Activate();
 		}
 

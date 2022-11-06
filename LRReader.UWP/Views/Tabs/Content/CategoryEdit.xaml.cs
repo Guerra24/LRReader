@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public CategoryEdit()
 		{
 			this.InitializeComponent();
-			ViewModel = DataContext as CategoryEditViewModel;
+			ViewModel = (CategoryEditViewModel)DataContext;
 			ArchiveList.Data.CustomArchiveCheckEvent = CustomArchiveCheck;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 			VisualStateManager.GoToState(this, "Selected", false);
@@ -82,7 +83,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			var deferral = e.GetDeferral();
 			if (e.DataView.Properties.TryGetValue("archivesAdd", out object value) && value is string data)
-				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data))
+				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data)!)
 					await ViewModel.AddToCategory(c.arcid);
 			deferral.Complete();
 		}
@@ -108,7 +109,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			var deferral = e.GetDeferral();
 			if (e.DataView.Properties.TryGetValue("archivesRemove", out object value) && value is string data)
-				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data))
+				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data)!)
 					await ViewModel.RemoveFromCategory(c.arcid);
 			deferral.Complete();
 		}

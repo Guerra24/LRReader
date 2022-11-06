@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
@@ -34,7 +35,7 @@ namespace LRReader.UWP.Views.Controls
 		public ArchiveList()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SearchResultsViewModel;
+			Data = (SearchResultsViewModel)DataContext;
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -48,7 +49,7 @@ namespace LRReader.UWP.Views.Controls
 			await Refresh();
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Archives.OpenTab(e.ClickedItem as Archive, (CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, Data.ArchiveList.ToList());
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Archives.OpenTab((Archive)e.ClickedItem, (CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, Data.ArchiveList.ToList());
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
@@ -91,7 +92,7 @@ namespace LRReader.UWP.Views.Controls
 		{
 			if (args.ChosenSuggestion != null)
 			{
-				query = args.ChosenSuggestion as string;
+				query = (string)args.ChosenSuggestion;
 				await HandleSearch();
 			}
 			else
@@ -181,7 +182,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
-			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (sender as RadioMenuFlyoutItem).Tag as string);
+			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (string)((RadioMenuFlyoutItem)sender).Tag);
 			await HandleSearch();
 		}
 

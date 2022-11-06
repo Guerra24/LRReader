@@ -1027,7 +1027,7 @@
 
 				<Border
 					Grid.Column="2" Width="1" Height="16"
-					Margin="3,0,3,8" VerticalAlignment="Bottom"
+					Margin="3,0,3,0" VerticalAlignment="Center"
 					Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
 				<ContentPresenter

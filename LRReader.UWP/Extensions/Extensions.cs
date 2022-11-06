@@ -53,7 +53,7 @@ namespace LRReader.UWP.Extensions
 			};
 		}
 
-		public static ICommand GetItemClickCommand(GridView gridView) => gridView.GetValue(ItemClickCommandProperty) as ICommand;
+		public static ICommand GetItemClickCommand(GridView gridView) => (ICommand)gridView.GetValue(ItemClickCommandProperty);
 	}
 
 	public class KeyboardAcceleratorExt : DependencyObject
@@ -74,7 +74,7 @@ namespace LRReader.UWP.Extensions
 			};
 		}
 
-		public static ICommand GetCommand(KeyboardAccelerator ka) => ka.GetValue(CommandProperty) as ICommand;
+		public static ICommand GetCommand(KeyboardAccelerator ka) => (ICommand)ka.GetValue(CommandProperty);
 
 		public static void SetCommandParameter(KeyboardAccelerator ka, object parameter) => ka.SetValue(CommandParameterProperty, parameter);
 
@@ -106,12 +106,12 @@ namespace LRReader.UWP.Extensions
 			}
 		}
 
-		public static Shadow GetModernShadow(FrameworkElement element) => element.GetValue(ModernShadowProperty) as Shadow;
+		public static Shadow GetModernShadow(FrameworkElement element) => (Shadow)element.GetValue(ModernShadowProperty);
 
 		private static void Grid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			var item = args.ItemContainer as GridViewItem;
-			var shadow = sender.GetValue(ModernShadowProperty) as Shadow;
+			var item = (GridViewItem)args.ItemContainer;
+			var shadow = (Shadow)sender.GetValue(ModernShadowProperty);
 			if (item.GetValue(ModernShadowProperty) == null)
 			{
 				item.SetValue(ModernShadowProperty, shadow);
@@ -131,15 +131,15 @@ namespace LRReader.UWP.Extensions
 			}
 		}
 
-		private static void GridViewItem_PointerEntered(object sender, PointerRoutedEventArgs e) => (sender as GridViewItem).Translation = new Vector3(0, 0, 32);
+		private static void GridViewItem_PointerEntered(object sender, PointerRoutedEventArgs e) => ((GridViewItem)sender).Translation = new Vector3(0, 0, 32);
 
-		private static void GridViewItem_PointerExited(object sender, PointerRoutedEventArgs e) => (sender as GridViewItem).Translation = new Vector3(0, 0, 14);
+		private static void GridViewItem_PointerExited(object sender, PointerRoutedEventArgs e) => ((GridViewItem)sender).Translation = new Vector3(0, 0, 14);
 	}
 
 	public class Shadow
 	{
-		internal ThemeShadow ThemeShadow { get; }
-		internal AttachedCardShadow DropShadow { get; }
+		internal ThemeShadow ThemeShadow { get; } = null!;
+		internal AttachedCardShadow DropShadow { get; } = null!;
 
 		public Vector3 Translation { get; set; } = new Vector3(0, 0, 14);
 

@@ -88,6 +88,8 @@ namespace LRReader.Shared.Services
 		public void MapTransitionToType(PagesTransition transition, Type type) => Transitions.Add(transition, type);
 
 		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition]);
+
+		public abstract Task<bool> CheckAppInstalled(string package);
 	}
 
 	public class StubPlatformService : PlatformService
@@ -115,5 +117,7 @@ namespace LRReader.Shared.Services
 		public override void CopyToClipboard(string text) { }
 
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) { }
+
+		public override Task<bool> CheckAppInstalled(string package) => Task.FromResult(false);
 	}
 }

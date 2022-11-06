@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Extensions;
+﻿#nullable enable
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
@@ -30,7 +31,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Bookmarks()
 		{
 			this.InitializeComponent();
-			Data = DataContext as BookmarksTabViewModel;
+			Data = (BookmarksTabViewModel)DataContext;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 		}
 
@@ -99,10 +100,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 			StorageFile file = await openPicker.PickSingleFileAsync();
 			if (file != null)
 			{
-				List<Shared.Models.Main.BookmarkedArchive> bookmarks = null;
+				List<Shared.Models.Main.BookmarkedArchive>? bookmarks;
 				try
 				{
-					bookmarks = JsonConvert.DeserializeObject<List<Shared.Models.Main.BookmarkedArchive>>(await FileIO.ReadTextAsync(file));
+					bookmarks = JsonConvert.DeserializeObject<List<Shared.Models.Main.BookmarkedArchive>>(await FileIO.ReadTextAsync(file))!;
 				}
 				catch (Exception e)
 				{
@@ -130,8 +131,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 	public class BookmarkTemplateSelector : DataTemplateSelector
 	{
-		public DataTemplate CompactTemplate { get; set; }
-		public DataTemplate FullTemplate { get; set; }
+		public DataTemplate CompactTemplate { get; set; } = null!;
+		public DataTemplate FullTemplate { get; set; } = null!;
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{

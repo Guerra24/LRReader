@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Extensions;
@@ -20,14 +21,14 @@ namespace LRReader.UWP.Views.Content.Tools
 
 		private DeduplicatorToolViewModel Data;
 
-		private ScrollViewer LeftScroller, RightScroller;
+		private ScrollViewer? LeftScroller, RightScroller;
 
 		private int _state = 0;
 
 		public Deduplicator()
 		{
 			this.InitializeComponent();
-			Data = DataContext as DeduplicatorToolViewModel;
+			Data = (DeduplicatorToolViewModel)DataContext;
 			for (int i = Environment.ProcessorCount; i > 0; i--)
 				WorkerThreads.Items.Add(i);
 			Details.SetVisualOpacity(0);
@@ -42,7 +43,7 @@ namespace LRReader.UWP.Views.Content.Tools
 			}
 			if (_state != 2)
 			{
-				LeftScroller.ChangeView(null, RightScroller.VerticalOffset, null, true);
+				LeftScroller?.ChangeView(null, RightScroller?.VerticalOffset, null, true);
 				_state = 1;
 			}
 		}
@@ -56,7 +57,7 @@ namespace LRReader.UWP.Views.Content.Tools
 			}
 			if (_state != 1)
 			{
-				RightScroller.ChangeView(null, LeftScroller.VerticalOffset, null, true);
+				RightScroller?.ChangeView(null, LeftScroller?.VerticalOffset, null, true);
 				_state = 2;
 			}
 		}
@@ -68,17 +69,21 @@ namespace LRReader.UWP.Views.Content.Tools
 			await FadeOut.StartAsync(Results);
 			Details.Visibility = Visibility.Visible;
 			FadeIn.Start(Details);
-			var item = e.ClickedItem as ArchiveHit;
+			var item = (ArchiveHit)e.ClickedItem;
 			await Data.LoadArchives(item);
 			if (RightScroller == null && LeftScroller == null)
 			{
 				var border = VisualTreeHelper.GetChild(RightPages, 0);
-				RightScroller = VisualTreeHelper.GetChild(border, 0) as ScrollViewer;
-				RightScroller.ViewChanged += RightScroller_ViewChanged;
+				if (border != null)
+					RightScroller = VisualTreeHelper.GetChild(border, 0) as ScrollViewer;
+				if (RightScroller != null)
+					RightScroller.ViewChanged += RightScroller_ViewChanged;
 
 				border = VisualTreeHelper.GetChild(LeftPages, 0);
-				LeftScroller = VisualTreeHelper.GetChild(border, 0) as ScrollViewer;
-				LeftScroller.ViewChanged += LeftScroller_ViewChanged;
+				if (border != null)
+					LeftScroller = VisualTreeHelper.GetChild(border, 0) as ScrollViewer;
+				if (LeftScroller != null)
+					LeftScroller.ViewChanged += LeftScroller_ViewChanged;
 			}
 		}
 

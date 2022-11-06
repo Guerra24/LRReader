@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
@@ -18,7 +19,7 @@ namespace LRReader.UWP.Views.Controls
 		{
 			var dataPackage = new DataPackage();
 			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			dataPackage.SetText((sender as MenuFlyoutItem).Tag as string);
+			dataPackage.SetText(((MenuFlyoutItem)sender).Tag as string);
 			Clipboard.SetContent(dataPackage);
 		}
 
@@ -30,13 +31,13 @@ namespace LRReader.UWP.Views.Controls
 
 		public ICommand ItemClickCommand
 		{
-			get => GetValue(ItemClickCommandProperty) as ICommand;
+			get => (ICommand)GetValue(ItemClickCommandProperty);
 			set => SetValue(ItemClickCommandProperty, value);
 		}
 
 		public ICollection<ArchiveTagsGroup> ItemsSource
 		{
-			get => GetValue(ItemsSourceProperty) as ICollection<ArchiveTagsGroup>;
+			get => (ICollection<ArchiveTagsGroup>)GetValue(ItemsSourceProperty);
 			set => SetValue(ItemsSourceProperty, value);
 		}
 
@@ -53,9 +54,9 @@ namespace LRReader.UWP.Views.Controls
 		private void TagsList_Loaded(object sender, RoutedEventArgs e)
 		{
 			var grid = sender as GridView;
-			if (grid.Tag == null)
+			if (grid?.Tag == null)
 			{
-				grid.MaxWidth = MaxTagsWidth;
+				grid!.MaxWidth = MaxTagsWidth;
 				grid.Tag = "The absolute state of UWP Bindings";
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿#nullable enable
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,13 +22,13 @@ namespace LRReader.UWP.Views.Controls
 
 		public string Title
 		{
-			get => GetValue(TitleProperty) as string;
+			get => (string)GetValue(TitleProperty);
 			set => SetValue(TitleProperty, value);
 		}
 
 		public Type Initial
 		{
-			get => GetValue(InitialProperty) as Type;
+			get => (Type)GetValue(InitialProperty);
 			set => SetValue(InitialProperty, value);
 		}
 
@@ -76,8 +77,8 @@ namespace LRReader.UWP.Views.Controls
 
 	public class ModernPageTabItem
 	{
-		public string Title { get; set; }
-		public string Description { get; set; }
-		public Type Page { get; set; }
+		public string Title { get; set; } = null!;
+		public string Description { get; set; } = null!;
+		public Type Page { get; set; } = null!;
 	}
 }

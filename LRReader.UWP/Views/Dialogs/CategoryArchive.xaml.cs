@@ -33,9 +33,9 @@ namespace LRReader.UWP.Views.Dialogs
 			if (_searching)
 				return;
 			foreach (var c in e.AddedItems)
-				await Data.AddToCategory((c as Category).id);
+				await Data.AddToCategory(((Category)c).id);
 			foreach (var c in e.RemovedItems)
-				await Data.RemoveFromCategory((c as Category).id);
+				await Data.RemoveFromCategory(((Category)c).id);
 			await Data.Reload();
 		}
 

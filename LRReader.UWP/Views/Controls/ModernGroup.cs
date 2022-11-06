@@ -16,13 +16,13 @@ namespace LRReader.UWP.Views.Controls
 
 		public IList<object> Items
 		{
-			get => GetValue(ContentProperty) as IList<object>;
+			get => (IList<object>)GetValue(ContentProperty);
 			set => SetValue(ContentProperty, value);
 		}
 
 		public string Title
 		{
-			get => GetValue(TitleProperty) as string;
+			get => (string)GetValue(TitleProperty);
 			set => SetValue(TitleProperty, value);
 		}
 

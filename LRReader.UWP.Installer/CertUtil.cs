@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace LRReader.UWP.Installer
 {
-	public class CertUtil
+	public static class CertUtil
 	{
 		private static X509Store Store;
 
@@ -28,13 +28,19 @@ namespace LRReader.UWP.Installer
 			if (!found)
 			{
 				var file = Path.GetTempFileName();
-				using (var client = new WebClient())
-					await client.DownloadFileTaskAsync(new Uri(url), file);
-				var cert = new X509Certificate2(file);
-				if (!cert.Thumbprint.Equals(thumb.ToUpper()))
-					return false;
-				Store.Add(cert);
-				File.Delete(file);
+				try
+				{
+					using (var client = new WebClient())
+						await client.DownloadFileTaskAsync(new Uri(url), file);
+					var cert = new X509Certificate2(file);
+					if (!cert.Thumbprint.Equals(thumb.ToUpper()))
+						return false;
+					Store.Add(cert);
+				}
+				finally
+				{
+					File.Delete(file);
+				}
 			}
 			return true;
 		}

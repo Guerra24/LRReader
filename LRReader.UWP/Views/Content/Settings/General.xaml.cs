@@ -16,7 +16,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public General()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SettingsPageViewModel;
+			Data = (SettingsPageViewModel)DataContext;
 			lang = ResourceLoader.GetForCurrentView("Settings");
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/System"));
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Dark"));
@@ -46,7 +46,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			if (!Data.SettingsManager.Profile.AcceptedDisclaimer)
 			{
-				var value = (sender as ToggleSwitch).IsOn;
+				var value = ((ToggleSwitch)sender).IsOn;
 				Data.SettingsManager.CrashReporting = value;
 				await Crashes.SetEnabledAsync(value);
 			}
@@ -54,7 +54,7 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private async void TrackCrashes_Loading(FrameworkElement sender, object args)
 		{
-			(sender as ToggleSwitch).IsOn = await Crashes.IsEnabledAsync();
+			((ToggleSwitch)sender).IsOn = await Crashes.IsEnabledAsync();
 		}
 	}
 }

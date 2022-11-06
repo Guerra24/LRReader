@@ -12,7 +12,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Profiles()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SettingsPageViewModel;
+			Data = (SettingsPageViewModel)DataContext;
 		}
 	}
 }

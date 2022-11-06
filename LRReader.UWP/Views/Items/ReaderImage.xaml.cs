@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -90,9 +91,9 @@ namespace LRReader.UWP.Views.Items
 			await decodePixel.WaitAsync();
 			_height = height;
 			if (LeftImage.Source != null)
-				(LeftImage.Source as BitmapImage).DecodePixelHeight = height;
+				((BitmapImage)LeftImage.Source).DecodePixelHeight = height;
 			if (RightImage.Source != null)
-				(RightImage.Source as BitmapImage).DecodePixelHeight = height;
+				((BitmapImage)RightImage.Source).DecodePixelHeight = height;
 			decodePixel.Release();
 		}
 
@@ -103,9 +104,9 @@ namespace LRReader.UWP.Views.Items
 			await decodePixel.WaitAsync();
 			_width = width;
 			if (LeftImage.Source != null)
-				(LeftImage.Source as BitmapImage).DecodePixelWidth = width;
+				((BitmapImage)LeftImage.Source).DecodePixelWidth = width;
 			if (RightImage.Source != null)
-				(RightImage.Source as BitmapImage).DecodePixelWidth = width;
+				((BitmapImage)RightImage.Source).DecodePixelWidth = width;
 			decodePixel.Release();
 		}
 

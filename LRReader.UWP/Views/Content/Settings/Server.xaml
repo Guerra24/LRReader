@@ -117,8 +117,8 @@
 				<controls:ModernInput x:Uid="/Settings/Server/ResetCache" Glyph="&#xE7C5;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/ResetCacheButton" Command="{x:Bind Data.ResetSearchCommand}" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Server/RescanContent" Glyph="&#xE8B7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V085Edit, Mode=OneWay}">
-					<Button x:Uid="/Settings/Server/RescanContentButton" Command="{x:Bind Data.RescanContentCommand}" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V085Edit, Mode=OneWay}" />
+				<controls:ModernInput x:Uid="/Settings/Server/RescanContent" Glyph="&#xE8B7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V085Edit}">
+					<Button x:Uid="/Settings/Server/RescanContentButton" Command="{x:Bind Data.RescanContentCommand}" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V085Edit}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Glyph="&#xE74E;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/BackupDBButton" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />

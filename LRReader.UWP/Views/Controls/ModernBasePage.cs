@@ -7,7 +7,7 @@ namespace LRReader.UWP.Views.Controls
 	public class ModernBasePage : Page
 	{
 
-		protected ModernPageTab Page;
+		protected ModernPageTab Page = null!;
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -18,7 +18,7 @@ namespace LRReader.UWP.Views.Controls
 
 		protected void PageButton_Click(object sender, RoutedEventArgs e)
 		{
-			Page.Navigate((sender as ModernInput).Tag as ModernPageTabItem);
+			Page.Navigate((ModernPageTabItem)((ModernInput)sender).Tag);
 		}
 	}
 }

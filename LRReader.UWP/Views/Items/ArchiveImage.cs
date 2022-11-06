@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
@@ -20,7 +21,7 @@ namespace LRReader.UWP.Views.Items
 
 		public ArchiveImageViewModel Data { get; }
 
-		private Grid Root;
+		private Grid Root = null!;
 
 		public ArchiveImage()
 		{
@@ -55,7 +56,7 @@ namespace LRReader.UWP.Views.Items
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			Root = GetTemplateChild("Root") as Grid;
+			Root = (Grid)GetTemplateChild("Root");
 			if (!KeepOverlayOpen)
 				VisualStateManager.GoToState(this, "Hidden", false);
 		}
@@ -64,7 +65,7 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			await Data.LoadImage(args.NewValue as ImagePageSet);
+			await Data.LoadImage((ImagePageSet)args.NewValue);
 		}
 
 		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿#nullable enable
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -24,36 +25,36 @@ namespace LRReader.UWP.Views.Controls
 
 		public string Title
 		{
-			get => GetValue(TitleProperty) as string;
+			get => (string)GetValue(TitleProperty);
 			set => SetValue(TitleProperty, value);
 		}
 		public string Description
 		{
-			get => GetValue(DescriptionProperty) as string;
+			get => (string)GetValue(DescriptionProperty);
 			set => SetValue(DescriptionProperty, value);
 		}
 
 		public IList<object> Items
 		{
-			get => GetValue(ItemsProperty) as IList<object>;
+			get => (IList<object>)GetValue(ItemsProperty);
 			set => SetValue(ItemsProperty, value);
 		}
 
 		public string Glyph
 		{
-			get => GetValue(GlyphProperty) as string;
+			get => (string)GetValue(GlyphProperty);
 			set => SetValue(GlyphProperty, value);
 		}
 
 		public IconElement Icon
 		{
-			get => GetValue(IconProperty) as IconElement;
+			get => (IconElement)GetValue(IconProperty);
 			set => SetValue(IconProperty, value);
 		}
 
 		public string ToolTip
 		{
-			get => GetValue(ToolTipProperty) as string;
+			get => (string)GetValue(ToolTipProperty);
 			set => SetValue(ToolTipProperty, value);
 		}
 
@@ -68,13 +69,13 @@ namespace LRReader.UWP.Views.Controls
 
 	public class ItemTemplateSelector : DataTemplateSelector
 	{
-		public DataTemplate LastItem { get; set; }
-		public DataTemplate OtherItem { get; set; }
+		public DataTemplate LastItem { get; set; } = null!;
+		public DataTemplate OtherItem { get; set; } = null!;
 
 		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
 		{
 			var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
-			return (itemsControl.IndexFromContainer(container) == (itemsControl.ItemsSource as IList<object>).Count - 1) ? LastItem : OtherItem;
+			return (itemsControl.IndexFromContainer(container) == ((IList<object>)itemsControl.ItemsSource).Count - 1) ? LastItem : OtherItem;
 		}
 	}
 }

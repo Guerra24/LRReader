@@ -8,7 +8,7 @@ namespace LRReader.UWP.Services
 {
 	public class DispatcherService : IDispatcherService
 	{
-		private DispatcherQueue Dispatcher;
+		private DispatcherQueue Dispatcher = null!;
 
 		public void Init() => Dispatcher = DispatcherQueue.GetForCurrentThread();
 

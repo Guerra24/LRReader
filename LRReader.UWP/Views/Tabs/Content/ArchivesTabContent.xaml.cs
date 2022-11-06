@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
@@ -30,7 +31,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchivesTabContent()
 		{
 			this.InitializeComponent();
-			Data = DataContext as ArchivesPageViewModel;
+			Data = (ArchivesPageViewModel)DataContext;
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -48,7 +49,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			reloading = false;
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Archives.OpenTab(e.ClickedItem as Archive, (CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, Data.ArchiveList.ToList());
+		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Archives.OpenTab((Archive)e.ClickedItem, (CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, Data.ArchiveList.ToList());
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
@@ -91,7 +92,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (args.ChosenSuggestion != null)
 			{
-				query = args.ChosenSuggestion as string;
+				query = (string)args.ChosenSuggestion;
 				await HandleSearch();
 			}
 			else
@@ -176,7 +177,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
-			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (sender as RadioMenuFlyoutItem).Tag as string);
+			Data.OrderBy = (Order)Enum.Parse(typeof(Order), ((RadioMenuFlyoutItem)sender).Tag as string);
 			await HandleSearch();
 		}
 
@@ -190,14 +191,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 	public class ArchiveTemplateSelector : DataTemplateSelector
 	{
-		public DataTemplate CompactTemplate { get; set; }
-		public DataTemplate FullTemplate { get; set; }
+		public DataTemplate CompactTemplate { get; set; } = null!;
+		public DataTemplate FullTemplate { get; set; } = null!;
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			if (false)
-				return CompactTemplate;
-			else
+			//if (false)
+				//return CompactTemplate;
+			//else
 				return FullTemplate;
 		}
 		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)

@@ -19,7 +19,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public About()
 		{
 			this.InitializeComponent();
-			Data = DataContext as SettingsPageViewModel;
+			Data = (SettingsPageViewModel)DataContext;
 
 			switch (this.ActualTheme)
 			{

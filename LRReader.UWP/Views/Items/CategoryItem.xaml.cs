@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿#nullable enable
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Extensions;
@@ -35,7 +36,7 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			ViewModel.Category = args.NewValue as Category;
+			ViewModel.Category = (Category)args.NewValue;
 
 			if (!_oldID.Equals(ViewModel.Category.id))
 			{

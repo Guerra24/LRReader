@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Extensions;
+﻿#nullable enable
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
@@ -34,7 +35,7 @@ namespace LRReader.UWP.Views.Main
 		public HostTabPage()
 		{
 			this.InitializeComponent();
-			Data = DataContext as TabsService;
+			Data = (TabsService)DataContext;
 			Settings = Service.Settings;
 
 			CoreView = CoreApplication.GetCurrentView();
@@ -97,13 +98,13 @@ namespace LRReader.UWP.Views.Main
 
 		private void HostTabPage_BackRequested(object sender, BackRequestedEventArgs e)
 		{
-			e.Handled = Data.CurrentTab.BackRequested();
+			e.Handled = Data.CurrentTab!.BackRequested();
 		}
 
 		private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
 		{
 			if (e.CurrentPoint.Properties.IsXButton1Pressed)
-				e.Handled = Data.CurrentTab.BackRequested();
+				e.Handled = Data.CurrentTab!.BackRequested();
 		}
 
 		private void TitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args)
@@ -118,12 +119,12 @@ namespace LRReader.UWP.Views.Main
 			if (sender.IsVisible)
 				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 32 : 0, 0, 0);
 			else
-				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 0 : -40, 0, 0);
+				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 0 : -48, 0, 0);
 		}
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration);
 
-		private void ShowNotification(string title, string content, int duration) => Service.Dispatcher.Run(() => Notifications.Show(new NotificationItem(title, content), duration), 0);
+		private void ShowNotification(string title, string? content, int duration) => Service.Dispatcher.Run(() => Notifications.Show(new NotificationItem(title, content), duration), 0);
 
 		// Move all of this to the ViewModel
 		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
@@ -142,7 +143,7 @@ namespace LRReader.UWP.Views.Main
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			Data.CloseTab(args.Tab as ModernTab);
+			Data.CloseTab((ModernTab)args.Tab);
 		}
 
 		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)

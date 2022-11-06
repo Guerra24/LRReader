@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Services;
+﻿#nullable enable
+using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -16,15 +17,15 @@ namespace LRReader.UWP.Views.Controls
 
 		public string Title
 		{
-			get => GetValue(TitleProperty) as string;
+			get => (string)GetValue(TitleProperty);
 			private set => SetValue(TitleProperty, value);
 		}
 
-		private Uri Page;
+		private Uri Page = null!;
 
 		private bool Redirect;
 
-		private string TabId;
+		private string? TabId;
 
 		private IWebView WebView;
 

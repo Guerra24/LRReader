@@ -6,7 +6,7 @@ namespace LRReader.UWP.Util
 {
 	public class IgnoreFocusKeyboardAccelerator : KeyboardAccelerator
 	{
-		public new event TypedEventHandler<KeyboardAccelerator, KeyboardAcceleratorInvokedEventArgs> Invoked;
+		public new event TypedEventHandler<KeyboardAccelerator, KeyboardAcceleratorInvokedEventArgs> Invoked = null!;
 
 		public IgnoreFocusKeyboardAccelerator()
 		{

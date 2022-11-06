@@ -122,7 +122,7 @@ namespace LRReader.UWP.Services
 
 		public string GetPackageFamilyName() => Package.Current.Id.FamilyName;
 
-		public async Task<bool> CheckAppInstalled(string package)
+		public override async Task<bool> CheckAppInstalled(string package)
 		{
 			try
 			{
