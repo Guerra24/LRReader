@@ -1,14 +1,14 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
-using LRReader.Shared.Services;
-using LRReader.Shared.ViewModels.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels.Base;
 
 namespace LRReader.Shared.ViewModels.Items
 {

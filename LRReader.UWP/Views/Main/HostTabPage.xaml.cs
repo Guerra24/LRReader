@@ -1,14 +1,14 @@
 ﻿#nullable enable
+using System;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Items;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Core;

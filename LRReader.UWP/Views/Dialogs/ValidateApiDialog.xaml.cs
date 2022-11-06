@@ -1,6 +1,6 @@
-﻿using LRReader.Shared.Models;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using LRReader.Shared.Models;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs

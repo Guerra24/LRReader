@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using LRReader.Shared.Services;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using LRReader.Shared.Services;
 using Windows.Storage;
 
 namespace LRReader.UWP.Services

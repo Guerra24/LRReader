@@ -1,5 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
-using CommunityToolkit.Mvvm.Messaging.Messages;
+﻿using CommunityToolkit.Mvvm.Messaging.Messages;
+using LRReader.Shared.Models.Main;
 
 namespace LRReader.Shared.Messages
 {

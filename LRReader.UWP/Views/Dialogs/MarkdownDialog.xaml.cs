@@ -1,6 +1,6 @@
-﻿using LRReader.Shared.Services;
+﻿using System;
+using LRReader.Shared.Services;
 using Microsoft.Toolkit.Uwp.UI.Controls;
-using System;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs

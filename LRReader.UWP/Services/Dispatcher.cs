@@ -1,7 +1,7 @@
-﻿using LRReader.Shared.Services;
-using Microsoft.Toolkit.Uwp;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using LRReader.Shared.Services;
+using Microsoft.Toolkit.Uwp;
 using Windows.System;
 
 namespace LRReader.UWP.Services

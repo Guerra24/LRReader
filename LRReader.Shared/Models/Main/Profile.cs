@@ -1,8 +1,8 @@
-﻿using LRReader.Shared.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LRReader.Shared.Services;
+using Newtonsoft.Json;
 
 namespace LRReader.Shared.Models.Main
 {

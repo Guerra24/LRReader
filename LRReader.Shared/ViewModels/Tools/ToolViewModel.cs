@@ -1,12 +1,12 @@
-﻿using LRReader.Shared.Services;
-using LRReader.Shared.Tools;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System;
+﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using LRReader.Shared.Services;
+using LRReader.Shared.Tools;
 
 namespace LRReader.Shared.ViewModels.Tools
 {

@@ -1,7 +1,6 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using System.Collections.Generic;
+using LRReader.Shared.Models.Main;
 using LRReader.UWP.Views.Controls;
-using System.Collections.Generic;
-using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs
 {

@@ -1,13 +1,13 @@
-﻿using LRReader.Shared.Messages;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
-using CommunityToolkit.Mvvm.Messaging;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using Newtonsoft.Json;
 
 namespace LRReader.Shared.Services
 {

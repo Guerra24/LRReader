@@ -1,10 +1,10 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
-using LRReader.Shared.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 
 namespace LRReader.Shared.ViewModels
 {

@@ -1,8 +1,8 @@
-﻿using LRReader.Shared.Models.Main;
-using RestSharp;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using LRReader.Shared.Models.Main;
+using RestSharp;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers

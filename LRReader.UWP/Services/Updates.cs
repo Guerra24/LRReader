@@ -1,4 +1,7 @@
 ﻿#nullable enable
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using LRReader.Shared;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
@@ -6,10 +9,6 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using RestSharp;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;

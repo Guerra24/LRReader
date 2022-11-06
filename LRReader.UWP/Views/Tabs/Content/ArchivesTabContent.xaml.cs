@@ -1,13 +1,13 @@
 ﻿#nullable enable
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.System;
 using Windows.UI.Core;
@@ -197,9 +197,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
 			//if (false)
-				//return CompactTemplate;
+			//return CompactTemplate;
 			//else
-				return FullTemplate;
+			return FullTemplate;
 		}
 		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
 		{

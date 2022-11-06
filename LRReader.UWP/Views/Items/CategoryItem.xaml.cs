@@ -1,11 +1,11 @@
 ﻿#nullable enable
+using System;
+using System.Linq;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;

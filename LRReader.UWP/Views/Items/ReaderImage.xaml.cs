@@ -1,11 +1,11 @@
 ﻿#nullable enable
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using Microsoft.Toolkit.Uwp.UI.Animations;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

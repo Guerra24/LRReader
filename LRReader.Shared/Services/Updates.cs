@@ -1,9 +1,9 @@
-﻿using LRReader.Shared.Models;
-using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using LRReader.Shared.Models;
+using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
 
 namespace LRReader.Shared.Services
 {
@@ -24,7 +24,7 @@ namespace LRReader.Shared.Services
 			SettingsStorage = settingsStorage;
 			Settings = settings;
 #if DEBUG
-			var uri  = new Uri("http://localhost:5000/");
+			var uri = new Uri("http://localhost:5000/");
 #else
 			var uri = new Uri("https://api.guerra24.net/");
 #endif

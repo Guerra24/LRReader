@@ -1,11 +1,11 @@
-﻿using LRReader.Shared.Extensions;
-using Microsoft.Toolkit.Uwp.UI;
-using Microsoft.Toolkit.Uwp.UI.Animations;
-using Microsoft.Toolkit.Uwp.UI.Media;
-using System;
+﻿using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LRReader.Shared.Extensions;
+using Microsoft.Toolkit.Uwp.UI;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using Microsoft.Toolkit.Uwp.UI.Media;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.System;

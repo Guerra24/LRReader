@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LRReader.Shared.ViewModels.Items
 {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using LRReader.Shared.Tools;
 using LRReader.Shared.ViewModels;

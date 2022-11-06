@@ -1,10 +1,10 @@
-﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Providers;
-using LRReader.Shared.Services;
+﻿using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Threading.Tasks;
+using LRReader.Shared.Extensions;
+using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 
 namespace LRReader.Shared.ViewModels
 {

@@ -1,14 +1,14 @@
-﻿using ICSharpCode.SharpZipLib.BZip2;
-using LRReader.Shared.Messages;
-using LRReader.Shared.Models.Main;
-using CommunityToolkit.Mvvm.Messaging;
-using Newtonsoft.Json;
-using RestSharp;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using ICSharpCode.SharpZipLib.BZip2;
+using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace LRReader.Shared
 {

@@ -1,8 +1,8 @@
-﻿using LRReader.Shared.Models;
+﻿using System;
+using System.Threading.Tasks;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels;
-using System;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
