@@ -4,7 +4,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
-using ICSharpCode.SharpZipLib.BZip2;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using Newtonsoft.Json;
@@ -190,7 +189,7 @@ namespace LRReader.Shared
 			return error;
 		}
 
-		public static byte[]? CompressData(string? data)
+		/*public static byte[]? CompressData(string? data)
 		{
 			if (data == null)
 				return null;
@@ -203,7 +202,7 @@ namespace LRReader.Shared
 				}
 				return compressed.ToArray();
 			}
-		}
+		}*/
 
 		private static void ShowNotification(string title, string? content) => WeakReferenceMessenger.Default.Send(new ShowNotification(title, content));
 	}

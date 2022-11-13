@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -595,11 +594,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 				zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 			}
 			var zoom = zoomFactor * (Data.ZoomValue * 0.01f);
-			double? yOffset = null;
 			if (zoom != _lastZoom)
 			{
 				_lastZoom = zoom;
-				yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
+				var yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
 				ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Service.Platform.AnimationsEnabled);
 			}
 		}

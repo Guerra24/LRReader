@@ -94,7 +94,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			SetProperty(ref AvifMissing, !await Platform.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
 			SetProperty(ref HeifMissing, !await Platform.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
-			await Task.FromResult(0);
+			await Task.CompletedTask;
 		}
 
 

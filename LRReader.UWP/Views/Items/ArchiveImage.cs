@@ -42,7 +42,7 @@ namespace LRReader.UWP.Views.Items
 				Root.Start(FadeIn);
 			else
 				Root.SetVisualOpacity(1);
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		private async Task Hide(bool animate)

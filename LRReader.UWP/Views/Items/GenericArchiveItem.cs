@@ -83,13 +83,13 @@ namespace LRReader.UWP.Views.Items
 				Root.Start(FadeIn);
 			else
 				Root.SetVisualOpacity(1);
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		private Task Hide(bool animate)
 		{
 			Root.SetVisualOpacity(0);
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		private async void Control_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

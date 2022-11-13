@@ -4,8 +4,6 @@ using Microsoft.AppCenter.Crashes;
 #endif
 using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -56,7 +54,7 @@ namespace LRReader.Shared.Tools
 
 		private readonly PlatformService Platform;
 
-		private Subject<ToolProgress<T>>? progressFilter;
+		private Throttle<ToolProgress<T>> progressFilter = null!;
 
 		public Tool(PlatformService platform)
 		{
@@ -65,8 +63,7 @@ namespace LRReader.Shared.Tools
 
 		public async Task<ToolResult<R, E>> Execute(P @params, int threads, IProgress<ToolProgress<T>>? progress = null)
 		{
-			progressFilter = new Subject<ToolProgress<T>>();
-			progressFilter.Window(TimeSpan.FromMilliseconds(1000)).SelectMany(i => i.TakeLast(1)).Subscribe(p => progress?.Report(p));
+			progressFilter = NotRx.CreateThrottledEvent<ToolProgress<T>>(p => progress?.Report(p));
 			var result = new ToolResult<R, E> { Title = Platform.GetLocalizedString("Tools/GenericTool/Error") };
 			try
 			{
@@ -78,10 +75,11 @@ namespace LRReader.Shared.Tools
 				Crashes.TrackError(e);
 #endif
 			}
+			progressFilter.Lock.Dispose();
+			progressFilter = null!;
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 			GC.Collect();
-			progressFilter.OnCompleted();
 			return result;
 		}
 
@@ -90,7 +88,10 @@ namespace LRReader.Shared.Tools
 		protected ToolResult<R, E> EarlyExit(string title, string description, E? error = default) => new ToolResult<R, E> { Title = title, Description = description, Error = error };
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1) => progressFilter?.OnNext(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
+		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1)
+		{
+			progressFilter.Action(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
+		}
 	}
 
 	public static class Util

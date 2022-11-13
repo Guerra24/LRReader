@@ -81,5 +81,10 @@ namespace LRReader.Avalonia.Services
 		{
 			throw new NotImplementedException();
 		}
+
+		public override Task<bool> CheckAppInstalled(string package)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

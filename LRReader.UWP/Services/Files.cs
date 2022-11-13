@@ -35,12 +35,12 @@ namespace LRReader.UWP.Services
 				try
 				{
 					attempts--;
-					await PathIO.WriteTextAsync(path, content);
+					await PathIO.WriteTextAsync(path, content).AsTask().ConfigureAwait(false);
 					break;
 				}
 				catch (Exception)
 				{
-					await Task.Delay(100);
+					await Task.Delay(100).ConfigureAwait(false);
 				}
 			}
 		}

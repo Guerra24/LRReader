@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +14,44 @@ namespace LRReader.Shared
 		public IntAttribute(int value)
 		{
 			this.Value = value;
+		}
+
+	}
+
+	public record Throttle<T>
+	{
+		public Action<T> Action { get; set; } = null!;
+		public ReaderWriterLockSlim Lock { get; internal set; } = null!;
+	}
+
+	public static class NotRx
+	{
+		public static Throttle<T> CreateThrottledEvent<T>(Action<T> action)
+		{
+			var throttle = new Throttle<T>();
+			throttle.Lock = new ReaderWriterLockSlim();
+			throttle.Action = (t) =>
+			{
+				if (!throttle.Lock.TryEnterWriteLock(0))
+					return;
+				action(t);
+				throttle.Lock.ExitWriteLock();
+			};
+			return throttle;
+		}
+
+		public static Throttle<object> CreateThrottledEvent(Action action)
+		{
+			var throttle = new Throttle<object>();
+			throttle.Lock = new ReaderWriterLockSlim();
+			throttle.Action = (t) =>
+			{
+				if (!throttle.Lock.TryEnterWriteLock(0))
+					return;
+				action();
+				throttle.Lock.ExitWriteLock();
+			};
+			return throttle;
 		}
 
 	}

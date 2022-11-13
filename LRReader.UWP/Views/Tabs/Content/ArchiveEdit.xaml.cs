@@ -35,7 +35,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				Thumbnail.Start(FadeIn);
 			else
 				Thumbnail.SetVisualOpacity(1);
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		private async Task Hide(bool animate)

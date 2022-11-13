@@ -8,7 +8,7 @@ namespace LRReader.Shared
 	{
 		public static Task InvokeAsync<T>(this AsyncAction<T>? action, T obj)
 		{
-			return action?.Invoke(obj) ?? Task.FromResult(0);
+			return action?.Invoke(obj) ?? Task.CompletedTask;
 		}
 	}
 }

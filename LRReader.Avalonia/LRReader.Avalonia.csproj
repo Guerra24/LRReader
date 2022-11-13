@@ -10,7 +10,7 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
     <PackageReference Include="FluentAvaloniaUI" Version="1.4.4" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.4.1" />
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.4.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />

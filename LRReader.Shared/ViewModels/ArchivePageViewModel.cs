@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -53,8 +52,7 @@ namespace LRReader.Shared.ViewModels
 		}
 		private bool _internalLoadingImages;
 		[ObservableProperty]
-		[AllowNull]
-		private ReaderImageSet _readerContent;
+		private ReaderImageSet _readerContent = null!;
 		private int _readerIndex;
 		public int ReaderIndex
 		{

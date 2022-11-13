@@ -17,7 +17,7 @@ namespace LRReader.Shared.Services
 
 		public static IServiceProvider Services { get; set; } = null!;
 
-		private static volatile bool Loaded;
+		private static bool Loaded;
 
 		public static void BuildServices(ConfigureServices? services = null)
 		{

@@ -11,13 +11,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
-	public partial class SettingsService : ObservableObject, IService
+	public partial class SettingsService : ObservableObject, IService, IDisposable
 	{
 		private readonly ISettingsStorageService SettingsStorage;
 		private readonly IFilesService Files;
@@ -255,7 +253,7 @@ namespace LRReader.Shared.Services
 			set => SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
 		}
 
-		private Subject<bool> save = new Subject<bool>();
+		private Throttle<object> save;
 
 		public bool FirstStartup = true;
 
@@ -264,20 +262,19 @@ namespace LRReader.Shared.Services
 			SettingsStorage = settingsStorage;
 			Files = files;
 			Platform = platform;
-			save.Throttle(TimeSpan.FromMilliseconds(500))
-				.Subscribe(async (n) =>
+			save = NotRx.CreateThrottledEvent(() =>
+			{
+				try
 				{
-					try
-					{
-						await Files.StoreFileSafe(Path.Combine(Files.Local, "Profiles.json"), JsonConvert.SerializeObject(Profiles));
-					}
-					catch (Exception e)
-					{
+					Files.StoreFileSafe(Path.Combine(Files.Local, "Profiles.json"), JsonConvert.SerializeObject(Profiles)).ConfigureAwait(false).GetAwaiter().GetResult();
+				}
+				catch (Exception e)
+				{
 #if WINDOWS_UWP
 						Crashes.TrackError(e);
 #endif
-					}
-				});
+				}
+			});
 		}
 
 		public async Task Init()
@@ -405,9 +402,13 @@ namespace LRReader.Shared.Services
 
 		public void SaveProfiles()
 		{
-			save.OnNext(true);
+			save.Action(null!);
 		}
 
+		public void Dispose()
+		{
+			save.Lock.Dispose();
+		}
 	}
 	public enum BookmarkReminderMode
 	{
