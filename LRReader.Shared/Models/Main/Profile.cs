@@ -77,6 +77,16 @@ namespace LRReader.Shared.Models.Main
 			OnPropertyChanged(string.Empty);
 		}
 
+		public override bool Equals(object? obj)
+		{
+			return obj is BookmarkedArchive archive && archiveID == archive.archiveID;
+		}
+
+		public override int GetHashCode()
+		{
+			return archiveID.GetHashCode();
+		}
+
 		[JsonIgnore]
 		public int BookmarkProgressDisplay => page + 1;
 		[JsonIgnore]

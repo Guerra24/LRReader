@@ -30,7 +30,7 @@ namespace LRReader.Shared.Services
 		private LRUCache<string, byte[]> thumbnailsCache;
 		private DirectoryInfo thumbnailCacheDirectory;
 
-		private static readonly string NoThumbHash = "BE17DA00E485ECAFDCB25101EE4FBA34";
+		//private static readonly string NoThumbHash = "BE17DA00E485ECAFDCB25101EE4FBA34";
 
 		public ImagesService(IFilesService files, ImageProcessingService imageProcessing)
 		{
@@ -135,7 +135,7 @@ namespace LRReader.Shared.Services
 					if (File.Exists(path) && !forced)
 					{
 						data = await Files.GetFileBytes(path);
-						if (data.Length == 55876)
+						/*if (data.Length == 55876)
 							using (var md5 = System.Security.Cryptography.MD5.Create())
 								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 								{
@@ -145,17 +145,17 @@ namespace LRReader.Shared.Services
 										return null;
 									Directory.CreateDirectory(Path.GetDirectoryName(path));
 									await Files.StoreFile(path, data);
-								}
+								}*/
 					}
 					else
 					{
 						data = await GetThumbnailRaw(id, page);
 						if (data == null)
 							return null;
-						if (data.Length == 55876)
-							using (var md5 = System.Security.Cryptography.MD5.Create())
-								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
-									return null;
+						//if (data.Length == 55876)
+						//	using (var md5 = System.Security.Cryptography.MD5.Create())
+						//		if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
+						//			return null;
 						Directory.CreateDirectory(Path.GetDirectoryName(path));
 						await Files.StoreFile(path, data);
 					}

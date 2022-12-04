@@ -7,7 +7,7 @@ using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Media;
 using Windows.Foundation;
-using Windows.Foundation.Metadata;
+
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -94,15 +94,15 @@ namespace LRReader.UWP.Extensions
 			}
 			else
 			{
-				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+				/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				{
 					element.Shadow = shadow.ThemeShadow;
 					element.Translation = shadow.Translation;
 				}
 				else
-				{
+				{*/
 					Effects.SetShadow(element, shadow.DropShadow);
-				}
+				//}
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace LRReader.UWP.Extensions
 			if (item.GetValue(ModernShadowProperty) == null)
 			{
 				item.SetValue(ModernShadowProperty, shadow);
-				if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+				/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				{
 					item.Shadow = shadow.ThemeShadow;
 					item.Translation = shadow.Translation;
@@ -125,9 +125,9 @@ namespace LRReader.UWP.Extensions
 					item.PointerExited += GridViewItem_PointerExited;
 				}
 				else
-				{
+				{*/
 					Effects.SetShadow(item, shadow.DropShadow);
-				}
+				//}
 			}
 		}
 
@@ -145,10 +145,10 @@ namespace LRReader.UWP.Extensions
 
 		public Shadow()
 		{
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+			/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				ThemeShadow = new ThemeShadow();
-			else
-				DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.15 };
+			else*/
+				DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.16 };
 		}
 	}
 

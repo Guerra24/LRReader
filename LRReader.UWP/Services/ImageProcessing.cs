@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,10 +35,10 @@ namespace LRReader.UWP.Services
 				image.DecodePixelWidth = decodeWidth;
 			if (decodeHeight > 0)
 				image.DecodePixelHeight = decodeHeight;
-			using (var stream = new InMemoryRandomAccessStream())
+			using (var ms = new MemoryStream(bytes))
 			{
-				await stream.WriteAsync(bytes.AsBuffer());
-				stream.Seek(0);
+				var stream = ms.AsRandomAccessStream();
+				//stream.Seek(0);
 				if (transcode)
 				{
 					await semaphore.WaitAsync();

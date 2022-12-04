@@ -54,7 +54,7 @@ namespace LRReader.Shared.Tools
 
 		private readonly PlatformService Platform;
 
-		private Throttle<ToolProgress<T>> progressFilter = null!;
+		private IProgress<ToolProgress<T>>? Progress;
 
 		public Tool(PlatformService platform)
 		{
@@ -63,7 +63,7 @@ namespace LRReader.Shared.Tools
 
 		public async Task<ToolResult<R, E>> Execute(P @params, int threads, IProgress<ToolProgress<T>>? progress = null)
 		{
-			progressFilter = NotRx.CreateThrottledEvent<ToolProgress<T>>(p => progress?.Report(p));
+			Progress = progress;
 			var result = new ToolResult<R, E> { Title = Platform.GetLocalizedString("Tools/GenericTool/Error") };
 			try
 			{
@@ -75,8 +75,6 @@ namespace LRReader.Shared.Tools
 				Crashes.TrackError(e);
 #endif
 			}
-			progressFilter.Lock.Dispose();
-			progressFilter = null!;
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 			GC.Collect();
@@ -90,7 +88,7 @@ namespace LRReader.Shared.Tools
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected void UpdateProgress(T status, int maxProgress = -1, int currentProgress = -1, int maxSteps = -1, int currentStep = -1, long time = -1)
 		{
-			progressFilter.Action(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
+			Progress?.Report(new ToolProgress<T>(status, maxProgress, currentProgress, maxSteps, currentStep, time));
 		}
 	}
 

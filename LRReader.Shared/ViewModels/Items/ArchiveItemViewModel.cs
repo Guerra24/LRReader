@@ -27,10 +27,10 @@ namespace LRReader.Shared.ViewModels.Items
 		{
 			if (!Archive.Equals(archive))
 			{
+				await Hide.InvokeAsync(false);
+
 				Archive = archive;
 				//await LoadArchive();
-
-				await Hide.InvokeAsync(false);
 
 				MissingImage = false;
 

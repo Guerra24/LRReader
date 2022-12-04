@@ -63,17 +63,11 @@ namespace LRReader.Shared.ViewModels.Base
 			get => _bookmarkedArchive;
 			set
 			{
-				if (value != null)
+				 if (SetProperty(ref _bookmarkedArchive, value ?? new BookmarkedArchive("") { totalPages = -1 }))
 				{
-					_bookmarkedArchive = value;
+					OnPropertyChanged("Bookmarked");
+					OnPropertyChanged("Pages");
 				}
-				else
-				{
-					_bookmarkedArchive = new BookmarkedArchive("") { totalPages = -1 };
-				}
-				OnPropertyChanged("Bookmarked");
-				OnPropertyChanged("Pages");
-				OnPropertyChanged("BookmarkedArchive");
 			}
 		}
 		public bool Bookmarked

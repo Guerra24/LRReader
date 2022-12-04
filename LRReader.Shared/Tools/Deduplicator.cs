@@ -93,6 +93,8 @@ namespace LRReader.Shared.Tools
 			UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, 0, 3, 1);
 			await Task.Delay(1000);
 
+			var tmpTimer = DateTime.Now;
+
 			int count = 0;
 			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(() =>
 			{
@@ -118,7 +120,11 @@ namespace LRReader.Shared.Tools
 					}
 				}
 				int itemCount = Interlocked.Increment(ref count);
-				UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
+				if (DateTime.Now - tmpTimer > TimeSpan.FromSeconds(1))
+				{
+					tmpTimer = DateTime.Now;
+					UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
+				}
 				return new Tuple<string, Image<Rgb24>?>(pair.Key, image);
 			})))).AsEnumerable().ToList();
 
@@ -144,6 +150,7 @@ namespace LRReader.Shared.Tools
 			UpdateProgress(DeduplicatorStatus.Comparing, decodedThumbnails.Count, 0, 3, 2);
 			await Task.Delay(1000);
 
+			tmpTimer = DateTime.Now;
 			var markedNonDuplicated = Settings.Profile.MarkedAsNonDuplicated;
 			var hits = new ConcurrentBag<ArchiveHit>();
 			int maxItems = decodedThumbnails.Count;
@@ -191,10 +198,13 @@ namespace LRReader.Shared.Tools
 						})));
 					}
 					int itemCount = Interlocked.Increment(ref count);
-
-					var delta = DateTime.Now.Subtract(start).Ticks;
-					long time = (maxItems - itemCount) * delta;
-					UpdateProgress(DeduplicatorStatus.Comparing, maxItems, itemCount, time: time);
+					if (DateTime.Now - tmpTimer > TimeSpan.FromSeconds(1))
+					{
+						tmpTimer = DateTime.Now;
+						var delta = DateTime.Now.Subtract(start).Ticks;
+						long time = (maxItems - itemCount) * delta;
+						UpdateProgress(DeduplicatorStatus.Comparing, maxItems, itemCount, time: time);
+					}
 				}
 			});
 			UpdateProgress(DeduplicatorStatus.Comparing, maxItems, count, time: 0);

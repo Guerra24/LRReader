@@ -28,21 +28,21 @@ namespace LRReader.Shared.Services
 
 		public async Task<string> GetFile(string path)
 		{
-			await Task.Delay(1);
+			await Task.CompletedTask;
 			return "";
 		}
 
 		public async Task<byte[]> GetFileBytes(string path)
 		{
-			await Task.Delay(1);
+			await Task.CompletedTask;
 			return new byte[0];
 		}
 
-		public Task StoreFile(string path, string content) => Task.Delay(1);
+		public Task StoreFile(string path, string content) => Task.CompletedTask;
 
-		public Task StoreFile(string path, byte[] content) => Task.Delay(1);
+		public Task StoreFile(string path, byte[] content) => Task.CompletedTask;
 
-		public Task StoreFileSafe(string path, string content) => Task.Delay(1);
+		public Task StoreFileSafe(string path, string content) => Task.CompletedTask;
 
 	}
 
