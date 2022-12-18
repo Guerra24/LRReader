@@ -39,10 +39,11 @@ namespace LRReader.UWP.Services
 			Tabs = tabs;
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
-			UISettings.AnimationsEnabledChanged += (sender, args) =>
-			{
-				_animationsEnabled = sender.AnimationsEnabled;
-			};
+			if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
+				UISettings.AnimationsEnabledChanged += (sender, args) =>
+				{
+					_animationsEnabled = sender.AnimationsEnabled;
+				};
 
 			MapPageToType(Pages.Loading, typeof(LoadingPage));
 			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
