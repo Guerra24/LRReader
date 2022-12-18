@@ -61,7 +61,7 @@ namespace LRReader.UWP.Views.Dialogs
 			{
 				ProfileError.Text = lang.GetString("ServerProfile/ErrorLocalHost").AsFormat("\n");
 				Command.Visibility = Visibility.Visible;
-				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n={((UWPlatformService)Service.Platform).GetPackageFamilyName()}";
+				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n=\"{((UWPlatformService)Service.Platform).GetPackageFamilyName()}\"";
 			}
 			IsPrimaryButtonEnabled = allow && ValidateProfileName();
 		}
@@ -80,7 +80,7 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			var dataPackage = new DataPackage();
 			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n={((UWPlatformService)Service.Platform).GetPackageFamilyName()}");
+			dataPackage.SetText($"CheckNetIsolation loopbackexempt -a -n=\"{((UWPlatformService)Service.Platform).GetPackageFamilyName()}\"");
 			Clipboard.SetContent(dataPackage);
 		}
 
