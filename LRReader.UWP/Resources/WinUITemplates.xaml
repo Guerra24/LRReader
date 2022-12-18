@@ -3,7 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
-	xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:contract13="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 13)">
 
 	<!--  https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/GridViewItem_themeresources_21h1.xaml  -->
 	<ResourceDictionary.ThemeDictionaries>
@@ -38,11 +39,11 @@
 			<StaticResource x:Key="GridViewItemFocusVisualSecondaryBrush" ResourceKey="FocusStrokeColorInnerBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemForegroundPointerOver" ResourceKey="TextFillColorSecondaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SystemAccentColorDark1" />
+			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SubtleFillColorTertiaryBrush" />
 			<StaticResource x:Key="GridViewItemForegroundSelected" ResourceKey="TextFillColorPrimaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SystemAccentColorDark1" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SubtleFillColorTertiaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SystemAccentColorDark2" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedDisabled" ResourceKey="SubtleFillColorSecondaryBrush" />
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="HighContrast">
@@ -114,11 +115,11 @@
 			<StaticResource x:Key="GridViewItemFocusVisualSecondaryBrush" ResourceKey="FocusStrokeColorInnerBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemForegroundPointerOver" ResourceKey="TextFillColorSecondaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SystemAccentColorDark1" />
+			<StaticResource x:Key="GridViewItemBackgroundSelected" ResourceKey="SubtleFillColorTertiaryBrush" />
 			<StaticResource x:Key="GridViewItemForegroundSelected" ResourceKey="TextFillColorPrimaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SystemAccentColorDark1" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPointerOver" ResourceKey="SubtleFillColorTertiaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
-			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SystemAccentColorDark2" />
+			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedDisabled" ResourceKey="SubtleFillColorSecondaryBrush" />
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
@@ -148,38 +149,58 @@
 				<ControlTemplate TargetType="GridViewItem">
 					<ListViewItemPresenter
 						x:Name="Root"
-						HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-						VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-						CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
-						CheckBrush="{ThemeResource GridViewItemCheckBrush}"
-						CheckMode="{ThemeResource GridViewItemCheckMode}"
-						ContentMargin="{TemplateBinding Padding}"
-						ContentTransitions="{TemplateBinding ContentTransitions}"
-						Control.IsTemplateFocusTarget="True"
-						CornerRadius="{TemplateBinding CornerRadius}"
-						DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-						DragBackground="{ThemeResource GridViewItemDragBackground}"
-						DragForeground="{ThemeResource GridViewItemDragForeground}"
-						DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-						FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
-						FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
-						FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
-						FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
-						FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
-						FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
-						PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
-						PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
-						PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
-						PressedBackground="{ThemeResource GridViewItemBackgroundPressed}"
-						ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
-						SelectedBackground="{ThemeResource GridViewItemBackgroundSelected}"
-						SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
-						SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
-						SelectedPointerOverBackground="{ThemeResource GridViewItemBackgroundSelectedPointerOver}"
-						SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
-						SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}"
-						SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" />
+                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                        Control.IsTemplateFocusTarget="True"
+                        FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                        FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                        FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                        FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                        FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                        SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}"
+                        CheckBrush="{ThemeResource GridViewItemCheckBrush}"
+                        CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
+                        DragBackground="{ThemeResource GridViewItemDragBackground}"
+                        DragForeground="{ThemeResource GridViewItemDragForeground}"
+                        FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
+                        PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
+                        PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
+                        PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
+                        SelectedBackground="{ThemeResource GridViewItemBackgroundSelected}"
+                        SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
+                        SelectedPointerOverBackground="{ThemeResource GridViewItemBackgroundSelectedPointerOver}"
+                        PressedBackground="{ThemeResource GridViewItemBackgroundPressed}"
+                        SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}"
+                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                        ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        ContentMargin="{TemplateBinding Padding}"
+                        CheckMode="{ThemeResource GridViewItemCheckMode}"
+                        SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
+                        SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
+                        CornerRadius="{ThemeResource GridViewItemCornerRadius}"
+                        contract13:CheckBoxCornerRadius="{ThemeResource GridViewItemCheckBoxCornerRadius}"
+                        contract13:CheckPressedBrush="{ThemeResource GridViewItemCheckPressedBrush}"
+                        contract13:CheckDisabledBrush="{ThemeResource GridViewItemCheckDisabledBrush}"
+                        contract13:CheckBoxPointerOverBrush="{ThemeResource GridViewItemCheckBoxPointerOverBrush}"
+                        contract13:CheckBoxPressedBrush="{ThemeResource GridViewItemCheckBoxPressedBrush}"
+                        contract13:CheckBoxDisabledBrush="{ThemeResource GridViewItemCheckBoxDisabledBrush}"
+                        contract13:CheckBoxSelectedBrush="{ThemeResource GridViewItemCheckBoxSelectedBrush}"
+                        contract13:CheckBoxSelectedPointerOverBrush="{ThemeResource GridViewItemCheckBoxSelectedPointerOverBrush}"
+                        contract13:CheckBoxSelectedPressedBrush="{ThemeResource GridViewItemCheckBoxSelectedPressedBrush}"
+                        contract13:CheckBoxSelectedDisabledBrush="{ThemeResource GridViewItemCheckBoxSelectedDisabledBrush}"
+                        contract13:CheckBoxBorderBrush="{ThemeResource GridViewItemCheckBoxBorderBrush}"
+                        contract13:CheckBoxPointerOverBorderBrush="{ThemeResource GridViewItemCheckBoxPointerOverBorderBrush}"
+                        contract13:CheckBoxPressedBorderBrush="{ThemeResource GridViewItemCheckBoxPressedBorderBrush}"
+                        contract13:CheckBoxDisabledBorderBrush="{ThemeResource GridViewItemCheckBoxDisabledBorderBrush}"
+                        contract13:SelectedDisabledBackground="{ThemeResource GridViewItemBackgroundSelectedDisabled}"
+                        contract13:SelectedBorderBrush="{ThemeResource GridViewItemSelectedBorderBrush}"
+                        contract13:SelectedPressedBorderBrush="{ThemeResource GridViewItemSelectedPressedBorderBrush}"
+                        contract13:SelectedDisabledBorderBrush="{ThemeResource GridViewItemSelectedDisabledBorderBrush}"
+                        contract13:SelectedInnerBorderBrush="{ThemeResource GridViewItemSelectedInnerBorderBrush}"/>
 				</ControlTemplate>
+                        <!--contract13:PointerOverBorderBrush="{ThemeResource GridViewItemPointerOverBorderBrush}"-->
 			</Setter.Value>
 		</Setter>
 	</Style>

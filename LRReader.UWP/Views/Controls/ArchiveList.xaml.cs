@@ -59,24 +59,25 @@ namespace LRReader.UWP.Views.Controls
 				Data.Suggestions.Clear();
 				if (!string.IsNullOrEmpty(sender.Text))
 				{
-					string text;
-					var sQuery = sender.Text.ToLower();
-					if (sender.Text.Length > query.Length)
+					var text = sender.Text;
+					//var queryText = text.Split(",").Last().Trim();
+					var comma = text.LastIndexOf(',');
+					var queryText = text;
+
+					if (comma != -1)
 					{
-						text = sQuery.Substring(query.Length).TrimStart();
+						text = sender.Text.Substring(0, comma);
+						queryText = sender.Text.Substring(comma + 1).Trim();
 					}
-					else
-					{
-						text = sQuery.Split(" ").Last();
-						query = sender.Text.Substring(0, Math.Max(0, sQuery.LastIndexOf(" ")));
-					}
+
 					foreach (var t in Archives.TagStats.Where(t =>
 					{
 						var names = t.@namespace.ToLower();
-						return t.GetNamespacedTag().ToLower().Contains(text) && !names.Equals("date_added") && !names.Equals("source");
+						return t.GetNamespacedTag().Contains(queryText, StringComparison.OrdinalIgnoreCase) && !names.Equals("date_added") && !names.Equals("source");
 					}))
 					{
-						Data.Suggestions.Add(query.TrimEnd() + (string.IsNullOrEmpty(query) ? "" : " ") + t.GetNamespacedTag());
+						Data.Suggestions.Add((comma == -1 ? "" : text + (string.IsNullOrEmpty(text) ? "" : ", ")) + t.GetNamespacedTag());
+						//Data.Suggestions.Add(t.GetNamespacedTag());
 					}
 				}
 				else if (string.IsNullOrEmpty(sender.Text) && !string.IsNullOrEmpty(query))
@@ -187,8 +188,28 @@ namespace LRReader.UWP.Views.Controls
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			if (args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item && item.Group == null)
-				item.Group = Data.ArchiveList.ToList();
+			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item)
+			{
+				if (item.Group == null)
+					item.Group = Data.ArchiveList.ToList();
+				item.Phase0();
+			}
+			args.RegisterUpdateCallback(Phase1);
+			args.Handled = true;
+		}
+
+		private void Phase1(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item)
+				item.Phase1((Archive)args.Item);
+
+			args.RegisterUpdateCallback(Phase2);
+		}
+
+		private void Phase2(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item)
+				item.Phase2();
 		}
 
 		// Dependency

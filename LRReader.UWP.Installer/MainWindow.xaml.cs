@@ -1,5 +1,4 @@
-﻿using ModernWpf;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -11,52 +10,51 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 using Windows.Management.Deployment;
+using Wpf.Ui.Appearance;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Extensions;
 
 namespace LRReader.UWP.Installer
 {
 
-	public partial class MainWindow : Window
+	public partial class MainWindow : UiWindow
 	{
-		private HwndSource hwnd;
 
 		private PackageManager pm;
 
 		private bool CertFound;
 
 		private bool IsWin11 = Environment.OSVersion.Version >= new Version(10, 0, 22000, 0);
-		private bool IsPublicApi = Environment.OSVersion.Version >= new Version(10, 0, 22523, 0);
 
 		public MainWindow()
 		{
 			InitializeComponent();
 			// Win32 Magic
-			var interop = new WindowInteropHelper(this);
-			interop.EnsureHandle();
-			hwnd = HwndSource.FromHwnd(interop.Handle);
-			hwnd.AddHook(WndProc);
-			SetTheme(hwnd.Handle);
-			EnableMica(hwnd.Handle);
-			User32.SetWindowLongPtr(hwnd.Handle, User32.GWL_STYLE, User32.GetWindowLongPtr(hwnd.Handle, User32.GWL_STYLE) & ~User32.WS_SYSMENU);
-			User32.SetWindowPos(hwnd.Handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOZORDER | User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOACTIVATE | User32.SWP_DRAWFRAME);
+			//var interop = new WindowInteropHelper(this);
+			//interop.EnsureHandle();
+			//hwnd = HwndSource.FromHwnd(interop.Handle);
+			//hwnd.AddHook(WndProc);
+			//SetTheme(hwnd.Handle);
+			//EnableMica(hwnd.Handle);
+			//User32.SetWindowLongPtr(hwnd.Handle, User32.GWL_STYLE, User32.GetWindowLongPtr(hwnd.Handle, User32.GWL_STYLE) & ~User32.WS_SYSMENU);
+			//User32.SetWindowPos(hwnd.Handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOZORDER | User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOACTIVATE | User32.SWP_DRAWFRAME);
 
 			if (Variables.AppInstallerUrl.Equals("{APP_INSTALLER_URL}"))
 				Variables.AppInstallerUrl = "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller";
 			if (Variables.Version.Equals("{APP_VERSION}"))
 				Variables.Version = "0.0.0.0";
 
-			if (IsWin11)
-				Icon1.FontFamily = Icon2.FontFamily = Icon3.FontFamily = new FontFamily("Segoe Fluent Icons");
-
 			string title;
 			if (Variables.Version.Contains("Nightly"))
 				title = $"LRReader {Variables.Version}";
 			else
 				title = $"LRReader {Variables.Version.Substring(0, Variables.Version.LastIndexOf('.'))}";
-			Title = WindowTitle.Text = title;
+			Title = Titlebar.Title = title;
 		}
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			Watcher.Watch(this, BackgroundType.Mica, true);
 			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
 			{
 				Error.Text = "LRReader requires Windows 10 1809 or newer";
@@ -211,15 +209,15 @@ namespace LRReader.UWP.Installer
 			return -99;
 		}
 
-		private void Window_ActualThemeChanged(object sender, RoutedEventArgs e)
+		/*private void Window_ActualThemeChanged(object sender, RoutedEventArgs e)
 		{
 			if (hwnd != null)
 				SetTheme(hwnd.Handle);
-		}
+		}*/
 
 		private void EnableMica(IntPtr hwnd)
 		{
-			if (!IsWin11)
+			/*if (!IsWin11)
 				return;
 			int trueValue = 0x01;
 			if (IsPublicApi) {
@@ -227,32 +225,32 @@ namespace LRReader.UWP.Installer
 				Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_SYSTEMBACKDROP_TYPE, ref flag, Marshal.SizeOf(typeof(int)));
 			}
 			else
-				Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+				Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));*/
 		}
 
 		private void SetTheme(IntPtr hwnd)
 		{
 			if (!IsWin11)
 			{
-				if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
+				//if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
 				{
 					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2B2B2B"));
 					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#202020"));
 				}
-				else
+				/*else
 				{
 					LeftBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FBFBFB"));
 					RightBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F3F3F3"));
-				}
+				}*/
 			}
 			else
 			{
 				int trueValue = 0x01;
-				int falseValue = 0x00;
-				if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
-					Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
-				else
-					Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref falseValue, Marshal.SizeOf(typeof(int)));
+				//int falseValue = 0x00;
+				//if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark)
+				Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
+				/*else
+					Dwmapi.DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref falseValue, Marshal.SizeOf(typeof(int)));*/
 			}
 		}
 

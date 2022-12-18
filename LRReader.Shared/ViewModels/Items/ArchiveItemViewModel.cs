@@ -23,6 +23,27 @@ namespace LRReader.Shared.ViewModels.Items
 			ImageProcessing = imageProcessing;
 		}
 
+		public async Task Phase0()
+		{
+			await Hide.InvokeAsync(false);
+		}
+
+		public void Phase1(Archive archive)
+		{
+			Archive = archive;
+			MissingImage = false;
+		}
+
+		public async Task Phase2(int decodePixelWidth = 0, int decodePixelHeight = 0)
+		{
+			Thumbnail = await ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(Archive.arcid), decodePixelWidth, decodePixelHeight, image: Thumbnail);
+
+			if (Thumbnail != null)
+				await Show.InvokeAsync(Platform.AnimationsEnabled);
+			else
+				MissingImage = true;
+		}
+
 		public async Task Load(Archive archive, int decodePixelWidth = 0, int decodePixelHeight = 0)
 		{
 			if (!Archive.Equals(archive))

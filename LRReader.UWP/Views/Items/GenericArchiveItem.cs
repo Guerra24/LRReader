@@ -11,6 +11,7 @@ using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.Devices.Input;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -97,6 +98,21 @@ namespace LRReader.UWP.Views.Items
 			if (args.NewValue == null)
 				return;
 			await ViewModel.Load((Archive)args.NewValue, DecodePixelWidth, DecodePixelHeight);
+		}
+
+		public async void Phase0()
+		{
+			await ViewModel.Phase0();
+		}
+
+		public void Phase1(Archive archive)
+		{
+			ViewModel.Phase1(archive);
+		}
+
+		public async void Phase2()
+		{
+			await ViewModel.Phase2(DecodePixelWidth, DecodePixelHeight);
 		}
 
 		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Service.Archives.OpenTab(ViewModel.Archive, false, Group);

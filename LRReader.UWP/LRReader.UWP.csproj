@@ -82,13 +82,14 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
+    <NoWarn>;2008;CS8305</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <SuppressXamlWarnings>1501</SuppressXamlWarnings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
     <OutputPath>bin\ARM64\Release\</OutputPath>
@@ -442,7 +443,7 @@
       <Version>2.8.2-prerelease.220830001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.1418.22</Version>
+      <Version>1.0.1462.37</Version>
     </PackageReference>
     <PackageReference Include="NReco.Logging.File">
       <Version>1.1.5</Version>

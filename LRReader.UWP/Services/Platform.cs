@@ -30,11 +30,19 @@ namespace LRReader.UWP.Services
 
 		private UISettings UISettings = new UISettings();
 
+		private bool _animationsEnabled;
+
 		private Root? Root;
 
 		public UWPlatformService(TabsService tabs, ILoggerFactory loggerFactory, IFilesService files)
 		{
 			Tabs = tabs;
+			_animationsEnabled = UISettings.AnimationsEnabled;
+
+			UISettings.AnimationsEnabledChanged += (sender, args) =>
+			{
+				_animationsEnabled = sender.AnimationsEnabled;
+			};
 
 			MapPageToType(Pages.Loading, typeof(LoadingPage));
 			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
@@ -82,7 +90,7 @@ namespace LRReader.UWP.Services
 			}
 		}
 
-		public override bool AnimationsEnabled => UISettings.AnimationsEnabled;
+		public override bool AnimationsEnabled => _animationsEnabled;
 
 		public override uint HoverTime => UISettings.MouseHoverTime;
 

@@ -1,111 +1,106 @@
-﻿<Window
+﻿<ui:UiWindow
 	x:Class="LRReader.UWP.Installer.MainWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:LRReader.UWP.Installer"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:ui="http://schemas.modernwpf.com/2019"
+	xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
 	Title="LRReader"
 	Width="962"
 	Height="514"
-	ui:ThemeManager.ActualThemeChanged="Window_ActualThemeChanged"
-	ui:ThemeManager.IsThemeAware="True"
-	ui:TitleBar.ExtendViewIntoTitleBar="True"
-	ui:WindowHelper.UseModernWindowStyle="True"
-	Background="Transparent"
-	BorderThickness="0"
+	MinWidth="962"
+	MinHeight="514"
+	ExtendsContentIntoTitleBar="True"
 	Loaded="Window_Loaded"
-	ResizeMode="NoResize"
+	WindowBackdropType="Mica"
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
-
-	<WindowChrome.WindowChrome>
-		<WindowChrome CaptionHeight="32" GlassFrameThickness="-1" UseAeroCaptionButtons="False" />
-	</WindowChrome.WindowChrome>
 
 	<Window.TaskbarItemInfo>
 		<TaskbarItemInfo x:Name="TaskbarProgress" />
 	</Window.TaskbarItemInfo>
 
-	<Grid Margin="0,1,0,0">
+	<Grid Margin="1,1,1,0">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<Border x:Name="LeftBorder" Padding="41" Background="{DynamicResource GridBackground}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<ui:TitleBar
+			x:Name="Titlebar" Title="LRReader" Grid.ColumnSpan="2"
+			Padding="12,8" />
+		<Border x:Name="LeftBorder" Grid.RowSpan="2">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
-					<RowDefinition />
+					<RowDefinition Height="228" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<TextBlock
-					x:Name="TitleText" Margin="0,0,0,67" HorizontalAlignment="Center"
+					x:Name="TitleText" Margin="0,0,0,10" HorizontalAlignment="Center"
 					VerticalAlignment="Bottom" FontSize="21" Text="We're getting LRReader ready for you..."
 					Visibility="Collapsed" />
-				<Image
-					Grid.Row="1" Height="100" Margin="0,-3,0,2"
-					RenderOptions.BitmapScalingMode="Fant" Source="logo.ico" />
-				<Grid Grid.Row="2">
-					<ui:SimpleStackPanel
-						HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical"
-						Spacing="4">
+				<Grid Grid.Row="1">
+					<Image VerticalAlignment="Top" Margin="0,61,0,0"
+						Height="100" RenderOptions.BitmapScalingMode="Fant"
+						Source="logo.ico" />
+				</Grid>
+				<Grid Grid.Row="2" VerticalAlignment="Top" Margin="0,18,0,0" >
+					<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
 						<TextBlock x:Name="Error" FontSize="16" />
 						<TextBlock
 							x:Name="OpenSettings" HorizontalAlignment="Center" FontSize="16"
 							Visibility="Collapsed">
 							<Hyperlink Click="Hyperlink_Click">Open Settings</Hyperlink>
 						</TextBlock>
-					</ui:SimpleStackPanel>
-					<ui:ProgressBar
-						x:Name="Progress" MaxWidth="250" Maximum="1"
-						Minimum="0" Visibility="Collapsed" />
-					<ui:SimpleStackPanel
-						x:Name="Buttons" HorizontalAlignment="Center" VerticalAlignment="Center"
-						Spacing="4">
-						<Button
+					</StackPanel>
+					<ProgressBar
+						x:Name="Progress" Height="5" MaxWidth="250"
+						Maximum="1" Minimum="0" Visibility="Collapsed" />
+					<StackPanel x:Name="Buttons" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<ui:Button
 							x:Name="InstallApp" HorizontalAlignment="Center" Click="Install_Click"
-							Content="Install"
-							Style="{StaticResource AccentButtonStyle}"
-							Visibility="Collapsed" />
+							Content="Install" Visibility="Collapsed" Margin="0,8" Appearance="Primary" />
 						<Button
 							x:Name="UninstallCert" Click="UninstallCert_Click" Content="Remove Certificate"
 							Visibility="Collapsed" />
 						<Button
 							x:Name="UninstallApp" HorizontalAlignment="Center" Click="Uninstall_Click"
-							Content="Uninstall" Visibility="Collapsed" />
-					</ui:SimpleStackPanel>
+							Content="Uninstall" Visibility="Collapsed" Margin="0,8" />
+					</StackPanel>
 				</Grid>
 			</Grid>
 		</Border>
-		<TextBlock
-			x:Name="WindowTitle" Margin="11,7" HorizontalAlignment="Left"
-			VerticalAlignment="Top" FontSize="13" Text="LRReader" />
-		<Border x:Name="RightBorder" Grid.Column="1" Padding="68,41">
-			<ui:SimpleStackPanel VerticalAlignment="Center" Spacing="48">
-				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
-					<ui:FontIcon x:Name="Icon1" FontSize="40" Glyph="&#xE736;" />
-					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
-						<TextBlock FontSize="21" Text="Advanced reader" />
+		<Border
+			x:Name="RightBorder" Grid.RowSpan="2" Grid.Column="1"
+			Padding="0,0">
+			<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+				<StackPanel Orientation="Horizontal">
+					<ui:FontIcon x:Name="Icon1" Margin="32,0" FontSize="40" Glyph="&#xE736;" />
+					<StackPanel Width="286" VerticalAlignment="Center">
+						<TextBlock FontSize="17" Text="Advanced reader" Margin="0,0,0,8" />
 						<TextBlock FontSize="14" Text="Keyboard or mouse, two pages, right to left, bookmarks and much more." TextWrapping="WrapWithOverflow" />
-					</ui:SimpleStackPanel>
-				</ui:SimpleStackPanel>
-				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
-					<ui:FontIcon x:Name="Icon2" FontSize="40" Glyph="&#xEC7A;" />
-					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
-						<TextBlock FontSize="21" Text="Archive management" />
+					</StackPanel>
+				</StackPanel>
+				<StackPanel Margin="0,41" Orientation="Horizontal">
+					<ui:FontIcon x:Name="Icon2" Margin="32,0" FontSize="40" Glyph="&#xEC7A;" />
+					<StackPanel Width="286" VerticalAlignment="Center">
+						<TextBlock FontSize="17" Text="Archive management" Margin="0,0,0,8" />
 						<TextBlock FontSize="14" Text="Manage your archives from one place with tags editor, categories editor, archive deduplicator and batch editing." TextWrapping="WrapWithOverflow" />
-					</ui:SimpleStackPanel>
-				</ui:SimpleStackPanel>
-				<ui:SimpleStackPanel Orientation="Horizontal" Spacing="32">
-					<ui:FontIcon x:Name="Icon3" FontSize="40" Glyph="&#xE895;" />
-					<ui:SimpleStackPanel Width="286" VerticalAlignment="Center" Spacing="8">
-						<TextBlock FontSize="21" Text="Always up to date" />
+					</StackPanel>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<ui:FontIcon x:Name="Icon3" Margin="32,0" FontSize="40" Glyph="&#xE895;" />
+					<StackPanel Width="286" VerticalAlignment="Center">
+						<TextBlock FontSize="17" Text="Always up to date" Margin="0,0,0,8" />
 						<TextBlock FontSize="14" Text="Making use of the latest and greatest LANraragi features." TextWrapping="WrapWithOverflow" />
-					</ui:SimpleStackPanel>
-				</ui:SimpleStackPanel>
-			</ui:SimpleStackPanel>
+					</StackPanel>
+				</StackPanel>
+			</StackPanel>
 		</Border>
 	</Grid>
-</Window>
+</ui:UiWindow>
