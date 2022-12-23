@@ -46,7 +46,7 @@ namespace LRReader.UWP.Views.Dialogs
 						await Task.Run(async () =>
 						{
 							foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
-								await Service.Dispatcher.RunAsync(() => Thumbnails.Add(new ImagePageSet(id, s, index + 1)), -10);
+								await Service.Dispatcher.RunAsync(() => Thumbnails.Add(new ImagePageSet(id, s, index + 1)), 10);
 						});
 					}
 				}
