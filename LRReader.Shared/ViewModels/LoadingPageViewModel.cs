@@ -153,8 +153,8 @@ namespace LRReader.Shared.ViewModels
 			}
 
 			Api.ServerInfo = serverInfo;
-			await Archives.ReloadArchives();
 			Api.ControlFlags.Check(serverInfo);
+			await Archives.ReloadArchives();
 			Active = false;
 			Platform.GoToPage(Pages.HostTab, PagesTransition.DrillIn);
 		}

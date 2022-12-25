@@ -163,7 +163,7 @@
 				</DataTemplate>
 			</muxc:ItemsRepeater.ItemTemplate>
 			<muxc:ItemsRepeater.Layout>
-				<muxc:StackLayout Spacing="4" />
+				<muxc:StackLayout DisableVirtualization="True" Spacing="4" />
 			</muxc:ItemsRepeater.Layout>
 		</muxc:ItemsRepeater>
 		<!--<ToggleButton

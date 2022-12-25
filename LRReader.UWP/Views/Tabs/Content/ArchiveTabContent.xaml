@@ -7,12 +7,12 @@
 	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:items="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:util="using:LRReader.UWP.Util"
-	xmlns:main="using:LRReader.Shared.Models.Main"
 	DataContext="{Binding ArchivePageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
@@ -26,7 +26,8 @@
 			<GridView
 				x:Name="ImagesGrid" Padding="0,0,0,64"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
-				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True" ItemClick="ImagesGrid_ItemClick"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ImagesGrid_ContainerContentChanging" IsItemClickEnabled="True"
+				ItemClick="ImagesGrid_ItemClick"
 				ItemsSource="{x:Bind Data.ArchiveImages}"
 				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
 				<GridView.Resources>

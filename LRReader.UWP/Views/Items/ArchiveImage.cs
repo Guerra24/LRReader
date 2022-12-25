@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
@@ -7,6 +8,7 @@ using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -66,6 +68,25 @@ namespace LRReader.UWP.Views.Items
 			if (args.NewValue == null)
 				return;
 			await Data.LoadImage((ImagePageSet)args.NewValue);
+		}
+
+		public async void Phase0()
+		{
+			await Data.Phase0();
+		}
+
+		public void Phase1(ImagePageSet set)
+		{
+			Data.Phase1(set);
+		}
+
+		public async void Phase2()
+		{
+			await Data.Phase2();
+		}
+		public async void Phase3()
+		{
+			await Data.Phase3();
 		}
 
 		private void UserControl_PointerEntered(object sender, PointerRoutedEventArgs e)

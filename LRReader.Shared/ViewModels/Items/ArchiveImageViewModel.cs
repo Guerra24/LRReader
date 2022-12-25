@@ -42,6 +42,39 @@ namespace LRReader.Shared.ViewModels.Items
 			ImageProcessing = imageProcessing;
 		}
 
+		public async Task Phase0()
+		{
+			await Hide.InvokeAsync(false);
+		}
+
+		public void Phase1(ImagePageSet set)
+		{
+			Set = set;
+			MissingImage = false;
+		}
+
+		public async Task Phase2()
+		{
+			if (!HideOverlay)
+				Page = Set.Page.ToString();
+			if (!HideOverlay && ShowExtraDetails)
+			{
+				Format = Set.Image!.Substring(Set.Image.LastIndexOf('.') + 1).ToUpper();
+				var size = await Images.GetImageSizeCached(Set.Image);
+				Resolution = $"{size.Width}x{size.Height}";
+			}
+		}
+
+		public async Task Phase3()
+		{
+			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275, image: Thumbnail);
+
+			if (Thumbnail != null)
+				await Show.InvokeAsync(Platform.AnimationsEnabled);
+			else
+				MissingImage = true;
+		}
+
 		public async Task LoadImage(ImagePageSet set)
 		{
 			if (!Set.Equals(set))

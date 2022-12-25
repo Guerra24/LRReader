@@ -91,12 +91,20 @@ namespace LRReader.Shared.Services
 		public bool ProgressTracking = false;
 
 		public bool V085;
+		public bool V088;
+		public bool V0881;
+
+		public bool BrokenCache;
 
 		public bool V085Edit => V085 & Service.Settings.Profile.HasApiKey;
 
 		public void Check(ServerInfo serverInfo)
 		{
 			V085 = serverInfo.version >= new Version(0, 8, 5);
+			V088 = serverInfo.version >= new Version(0, 8, 8);
+			V0881 = serverInfo.version == new Version(0, 8, 81);
+
+			BrokenCache = V088 || V0881;
 
 			ProgressTracking = serverInfo.server_tracks_progress;
 		}

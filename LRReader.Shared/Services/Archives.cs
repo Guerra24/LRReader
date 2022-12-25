@@ -17,6 +17,7 @@ namespace LRReader.Shared.Services
 		private readonly ISettingsStorageService SettingsStorage;
 		private readonly SettingsService Settings;
 		private readonly TabsService Tabs;
+		private readonly ApiService Api;
 
 		public Dictionary<string, Archive> Archives { get; private set; } = new();
 		public List<TagStats> TagStats { get; private set; } = new();
@@ -27,12 +28,13 @@ namespace LRReader.Shared.Services
 
 		private DirectoryInfo metadataDirectory;
 
-		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs)
+		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs, ApiService api)
 		{
 			Files = files;
 			SettingsStorage = settingsStorage;
 			Settings = settings;
 			Tabs = tabs;
+			Api = api;
 			metadataDirectory = Directory.CreateDirectory(Files.LocalCache + "/Metadata");
 		}
 
@@ -56,7 +58,7 @@ namespace LRReader.Shared.Services
 
 			SettingsStorage.DeleteObjectLocal("CacheTimestamp");
 
-			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(MetadataPath))
+			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(MetadataPath) || Api.ControlFlags.BrokenCache)
 			{
 				profile.CacheTimestamp = serverInfo.cache_last_cleared;
 				Settings.SaveProfiles();
@@ -85,14 +87,18 @@ namespace LRReader.Shared.Services
 		private async Task Update(string path)
 		{
 			Directory.CreateDirectory(path);
-			var resultA = await ArchivesProvider.GetArchives();
+			var resultATask = ArchivesProvider.GetArchives();
+			var resultTTask = DatabaseProvider.GetTagStats();
+			await Task.WhenAll(resultATask, resultTTask);
+			var resultA = await resultATask;
+			var resultT = await resultTTask;
+
 			if (resultA != null)
 			{
 				var temp = resultA.ToDictionary(c => c.arcid, c => c);
 				await Files.StoreFile($"{path}/Index-v3.json", JsonConvert.SerializeObject(temp));
 				Archives = temp;
 			}
-			var resultT = await DatabaseProvider.GetTagStats();
 			if (resultT != null)
 			{
 				await Files.StoreFile($"{path}/Tags-v1.json", JsonConvert.SerializeObject(resultT));
