@@ -1,5 +1,5 @@
-﻿using Caching;
-using KeyedSemaphores;
+﻿using AsyncKeyedLock;
+using Caching;
 using LRReader.Shared.Providers;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
@@ -24,6 +24,11 @@ namespace LRReader.Shared.Services
 	{
 		private readonly IFilesService Files;
 		private readonly ImageProcessingService ImageProcessing;
+		private static readonly AsyncKeyedLocker<string> asyncKeyedLock = new AsyncKeyedLocker<string>(o =>
+		{
+			o.PoolSize = 20;
+			o.PoolInitialFill = 1;
+		});
 
 		private LRUCache<string, byte[]> imagesCache;
 		private LRUCache<string, Size> imagesSizeCache;
@@ -74,7 +79,7 @@ namespace LRReader.Shared.Services
 		{
 			if (string.IsNullOrEmpty(path))
 				return new Size(0, 0);
-			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
+			using (await asyncKeyedLock.LockAsync(path + "size").ConfigureAwait(false))
 			{
 				Size size;
 				if (imagesSizeCache.TryGet(path!, out size))
@@ -97,7 +102,7 @@ namespace LRReader.Shared.Services
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
-			using (var key = await KeyedSemaphore.LockAsync(path!))
+			using (await asyncKeyedLock.LockAsync(path!).ConfigureAwait(false))
 			{
 				byte[]? image;
 				if (imagesCache.TryGet(path!, out image) && !forced)
@@ -122,7 +127,7 @@ namespace LRReader.Shared.Services
 			var thumbKey = $"{id}.{page}";
 			if (ignoreCache)
 				return await GetThumbnailRaw(id!, page);
-			using (var key = await KeyedSemaphore.LockAsync(thumbKey))
+			using (await asyncKeyedLock.LockAsync(thumbKey).ConfigureAwait(false))
 			{
 				byte[]? data;
 				if (thumbnailsCache.TryGet(thumbKey, out data) && !forced)
