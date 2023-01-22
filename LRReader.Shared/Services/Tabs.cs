@@ -24,7 +24,7 @@ namespace LRReader.Shared.Services
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("Windowed")]
 		private bool _fullscreen;
-		public bool Windowed => !_fullscreen;
+		public bool Windowed => !Fullscreen;
 
 		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
 
