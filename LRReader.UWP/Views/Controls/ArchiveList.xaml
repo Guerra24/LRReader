@@ -161,7 +161,7 @@
 		<Button
 			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
-		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
+		<!--<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />-->
 		<!--  Force non rounded items in Win10 due to border not working with them enabled  -->
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="CommonState">

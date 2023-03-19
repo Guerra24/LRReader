@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -21,6 +23,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly UpdatesService Updates;
 		private readonly ApiService Api;
 		private readonly TabsService Tabs;
+		private readonly IKarenService Karen;
 
 		public readonly string LRReader = "LRReader";
 
@@ -49,6 +52,85 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private string? _updateError;
 
+		private string? _contentFolder;
+		public string? ContentFolder
+		{
+			get => _contentFolder;
+			set
+			{
+				if (value != null && SetProperty(ref _contentFolder, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value);
+			}
+		}
+
+		private string? _thumbnailFolder;
+		public string? ThumbnailFolder
+		{
+			get => _thumbnailFolder;
+			set
+			{
+				if (value != null && SetProperty(ref _thumbnailFolder, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value);
+			}
+		}
+
+		private bool _startServerAutomatically;
+		public bool StartServerAutomatically
+		{
+			get => _startServerAutomatically;
+			set
+			{
+				if (SetProperty(ref _startServerAutomatically, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value);
+			}
+		}
+
+		private bool _startWithWindows;
+		public bool StartWithWindows
+		{
+			get => _startWithWindows;
+			set
+			{
+				if (SetProperty(ref _startWithWindows, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value);
+			}
+		}
+
+		public int _networkPort;
+		public int NetworkPort
+		{
+			get => _networkPort;
+			set
+			{
+				if (SetProperty(ref _networkPort, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value.ToString());
+			}
+		}
+
+		public bool _forceDebugMode;
+		public bool ForceDebugMode
+		{
+			get => _forceDebugMode;
+			set
+			{
+				if (SetProperty(ref _forceDebugMode, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value);
+			}
+		}
+
+		public bool _useWSL2;
+		public bool UseWSL2
+		{
+			get => _useWSL2;
+			set
+			{
+				if (SetProperty(ref _useWSL2, value) && SettingsManager.Profile.Integration)
+					SaveSetting(value);
+			}
+		}
+		[ObservableProperty]
+		private bool _karenStatus;
+
 		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
 		private int _sortByIndex = -1;
 		public int SortByIndex
@@ -76,7 +158,7 @@ namespace LRReader.Shared.ViewModels
 		public bool AvifMissing;
 		public bool HeifMissing;
 
-		public SettingsPageViewModel(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, UpdatesService updates, ApiService api, TabsService tabs)
+		public SettingsPageViewModel(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, UpdatesService updates, ApiService api, TabsService tabs, IKarenService karen)
 		{
 			SettingsManager = settings;
 			Images = images;
@@ -84,6 +166,7 @@ namespace LRReader.Shared.ViewModels
 			Updates = updates;
 			Api = api;
 			Tabs = tabs;
+			Karen = karen;
 
 			foreach (var n in archives.Namespaces)
 				SortBy.Add(n);
@@ -94,7 +177,6 @@ namespace LRReader.Shared.ViewModels
 		{
 			SetProperty(ref AvifMissing, !await Platform.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
 			SetProperty(ref HeifMissing, !await Platform.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
-			await Task.CompletedTask;
 		}
 
 
@@ -158,9 +240,22 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
+		private async void SaveSetting(object value, [CallerMemberName] string? propertyName = null) => await Karen.SaveSetting((SettingType)Enum.Parse(typeof(SettingType), propertyName), value);
+
 		public async Task UpdateServerInfo()
 		{
 			ServerInfo = await ServerProvider.GetServerInfo();
+			if (SettingsManager.Profile.Integration)
+			{
+				ContentFolder = await Karen.LoadSetting<string>(SettingType.ContentFolder);
+				ThumbnailFolder = await Karen.LoadSetting<string>(SettingType.ThumbnailFolder);
+				StartServerAutomatically = await Karen.LoadSetting<bool>(SettingType.StartServerAutomatically);
+				StartWithWindows = await Karen.LoadSetting<bool>(SettingType.StartWithWindows);
+				NetworkPort = int.Parse(await Karen.LoadSetting<string>(SettingType.NetworkPort) ?? "0");
+				ForceDebugMode = await Karen.LoadSetting<bool>(SettingType.ForceDebugMode);
+				UseWSL2 = await Karen.LoadSetting<bool>(SettingType.UseWSL2);
+				KarenStatus = Karen.IsConnected;
+			}
 		}
 
 		public async Task CheckThumbnailJob()
@@ -200,7 +295,7 @@ namespace LRReader.Shared.ViewModels
 				var address = dialog.Address;
 				if (!(address.StartsWith("http://") || address.StartsWith("https://")))
 					address = "http://" + address;
-				SettingsManager.AddProfile(dialog.Name, address, dialog.ApiKey);
+				SettingsManager.AddProfile(dialog.Name, address, dialog.ApiKey, dialog.Integration);
 			}
 		}
 
@@ -211,13 +306,14 @@ namespace LRReader.Shared.ViewModels
 			dialog.Name = profile.Name;
 			dialog.Address = profile.ServerAddress;
 			dialog.ApiKey = profile.ServerApiKey;
+			dialog.Integration = profile.Integration;
 			var result = await dialog.ShowAsync();
 			if (result == IDialogResult.Primary)
 			{
 				var address = dialog.Address;
 				if (!(address.StartsWith("http://") || address.StartsWith("https://")))
 					address = "http://" + address;
-				SettingsManager.ModifyProfile(profile.UID, dialog.Name, address, dialog.ApiKey);
+				SettingsManager.ModifyProfile(profile.UID, dialog.Name, address, dialog.ApiKey, dialog.Integration);
 				Api.RefreshSettings(profile);
 			}
 		}
@@ -291,5 +387,15 @@ namespace LRReader.Shared.ViewModels
 
 		[RelayCommand]
 		private Task OpenLink(string url) => Platform.OpenInBrowser(new Uri(url));
+		[RelayCommand]
+		private async Task Repair()
+		{
+			var res = await Karen.SendMessage(new Dictionary<string, object> { { "PacketType", (int)PacketType.InstanceRepair } });
+			if (res != null)
+			{
+				Tabs.CloseAllTabs();
+				Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
+			}
+		}
 	}
 }

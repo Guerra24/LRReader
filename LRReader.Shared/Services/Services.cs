@@ -36,6 +36,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<EventsService>();
 			collection.AddSingleton<ApiService>();
 			collection.AddSingleton<TabsService>();
+			collection.AddSingleton<IKarenService, StubKarenService>();
 
 			// Tools
 			collection.AddSingleton<DeduplicationTool>();
@@ -91,6 +92,7 @@ namespace LRReader.Shared.Services
 		public static EventsService Events => Services.GetRequiredService<EventsService>();
 		public static ApiService Api => Services.GetRequiredService<ApiService>();
 		public static TabsService Tabs => Services.GetRequiredService<TabsService>();
+		public static IKarenService Karen => Services.GetRequiredService<IKarenService>();
 		public static ILogger<T> Logger<T>() => Services.GetRequiredService<ILogger<T>>();
 
 	}

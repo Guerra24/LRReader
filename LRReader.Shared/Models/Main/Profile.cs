@@ -17,6 +17,7 @@ namespace LRReader.Shared.Models.Main
 		public bool AcceptedDisclaimer { get; set; }
 		public List<ArchiveHit> MarkedAsNonDuplicated { get; set; }
 		public int CacheTimestamp { get; set; }
+		public bool Integration { get; set; }
 
 		[JsonIgnore]
 		public bool HasApiKey
@@ -25,14 +26,21 @@ namespace LRReader.Shared.Models.Main
 		}
 
 		[JsonIgnore]
+		public bool IsLocalHost
+		{
+			get => ServerAddress.Contains("127.0.0.") || ServerAddress.Contains("localhost");
+		}
+
+		[JsonIgnore]
 		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');
 
 
-		public ServerProfile(string name, string address, string key)
+		public ServerProfile(string name, string address, string key, bool integration)
 		{
 			Name = name;
 			ServerAddress = address;
 			ServerApiKey = key;
+			Integration = integration;
 			UID = Guid.NewGuid().ToString();
 			Bookmarks = new List<BookmarkedArchive>();
 			MarkedAsNonDuplicated = new List<ArchiveHit>();

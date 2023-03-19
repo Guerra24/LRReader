@@ -196,7 +196,7 @@ namespace LRReader.UWP.Installer
 
 		private async Task<int> LaunchAdmin(string command)
 		{
-			var process = new Process();
+			using var process = new Process();
 			process.StartInfo.Verb = "runas";
 			process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
 			process.StartInfo.Arguments = command;

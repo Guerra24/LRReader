@@ -14,7 +14,7 @@ namespace LRReader.Shared.Services
 		protected readonly SettingsService Settings;
 
 		public Version MIN_VERSION = new Version(0, 8, 4);
-		public Version MAX_VERSION = new Version(0, 8, 81);
+		public Version MAX_VERSION = new Version(0, 8, 90);
 
 		protected readonly RestClient client;
 
@@ -29,8 +29,7 @@ namespace LRReader.Shared.Services
 			var uri = new Uri("https://api.guerra24.net/");
 #endif
 			var options = new RestClientOptions(uri) { UserAgent = "LRReader" };
-			client = new RestClient(options);
-			client.UseNewtonsoftJson();
+			client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson());
 		}
 
 		public abstract Task<CheckForUpdatesResult> CheckForUpdates();
@@ -75,8 +74,8 @@ namespace LRReader.Shared.Services
 				var range = result.Data;
 				MIN_VERSION = range.minSupported;
 				MAX_VERSION = range.maxSupported;
-				SettingsStorage.StoreObjectLocal("MinVersion", MIN_VERSION.ToString());
-				SettingsStorage.StoreObjectLocal("MaxVersion", MAX_VERSION.ToString());
+				SettingsStorage.StoreObjectLocal(MIN_VERSION.ToString(), "MinVersion");
+				SettingsStorage.StoreObjectLocal(MAX_VERSION.ToString(), "MaxVersion");
 			}
 			else
 			{
@@ -86,8 +85,8 @@ namespace LRReader.Shared.Services
 
 		private void ReadVersion()
 		{
-			MIN_VERSION = Version.Parse(SettingsStorage.GetObjectLocal("MinVersion", MIN_VERSION.ToString()));
-			MAX_VERSION = Version.Parse(SettingsStorage.GetObjectLocal("MaxVersion", MAX_VERSION.ToString()));
+			MIN_VERSION = Version.Parse(SettingsStorage.GetObjectLocal(MIN_VERSION.ToString(), "MinVersion"));
+			MAX_VERSION = Version.Parse(SettingsStorage.GetObjectLocal(MAX_VERSION.ToString(), "MaxVersion"));
 		}
 
 	}

@@ -138,6 +138,70 @@
 					</Button>
 				</controls:ModernInput>
 			</controls:ModernGroup>
+			<controls:ModernGroup Title="Windows Settings" Visibility="{x:Bind Data.SettingsManager.Profile.Integration, Converter={StaticResource BoolToVisibilityConverter}}">
+				<controls:ModernInput
+					Title="Content folder location"
+					Description="{x:Bind Data.ContentFolder, Mode=OneWay}"
+					Glyph="&#xE8B7;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}"
+					ToolTipService.ToolTip="Where LANraragi looks for archives on your machine">
+					<Button Content="Browse" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Thumbnail folder location"
+					Description="{x:Bind Data.ThumbnailFolder, Mode=OneWay}"
+					Glyph="&#xE8B9;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}"
+					ToolTipService.ToolTip="Defaults to a subfolder in the content folder if not set">
+					<Button Content="Browse" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Network port" Description="Port of your machine the server will run on" Glyph="&#xE968;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<muxc:NumberBox
+						MinWidth="120"
+						IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}"
+						Maximum="65535" Minimum="1" SpinButtonPlacementMode="Inline"
+						Value="{x:Bind Data.NetworkPort, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Start server automatically" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.StartServerAutomatically, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Start on Windows boot" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.StartWithWindows, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Force Debug Mode" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.ForceDebugMode, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Use WSL2" Description="LANraragi defaults to using WSL1 for wider compatibility and better performance for filesystem access between the Distro and Windows." IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.UseWSL2, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Repair install" Description="If LANraragi fails to launch due to a broken WSL distro, you can try repairing it" Glyph="&#xEC7A;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<Button Content="Repair" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" >
+						<Button.Flyout>
+							<Flyout x:Name="RepairFlyout">
+								<StackPanel>
+									<TextBlock Text="This will reinstall the distro and reload the application" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+									<Button
+											Content="Yes, repair and reload" HorizontalAlignment="Center" Click="Repair_Click"
+											Command="{x:Bind Data.RepairCommand}" />
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</controls:ModernInput>
+				<muxc:InfoBar
+					Title="Unable to connect" Message="Make sure LANraragi for Windows is running" IsClosable="False" Severity="Warning"
+					IsOpen="{x:Bind Data.KarenStatus, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+				</muxc:InfoBar>
+			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>
 </controls:ModernBasePage>

@@ -98,5 +98,10 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			RegenThumbsFlyout.Hide();
 		}
-	}
+
+		private void Repair_Click(object sender, RoutedEventArgs e)
+		{
+			RepairFlyout.Hide();
+		}
+    }
 }

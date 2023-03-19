@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
@@ -7,46 +8,33 @@ namespace LRReader.Shared.Services
 	//[CallerMemberName]
 	public interface ISettingsStorageService : IService
 	{
-		void StoreObjectLocal(string key, object obj);
+		T? GetObjectLocal<T>([CallerMemberName] string? key = null);
 
-		void StoreObjectRoamed(string key, object obj);
-
-		T? GetObjectLocal<T>(string key);
-
-		[return: NotNullIfNotNull("def")]
-		T? GetObjectLocal<T>(string key, T? def);
-
-		T? GetObjectRoamed<T>(string key);
-
-		[return: NotNullIfNotNull("def")]
-		T? GetObjectRoamed<T>(string key, T? def);
+		T? GetObjectRoamed<T>([CallerMemberName] string? key = null);
 
 		void DeleteObjectLocal(string key);
 
 		void DeleteObjectRoamed(string key);
+
+		void StoreObjectLocal(object obj, [CallerMemberName] string? key = null);
+
+		void StoreObjectRoamed(object obj, [CallerMemberName] string? key = null);
+
+		[return: NotNullIfNotNull("def")]
+		T? GetObjectLocal<T>(T? def, [CallerMemberName] string? key = null);
+
+		[return: NotNullIfNotNull("def")]
+		T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null);
+
 	}
 
 	public class StubSettingsStorageService : ISettingsStorageService
 	{
 		public Task Init() => Task.Delay(1);
 
-		public T? GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
+		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
 
-		[return: NotNullIfNotNull("def")]
-		public T? GetObjectLocal<T>(string key, T? def) => def;
-
-		public T? GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
-
-		[return: NotNullIfNotNull("def")]
-		public T? GetObjectRoamed<T>(string key, T? def) => def;
-
-		public void StoreObjectLocal(string key, object obj)
-		{
-		}
-
-		public void StoreObjectRoamed(string key, object obj)
-		{
-		}
+		public T? GetObjectRoamed<T>([CallerMemberName] string? key = null) => GetObjectRoamed<T>(default, key);
 
 		public void DeleteObjectLocal(string key)
 		{
@@ -55,5 +43,19 @@ namespace LRReader.Shared.Services
 		public void DeleteObjectRoamed(string key)
 		{
 		}
+
+		public void StoreObjectLocal(object obj, [CallerMemberName] string? key = null)
+		{
+		}
+
+		public void StoreObjectRoamed(object obj, [CallerMemberName] string? key = null)
+		{
+		}
+
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectLocal<T>(T? def, [CallerMemberName] string? key = null) => def;
+
+		[return: NotNullIfNotNull("def")]
+		public T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null) => def;
 	}
 }

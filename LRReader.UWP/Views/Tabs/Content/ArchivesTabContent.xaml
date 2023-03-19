@@ -165,6 +165,6 @@
 		<Button
 			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
-		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />
+		<!--<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />-->
 	</Grid>
 </UserControl>

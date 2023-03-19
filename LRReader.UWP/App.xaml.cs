@@ -6,6 +6,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using static LRReader.Shared.Services.Service;
 using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
+using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace LRReader.UWP
 {
@@ -70,6 +72,12 @@ namespace LRReader.UWP
 			if (root.FrameContent.Content == null)
 				Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
 			Window.Current.Activate();
+		}
+
+		protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+		{
+			if (args.TaskInstance.TriggerDetails is AppServiceTriggerDetails)
+				Service.Karen.Connect(args.TaskInstance);
 		}
 
 		/// <summary>

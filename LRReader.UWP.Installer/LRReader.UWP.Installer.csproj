@@ -144,7 +144,7 @@
       <Version>10.0.22621.755</Version>
     </PackageReference>
     <PackageReference Include="WPF-UI">
-      <Version>2.0.3</Version>
+      <Version>3.0.0-preview.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

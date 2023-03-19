@@ -26,5 +26,9 @@
 				<SymbolIcon Symbol="Copy" />
 			</Button>
 		</StackPanel>
+		<StackPanel x:Name="KarenStack" Visibility="Collapsed">
+			<TextBlock VerticalAlignment="Center" Text="Karen Integration" />
+			<ToggleSwitch x:Name="KarenIntegration" />
+		</StackPanel>
 	</StackPanel>
 </ContentDialog>

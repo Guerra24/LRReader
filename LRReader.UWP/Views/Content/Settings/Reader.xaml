@@ -90,6 +90,49 @@
 				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernExpander
+					Title="Autoplay" Description="Automatically scroll and change pages" Glyph="&#xE768;"
+					IsExpanded="{x:Bind Data.SettingsManager.Autoplay, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.Autoplay, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput Title="Scroll speed" InputHorizontalAlignment="Stretch">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Slider
+							IsThumbToolTipEnabled="False" Maximum="200"
+							Minimum="1"
+							TickFrequency="30" TickPlacement="None"
+							Value="{x:Bind Data.SettingsManager.AutoplaySpeed, Mode=TwoWay}" />
+							<TextBlock
+							Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+							VerticalAlignment="Center">
+								<Run Text="{x:Bind Data.SettingsManager.AutoplaySpeed, Mode=OneWay}" />%
+							</TextBlock>
+						</Grid>
+					</controls:ModernInput>
+					<controls:ModernInput Title="Start delay">
+						<muxc:NumberBox
+							MinWidth="134" Minimum="1"
+							SmallChange="100" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.SettingsManager.AutoplayStartDelay, Mode=TwoWay}" />
+					</controls:ModernInput>
+					<controls:ModernInput Title="Before page change">
+						<muxc:NumberBox
+							MinWidth="134" Minimum="1"
+							SmallChange="100" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.SettingsManager.AutoplayBeforeChangeDelay, Mode=TwoWay}" />
+					</controls:ModernInput>
+					<controls:ModernInput Title="After page change">
+						<muxc:NumberBox
+							MinWidth="134" Minimum="1"
+							SmallChange="100" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.SettingsManager.AutoplayAfterChangeDelay, Mode=TwoWay}" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
 				<controls:ModernExpander x:Uid="/Settings/Reader/CustomBackground" Glyph="&#xE790;">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseReaderBackground, Mode=TwoWay}" />

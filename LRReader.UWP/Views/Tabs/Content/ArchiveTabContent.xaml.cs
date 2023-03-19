@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +21,12 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.System;
+using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
@@ -41,10 +44,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _opened;
 		private bool _focus = true;
 		private bool _changePage;
+		private bool _changingPage;
 		private float _lastZoom;
 		private double _fitAgainstFixedWidth;
 
 		private bool _transition;
+
+		private TimeSpan _previousTime = TimeSpan.Zero;
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
@@ -139,7 +145,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			_focus = true;
 			FocusReader();
+
 			_transition = false;
+			await PlayStop(Service.Settings.Autoplay);
 		}
 
 		public async void CloseReader()
@@ -147,6 +155,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (_transition)
 				return;
 			_transition = true;
+			await PlayStop(false);
 			var animate = Service.Platform.AnimationsEnabled;
 			ConnectedAnimation? animLeft = null, animRight = null;
 
@@ -212,6 +221,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_wasNew = await Data.SaveReaderData(_wasNew);
 
 			_transition = false;
+			_changePage = false;
 		}
 
 		private async void NextArchive() => await NextArchiveAsync();
@@ -503,18 +513,30 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void NextPage(bool ignore = false)
 		{
+			_changingPage = true;
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayBeforeChangeDelay));
 			if (Data.ReadRTL && !ignore)
 				await GoLeft();
 			else
 				await GoRight();
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayAfterChangeDelay));
+			_changingPage = false;
 		}
 
 		private async void PrevPage(bool ignore = false)
 		{
+			_changingPage = true;
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayBeforeChangeDelay));
 			if (Data.ReadRTL && !ignore)
 				await GoRight();
 			else
 				await GoLeft();
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayAfterChangeDelay));
+			_changingPage = false;
 		}
 
 		private async Task GoRight()
@@ -622,6 +644,38 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			else
 				await ReaderImage.ResizeHeight((int)Math.Round(ScrollViewer.ExtentHeight));
+		}
+
+		private void CompositionTarget_Rendering(object sender, object e)
+		{
+			var timings = (RenderingEventArgs)e;
+			if (!_changingPage)
+			{
+				if (ScrollViewer.VerticalOffset >= ScrollViewer.ScrollableHeight)
+				{
+					NextPage();
+				}
+				else
+				{
+					var yOffset = ScrollViewer.VerticalOffset + Service.Settings.AutoplaySpeed * 0.01 * _lastZoom;
+					ScrollViewer.ChangeView(null, yOffset, null, true);
+				}
+			}
+			_previousTime = timings.RenderingTime;
+		}
+
+		[RelayCommand]
+		private async Task PlayStop(bool state)
+		{
+			Data.UseAutoplay = state;
+			if (state)
+			{
+				ScrollViewer.ChangeView(null, 0, null, true);
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayStartDelay));
+				Windows.UI.Xaml.Media.CompositionTarget.Rendering += CompositionTarget_Rendering;
+			}
+			else
+				Windows.UI.Xaml.Media.CompositionTarget.Rendering -= CompositionTarget_Rendering;
 		}
 
 		private async void DownloadButton_Click(object sender, RoutedEventArgs e)

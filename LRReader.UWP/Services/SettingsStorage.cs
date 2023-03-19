@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using LRReader.Shared.Services;
 using Windows.Storage;
@@ -13,27 +14,27 @@ namespace LRReader.UWP.Services
 
 		public Task Init() => Task.Delay(1);
 
-		public T? GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
+		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
 
 		[return: NotNullIfNotNull("def")]
-		public T? GetObjectLocal<T>(string key, T? def)
+		public T? GetObjectLocal<T>(T? def, [CallerMemberName] string? key = null)
 		{
 			var val = localSettings.Values[key];
 			return val != null ? (T)val : def;
 		}
 
-		public T? GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
+		public T? GetObjectRoamed<T>([CallerMemberName] string? key = null) => GetObjectRoamed<T>(default, key);
 
 		[return: NotNullIfNotNull("def")]
-		public T? GetObjectRoamed<T>(string key, T? def)
+		public T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null)
 		{
 			var val = roamedSettings.Values[key];
 			return val != null ? (T)val : def;
 		}
 
-		public void StoreObjectLocal(string key, object obj) => localSettings.Values[key] = obj;
+		public void StoreObjectLocal(object obj, [CallerMemberName] string? key = null) => localSettings.Values[key] = obj;
 
-		public void StoreObjectRoamed(string key, object obj) => roamedSettings.Values[key] = obj;
+		public void StoreObjectRoamed(object obj, [CallerMemberName] string? key = null) => roamedSettings.Values[key] = obj;
 
 		public void DeleteObjectLocal(string key) => localSettings.Values.Remove(key);
 

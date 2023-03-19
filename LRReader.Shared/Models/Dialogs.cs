@@ -26,6 +26,7 @@ namespace LRReader.Shared.Models
 		string Name { get; set; }
 		string Address { get; set; }
 		string ApiKey { get; set; }
+		bool Integration { get; set; }
 	}
 
 	public enum ConflictMode
