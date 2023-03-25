@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
@@ -33,9 +34,9 @@ namespace LRReader.Avalonia.Services
 		public async Task Init()
 		{
 			if (File.Exists(AppDataFile))
-				roamedSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(await File.ReadAllTextAsync(AppDataFile));
+				roamedSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(await File.ReadAllTextAsync(AppDataFile))!;
 			if (File.Exists(LocalDataFile))
-				localSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(await File.ReadAllTextAsync(LocalDataFile));
+				localSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(await File.ReadAllTextAsync(LocalDataFile))!;
 		}
 
 		public void Save()
@@ -44,37 +45,37 @@ namespace LRReader.Avalonia.Services
 			File.WriteAllText(LocalDataFile, JsonConvert.SerializeObject(localSettings));
 		}
 
-		public T? GetObjectLocal<T>(string key) => GetObjectLocal<T>(key, default);
+		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
 
 		[return: NotNullIfNotNull("def")]
-		public T? GetObjectLocal<T>(string key, T? def)
+		public T? GetObjectLocal<T>(T? def, [CallerMemberName] string? key = null)
 		{
-			if (!localSettings.ContainsKey(key))
+			if (!localSettings.ContainsKey(key!))
 				return def;
-			var val = localSettings[key];
+			var val = localSettings[key!];
 			return val != null ? (T)Convert.ChangeType(val, typeof(T), CultureInfo.InvariantCulture) : def;
 		}
 
-		public T? GetObjectRoamed<T>(string key) => GetObjectRoamed<T>(key, default);
+		public T? GetObjectRoamed<T>([CallerMemberName] string? key = null) => GetObjectRoamed<T>(default, key);
 
 		[return: NotNullIfNotNull("def")]
-		public T? GetObjectRoamed<T>(string key, T? def)
+		public T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null)
 		{
-			if (!roamedSettings.ContainsKey(key))
+			if (!roamedSettings.ContainsKey(key!))
 				return def;
-			var val = roamedSettings[key];
+			var val = roamedSettings[key!];
 			return val != null ? (T)Convert.ChangeType(val, typeof(T), CultureInfo.InvariantCulture) : def;
 		}
 
-		public void StoreObjectLocal(string key, object obj)
+		public void StoreObjectLocal(object obj, [CallerMemberName] string? key = null)
 		{
-			localSettings[key] = obj;
+			localSettings[key!] = obj;
 			Save();
 		}
 
-		public void StoreObjectRoamed(string key, object obj)
+		public void StoreObjectRoamed(object obj, [CallerMemberName] string? key = null)
 		{
-			roamedSettings[key] = obj;
+			roamedSettings[key!] = obj;
 			Save();
 		}
 

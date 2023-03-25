@@ -1,4 +1,4 @@
-﻿<ui:UiWindow
+﻿<ui:FluentWindow
 	x:Class="LRReader.UWP.Installer.MainWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -103,4 +103,4 @@
 			</StackPanel>
 		</Border>
 	</Grid>
-</ui:UiWindow>
+</ui:FluentWindow>

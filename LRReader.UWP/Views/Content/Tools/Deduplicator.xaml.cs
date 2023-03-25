@@ -67,10 +67,12 @@ namespace LRReader.UWP.Views.Content.Tools
 		private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			await FadeOut.StartAsync(Results);
-			Details.Visibility = Visibility.Visible;
-			FadeIn.Start(Details);
 			var item = (ArchiveHit)e.ClickedItem;
 			await Data.LoadArchives(item);
+			LeftPages.SetVisualOpacity(0);
+			RightPages.SetVisualOpacity(0);
+			Details.Visibility = Visibility.Visible;
+			await FadeIn.StartAsync(Details);
 			if (RightScroller == null && LeftScroller == null)
 			{
 				var border = VisualTreeHelper.GetChild(RightPages, 0);
@@ -85,6 +87,8 @@ namespace LRReader.UWP.Views.Content.Tools
 				if (LeftScroller != null)
 					LeftScroller.ViewChanged += LeftScroller_ViewChanged;
 			}
+			FadeIn.Start(LeftPages);
+			FadeIn.Start(RightPages);
 		}
 
 		private void Flyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs e) => e.Cancel = !Service.Platform.Active;

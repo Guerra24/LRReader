@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -6,21 +7,19 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 using Windows.Management.Deployment;
 using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls;
-using Wpf.Ui.Extensions;
+using Wpf.Ui.Controls.Window;
 
 namespace LRReader.UWP.Installer
 {
 
-	public partial class MainWindow : UiWindow
+	public partial class MainWindow : FluentWindow
 	{
 
-		private PackageManager pm;
+		private PackageManager pm = null!;
 
 		private bool CertFound;
 
@@ -54,7 +53,7 @@ namespace LRReader.UWP.Installer
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			Watcher.Watch(this, BackgroundType.Mica, true);
+			Watcher.Watch(this, WindowBackdropType.Mica, true);
 			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
 			{
 				Error.Text = "LRReader requires Windows 10 1809 or newer";

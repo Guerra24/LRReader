@@ -8,9 +8,9 @@ jobs:
     runs-on: windows-2022
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v1.3
     - name: Build AppInstaller
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -38,12 +38,12 @@ jobs:
         foreach ($file in $(Get-ChildItem *.appxsym -File)) { appcenter crashes upload-symbols --app Guerra24/LRReader --appxsym $file --token ${env:APPCENTER_TOKEN} }
         Remove-Item $(Get-ChildItem *.appxsym -File)
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -58,38 +58,64 @@ jobs:
         name: LRReader.appinstaller
         path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  buildInstaller:
-    name: Build Installer
+  buildInstallerX64:
+    name: Build Installer X64
     runs-on: windows-2022
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v1.3
     - name: Installer
       run: |
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
         $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
         $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=x64
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: Installer
-        path: LRReader.UWP.Installer/bin/Release/LRReader.exe
+        name: Installer-x64
+        path: LRReader.UWP.Installer/bin/x64/Release/net472/LRReader.UWP.Installer.exe
     - name: Upload to Release
       uses: Guerra24/upload-to-release@v1
       with:
-        name: LRReader.exe
-        path: LRReader.UWP.Installer/bin/Release/LRReader.exe
+        name: LRReader.x64.exe
+        path: LRReader.UWP.Installer/bin/x64/Release/net472/LRReader.UWP.Installer.exe
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+  buildInstallerARM64:
+    name: Build Installer ARM64
+    runs-on: windows-2022
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Prepare Env
+      uses: microsoft/setup-msbuild@v1.3
+    - name: Installer
+      run: |
+        [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
+        $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
+        $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
+        Invoke-Expression "./Util/ConfigureInstaller.ps1"
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=ARM64
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Installer-ARM64
+        path: LRReader.UWP.Installer/bin/ARM64/Release/net472/LRReader.UWP.Installer.exe
+    - name: Upload to Release
+      uses: Guerra24/upload-to-release@v1
+      with:
+        name: LRReader.ARM64.exe
+        path: LRReader.UWP.Installer/bin/ARM64/Release/net472/LRReader.UWP.Installer.exe
         repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildStoreBundle:
     name: Build Store Bundle
     runs-on: windows-2022
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build AppInstaller
@@ -99,7 +125,7 @@ jobs:
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly" /p:AppxPackageSigningEnabled=false
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: LRReader_Store
         path: LRReader.UWP/AppPackages/*.msixupload
