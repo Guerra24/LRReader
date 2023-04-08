@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
+using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -30,7 +31,7 @@ namespace LRReader.UWP.Services
 
 		private UISettings UISettings = new UISettings();
 
-		private bool _animationsEnabled;
+		private bool _animationsEnabled, _dualScreen;
 
 		private Root? Root;
 
@@ -40,10 +41,10 @@ namespace LRReader.UWP.Services
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
 			if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
-				UISettings.AnimationsEnabledChanged += (sender, args) =>
-				{
-					_animationsEnabled = sender.AnimationsEnabled;
-				};
+				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
+
+			var device = new EasClientDeviceInformation();
+			_dualScreen = !string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo");
 
 			MapPageToType(Pages.Loading, typeof(LoadingPage));
 			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
@@ -94,6 +95,8 @@ namespace LRReader.UWP.Services
 		public override bool AnimationsEnabled => _animationsEnabled;
 
 		public override uint HoverTime => UISettings.MouseHoverTime;
+
+		public override bool DualScreen => _dualScreen;
 
 		public override Task<bool> OpenInBrowser(Uri uri) => Launcher.LaunchUriAsync(uri).AsTask();
 

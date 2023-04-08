@@ -16,7 +16,7 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
-			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="32" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		<Canvas Grid.ColumnSpan="3">
@@ -36,10 +36,6 @@
 				<TextBlock x:Uid="/Pages/FirstRunPage/Create" FontSize="16" Visibility="{x:Bind Data.SettingsManager.ProfilesAvailable, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 			</StackPanel>
 		</Grid>
-		<Border
-			Grid.Column="1" Margin="16,0"
-			BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
-			BorderThickness="1" />
 		<ScrollViewer x:Name="ScrollViewer" Grid.Column="2" Margin="0,32,0,0">
 			<StackPanel
 				Grid.Column="2"

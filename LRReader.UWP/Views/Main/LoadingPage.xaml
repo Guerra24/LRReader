@@ -6,6 +6,8 @@
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ext="using:LRReader.UWP.Extensions"
+	xmlns:services="using:LRReader.Shared.Services"
 	DataContext="{Binding LoadingPageInstance, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
@@ -13,43 +15,49 @@
 	mc:Ignorable="d">
 
 	<Grid>
+		<muxc:TwoPaneView
+			ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" PanePriority="Pane1"
+			TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+			<muxc:TwoPaneView.Pane1>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Canvas Grid.RowSpan="3">
+						<Image x:Name="Splash" Source="/Assets/SplashScreen.scale-200.png" />
+					</Canvas>
+					<Grid Grid.Row="2">
+						<muxc:ProgressRing
+							Width="40" Height="40" HorizontalAlignment="Center"
+							VerticalAlignment="Top"
+							IsActive="{x:Bind ViewModel.Active, Mode=OneWay}" />
+						<muxc:ProgressBar
+							Width="200" Margin="0,18,0,0" VerticalAlignment="Top"
+							Maximum="0.8"
+							Visibility="{x:Bind ViewModel.Updating, Mode=OneWay}"
+							Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
+						<StackPanel VerticalAlignment="Top" Spacing="5">
+							<TextBlock HorizontalAlignment="Center" FontSize="18" Text="{x:Bind ViewModel.Status, Mode=OneWay}" />
+							<TextBlock HorizontalAlignment="Center" FontSize="17" Text="{x:Bind ViewModel.StatusSub, Mode=OneWay}" />
+							<Grid HorizontalAlignment="Center" Visibility="{x:Bind ViewModel.Retry, Mode=OneWay}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="150" />
+									<ColumnDefinition Width="150" />
+								</Grid.ColumnDefinitions>
+								<Button x:Uid="/Pages/LoadingPage/ChangeProfile" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ChangeCommand}" />
+								<Button
+									x:Uid="/Pages/LoadingPage/Retry" Grid.Column="1" HorizontalAlignment="Center"
+									Command="{x:Bind ViewModel.ConnectCommand}" />
+							</Grid>
+						</StackPanel>
+					</Grid>
+				</Grid>
+			</muxc:TwoPaneView.Pane1>
+		</muxc:TwoPaneView>
 		<Grid
 			x:Name="TitleBar" Height="32" VerticalAlignment="Top"
 			Background="{ThemeResource TitlebarBackground}" />
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<Canvas Grid.RowSpan="3">
-				<Image x:Name="Splash" Source="/Assets/SplashScreen.scale-200.png" />
-			</Canvas>
-			<Grid Grid.Row="2">
-				<muxc:ProgressRing
-					Width="40" Height="40" HorizontalAlignment="Center"
-					VerticalAlignment="Top"
-					IsActive="{x:Bind ViewModel.Active, Mode=OneWay}" />
-				<muxc:ProgressBar
-					Width="200" Margin="0,18,0,0" VerticalAlignment="Top"
-					Maximum="0.8"
-					Visibility="{x:Bind ViewModel.Updating, Mode=OneWay}"
-					Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
-				<StackPanel VerticalAlignment="Top" Spacing="5">
-					<TextBlock HorizontalAlignment="Center" FontSize="18" Text="{x:Bind ViewModel.Status, Mode=OneWay}" />
-					<TextBlock HorizontalAlignment="Center" FontSize="17" Text="{x:Bind ViewModel.StatusSub, Mode=OneWay}" />
-					<Grid HorizontalAlignment="Center" Visibility="{x:Bind ViewModel.Retry, Mode=OneWay}">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="150" />
-							<ColumnDefinition Width="150" />
-						</Grid.ColumnDefinitions>
-						<Button x:Uid="/Pages/LoadingPage/ChangeProfile" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ChangeCommand}" />
-						<Button
-							x:Uid="/Pages/LoadingPage/Retry" Grid.Column="1" HorizontalAlignment="Center"
-							Command="{x:Bind ViewModel.ConnectCommand}" />
-					</Grid>
-				</StackPanel>
-			</Grid>
-		</Grid>
 	</Grid>
 </Page>

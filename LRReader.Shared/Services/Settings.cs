@@ -31,7 +31,7 @@ namespace LRReader.Shared.Services
 			set
 			{
 				if (value != null)
-					SettingsStorage.StoreObjectLocal(value.UID);
+					SettingsStorage.StoreObjectLocal(value.UID, "ProfileUID");
 				SetProperty(ref _profile, value);
 			}
 		}

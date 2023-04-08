@@ -34,66 +34,72 @@
 					<SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
 				</GridView.Resources>
 				<GridView.Header>
-					<StackPanel Padding="50,5,50,5">
-						<Grid Margin="0,0,0,8">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-							<Button
-								x:Uid="/Tabs/Archive/New" Margin="0,2,8,0" Padding="4,2"
-								IsHitTestVisible="False" IsTabStop="False"
-								Style="{ThemeResource AccentButtonStyle}"
-								Visibility="{x:Bind Data.IsNew, Mode=OneWay}" />
-							<TextBlock
-								Grid.Column="1" HorizontalAlignment="Left" FontSize="24"
-								IsTextSelectionEnabled="True"
-								Text="{x:Bind Data.Archive.title, Mode=OneWay}"
-								TextWrapping="WrapWholeWords" />
-						</Grid>
-						<controls:ArchiveTags Margin="0,0,0,8" ItemClickCommand="{x:Bind Data.TagClickCommand}" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
-						<StackPanel Orientation="Horizontal">
-							<ToggleButton x:Uid="/Tabs/Archive/Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
-							<Button
-								Margin="2,0,0,0" Click="Continue_Click"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}">
-								<TextBlock>
-									<Run x:Uid="/Tabs/Archive/Continue" /> (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)
-								</TextBlock>
-							</Button>
-							<Button
-								x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0"
-								Command="{x:Bind Data.EditCommand}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
-							<Button
-								x:Uid="/Tabs/Archive/Categories" Margin="2,0,0,0"
-								Command="{x:Bind Data.EditCategoriesCommand}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
-							<Button
-								x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DownloadButton_Click"
-								IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-							<Button
-								x:Uid="/Tabs/Archive/Delete" Margin="2,0,0,0"
-								Command="{x:Bind Data.DeleteCommand}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
-							<Border
-								Grid.Column="2" Width="1" Margin="8,4,8,4"
-								Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-							<Button
-								x:Uid="/Tabs/Archive/Next" Margin="0,0,2,0"
-								Click="{x:Bind NextArchive}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind Data.CanGoNext, Mode=OneWay}" />
-							<Button
-								x:Uid="/Tabs/Archive/Random" Margin="0,0,0,0"
-								Click="{x:Bind Random_Clicked}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
-						</StackPanel>
-					</StackPanel>
+					<muxc:TwoPaneView
+						ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*"
+						PanePriority="Pane1" TallModeConfiguration="SinglePane" WideModeConfiguration="LeftRight">
+						<muxc:TwoPaneView.Pane1>
+							<StackPanel Padding="50,5,50,5">
+								<Grid Margin="0,0,0,8">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto" />
+										<ColumnDefinition />
+									</Grid.ColumnDefinitions>
+									<Button
+										x:Uid="/Tabs/Archive/New" Margin="0,2,8,0" Padding="4,2"
+										IsHitTestVisible="False" IsTabStop="False"
+										Style="{ThemeResource AccentButtonStyle}"
+										Visibility="{x:Bind Data.IsNew, Mode=OneWay}" />
+									<TextBlock
+										Grid.Column="1" HorizontalAlignment="Left" FontSize="24"
+										IsTextSelectionEnabled="True"
+										Text="{x:Bind Data.Archive.title, Mode=OneWay}"
+										TextWrapping="WrapWholeWords" />
+								</Grid>
+								<controls:ArchiveTags Margin="0,0,0,8" ItemClickCommand="{x:Bind Data.TagClickCommand}" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
+								<StackPanel Orientation="Horizontal">
+									<ToggleButton x:Uid="/Tabs/Archive/Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+									<Button
+										Margin="2,0,0,0" Click="Continue_Click"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										Visibility="{x:Bind Data.Bookmarked, Mode=OneWay}">
+										<TextBlock>
+											<Run x:Uid="/Tabs/Archive/Continue" /> (<Run Text="{x:Bind Data.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind Data.Pages, Mode=OneWay}" />)
+										</TextBlock>
+									</Button>
+									<Button
+										x:Uid="/Tabs/Archive/Edit" Margin="2,0,0,0"
+										Command="{x:Bind Data.EditCommand}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
+									<Button
+										x:Uid="/Tabs/Archive/Categories" Margin="2,0,0,0"
+										Command="{x:Bind Data.EditCategoriesCommand}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
+									<Button
+										x:Uid="/Tabs/Archive/Download" Margin="2,0,0,0" Click="DownloadButton_Click"
+										IsEnabled="{x:Bind Data.Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+									<Button
+										x:Uid="/Tabs/Archive/Delete" Margin="2,0,0,0"
+										Command="{x:Bind Data.DeleteCommand}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
+									<Border
+										Grid.Column="2" Width="1" Margin="8,4,8,4"
+										Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+									<Button
+										x:Uid="/Tabs/Archive/Next" Margin="0,0,2,0"
+										Click="{x:Bind NextArchive}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										Visibility="{x:Bind Data.CanGoNext, Mode=OneWay}" />
+									<Button
+										x:Uid="/Tabs/Archive/Random" Margin="0,0,0,0"
+										Click="{x:Bind Random_Clicked}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+								</StackPanel>
+							</StackPanel>
+						</muxc:TwoPaneView.Pane1>
+					</muxc:TwoPaneView>
 				</GridView.Header>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
@@ -193,18 +199,26 @@
 		<Button
 			x:Uid="/Generic/RetryBtn" Grid.Row="1" HorizontalAlignment="Center"
 			Command="{x:Bind Data.ReloadCommand}"
-			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" >
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
 			<Button.CommandParameter>
 				<x:Boolean>True</x:Boolean>
 			</Button.CommandParameter>
 		</Button>
-		<muxc:ProgressRing
-			Grid.Row="1" Width="80" Height="80"
-			Background="#4B000000" IsActive="True"
-			IsIndeterminate="{x:Bind Data.LoadingIndeterminate, Mode=OneWay}"
-			Maximum="{x:Bind Data.BuildMax, Mode=OneWay}"
-			Visibility="{x:Bind Data.LoadingImages, Mode=OneWay}"
-			Value="{x:Bind Data.BuildProgress, Mode=OneWay}" />
+		<muxc:TwoPaneView
+			ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" IsHitTestVisible="False"
+			PanePriority="Pane1" TallModeConfiguration="SinglePane" WideModeConfiguration="LeftRight">
+			<muxc:TwoPaneView.Pane1>
+				<Grid>
+					<muxc:ProgressRing
+						Grid.Row="1" Width="80" Height="80"
+						Background="#4B000000" IsActive="True"
+						IsIndeterminate="{x:Bind Data.LoadingIndeterminate, Mode=OneWay}"
+						Maximum="{x:Bind Data.BuildMax, Mode=OneWay}"
+						Visibility="{x:Bind Data.LoadingImages, Mode=OneWay}"
+						Value="{x:Bind Data.BuildProgress, Mode=OneWay}" />
+				</Grid>
+			</muxc:TwoPaneView.Pane1>
+		</muxc:TwoPaneView>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="ThemeBackground" />

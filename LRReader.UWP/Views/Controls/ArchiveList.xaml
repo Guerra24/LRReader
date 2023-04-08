@@ -8,6 +8,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding SearchResultsInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
@@ -30,70 +31,73 @@
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed">
 				<GridView.Header>
-					<Grid Margin="0,10,0,10">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<AutoSuggestBox
-							x:Name="SearchBox" x:Uid="/Tabs/Archives/Search" MinWidth="300"
-							HorizontalAlignment="Center"
-							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-							ItemsSource="{x:Bind Data.Suggestions, Mode=OneWay}"
-							QueryIcon="Find" QuerySubmitted="SearchQuerySubmitted" TextChanged="SearchTextChanged" />
-						<StackPanel
-							Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Center"
-							Orientation="Horizontal">
-							<ToggleButton
-								x:Uid="/Tabs/Archives/Untagged" Width="150" Margin="0,0,5,0"
-								Click="FilterToggle_Click"
-								IsChecked="{x:Bind Data.UntaggedOnly, Mode=TwoWay}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
-							<ToggleButton
-								x:Uid="/Tabs/Archives/New" Width="150" Margin="5,0,5,0"
-								Click="FilterToggle_Click"
-								IsChecked="{x:Bind Data.NewOnly, Mode=TwoWay}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
-							<Button
-								x:Uid="/Tabs/Archives/Random" Width="150" Margin="5,0,0,0"
-								Click="{x:Bind Data.OpenRandom}"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								Visibility="{x:Bind RandomVisible, Mode=OneWay}" />
-						</StackPanel>
-						<StackPanel
-							Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
-							Orientation="Horizontal">
-							<Button
-								x:Uid="/Tabs/Archives/Order" Margin="0,0,10,0" Padding="8"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
-								<Button.Flyout>
-									<MenuFlyout>
-										<muxc:RadioMenuFlyoutItem
-											x:Name="AscFlyoutItem" x:Uid="/Tabs/Archives/OrderAsc" Click="OrderBy_Click"
-											Tag="Ascending" />
-										<muxc:RadioMenuFlyoutItem
-											x:Name="DesFlyoutItem" x:Uid="/Tabs/Archives/OrderDesc" Click="OrderBy_Click"
-											Tag="Descending" />
-									</MenuFlyout>
-								</Button.Flyout>
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE8CB;" />
-							</Button>
-							<ComboBox
-								x:Uid="/Tabs/Archives/SortBy" MinWidth="150" HorizontalAlignment="Stretch"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-								ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
-								SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}"
-								SelectionChanged="SortBy_SelectionChanged" />
-							<Button
-								x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
-								Click="ClearButton_Click"
-								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
-							</Button>
-						</StackPanel>
-						<!--<StackPanel
+					<muxc:TwoPaneView
+						ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" PanePriority="Pane1"
+						TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+						<muxc:TwoPaneView.Pane1>
+							<Grid Margin="0,10,0,10">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+								<AutoSuggestBox
+									x:Name="SearchBox" x:Uid="/Tabs/Archives/Search" MinWidth="300"
+									HorizontalAlignment="Center"
+									IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+									ItemsSource="{x:Bind Data.Suggestions, Mode=OneWay}"
+									QueryIcon="Find" QuerySubmitted="SearchQuerySubmitted" TextChanged="SearchTextChanged" />
+								<StackPanel
+									Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Center"
+									Orientation="Horizontal">
+									<ToggleButton
+										x:Uid="/Tabs/Archives/Untagged" Width="150" Margin="0,0,5,0"
+										Click="FilterToggle_Click"
+										IsChecked="{x:Bind Data.UntaggedOnly, Mode=TwoWay}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+									<ToggleButton
+										x:Uid="/Tabs/Archives/New" Width="150" Margin="5,0,5,0"
+										Click="FilterToggle_Click"
+										IsChecked="{x:Bind Data.NewOnly, Mode=TwoWay}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+									<Button
+										x:Uid="/Tabs/Archives/Random" Width="150" Margin="5,0,0,0"
+										Click="{x:Bind Data.OpenRandom}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+								</StackPanel>
+								<StackPanel
+									Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
+									Orientation="Horizontal">
+									<Button
+										x:Uid="/Tabs/Archives/Order" Margin="0,0,10,0" Padding="8"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
+										<Button.Flyout>
+											<MenuFlyout>
+												<muxc:RadioMenuFlyoutItem
+													x:Name="AscFlyoutItem" x:Uid="/Tabs/Archives/OrderAsc" Click="OrderBy_Click"
+													Tag="Ascending" />
+												<muxc:RadioMenuFlyoutItem
+													x:Name="DesFlyoutItem" x:Uid="/Tabs/Archives/OrderDesc" Click="OrderBy_Click"
+													Tag="Descending" />
+											</MenuFlyout>
+										</Button.Flyout>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE8CB;" />
+									</Button>
+									<ComboBox
+										x:Uid="/Tabs/Archives/SortBy" MinWidth="150" HorizontalAlignment="Stretch"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
+										SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}"
+										SelectionChanged="SortBy_SelectionChanged" />
+									<Button
+										x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
+										Click="ClearButton_Click"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+									</Button>
+								</StackPanel>
+								<!--<StackPanel
 							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
 							Orientation="Horizontal">
 							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
@@ -106,17 +110,31 @@
 								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72A;" />
 							</Button>
 						</StackPanel>-->
-						<muxc:PagerControl
-							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
-							DisplayMode="ComboBox"
-							IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-							IsTabStop="False"
-							NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
-							SelectedIndexChanged="PagerControl_SelectedIndexChanged"
-							SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
-					</Grid>
+								<muxc:PagerControl
+									Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
+									DisplayMode="ComboBox"
+									IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+									IsTabStop="False"
+									NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+									SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+									SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
+							</Grid>
+						</muxc:TwoPaneView.Pane1>
+					</muxc:TwoPaneView>
 				</GridView.Header>
 				<GridView.Footer>
+					<muxc:TwoPaneView
+						ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" PanePriority="Pane1"
+						TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+						<muxc:TwoPaneView.Pane1>
+							<muxc:PagerControl
+								Margin="0,10,0,0" HorizontalAlignment="Center" DisplayMode="ComboBox"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+								SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+								SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
+						</muxc:TwoPaneView.Pane1>
+					</muxc:TwoPaneView>
 					<!--<StackPanel Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
 						<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72B;" />
@@ -128,12 +146,6 @@
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72A;" />
 						</Button>
 					</StackPanel>-->
-					<muxc:PagerControl
-						Margin="0,10,0,0" HorizontalAlignment="Center" DisplayMode="ComboBox"
-						IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-						NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
-						SelectedIndexChanged="PagerControl_SelectedIndexChanged"
-						SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
 				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind HandleF5, Mode=OneWay}" />

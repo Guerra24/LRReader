@@ -7,7 +7,6 @@ using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Media;
 using Windows.Foundation;
-
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -18,6 +17,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
 
 namespace LRReader.UWP.Extensions
 {
@@ -37,6 +37,19 @@ namespace LRReader.UWP.Extensions
 		public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
 		public static Task StartAsync(this UIElement element, AnimationBuilder animation) => animation.StartAsync(element);
 
+	}
+
+	public class TwoPaneViewExt : DependencyObject
+	{
+		public static readonly DependencyProperty EnableDualScreenProperty = DependencyProperty.RegisterAttached("EnableDualScreen", typeof(bool), typeof(TwoPaneView), new PropertyMetadata(false));
+
+		public static void SetEnableDualScreen(TwoPaneView pane, bool state)
+		{
+			pane.MinWideModeWidth = state ? 1340 : double.MaxValue;
+			pane.SetValue(EnableDualScreenProperty, state);
+		}
+
+		public static bool GetEnableDualScreen(TwoPaneView pane) => (bool)pane.GetValue(EnableDualScreenProperty);
 	}
 
 	public class GridViewExt : DependencyObject
@@ -101,7 +114,7 @@ namespace LRReader.UWP.Extensions
 				}
 				else
 				{*/
-					Effects.SetShadow(element, shadow.DropShadow);
+				Effects.SetShadow(element, shadow.DropShadow);
 				//}
 			}
 		}
@@ -126,7 +139,7 @@ namespace LRReader.UWP.Extensions
 				}
 				else
 				{*/
-					Effects.SetShadow(item, shadow.DropShadow);
+				Effects.SetShadow(item, shadow.DropShadow);
 				//}
 			}
 		}
@@ -148,7 +161,7 @@ namespace LRReader.UWP.Extensions
 			/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				ThemeShadow = new ThemeShadow();
 			else*/
-				DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.16 };
+			DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.16 };
 		}
 	}
 

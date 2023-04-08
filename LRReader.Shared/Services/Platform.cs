@@ -34,6 +34,7 @@ namespace LRReader.Shared.Services
 		public abstract Version Version { get; }
 		public abstract bool AnimationsEnabled { get; }
 		public abstract uint HoverTime { get; }
+		public abstract bool DualScreen { get; }
 
 		public bool Active { get; protected set; }
 
@@ -102,6 +103,8 @@ namespace LRReader.Shared.Services
 		public override bool AnimationsEnabled => false;
 
 		public override uint HoverTime => 300;
+
+		public override bool DualScreen => false;
 
 		public override Task<bool> OpenInBrowser(Uri uri)
 		{

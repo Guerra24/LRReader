@@ -649,6 +649,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private void CompositionTarget_Rendering(object sender, object e)
 		{
 			var timings = (RenderingEventArgs)e;
+			var delta = timings.RenderingTime.TotalSeconds - _previousTime.TotalSeconds;
 			if (!_changingPage)
 			{
 				if (ScrollViewer.VerticalOffset >= ScrollViewer.ScrollableHeight)
@@ -657,7 +658,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				}
 				else
 				{
-					var yOffset = ScrollViewer.VerticalOffset + Service.Settings.AutoplaySpeed * 0.01 * _lastZoom;
+					var yOffset = ScrollViewer.VerticalOffset + Service.Settings.AutoplaySpeed * delta * _lastZoom;
 					ScrollViewer.ChangeView(null, yOffset, null, true);
 				}
 			}

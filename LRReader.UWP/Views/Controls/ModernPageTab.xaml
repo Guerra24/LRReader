@@ -7,6 +7,8 @@
 	xmlns:local="using:LRReader.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
@@ -16,34 +18,40 @@
 			TrueValue="True" />
 	</UserControl.Resources>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-		<Grid MaxWidth="1000" Margin="10">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Button Click="{x:Bind GoBack}" IsEnabled="{x:Bind BreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
-			<muxc:BreadcrumbBar
-				x:Name="Breadcrumb" Grid.Column="1" Margin="0,-3,0,0"
-				VerticalAlignment="Center" ItemClicked="Breadcrumb_ItemClicked"
-				ItemsSource="{x:Bind BreadcrumbItems}">
-				<muxc:BreadcrumbBar.ItemTemplate>
-					<DataTemplate x:DataType="local:ModernPageTabItem">
-						<TextBlock Margin="10,0" Text="{x:Bind Title}" />
-					</DataTemplate>
-				</muxc:BreadcrumbBar.ItemTemplate>
-			</muxc:BreadcrumbBar>
-		</Grid>
-		<Frame x:Name="ContentFrame" Grid.Row="1" IsNavigationStackEnabled="False">
-			<Frame.ContentTransitions>
-				<TransitionCollection>
-					<PopupThemeTransition FromVerticalOffset="200" />
-				</TransitionCollection>
-			</Frame.ContentTransitions>
-		</Frame>
-	</Grid>
+	<muxc:TwoPaneView
+		ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*"
+		PanePriority="Pane1" TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+		<muxc:TwoPaneView.Pane1>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Grid MaxWidth="1000" Margin="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Button Click="{x:Bind GoBack}" IsEnabled="{x:Bind BreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
+					<muxc:BreadcrumbBar
+						x:Name="Breadcrumb" Grid.Column="1" Margin="0,-3,0,0"
+						VerticalAlignment="Center" ItemClicked="Breadcrumb_ItemClicked"
+						ItemsSource="{x:Bind BreadcrumbItems}">
+						<muxc:BreadcrumbBar.ItemTemplate>
+							<DataTemplate x:DataType="local:ModernPageTabItem">
+								<TextBlock Margin="10,0" Text="{x:Bind Title}" />
+							</DataTemplate>
+						</muxc:BreadcrumbBar.ItemTemplate>
+					</muxc:BreadcrumbBar>
+				</Grid>
+				<Frame x:Name="ContentFrame" Grid.Row="1" IsNavigationStackEnabled="False">
+					<Frame.ContentTransitions>
+						<TransitionCollection>
+							<PopupThemeTransition FromVerticalOffset="200" />
+						</TransitionCollection>
+					</Frame.ContentTransitions>
+				</Frame>
+			</Grid>
+		</muxc:TwoPaneView.Pane1>
+	</muxc:TwoPaneView>
 </UserControl>
