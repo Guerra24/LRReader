@@ -17,7 +17,7 @@
 	<Grid>
 		<muxc:TwoPaneView
 			ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" PanePriority="Pane1"
-			TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+			TallModeConfiguration="SinglePane" WideModeConfiguration="LeftRight">
 			<muxc:TwoPaneView.Pane1>
 				<Grid>
 					<Grid.RowDefinitions>

@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using LRReader.Shared.Services;
@@ -44,19 +43,20 @@ namespace LRReader.UWP.Services
 					await semaphore.WaitAsync();
 					try
 					{
-						SoftwareBitmap softwareBitmap;
 						var decoder = await BitmapDecoder.CreateAsync(stream);
-						using (softwareBitmap = await decoder.GetSoftwareBitmapAsync())
+						using (var softwareBitmap = await decoder.GetSoftwareBitmapAsync())
 						{
+							SoftwareBitmap? newSource = null;
 							if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
-								softwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+								newSource = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
 							using (var converted = new InMemoryRandomAccessStream())
 							{
 								var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
-								encoder.SetSoftwareBitmap(softwareBitmap);
+								encoder.SetSoftwareBitmap(newSource ?? softwareBitmap);
 								await encoder.FlushAsync();
 								await image.SetSourceAsync(converted);
 							}
+							newSource?.Dispose();
 						}
 					}
 					catch (Exception)

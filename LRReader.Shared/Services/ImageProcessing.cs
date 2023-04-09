@@ -15,9 +15,15 @@ namespace LRReader.Shared.Services
 			{
 				if (bytes == null)
 					return Size.Empty;
-				var info = Image.Identify(bytes);
-				if (info != null)
-					return new Size(info.Width, info.Height);
+				try
+				{
+					var info = Image.Identify(bytes);
+					if (info != null)
+						return new Size(info.Width, info.Height);
+				}
+				catch
+				{
+				}
 				return Size.Empty;
 			});
 		}
