@@ -202,8 +202,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveCategories : GenericApiResult
 	{
-		[AllowNull]
-		public List<Category> categories { get; set; }
+		public List<Category> categories { get; set; } = null!;
 	}
 
 	public class DeleteArchiveResult : GenericApiResult

@@ -35,8 +35,7 @@ namespace LRReader.UWP.Services
 			if (decodeHeight > 0)
 				image.DecodePixelHeight = decodeHeight;
 			using (var ms = new MemoryStream(bytes))
-			{
-				var stream = ms.AsRandomAccessStream();
+			using (var stream = ms.AsRandomAccessStream())
 				//stream.Seek(0);
 				if (transcode)
 				{
@@ -79,7 +78,6 @@ namespace LRReader.UWP.Services
 						return null;
 					}
 				}
-			}
 			return image;
 		}
 
@@ -92,8 +90,7 @@ namespace LRReader.UWP.Services
 			var size = await base.GetImageSize(bytes);
 			if (size.IsEmpty)
 				using (var ms = new MemoryStream(bytes))
-				{
-					var stream = ms.AsRandomAccessStream();
+				using (var stream = ms.AsRandomAccessStream())
 					try
 					{
 						var decoder = await BitmapDecoder.CreateAsync(stream);
@@ -103,7 +100,6 @@ namespace LRReader.UWP.Services
 					{
 						return new Size(0, 0);
 					}
-				}
 			return size;
 		}
 

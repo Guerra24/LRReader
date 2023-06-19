@@ -4,9 +4,11 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:LRReader.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:viewmodels="using:LRReader.Shared.ViewModels"
 	DataContext="{Binding ArchiveEditInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
@@ -237,96 +239,103 @@
 		</ControlTemplate>
 	</UserControl.Resources>
 
-	<ScrollViewer x:Name="ScrollViewer" Padding="10,10" VerticalScrollBarVisibility="Auto">
-		<Grid Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
-			<StackPanel Spacing="10">
-				<StackPanel>
-					<TextBlock x:Uid="/Tabs/ArchiveEdit/ThumbnailTitle" Margin="{ThemeResource TextBoxTopHeaderMargin}" HorizontalAlignment="Left" />
-					<Button
-						x:Uid="/Tabs/ArchiveEdit/ChangeThumbnail" Padding="0" HorizontalAlignment="Center"
-						Command="{x:Bind Data.ChangeThumbnailCommand}" >
-						<Grid CornerRadius="{ThemeResource ControlCornerRadius}">
-							<Image x:Name="Thumbnail" Height="275" Source="{x:Bind Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
-							<Border Background="{ThemeResource ThumbnailSmoke}" />
-							<FontIcon
-								Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+	<muxc:TwoPaneView
+		ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}"
+		Pane1Length="1*" PanePriority="Pane1" TallModeConfiguration="SinglePane"
+		WideModeConfiguration="RightLeft">
+		<muxc:TwoPaneView.Pane1>
+			<ScrollViewer x:Name="ScrollViewer" Padding="10,10" VerticalScrollBarVisibility="Auto">
+				<Grid Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+					<StackPanel Spacing="10">
+						<StackPanel>
+							<TextBlock x:Uid="/Tabs/ArchiveEdit/ThumbnailTitle" Margin="{ThemeResource TextBoxTopHeaderMargin}" HorizontalAlignment="Left" />
+							<Button
+								x:Uid="/Tabs/ArchiveEdit/ChangeThumbnail" Padding="0" HorizontalAlignment="Center"
+								Command="{x:Bind Data.ChangeThumbnailCommand}">
+								<Grid CornerRadius="{ThemeResource ControlCornerRadius}">
+									<Image x:Name="Thumbnail" Height="275" Source="{x:Bind Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
+									<Border Background="{ThemeResource ThumbnailSmoke}" />
+									<FontIcon
+										Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+										FontFamily="{StaticResource SymbolThemeFontFamily}"
+										FontSize="84" Glyph="&#xE8E6;" />
+								</Grid>
+							</Button>
+						</StackPanel>
+						<TextBox x:Uid="/Tabs/ArchiveEdit/ID" IsReadOnly="True" Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
+						<TextBox
+							x:Uid="/Tabs/ArchiveEdit/Title"
+							IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+							IsSpellCheckEnabled="False"
+							Text="{x:Bind Data.Title, Mode=TwoWay}" />
+						<Grid>
+							<ToggleButton
+								Padding="4.5" HorizontalAlignment="Right" VerticalAlignment="Top"
+								Content="&#xE8AB;"
 								FontFamily="{StaticResource SymbolThemeFontFamily}"
-								FontSize="84" Glyph="&#xE8E6;" />
+								IsChecked="{x:Bind Data.UseTextTags, Mode=TwoWay}"
+								IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+							<TextBox
+								x:Name="TextTags" x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="80"
+								IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+								IsSpellCheckEnabled="False"
+								Text="{x:Bind Data.Tags, Mode=TwoWay}"
+								TextWrapping="Wrap" Visibility="Collapsed" />
+							<StackPanel x:Name="VisualTags">
+								<TextBlock
+									x:Uid="/Tabs/ArchiveEdit/TagsV2"
+									Margin="{ThemeResource TextBoxTopHeaderMargin}"
+									HorizontalAlignment="Left"
+									Foreground="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource DisabledTextConverter}}" />
+								<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemTemplate="{StaticResource TagTemplateSelector}" ItemsSource="{x:Bind Data.TagsList}">
+									<muxc:ItemsRepeater.Layout>
+										<muxc:FlowLayout MinColumnSpacing="3" MinRowSpacing="3" />
+									</muxc:ItemsRepeater.Layout>
+								</muxc:ItemsRepeater>
+							</StackPanel>
 						</Grid>
-					</Button>
-				</StackPanel>
-				<TextBox x:Uid="/Tabs/ArchiveEdit/ID" IsReadOnly="True" Text="{x:Bind Data.Archive.arcid, Mode=OneWay}" />
-				<TextBox
-					x:Uid="/Tabs/ArchiveEdit/Title"
-					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-					IsSpellCheckEnabled="False"
-					Text="{x:Bind Data.Title, Mode=TwoWay}" />
-				<Grid>
-					<ToggleButton
-						Padding="4.5" HorizontalAlignment="Right" VerticalAlignment="Top"
-						Content="&#xE8AB;"
-						FontFamily="{StaticResource SymbolThemeFontFamily}"
-						IsChecked="{x:Bind Data.UseTextTags, Mode=TwoWay}"
-						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-					<TextBox
-						x:Name="TextTags" x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="80"
-						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-						IsSpellCheckEnabled="False"
-						Text="{x:Bind Data.Tags, Mode=TwoWay}"
-						TextWrapping="Wrap" Visibility="Collapsed" />
-					<StackPanel x:Name="VisualTags">
-						<TextBlock
-							x:Uid="/Tabs/ArchiveEdit/TagsV2"
-							Margin="{ThemeResource TextBoxTopHeaderMargin}"
-							HorizontalAlignment="Left"
-							Foreground="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource DisabledTextConverter}}" />
-						<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemTemplate="{StaticResource TagTemplateSelector}" ItemsSource="{x:Bind Data.TagsList}">
-							<muxc:ItemsRepeater.Layout>
-								<muxc:FlowLayout MinColumnSpacing="3" MinRowSpacing="3" />
-							</muxc:ItemsRepeater.Layout>
-						</muxc:ItemsRepeater>
+						<StackPanel Orientation="Horizontal">
+							<ComboBox
+								x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,10,0"
+								IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+								ItemsSource="{x:Bind Data.Plugins}"
+								SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
+							<Button x:Uid="/Tabs/ArchiveEdit/RunPlugin" VerticalAlignment="Bottom" Command="{x:Bind Data.UsePluginCommand}" />
+						</StackPanel>
+						<Grid x:Name="PluginTags" Visibility="{x:Bind Data.PluginTagsList, Mode=OneWay, Converter={StaticResource EmptyCollectionToObjectConverter}}">
+							<Button
+								x:Uid="/Tabs/ArchiveEdit/AddAllTags" Padding="4.5" HorizontalAlignment="Right"
+								VerticalAlignment="Top"
+								Command="{x:Bind Data.AddAllTags}"
+								Content="&#xE710;"
+								FontFamily="{StaticResource SymbolThemeFontFamily}" />
+							<StackPanel>
+								<TextBlock
+									x:Uid="/Tabs/ArchiveEdit/TagsV2"
+									Margin="{ThemeResource TextBoxTopHeaderMargin}"
+									HorizontalAlignment="Left"
+									Foreground="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource DisabledTextConverter}}" />
+								<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemTemplate="{StaticResource PluginTagTemplate}" ItemsSource="{x:Bind Data.PluginTagsList}">
+									<muxc:ItemsRepeater.Layout>
+										<muxc:FlowLayout MinColumnSpacing="3" MinRowSpacing="3" />
+									</muxc:ItemsRepeater.Layout>
+								</muxc:ItemsRepeater>
+							</StackPanel>
+						</Grid>
+						<TextBox
+							Header="{x:Bind Data.CurrentPlugin.oneshot_arg, Mode=OneWay}"
+							IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+							IsSpellCheckEnabled="False"
+							Text="{x:Bind Data.Arg, Mode=TwoWay}"
+							Visibility="{x:Bind Data.CurrentPlugin.HasArg, Mode=OneWay}" />
+						<Button x:Uid="/Tabs/ArchiveEdit/Save" HorizontalAlignment="Center" Command="{x:Bind Data.SaveCommand}" />
 					</StackPanel>
+					<muxc:ProgressRing
+						Grid.Column="1" Width="60" Height="60"
+						IsActive="{x:Bind Data.Saving, Mode=OneWay}" />
 				</Grid>
-				<StackPanel Orientation="Horizontal">
-					<ComboBox
-						x:Uid="/Tabs/ArchiveEdit/Plugin" Margin="0,0,10,0"
-						IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-						ItemsSource="{x:Bind Data.Plugins}"
-						SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
-					<Button x:Uid="/Tabs/ArchiveEdit/RunPlugin" VerticalAlignment="Bottom" Command="{x:Bind Data.UsePluginCommand}" />
-				</StackPanel>
-				<Grid x:Name="PluginTags" Visibility="{x:Bind Data.PluginTagsList, Mode=OneWay, Converter={StaticResource EmptyCollectionToObjectConverter}}">
-					<Button
-						x:Uid="/Tabs/ArchiveEdit/AddAllTags" Padding="4.5" HorizontalAlignment="Right"
-						VerticalAlignment="Top"
-						Command="{x:Bind Data.AddAllTags}"
-						Content="&#xE710;"
-						FontFamily="{StaticResource SymbolThemeFontFamily}" />
-					<StackPanel>
-						<TextBlock
-							x:Uid="/Tabs/ArchiveEdit/TagsV2"
-							Margin="{ThemeResource TextBoxTopHeaderMargin}"
-							HorizontalAlignment="Left"
-							Foreground="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource DisabledTextConverter}}" />
-						<muxc:ItemsRepeater Animator="{StaticResource ItemsRepeaterAnimator}" ItemTemplate="{StaticResource PluginTagTemplate}" ItemsSource="{x:Bind Data.PluginTagsList}">
-							<muxc:ItemsRepeater.Layout>
-								<muxc:FlowLayout MinColumnSpacing="3" MinRowSpacing="3" />
-							</muxc:ItemsRepeater.Layout>
-						</muxc:ItemsRepeater>
-					</StackPanel>
-				</Grid>
-				<TextBox
-					Header="{x:Bind Data.CurrentPlugin.oneshot_arg, Mode=OneWay}"
-					IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-					IsSpellCheckEnabled="False"
-					Text="{x:Bind Data.Arg, Mode=TwoWay}"
-					Visibility="{x:Bind Data.CurrentPlugin.HasArg, Mode=OneWay}" />
-				<Button x:Uid="/Tabs/ArchiveEdit/Save" HorizontalAlignment="Center" Command="{x:Bind Data.SaveCommand}" />
-			</StackPanel>
-			<muxc:ProgressRing
-				Grid.Column="1" Width="60" Height="60"
-				IsActive="{x:Bind Data.Saving, Mode=OneWay}" />
-		</Grid>
+			</ScrollViewer>
+		</muxc:TwoPaneView.Pane1>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="CommonStates">
 				<VisualState x:Name="Normal" />
@@ -342,5 +351,5 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-	</ScrollViewer>
+	</muxc:TwoPaneView>
 </UserControl>

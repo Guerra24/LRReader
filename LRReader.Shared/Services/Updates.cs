@@ -14,7 +14,7 @@ namespace LRReader.Shared.Services
 		protected readonly SettingsService Settings;
 
 		public Version MIN_VERSION = new Version(0, 8, 4);
-		public Version MAX_VERSION = new Version(0, 8, 90);
+		public Version MAX_VERSION = new Version(0, 9, 0);
 
 		protected readonly RestClient client;
 
@@ -51,7 +51,7 @@ namespace LRReader.Shared.Services
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 				return new UpdateChangelog { Name = "", Content = "" };
 			if (result.OK)
-				return result.Data;
+				return result.Data!;
 			return new UpdateChangelog { Name = "", Content = "" };
 		}
 
@@ -99,6 +99,6 @@ namespace LRReader.Shared.Services
 
 		public override Task<CheckForUpdatesResult> CheckForUpdates() => Task.Run(() => new CheckForUpdatesResult { Result = false });
 
-		public override Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null) => Task.Run(() => new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = "Stub" });
+		public override Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null) => Task.FromResult(new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = "Stub" });
 	}
 }

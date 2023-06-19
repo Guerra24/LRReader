@@ -31,10 +31,9 @@
       <Version>5.7.0</Version>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="WPF-UI">
-      <Version>3.0.0-preview.1</Version>
+      <Version>3.0.0-preview.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -47,10 +47,10 @@ namespace LRReader.Shared.Models
 		public string Link { get; set; } = null!;
 	}
 
-	public struct UpdateChangelog
+	public record UpdateChangelog
 	{
-		public string Name { get; set; }
-		public string Content { get; set; }
+		public string Name { get; set; } = null!;
+		public string Content { get; set; } = null!;
 	}
 
 	public class DeduplicatorMetadata

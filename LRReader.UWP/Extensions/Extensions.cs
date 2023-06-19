@@ -7,6 +7,7 @@ using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Media;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -45,7 +46,14 @@ namespace LRReader.UWP.Extensions
 
 		public static void SetEnableDualScreen(TwoPaneView pane, bool state)
 		{
-			pane.MinWideModeWidth = state ? 1340 : double.MaxValue;
+			if (state)
+			{
+				var dpi = DisplayInformation.GetForCurrentView();
+				pane.MinWideModeWidth = dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel - 10;
+			}
+			else
+				pane.MinWideModeWidth = double.MaxValue;
+
 			pane.SetValue(EnableDualScreenProperty, state);
 		}
 

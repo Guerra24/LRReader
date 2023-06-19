@@ -52,7 +52,7 @@ namespace LRReader.Shared
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
 				ShowNotification("Network Error", request.ErrorMessage);
-				return default(T);
+				return default;
 			}
 			if (result.OK)
 			{
@@ -61,7 +61,7 @@ namespace LRReader.Shared
 			else
 			{
 				ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
-				return default(T);
+				return default;
 			}
 		}
 		public async static Task<GenericApiResponse<T>?> GetResultComplete<T>(this RestResponse request)
@@ -88,11 +88,11 @@ namespace LRReader.Shared
 		{
 			var result = await request.GetResultInternal<T>();
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
-				return default(T);
+				return default;
 			if (result.OK)
 				return result.Data;
 			else
-				return default(T);
+				return default;
 		}
 
 		public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this RestResponse restResponse)

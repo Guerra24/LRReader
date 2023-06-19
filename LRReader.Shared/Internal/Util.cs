@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,12 +8,9 @@ namespace LRReader.Shared
 	[AttributeUsage(AttributeTargets.All)]
 	public class IntAttribute : Attribute
 	{
-		public int Value { get; private set; }
+		public int Value { get; }
 
-		public IntAttribute(int value)
-		{
-			this.Value = value;
-		}
+		public IntAttribute(int value) => Value = value;
 
 	}
 

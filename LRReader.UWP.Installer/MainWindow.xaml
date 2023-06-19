@@ -80,21 +80,21 @@
 			Padding="0,0">
 			<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 				<StackPanel Orientation="Horizontal">
-					<ui:FontIcon x:Name="Icon1" Margin="32,0" FontSize="40" Glyph="&#xE736;" />
+					<ui:FontIcon x:Name="Icon1" Margin="32,0" FontSize="40" Glyph="&#xE736;" FontFamily="Segoe Fluent Icons" />
 					<StackPanel Width="286" VerticalAlignment="Center">
 						<TextBlock FontSize="17" Text="Advanced reader" Margin="0,0,0,8" />
 						<TextBlock FontSize="14" Text="Keyboard or mouse, two pages, right to left, bookmarks and much more." TextWrapping="WrapWithOverflow" />
 					</StackPanel>
 				</StackPanel>
 				<StackPanel Margin="0,41" Orientation="Horizontal">
-					<ui:FontIcon x:Name="Icon2" Margin="32,0" FontSize="40" Glyph="&#xEC7A;" />
+					<ui:FontIcon x:Name="Icon2" Margin="32,0" FontSize="40" Glyph="&#xEC7A;" FontFamily="Segoe Fluent Icons" />
 					<StackPanel Width="286" VerticalAlignment="Center">
 						<TextBlock FontSize="17" Text="Archive management" Margin="0,0,0,8" />
 						<TextBlock FontSize="14" Text="Manage your archives from one place with tags editor, categories editor, archive deduplicator and batch editing." TextWrapping="WrapWithOverflow" />
 					</StackPanel>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
-					<ui:FontIcon x:Name="Icon3" Margin="32,0" FontSize="40" Glyph="&#xE895;" />
+					<ui:FontIcon x:Name="Icon3" Margin="32,0" FontSize="40" Glyph="&#xE895;" FontFamily="Segoe Fluent Icons" />
 					<StackPanel Width="286" VerticalAlignment="Center">
 						<TextBlock FontSize="17" Text="Always up to date" Margin="0,0,0,8" />
 						<TextBlock FontSize="14" Text="Making use of the latest and greatest LANraragi features." TextWrapping="WrapWithOverflow" />

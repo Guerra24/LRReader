@@ -115,7 +115,7 @@ namespace LRReader.Shared.Services
 
 		public override void ChangeTheme(AppTheme theme) { }
 
-		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content) { return Task.Run(() => IDialogResult.None); }
+		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content) => Task.FromResult(IDialogResult.None);
 
 		public override void CopyToClipboard(string text) { }
 
