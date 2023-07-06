@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
+using ImageMagick;
 using SixLabors.ImageSharp;
 using Size = System.Drawing.Size;
 
@@ -15,11 +17,24 @@ namespace LRReader.Shared.Services
 			{
 				if (bytes == null)
 					return Size.Empty;
+				using var ms = new MemoryStream(bytes);
 				try
 				{
-					var info = Image.Identify(bytes);
+					var info = Image.Identify(ms);
 					if (info != null)
 						return new Size(info.Width, info.Height);
+				}
+				catch
+				{
+				}
+				ms.Seek(0, SeekOrigin.Begin);
+				try
+				{
+					using (var magick = new MagickImage())
+					{
+						magick.Ping(ms);
+						return new Size(magick.Width, magick.Height);
+					}
 				}
 				catch
 				{

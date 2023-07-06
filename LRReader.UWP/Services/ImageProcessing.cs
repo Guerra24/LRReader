@@ -4,10 +4,12 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ImageMagick;
 using LRReader.Shared.Services;
+using SixLabors.ImageSharp;
 using Windows.Graphics.Imaging;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using Size = System.Drawing.Size;
 
 namespace LRReader.UWP.Services
 {
@@ -34,50 +36,56 @@ namespace LRReader.UWP.Services
 				image.DecodePixelWidth = decodeWidth;
 			if (decodeHeight > 0)
 				image.DecodePixelHeight = decodeHeight;
-			using (var ms = new MemoryStream(bytes))
-			using (var stream = ms.AsRandomAccessStream())
-				//stream.Seek(0);
-				if (transcode)
+
+			using var ms = new MemoryStream(bytes);
+
+			IImageInfo? info = null;
+			try
+			{
+				info = await Image.IdentifyAsync(ms);
+			}
+			catch
+			{
+			}
+			ms.Seek(0, SeekOrigin.Begin);
+			if (transcode || info == null)
+			{
+				await semaphore.WaitAsync();
+				try
 				{
-					await semaphore.WaitAsync();
-					try
+					using var converted = await Task.Run(() =>
 					{
-						var decoder = await BitmapDecoder.CreateAsync(stream);
-						using (var softwareBitmap = await decoder.GetSoftwareBitmapAsync())
-						{
-							SoftwareBitmap? newSource = null;
-							if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
-								newSource = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-							using (var converted = new InMemoryRandomAccessStream())
-							{
-								var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
-								encoder.SetSoftwareBitmap(newSource ?? softwareBitmap);
-								await encoder.FlushAsync();
-								await image.SetSourceAsync(converted);
-							}
-							newSource?.Dispose();
-						}
-					}
-					catch (Exception)
-					{
-						return null;
-					}
-					finally
-					{
-						semaphore.Release();
-					}
+						using var magick = new MagickImage();
+						magick.Read(ms);
+						magick.Format = MagickFormat.Png00;
+						var converted = new MemoryStream();
+						magick.Write(converted);
+						converted.Seek(0, SeekOrigin.Begin);
+						return converted;
+
+					});
+					await image.SetSourceAsync(converted.AsRandomAccessStream());
 				}
-				else
+				catch (Exception)
 				{
-					try
-					{
-						await image.SetSourceAsync(stream);
-					}
-					catch (Exception)
-					{
-						return null;
-					}
+					return null;
 				}
+				finally
+				{
+					semaphore.Release();
+				}
+			}
+			else
+			{
+				try
+				{
+					await image.SetSourceAsync(ms.AsRandomAccessStream());
+				}
+				catch (Exception)
+				{
+					return null;
+				}
+			}
 			return image;
 		}
 
@@ -89,17 +97,20 @@ namespace LRReader.UWP.Services
 				return Size.Empty;
 			var size = await base.GetImageSize(bytes);
 			if (size.IsEmpty)
+			{
 				using (var ms = new MemoryStream(bytes))
-				using (var stream = ms.AsRandomAccessStream())
+				{
 					try
 					{
-						var decoder = await BitmapDecoder.CreateAsync(stream);
+						var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
 						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
 					}
-					catch (Exception)
+					catch
 					{
 						return new Size(0, 0);
 					}
+				}
+			}
 			return size;
 		}
 
