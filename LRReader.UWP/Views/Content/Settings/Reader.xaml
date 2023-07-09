@@ -171,6 +171,21 @@
 							NavigateUri="ms-windows-store://pdp/?productid=9PMMSR1CGPWG" />
 					</muxc:InfoBar.ActionButton>
 				</muxc:InfoBar>
+				<muxc:InfoBar x:Uid="/Settings/Reader/WebPNoticeInfo" IsClosable="False" IsOpen="{x:Bind Data.WebPMissing, Mode=OneWay}">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+					<muxc:InfoBar.IconSource>
+						<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA86;" />
+					</muxc:InfoBar.IconSource>
+					<muxc:InfoBar.ActionButton>
+						<HyperlinkButton
+							x:Uid="/Settings/Reader/WebPNotice" Margin="0,0,-1,0" HorizontalAlignment="Right"
+							NavigateUri="ms-windows-store://pdp/?productid=9PG2DK419DRG" />
+					</muxc:InfoBar.ActionButton>
+				</muxc:InfoBar>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Reader/BookmarksGroup">
 				<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" Glyph="&#xEB50;" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">

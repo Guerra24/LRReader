@@ -189,17 +189,18 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (item.Group == null)
 					item.Group = Data.ArchiveList.ToList();
 				item.Phase0();
+				args.RegisterUpdateCallback(Phase1);
 			}
-			args.RegisterUpdateCallback(Phase1);
 			args.Handled = true;
 		}
 
 		private void Phase1(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item)
+			{
 				item.Phase1((Archive)args.Item);
-
-			args.RegisterUpdateCallback(Phase2);
+				args.RegisterUpdateCallback(Phase2);
+			}
 		}
 
 		private void Phase2(ListViewBase sender, ContainerContentChangingEventArgs args)

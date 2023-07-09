@@ -90,8 +90,8 @@ namespace LRReader.Shared.Services
 			var resultATask = ArchivesProvider.GetArchives();
 			var resultTTask = DatabaseProvider.GetTagStats();
 			await Task.WhenAll(resultATask, resultTTask);
-			var resultA = await resultATask;
-			var resultT = await resultTTask;
+			var resultA = resultATask.Result;
+			var resultT = resultTTask.Result;
 
 			if (resultA != null)
 			{

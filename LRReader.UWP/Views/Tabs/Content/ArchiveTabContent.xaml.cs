@@ -736,37 +736,33 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
 			{
 				item.Phase0();
+				args.RegisterUpdateCallback(Phase1);
 			}
-			args.RegisterUpdateCallback(Phase1);
 			args.Handled = true;
 		}
 
 		private void Phase1(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
 			{
 				item.Phase1((ImagePageSet)args.Item);
+				args.RegisterUpdateCallback(Phase2);
 			}
-			args.RegisterUpdateCallback(Phase2);
 		}
 
 		private void Phase2(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
 			{
 				item.Phase2();
+				args.RegisterUpdateCallback(Phase3);
 			}
-			args.RegisterUpdateCallback(Phase3);
 		}
 
 		private void Phase3(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
-			{
 				item.Phase3();
-			}
 		}
 
 		public void RemoveEvent()

@@ -69,9 +69,9 @@ namespace LRReader.Shared.Providers
 			var rq = new RestRequest("api/minion/{job}");
 			rq.AddUrlSegment("job", job);
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
-			return await r.GetResult<MinionStatus>();
+			return await r.GetResult<MinionStatus>().ConfigureAwait(false);
 		}
 
 	}
@@ -83,14 +83,14 @@ namespace LRReader.Shared.Providers
 		{
 			while (true)
 			{
-				var job = await ServerProvider.GetMinionStatus(minionJob.job);
+				var job = await ServerProvider.GetMinionStatus(minionJob.job).ConfigureAwait(false);
 				if (job == null || job.state == null)
 					return false;
 				if (job.state.Equals("finished"))
 					return true;
 				if (job.state.Equals("failed"))
 					return false;
-				await Task.Delay(100);
+				await Task.Delay(100).ConfigureAwait(false);
 			}
 		}
 	}

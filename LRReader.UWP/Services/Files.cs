@@ -8,12 +8,9 @@ namespace LRReader.UWP.Services
 {
 	public class FilesService : IFilesService
 	{
-		private readonly string LocalCachePath = ApplicationData.Current.LocalCacheFolder.Path;
-		private readonly string LocalPath = ApplicationData.Current.LocalFolder.Path;
+		public string LocalCache { get; } = ApplicationData.Current.LocalCacheFolder.Path;
 
-		public string LocalCache => LocalCachePath;
-
-		public string Local => LocalPath;
+		public string Local { get; } = ApplicationData.Current.LocalFolder.Path;
 
 		public Task<string> GetFile(string path) => File.ReadAllTextAsync(path);
 

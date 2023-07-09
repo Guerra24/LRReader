@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
@@ -17,7 +15,7 @@ namespace LRReader.Shared
 
 		public async static Task<bool> GetResult(this RestResponse request)
 		{
-			var result = await request.GetResultInternal<GenericApiResult>();
+			var result = await request.GetResultInternal<GenericApiResult>().ConfigureAwait(false);
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
@@ -36,7 +34,7 @@ namespace LRReader.Shared
 		}
 		public async static Task<bool> GetResultNoError(this RestResponse request)
 		{
-			var result = await request.GetResultInternal<GenericApiResult>();
+			var result = await request.GetResultInternal<GenericApiResult>().ConfigureAwait(false);
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 				return false;
 			if (result.OK)
@@ -47,7 +45,7 @@ namespace LRReader.Shared
 
 		public async static Task<T?> GetResult<T>(this RestResponse request)
 		{
-			var result = await request.GetResultInternal<T>();
+			var result = await request.GetResultInternal<T>().ConfigureAwait(false);
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
@@ -66,7 +64,7 @@ namespace LRReader.Shared
 		}
 		public async static Task<GenericApiResponse<T>?> GetResultComplete<T>(this RestResponse request)
 		{
-			var result = await request.GetResultInternal<T>();
+			var result = await request.GetResultInternal<T>().ConfigureAwait(false);
 
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 			{
@@ -86,7 +84,7 @@ namespace LRReader.Shared
 
 		public async static Task<T?> GetResultNoError<T>(this RestResponse request)
 		{
-			var result = await request.GetResultInternal<T>();
+			var result = await request.GetResultInternal<T>().ConfigureAwait(false);
 			if (!string.IsNullOrEmpty(request.ErrorMessage))
 				return default;
 			if (result.OK)
@@ -128,7 +126,7 @@ namespace LRReader.Shared
 					ex = e;
 				}
 				return new Tuple<T?, Exception?>(value, ex);
-			});
+			}).ConfigureAwait(false);
 			if (data.Item1 != null)
 				switch (restResponse.StatusCode)
 				{
@@ -139,7 +137,7 @@ namespace LRReader.Shared
 						apiResponse.Json = restResponse.Content;
 						break;
 					default:
-						apiResponse.Error = await restResponse.GetError();
+						apiResponse.Error = await restResponse.GetError().ConfigureAwait(false);
 						break;
 				}
 			else
@@ -173,7 +171,7 @@ namespace LRReader.Shared
 					Crashes.TrackError(e, properties, attachments);*/
 					return null;
 				}
-			});
+			}).ConfigureAwait(false);
 			if (error == null)
 				return new GenericApiResult { operation = $"Error code: {(int)restResponse.StatusCode} {restResponse.StatusDescription}", error = $"{restResponse.ResponseUri}" };
 			switch (restResponse.StatusCode)

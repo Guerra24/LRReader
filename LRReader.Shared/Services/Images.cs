@@ -74,7 +74,7 @@ namespace LRReader.Shared.Services
 		{
 			if (string.IsNullOrEmpty(path))
 				return new Size(0, 0);
-			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
+			using (var key = await KeyedSemaphore.LockAsync(path + "size").ConfigureAwait(false))
 			{
 				Size size;
 				if (imagesSizeCache.TryGet(path!, out size))
@@ -83,10 +83,10 @@ namespace LRReader.Shared.Services
 				}
 				else
 				{
-					var image = await GetImageCached(path);
+					var image = await GetImageCached(path).ConfigureAwait(false);
 					if (image == null)
 						return Size.Empty;
-					size = await ImageProcessing.GetImageSize(image);
+					size = await ImageProcessing.GetImageSize(image).ConfigureAwait(false);
 					imagesSizeCache.AddReplace(path!, size);
 					return size;
 				}
@@ -97,7 +97,7 @@ namespace LRReader.Shared.Services
 		{
 			if (string.IsNullOrEmpty(path))
 				return null;
-			using (var key = await KeyedSemaphore.LockAsync(path!))
+			using (var key = await KeyedSemaphore.LockAsync(path!).ConfigureAwait(false))
 			{
 				byte[]? image;
 				if (imagesCache.TryGet(path!, out image) && !forced)
@@ -106,7 +106,7 @@ namespace LRReader.Shared.Services
 				}
 				else
 				{
-					image = await ArchivesProvider.GetImage(path!);
+					image = await ArchivesProvider.GetImage(path!).ConfigureAwait(false);
 					if (image == null)
 						return null;
 					imagesCache.AddReplace(path!, image);
@@ -121,8 +121,8 @@ namespace LRReader.Shared.Services
 				return null;
 			var thumbKey = $"{id}.{page}";
 			if (ignoreCache)
-				return await GetThumbnailRaw(id!, page);
-			using (var key = await KeyedSemaphore.LockAsync(thumbKey))
+				return await GetThumbnailRaw(id!, page).ConfigureAwait(false);
+			using (var key = await KeyedSemaphore.LockAsync(thumbKey).ConfigureAwait(false))
 			{
 				byte[]? data;
 				if (thumbnailsCache.TryGet(thumbKey, out data) && !forced)
@@ -134,7 +134,7 @@ namespace LRReader.Shared.Services
 					var path = $"{thumbnailCacheDirectory.FullName}/{id!.Substring(0, 2)}/{id}/{page}.cache";
 					if (File.Exists(path) && !forced)
 					{
-						data = await Files.GetFileBytes(path);
+						data = await Files.GetFileBytes(path).ConfigureAwait(false);
 						/*if (data.Length == 55876)
 							using (var md5 = System.Security.Cryptography.MD5.Create())
 								if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
@@ -149,7 +149,7 @@ namespace LRReader.Shared.Services
 					}
 					else
 					{
-						data = await GetThumbnailRaw(id, page);
+						data = await GetThumbnailRaw(id, page).ConfigureAwait(false);
 						if (data == null)
 							return null;
 						//if (data.Length == 55876)
@@ -157,7 +157,7 @@ namespace LRReader.Shared.Services
 						//		if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 						//			return null;
 						Directory.CreateDirectory(Path.GetDirectoryName(path));
-						await Files.StoreFile(path, data);
+						await Files.StoreFile(path, data).ConfigureAwait(false);
 					}
 					thumbnailsCache.AddReplace(thumbKey, data);
 					return data;
@@ -167,13 +167,13 @@ namespace LRReader.Shared.Services
 
 		private async Task<byte[]?> GetThumbnailRaw(string id, int page = 0)
 		{
-			var data = await ArchivesProvider.GetThumbnail(id, true, page);
+			var data = await ArchivesProvider.GetThumbnail(id, true, page).ConfigureAwait(false);
 			if (data == null)
 				return null;
 			if (data.Thumbnail != null)
 				return data.Thumbnail;
-			if (data.Job != null && await data.Job.WaitForMinionJob())
-				return await GetThumbnailRaw(id, page);
+			if (data.Job != null && await data.Job.WaitForMinionJob().ConfigureAwait(false))
+				return await GetThumbnailRaw(id, page).ConfigureAwait(false);
 			return null;
 		}
 

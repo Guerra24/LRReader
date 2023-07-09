@@ -74,12 +74,12 @@ namespace LRReader.Shared.Providers
 			rq.AddQueryParameter("no_fallback", noFallback.ToString().ToLower());
 			rq.AddQueryParameter("page", page.ToString());
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.Accepted:
-					return new ThumbnailRequest { Job = await r.GetResult<MinionJob>() };
+					return new ThumbnailRequest { Job = await r.GetResult<MinionJob>().ConfigureAwait(false) };
 				case HttpStatusCode.OK:
 					return new ThumbnailRequest { Thumbnail = r.RawBytes };
 				default:
@@ -192,7 +192,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest(path);
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
 			switch (r.StatusCode)
 			{

@@ -157,6 +157,7 @@ namespace LRReader.Shared.ViewModels
 
 		public bool AvifMissing;
 		public bool HeifMissing;
+		public bool WebPMissing;
 
 		public SettingsPageViewModel(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, UpdatesService updates, ApiService api, TabsService tabs, IKarenService karen)
 		{
@@ -177,6 +178,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			SetProperty(ref AvifMissing, !await Platform.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
 			SetProperty(ref HeifMissing, !await Platform.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
+			SetProperty(ref WebPMissing, !await Platform.CheckAppInstalled("Microsoft.WebpImageExtension_8wekyb3d8bbwe"), nameof(WebPMissing));
 		}
 
 

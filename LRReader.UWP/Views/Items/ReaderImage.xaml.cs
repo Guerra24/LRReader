@@ -36,11 +36,16 @@ namespace LRReader.UWP.Views.Items
 			await decodePixel.WaitAsync();
 			var lImage = Service.Images.GetImageCached(set.LeftImage);
 			var rImage = Service.Images.GetImageCached(set.RightImage);
-			LeftImage.Source = await imageProcessing.ByteToBitmap(await lImage, _width, _height) as BitmapImage;
-			RightImage.Source = await imageProcessing.ByteToBitmap(await rImage, _width, _height) as BitmapImage;
-			var lSize = await Service.Images.GetImageSizeCached(set.LeftImage);
-			var rSize = await Service.Images.GetImageSizeCached(set.RightImage);
-			var size = new Size(Math.Max(lSize.Width, rSize.Width), Math.Max(lSize.Height, rSize.Height));
+			var images = await Task.WhenAll(lImage, rImage);
+			var lBitmap = imageProcessing.ByteToBitmap(images[0], _width, _height);
+			var rBitmap = imageProcessing.ByteToBitmap(images[1], _width, _height);
+			var imageBitmaps = await Task.WhenAll(lBitmap, rBitmap);
+			LeftImage.Source = imageBitmaps[0] as BitmapImage;
+			RightImage.Source = imageBitmaps[1] as BitmapImage;
+			var lSize = Service.Images.GetImageSizeCached(set.LeftImage);
+			var rSize = Service.Images.GetImageSizeCached(set.RightImage);
+			var sizes = await Task.WhenAll(lSize, rSize);
+			var size = new Size(Math.Max(sizes[0].Width, sizes[1].Width), Math.Max(sizes[0].Height, sizes[1].Height));
 			LeftImage.Height = RightImage.Height = 0;
 			if (LeftImage.Source != null)
 			{
