@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.System;
-using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -199,6 +197,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			leftTarget = leftTarget.Clamp(0, count - 1);
 			rightTarget = rightTarget.Clamp(0, count - 1);
+			await ImagesGrid.SmoothScrollIntoViewWithIndexAsync(leftTarget, disableAnimation: false);
 			if (animate)
 			{
 				var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail");

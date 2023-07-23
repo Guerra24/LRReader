@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Shell;
 using Windows.Management.Deployment;
 using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls.Window;
+using Wpf.Ui.Controls;
 
 namespace LRReader.UWP.Installer
 {
@@ -49,6 +49,9 @@ namespace LRReader.UWP.Installer
 			else
 				title = $"LRReader {Variables.Version.Substring(0, Variables.Version.LastIndexOf('.'))}";
 			Title = Titlebar.Title = title;
+
+			if (!IsWin11)
+				Icon1.FontFamily = Icon2.FontFamily = Icon3.FontFamily = new FontFamily("Segoe MDL2 Assets");
 		}
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)

@@ -103,5 +103,5 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			RepairFlyout.Hide();
 		}
-    }
+	}
 }

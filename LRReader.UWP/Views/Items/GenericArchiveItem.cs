@@ -11,7 +11,6 @@ using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.Devices.Input;
-using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;

@@ -13,7 +13,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" Condition="'$(TargetFramework)' == 'uap10.0.17763'" />
     <PackageReference Include="Caching.dll" Version="2.0.0.1" />
-    <PackageReference Include="KeyedSemaphores" Version="4.1.0" />
+    <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
