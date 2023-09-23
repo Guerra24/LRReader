@@ -33,7 +33,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
     <PackageReference Include="WPF-UI">
-      <Version>3.0.0-preview.4</Version>
+      <Version>3.0.0-preview.6</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

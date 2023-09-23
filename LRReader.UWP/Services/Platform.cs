@@ -52,7 +52,7 @@ namespace LRReader.UWP.Services
 
 			MapTransitionToType(PagesTransition.None, typeof(SuppressNavigationTransitionInfo));
 			MapTransitionToType(PagesTransition.DrillIn, typeof(DrillInNavigationTransitionInfo));
-#if DEBUG
+#if DEBUG || NIGHTLY
 			loggerFactory.AddFile(files.LocalCache + string.Format("/Logs/{0:yyyy}-{0:MM}-{0:dd}.log", DateTime.UtcNow));
 #endif
 		}
