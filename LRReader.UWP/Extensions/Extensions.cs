@@ -2,10 +2,10 @@
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Animations;
+using CommunityToolkit.WinUI.Media;
 using LRReader.Shared.Extensions;
-using Microsoft.Toolkit.Uwp.UI;
-using Microsoft.Toolkit.Uwp.UI.Animations;
-using Microsoft.Toolkit.Uwp.UI.Media;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.System;

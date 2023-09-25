@@ -412,17 +412,29 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Uwp.Animations">
+      <Version>8.0.230907</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives">
+      <Version>8.0.230907</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.Sizers">
+      <Version>8.0.230907</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Converters">
+      <Version>8.0.230907</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Helpers">
+      <Version>8.0.230907</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Media">
+      <Version>8.0.230907</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
       <Version>5.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
-      <Version>7.1.3</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>7.1.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Core">
       <Version>7.1.3</Version>
@@ -431,9 +443,6 @@
       <Version>7.1.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Markdown">
-      <Version>7.1.3</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Media">
       <Version>7.1.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">

@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:items="using:LRReader.UWP.Views.Items"
-	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+	xmlns:media="using:CommunityToolkit.WinUI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services">
 

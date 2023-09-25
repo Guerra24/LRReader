@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;

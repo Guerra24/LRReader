@@ -1,7 +1,7 @@
 ﻿using System;
+using CommunityToolkit.WinUI.Helpers;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Dialogs;
-using Microsoft.Toolkit.Uwp.UI.Helpers;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;

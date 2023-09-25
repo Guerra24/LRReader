@@ -3,8 +3,8 @@ using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Web.WebView2.Core;
+using Windows.System.Profile;
 
 namespace LRReader.UWP
 {
@@ -35,7 +35,7 @@ namespace LRReader.UWP
 
 		public static bool CanUseWebView2()
 		{
-			bool canUseWebView2 = SystemInformation.Instance.DeviceFamily.Equals("Windows.Desktop");
+			bool canUseWebView2 = AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Desktop");
 			if (canUseWebView2)
 			{
 				try

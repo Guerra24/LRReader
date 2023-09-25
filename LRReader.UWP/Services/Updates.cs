@@ -2,12 +2,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.Helpers;
 using LRReader.Shared;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.Logging;
-using Microsoft.Toolkit.Uwp.Connectivity;
 using RestSharp;
 using Windows.ApplicationModel;
 using Windows.Foundation;

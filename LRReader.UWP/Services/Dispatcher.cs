@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI;
 using LRReader.Shared.Services;
-using Microsoft.Toolkit.Uwp;
 using Windows.System;
 
 namespace LRReader.UWP.Services

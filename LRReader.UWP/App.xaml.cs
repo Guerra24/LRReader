@@ -13,7 +13,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using static LRReader.Shared.Services.Service;
-using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
+using ColorHelper = CommunityToolkit.WinUI.Helpers.ColorHelper;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace LRReader.UWP
