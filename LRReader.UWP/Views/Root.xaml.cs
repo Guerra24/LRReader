@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Services;
-using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Controls;
+using TenMica;
 using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -15,7 +16,11 @@ namespace LRReader.UWP.Views
 			this.InitializeComponent();
 			if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 			{
-				Background = (AcrylicBrush)Resources["MicaFallbackBrush"];
+				Background = new TenMicaBrush();
+			}
+			else
+			{
+				BackdropMaterial.SetApplyToRootOrPageBackground(this, true);
 			}
 		}
 
