@@ -21,7 +21,7 @@
 				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch">
+				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch" RightColumnWidth="1*">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*" />

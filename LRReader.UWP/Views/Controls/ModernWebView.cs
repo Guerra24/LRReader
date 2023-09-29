@@ -31,7 +31,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public ModernWebView()
 		{
-			if (Init.CanUseWebView2())
+			if (CanUseWebView2())
 			{
 				var webview = new EdgeChromeWebView(this);
 				Content = webview;
@@ -99,6 +99,17 @@ namespace LRReader.UWP.Views.Controls
 			{
 				// Show Error
 			}
+		}
+
+		private static bool CanUseWebView2()
+		{
+			try
+			{
+				CoreWebView2Environment.GetAvailableBrowserVersionString();
+				return true;
+			}
+			catch { }
+			return false;
 		}
 
 		public static DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernWebView), new PropertyMetadata(""));

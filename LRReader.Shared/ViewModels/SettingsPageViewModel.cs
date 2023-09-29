@@ -399,5 +399,11 @@ namespace LRReader.Shared.ViewModels
 				Platform.GoToPage(Pages.FirstRun, PagesTransition.DrillIn);
 			}
 		}
+
+		[RelayCommand]
+		private async Task ChangeProfilesLocation() => await SettingsManager.ChangeProfilesLocation();
+
+		[RelayCommand]
+		private async Task ResetProfilesLocation() => await SettingsManager.ResetProfilesLocation();
 	}
 }

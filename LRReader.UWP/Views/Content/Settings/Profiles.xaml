@@ -20,6 +20,17 @@
 				<controls:ModernInput x:Uid="/Settings/Profiles/AutoLogin" Glyph="&#xE8d7;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.AutoLogin, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernExpander Title="Profiles save location" Description="{x:Bind Data.SettingsManager.ProfilesPathLocation, Mode=OneWay}" Glyph="&#xE8DE;">
+					<controls:ModernExpander.Input>
+						<Button Content="Change" Command="{x:Bind Data.ChangeProfilesLocationCommand}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput Title="Reset location">
+						<Button Content="Reset" Command="{x:Bind Data.ResetProfilesLocationCommand}" />
+					</controls:ModernInput>
+					<controls:ModernInput Title="Open folder">
+						<Button Content="Open" Click="OpenFolder_Click" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Profiles/ProfileGroup">
 				<Button

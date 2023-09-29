@@ -12,6 +12,13 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.UI.Xaml.Controls;
+
+#endif
 
 namespace LRReader.Shared.Services
 {
@@ -268,6 +275,20 @@ namespace LRReader.Shared.Services
 				OnPropertyChanged();
 			}
 		}
+		public string ProfilesPathLocation
+		{
+			get => SettingsStorage.GetObjectLocal(Path.Combine(Files.Local, "Profiles.json"));
+			private set => SettingsStorage.StoreObjectLocal(value);
+		}
+#if WINDOWS_UWP
+		private string ProfilesFileToken
+		{
+			get => SettingsStorage.GetObjectLocal("");
+			set => SettingsStorage.StoreObjectLocal(value);
+		}
+
+		public StorageFile ProfilesFile { get; private set; } = null!;
+#endif
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
@@ -295,7 +316,11 @@ namespace LRReader.Shared.Services
 			{
 				try
 				{
-					Files.StoreFileSafe(Path.Combine(Files.Local, "Profiles.json"), JsonConvert.SerializeObject(Profiles)).ConfigureAwait(false).GetAwaiter().GetResult();
+#if WINDOWS_UWP
+					FileIO.WriteTextAsync(ProfilesFile, JsonConvert.SerializeObject(Profiles)).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+#else
+					Files.StoreFileSafe(ProfilesPathLocation, JsonConvert.SerializeObject(Profiles)).ConfigureAwait(false).GetAwaiter().GetResult();
+#endif
 				}
 				catch (Exception e)
 				{
@@ -308,8 +333,35 @@ namespace LRReader.Shared.Services
 
 		public async Task Init()
 		{
-			if (File.Exists(Files.Local + "/Profiles.json"))
-				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json")) ?? new ObservableCollection<ServerProfile>();
+#if WINDOWS_UWP
+			try
+			{
+				if (string.IsNullOrEmpty(ProfilesFileToken))
+				{
+					ProfilesFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.OpenIfExists);
+				}
+				else
+					ProfilesFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(ProfilesFileToken);
+			}
+			catch
+			{
+				// Reset everything
+				StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
+
+				SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
+				SettingsStorage.DeleteObjectLocal(nameof(ProfilesFileToken));
+
+				Profiles = new ObservableCollection<ServerProfile>();
+				await Files.StoreFileSafe(ProfilesPathLocation, "");
+				ProfilesFile = await StorageFile.GetFileFromPathAsync(ProfilesPathLocation);
+			}
+
+			ProfilesPathLocation = ProfilesFile.Path;
+			Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await FileIO.ReadTextAsync(ProfilesFile)) ?? new ObservableCollection<ServerProfile>();
+#else
+			if (File.Exists(ProfilesPathLocation))
+				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(ProfilesPathLocation)) ?? new ObservableCollection<ServerProfile>();
+#endif
 
 			UpgradeSettings();
 
@@ -408,13 +460,13 @@ namespace LRReader.Shared.Services
 					}
 				}
 			}
-			OnPropertyChanged("ProfilesAvailable");
-			OnPropertyChanged("AtLeastOneProfile");
+			OnPropertyChanged(nameof(ProfilesAvailable));
+			OnPropertyChanged(nameof(AtLeastOneProfile));
 		}
 
 		public ServerProfile AddProfile(string name, string address, string apikey, bool integration)
 		{
-			ServerProfile profile = new ServerProfile(name, address, apikey, integration);
+			var profile = new ServerProfile(name, address, apikey, integration);
 			Profiles.Add(profile);
 			return profile;
 		}
@@ -439,6 +491,44 @@ namespace LRReader.Shared.Services
 		{
 			save.Lock.Dispose();
 		}
+
+		public async Task ChangeProfilesLocation()
+		{
+#if WINDOWS_UWP
+			var savePicker = new FileSavePicker();
+			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+			savePicker.FileTypeChoices.Add("JSON file", new List<string> { ".json" });
+			savePicker.SuggestedFileName = "Profiles.json";
+			var file = await savePicker.PickSaveFileAsync();
+			if (file != null)
+			{
+				await ProfilesFile.MoveAndReplaceAsync(file);
+				StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
+				ProfilesFileToken = StorageApplicationPermissions.FutureAccessList.Add(file);
+				ProfilesFile = file;
+				ProfilesPathLocation = file.Path;
+			}
+#else
+#endif
+			OnPropertyChanged(nameof(ProfilesPathLocation));
+		}
+
+		public async Task ResetProfilesLocation()
+		{
+#if WINDOWS_UWP
+			var original = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.ReplaceExisting);
+			await ProfilesFile.MoveAndReplaceAsync(original);
+			ProfilesFile = original;
+
+			StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
+
+			SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
+			SettingsStorage.DeleteObjectLocal(nameof(ProfilesFileToken));
+#else
+#endif
+			OnPropertyChanged(nameof(ProfilesPathLocation));
+		}
+
 	}
 	public enum BookmarkReminderMode
 	{

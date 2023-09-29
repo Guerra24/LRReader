@@ -617,6 +617,7 @@
 	</Style>
 
 	<Style x:Key="DefaultModernInputStyle" TargetType="controls:ModernInput">
+		<Setter Property="RightColumnWidth" Value="Auto" />
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 		<Setter Property="Margin" Value="0" />
 		<Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
@@ -654,7 +655,7 @@
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition />
-							<ColumnDefinition MaxWidth="400" />
+							<ColumnDefinition MaxWidth="400" Width="{x:Bind RightColumnWidth, Mode=OneWay}" />
 						</Grid.ColumnDefinitions>
 
 						<Grid.BackgroundTransition>

@@ -81,6 +81,15 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(CommandParameterProperty, value);
 		}
 
+		public GridLength RightColumnWidth
+		{
+			get => (GridLength)GetValue(RightColumnWidthProperty);
+			set
+			{
+				SetValue(RightColumnWidthProperty, value);
+			}
+		}
+
 		public event RoutedEventHandler? Click;
 
 		protected override void OnPointerEntered(PointerRoutedEventArgs e)
@@ -157,5 +166,6 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty RightGlyphProperty = DependencyProperty.Register("RightGlyph", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty RightColumnWidthProperty = DependencyProperty.Register("RightColumnWidth", typeof(GridLength), typeof(ModernInput), new PropertyMetadata(GridLength.Auto));
 	}
 }
