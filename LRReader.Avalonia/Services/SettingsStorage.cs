@@ -90,5 +90,9 @@ namespace LRReader.Avalonia.Services
 			roamedSettings.Remove(key);
 			Save();
 		}
+
+		public bool ExistLocal(string key) => localSettings.ContainsKey(key);
+
+		public bool ExistRoamed(string key) => roamedSettings.ContainsKey(key);
 	}
 }

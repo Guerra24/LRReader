@@ -26,6 +26,9 @@ namespace LRReader.Shared.Services
 		[return: NotNullIfNotNull("def")]
 		T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null);
 
+		bool ExistLocal(string key);
+		bool ExistRoamed(string key);
+
 	}
 
 	public class StubSettingsStorageService : ISettingsStorageService
@@ -57,5 +60,9 @@ namespace LRReader.Shared.Services
 
 		[return: NotNullIfNotNull("def")]
 		public T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null) => def;
+
+		public bool ExistLocal(string key) => false;
+
+		public bool ExistRoamed(string key) => false;
 	}
 }

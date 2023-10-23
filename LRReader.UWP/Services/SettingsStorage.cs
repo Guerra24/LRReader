@@ -39,5 +39,9 @@ namespace LRReader.UWP.Services
 		public void DeleteObjectLocal(string key) => localSettings.Values.Remove(key);
 
 		public void DeleteObjectRoamed(string key) => roamedSettings.Values.Remove(key);
+
+		public bool ExistLocal(string key) => localSettings.Values.ContainsKey(key);
+
+		public bool ExistRoamed(string key) => roamedSettings.Values.ContainsKey(key);
 	}
 }

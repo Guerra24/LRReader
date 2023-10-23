@@ -351,9 +351,7 @@ namespace LRReader.Shared.Services
 				SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
 				SettingsStorage.DeleteObjectLocal(nameof(ProfilesFileToken));
 
-				Profiles = new ObservableCollection<ServerProfile>();
-				await Files.StoreFileSafe(ProfilesPathLocation, "");
-				ProfilesFile = await StorageFile.GetFileFromPathAsync(ProfilesPathLocation);
+				ProfilesFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.ReplaceExisting);
 			}
 
 			ProfilesPathLocation = ProfilesFile.Path;
@@ -502,6 +500,9 @@ namespace LRReader.Shared.Services
 			var file = await savePicker.PickSaveFileAsync();
 			if (file != null)
 			{
+				if (file.IsEqual(ProfilesFile))
+					return;
+
 				await ProfilesFile.MoveAndReplaceAsync(file);
 				StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
 				ProfilesFileToken = StorageApplicationPermissions.FutureAccessList.Add(file);
@@ -515,6 +516,8 @@ namespace LRReader.Shared.Services
 
 		public async Task ResetProfilesLocation()
 		{
+			if (Path.Combine(Files.Local, "Profiles.json").Equals(ProfilesPathLocation))
+				return;
 #if WINDOWS_UWP
 			var original = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.ReplaceExisting);
 			await ProfilesFile.MoveAndReplaceAsync(original);
@@ -522,10 +525,11 @@ namespace LRReader.Shared.Services
 
 			StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
 
-			SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
 			SettingsStorage.DeleteObjectLocal(nameof(ProfilesFileToken));
 #else
 #endif
+			SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
+
 			OnPropertyChanged(nameof(ProfilesPathLocation));
 		}
 

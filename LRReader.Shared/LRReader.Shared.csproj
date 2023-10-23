@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;uap10.0.17763</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <ExtrasUwpMetaPackageVersion>6.2.14</ExtrasUwpMetaPackageVersion>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" Condition="'$(TargetFramework)' == 'uap10.0.17763'" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" Condition="'$(TargetFramework)' == 'uap10.0.17763'" />
     <PackageReference Include="Caching.dll" Version="2.0.0.1" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />

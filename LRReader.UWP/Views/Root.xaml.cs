@@ -30,12 +30,18 @@ namespace LRReader.UWP.Views
 			{
 				case AppTheme.System:
 					RequestedTheme = ElementTheme.Default;
+					if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+						((TenMicaBrush)Background).ThemeForced = false;
 					break;
 				case AppTheme.Dark:
 					RequestedTheme = ElementTheme.Dark;
+					if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+						((TenMicaBrush)Background).ForcedTheme = ApplicationTheme.Dark;
 					break;
 				case AppTheme.Light:
 					RequestedTheme = ElementTheme.Light;
+					if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+						((TenMicaBrush)Background).ForcedTheme = ApplicationTheme.Light;
 					break;
 			}
 		}

@@ -157,6 +157,7 @@
 			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 			HorizontalAnchorRatio="0.5" HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden"
 			PointerPressed="ScrollViewer_PointerPressed" RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged"
+			DoubleTapped="ScrollViewer_DoubleTapped"
 			Tapped="ScrollViewer_Tapped" VerticalAnchorRatio="0.01" VerticalScrollBarVisibility="Auto"
 			ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
@@ -180,6 +181,39 @@
 				</Grid>
 			</ContentControl>
 		</ScrollViewer>
+		<!--<Grid Height="300" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Load="{x:Bind Data.ShowReader, Mode=OneWay}">
+			<ListView ItemsSource="{x:Bind Data.ArchiveImages}"
+					  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<items:ArchiveImage />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+				<ListView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsStackPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ListView.ItemsPanel>
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Margin" Value="5" />
+					</Style>
+				</ListView.ItemContainerStyle>
+			</ListView>-->
+			<!--<muxc:ItemsRepeater ItemsSource="{x:Bind Data.ArchiveImages}">
+		<muxc:ItemsRepeater.ItemTemplate>
+			<DataTemplate x:DataType="main:ImagePageSet">
+				<items:ArchiveImage DataContext="{x:Bind}" />
+			</DataTemplate>
+		</muxc:ItemsRepeater.ItemTemplate>
+		<muxc:ItemsRepeater.Layout>
+			<muxc:StackLayout Orientation="Horizontal" />
+		</muxc:ItemsRepeater.Layout>
+	</muxc:ItemsRepeater>-->
+		<!--</Grid>-->
+		<!--<Border x:Name="LeftHitTargetOverlay" Background="#40FF0000" BorderThickness="2" BorderBrush="#90FF0000" HorizontalAlignment="Left" IsHitTestVisible="False" />
+		<Border x:Name="RightHitTargetOverlay" Background="#40FF0000" BorderThickness="2" BorderBrush="#90FF0000" HorizontalAlignment="Right" IsHitTestVisible="False" />-->
 		<Button
 			Grid.RowSpan="2" Width="38" Height="38"
 			HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent"

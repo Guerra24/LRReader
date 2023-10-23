@@ -21,6 +21,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -481,11 +482,30 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_changePage = pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed;
 		}
 
-		private void ScrollViewer_RightTapped(object sender, RightTappedRoutedEventArgs e) => HandleTapped(e.GetPosition(ScrollViewer));
+		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+		{
+			var point = e.GetPosition(ScrollViewer);
+			double distance = ScrollViewer.ActualWidth / 6.0;
+			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+			{
+				var AppView = ApplicationView.GetForCurrentView();
+				if (AppView.IsFullScreenMode)
+				{
+					AppView.ExitFullScreenMode();
+				}
+				else
+				{
+					AppView.TryEnterFullScreenMode();
+				}
+				e.Handled = true;
+			}
+		}
 
-		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e) => HandleTapped(e.GetPosition(ScrollViewer));
+		private void ScrollViewer_RightTapped(object sender, RightTappedRoutedEventArgs e) => e.Handled = HandleTapped(e.GetPosition(ScrollViewer));
 
-		private void HandleTapped(Point point)
+		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e) => e.Handled = HandleTapped(e.GetPosition(ScrollViewer));
+
+		private bool HandleTapped(Point point)
 		{
 			if (_changePage)
 			{
@@ -493,13 +513,16 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (point.X < distance)
 				{
 					PrevPage();
+					return true;
 				}
 				else if (point.X > ScrollViewer.ActualWidth - distance)
 				{
 					NextPage();
+					return true;
 				}
 				_changePage = false;
 			}
+			return false;
 		}
 
 		private void ReaderControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
@@ -589,7 +612,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Service.Images.GetImageCached(set.RightImage);
 		}
 
-		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(Data.UseVerticalReader);
+		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			FitImages(Data.UseVerticalReader);
+			//LeftHitTargetOverlay.Width = RightHitTargetOverlay.Width = ScrollViewer.ActualWidth / 6.0;
+		}
 
 		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(true);
 
