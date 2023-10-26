@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Views\Controls\ModernTab.cs" />
     <Compile Include="Views\Controls\ModernWebView.cs" />
+    <Compile Include="Views\Controls\NoBorderListViewItemPresenter.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
     </Compile>

@@ -13,6 +13,7 @@
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:util="using:LRReader.UWP.Util"
+	xmlns:contract8="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
 	DataContext="{Binding ArchivePageInstance, Source={StaticResource Locator}}"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
@@ -181,37 +182,86 @@
 				</Grid>
 			</ContentControl>
 		</ScrollViewer>
-		<!--<Grid Height="300" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" x:Load="{x:Bind Data.ShowReader, Mode=OneWay}">
-			<ListView ItemsSource="{x:Bind Data.ArchiveImages}"
-					  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True">
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<items:ArchiveImage />
-					</DataTemplate>
-				</ListView.ItemTemplate>
-				<ListView.ItemsPanel>
-					<ItemsPanelTemplate>
-						<ItemsStackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ListView.ItemsPanel>
-				<ListView.ItemContainerStyle>
-					<Style TargetType="ListViewItem">
-						<Setter Property="Padding" Value="0" />
-						<Setter Property="Margin" Value="5" />
-					</Style>
-				</ListView.ItemContainerStyle>
-			</ListView>-->
-			<!--<muxc:ItemsRepeater ItemsSource="{x:Bind Data.ArchiveImages}">
-		<muxc:ItemsRepeater.ItemTemplate>
-			<DataTemplate x:DataType="main:ImagePageSet">
-				<items:ArchiveImage DataContext="{x:Bind}" />
-			</DataTemplate>
-		</muxc:ItemsRepeater.ItemTemplate>
-		<muxc:ItemsRepeater.Layout>
-			<muxc:StackLayout Orientation="Horizontal" />
-		</muxc:ItemsRepeater.Layout>
-	</muxc:ItemsRepeater>-->
-		<!--</Grid>-->
+		<Grid
+			Height="48" VerticalAlignment="Bottom" Background="Transparent"
+			PointerEntered="Trigger_PointerEntered" PointerExited="Trigger_PointerExited"
+			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />
+		<Popup
+			x:Name="ReaderThumbnailOverlay" Height="342" HorizontalAlignment="Center"
+			VerticalAlignment="Bottom" IsLightDismissEnabled="True">
+			<Popup.ChildTransitions>
+				<TransitionCollection>
+					<PaneThemeTransition Edge="Bottom" />
+				</TransitionCollection>
+			</Popup.ChildTransitions>
+			<Grid Width="{x:Bind ReaderThumbnailOverlay.Width, Mode=OneWay}" Height="{x:Bind ReaderThumbnailOverlay.Height, Mode=OneWay}">
+				<!-- We can't use listview because listview -->
+				<!--<ListView x:Name="OverlayThumbnails"
+					VerticalAlignment="Top"
+					Padding="16"
+					Margin="16,0,16,16"
+					ext:Element.ModernShadow="{StaticResource ElementShadow}"
+					Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}"
+					BorderBrush="{ThemeResource FlyoutBorderThemeBrush}"
+					BorderThickness="{ThemeResource FlyoutBorderThemeThickness}"
+					CornerRadius="{ThemeResource OverlayCornerRadius}"
+					ItemsSource="{x:Bind Data.ArchiveImages}"
+					ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True"
+					ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="Single" Translation="0,0,32">
+					<contract8:ListView.Shadow>
+						<contract8:ThemeShadow />
+					</contract8:ListView.Shadow>
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<items:ArchiveImage KeepOverlayOpen="True" />
+						</DataTemplate>
+					</ListView.ItemTemplate>
+					<ListView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsStackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ListView.ItemsPanel>
+					<ListView.ItemContainerStyle>
+						<Style BasedOn="{StaticResource WinUIListViewItemStyle}" TargetType="ListViewItem">
+							<Setter Property="Padding" Value="4" />
+							<Setter Property="Margin" Value="5" />
+						</Style>
+					</ListView.ItemContainerStyle>
+				</ListView>-->
+				<GridView
+					x:Name="OverlayThumbnails" Margin="16,0,16,16" Padding="16"
+					VerticalAlignment="Top"
+					ext:Element.ModernShadow="{StaticResource ElementShadow}"
+					Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}"
+					BorderBrush="{ThemeResource FlyoutBorderThemeBrush}"
+					BorderThickness="{ThemeResource FlyoutBorderThemeThickness}"
+					CornerRadius="{ThemeResource OverlayCornerRadius}"
+					IsItemClickEnabled="True" ItemClick="OverlayThumbnails_ItemClick"
+					ItemsSource="{x:Bind Data.ArchiveImages}"
+					ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True"
+					ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="Single" Translation="0,0,32">
+					<contract8:GridView.Shadow>
+						<contract8:ThemeShadow />
+					</contract8:GridView.Shadow>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<items:ArchiveImage KeepOverlayOpen="True" />
+						</DataTemplate>
+					</GridView.ItemTemplate>
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsStackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemContainerStyle>
+						<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+							<Setter Property="Padding" Value="4" />
+							<Setter Property="Margin" Value="5" />
+						</Style>
+					</GridView.ItemContainerStyle>
+				</GridView>
+			</Grid>
+		</Popup>
 		<!--<Border x:Name="LeftHitTargetOverlay" Background="#40FF0000" BorderThickness="2" BorderBrush="#90FF0000" HorizontalAlignment="Left" IsHitTestVisible="False" />
 		<Border x:Name="RightHitTargetOverlay" Background="#40FF0000" BorderThickness="2" BorderBrush="#90FF0000" HorizontalAlignment="Right" IsHitTestVisible="False" />-->
 		<Button

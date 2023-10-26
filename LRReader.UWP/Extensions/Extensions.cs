@@ -35,6 +35,8 @@ namespace LRReader.UWP.Extensions
 
 		public static void SetVisualOpacity(this UIElement element, float opacity) => ElementCompositionPreview.GetElementVisual(element).Opacity = opacity;
 
+		//public static void SetVisualTranslation(this UIElement element, Vector3 transform) => ElementCompositionPreview.GetElementVisual(element).TransformMatrix = Matrix4x4.CreateTranslation(transform);
+
 		public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
 		public static Task StartAsync(this UIElement element, AnimationBuilder animation) => animation.StartAsync(element);
 
@@ -131,7 +133,7 @@ namespace LRReader.UWP.Extensions
 
 		private static void Grid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			var item = (GridViewItem)args.ItemContainer;
+			var item = args.ItemContainer;
 			var shadow = (Shadow)sender.GetValue(ModernShadowProperty);
 			if (item.GetValue(ModernShadowProperty) == null)
 			{

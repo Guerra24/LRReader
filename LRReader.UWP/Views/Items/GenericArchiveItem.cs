@@ -185,13 +185,10 @@ namespace LRReader.UWP.Views.Items
 		private void Control_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(this);
-			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse && pointerPoint.Properties.IsMiddleButtonPressed)
 			{
-				if (pointerPoint.Properties.IsMiddleButtonPressed)
-				{
-					Service.Archives.OpenTab(ViewModel.Archive, false, Group);
-					e.Handled = true;
-				}
+				Service.Archives.OpenTab(ViewModel.Archive, false, Group);
+				e.Handled = true;
 			}
 		}
 
