@@ -45,7 +45,7 @@
 			<StaticResource x:Key="GridViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedDisabled" ResourceKey="SubtleFillColorSecondaryBrush" />
-
+<!--
 			<x:Boolean x:Key='ListViewItemSelectionIndicatorVisualEnabled'>True</x:Boolean>
 			<x:Double x:Key="ListViewItemContentOffsetX">-40.5</x:Double>
 			<x:Double x:Key="ListViewItemDisabledThemeOpacity">0.3</x:Double>
@@ -122,6 +122,7 @@
 			<StaticResource x:Key="ListViewItemSelectionIndicatorPointerOverBrush" ResourceKey="AccentFillColorDefaultBrush" />
 			<StaticResource x:Key="ListViewItemSelectionIndicatorPressedBrush" ResourceKey="AccentFillColorDefaultBrush" />
 			<StaticResource x:Key="ListViewItemSelectionIndicatorDisabledBrush" ResourceKey="AccentFillColorDisabledBrush" />
+			-->
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="HighContrast">
 			<CornerRadius x:Key="GridViewItemCornerRadius">4</CornerRadius>
@@ -160,7 +161,7 @@
 			<SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="{ThemeResource SystemColorWindowColor}" />
 			<SolidColorBrush x:Key="GridViewItemBackgroundSelectedPressed" Color="{ThemeResource SystemColorWindowColor}" />
 			<SolidColorBrush x:Key="GridViewItemBackgroundSelectedDisabled" Color="{ThemeResource SystemColorWindowColor}" />
-
+<!--
 			<x:Boolean x:Key='ListViewItemSelectionIndicatorVisualEnabled'>True</x:Boolean>
 			<x:Double x:Key="ListViewItemContentOffsetX">-40.5</x:Double>
 			<x:Double x:Key="ListViewItemDisabledThemeOpacity">0.3</x:Double>
@@ -237,6 +238,7 @@
 			<SolidColorBrush x:Key="ListViewItemSelectionIndicatorPointerOverBrush" Color="{ThemeResource SystemColorHighlightTextColor}" />
 			<SolidColorBrush x:Key="ListViewItemSelectionIndicatorPressedBrush" Color="{ThemeResource SystemColorHighlightTextColor}" />
 			<SolidColorBrush x:Key="ListViewItemSelectionIndicatorDisabledBrush" Color="{ThemeResource SystemColorGrayTextColor}" />
+			-->
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Light">
 			<CornerRadius x:Key="GridViewItemCornerRadius">4</CornerRadius>
@@ -275,7 +277,7 @@
 			<StaticResource x:Key="GridViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
 			<StaticResource x:Key="GridViewItemBackgroundSelectedDisabled" ResourceKey="SubtleFillColorSecondaryBrush" />
-
+<!--
 			<x:Boolean x:Key='ListViewItemSelectionIndicatorVisualEnabled'>True</x:Boolean>
 			<x:Double x:Key="ListViewItemContentOffsetX">-40.5</x:Double>
 			<x:Double x:Key="ListViewItemDisabledThemeOpacity">0.3</x:Double>
@@ -351,6 +353,7 @@
 			<StaticResource x:Key="ListViewItemSelectionIndicatorPointerOverBrush" ResourceKey="AccentFillColorDefaultBrush" />
 			<StaticResource x:Key="ListViewItemSelectionIndicatorPressedBrush" ResourceKey="AccentFillColorDefaultBrush" />
 			<StaticResource x:Key="ListViewItemSelectionIndicatorDisabledBrush" ResourceKey="AccentFillColorDisabledBrush" />
+			-->
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 
@@ -434,7 +437,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-
+<!--
 	<x:Boolean x:Key="ListViewBaseItemRoundedChromeEnabled">True</x:Boolean>
 
 	<Style x:Key="WinUIListViewItemStyle" TargetType="ListViewItem">
@@ -517,7 +520,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-
+-->
 	<!--  Stolen from https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml  -->
 	<ControlTemplate x:Key="LeftContentToggleSwitch" TargetType="ToggleSwitch">
 		<Grid
