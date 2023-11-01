@@ -140,7 +140,7 @@ namespace LRReader.Shared.Services
 			var result = await ArchivesProvider.DeleteArchive(id);
 			if (result == null)
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to delete archive", "", 0));
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to delete archive", "", 0, NotificationSeverity.Error));
 				return false;
 			}
 			if (result.success)
@@ -154,7 +154,7 @@ namespace LRReader.Shared.Services
 			}
 			else
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification("An error ocurred while deleting archive", "Metadata has been deleted, remove file manually.", 0));
+				WeakReferenceMessenger.Default.Send(new ShowNotification("An error ocurred while deleting archive", "Metadata has been deleted, remove file manually.", 0, NotificationSeverity.Warning));
 			}
 			return true;
 		}

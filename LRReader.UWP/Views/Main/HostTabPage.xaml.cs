@@ -7,7 +7,6 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
-using LRReader.UWP.Views.Items;
 using Microsoft.UI.Xaml.Controls;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
@@ -75,7 +74,7 @@ namespace LRReader.UWP.Views.Main
 			var info = await Updates.CheckForUpdates();
 
 			if (info.Result)
-				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target?.ToString() ?? "Nightly"), lang.GetString("HostTab/Update2"), 0);
+				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target?.ToString() ?? "Nightly"), lang.GetString("HostTab/Update2"), 0, NotificationSeverity.Informational);
 
 			await ShowWhatsNew();
 		}
@@ -122,9 +121,12 @@ namespace LRReader.UWP.Views.Main
 				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 0 : -48, 0, 0);
 		}
 
-		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration);
+		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);
 
-		private void ShowNotification(string title, string? content, int duration) => Service.Dispatcher.Run(() => Notifications.Show(new NotificationItem(title, content), duration), 0);
+		private void ShowNotification(string title, string? content, int duration, NotificationSeverity severity = NotificationSeverity.Informational)
+		{
+			Service.Dispatcher.Run(() => Notifications.Show(new CommunityToolkit.WinUI.Behaviors.Notification { Title = title, Message = content, Duration = duration <= 0 ? null : TimeSpan.FromMilliseconds(duration), Severity = (InfoBarSeverity)(int)severity }), 0);
+		}
 
 		// Move all of this to the ViewModel
 		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);

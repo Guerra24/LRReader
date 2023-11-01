@@ -30,7 +30,7 @@
     <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
     <Win32Resource>Resources\MiddleClickScrolling-CursorType.res</Win32Resource>
     <Nullable>enable</Nullable>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -161,6 +161,9 @@
     <Compile Include="Services\Dispatcher.cs" />
     <Compile Include="Services\Updates.cs" />
     <Compile Include="Util\IgnoreFocusKeyboardAccelerator.cs" />
+    <Compile Include="Views\Content\Empty.xaml.cs">
+      <DependentUpon>Empty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Content\Settings\Feedback.xaml.cs">
       <DependentUpon>Feedback.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,9 @@
     </Compile>
     <Compile Include="Views\Content\Tools\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\WebContent.xaml.cs">
+      <DependentUpon>WebContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ArchiveTags.xaml.cs">
       <DependentUpon>ArchiveTags.xaml</DependentUpon>
@@ -229,9 +235,6 @@
       <DependentUpon>CategoryItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Items\GenericArchiveItem.cs" />
-    <Compile Include="Views\Items\NotificationItem.xaml.cs">
-      <DependentUpon>NotificationItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Items\ReaderImage.xaml.cs">
       <DependentUpon>ReaderImage.xaml</DependentUpon>
     </Compile>
@@ -416,6 +419,9 @@
     <PackageReference Include="CommunityToolkit.Uwp.Animations">
       <Version>8.0.230907</Version>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Behaviors">
+      <Version>8.0.230907</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives">
       <Version>8.0.230907</Version>
     </PackageReference>
@@ -436,12 +442,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Core">
-      <Version>7.1.3</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Layout">
-      <Version>7.1.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Markdown">
       <Version>7.1.3</Version>
@@ -472,10 +472,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\NotificationStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Templates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -485,6 +481,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\WinUITemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Content\Empty.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -513,6 +513,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Content\Tools\Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Content\WebContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -565,10 +569,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Items\CategoryItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Items\NotificationItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

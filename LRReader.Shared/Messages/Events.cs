@@ -20,16 +20,24 @@ namespace LRReader.Shared.Messages
 		public string? Content { get; }
 		public int Duration { get; }
 
-		public Notification(string title, string? content, int duration)
+		public NotificationSeverity Severity { get; }
+
+		public Notification(string title, string? content, int duration, NotificationSeverity severity = NotificationSeverity.Informational)
 		{
 			Title = title;
 			Content = content;
 			Duration = duration;
+			Severity = severity;
 		}
+	}
+
+	public enum NotificationSeverity
+	{
+		Informational, Success, Warning, Error
 	}
 
 	public class ShowNotification : ValueChangedMessage<Notification>
 	{
-		public ShowNotification(string title, string? content, int duration = 5000) : base(new Notification(title, content, duration)) { }
+		public ShowNotification(string title, string? content, int duration = 5000, NotificationSeverity severity = NotificationSeverity.Informational) : base(new Notification(title, content, duration, severity)) { }
 	}
 }

@@ -11,7 +11,6 @@
 					<controls:XamlControlsResources.MergedDictionaries>
 						<ResourceDictionary Source="ms-appx:///Resources/ThemeDictionary.xaml" />
 						<ResourceDictionary Source="ms-appx:///Resources/Converters.xaml" />
-						<ResourceDictionary Source="ms-appx:///Resources/NotificationStyle.xaml" />
 						<ResourceDictionary Source="ms-appx:///Resources/WinUITemplates.xaml" />
 						<Templates xmlns="using:LRReader.UWP.Resources" />
 					</controls:XamlControlsResources.MergedDictionaries>

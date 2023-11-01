@@ -9,6 +9,8 @@
 	<!--  https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/GridViewItem_themeresources_21h1.xaml  -->
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key="Default">
+			<SolidColorBrush x:Key="InfoBarInformationalSeverityBackgroundBrush" Color="#2B2B2B"/>
+
 			<CornerRadius x:Key="GridViewItemCornerRadius">4</CornerRadius>
 			<CornerRadius x:Key="GridViewItemCheckBoxCornerRadius">3</CornerRadius>
 			<Thickness x:Key="GridViewItemSelectedBorderThickness">2</Thickness>
@@ -125,6 +127,8 @@
 			-->
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="HighContrast">
+			<SolidColorBrush x:Key="InfoBarInformationalSeverityBackgroundBrush" Color="{ThemeResource SystemColorWindowColor}"/>
+
 			<CornerRadius x:Key="GridViewItemCornerRadius">4</CornerRadius>
 			<CornerRadius x:Key="GridViewItemCheckBoxCornerRadius">3</CornerRadius>
 			<Thickness x:Key="GridViewItemSelectedBorderThickness">2</Thickness>
@@ -241,6 +245,8 @@
 			-->
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Light">
+			<SolidColorBrush x:Key="InfoBarInformationalSeverityBackgroundBrush" Color="#F2F2F2"/>
+
 			<CornerRadius x:Key="GridViewItemCornerRadius">4</CornerRadius>
 			<CornerRadius x:Key="GridViewItemCheckBoxCornerRadius">3</CornerRadius>
 			<Thickness x:Key="GridViewItemSelectedBorderThickness">2</Thickness>

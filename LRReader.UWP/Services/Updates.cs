@@ -136,9 +136,9 @@ namespace LRReader.UWP.Services
 			Logger.LogInformation("Download and install");
 			try
 			{
-				Logger.LogInformation("Source: {0}", check?.Link);
+				Logger.LogInformation("Source: {0}", check.Link);
 				var pm = new PackageManager();
-				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check?.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
+				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
 				var result = await downloadTask.AsTask();
 				if (result.IsRegistered)

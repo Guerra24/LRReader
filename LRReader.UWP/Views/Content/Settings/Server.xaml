@@ -8,6 +8,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:tools="using:LRReader.UWP.Views.Content.Tools"
+	xmlns:content="using:LRReader.UWP.Views.Content"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
@@ -42,6 +43,7 @@
 							IsHitTestVisible="False" IsTabStop="False" />
 					</StackPanel>
 				</controls:ModernExpander>
+				<!--
 				<controls:ModernInput
 					x:Uid="/Settings/Server/Upload"
 					Command="{x:Bind Data.OpenWebTabCommand}"
@@ -67,6 +69,42 @@
 					Command="{x:Bind Data.OpenWebTabCommand}"
 					CommandParameter="/logs" Glyph="&#xeE94;" IsButton="True"
 					RightGlyph="&#xE8A7;" />
+				-->
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Upload" Click="PageButton_Click" Glyph="&#xE898;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Upload" Page="content:WebContent" Parameter="/upload" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Batch" Click="PageButton_Click" Glyph="&#xE9f5;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Batch" Page="content:WebContent" Parameter="/batch" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Settings" Click="PageButton_Click" Glyph="&#xE713;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Settings" Page="content:WebContent" Parameter="/config" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/PluginSettings" Click="PageButton_Click" Glyph="&#xEA86;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/PluginSettings" Page="content:WebContent" Parameter="/config/plugins" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Logs" Click="PageButton_Click" Glyph="&#xeE94;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Logs" Page="content:WebContent" Parameter="/logs" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
 				<!--
 				<controls:ModernInput
 					x:Uid="/Tools/MainPage" Click="PageButton_Click" Glyph="&#xEC7A;"

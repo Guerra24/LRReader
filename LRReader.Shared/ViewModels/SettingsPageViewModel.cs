@@ -272,7 +272,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			if (status.state!.Equals("finished"))
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification("Thumbnail generation completed", ""));
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Thumbnail generation completed", "", severity: NotificationSeverity.Informational));
 				thumbnailJob = null;
 			}
 		}

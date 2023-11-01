@@ -4,11 +4,11 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:CommunityToolkit.WinUI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:local="using:LRReader.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
-	xmlns:ext="using:LRReader.UWP.Extensions"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
@@ -19,8 +19,10 @@
 	</UserControl.Resources>
 
 	<muxc:TwoPaneView
-		ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*"
-		PanePriority="Pane1" TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+		x:Name="TwoPane"
+		ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}"
+		ModeChanged="TwoPane_ModeChanged" Pane1Length="1*" Pane2Length="1*"
+		PanePriority="Pane1" TallModeConfiguration="SinglePane" WideModeConfiguration="LeftRight">
 		<muxc:TwoPaneView.Pane1>
 			<Grid>
 				<Grid.RowDefinitions>
@@ -32,11 +34,11 @@
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
-					<Button Click="{x:Bind GoBack}" IsEnabled="{x:Bind BreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
+					<Button Click="{x:Bind GoBackMain}" IsEnabled="{x:Bind MainBreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
 					<muxc:BreadcrumbBar
-						x:Name="Breadcrumb" Grid.Column="1" Margin="0,-3,0,0"
-						VerticalAlignment="Center" ItemClicked="Breadcrumb_ItemClicked"
-						ItemsSource="{x:Bind BreadcrumbItems}">
+						x:Name="MainBreadcrumb" Grid.Column="1" Margin="0,-3,0,0"
+						VerticalAlignment="Center" ItemClicked="MainBreadcrumb_ItemClicked"
+						ItemsSource="{x:Bind MainBreadcrumbItems}">
 						<muxc:BreadcrumbBar.ItemTemplate>
 							<DataTemplate x:DataType="local:ModernPageTabItem">
 								<TextBlock Margin="10,0" Text="{x:Bind Title}" />
@@ -44,7 +46,10 @@
 						</muxc:BreadcrumbBar.ItemTemplate>
 					</muxc:BreadcrumbBar>
 				</Grid>
-				<Frame x:Name="ContentFrame" Grid.Row="1" IsNavigationStackEnabled="False">
+				<Frame x:Name="ContentMain" Grid.Row="1" IsNavigationStackEnabled="False">
+					<Frame.Tag>
+						<x:Int32>0</x:Int32>
+					</Frame.Tag>
 					<Frame.ContentTransitions>
 						<TransitionCollection>
 							<PopupThemeTransition FromVerticalOffset="200" />
@@ -53,5 +58,40 @@
 				</Frame>
 			</Grid>
 		</muxc:TwoPaneView.Pane1>
+		<muxc:TwoPaneView.Pane2>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Grid MaxWidth="1000" Margin="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Button Click="{x:Bind GoBackExtra}" IsEnabled="{x:Bind ExtraBreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Style="{ThemeResource WinUINavigationBackButtonNormalStyle}" />
+					<muxc:BreadcrumbBar
+					x:Name="ExtraBreadcrumb" Grid.Column="1" Margin="0,-3,0,0"
+					VerticalAlignment="Center" ItemClicked="ExtraBreadcrumb_ItemClicked"
+					ItemsSource="{x:Bind ExtraBreadcrumbItems}">
+						<muxc:BreadcrumbBar.ItemTemplate>
+							<DataTemplate x:DataType="local:ModernPageTabItem">
+								<TextBlock Margin="10,0" Text="{x:Bind Title}" />
+							</DataTemplate>
+						</muxc:BreadcrumbBar.ItemTemplate>
+					</muxc:BreadcrumbBar>
+				</Grid>
+				<Frame x:Name="ContentExtra" Grid.Row="1" IsNavigationStackEnabled="False">
+					<Frame.Tag>
+						<x:Int32>1</x:Int32>
+					</Frame.Tag>
+					<Frame.ContentTransitions>
+						<TransitionCollection>
+							<PopupThemeTransition FromVerticalOffset="200" />
+						</TransitionCollection>
+					</Frame.ContentTransitions>
+				</Frame>
+			</Grid>
+		</muxc:TwoPaneView.Pane2>
 	</muxc:TwoPaneView>
 </UserControl>

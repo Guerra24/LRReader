@@ -22,6 +22,7 @@ namespace LRReader.Shared.Models.Main
 		public string title { get; set; } = null!;
 		public int pagecount { get; set; }
 		public int progress { get; set; }
+		public  int? lastreadtime { get; set; }
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]

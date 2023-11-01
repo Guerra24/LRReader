@@ -54,7 +54,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage));
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage, severity: NotificationSeverity.Error));
 				return null;
 			}
 			if (result.OK)
@@ -63,7 +63,7 @@ namespace LRReader.Shared.Providers
 			}
 			else
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification(result?.Error?.operation ?? "", result?.Error?.error));
+				WeakReferenceMessenger.Default.Send(new ShowNotification(result?.Error?.operation ?? "", result?.Error?.error, severity: NotificationSeverity.Error));
 				return null;
 			}
 		}

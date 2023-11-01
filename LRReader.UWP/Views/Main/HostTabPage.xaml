@@ -2,12 +2,13 @@
 	x:Class="LRReader.UWP.Views.Main.HostTabPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:comcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:util="using:LRReader.UWP.Util"
+	xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
 	NavigationCacheMode="Required"
@@ -115,11 +116,16 @@
 				</Grid>
 			</muxc:TabView.TabStripFooter>
 		</muxc:TabView>
-		<comcontrols:InAppNotification
-			x:Name="Notifications"
-			Background="{ThemeResource GridOverGridBackground}"
-			ShowDismissButton="True" StackMode="QueueBehind"
-			Style="{StaticResource CustomNotificationStyle}" />
+		<muxc:InfoBar HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32">
+			<muxc:InfoBar.Transitions>
+				<TransitionCollection>
+					<EdgeUIThemeTransition Edge="Bottom" />
+				</TransitionCollection>
+			</muxc:InfoBar.Transitions>
+			<interactivity:Interaction.Behaviors>
+				<behaviors:StackedNotificationsBehavior x:Name="Notifications" />
+			</interactivity:Interaction.Behaviors>
+		</muxc:InfoBar>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="Default" />

@@ -72,7 +72,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage));
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage, severity: NotificationSeverity.Error));
 				return null;
 			}
 			switch (r.StatusCode)
@@ -85,7 +85,7 @@ namespace LRReader.Shared.Providers
 					return download;
 				default:
 					var error = await r.GetError();
-					WeakReferenceMessenger.Default.Send(new ShowNotification(error.operation, error.error));
+					WeakReferenceMessenger.Default.Send(new ShowNotification(error.operation, error.error, severity: NotificationSeverity.Error));
 					return null;
 			}
 		}

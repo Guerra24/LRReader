@@ -202,7 +202,7 @@ namespace LRReader.Shared
 			}
 		}*/
 
-		private static void ShowNotification(string title, string? content) => WeakReferenceMessenger.Default.Send(new ShowNotification(title, content));
+		private static void ShowNotification(string title, string? content) => WeakReferenceMessenger.Default.Send(new ShowNotification(title, content, severity: NotificationSeverity.Error));
 	}
 
 }
