@@ -25,9 +25,10 @@ namespace LRReader.UWP.Views.Tabs
 			DispatcherTimer.Start();
 		}
 
-		public override void Unload()
+		public override void Dispose()
 		{
-			base.Unload();
+			base.Dispose();
+			ContentPage.Dispose();
 			DispatcherTimer.Stop();
 		}
 

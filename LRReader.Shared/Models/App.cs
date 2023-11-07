@@ -3,15 +3,13 @@ using Newtonsoft.Json;
 
 namespace LRReader.Shared.Models
 {
-	public interface ICustomTab
+	public interface ICustomTab : IDisposable
 	{
 		object CustomTabControl { get; set; }
 
 		string CustomTabId { get; set; }
 
 		bool IsClosable { get; set; }
-
-		void Unload();
 
 		bool BackRequested();
 	}

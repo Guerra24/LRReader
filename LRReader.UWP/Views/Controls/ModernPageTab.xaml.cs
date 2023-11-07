@@ -11,7 +11,7 @@ using TwoPaneViewMode = Microsoft.UI.Xaml.Controls.TwoPaneViewMode;
 
 namespace LRReader.UWP.Views.Controls
 {
-	public sealed partial class ModernPageTab : UserControl
+	public sealed partial class ModernPageTab : UserControl, IDisposable
 	{
 
 		private ObservableCollection<ModernPageTabItem> MainBreadcrumbItems = new ObservableCollection<ModernPageTabItem>();
@@ -164,6 +164,12 @@ namespace LRReader.UWP.Views.Controls
 				var item = (ModernPageTabItem)args.Item;
 				ContentExtra.Navigate(item.Page, new ModernPageTabWrapper(this, item.Parameter));
 			}
+		}
+
+		public void Dispose()
+		{
+			if (ContentMain.Content is IDisposable main) main.Dispose();
+			if (ContentExtra.Content is IDisposable extra) extra.Dispose();
 		}
 
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernPageTab), new PropertyMetadata(null));

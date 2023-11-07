@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using LRReader.UWP.Extensions;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using Windows.UI;
@@ -10,7 +12,7 @@ using Windows.UI.Xaml.Media;
 
 namespace LRReader.UWP.Views.Controls
 {
-	public class ModernWebView : UserControl
+	public class ModernWebView : UserControl, IDisposable
 	{
 		private static List<string> Allowed = new List<string>() { "/upload", "/batch", "/config", "/config/plugins", "/logs" };
 
@@ -54,10 +56,12 @@ namespace LRReader.UWP.Views.Controls
 
 		public void Refresh() => WebView.Refresh();
 
-		public void Close() => WebView.Close();
+		public void Dispose() => WebView.Dispose();
 
 		public bool NavigationStarting(IWebView sender, Uri uri)
 		{
+			if (!Page.Host.Equals(uri.Host))
+				return true;
 			var path = uri.AbsolutePath;
 			if (path.Equals("/login") || Allowed.Contains(path))
 			{
@@ -113,12 +117,11 @@ namespace LRReader.UWP.Views.Controls
 		public static DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernWebView), new PropertyMetadata(""));
 	}
 
-	public interface IWebView
+	public interface IWebView : IDisposable
 	{
 		public string DocumentTitle { get; }
-		public void Navigate(Uri page);
+		public Task Navigate(Uri page);
 		public void Refresh();
-		public void Close();
 
 	}
 
@@ -140,7 +143,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public string DocumentTitle => WebView.CoreWebView2.DocumentTitle;
 
-		public async void Navigate(Uri page)
+		public async Task Navigate(Uri page)
 		{
 			await WebView.EnsureCoreWebView2Async();
 			if (!Initialized)
@@ -151,25 +154,35 @@ namespace LRReader.UWP.Views.Controls
 				WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
 				WebView.CoreWebView2.DOMContentLoaded += CoreWebView2_DOMContentLoaded;
 			}
-			WebView.Source = page;
+			WebView.CoreWebView2.Navigate(page.ToString());
 		}
 
 		public void Refresh() => WebView.Reload();
 
-		public void Close() => WebView.Close();
+		public void Dispose() => WebView.Close();
 
-		private void NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args) => args.Cancel = Modern.NavigationStarting(this, new Uri(args.Uri));
+		private void NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
+		{
+			var res = Modern.NavigationStarting(this, new Uri(args.Uri));
+			//if (!res)
+				//await WebView.FadeOutAsync();
+			args.Cancel = res;
+		}
 
-		private void NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args) => Modern.NavigationCompleted(this, args.IsSuccess);
+		private void NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+		{
+			Modern.NavigationCompleted(this, args.IsSuccess);
+		}
 
 		private void CoreWebView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
 		{
 			args.Handled = true;
 		}
 
-		private async void CoreWebView2_DOMContentLoaded(CoreWebView2 sender, CoreWebView2DOMContentLoadedEventArgs args)
+		private void CoreWebView2_DOMContentLoaded(CoreWebView2 sender, CoreWebView2DOMContentLoadedEventArgs args)
 		{
-			await sender.ExecuteScriptAsync("var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; }'; document.head.appendChild(style);");
+			//await sender.ExecuteScriptAsync("var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; } div.ido, .option-flyout { border: 1px solid #00000019; border-radius: 4px; background-color: #FFFFFF0D !important; background-clip: padding-box !important; }'; document.head.appendChild(style);");
+			//WebView.FadeIn();
 		}
 
 	}
@@ -191,20 +204,30 @@ namespace LRReader.UWP.Views.Controls
 
 		public string DocumentTitle => WebView.DocumentTitle;
 
-		public void Navigate(Uri page) => WebView.Navigate(page);
+		public Task Navigate(Uri page)
+		{
+			WebView.Navigate(page);
+			return Task.CompletedTask;
+		}
 
 		public void Refresh() => WebView.Refresh();
 
-		public void Close() { }
+		public void Dispose() { }
 
-		private void NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) => args.Cancel = Modern.NavigationStarting(this, args.Uri);
-
-		private void NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args) => Modern.NavigationCompleted(this, args.IsSuccess);
-
-		private async void DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+		private void NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
 		{
-			var func = "var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; }'; document.head.appendChild(style);";
-			await sender.InvokeScriptAsync("eval", new string[] { func });
+			args.Cancel = Modern.NavigationStarting(this, args.Uri);
+		}
+
+		private void NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+		{
+			Modern.NavigationCompleted(this, args.IsSuccess);
+		}
+
+		private void DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
+		{
+			//var func = "var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; } div.ido, .option-flyout { border: 1px solid #00000019; border-radius: 4px; background-color: #FFFFFF0D !important; background-clip: padding-box !important; }'; document.head.appendChild(style);";
+			//await sender.InvokeScriptAsync("eval", new string[] { func });
 		}
 	}
 }

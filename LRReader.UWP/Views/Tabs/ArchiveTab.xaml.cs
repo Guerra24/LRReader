@@ -14,9 +14,9 @@ namespace LRReader.UWP.Views.Tabs
 			TabContent.LoadArchive(archive, next);
 		}
 
-		public override void Unload()
+		public override void Dispose()
 		{
-			base.Unload();
+			base.Dispose();
 			TabContent.RemoveEvent();
 		}
 	}

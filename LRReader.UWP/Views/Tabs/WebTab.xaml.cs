@@ -26,10 +26,10 @@ namespace LRReader.UWP.Views.Tabs
 			TabContent.Navigate(page);
 		}
 
-		public override void Unload()
+		public override void Dispose()
 		{
-			base.Unload();
-			TabContent.Close();
+			base.Dispose();
+			TabContent.Dispose();
 		}
 
 		private void TabContent_OnCloseRequested()

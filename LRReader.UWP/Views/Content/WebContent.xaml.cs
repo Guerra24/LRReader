@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
 using Windows.UI.Xaml.Controls;
@@ -7,7 +8,7 @@ using Windows.UI.Xaml.Navigation;
 namespace LRReader.UWP.Views.Content
 {
 
-	public sealed partial class WebContent : ModernBasePage
+	public sealed partial class WebContent : ModernBasePage, IDisposable
 	{
 		public WebContent()
 		{
@@ -23,7 +24,7 @@ namespace LRReader.UWP.Views.Content
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
-			WebView.Close();
+			WebView.Dispose();
 			base.OnNavigatingFrom(e);
 		}
 
@@ -31,5 +32,11 @@ namespace LRReader.UWP.Views.Content
 		{
 			Wrapper.ModernPageTab.GoBack((int)((Frame)Parent).Tag);
 		}
+
+		public void Dispose()
+		{
+			WebView.Dispose();
+		}
+
 	}
 }

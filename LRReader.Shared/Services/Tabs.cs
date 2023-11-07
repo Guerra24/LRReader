@@ -68,7 +68,7 @@ namespace LRReader.Shared.Services
 
 		public void CloseTab(ICustomTab tab)
 		{
-			tab.Unload();
+			tab.Dispose();
 			TabItems.Remove(tab);
 		}
 
@@ -82,7 +82,7 @@ namespace LRReader.Shared.Services
 		public void CloseAllTabs()
 		{
 			foreach (var t in TabItems)
-				t.Unload();
+				t.Dispose();
 			TabItems.Clear();
 		}
 
