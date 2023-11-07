@@ -1,4 +1,5 @@
-﻿using LRReader.UWP.Views.Controls;
+﻿using LRReader.Shared.Services;
+using LRReader.UWP.Views.Controls;
 using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs
@@ -22,13 +23,18 @@ namespace LRReader.UWP.Views.Tabs
 			if (loaded)
 				return;
 			loaded = true;
-			TabContent.Navigate(page, CustomTabId);
+			TabContent.Navigate(page);
 		}
 
 		public override void Unload()
 		{
 			base.Unload();
 			TabContent.Close();
+		}
+
+		private void TabContent_OnCloseRequested()
+		{
+			Service.Tabs.CloseTabWithId(CustomTabId);
 		}
 	}
 }

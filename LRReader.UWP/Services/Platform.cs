@@ -46,6 +46,8 @@ namespace LRReader.UWP.Services
 			var device = new EasClientDeviceInformation();
 			_dualScreen = !string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo");
 
+			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
+
 			MapPageToType(Pages.Loading, typeof(LoadingPage));
 			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
 			MapPageToType(Pages.HostTab, typeof(HostTabPage));

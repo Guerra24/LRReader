@@ -52,6 +52,14 @@ namespace LRReader.UWP.Views.Controls
 			return GoBackExtra() || GoBackMain();
 		}
 
+		public void GoBack(int framesource)
+		{
+			if (framesource == 0)
+				GoBackMain();
+			else
+				GoBackExtra();
+		}
+
 		public bool GoBackMain()
 		{
 			if (MainBreadcrumbItems.Count > 1)

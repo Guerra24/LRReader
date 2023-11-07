@@ -4,6 +4,7 @@
     <TargetFrameworks>netstandard2.1;uap10.0.17763</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>10.0</LangVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <ExtrasUwpMetaPackageVersion>6.2.14</ExtrasUwpMetaPackageVersion>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>

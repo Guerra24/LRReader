@@ -8,5 +8,5 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<controls:ModernWebView x:Name="WebView" />
+	<controls:ModernWebView x:Name="WebView" OnCloseRequested="WebView_OnCloseRequested" />
 </controls:ModernBasePage>

@@ -28,7 +28,7 @@
 		Pane1Length="1*" PanePriority="Pane1" TallModeConfiguration="SinglePane"
 		WideModeConfiguration="RightLeft">
 		<muxc:TwoPaneView.Pane1>
-			<controls:ModernWebView x:Name="TabContent" />
+			<controls:ModernWebView x:Name="TabContent" OnCloseRequested="TabContent_OnCloseRequested" />
 		</muxc:TwoPaneView.Pane1>
 	</muxc:TwoPaneView>
 </controls:ModernTab>

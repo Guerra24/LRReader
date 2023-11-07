@@ -2,12 +2,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFrameworks>net472</TargetFrameworks>
-    <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x64;win10-arm64;win7-x64</RuntimeIdentifiers>
     <UseWPF>true</UseWPF>
     <Platforms>x64;ARM64</Platforms>
-	<Nullable>enable</Nullable>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
-	<Optimize>false</Optimize>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logo.ico</ApplicationIcon>

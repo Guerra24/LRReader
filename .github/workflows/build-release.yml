@@ -4,14 +4,25 @@ on:
     types: [published]
 jobs:
   buildAppxBundle:
-    name: Build AppInstaller
+    name: Sideload
     runs-on: windows-2022
+    permissions:
+      packages: read
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.3
-    - name: Build AppInstaller
+    - name: Auth nuget registry
+      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
+    - name: Prepare nuget cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-uwp-${{ hashFiles('LRReader.Shared/packages.lock.json', 'LRReader.UWP/packages.lock.json') }}
+        restore-keys: |
+          nuget-uwp-
+    - name: Build
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
@@ -24,7 +35,7 @@ jobs:
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
@@ -58,72 +69,71 @@ jobs:
         name: LRReader.appinstaller
         path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  buildInstallerX64:
-    name: Build Installer X64
+  buildInstaller:
+    name: Installer
     runs-on: windows-2022
+    permissions:
+      packages: read
+    strategy:
+      matrix:
+        arch: [x64, ARM64]
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v1.3
-    - name: Installer
+    - name: Auth nuget registry
+      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
+    - name: Prepare nuget cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-installer-${{ hashFiles('LRReader.UWP.Installer/packages.lock.json') }}
+        restore-keys: |
+          nuget-installer-
+    - name: Build
       run: |
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
         $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
         $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=x64
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }}
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Installer-x64
-        path: LRReader.UWP.Installer/bin/x64/Release/net472/LRReader.UWP.Installer.exe
+        name: Installer-${{ matrix.arch }}
+        path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
     - name: Upload to Release
       uses: Guerra24/upload-to-release@v1
       with:
-        name: LRReader.x64.exe
-        path: LRReader.UWP.Installer/bin/x64/Release/net472/LRReader.UWP.Installer.exe
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-  buildInstallerARM64:
-    name: Build Installer ARM64
-    runs-on: windows-2022
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.3
-    - name: Installer
-      run: |
-        [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
-        $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
-        $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
-        Invoke-Expression "./Util/ConfigureInstaller.ps1"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=ARM64
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: Installer-ARM64
-        path: LRReader.UWP.Installer/bin/ARM64/Release/net472/LRReader.UWP.Installer.exe
-    - name: Upload to Release
-      uses: Guerra24/upload-to-release@v1
-      with:
-        name: LRReader.ARM64.exe
-        path: LRReader.UWP.Installer/bin/ARM64/Release/net472/LRReader.UWP.Installer.exe
+        name: LRReader.${{ matrix.arch }}.exe
+        path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
         repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildStoreBundle:
-    name: Build Store Bundle
+    name: Store
     runs-on: windows-2022
+    permissions:
+      packages: read
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.0.2
-    - name: Build AppInstaller
+      uses: microsoft/setup-msbuild@v1.3
+    - name: Auth nuget registry
+      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
+    - name: Prepare nuget cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-uwp-${{ hashFiles('LRReader.Shared/packages.lock.json', 'LRReader.UWP/packages.lock.json') }}
+        restore-keys: |
+          nuget-uwp-
+    - name: Build
       env:
         APPCENTER_APP_ID: ${{ secrets.APPCENTER_APP_ID }}
       run: |
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly" /p:AppxPackageSigningEnabled=false
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly" /p:AppxPackageSigningEnabled=false
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:

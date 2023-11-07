@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using Windows.UI;
@@ -21,11 +20,11 @@ namespace LRReader.UWP.Views.Controls
 			private set => SetValue(TitleProperty, value);
 		}
 
+		public event Action? OnCloseRequested;
+
 		private Uri Page = null!;
 
 		private bool Redirect;
-
-		private string? TabId;
 
 		private IWebView WebView;
 
@@ -45,11 +44,10 @@ namespace LRReader.UWP.Views.Controls
 			}
 		}
 
-		public void Navigate(string url, string tabId)
+		public void Navigate(string url)
 		{
 			if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
 				return;
-			TabId = tabId;
 			Page = new Uri(url);
 			WebView.Navigate(Page);
 		}
@@ -67,7 +65,7 @@ namespace LRReader.UWP.Views.Controls
 			}
 			else if (path.Equals("/"))
 			{
-				Service.Tabs.CloseTabWithId(TabId);
+				OnCloseRequested?.Invoke();
 				return true;
 			}
 			else if (path.Equals(Page.AbsolutePath))
@@ -121,6 +119,7 @@ namespace LRReader.UWP.Views.Controls
 		public void Navigate(Uri page);
 		public void Refresh();
 		public void Close();
+
 	}
 
 	public class EdgeChromeWebView : UserControl, IWebView
@@ -150,6 +149,7 @@ namespace LRReader.UWP.Views.Controls
 				WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
 				WebView.CoreWebView2.Settings.IsStatusBarEnabled = false;
 				WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+				WebView.CoreWebView2.DOMContentLoaded += CoreWebView2_DOMContentLoaded;
 			}
 			WebView.Source = page;
 		}
@@ -165,6 +165,11 @@ namespace LRReader.UWP.Views.Controls
 		private void CoreWebView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
 		{
 			args.Handled = true;
+		}
+
+		private async void CoreWebView2_DOMContentLoaded(CoreWebView2 sender, CoreWebView2DOMContentLoadedEventArgs args)
+		{
+			await sender.ExecuteScriptAsync("var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; }'; document.head.appendChild(style);");
 		}
 
 	}
@@ -198,7 +203,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private async void DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
 		{
-			string func = "var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; }'; document.head.appendChild(style);";
+			var func = "var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; }'; document.head.appendChild(style);";
 			await sender.InvokeScriptAsync("eval", new string[] { func });
 		}
 	}
