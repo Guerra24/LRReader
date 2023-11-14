@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Converters;
+using LRReader.Shared.Extensions;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
 #endif
@@ -6,7 +7,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -17,12 +17,12 @@ namespace LRReader.Shared.Models.Main
 		public string arcid { get; set; } = null!;
 		[JsonConverter(typeof(ArchiveNewConverter))]
 		public bool isnew { get; set; }
-		public string? extension { get; set; }
+		public string extension { get; set; } = null!;
 		public string tags { get; set; } = null!;
 		public string title { get; set; } = null!;
 		public int pagecount { get; set; }
 		public int progress { get; set; }
-		public  int? lastreadtime { get; set; }
+		public long? lastreadtime { get; set; }
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]
@@ -70,7 +70,7 @@ namespace LRReader.Shared.Models.Main
 				var tag = parts[parts.Length - 1];
 				if (parts[0].Equals("date_added"))
 					if (long.TryParse(tag, out long unixTime))
-						tag = Util.UnixTimeToDateTime(unixTime).ToString();
+						tag = DateTimeOffset.FromUnixTimeSeconds(unixTime).ToLocalTime().ToString();
 				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag, Namespace = @namespace });
 			}
 			tmp.Sort((a, b) => string.Compare(a.Namespace, b.Namespace));

@@ -164,6 +164,7 @@ namespace LRReader.Shared.ViewModels.Base
 				Archive.pagecount = result.pagecount;
 				Archive.progress = result.progress;
 				Archive.extension = result.extension;
+				Archive.lastreadtime = result.lastreadtime;
 				Archive.UpdateTags();
 				OnPropertyChanged("Archive");
 			}

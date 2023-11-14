@@ -80,7 +80,7 @@ namespace LRReader.Shared.Services
 			Settings.SaveProfiles();
 			return result;
 #else
-			return Task.Run(() => true);
+			return Task.FromResult(true);
 #endif
 		}
 	}
