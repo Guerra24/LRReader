@@ -25,9 +25,9 @@
       },
       "WPF-UI": {
         "type": "Direct",
-        "requested": "[3.0.0-preview.9, )",
-        "resolved": "3.0.0-preview.9",
-        "contentHash": "2YfsKjvYE1XvS39uS60RAVD5oPPvYtjclDJIhBTZIFmCwm4Ityfdn6M2PBwXpK7JvQ3d0ggeq9vvwPEzGwRMaQ=="
+        "requested": "[3.0.0-preview.7, )",
+        "resolved": "3.0.0-preview.7",
+        "contentHash": "l+O4L8w8P6oU36z7zQci9QAwLpRYrjIOpQsPfDbkXrIDhUaJur0WJ8+XaybDhWDG94hfoiz0PL0rdL1w+zmYnw=="
       },
       "Fody": {
         "type": "Transitive",
