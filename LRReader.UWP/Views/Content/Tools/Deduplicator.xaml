@@ -288,6 +288,16 @@
 					<RowDefinition Height="4" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="4" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<Button
@@ -347,7 +357,7 @@
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE8A6;" />
 				</Button>
 				<Button
-					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="5" Margin="4,0,0,0"
+					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="13" Margin="4,0,0,0"
 					Padding="0,8,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
 					<Button.Flyout>
@@ -364,7 +374,7 @@
 					<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="32" Glyph="&#xE74D;" />
 				</Button>
 				<Button
-					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="5" Grid.Column="5"
+					x:Uid="/Tools/Deduplicator/DeleteArchiveTT" Grid.Row="13" Grid.Column="5"
 					Margin="0,0,4,0" Padding="0,8,0,8" HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
 					IsEnabled="{x:Bind Data.CanClosePreviews, Mode=OneWay}">
@@ -402,16 +412,40 @@
 					Grid.Row="1" Grid.Column="1" Margin="4,0"
 					HorizontalAlignment="Right"
 					Style="{ThemeResource PropertyTitleStyle}">
-					<TextBlock Text="{x:Bind Data.LeftArchive.Resolution, Mode=OneWay}" />
+					<TextBlock Text="{x:Bind Data.LeftArchive.Archive.LastReadTimeString, Mode=OneWay}" />
 				</Grid>
 				<Grid
 					Grid.Row="3" Grid.Column="1" Margin="4,0"
 					HorizontalAlignment="Right"
 					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.LeftArchive.Resolution, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="5" Grid.Column="1" Margin="4,0"
+					HorizontalAlignment="Right"
+					Style="{ThemeResource PropertyTitleStyle}">
 					<TextBlock Text="{x:Bind Data.LeftArchive.Pages, Mode=OneWay}" />
 				</Grid>
+				<Grid
+					Grid.Row="7" Grid.Column="1" Margin="4,0"
+					HorizontalAlignment="Right"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.LeftArchive.Archive.filename, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="9" Grid.Column="1" Margin="4,0"
+					HorizontalAlignment="Right"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.LeftArchive.Archive.extension, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="11" Grid.Column="1" Margin="4,0"
+					HorizontalAlignment="Right"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.LeftArchive.Archive.SizeString, Mode=OneWay}" />
+				</Grid>
 				<controls:ArchiveTags
-					Grid.Row="5" Grid.Column="1" Margin="4,0"
+					Grid.Row="13" Grid.Column="1" Margin="4,0"
 					FlowDirection="RightToLeft"
 					ItemsSource="{x:Bind Data.LeftArchive.Archive.TagsGroups, Mode=OneWay}" />
 				<!--    -->
@@ -419,15 +453,27 @@
 					<TextBlock x:Uid="/Tools/Deduplicator/SxSTitle" />
 				</Grid>
 				<Grid Grid.Row="1" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock x:Uid="/Tools/Deduplicator/SxSResolution" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSLastRead" />
 				</Grid>
 				<Grid Grid.Row="3" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock x:Uid="/Tools/Deduplicator/SxSPages" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSResolution" />
 				</Grid>
 				<Grid Grid.Row="5" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
-					<TextBlock x:Uid="/Tools/Deduplicator/SxSTags" />
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSPages" />
 				</Grid>
 				<Grid Grid.Row="7" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSFileName" />
+				</Grid>
+				<Grid Grid.Row="9" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSFileType" />
+				</Grid>
+				<Grid Grid.Row="11" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSFileSize" />
+				</Grid>
+				<Grid Grid.Row="13" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
+					<TextBlock x:Uid="/Tools/Deduplicator/SxSTags" />
+				</Grid>
+				<Grid Grid.Row="15" Grid.Column="2" Style="{ThemeResource PropertyStyle}">
 					<TextBlock x:Uid="/Tools/Deduplicator/SxSImages" />
 				</Grid>
 				<!--    -->
@@ -451,20 +497,44 @@
 					Grid.Row="1" Grid.Column="3" Margin="4,0"
 					HorizontalAlignment="Left"
 					Style="{ThemeResource PropertyTitleStyle}">
-					<TextBlock Text="{x:Bind Data.RightArchive.Resolution, Mode=OneWay}" />
+					<TextBlock Text="{x:Bind Data.RightArchive.Archive.LastReadTimeString, Mode=OneWay}" />
 				</Grid>
 				<Grid
 					Grid.Row="3" Grid.Column="3" Margin="4,0"
 					HorizontalAlignment="Left"
 					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.RightArchive.Resolution, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="5" Grid.Column="3" Margin="4,0"
+					HorizontalAlignment="Left"
+					Style="{ThemeResource PropertyTitleStyle}">
 					<TextBlock Text="{x:Bind Data.RightArchive.Pages, Mode=OneWay}" />
 				</Grid>
+				<Grid
+					Grid.Row="7" Grid.Column="3" Margin="4,0"
+					HorizontalAlignment="Left"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.RightArchive.Archive.filename, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="9" Grid.Column="3" Margin="4,0"
+					HorizontalAlignment="Left"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.RightArchive.Archive.extension, Mode=OneWay}" />
+				</Grid>
+				<Grid
+					Grid.Row="11" Grid.Column="3" Margin="4,0"
+					HorizontalAlignment="Left"
+					Style="{ThemeResource PropertyTitleStyle}">
+					<TextBlock Text="{x:Bind Data.RightArchive.Archive.SizeString, Mode=OneWay}" />
+				</Grid>
 				<controls:ArchiveTags
-					Grid.Row="5" Grid.Column="3" Margin="4,0"
+					Grid.Row="13" Grid.Column="3" Margin="4,0"
 					ItemsSource="{x:Bind Data.RightArchive.Archive.TagsGroups, Mode=OneWay}" />
 				<!--    -->
 				<GridView
-					x:Name="LeftPages" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+					x:Name="LeftPages" Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2"
 					ext:Element.ModernShadow="{StaticResource ElementShadow}"
 					ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 					ItemsSource="{x:Bind Data.LeftArchive.ArchiveImages}"
@@ -498,7 +568,7 @@
 					</GridView.ItemContainerTransitions>
 				</GridView>
 				<GridView
-					x:Name="RightPages" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2"
+					x:Name="RightPages" Grid.Row="15" Grid.Column="3" Grid.ColumnSpan="2"
 					ext:Element.ModernShadow="{StaticResource ElementShadow}"
 					ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 					ItemsSource="{x:Bind Data.RightArchive.ArchiveImages}"

@@ -126,6 +126,12 @@
   <data name="Archive.AddBookmark.Title" xml:space="preserve">
     <value>Архивировать закладку?</value>
   </data>
+  <data name="Archive.AutoplayState.Play" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="Archive.AutoplayState.Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
   <data name="Archive.Bookmark.Content" xml:space="preserve">
     <value>Закладка</value>
   </data>
@@ -147,11 +153,23 @@
   <data name="Archive.Edit.Content" xml:space="preserve">
     <value>Изменить</value>
   </data>
+  <data name="Archive.FileName.Text" xml:space="preserve">
+    <value>File name:</value>
+  </data>
+  <data name="Archive.FileType.Text" xml:space="preserve">
+    <value>File type:</value>
+  </data>
+  <data name="Archive.LastRead.Text" xml:space="preserve">
+    <value>Last read:</value>
+  </data>
   <data name="Archive.New.Content" xml:space="preserve">
     <value>Новый!</value>
   </data>
   <data name="Archive.Next.Content" xml:space="preserve">
     <value>Следующий архив</value>
+  </data>
+  <data name="Archive.Pages.Text" xml:space="preserve">
+    <value>Pages:</value>
   </data>
   <data name="Archive.Random.Content" xml:space="preserve">
     <value>Случайно</value>
@@ -164,6 +182,9 @@
   </data>
   <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
     <value>Удалить закладку?</value>
+  </data>
+  <data name="Archive.Settings.Autoplay.Text" xml:space="preserve">
+    <value>Autoplay</value>
   </data>
   <data name="Archive.Settings.Button.ToolTipService.ToolTip" xml:space="preserve">
     <value>Ридер</value>
@@ -179,6 +200,9 @@
   </data>
   <data name="Archive.Settings.VerticalReader.Text" xml:space="preserve">
     <value>Использовать вертикальный ридер</value>
+  </data>
+  <data name="Archive.Size.Text" xml:space="preserve">
+    <value>Size:</value>
   </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Добавить все</value>

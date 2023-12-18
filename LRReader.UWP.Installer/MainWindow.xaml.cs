@@ -27,6 +27,7 @@ namespace LRReader.UWP.Installer
 
 		public MainWindow()
 		{
+			SystemThemeWatcher.Watch(this, WindowBackdropType.Mica, true);
 			InitializeComponent();
 			// Win32 Magic
 			//var interop = new WindowInteropHelper(this);
@@ -56,7 +57,6 @@ namespace LRReader.UWP.Installer
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			SystemThemeWatcher.Watch(this, WindowBackdropType.Mica, true);
 			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
 			{
 				Error.Text = "LRReader requires Windows 10 1809 or newer";

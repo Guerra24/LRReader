@@ -14,8 +14,10 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Items;
+using Windows.Devices.Display.Core;
 using Windows.Devices.Input;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -686,6 +688,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			var timings = (RenderingEventArgs)e;
 			var delta = timings.RenderingTime.TotalSeconds - _previousTime.TotalSeconds;
+			if (delta > 0.033)
+				delta = 0;
 			if (!_changingPage)
 			{
 				if (ScrollViewer.VerticalOffset >= ScrollViewer.ScrollableHeight)
@@ -704,15 +708,16 @@ namespace LRReader.UWP.Views.Tabs.Content
 		[RelayCommand]
 		private async Task PlayStop(bool state)
 		{
+			// Handle user initiated mouse action (disable autoplay)
 			Data.UseAutoplay = state;
 			if (state)
 			{
 				ScrollViewer.ChangeView(null, 0, null, true);
 				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayStartDelay));
-				Windows.UI.Xaml.Media.CompositionTarget.Rendering += CompositionTarget_Rendering;
+				CompositionTarget.Rendering += CompositionTarget_Rendering;
 			}
 			else
-				Windows.UI.Xaml.Media.CompositionTarget.Rendering -= CompositionTarget_Rendering;
+				CompositionTarget.Rendering -= CompositionTarget_Rendering;
 		}
 
 		private async void DownloadButton_Click(object sender, RoutedEventArgs e)
@@ -839,7 +844,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (_overlayDelayOpen)
 			{
 				ReaderThumbnailOverlay.IsOpen = true;
-				await Task.Delay(100);
+				await Task.Delay(50);
 				OverlayThumbnails.SelectedIndex = Data.ReaderContent.Page;
 				await OverlayThumbnails.SmoothScrollIntoViewWithIndexAsync(Data.ReaderContent.Page, ScrollItemPlacement.Center);
 			}

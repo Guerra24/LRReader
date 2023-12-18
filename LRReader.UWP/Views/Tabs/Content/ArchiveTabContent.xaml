@@ -20,6 +20,14 @@
 
 	<UserControl.Resources>
 		<ext:Shadow x:Name="ElementShadow" />
+		<Style x:Key="CustomTag" TargetType="Border">
+			<Setter Property="Padding" Value="4,2"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}"/>
+			<Setter Property="BackgroundSizing" Value="InnerBorderEdge"/>
+			<Setter Property="Background" Value="{ThemeResource ControlFillColorDefault}"/>
+		</Style>
 	</UserControl.Resources>
 
 	<Grid>
@@ -56,25 +64,33 @@
 										Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 										TextWrapping="WrapWholeWords" />
 								</Grid>
-								<!--
 								<StackPanel Orientation="Horizontal" Spacing="4" Margin="0,0,0,8">
-									<Border Padding="4,2" BorderThickness="1" CornerRadius="{ThemeResource ControlCornerRadius}" BorderBrush="{ThemeResource ControlElevationBorderBrush}" BackgroundSizing="InnerBorderEdge" Background="{ThemeResource ControlFillColorDefault}" >
+									<Border Style="{StaticResource CustomTag}">
 										<TextBlock>
-											Pages: <Run Text="{x:Bind Data.Archive.pagecount, Mode=OneWay}"/>
+											<Run x:Uid="/Tabs/Archive/Pages" /> <Run Text="{x:Bind Data.Archive.pagecount, Mode=OneWay}"/>
 										</TextBlock>
 									</Border>
-									<Border Padding="4,2" BorderThickness="1" CornerRadius="{ThemeResource ControlCornerRadius}" BorderBrush="{ThemeResource ControlElevationBorderBrush}" BackgroundSizing="InnerBorderEdge" Background="{ThemeResource ControlFillColorDefault}" >
+									<Border Style="{StaticResource CustomTag}">
 										<TextBlock>
-											Last read: <Run Text="{x:Bind util2:Util.UnixTimeToDateTime(Data.Archive.lastreadtime), Mode=OneWay}"/>
+											<Run x:Uid="/Tabs/Archive/FileType" /> <Run Text="{x:Bind Data.Archive.extension, Mode=OneWay}"/>
 										</TextBlock>
 									</Border>
-									<Border Padding="4,2" BorderThickness="1" CornerRadius="{ThemeResource ControlCornerRadius}" BorderBrush="{ThemeResource ControlElevationBorderBrush}" BackgroundSizing="InnerBorderEdge" Background="{ThemeResource ControlFillColorDefault}" >
+									<Border Style="{StaticResource CustomTag}" Visibility="{x:Bind Data.Archive.LastReadTimeString, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
 										<TextBlock>
-											File type: <Run Text="{x:Bind Data.Archive.extension, Mode=OneWay}"/>
+											<Run x:Uid="/Tabs/Archive/LastRead" /> <Run Text="{x:Bind Data.Archive.LastReadTimeString, Mode=OneWay}"/>
+										</TextBlock>
+									</Border>
+									<Border Style="{StaticResource CustomTag}" Visibility="{x:Bind Data.Archive.SizeString, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+										<TextBlock>
+											<Run x:Uid="/Tabs/Archive/Size" />  <Run Text="{x:Bind Data.Archive.SizeString, Mode=OneWay}"/>
+										</TextBlock>
+									</Border>
+									<Border Style="{StaticResource CustomTag}" Visibility="{x:Bind Data.Archive.filename, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+										<TextBlock>
+											<Run x:Uid="/Tabs/Archive/FileName" />  <Run Text="{x:Bind Data.Archive.filename, Mode=OneWay}"/>
 										</TextBlock>
 									</Border>
 								</StackPanel>
-								-->
 								<controls:ArchiveTags Margin="0,0,0,8" ItemClickCommand="{x:Bind Data.TagClickCommand}" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
 								<StackPanel Orientation="Horizontal">
 									<ToggleButton x:Uid="/Tabs/Archive/Bookmark" IsChecked="{x:Bind Data.Bookmarked, Mode=TwoWay}" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />

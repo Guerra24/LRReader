@@ -22,7 +22,18 @@ namespace LRReader.Shared.Models.Main
 		public string title { get; set; } = null!;
 		public int pagecount { get; set; }
 		public int progress { get; set; }
-		public long? lastreadtime { get; set; }
+		public long? lastreadtime { get; set; } // 0.9.0
+
+		[JsonIgnore]
+		public string LastReadTimeString => lastreadtime == null ? "" : DateTimeOffset.FromUnixTimeSeconds((long)lastreadtime).ToLocalTime().ToString();
+
+		public long? size { get; set; } // dev
+
+		[JsonIgnore]
+		public string SizeString => size == null ? "" : string.Format("{0:n2} MB", size / 1024f / 1024f);
+
+		public string? filename { get; set; } // dev
+
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]

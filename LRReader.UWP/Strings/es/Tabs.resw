@@ -126,6 +126,12 @@
   <data name="Archive.AddBookmark.Title" xml:space="preserve">
     <value>Marcar Archivo?</value>
   </data>
+  <data name="Archive.AutoplayState.Play" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="Archive.AutoplayState.Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
   <data name="Archive.Bookmark.Content" xml:space="preserve">
     <value>Marcar</value>
   </data>
@@ -147,11 +153,23 @@
   <data name="Archive.Edit.Content" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="Archive.FileName.Text" xml:space="preserve">
+    <value>Nombre del archivo:</value>
+  </data>
+  <data name="Archive.FileType.Text" xml:space="preserve">
+    <value>Tipo de archivo:</value>
+  </data>
+  <data name="Archive.LastRead.Text" xml:space="preserve">
+    <value>Última lectura:</value>
+  </data>
   <data name="Archive.New.Content" xml:space="preserve">
     <value>¡Nuevo!</value>
   </data>
   <data name="Archive.Next.Content" xml:space="preserve">
     <value>Siguiente archivo</value>
+  </data>
+  <data name="Archive.Pages.Text" xml:space="preserve">
+    <value>Páginas:</value>
   </data>
   <data name="Archive.Random.Content" xml:space="preserve">
     <value>Aleatorio</value>
@@ -164,6 +182,9 @@
   </data>
   <data name="Archive.RemoveBookmark.Title" xml:space="preserve">
     <value>Eliminar Marcador?</value>
+  </data>
+  <data name="Archive.Settings.Autoplay.Text" xml:space="preserve">
+    <value>Autoplay</value>
   </data>
   <data name="Archive.Settings.Button.ToolTipService.ToolTip" xml:space="preserve">
     <value>Lector</value>
@@ -179,6 +200,9 @@
   </data>
   <data name="Archive.Settings.VerticalReader.Text" xml:space="preserve">
     <value>Utilizar lector vertical</value>
+  </data>
+  <data name="Archive.Size.Text" xml:space="preserve">
+    <value>Tamaño:</value>
   </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Agregar Todo</value>

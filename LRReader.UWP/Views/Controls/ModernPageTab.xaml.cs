@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Content;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
@@ -110,32 +111,37 @@ namespace LRReader.UWP.Views.Controls
 		{
 			if (TwoPane.Mode == TwoPaneViewMode.SinglePane && CurrentExtraPage != null)
 			{
-				ExtraBreadcrumbItems.Remove(CurrentExtraPage);
-				foreach (var i in ExtraBreadcrumbItems)
-					MainBreadcrumbItems.Add(i);
-				ExtraBreadcrumbItems.Clear();
-
-				Navigate(CurrentExtraPage, 0);
-				CurrentExtraPage = null;
-				ContentExtra.Navigate(typeof(Empty));
+				_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+				{
+					ExtraBreadcrumbItems.Remove(CurrentExtraPage);
+					foreach (var i in ExtraBreadcrumbItems)
+						MainBreadcrumbItems.Add(i);
+					ExtraBreadcrumbItems.Clear();
+					Navigate(CurrentExtraPage, 0);
+					CurrentExtraPage = null;
+					ContentExtra.Navigate(typeof(Empty));
+				});
 			}
 			else
 			{
 				if (MainBreadcrumbItems.Count > 1)
 				{
-					var main = MainBreadcrumbItems.First();
-					var extra = MainBreadcrumbItems.Skip(1).ToList();
+					_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+					{
+						var main = MainBreadcrumbItems.First();
+						var extra = MainBreadcrumbItems.Skip(1).ToList();
 
-					MainBreadcrumbItems.Clear();
+						MainBreadcrumbItems.Clear();
 
-					CurrentMainPage = main;
-					MainBreadcrumbItems.Add(main);
-					ContentMain.Navigate(CurrentMainPage.Page, new ModernPageTabWrapper(this, main.Parameter));
+						CurrentMainPage = main;
+						MainBreadcrumbItems.Add(main);
+						ContentMain.Navigate(CurrentMainPage.Page, new ModernPageTabWrapper(this, main.Parameter));
 
-					foreach (var i in extra)
-						ExtraBreadcrumbItems.Add(i);
-					CurrentExtraPage = ExtraBreadcrumbItems.Last();
-					ContentExtra.Navigate(CurrentExtraPage.Page, new ModernPageTabWrapper(this, CurrentExtraPage.Parameter));
+						foreach (var i in extra)
+							ExtraBreadcrumbItems.Add(i);
+						CurrentExtraPage = ExtraBreadcrumbItems.Last();
+						ContentExtra.Navigate(CurrentExtraPage.Page, new ModernPageTabWrapper(this, CurrentExtraPage.Parameter));
+					});
 				}
 			}
 		}

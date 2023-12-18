@@ -121,9 +121,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "Nullable": {
         "type": "Direct",
@@ -691,9 +691,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
@@ -753,9 +753,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
@@ -815,9 +815,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
@@ -877,9 +877,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
@@ -939,9 +939,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
@@ -1001,9 +1001,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
@@ -1063,9 +1063,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2151.40, )",
-        "resolved": "1.0.2151.40",
-        "contentHash": "OPWjZVJvYhDm4Jq+7QdsQfEgv2QHrkaqUkdk4i9FahatsOJ4cIaVLfnDHGsKjcxGqCVX+Lo4mi4Lqh5hcgfsdw=="
+        "requested": "[1.0.2210.55, )",
+        "resolved": "1.0.2210.55",
+        "contentHash": "pb5kuzl8TQm+ztzOnOm/qX75DXXjOQMdKlcs2hyizbZobiGzJcMcIhpmMmgg1cTGYwof2fVhlC809YScvDbm3w=="
       },
       "TenMica": {
         "type": "Direct",
