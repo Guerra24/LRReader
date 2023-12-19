@@ -173,6 +173,9 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
+		[ObservableProperty]
+		private bool _useAutoplay;
+
 		public event Action? RebuildReader;
 
 		[ObservableProperty]

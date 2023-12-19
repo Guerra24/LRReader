@@ -29,7 +29,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public event GoBackTabEvent? GoBack;
 
-		public virtual void Unload()
+		public virtual void Dispose()
 		{
 		}
 

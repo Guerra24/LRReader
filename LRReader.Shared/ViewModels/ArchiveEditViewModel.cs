@@ -195,7 +195,7 @@ namespace LRReader.Shared.ViewModels
 					}
 					else
 					{
-						WeakReferenceMessenger.Default.Send(new ShowNotification("Error while fetching tags", result.error, 0));
+						WeakReferenceMessenger.Default.Send(new ShowNotification("Error while fetching tags", result.error, 0, NotificationSeverity.Error));
 					}
 				}
 				Saving = false;

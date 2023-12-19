@@ -8,6 +8,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:tools="using:LRReader.UWP.Views.Content.Tools"
+	xmlns:content="using:LRReader.UWP.Views.Content"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
@@ -42,6 +43,7 @@
 							IsHitTestVisible="False" IsTabStop="False" />
 					</StackPanel>
 				</controls:ModernExpander>
+				<!--
 				<controls:ModernInput
 					x:Uid="/Settings/Server/Upload"
 					Command="{x:Bind Data.OpenWebTabCommand}"
@@ -67,6 +69,42 @@
 					Command="{x:Bind Data.OpenWebTabCommand}"
 					CommandParameter="/logs" Glyph="&#xeE94;" IsButton="True"
 					RightGlyph="&#xE8A7;" />
+				-->
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Upload" Click="PageButton_Click" Glyph="&#xE898;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Upload" Page="content:WebContent" Parameter="/upload" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Batch" Click="PageButton_Click" Glyph="&#xE9f5;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Batch" Page="content:WebContent" Parameter="/batch" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Settings" Click="PageButton_Click" Glyph="&#xE713;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Settings" Page="content:WebContent" Parameter="/config" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/PluginSettings" Click="PageButton_Click" Glyph="&#xEA86;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/PluginSettings" Page="content:WebContent" Parameter="/config/plugins" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Logs" Click="PageButton_Click" Glyph="&#xeE94;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/Server/Logs" Page="content:WebContent" Parameter="/logs" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
 				<!--
 				<controls:ModernInput
 					x:Uid="/Tools/MainPage" Click="PageButton_Click" Glyph="&#xEC7A;"
@@ -137,6 +175,70 @@
 						</Button.Flyout>
 					</Button>
 				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="Windows Settings" Visibility="{x:Bind Data.SettingsManager.Profile.Integration, Converter={StaticResource BoolToVisibilityConverter}}">
+				<controls:ModernInput
+					Title="Content folder location"
+					Description="{x:Bind Data.ContentFolder, Mode=OneWay}"
+					Glyph="&#xE8B7;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}"
+					ToolTipService.ToolTip="Where LANraragi looks for archives on your machine">
+					<Button Content="Browse" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Thumbnail folder location"
+					Description="{x:Bind Data.ThumbnailFolder, Mode=OneWay}"
+					Glyph="&#xE8B9;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}"
+					ToolTipService.ToolTip="Defaults to a subfolder in the content folder if not set">
+					<Button Content="Browse" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Network port" Description="Port of your machine the server will run on" Glyph="&#xE968;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<muxc:NumberBox
+						MinWidth="120"
+						IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}"
+						Maximum="65535" Minimum="1" SpinButtonPlacementMode="Inline"
+						Value="{x:Bind Data.NetworkPort, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Start server automatically" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.StartServerAutomatically, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Start on Windows boot" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.StartWithWindows, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Force Debug Mode" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.ForceDebugMode, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="Use WSL2" Description="LANraragi defaults to using WSL1 for wider compatibility and better performance for filesystem access between the Distro and Windows." IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<ToggleSwitch IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" IsOn="{x:Bind Data.UseWSL2, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Repair install" Description="If LANraragi fails to launch due to a broken WSL distro, you can try repairing it" Glyph="&#xEC7A;"
+					IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}">
+					<Button Content="Repair" IsEnabled="{x:Bind Data.KarenStatus, Mode=OneWay}" >
+						<Button.Flyout>
+							<Flyout x:Name="RepairFlyout">
+								<StackPanel>
+									<TextBlock Text="This will reinstall the distro and reload the application" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
+									<Button
+											Content="Yes, repair and reload" HorizontalAlignment="Center" Click="Repair_Click"
+											Command="{x:Bind Data.RepairCommand}" />
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</controls:ModernInput>
+				<muxc:InfoBar
+					Title="Unable to connect" Message="Make sure LANraragi for Windows is running" IsClosable="False" Severity="Warning"
+					IsOpen="{x:Bind Data.KarenStatus, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<muxc:InfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</muxc:InfoBar.Transitions>
+				</muxc:InfoBar>
 			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>

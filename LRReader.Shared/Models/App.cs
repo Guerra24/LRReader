@@ -1,17 +1,16 @@
 ﻿using System;
+using LRReader.Shared.Converters;
 using Newtonsoft.Json;
 
 namespace LRReader.Shared.Models
 {
-	public interface ICustomTab
+	public interface ICustomTab : IDisposable
 	{
 		object CustomTabControl { get; set; }
 
 		string CustomTabId { get; set; }
 
 		bool IsClosable { get; set; }
-
-		void Unload();
 
 		bool BackRequested();
 	}
@@ -47,10 +46,10 @@ namespace LRReader.Shared.Models
 		public string Link { get; set; } = null!;
 	}
 
-	public struct UpdateChangelog
+	public record UpdateChangelog
 	{
-		public string Name { get; set; }
-		public string Content { get; set; }
+		public string Name { get; set; } = null!;
+		public string Content { get; set; } = null!;
 	}
 
 	public class DeduplicatorMetadata

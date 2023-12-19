@@ -256,8 +256,20 @@ Por último, active la opción de omitir las miniaturas que faltan y vuelva a in
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Paso</value>
   </data>
+  <data name="Deduplicator.SxSFileName.Text" xml:space="preserve">
+    <value>Nombre del archivo</value>
+  </data>
+  <data name="Deduplicator.SxSFileSize.Text" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="Deduplicator.SxSFileType.Text" xml:space="preserve">
+    <value>Tipo de archivo</value>
+  </data>
   <data name="Deduplicator.SxSImages.Text" xml:space="preserve">
     <value>Imágenes</value>
+  </data>
+  <data name="Deduplicator.SxSLastRead.Text" xml:space="preserve">
+    <value>Última lectura</value>
   </data>
   <data name="Deduplicator.SxSPages.Text" xml:space="preserve">
     <value>Páginas</value>

@@ -33,7 +33,7 @@ namespace LRReader.UWP.Views.Main
 
 		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			Splash.SetValue(Canvas.LeftProperty, e.NewSize.Width / 2d - Splash.ActualWidth / 2d - 67);
+			Splash.SetValue(Canvas.LeftProperty, e.NewSize.Width / 2d - Splash.ActualWidth / 2d - 68 - 8);
 			Splash.SetValue(Canvas.TopProperty, e.NewSize.Height / 2d - Splash.ActualHeight / 2d - 58);
 		}
 

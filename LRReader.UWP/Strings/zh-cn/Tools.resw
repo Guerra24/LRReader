@@ -256,8 +256,20 @@
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>步骤</value>
   </data>
+  <data name="Deduplicator.SxSFileName.Text" xml:space="preserve">
+    <value>File name</value>
+  </data>
+  <data name="Deduplicator.SxSFileSize.Text" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="Deduplicator.SxSFileType.Text" xml:space="preserve">
+    <value>File type</value>
+  </data>
   <data name="Deduplicator.SxSImages.Text" xml:space="preserve">
     <value>图片</value>
+  </data>
+  <data name="Deduplicator.SxSLastRead.Text" xml:space="preserve">
+    <value>Last read</value>
   </data>
   <data name="Deduplicator.SxSPages.Text" xml:space="preserve">
     <value>页数</value>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using Size = System.Drawing.Size;
 
@@ -9,17 +10,21 @@ namespace LRReader.Shared.Services
 
 		public abstract Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? image = default);
 
-		public virtual Task<Size> GetImageSize(byte[]? bytes)
+		public virtual async Task<Size> GetImageSize(byte[]? bytes)
 		{
-			return Task.Run(() =>
+			if (bytes == null)
+				return Size.Empty;
+			using var ms = new MemoryStream(bytes);
+			try
 			{
-				if (bytes == null)
-					return Size.Empty;
-				var info = Image.Identify(bytes);
+				var info = await Image.IdentifyAsync(ms).ConfigureAwait(false);
 				if (info != null)
 					return new Size(info.Width, info.Height);
-				return Size.Empty;
-			});
+			}
+			catch
+			{
+			}
+			return Size.Empty;
 		}
 	}
 }

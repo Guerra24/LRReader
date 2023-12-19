@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommunityToolkit.WinUI.Helpers;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
-using Microsoft.Toolkit.Uwp.UI.Helpers;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -97,6 +97,11 @@ namespace LRReader.UWP.Views.Content.Settings
 		private void RegenThumb_Click(object sender, RoutedEventArgs e)
 		{
 			RegenThumbsFlyout.Hide();
+		}
+
+		private void Repair_Click(object sender, RoutedEventArgs e)
+		{
+			RepairFlyout.Hide();
 		}
 	}
 }

@@ -26,6 +26,7 @@ namespace LRReader.UWP.Views.Dialogs
 		public new string Name { get => ProfileName.Text; set => ProfileName.Text = value; }
 		public string Address { get => ProfileServerAddress.Text; set => ProfileServerAddress.Text = value; }
 		public string ApiKey { get => ProfileServerApiKey.Password; set => ProfileServerApiKey.Password = value; }
+		public bool Integration { get => KarenIntegration.IsOn; set => KarenIntegration.IsOn = value; }
 
 		public new async Task<IDialogResult> ShowAsync() => (IDialogResult)(int)await base.ShowAsync();
 
@@ -46,6 +47,7 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			bool allow = true;
 			Command.Visibility = Visibility.Collapsed;
+			KarenStack.Visibility = Visibility.Collapsed;
 			ProfileError.Text = "";
 			if (string.IsNullOrEmpty(ProfileServerAddress.Text))
 			{
@@ -62,6 +64,7 @@ namespace LRReader.UWP.Views.Dialogs
 				ProfileError.Text = lang.GetString("ServerProfile/ErrorLocalHost").AsFormat("\n");
 				Command.Visibility = Visibility.Visible;
 				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n=\"{((UWPlatformService)Service.Platform).GetPackageFamilyName()}\"";
+				KarenStack.Visibility = Visibility.Visible;
 			}
 			IsPrimaryButtonEnabled = allow && ValidateProfileName();
 		}

@@ -81,6 +81,15 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(CommandParameterProperty, value);
 		}
 
+		public GridLength RightColumnWidth
+		{
+			get => (GridLength)GetValue(RightColumnWidthProperty);
+			set
+			{
+				SetValue(RightColumnWidthProperty, value);
+			}
+		}
+
 		public event RoutedEventHandler? Click;
 
 		protected override void OnPointerEntered(PointerRoutedEventArgs e)
@@ -148,7 +157,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public static readonly DependencyProperty ControlProperty = DependencyProperty.Register("Control", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
-		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("DescriptionProperty", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
+		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ModernInput), new PropertyMetadata(""));
 		public static readonly DependencyProperty InputHorizontalAlignmentProperty = DependencyProperty.Register("InputHorizontalAlignment", typeof(HorizontalAlignment), typeof(ModernInput), new PropertyMetadata(HorizontalAlignment.Right));
 		public static readonly DependencyProperty TextMarginProperty = DependencyProperty.Register("TextMargin", typeof(Thickness), typeof(ModernInput), new PropertyMetadata(new Thickness(0)));
 		public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register("Glyph", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
@@ -157,5 +166,6 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty RightGlyphProperty = DependencyProperty.Register("RightGlyph", typeof(string), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(ModernInput), new PropertyMetadata(null));
 		public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(ModernInput), new PropertyMetadata(null));
+		public static readonly DependencyProperty RightColumnWidthProperty = DependencyProperty.Register("RightColumnWidth", typeof(GridLength), typeof(ModernInput), new PropertyMetadata(GridLength.Auto));
 	}
 }

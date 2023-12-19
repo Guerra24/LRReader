@@ -6,24 +6,28 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Items;
-using Microsoft.Toolkit.Uwp.UI;
-using Microsoft.Toolkit.Uwp.UI.Animations;
+using Windows.Devices.Display.Core;
 using Windows.Devices.Input;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
@@ -41,10 +45,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _opened;
 		private bool _focus = true;
 		private bool _changePage;
+		private bool _changingPage;
 		private float _lastZoom;
 		private double _fitAgainstFixedWidth;
+		private bool _handleDoubleTap;
+		private bool _overlayDelayOpen;
 
 		private bool _transition;
+
+		private TimeSpan _previousTime = TimeSpan.Zero;
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
@@ -53,6 +62,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 			this.InitializeComponent();
 			ReaderBackground.SetVisualOpacity(0);
 			ScrollViewer.SetVisualOpacity(0);
+			/*
+			ElementCompositionPreview.SetIsTranslationEnabled(ReaderThumbnailOverlay, true);
+			ElementCompositionPreview.GetElementVisual(ReaderThumbnailOverlay).Properties.InsertVector3("Translation", new Vector3(0, 317, 0));
+			*/
 
 			Data = (ArchivePageViewModel)DataContext;
 			Data.ZoomChangedEvent += FitImages;
@@ -139,7 +152,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			_focus = true;
 			FocusReader();
+
 			_transition = false;
+			await PlayStop(Service.Settings.Autoplay);
 		}
 
 		public async void CloseReader()
@@ -147,6 +162,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (_transition)
 				return;
 			_transition = true;
+			await PlayStop(false);
 			var animate = Service.Platform.AnimationsEnabled;
 			ConnectedAnimation? animLeft = null, animRight = null;
 
@@ -190,6 +206,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			leftTarget = leftTarget.Clamp(0, count - 1);
 			rightTarget = rightTarget.Clamp(0, count - 1);
+			await ImagesGrid.SmoothScrollIntoViewWithIndexAsync(leftTarget, disableAnimation: false);
 			if (animate)
 			{
 				var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail");
@@ -212,6 +229,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_wasNew = await Data.SaveReaderData(_wasNew);
 
 			_transition = false;
+			_changePage = false;
 		}
 
 		private async void NextArchive() => await NextArchiveAsync();
@@ -452,6 +470,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
+			_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
 			{
 				if (pointerPoint.Properties.IsXButton1Pressed)
@@ -472,11 +491,32 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_changePage = pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed;
 		}
 
-		private void ScrollViewer_RightTapped(object sender, RightTappedRoutedEventArgs e) => HandleTapped(e.GetPosition(ScrollViewer));
+		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+		{
+			if (!_handleDoubleTap)
+				return;
+			var point = e.GetPosition(ScrollViewer);
+			double distance = ScrollViewer.ActualWidth / 6.0;
+			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+			{
+				var AppView = ApplicationView.GetForCurrentView();
+				if (AppView.IsFullScreenMode)
+				{
+					AppView.ExitFullScreenMode();
+				}
+				else
+				{
+					AppView.TryEnterFullScreenMode();
+				}
+				e.Handled = true;
+			}
+		}
 
-		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e) => HandleTapped(e.GetPosition(ScrollViewer));
+		private void ScrollViewer_RightTapped(object sender, RightTappedRoutedEventArgs e) => e.Handled = HandleTapped(e.GetPosition(ScrollViewer));
 
-		private void HandleTapped(Point point)
+		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e) => e.Handled = HandleTapped(e.GetPosition(ScrollViewer));
+
+		private bool HandleTapped(Point point)
 		{
 			if (_changePage)
 			{
@@ -484,13 +524,16 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (point.X < distance)
 				{
 					PrevPage();
+					return true;
 				}
 				else if (point.X > ScrollViewer.ActualWidth - distance)
 				{
 					NextPage();
+					return true;
 				}
 				_changePage = false;
 			}
+			return false;
 		}
 
 		private void ReaderControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
@@ -503,18 +546,30 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void NextPage(bool ignore = false)
 		{
+			_changingPage = true;
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayBeforeChangeDelay));
 			if (Data.ReadRTL && !ignore)
 				await GoLeft();
 			else
 				await GoRight();
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayAfterChangeDelay));
+			_changingPage = false;
 		}
 
 		private async void PrevPage(bool ignore = false)
 		{
+			_changingPage = true;
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayBeforeChangeDelay));
 			if (Data.ReadRTL && !ignore)
 				await GoRight();
 			else
 				await GoLeft();
+			if (Data.UseAutoplay)
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayAfterChangeDelay));
+			_changingPage = false;
 		}
 
 		private async Task GoRight()
@@ -568,7 +623,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 			await Service.Images.GetImageCached(set.RightImage);
 		}
 
-		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(Data.UseVerticalReader);
+		private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			FitImages(Data.UseVerticalReader);
+			ReaderThumbnailOverlay.Width = e.NewSize.Width;
+			//LeftHitTargetOverlay.Width = RightHitTargetOverlay.Width = ScrollViewer.ActualWidth / 6.0;
+		}
 
 		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(true);
 
@@ -622,6 +682,42 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			else
 				await ReaderImage.ResizeHeight((int)Math.Round(ScrollViewer.ExtentHeight));
+		}
+
+		private void CompositionTarget_Rendering(object sender, object e)
+		{
+			var timings = (RenderingEventArgs)e;
+			var delta = timings.RenderingTime.TotalSeconds - _previousTime.TotalSeconds;
+			if (delta > 0.033)
+				delta = 0;
+			if (!_changingPage)
+			{
+				if (ScrollViewer.VerticalOffset >= ScrollViewer.ScrollableHeight)
+				{
+					NextPage();
+				}
+				else
+				{
+					var yOffset = ScrollViewer.VerticalOffset + Service.Settings.AutoplaySpeed * delta * _lastZoom;
+					ScrollViewer.ChangeView(null, yOffset, null, true);
+				}
+			}
+			_previousTime = timings.RenderingTime;
+		}
+
+		[RelayCommand]
+		private async Task PlayStop(bool state)
+		{
+			// Handle user initiated mouse action (disable autoplay)
+			Data.UseAutoplay = state;
+			if (state)
+			{
+				ScrollViewer.ChangeView(null, 0, null, true);
+				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayStartDelay));
+				CompositionTarget.Rendering += CompositionTarget_Rendering;
+			}
+			else
+				CompositionTarget.Rendering -= CompositionTarget_Rendering;
 		}
 
 		private async void DownloadButton_Click(object sender, RoutedEventArgs e)
@@ -681,37 +777,33 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
 			{
 				item.Phase0();
+				args.RegisterUpdateCallback(Phase1);
 			}
-			args.RegisterUpdateCallback(Phase1);
 			args.Handled = true;
 		}
 
 		private void Phase1(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
 			{
 				item.Phase1((ImagePageSet)args.Item);
+				args.RegisterUpdateCallback(Phase2);
 			}
-			args.RegisterUpdateCallback(Phase2);
 		}
 
 		private void Phase2(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
 			{
 				item.Phase2();
+				args.RegisterUpdateCallback(Phase3);
 			}
-			args.RegisterUpdateCallback(Phase3);
 		}
 
 		private void Phase3(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is ArchiveImage item)
-			{
 				item.Phase3();
-			}
 		}
 
 		public void RemoveEvent()
@@ -743,5 +835,54 @@ namespace LRReader.UWP.Views.Tabs.Content
 			return targetAnim;
 		}
 
+		private async void Trigger_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			if (!Data.ShowReader)
+				return;
+			_overlayDelayOpen = true;
+			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
+			if (_overlayDelayOpen)
+			{
+				ReaderThumbnailOverlay.IsOpen = true;
+				await Task.Delay(50);
+				OverlayThumbnails.SelectedIndex = Data.ReaderContent.Page;
+				await OverlayThumbnails.SmoothScrollIntoViewWithIndexAsync(Data.ReaderContent.Page, ScrollItemPlacement.Center);
+			}
+		}
+
+		private void Trigger_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			if (!_overlayDelayOpen)
+				return;
+			_overlayDelayOpen = false;
+		}
+
+		private async void OverlayThumbnails_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			var readerSet = Data.ArchiveImagesReader.FirstOrDefault(s => s.Page >= Data.ArchiveImages.IndexOf((ImagePageSet)e.ClickedItem));
+			if (readerSet == null)
+				return;
+
+			int index = Data.ArchiveImagesReader.IndexOf(readerSet);
+
+			if (Data.UseVerticalReader)
+			{
+				await Task.Delay(100);
+				var element = ReaderVertical.GetOrCreateElement(index);
+				element.UpdateLayout();
+				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = true, VerticalAlignmentRatio = 0f });
+			}
+			else
+			{
+				_changingPage = true;
+
+				Data.ReaderIndex = index;
+				await ReaderImage.FadeOutPage();
+				ScrollViewer.ChangeView(null, 0, null, true);
+				await ChangePage();
+
+				_changingPage = false;
+			}
+		}
 	}
 }

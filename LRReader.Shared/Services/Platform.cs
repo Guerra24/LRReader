@@ -34,6 +34,7 @@ namespace LRReader.Shared.Services
 		public abstract Version Version { get; }
 		public abstract bool AnimationsEnabled { get; }
 		public abstract uint HoverTime { get; }
+		public abstract bool DualScreen { get; }
 
 		public bool Active { get; protected set; }
 
@@ -103,6 +104,8 @@ namespace LRReader.Shared.Services
 
 		public override uint HoverTime => 300;
 
+		public override bool DualScreen => false;
+
 		public override Task<bool> OpenInBrowser(Uri uri)
 		{
 			return Task.Run(() => false);
@@ -112,7 +115,7 @@ namespace LRReader.Shared.Services
 
 		public override void ChangeTheme(AppTheme theme) { }
 
-		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content) { return Task.Run(() => IDialogResult.None); }
+		public override Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content) => Task.FromResult(IDialogResult.None);
 
 		public override void CopyToClipboard(string text) { }
 

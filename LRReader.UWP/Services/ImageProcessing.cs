@@ -1,14 +1,13 @@
 ﻿#nullable enable
 using System;
-using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using LRReader.Shared.Services;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using Size = System.Drawing.Size;
 
 namespace LRReader.UWP.Services
 {
@@ -35,49 +34,46 @@ namespace LRReader.UWP.Services
 				image.DecodePixelWidth = decodeWidth;
 			if (decodeHeight > 0)
 				image.DecodePixelHeight = decodeHeight;
-			using (var ms = new MemoryStream(bytes))
+
+			using var ms = new MemoryStream(bytes);
+			var ras = ms.AsRandomAccessStream();
+			if (transcode)
 			{
-				var stream = ms.AsRandomAccessStream();
-				//stream.Seek(0);
-				if (transcode)
+				await semaphore.WaitAsync();
+				try
 				{
-					await semaphore.WaitAsync();
-					try
+					var decoder = await BitmapDecoder.CreateAsync(ras);
+					using var softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+					SoftwareBitmap? newSource = null;
+					if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
+						newSource = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+					using (var converted = new InMemoryRandomAccessStream())
 					{
-						SoftwareBitmap softwareBitmap;
-						var decoder = await BitmapDecoder.CreateAsync(stream);
-						using (softwareBitmap = await decoder.GetSoftwareBitmapAsync())
-						{
-							if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
-								softwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-							using (var converted = new InMemoryRandomAccessStream())
-							{
-								var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
-								encoder.SetSoftwareBitmap(softwareBitmap);
-								await encoder.FlushAsync();
-								await image.SetSourceAsync(converted);
-							}
-						}
+						var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
+						encoder.SetSoftwareBitmap(newSource ?? softwareBitmap);
+						await encoder.FlushAsync();
+						await image.SetSourceAsync(converted);
 					}
-					catch (Exception)
-					{
-						return null;
-					}
-					finally
-					{
-						semaphore.Release();
-					}
+					newSource?.Dispose();
 				}
-				else
+				catch
 				{
-					try
-					{
-						await image.SetSourceAsync(stream);
-					}
-					catch (Exception)
-					{
-						return null;
-					}
+					return null;
+				}
+				finally
+				{
+					semaphore.Release();
+				}
+			}
+			else
+			{
+				try
+				{
+					await image.SetSourceAsync(ras);
+				}
+				catch
+				{
+					return null;
 				}
 			}
 			return image;
@@ -91,20 +87,18 @@ namespace LRReader.UWP.Services
 				return Size.Empty;
 			var size = await base.GetImageSize(bytes);
 			if (size.IsEmpty)
-				using (var stream = new InMemoryRandomAccessStream())
+			{
+				using var ms = new MemoryStream(bytes);
+				try
 				{
-					await stream.WriteAsync(bytes.AsBuffer());
-					stream.Seek(0);
-					try
-					{
-						var decoder = await BitmapDecoder.CreateAsync(stream);
-						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
-					}
-					catch (Exception)
-					{
-						return new Size(0, 0);
-					}
+					var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
+					return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
 				}
+				catch
+				{
+					return new Size(0, 0);
+				}
+			}
 			return size;
 		}
 

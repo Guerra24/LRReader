@@ -1,6 +1,8 @@
-﻿using LRReader.Shared.ViewModels;
+﻿using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -63,10 +65,22 @@ namespace LRReader.UWP.Views.Main
 
 		private void UpdateSplash()
 		{
-			Splash.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.X);
-			Splash.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Y);
-			Splash.Width = splashScreen.ImageLocation.Width;
-			Splash.Height = splashScreen.ImageLocation.Height;
+			var dpi = DisplayInformation.GetForCurrentView();
+			var threshold = dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel - 10;
+			if (Service.Platform.DualScreen && ActualWidth > threshold)
+			{
+				Splash.SetValue(Canvas.LeftProperty, 0);
+				Splash.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Y);
+				Splash.Width = ActualWidth / 2;
+				Splash.Height = splashScreen.ImageLocation.Height;
+			}
+			else
+			{
+				Splash.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.X);
+				Splash.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Y);
+				Splash.Width = splashScreen.ImageLocation.Width;
+				Splash.Height = splashScreen.ImageLocation.Height;
+			}
 		}
 
 	}

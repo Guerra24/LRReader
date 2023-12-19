@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
-	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+	xmlns:converters="using:CommunityToolkit.WinUI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -107,6 +107,17 @@
 								</Grid.ColumnDefinitions>
 								<TextBlock x:Uid="/Tabs/Archive/Settings/VerticalReader" VerticalAlignment="Center" />
 								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.UseVerticalReader, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Uid="/Tabs/Archive/Settings/Autoplay" VerticalAlignment="Center" />
+								<ToggleButton
+									x:Name="AutoplayButton" Grid.Column="1" Checked="AutoplayButton_Checked" Unchecked="AutoplayButton_Unchecked"
+									Command="{x:Bind TabContent.PlayStopCommand}" IsChecked="{x:Bind TabContent.Data.UseAutoplay, Mode=TwoWay}"
+									CommandParameter="{x:Bind AutoplayButton.IsChecked, Mode=OneWay}" />
 							</Grid>
 						</StackPanel>
 					</Flyout>

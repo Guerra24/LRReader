@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Extensions;
+using LRReader.Shared.Models;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 
@@ -16,6 +18,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly ArchivesService Archives;
 		private readonly UpdatesService Updates;
 		private readonly ISettingsStorageService SettingsStorage;
+		private readonly IKarenService Karen;
 
 		[ObservableProperty]
 		private string _status = "";
@@ -32,7 +35,7 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private bool _animate;
 
-		public LoadingPageViewModel(SettingsService settings, PlatformService platform, ApiService api, ArchivesService archives, UpdatesService updates, ISettingsStorageService settingsStorage)
+		public LoadingPageViewModel(SettingsService settings, PlatformService platform, ApiService api, ArchivesService archives, UpdatesService updates, ISettingsStorageService settingsStorage, IKarenService karen)
 		{
 			Settings = settings;
 			Platform = platform;
@@ -40,6 +43,7 @@ namespace LRReader.Shared.ViewModels
 			Archives = archives;
 			Updates = updates;
 			SettingsStorage = settingsStorage;
+			Karen = karen;
 		}
 
 		private async Task Reload(double time = 5)
@@ -63,7 +67,7 @@ namespace LRReader.Shared.ViewModels
 				{
 					Updating = true;
 					// Set wasUpdate in settingstorage
-					SettingsStorage.StoreObjectLocal("WasUpdated", true);
+					SettingsStorage.StoreObjectLocal(true, "WasUpdated");
 					var result = await Updates.DownloadAndInstall(new Progress<double>(progress => Progress = progress), update);
 					Updating = false;
 					if (!result.Result)
@@ -99,10 +103,13 @@ namespace LRReader.Shared.ViewModels
 		[RelayCommand]
 		private async Task Connect()
 		{
+			if (!Settings.Profile.IsLocalHost || !Settings.Profile.Integration)
+				Karen.Disconnect();
 			Status = "";
 			StatusSub = "";
 			Retry = false;
 			Active = true;
+			int retires = 0;
 			if (!Api.RefreshSettings(Settings.Profile))
 			{
 				Status = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddress");
@@ -110,14 +117,30 @@ namespace LRReader.Shared.ViewModels
 				await Reload();
 				return;
 			}
+		Retry:
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
 			{
-				var address = Settings.Profile.ServerAddress;
-				if (address.Contains("127.0.0.") || address.Contains("localhost"))
+				if (Settings.Profile.IsLocalHost)
 				{
-					Status = Platform.GetLocalizedString("Pages/LoadingPage/NoConnectionLocalHost");
-					StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/NoConnectionLocalHostSub");
+					if (Karen.IsConnected && retires < 3)
+					{
+						Active = false;
+						Status = "Starting Server... Please wait";
+						var data = new Dictionary<string, object>();
+						data["PacketType"] = (int)PacketType.InstanceStart;
+						await Karen.SendMessage(data);
+						await Task.Delay(TimeSpan.FromSeconds(2.5));
+						Active = true;
+						Status = "";
+						retires++;
+						goto Retry;
+					}
+					else
+					{
+						Status = Platform.GetLocalizedString("Pages/LoadingPage/NoConnectionLocalHost");
+						StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/NoConnectionLocalHostSub");
+					}
 				}
 				else
 					Status = Platform.GetLocalizedString("Pages/LoadingPage/NoConnection");

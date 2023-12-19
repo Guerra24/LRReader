@@ -38,6 +38,8 @@ namespace LRReader.Avalonia.Services
 
 		public override uint HoverTime => 500;
 
+		public override bool DualScreen => false;
+
 		public override void ChangeTheme(AppTheme theme)
 		{
 			throw new NotImplementedException();

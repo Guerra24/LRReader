@@ -2,12 +2,12 @@
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Animations;
+using CommunityToolkit.WinUI.Media;
 using LRReader.Shared.Extensions;
-using Microsoft.Toolkit.Uwp.UI;
-using Microsoft.Toolkit.Uwp.UI.Animations;
-using Microsoft.Toolkit.Uwp.UI.Media;
 using Windows.Foundation;
-
+using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
 
 namespace LRReader.UWP.Extensions
 {
@@ -34,9 +35,31 @@ namespace LRReader.UWP.Extensions
 
 		public static void SetVisualOpacity(this UIElement element, float opacity) => ElementCompositionPreview.GetElementVisual(element).Opacity = opacity;
 
+		//public static void SetVisualTranslation(this UIElement element, Vector3 transform) => ElementCompositionPreview.GetElementVisual(element).TransformMatrix = Matrix4x4.CreateTranslation(transform);
+
 		public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
 		public static Task StartAsync(this UIElement element, AnimationBuilder animation) => animation.StartAsync(element);
 
+	}
+
+	public class TwoPaneViewExt : DependencyObject
+	{
+		public static readonly DependencyProperty EnableDualScreenProperty = DependencyProperty.RegisterAttached("EnableDualScreen", typeof(bool), typeof(TwoPaneView), new PropertyMetadata(false));
+
+		public static void SetEnableDualScreen(TwoPaneView pane, bool state)
+		{
+			if (state)
+			{
+				var dpi = DisplayInformation.GetForCurrentView();
+				pane.MinWideModeWidth = dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel - 10;
+			}
+			else
+				pane.MinWideModeWidth = double.MaxValue;
+
+			pane.SetValue(EnableDualScreenProperty, state);
+		}
+
+		public static bool GetEnableDualScreen(TwoPaneView pane) => (bool)pane.GetValue(EnableDualScreenProperty);
 	}
 
 	public class GridViewExt : DependencyObject
@@ -101,7 +124,7 @@ namespace LRReader.UWP.Extensions
 				}
 				else
 				{*/
-					Effects.SetShadow(element, shadow.DropShadow);
+				Effects.SetShadow(element, shadow.DropShadow);
 				//}
 			}
 		}
@@ -110,7 +133,7 @@ namespace LRReader.UWP.Extensions
 
 		private static void Grid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			var item = (GridViewItem)args.ItemContainer;
+			var item = args.ItemContainer;
 			var shadow = (Shadow)sender.GetValue(ModernShadowProperty);
 			if (item.GetValue(ModernShadowProperty) == null)
 			{
@@ -126,7 +149,7 @@ namespace LRReader.UWP.Extensions
 				}
 				else
 				{*/
-					Effects.SetShadow(item, shadow.DropShadow);
+				Effects.SetShadow(item, shadow.DropShadow);
 				//}
 			}
 		}
@@ -148,7 +171,7 @@ namespace LRReader.UWP.Extensions
 			/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 				ThemeShadow = new ThemeShadow();
 			else*/
-				DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.16 };
+			DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.16 };
 		}
 	}
 

@@ -3,13 +3,12 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace LRReader.UWP.Installer
 {
 	public static class CertUtil
 	{
-		private static X509Store Store;
+		private static X509Store Store = null!;
 
 		public static void Open(OpenFlags flags = OpenFlags.ReadOnly)
 		{

@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:items="using:LRReader.UWP.Views.Items"
-	xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+	xmlns:media="using:CommunityToolkit.WinUI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services">
 
@@ -617,6 +617,7 @@
 	</Style>
 
 	<Style x:Key="DefaultModernInputStyle" TargetType="controls:ModernInput">
+		<Setter Property="RightColumnWidth" Value="Auto" />
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 		<Setter Property="Margin" Value="0" />
 		<Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
@@ -654,7 +655,7 @@
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition />
-							<ColumnDefinition MaxWidth="400" />
+							<ColumnDefinition MaxWidth="400" Width="{x:Bind RightColumnWidth, Mode=OneWay}" />
 						</Grid.ColumnDefinitions>
 
 						<Grid.BackgroundTransition>

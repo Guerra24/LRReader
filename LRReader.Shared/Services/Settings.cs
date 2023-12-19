@@ -12,6 +12,13 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.UI.Xaml.Controls;
+
+#endif
 
 namespace LRReader.Shared.Services
 {
@@ -31,7 +38,7 @@ namespace LRReader.Shared.Services
 			set
 			{
 				if (value != null)
-					SettingsStorage.StoreObjectLocal("ProfileUID", value.UID);
+					SettingsStorage.StoreObjectLocal(value.UID, "ProfileUID");
 				SetProperty(ref _profile, value);
 			}
 		}
@@ -45,212 +52,255 @@ namespace LRReader.Shared.Services
 		}
 		public int DefaultZoom
 		{
-			get => SettingsStorage.GetObjectLocal("DefaultZoom", 100);
+			get => SettingsStorage.GetObjectLocal(100);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("DefaultZoom", value);
-				OnPropertyChanged("DefaultZoom");
+				SettingsStorage.StoreObjectLocal(value);
+				OnPropertyChanged();
 			}
 		}
 		public bool ReadRTL
 		{
-			get => SettingsStorage.GetObjectLocal("ReadRTL", false);
+			get => SettingsStorage.GetObjectLocal(false);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("ReadRTL", value);
+				SettingsStorage.StoreObjectLocal(value);
 				Service.Events.RebuildReaderImagesSet();
 			}
 		}
 		public bool TwoPages
 		{
-			get => SettingsStorage.GetObjectLocal("TwoPages", false);
+			get => SettingsStorage.GetObjectLocal(false);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("TwoPages", value);
-				OnPropertyChanged("TwoPages");
+				SettingsStorage.StoreObjectLocal(value);
+				OnPropertyChanged();
 				Service.Events.RebuildReaderImagesSet();
 			}
 		}
 		public bool BookmarkReminder
 		{
-			get => SettingsStorage.GetObjectRoamed("BookmarkReminder", true);
+			get => SettingsStorage.GetObjectRoamed(true);
 			set
 			{
-				SettingsStorage.StoreObjectRoamed("BookmarkReminder", value);
-				OnPropertyChanged("BookmarkReminder");
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
 			}
 		}
 		public BookmarkReminderMode BookmarkReminderMode
 		{
-			get => (BookmarkReminderMode)SettingsStorage.GetObjectRoamed("BookmarkReminderMode", (int)BookmarkReminderMode.New);
-			set => SettingsStorage.StoreObjectRoamed("BookmarkReminderMode", (int)value);
+			get => (BookmarkReminderMode)SettingsStorage.GetObjectRoamed((int)BookmarkReminderMode.New);
+			set => SettingsStorage.StoreObjectRoamed((int)value);
 		}
 		public bool RemoveBookmark
 		{
-			get => SettingsStorage.GetObjectRoamed("RemoveBookmark", true);
-			set => SettingsStorage.StoreObjectRoamed("RemoveBookmark", value);
+			get => SettingsStorage.GetObjectRoamed(true);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool OpenBookmarksTab
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenBookmarksTab", false);
-			set => SettingsStorage.StoreObjectRoamed("OpenBookmarksTab", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool OpenBookmarksStart
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenBookmarksStart", false);
-			set => SettingsStorage.StoreObjectRoamed("OpenBookmarksStart", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool OpenReader
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenReader", false);
-			set => SettingsStorage.StoreObjectRoamed("OpenReader", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public int KeyboardScroll
 		{
-			get => SettingsStorage.GetObjectLocal("KeyboardScroll", 200);
-			set => SettingsStorage.StoreObjectLocal("KeyboardScroll", value);
+			get => SettingsStorage.GetObjectLocal(200);
+			set => SettingsStorage.StoreObjectLocal(value);
 		}
 		public bool FitToWidth
 		{
-			get => SettingsStorage.GetObjectRoamed("FitToWidth", false);
+			get => SettingsStorage.GetObjectRoamed(false);
 			set
 			{
-				SettingsStorage.StoreObjectRoamed("FitToWidth", value);
-				OnPropertyChanged("FitToWidth");
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
 			}
 		}
 		public int FitScaleLimit
 		{
-			get => SettingsStorage.GetObjectLocal("FitScaleLimit", 100);
+			get => SettingsStorage.GetObjectLocal(100);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("FitScaleLimit", value);
-				OnPropertyChanged("FitScaleLimit");
+				SettingsStorage.StoreObjectLocal(value);
+				OnPropertyChanged();
 			}
 		}
 		public AppTheme Theme
 		{
-			get => (AppTheme)SettingsStorage.GetObjectLocal("Theme", (int)AppTheme.System);
+			get => (AppTheme)SettingsStorage.GetObjectLocal((int)AppTheme.System);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("Theme", (int)value);
+				SettingsStorage.StoreObjectLocal((int)value);
 				Platform.ChangeTheme(value);
 			}
 		}
 		public bool CompactBookmarks
 		{
-			get => SettingsStorage.GetObjectRoamed("CompactBookmarks", true);
-			set => SettingsStorage.StoreObjectRoamed("CompactBookmarks", value);
+			get => SettingsStorage.GetObjectRoamed(true);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool OpenCategoriesTab
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenCategoriesTab", false);
-			set => SettingsStorage.StoreObjectRoamed("OpenCategoriesTab", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public string SortByDefault
 		{
-			get => SettingsStorage.GetObjectRoamed("SortByDefault", "title");
-			set => SettingsStorage.StoreObjectRoamed("SortByDefault", value);
+			get => SettingsStorage.GetObjectRoamed("title");
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public Order OrderByDefault
 		{
-			get => (Order)SettingsStorage.GetObjectRoamed("OrderByDefault", (int)Order.Ascending);
-			set => SettingsStorage.StoreObjectRoamed("OrderByDefault", (int)value);
+			get => (Order)SettingsStorage.GetObjectRoamed((int)Order.Ascending);
+			set => SettingsStorage.StoreObjectRoamed((int)value);
 		}
 		public bool ReaderImageSetBuilder
 		{
-			get => SettingsStorage.GetObjectLocal("ReaderImageSetBuilder", true);
+			get => SettingsStorage.GetObjectLocal(true);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("ReaderImageSetBuilder", value);
+				SettingsStorage.StoreObjectLocal(value);
 				Service.Events.RebuildReaderImagesSet();
 			}
 		}
 		public bool UseVisualTags
 		{
-			get => SettingsStorage.GetObjectRoamed("UseVisualTags", true);
-			set => SettingsStorage.StoreObjectRoamed("UseVisualTags", value);
+			get => SettingsStorage.GetObjectRoamed(true);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool ScrollToChangePage
 		{
-			get => SettingsStorage.GetObjectRoamed("ScrollToChangePage", false);
-			set => SettingsStorage.StoreObjectRoamed("ScrollToChangePage", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool UseReaderBackground
 		{
-			get => SettingsStorage.GetObjectLocal("UseReaderBackground", false);
+			get => SettingsStorage.GetObjectLocal(false);
 			set
 			{
-				SettingsStorage.StoreObjectLocal("UseReaderBackground", value);
-				OnPropertyChanged("UseReaderBackground");
+				SettingsStorage.StoreObjectLocal(value);
+				OnPropertyChanged();
 			}
 		}
 		public string ReaderBackground
 		{
-			get => SettingsStorage.GetObjectLocal("ReaderBackground", "#FF000000");
-			set => SettingsStorage.StoreObjectLocal("ReaderBackground", value);
+			get => SettingsStorage.GetObjectLocal("#FF000000");
+			set => SettingsStorage.StoreObjectLocal(value);
 		}
 		public bool AutoUpdate
 		{
-			get => SettingsStorage.GetObjectLocal("AutoUpdate", false);
-			set => SettingsStorage.StoreObjectLocal("AutoUpdate", value);
+			get => SettingsStorage.GetObjectLocal(false);
+			set => SettingsStorage.StoreObjectLocal(value);
 		}
 		public bool OpenNextArchive
 		{
-			get => SettingsStorage.GetObjectRoamed("OpenNextArchive", true);
-			set => SettingsStorage.StoreObjectRoamed("OpenNextArchive", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool AutoLogin
 		{
-			get => SettingsStorage.GetObjectRoamed("AutoLogin", true);
-			set => SettingsStorage.StoreObjectRoamed("AutoLogin", value);
+			get => SettingsStorage.GetObjectRoamed(true);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool CrashReporting
 		{
-			get => SettingsStorage.GetObjectLocal("CrashReporting", true);
-			set => SettingsStorage.StoreObjectLocal("CrashReporting", value);
+			get => SettingsStorage.GetObjectLocal(true);
+			set => SettingsStorage.StoreObjectLocal(value);
 		}
 		public TagsPopupLocation TagsPopup
 		{
-			get => (TagsPopupLocation)SettingsStorage.GetObjectRoamed("TagsPopup", (int)TagsPopupLocation.Middle);
-			set => SettingsStorage.StoreObjectRoamed("TagsPopup", (int)value);
+			get => (TagsPopupLocation)SettingsStorage.GetObjectRoamed((int)TagsPopupLocation.Middle);
+			set => SettingsStorage.StoreObjectRoamed((int)value);
 		}
 		public bool KeepPageDetailsOpen
 		{
-			get => SettingsStorage.GetObjectRoamed("KeepPageDetailsOpen", false);
-			set => SettingsStorage.StoreObjectRoamed("KeepPageDetailsOpen", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool ShowExtraPageDetails
 		{
-			get => SettingsStorage.GetObjectRoamed("ShowExtraPageDetails", false);
-			set => SettingsStorage.StoreObjectRoamed("ShowExtraPageDetails", value);
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 		public bool UseVerticalReader
 		{
-			get => SettingsStorage.GetObjectRoamed("UseVerticalReader", false);
+			get => SettingsStorage.GetObjectRoamed(false);
 			set
 			{
-				SettingsStorage.StoreObjectRoamed("UseVerticalReader", value);
-				OnPropertyChanged("UseVerticalReader");
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
 			}
 		}
 		public bool UseVerticalTabs
 		{
-			get => SettingsStorage.GetObjectLocal("UseVerticalTabs", false);
-			set => SettingsStorage.StoreObjectLocal("UseVerticalTabs", value);
+			get => SettingsStorage.GetObjectLocal(false);
+			set => SettingsStorage.StoreObjectLocal(value);
 		}
+		public bool Autoplay
+		{
+			get => SettingsStorage.GetObjectLocal(false);
+			set => SettingsStorage.StoreObjectLocal(value);
+		}
+		public int AutoplayStartDelay
+		{
+			get => SettingsStorage.GetObjectRoamed(2000);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
+		public int AutoplayBeforeChangeDelay
+		{
+			get => SettingsStorage.GetObjectRoamed(2000);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
+		public int AutoplayAfterChangeDelay
+		{
+			get => SettingsStorage.GetObjectRoamed(2000);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
+		public int AutoplaySpeed
+		{
+			get => SettingsStorage.GetObjectLocal(100);
+			set
+			{
+				SettingsStorage.StoreObjectLocal(value);
+				OnPropertyChanged();
+			}
+		}
+		public string ProfilesPathLocation
+		{
+			get => SettingsStorage.GetObjectLocal(Path.Combine(Files.Local, "Profiles.json"));
+			private set => SettingsStorage.StoreObjectLocal(value);
+		}
+#if WINDOWS_UWP
+		private string ProfilesFileToken
+		{
+			get => SettingsStorage.GetObjectLocal("");
+			set => SettingsStorage.StoreObjectLocal(value);
+		}
+
+		public StorageFile ProfilesFile { get; private set; } = null!;
+#endif
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{
-			get => SettingsStorage.GetObjectLocal("SettingsVersion", CurrentLocalVersion);
-			set => SettingsStorage.StoreObjectLocal("SettingsVersion", value);
+			get => SettingsStorage.GetObjectLocal(CurrentLocalVersion);
+			set => SettingsStorage.StoreObjectLocal(value);
 		}
 		public static readonly int CurrentRoamedVersion = 2;
 		public int SettingsVersionRoamed
 		{
-			get => SettingsStorage.GetObjectRoamed("SettingsVersion", CurrentRoamedVersion);
-			set => SettingsStorage.StoreObjectRoamed("SettingsVersion", value);
+			get => SettingsStorage.GetObjectRoamed(CurrentRoamedVersion);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 
 		private Throttle<object> save;
@@ -266,12 +316,16 @@ namespace LRReader.Shared.Services
 			{
 				try
 				{
-					Files.StoreFileSafe(Path.Combine(Files.Local, "Profiles.json"), JsonConvert.SerializeObject(Profiles)).ConfigureAwait(false).GetAwaiter().GetResult();
+#if WINDOWS_UWP
+					FileIO.WriteTextAsync(ProfilesFile, JsonConvert.SerializeObject(Profiles)).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+#else
+					Files.StoreFileSafe(ProfilesPathLocation, JsonConvert.SerializeObject(Profiles)).ConfigureAwait(false).GetAwaiter().GetResult();
+#endif
 				}
 				catch (Exception e)
 				{
 #if WINDOWS_UWP
-						Crashes.TrackError(e);
+					Crashes.TrackError(e);
 #endif
 				}
 			});
@@ -279,8 +333,33 @@ namespace LRReader.Shared.Services
 
 		public async Task Init()
 		{
-			if (File.Exists(Files.Local + "/Profiles.json"))
-				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(Files.Local + "/Profiles.json")) ?? new ObservableCollection<ServerProfile>();
+#if WINDOWS_UWP
+			try
+			{
+				if (string.IsNullOrEmpty(ProfilesFileToken))
+				{
+					ProfilesFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.OpenIfExists);
+				}
+				else
+					ProfilesFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(ProfilesFileToken);
+			}
+			catch
+			{
+				// Reset everything
+				StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
+
+				SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
+				SettingsStorage.DeleteObjectLocal(nameof(ProfilesFileToken));
+
+				ProfilesFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.ReplaceExisting);
+			}
+
+			ProfilesPathLocation = ProfilesFile.Path;
+			Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await FileIO.ReadTextAsync(ProfilesFile)) ?? new ObservableCollection<ServerProfile>();
+#else
+			if (File.Exists(ProfilesPathLocation))
+				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(ProfilesPathLocation)) ?? new ObservableCollection<ServerProfile>();
+#endif
 
 			UpgradeSettings();
 
@@ -324,7 +403,7 @@ namespace LRReader.Shared.Services
 				switch (localVersion)
 				{
 					case 0:
-						KeyboardScroll = SettingsStorage.GetObjectLocal("SpacebarScroll", 200);
+						KeyboardScroll = SettingsStorage.GetObjectLocal(200, "SpacebarScroll");
 						SettingsStorage.DeleteObjectLocal("SpacebarScroll");
 						break;
 					case 1:
@@ -379,23 +458,24 @@ namespace LRReader.Shared.Services
 					}
 				}
 			}
-			OnPropertyChanged("ProfilesAvailable");
-			OnPropertyChanged("AtLeastOneProfile");
+			OnPropertyChanged(nameof(ProfilesAvailable));
+			OnPropertyChanged(nameof(AtLeastOneProfile));
 		}
 
-		public ServerProfile AddProfile(string name, string address, string apikey)
+		public ServerProfile AddProfile(string name, string address, string apikey, bool integration)
 		{
-			ServerProfile profile = new ServerProfile(name, address, apikey);
+			var profile = new ServerProfile(name, address, apikey, integration);
 			Profiles.Add(profile);
 			return profile;
 		}
 
-		public void ModifyProfile(string uid, string name, string address, string apikey)
+		public void ModifyProfile(string uid, string name, string address, string apikey, bool integration)
 		{
 			var profile = Profiles.FirstOrDefault(p => p.UID.Equals(uid));
 			profile.Name = name;
 			profile.ServerAddress = address;
 			profile.ServerApiKey = apikey;
+			profile.Integration = integration;
 			profile.Update();
 			SaveProfiles();
 		}
@@ -409,6 +489,50 @@ namespace LRReader.Shared.Services
 		{
 			save.Lock.Dispose();
 		}
+
+		public async Task ChangeProfilesLocation()
+		{
+#if WINDOWS_UWP
+			var savePicker = new FileSavePicker();
+			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+			savePicker.FileTypeChoices.Add("JSON file", new List<string> { ".json" });
+			savePicker.SuggestedFileName = "Profiles.json";
+			var file = await savePicker.PickSaveFileAsync();
+			if (file != null)
+			{
+				if (file.IsEqual(ProfilesFile))
+					return;
+
+				await ProfilesFile.MoveAndReplaceAsync(file);
+				StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
+				ProfilesFileToken = StorageApplicationPermissions.FutureAccessList.Add(file);
+				ProfilesFile = file;
+				ProfilesPathLocation = file.Path;
+			}
+#else
+#endif
+			OnPropertyChanged(nameof(ProfilesPathLocation));
+		}
+
+		public async Task ResetProfilesLocation()
+		{
+			if (Path.Combine(Files.Local, "Profiles.json").Equals(ProfilesPathLocation))
+				return;
+#if WINDOWS_UWP
+			var original = await ApplicationData.Current.LocalFolder.CreateFileAsync("Profiles.json", CreationCollisionOption.ReplaceExisting);
+			await ProfilesFile.MoveAndReplaceAsync(original);
+			ProfilesFile = original;
+
+			StorageApplicationPermissions.FutureAccessList.Remove(ProfilesFileToken);
+
+			SettingsStorage.DeleteObjectLocal(nameof(ProfilesFileToken));
+#else
+#endif
+			SettingsStorage.DeleteObjectLocal(nameof(ProfilesPathLocation));
+
+			OnPropertyChanged(nameof(ProfilesPathLocation));
+		}
+
 	}
 	public enum BookmarkReminderMode
 	{

@@ -2,12 +2,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.Helpers;
 using LRReader.Shared;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.Logging;
-using Microsoft.Toolkit.Uwp.Connectivity;
 using RestSharp;
 using Windows.ApplicationModel;
 using Windows.Foundation;
@@ -136,9 +136,9 @@ namespace LRReader.UWP.Services
 			Logger.LogInformation("Download and install");
 			try
 			{
-				Logger.LogInformation("Source: {0}", check?.Link);
+				Logger.LogInformation("Source: {0}", check.Link);
 				var pm = new PackageManager();
-				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check?.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
+				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
 				var result = await downloadTask.AsTask();
 				if (result.IsRegistered)

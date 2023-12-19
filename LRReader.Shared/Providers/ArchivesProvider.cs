@@ -74,12 +74,12 @@ namespace LRReader.Shared.Providers
 			rq.AddQueryParameter("no_fallback", noFallback.ToString().ToLower());
 			rq.AddQueryParameter("page", page.ToString());
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
 			switch (r.StatusCode)
 			{
 				case HttpStatusCode.Accepted:
-					return new ThumbnailRequest { Job = await r.GetResult<MinionJob>() };
+					return new ThumbnailRequest { Job = await r.GetResult<MinionJob>().ConfigureAwait(false) };
 				case HttpStatusCode.OK:
 					return new ThumbnailRequest { Thumbnail = r.RawBytes };
 				default:
@@ -110,7 +110,7 @@ namespace LRReader.Shared.Providers
 
 			if (!string.IsNullOrEmpty(r.ErrorMessage))
 			{
-				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage));
+				WeakReferenceMessenger.Default.Send(new ShowNotification("Network Error", r.ErrorMessage, severity: NotificationSeverity.Error));
 				return null;
 			}
 			switch (r.StatusCode)
@@ -128,7 +128,7 @@ namespace LRReader.Shared.Providers
 					return download;
 				default:
 					var error = await r.GetError();
-					WeakReferenceMessenger.Default.Send(new ShowNotification(error.operation, error.error));
+					WeakReferenceMessenger.Default.Send(new ShowNotification(error.operation, error.error, severity: NotificationSeverity.Error));
 					return null;
 			}
 		}
@@ -192,7 +192,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest(path);
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
 			switch (r.StatusCode)
 			{

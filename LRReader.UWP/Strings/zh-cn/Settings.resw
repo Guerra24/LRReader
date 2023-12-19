@@ -539,6 +539,11 @@
   </data>
   <data name="Server.RescanContentButton.Content" xml:space="preserve">
     <value>重新扫描</value>
-    <comment>n</comment>
+  </data>
+  <data name="Reader.WebPNotice.Content" xml:space="preserve">
+    <value>Install to view WebP content</value>
+  </data>
+  <data name="Reader.WebPNoticeInfo.Title" xml:space="preserve">
+    <value>Missing WebP Image Extensions</value>
   </data>
 </root>

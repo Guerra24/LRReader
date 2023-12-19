@@ -530,6 +530,20 @@
   </data>
   <data name="Server.RescanContentButton.Content" xml:space="preserve">
     <value>Volver a escanear</value>
-    <comment>n</comment>
+  </data>
+  <data name="Reader.WebPNotice.Content" xml:space="preserve">
+    <value>Instalar para ver contenido WebP</value>
+  </data>
+  <data name="Reader.WebPNoticeInfo.Title" xml:space="preserve">
+    <value>Faltan extensiones de imagen WebP</value>
+  </data>
+  <data name="Updates.AutoUpdates.Title" xml:space="preserve">
+    <value>Actualizaciones automáticas</value>
+  </data>
+  <data name="Reader.NextArchive.Description" xml:space="preserve">
+    <value>Pasar al siguiente archivo al final</value>
+  </data>
+  <data name="Reader.NextArchive.Title" xml:space="preserve">
+    <value>Abrir siguiente archivo</value>
   </data>
 </root>

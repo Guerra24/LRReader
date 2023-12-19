@@ -10,6 +10,7 @@ using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -57,13 +58,15 @@ namespace LRReader.Shared.Tools
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
+		private readonly ILogger<DeduplicationTool> Logger;
 
-		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform) : base(platform)
+		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, ILogger<DeduplicationTool> logger) : base(platform)
 		{
 			Settings = settings;
 			Images = images;
 			Archives = archives;
 			Platform = platform;
+			Logger = logger;
 		}
 
 		protected override async Task<ToolResult<List<ArchiveHit>, List<string>>> Process(DeduplicatorParams @params, int threads)
@@ -100,30 +103,34 @@ namespace LRReader.Shared.Tools
 			{
 				int tries = 5;
 				Image<Rgb24>? image = null;
-				while (tries > 0)
+				try
 				{
-					Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
-					var bytes = Task.Run(async () => await Images.GetThumbnailCached(pair.Key)).GetAwaiter().GetResult();
-					if (bytes != null)
+					while (tries > 0)
 					{
-						try
+						Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
+						Logger.LogInformation("LoadThumb {0} {1}", pair.Key, tries);
+						var bytes = Images.GetThumbnailCached(pair.Key).ConfigureAwait(false).GetAwaiter().GetResult();
+						if (bytes != null)
 						{
 							image = Image.Load<Rgb24>(bytes);
 							image.Mutate(i => i.Resize(width, 0));
+							break;
 						}
-						catch { }
-						break;
+						else
+						{
+							tries--;
+						}
 					}
-					else
+					int itemCount = Interlocked.Increment(ref count);
+					if (DateTime.Now - tmpTimer > TimeSpan.FromSeconds(1))
 					{
-						tries--;
+						tmpTimer = DateTime.Now;
+						UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
 					}
 				}
-				int itemCount = Interlocked.Increment(ref count);
-				if (DateTime.Now - tmpTimer > TimeSpan.FromSeconds(1))
+				catch (Exception e)
 				{
-					tmpTimer = DateTime.Now;
-					UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
+					Logger.LogInformation(e, "LoadThumb {0}", pair.Key);
 				}
 				return new Tuple<string, Image<Rgb24>?>(pair.Key, image);
 			})))).AsEnumerable().ToList();

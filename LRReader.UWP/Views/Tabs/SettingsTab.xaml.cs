@@ -21,13 +21,14 @@ namespace LRReader.UWP.Views.Tabs
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 			DispatcherTimer = new DispatcherTimer();
 			DispatcherTimer.Tick += DispatcherTimer_Tick;
-			DispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+			DispatcherTimer.Interval = TimeSpan.FromSeconds(5);
 			DispatcherTimer.Start();
 		}
 
-		public override void Unload()
+		public override void Dispose()
 		{
-			base.Unload();
+			base.Dispose();
+			ContentPage.Dispose();
 			DispatcherTimer.Stop();
 		}
 

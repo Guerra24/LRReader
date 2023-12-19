@@ -255,8 +255,20 @@
   <data name="Deduplicator.Step.Text" xml:space="preserve">
     <value>Шаг</value>
   </data>
+  <data name="Deduplicator.SxSFileName.Text" xml:space="preserve">
+    <value>File name</value>
+  </data>
+  <data name="Deduplicator.SxSFileSize.Text" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="Deduplicator.SxSFileType.Text" xml:space="preserve">
+    <value>File type</value>
+  </data>
   <data name="Deduplicator.SxSImages.Text" xml:space="preserve">
     <value>Изображения</value>
+  </data>
+  <data name="Deduplicator.SxSLastRead.Text" xml:space="preserve">
+    <value>Last read</value>
   </data>
   <data name="Deduplicator.SxSPages.Text" xml:space="preserve">
     <value>Страницы</value>

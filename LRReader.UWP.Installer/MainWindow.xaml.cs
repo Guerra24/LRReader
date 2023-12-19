@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -6,21 +7,19 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 using Windows.Management.Deployment;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Extensions;
 
 namespace LRReader.UWP.Installer
 {
 
-	public partial class MainWindow : UiWindow
+	public partial class MainWindow : FluentWindow
 	{
 
-		private PackageManager pm;
+		private PackageManager pm = null!;
 
 		private bool CertFound;
 
@@ -28,6 +27,7 @@ namespace LRReader.UWP.Installer
 
 		public MainWindow()
 		{
+			SystemThemeWatcher.Watch(this, WindowBackdropType.Mica, true);
 			InitializeComponent();
 			// Win32 Magic
 			//var interop = new WindowInteropHelper(this);
@@ -50,11 +50,13 @@ namespace LRReader.UWP.Installer
 			else
 				title = $"LRReader {Variables.Version.Substring(0, Variables.Version.LastIndexOf('.'))}";
 			Title = Titlebar.Title = title;
+
+			if (!IsWin11)
+				Icon1.FontFamily = Icon2.FontFamily = Icon3.FontFamily = new FontFamily("Segoe MDL2 Assets");
 		}
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			Watcher.Watch(this, BackgroundType.Mica, true);
 			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
 			{
 				Error.Text = "LRReader requires Windows 10 1809 or newer";
@@ -196,7 +198,7 @@ namespace LRReader.UWP.Installer
 
 		private async Task<int> LaunchAdmin(string command)
 		{
-			var process = new Process();
+			using var process = new Process();
 			process.StartInfo.Verb = "runas";
 			process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
 			process.StartInfo.Arguments = command;

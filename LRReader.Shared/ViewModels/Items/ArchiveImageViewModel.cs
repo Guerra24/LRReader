@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using KeyedSemaphores;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 
@@ -35,6 +37,8 @@ namespace LRReader.Shared.ViewModels.Items
 		public event AsyncAction<bool>? Show;
 		public event AsyncAction<bool>? Hide;
 
+		private Guid _key = Guid.NewGuid();
+
 		public ArchiveImageViewModel(PlatformService platform, ImagesService images, ImageProcessingService imageProcessing)
 		{
 			Platform = platform;
@@ -67,7 +71,9 @@ namespace LRReader.Shared.ViewModels.Items
 
 		public async Task Phase3()
 		{
-			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275, image: Thumbnail);
+			var img = await Images.GetThumbnailCached(Set.Id, Set.Page);
+			using (var key = await KeyedSemaphore.LockAsync($"PageThumb_{_key}"))
+				Thumbnail = await ImageProcessing.ByteToBitmap(img, decodeHeight: 275, image: Thumbnail);
 
 			if (Thumbnail != null)
 				await Show.InvokeAsync(Platform.AnimationsEnabled);

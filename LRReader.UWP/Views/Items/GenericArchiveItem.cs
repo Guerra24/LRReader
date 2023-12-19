@@ -3,15 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.Devices.Input;
-using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -186,13 +185,10 @@ namespace LRReader.UWP.Views.Items
 		private void Control_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(this);
-			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse && pointerPoint.Properties.IsMiddleButtonPressed)
 			{
-				if (pointerPoint.Properties.IsMiddleButtonPressed)
-				{
-					Service.Archives.OpenTab(ViewModel.Archive, false, Group);
-					e.Handled = true;
-				}
+				Service.Archives.OpenTab(ViewModel.Archive, false, Group);
+				e.Handled = true;
 			}
 		}
 

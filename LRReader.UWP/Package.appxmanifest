@@ -47,6 +47,11 @@
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" uap5:Optional="true" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.appService">
+          <uap:AppService Name="KarenMonitor" />
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

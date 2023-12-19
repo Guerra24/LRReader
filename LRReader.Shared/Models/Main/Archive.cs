@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Converters;
+using LRReader.Shared.Extensions;
 #if WINDOWS_UWP
 using Microsoft.AppCenter.Crashes;
 #endif
@@ -6,7 +7,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -17,11 +17,23 @@ namespace LRReader.Shared.Models.Main
 		public string arcid { get; set; } = null!;
 		[JsonConverter(typeof(ArchiveNewConverter))]
 		public bool isnew { get; set; }
-		public string? extension { get; set; }
+		public string extension { get; set; } = null!;
 		public string tags { get; set; } = null!;
 		public string title { get; set; } = null!;
 		public int pagecount { get; set; }
 		public int progress { get; set; }
+		public long? lastreadtime { get; set; } // 0.9.0
+
+		[JsonIgnore]
+		public string LastReadTimeString => lastreadtime == null ? "" : DateTimeOffset.FromUnixTimeSeconds((long)lastreadtime).ToLocalTime().ToString();
+
+		public long? size { get; set; } // dev
+
+		[JsonIgnore]
+		public string SizeString => size == null ? "" : string.Format("{0:n2} MB", size / 1024f / 1024f);
+
+		public string? filename { get; set; } // dev
+
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]
@@ -69,7 +81,7 @@ namespace LRReader.Shared.Models.Main
 				var tag = parts[parts.Length - 1];
 				if (parts[0].Equals("date_added"))
 					if (long.TryParse(tag, out long unixTime))
-						tag = Util.UnixTimeToDateTime(unixTime).ToString();
+						tag = DateTimeOffset.FromUnixTimeSeconds(unixTime).ToLocalTime().ToString();
 				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag, Namespace = @namespace });
 			}
 			tmp.Sort((a, b) => string.Compare(a.Namespace, b.Namespace));
@@ -202,8 +214,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveCategories : GenericApiResult
 	{
-		[AllowNull]
-		public List<Category> categories { get; set; }
+		public List<Category> categories { get; set; } = null!;
 	}
 
 	public class DeleteArchiveResult : GenericApiResult
