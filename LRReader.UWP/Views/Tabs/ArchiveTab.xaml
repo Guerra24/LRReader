@@ -115,7 +115,7 @@
 								</Grid.ColumnDefinitions>
 								<TextBlock x:Uid="/Tabs/Archive/Settings/Autoplay" VerticalAlignment="Center" />
 								<ToggleButton
-									x:Name="AutoplayButton" Grid.Column="1" Unchecked="AutoplayButton_Unchecked"
+									x:Name="AutoplayButton" Grid.Column="1" Checked="AutoplayButton_Checked" Unchecked="AutoplayButton_Unchecked"
 									Command="{x:Bind TabContent.PlayStopCommand}" IsChecked="{x:Bind TabContent.Data.UseAutoplay, Mode=TwoWay}"
 									CommandParameter="{x:Bind AutoplayButton.IsChecked, Mode=OneWay}" />
 							</Grid>

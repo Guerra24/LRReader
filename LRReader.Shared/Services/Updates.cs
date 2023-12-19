@@ -14,7 +14,7 @@ namespace LRReader.Shared.Services
 		protected readonly SettingsService Settings;
 
 		public Version MIN_VERSION = new Version(0, 8, 4);
-		public Version MAX_VERSION = new Version(0, 9, 0);
+		public Version MAX_VERSION = new Version(0, 9, 10);
 
 		protected readonly RestClient client;
 
