@@ -9,16 +9,16 @@ jobs:
   #   runs-on: windows-2022
   #   steps:
   #   - name: Checkout
-  #     uses: actions/checkout@v3
+  #     uses: actions/checkout@v4
   #   - name: Prepare Env
-  #     uses: microsoft/setup-msbuild@v1.3
+  #     uses: microsoft/setup-msbuild@v2
   #   - name: Build
   #     env:
   #       DOTNET_NOLOGO: true
   #     run: |
   #       dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=linux-x64
   #   - name: Upload Artifacts
-  #     uses: actions/upload-artifact@v3
+  #     uses: actions/upload-artifact@v4
   #     with:
   #       name: LRReader.Avalonia.Desktop.Linux-X64
   #       path: LRReader.Avalonia.Desktop/publish/linux-x64
@@ -27,16 +27,16 @@ jobs:
   #   runs-on: windows-2022
   #   steps:
   #   - name: Checkout
-  #     uses: actions/checkout@v3
+  #     uses: actions/checkout@v4
   #   - name: Prepare Env
-  #     uses: microsoft/setup-msbuild@v1.3
+  #     uses: microsoft/setup-msbuild@v2
   #   - name: Build
   #     env:
   #       DOTNET_NOLOGO: true
   #     run: |
   #       dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=macos-x64
   #   - name: Upload Artifacts
-  #     uses: actions/upload-artifact@v3
+  #     uses: actions/upload-artifact@v4
   #     with:
   #       name: LRReader.Avalonia.Desktop.macOS-X64
   #       path: LRReader.Avalonia.Desktop/publish/macos-x64
@@ -45,16 +45,16 @@ jobs:
   #   runs-on: windows-2022
   #   steps:
   #   - name: Checkout
-  #     uses: actions/checkout@v3
+  #     uses: actions/checkout@v4
   #   - name: Prepare Env
-  #     uses: microsoft/setup-msbuild@v1.3
+  #     uses: microsoft/setup-msbuild@v2
   #   - name: Build
   #     env:
   #       DOTNET_NOLOGO: true
   #     run: |
   #       dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=win-x64
   #   - name: Upload Artifacts
-  #     uses: actions/upload-artifact@v3
+  #     uses: actions/upload-artifact@v4
   #     with:
   #       name: LRReader.Avalonia.Desktop.Win-X64
   #       path: LRReader.Avalonia.Desktop/publish/win-x64
@@ -65,13 +65,13 @@ jobs:
       packages: read
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.3
+      uses: microsoft/setup-msbuild@v2
     - name: Auth nuget registry
       run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
     - name: Prepare nuget cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: nuget-uwp-${{ hashFiles('LRReader.Shared/packages.lock.json', 'LRReader.UWP/packages.lock.json') }}
@@ -100,7 +100,7 @@ jobs:
         Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
         Remove-Item $(Get-ChildItem *.appxsym -File)
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -110,7 +110,7 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       run: aws s3 sync LRReader.UWP/AppPackages s3://${env:AWS_S3_BUCKET}/projects/lrr/nightly --no-progress --acl public-read --follow-symlinks --delete
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: LRReader.UWP
         path: LRReader.UWP/AppPackages
@@ -124,13 +124,13 @@ jobs:
         arch: [x64, ARM64]
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Prepare Env
-      uses: microsoft/setup-msbuild@v1.3
+      uses: microsoft/setup-msbuild@v2
     - name: Auth nuget registry
       run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
     - name: Prepare nuget cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: nuget-installer-${{ hashFiles('LRReader.UWP.Installer/packages.lock.json') }}
@@ -143,7 +143,7 @@ jobs:
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
         MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }}
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Installer-${{ matrix.arch }}
         path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe

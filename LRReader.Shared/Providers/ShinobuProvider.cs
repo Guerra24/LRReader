@@ -5,7 +5,7 @@ using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers
 {
-	public class ShinobuProvider
+	public static class ShinobuProvider
 	{
 
 		public static async Task<ShinobuStatus?> GetShinobuStatus()

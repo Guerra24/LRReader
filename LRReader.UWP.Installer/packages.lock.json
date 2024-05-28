@@ -14,15 +14,15 @@
       },
       "Fody": {
         "type": "Direct",
-        "requested": "[6.8.0, )",
-        "resolved": "6.8.0",
-        "contentHash": "hfZ/f8Mezt8aTkgv9nsvFdYoQ809/AqwsJlOGOPYIfBcG2aAIG3v3ex9d8ZqQuFYyMoucjRg4eKy3VleeGodKQ=="
+        "requested": "[6.8.1, )",
+        "resolved": "6.8.1",
+        "contentHash": "pwk2/No1kL1ft+zMT2y0MvzB6W5cpkdOTj+0+T2u7LGJMTw37qtlnHzCSCyvwRiZVoJ/V/DE78eQ/WEcutUVDw=="
       },
       "Microsoft.Windows.SDK.Contracts": {
         "type": "Direct",
-        "requested": "[10.0.22621.2428, )",
-        "resolved": "10.0.22621.2428",
-        "contentHash": "W+mt71YdJcDtNzgVrRSHQYdj2/p0t7Dlvd0MRVwT57S54uxzsw3Qyv6RjGTUZ6nwOLYe/MA4IMeCHQZqPi3Tpw==",
+        "requested": "[10.0.26100.1, )",
+        "resolved": "10.0.26100.1",
+        "contentHash": "+DzrYQM8WYDw38HZDq3DcOSS6CzNfMNngnIHeja1knyh7r+87cbXOiX7wCwiS3qi9StJ58B63DhPaFD5Sr6q6A==",
         "dependencies": {
           "System.Runtime.InteropServices.WindowsRuntime": "4.3.0",
           "System.Runtime.WindowsRuntime": "4.6.0",
@@ -31,9 +31,9 @@
       },
       "WPF-UI": {
         "type": "Direct",
-        "requested": "[3.0.0-preview.13, )",
-        "resolved": "3.0.0-preview.13",
-        "contentHash": "57Exnba6ySbx7pe8czXpgYs5pinq9sCI5TBKsX4qo03K7a0frj0KT5vUkYWjd4xWjfThAqZxLZE4YTA5vNJoUg=="
+        "requested": "[3.0.4, )",
+        "resolved": "3.0.4",
+        "contentHash": "Jbt8nJ4MSC/WBhqx6iXOW06Rt2UUNVxA8+23AOSM63jlOIhU6e6P4BIw8rL/UnRPycOdA2vntYl5i7k53E0AGg=="
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",

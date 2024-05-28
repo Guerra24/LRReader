@@ -34,6 +34,8 @@ namespace LRReader.Shared.Models.Main
 
 		public string? filename { get; set; } // dev
 
+		public string? summary { get; set; } // dev
+
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]

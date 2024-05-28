@@ -19,7 +19,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/database/stats");
 
-			var r = await client.ExecuteAsync(rq, Method.Head);
+			var r = await client.ExecuteHeadAsync(rq);
 
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;

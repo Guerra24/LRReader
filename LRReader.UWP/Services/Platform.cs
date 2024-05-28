@@ -8,6 +8,7 @@ using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
 using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.Logging;
+using NReco.Logging.File;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;

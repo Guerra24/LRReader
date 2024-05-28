@@ -18,7 +18,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/categories");
 
-			var r = await client.ExecuteAsync(rq, Method.Head);
+			var r = await client.ExecuteHeadAsync(rq);
 
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
@@ -43,12 +43,12 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories", Method.Put);
+			var rq = new RestRequest("api/categories");
 			rq.AddQueryParameter("name", name);
 			rq.AddQueryParameter("search", search);
 			rq.AddQueryParameter("pinned", (pinned ? 1 : 0).ToString());
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecutePutAsync(rq);
 
 			var result = await r.GetResultInternal<CategoryCreatedApiResult>();
 
@@ -72,13 +72,13 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}", Method.Put);
+			var rq = new RestRequest("api/categories/{id}");
 			rq.AddUrlSegment("id", id);
 			rq.AddQueryParameter("name", name);
 			rq.AddQueryParameter("search", search);
 			rq.AddQueryParameter("pinned", (pinned ? 1 : 0).ToString());
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecutePutAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -87,10 +87,10 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}", Method.Delete);
+			var rq = new RestRequest("api/categories/{id}");
 			rq.AddUrlSegment("id", id);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecuteDeleteAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -99,11 +99,11 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}/{archive}", Method.Put);
+			var rq = new RestRequest("api/categories/{id}/{archive}");
 			rq.AddUrlSegment("id", id);
 			rq.AddUrlSegment("archive", archive);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecutePutAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -112,11 +112,11 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/categories/{id}/{archive}", Method.Delete);
+			var rq = new RestRequest("api/categories/{id}/{archive}");
 			rq.AddUrlSegment("id", id);
 			rq.AddUrlSegment("archive", archive);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecuteDeleteAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -135,8 +135,4 @@ namespace LRReader.Shared.Providers
 
 	}
 
-	public class CategoryCreatedApiResult : GenericApiResult
-	{
-		public string category_id { get; set; } = null!;
-	}
 }

@@ -20,7 +20,7 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/archives");
 
-			var r = await client.ExecuteAsync(rq, Method.Head);
+			var r = await client.ExecuteHeadAsync(rq);
 
 			if (r.StatusCode != HttpStatusCode.OK)
 				return false;
@@ -137,11 +137,11 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/thumbnail", Method.Put);
+			var rq = new RestRequest("api/archives/{id}/thumbnail");
 			rq.AddUrlSegment("id", id);
 			rq.AddQueryParameter("page", page);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecutePutAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -150,10 +150,10 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/isnew", Method.Delete);
+			var rq = new RestRequest("api/archives/{id}/isnew");
 			rq.AddUrlSegment("id", id);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecuteDeleteAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -162,12 +162,12 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/metadata", Method.Put);
+			var rq = new RestRequest("api/archives/{id}/metadata");
 			rq.AddUrlSegment("id", id);
 			rq.AddQueryParameter("title", title);
 			rq.AddQueryParameter("tags", tags);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecutePutAsync(rq);
 
 			return await r.GetResult();
 		}
@@ -176,10 +176,10 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}", Method.Delete);
+			var rq = new RestRequest("api/archives/{id}");
 			rq.AddUrlSegment("id", id);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecuteDeleteAsync(rq);
 
 			return await r.GetResult<DeleteArchiveResult>();
 		}
@@ -207,11 +207,11 @@ namespace LRReader.Shared.Providers
 		{
 			var client = Api.Client;
 
-			var rq = new RestRequest("api/archives/{id}/progress/{progress}", Method.Put);
+			var rq = new RestRequest("api/archives/{id}/progress/{progress}");
 			rq.AddUrlSegment("id", id);
 			rq.AddParameter("progress", progress, ParameterType.UrlSegment);
 
-			var r = await client.ExecuteAsync(rq);
+			var r = await client.ExecutePutAsync(rq);
 
 			return await r.GetResult();
 		}
