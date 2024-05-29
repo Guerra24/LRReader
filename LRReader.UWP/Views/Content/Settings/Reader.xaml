@@ -90,6 +90,9 @@
 				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Reader/Map" Glyph="&#xE90e;">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ShowMap, Mode=TwoWay}" />
+				</controls:ModernInput>
 				<!--
 				<controls:ModernExpander
 					Title="Autoplay" Description="Automatically scroll and change pages" Glyph="&#xE768;"

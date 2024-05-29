@@ -154,13 +154,13 @@
     <value>Изменить</value>
   </data>
   <data name="Archive.FileName.Text" xml:space="preserve">
-    <value>File name:</value>
+    <value>File name</value>
   </data>
   <data name="Archive.FileType.Text" xml:space="preserve">
-    <value>File type:</value>
+    <value>File type</value>
   </data>
   <data name="Archive.LastRead.Text" xml:space="preserve">
-    <value>Last read:</value>
+    <value>Last read</value>
   </data>
   <data name="Archive.New.Content" xml:space="preserve">
     <value>Новый!</value>
@@ -169,7 +169,7 @@
     <value>Следующий архив</value>
   </data>
   <data name="Archive.Pages.Text" xml:space="preserve">
-    <value>Pages:</value>
+    <value>Pages</value>
   </data>
   <data name="Archive.Random.Content" xml:space="preserve">
     <value>Случайно</value>
@@ -202,7 +202,7 @@
     <value>Использовать вертикальный ридер</value>
   </data>
   <data name="Archive.Size.Text" xml:space="preserve">
-    <value>Size:</value>
+    <value>Size</value>
   </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Добавить все</value>

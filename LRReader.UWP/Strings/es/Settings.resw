@@ -546,4 +546,10 @@
   <data name="Reader.NextArchive.Title" xml:space="preserve">
     <value>Abrir siguiente archivo</value>
   </data>
+  <data name="Reader.Map.Description" xml:space="preserve">
+    <value>Show page list on hover at the bottom of the reader</value>
+  </data>
+  <data name="Reader.Map.Title" xml:space="preserve">
+    <value>Show pages map</value>
+  </data>
 </root>

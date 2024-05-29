@@ -23,10 +23,16 @@
 		<Style x:Key="CustomTag" TargetType="Border">
 			<Setter Property="Padding" Value="4,2"/>
 			<Setter Property="BorderThickness" Value="1"/>
-			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
 			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}"/>
 			<Setter Property="BackgroundSizing" Value="InnerBorderEdge"/>
 			<Setter Property="Background" Value="{ThemeResource ControlFillColorDefault}"/>
+			<Setter Property="CornerRadius" Value="4,0,0,4" />
+		</Style>
+		<Style x:Key="CustomTagValue" TargetType="Border" BasedOn="{StaticResource CustomTag}">
+			<Setter Property="Background" Value="{ThemeResource ControlStrongStrokeColorDisabled}"/>
+			<Setter Property="Padding" Value="5,3"/>
+			<Setter Property="CornerRadius" Value="0,4,4,0"/>
+			<Setter Property="BorderThickness" Value="0" />
 		</Style>
 	</UserControl.Resources>
 
@@ -65,31 +71,46 @@
 										TextWrapping="WrapWholeWords" />
 								</Grid>
 								<StackPanel Orientation="Horizontal" Spacing="4" Margin="0,0,0,8">
-									<Border Style="{StaticResource CustomTag}">
-										<TextBlock>
-											<Run x:Uid="/Tabs/Archive/Pages" /> <Run Text="{x:Bind Data.Archive.pagecount, Mode=OneWay}"/>
-										</TextBlock>
-									</Border>
-									<Border Style="{StaticResource CustomTag}">
-										<TextBlock>
-											<Run x:Uid="/Tabs/Archive/FileType" /> <Run Text="{x:Bind Data.Archive.extension, Mode=OneWay}"/>
-										</TextBlock>
-									</Border>
-									<Border Style="{StaticResource CustomTag}" Visibility="{x:Bind Data.Archive.LastReadTimeString, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
-										<TextBlock>
-											<Run x:Uid="/Tabs/Archive/LastRead" /> <Run Text="{x:Bind Data.Archive.LastReadTimeString, Mode=OneWay}"/>
-										</TextBlock>
-									</Border>
-									<Border Style="{StaticResource CustomTag}" Visibility="{x:Bind Data.Archive.SizeString, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
-										<TextBlock>
-											<Run x:Uid="/Tabs/Archive/Size" />  <Run Text="{x:Bind Data.Archive.SizeString, Mode=OneWay}"/>
-										</TextBlock>
-									</Border>
-									<Border Style="{StaticResource CustomTag}" Visibility="{x:Bind Data.Archive.filename, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
-										<TextBlock>
-											<Run x:Uid="/Tabs/Archive/FileName" />  <Run Text="{x:Bind Data.Archive.filename, Mode=OneWay}"/>
-										</TextBlock>
-									</Border>
+									<StackPanel Orientation="Horizontal">
+										<Border Style="{StaticResource CustomTag}">
+											<TextBlock x:Uid="/Tabs/Archive/Pages"/>
+										</Border>
+										<Border Style="{StaticResource CustomTagValue}" >
+											<TextBlock Text="{x:Bind Data.Archive.pagecount, Mode=OneWay}"/>
+										</Border>
+									</StackPanel>
+									<StackPanel Orientation="Horizontal">
+										<Border Style="{StaticResource CustomTag}">
+											<TextBlock x:Uid="/Tabs/Archive/FileType"/>
+										</Border>
+										<Border Style="{StaticResource CustomTagValue}" >
+											<TextBlock Text="{x:Bind Data.Archive.extension, Mode=OneWay}"/>
+										</Border>
+									</StackPanel>
+									<StackPanel Orientation="Horizontal" Visibility="{x:Bind Data.Archive.LastReadTimeString, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+										<Border Style="{StaticResource CustomTag}">
+											<TextBlock x:Uid="/Tabs/Archive/LastRead"/>
+										</Border>
+										<Border Style="{StaticResource CustomTagValue}" >
+											<TextBlock Text="{x:Bind Data.Archive.LastReadTimeString, Mode=OneWay}"/>
+										</Border>
+									</StackPanel>
+									<StackPanel Orientation="Horizontal" Visibility="{x:Bind Data.Archive.SizeString, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+										<Border Style="{StaticResource CustomTag}">
+											<TextBlock x:Uid="/Tabs/Archive/Size"/>
+										</Border>
+										<Border Style="{StaticResource CustomTagValue}" >
+											<TextBlock Text="{x:Bind Data.Archive.SizeString, Mode=OneWay}"/>
+										</Border>
+									</StackPanel>
+									<StackPanel Orientation="Horizontal" Visibility="{x:Bind Data.Archive.filename, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+										<Border Style="{StaticResource CustomTag}">
+											<TextBlock x:Uid="/Tabs/Archive/FileName"/>
+										</Border>
+										<Border Style="{StaticResource CustomTagValue}" >
+											<TextBlock Text="{x:Bind Data.Archive.filename, Mode=OneWay}"/>
+										</Border>
+									</StackPanel>
 								</StackPanel>
 								<controls:ArchiveTags Margin="0,0,0,8" ItemClickCommand="{x:Bind Data.TagClickCommand}" ItemsSource="{x:Bind Data.Archive.TagsGroups, Mode=OneWay}" />
 								<StackPanel Orientation="Horizontal">
@@ -217,7 +238,7 @@
 				</Grid>
 			</ContentControl>
 		</ScrollViewer>
-		<Grid
+		<Grid x:Name="ReaderThumbnailOverlayHitArea"
 			Height="48" VerticalAlignment="Bottom" Background="Transparent"
 			PointerEntered="Trigger_PointerEntered" PointerExited="Trigger_PointerExited"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />

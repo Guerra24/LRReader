@@ -16,8 +16,6 @@ using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.UI.Xaml.Controls;
-
 #endif
 
 namespace LRReader.Shared.Services
@@ -289,6 +287,11 @@ namespace LRReader.Shared.Services
 
 		public StorageFile ProfilesFile { get; private set; } = null!;
 #endif
+		public bool ShowMap
+		{
+			get => SettingsStorage.GetObjectRoamed(true);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal

@@ -154,13 +154,13 @@
     <value>Editar</value>
   </data>
   <data name="Archive.FileName.Text" xml:space="preserve">
-    <value>Nombre del archivo:</value>
+    <value>Nombre del archivo</value>
   </data>
   <data name="Archive.FileType.Text" xml:space="preserve">
-    <value>Tipo de archivo:</value>
+    <value>Tipo de archivo</value>
   </data>
   <data name="Archive.LastRead.Text" xml:space="preserve">
-    <value>Última lectura:</value>
+    <value>Última lectura</value>
   </data>
   <data name="Archive.New.Content" xml:space="preserve">
     <value>¡Nuevo!</value>
@@ -169,7 +169,7 @@
     <value>Siguiente archivo</value>
   </data>
   <data name="Archive.Pages.Text" xml:space="preserve">
-    <value>Páginas:</value>
+    <value>Páginas</value>
   </data>
   <data name="Archive.Random.Content" xml:space="preserve">
     <value>Aleatorio</value>
@@ -202,7 +202,7 @@
     <value>Utilizar lector vertical</value>
   </data>
   <data name="Archive.Size.Text" xml:space="preserve">
-    <value>Tamaño:</value>
+    <value>Tamaño</value>
   </data>
   <data name="ArchiveEdit.AddAllTags.ToolTipService.ToolTip" xml:space="preserve">
     <value>Agregar Todo</value>

@@ -628,6 +628,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			FitImages(Data.UseVerticalReader);
 			ReaderThumbnailOverlay.Width = e.NewSize.Width;
 			//LeftHitTargetOverlay.Width = RightHitTargetOverlay.Width = ScrollViewer.ActualWidth / 6.0;
+			ReaderThumbnailOverlayHitArea.Margin = new Thickness(ScrollViewer.ActualWidth / 6.0, 0, ScrollViewer.ActualWidth / 6.0, 0);
 		}
 
 		private void ReaderControl_SizeChanged(object sender, SizeChangedEventArgs e) => FitImages(true);
@@ -838,6 +839,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private async void Trigger_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
 			if (!Data.ShowReader)
+				return;
+			if (!Service.Settings.ShowMap)
 				return;
 			_overlayDelayOpen = true;
 			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
