@@ -30,6 +30,7 @@
     <!-- Add your application specific runtime directives here. -->
     <Namespace Name="Microsoft.Extensions.Options" Dynamic="Required All" />
     <Namespace Name="Microsoft.Extensions.Logging" Dynamic="Required All" />
+    <Namespace Name="NReco.Logging.File" Dynamic="Required All" />
 
   </Application>
 </Directives>
