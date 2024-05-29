@@ -108,6 +108,7 @@
 								<TextBlock x:Uid="/Tabs/Archive/Settings/VerticalReader" VerticalAlignment="Center" />
 								<ToggleSwitch Grid.Column="1" IsOn="{x:Bind TabContent.Data.UseVerticalReader, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
 							</Grid>
+							<!--
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition />
@@ -119,6 +120,7 @@
 									Command="{x:Bind TabContent.PlayStopCommand}" IsChecked="{x:Bind TabContent.Data.UseAutoplay, Mode=TwoWay}"
 									CommandParameter="{x:Bind AutoplayButton.IsChecked, Mode=OneWay}" />
 							</Grid>
+							-->
 						</StackPanel>
 					</Flyout>
 				</Button.Flyout>
