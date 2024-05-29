@@ -395,7 +395,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ReaderControl_KeyDown(object sender, KeyRoutedEventArgs e)
 		{
-			if (!Data.ShowReader)
+			if (!Data.ShowReader || _changingPage)
 				return;
 
 			var ctrl = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
@@ -441,6 +441,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private void ReaderControl_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
 		{
+			if (_changingPage)
+				return;
 			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
 			{
