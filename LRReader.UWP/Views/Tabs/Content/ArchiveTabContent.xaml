@@ -295,7 +295,7 @@
 					IsItemClickEnabled="True" ItemClick="OverlayThumbnails_ItemClick"
 					ItemsSource="{x:Bind Data.ArchiveImages}"
 					ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True"
-					ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="Single" Translation="0,0,32">
+					ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.IsVerticalRailEnabled="False" SelectionMode="Single" Translation="0,0,32">
 					<contract8:GridView.Shadow>
 						<contract8:ThemeShadow />
 					</contract8:GridView.Shadow>
