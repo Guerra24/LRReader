@@ -123,10 +123,13 @@ namespace LRReader.Shared.ViewModels.Tools
 		}
 
 		[RelayCommand]
-		private void MarkNonDup()
+		private void MarkNonDup() => MarkNonDupValue(_current);
+
+		[RelayCommand]
+		private void MarkNonDupValue(ArchiveHit archiveHit)
 		{
-			Settings.Profile.MarkedAsNonDuplicated.Add(_current);
-			Items.Remove(_current);
+			Settings.Profile.MarkedAsNonDuplicated.Add(archiveHit);
+			Items.Remove(archiveHit);
 			Settings.SaveProfiles();
 		}
 

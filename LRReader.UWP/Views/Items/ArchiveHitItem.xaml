@@ -16,10 +16,15 @@
 			<ColumnDefinition Width="2" />
 			<ColumnDefinition Width="200" />
 		</Grid.ColumnDefinitions>
-		<Grid Grid.ColumnSpan="3" Background="Transparent" Visibility="{x:Bind ShowRemove, Mode=OneWay}">
+		<Grid Grid.ColumnSpan="3" Background="Transparent">
 			<Grid.ContextFlyout>
 				<MenuFlyout>
-					<MenuFlyoutItem x:Uid="/Tools/DeduplicatorHidden/Remove" Click="Remove_Click" Icon="Delete" />
+					<MenuFlyoutItem x:Uid="/Tools/Deduplicator/MarkNonDuplicate" Command="{x:Bind MarkNonDuplicateCommand, Mode=OneWay}" CommandParameter="{x:Bind Data.ArchiveHit, Mode=OneWay}" Visibility="{x:Bind ShowRemove, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+						<MenuFlyoutItem.Icon>
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8A6;" />
+						</MenuFlyoutItem.Icon>
+					</MenuFlyoutItem>
+					<MenuFlyoutItem x:Uid="/Tools/DeduplicatorHidden/Remove" Click="Remove_Click" Icon="Delete" Visibility="{x:Bind ShowRemove, Mode=OneWay}" />
 				</MenuFlyout>
 			</Grid.ContextFlyout>
 		</Grid>

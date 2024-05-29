@@ -80,7 +80,7 @@
 		<Thickness x:Key="FlyoutContentPadding">8,7,8,9</Thickness>
 	</Page.Resources>
 
-	<Grid>
+	<Grid x:Name="RootGrid">
 		<GridView
 			x:Name="Results"
 			ext:Element.ModernShadow="{StaticResource ElementShadow}"
@@ -249,7 +249,7 @@
 			</GridView.Header>
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="items:ArchiveHit">
-					<items1:ArchiveHitItem />
+					<items1:ArchiveHitItem MarkNonDuplicateCommand="{Binding ElementName=RootGrid, Path=DataContext.MarkNonDupValueCommand}" />
 				</DataTemplate>
 			</GridView.ItemTemplate>
 			<GridView.ItemsPanel>

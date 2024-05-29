@@ -43,6 +43,12 @@ namespace LRReader.UWP.Views.Items
 			set => SetValue(RemoveCommandProperty, value);
 		}
 
+		public ICommand MarkNonDuplicateCommand
+		{
+			get => (ICommand)GetValue(MarkNonDuplicateCommandProperty);
+			set => SetValue(MarkNonDuplicateCommandProperty, value);
+		}
+
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)
@@ -101,6 +107,7 @@ namespace LRReader.UWP.Views.Items
 
 		public static readonly DependencyProperty ShowRemoveProperty = DependencyProperty.Register("ShowRemove", typeof(bool), typeof(ArchiveHitItem), new PropertyMetadata(false));
 		public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.RegisterAttached("RemoveCommand", typeof(ICommand), typeof(ArchiveHitItem), new PropertyMetadata(null));
+		public static readonly DependencyProperty MarkNonDuplicateCommandProperty = DependencyProperty.RegisterAttached("MarkNonDuplicateCommand", typeof(ICommand), typeof(ArchiveHitItem), new PropertyMetadata(null));
 
 	}
 }

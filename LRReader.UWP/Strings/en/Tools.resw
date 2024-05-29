@@ -208,6 +208,9 @@ At last enable Skip missing thumbnails and try again</value>
   <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
     <value>Mark as non duplicate?</value>
   </data>
+  <data name="Deduplicator.MarkNonDuplicate.Text" xml:space="preserve">
+    <value>Mark as non duplicate</value>
+  </data>
   <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
     <value>Mark as non duplicate</value>
   </data>

@@ -208,6 +208,9 @@
   <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
     <value>标记为非重复?</value>
   </data>
+  <data name="Deduplicator.MarkNonDuplicate.Text" xml:space="preserve">
+    <value>标记为非重复</value>
+  </data>
   <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
     <value>标记为非重复</value>
   </data>

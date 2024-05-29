@@ -207,6 +207,9 @@
   <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
     <value>Пометить как не дубликат?</value>
   </data>
+  <data name="Deduplicator.MarkNonDuplicate.Text" xml:space="preserve">
+    <value>Пометить как не дубликат</value>
+  </data>
   <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
     <value>Пометить как не дубликат</value>
   </data>

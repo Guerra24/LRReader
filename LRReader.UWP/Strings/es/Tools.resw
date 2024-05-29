@@ -208,6 +208,9 @@ Por último, active la opción de omitir las miniaturas que faltan y vuelva a in
   <data name="Deduplicator.MarkNonDup.Text" xml:space="preserve">
     <value>¿Marcar como no duplicado?</value>
   </data>
+  <data name="Deduplicator.MarkNonDuplicate.Text" xml:space="preserve">
+    <value>Marcar como no duplicado</value>
+  </data>
   <data name="Deduplicator.MarkNonDupTT.ToolTipService.ToolTip" xml:space="preserve">
     <value>Marcar como no duplicado</value>
   </data>
