@@ -65,7 +65,7 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       run: aws s3 sync LRReader.UWP/AppPackages s3://${env:AWS_S3_BUCKET}/projects/lrr/$(Get-Content ".\version.txt") --no-progress --acl public-read --follow-symlinks
     - name: Upload to Release
-      uses: Guerra24/upload-to-release@v2
+      uses: Guerra24/upload-to-release@v1
       with:
         name: LRReader.appinstaller
         path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
@@ -106,7 +106,7 @@ jobs:
         name: Installer-${{ matrix.arch }}
         path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
     - name: Upload to Release
-      uses: Guerra24/upload-to-release@v2
+      uses: Guerra24/upload-to-release@v1
       with:
         name: LRReader.${{ matrix.arch }}.exe
         path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
