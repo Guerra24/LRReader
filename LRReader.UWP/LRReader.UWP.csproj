@@ -11,7 +11,7 @@
     <AssemblyName>LRReader.UWP</AssemblyName>
     <DefaultLanguage>en</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.26100.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -433,6 +433,9 @@
     <PackageReference Include="CommunityToolkit.Uwp.Converters">
       <Version>8.0.240109</Version>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Extensions">
+      <Version>8.0.240109</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Helpers">
       <Version>8.0.240109</Version>
     </PackageReference>
@@ -440,7 +443,7 @@
       <Version>8.0.240109</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>5.0.4</Version>
+      <Version>5.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>

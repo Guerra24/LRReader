@@ -93,7 +93,6 @@
 				<controls:ModernInput x:Uid="/Settings/Reader/Map" Glyph="&#xE90e;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ShowMap, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<!--
 				<controls:ModernExpander
 					Title="Autoplay" Description="Automatically scroll and change pages" Glyph="&#xE768;"
 					IsExpanded="{x:Bind Data.SettingsManager.Autoplay, Mode=OneWay}">
@@ -137,7 +136,6 @@
 							Value="{x:Bind Data.SettingsManager.AutoplayAfterChangeDelay, Mode=TwoWay}" />
 					</controls:ModernInput>
 				</controls:ModernExpander>
-				-->
 				<controls:ModernExpander x:Uid="/Settings/Reader/CustomBackground" Glyph="&#xE790;">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseReaderBackground, Mode=TwoWay}" />

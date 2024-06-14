@@ -54,6 +54,16 @@
           "Microsoft.UI.Xaml": "2.7.0"
         }
       },
+      "CommunityToolkit.Uwp.Extensions": {
+        "type": "Direct",
+        "requested": "[8.0.240109, )",
+        "resolved": "8.0.240109",
+        "contentHash": "N2P6bH66aQ37dfrlfvDdTSO1cIip+FceMB8ZFZSPX8iwq4emZZHzTNrouS2hltB4LIn9XX0HV46fawWPnQIIeA==",
+        "dependencies": {
+          "CommunityToolkit.Common": "8.2.1",
+          "Microsoft.UI.Xaml": "2.7.0"
+        }
+      },
       "CommunityToolkit.Uwp.Helpers": {
         "type": "Direct",
         "requested": "[8.0.240109, )",
@@ -78,11 +88,11 @@
       },
       "Microsoft.AppCenter.Crashes": {
         "type": "Direct",
-        "requested": "[5.0.4, )",
-        "resolved": "5.0.4",
-        "contentHash": "XrzfB4tKJBT+jyuret/gfASFMg9yaHhl1jfwelxdg+dOVuUC4uks4GJOlH5jMrUqqvMjMoHhQyvN2d3jJXekXg==",
+        "requested": "[5.0.5, )",
+        "resolved": "5.0.5",
+        "contentHash": "zIq14HQjmTqgQLFH5jgFD0o8LjmNILxcCjDpzc5Id4YxXxVhkyooabzxeHSDWLdqrHFoCCcBANB6swX9KKxKKg==",
         "dependencies": {
-          "Microsoft.AppCenter": "5.0.4",
+          "Microsoft.AppCenter": "5.0.5",
           "System.Reflection.Metadata": "1.7.0"
         }
       },
@@ -180,15 +190,6 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
-      "CommunityToolkit.Uwp.Extensions": {
-        "type": "Transitive",
-        "resolved": "8.0.240109",
-        "contentHash": "N2P6bH66aQ37dfrlfvDdTSO1cIip+FceMB8ZFZSPX8iwq4emZZHzTNrouS2hltB4LIn9XX0HV46fawWPnQIIeA==",
-        "dependencies": {
-          "CommunityToolkit.Common": "8.2.1",
-          "Microsoft.UI.Xaml": "2.7.0"
-        }
-      },
       "KeyedSemaphores": {
         "type": "Transitive",
         "resolved": "5.0.0",
@@ -200,8 +201,8 @@
       },
       "Microsoft.AppCenter": {
         "type": "Transitive",
-        "resolved": "5.0.4",
-        "contentHash": "DfND8Rtsoe3jwQGr1gAqPo3qlE+SXR8xwTKQmHVznUQwzNhcaOyMtUi10ZRYuaC0LsrhI2qmjPSqviNI264CnQ==",
+        "resolved": "5.0.5",
+        "contentHash": "Hjjd5D8yIIhDTVNXvJl9g7pX4jm5mFLGD46nLRxLsgtmw2tyDSy6YbixjOndc7r6ASfRRJFzIFclJuu4zWHhBA==",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.8",
           "Newtonsoft.Json": "13.0.2",
@@ -417,8 +418,8 @@
       },
       "NReco.Logging.File": {
         "type": "Transitive",
-        "resolved": "1.2.0",
-        "contentHash": "SxRwqg30BzeapccPWrFm5cOPNI1CHPVuLsXTyFUxUJAmYE2pUMMsDf+7RrmYzYF6LyqmAcMKsLTWzYu97Y55mg==",
+        "resolved": "1.2.1",
+        "contentHash": "DuGBOw5uIvrT/iH0pTBJaUxn6Y0kGGj83HMMwPgt+3B6HGUz3l+NjFgP6LgMdNLU72G4C8E6e7lB0qIoLz+/RQ==",
         "dependencies": {
           "Microsoft.Extensions.Logging": "3.1.32",
           "Microsoft.Extensions.Logging.Configuration": "3.1.32",
@@ -427,19 +428,19 @@
       },
       "RestSharp": {
         "type": "Transitive",
-        "resolved": "111.1.0",
-        "contentHash": "BWDcSLxNBDnILnWbvklMHtY3n93REYCu/1Ft13hh6xkluB1wfQvpPxvj9zaOlfwCZ+zMBDGuQmNAuo+mV8E9tQ==",
+        "resolved": "111.2.0",
+        "contentHash": "OkWr6AGM0zirdkRpxVOxXMWx9OHEIWrDzrpx1XIx5KyvTcmtjJVsKBscVkYTcFerhj5w5Bny7boRIV4a0ENGaQ==",
         "dependencies": {
           "System.Text.Json": "8.0.3"
         }
       },
       "RestSharp.Serializers.NewtonsoftJson": {
         "type": "Transitive",
-        "resolved": "111.1.0",
-        "contentHash": "VQJtq+sGJehgtgsaYoBhekpX5l/2jazzQGDd0qDe+dqByKam/PER+xj73yDwhUMcFJQxcUta4IzmL5HLUoITRw==",
+        "resolved": "111.2.0",
+        "contentHash": "fYMxbFeUFFwoWdVoXjyPMcZMW8OI5wD669MYvtjU6H/mMerNxrNnd345V4b2Yc2ttTQveRvDH8GnWFkJ6Ew26Q==",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "111.1.0"
+          "RestSharp": "111.2.0"
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
@@ -654,13 +655,13 @@
           "Caching.dll": "[2.0.0.1, )",
           "CommunityToolkit.Mvvm": "[8.2.2, )",
           "KeyedSemaphores": "[5.0.0, )",
-          "Microsoft.AppCenter.Crashes": "[5.0.4, )",
+          "Microsoft.AppCenter.Crashes": "[5.0.5, )",
           "Microsoft.Extensions.DependencyInjection": "[8.0.0, )",
           "Microsoft.Extensions.Logging": "[8.0.0, )",
-          "NReco.Logging.File": "[1.2.0, )",
+          "NReco.Logging.File": "[1.2.1, )",
           "Newtonsoft.Json": "[13.0.3, )",
-          "RestSharp": "[111.1.0, )",
-          "RestSharp.Serializers.NewtonsoftJson": "[111.1.0, )",
+          "RestSharp": "[111.2.0, )",
+          "RestSharp.Serializers.NewtonsoftJson": "[111.2.0, )",
           "SixLabors.ImageSharp": "[2.1.8, )"
         }
       }

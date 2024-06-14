@@ -64,7 +64,7 @@ namespace LRReader.UWP.Views.Dialogs
 				ProfileError.Text = lang.GetString("ServerProfile/ErrorLocalHost").AsFormat("\n");
 				Command.Visibility = Visibility.Visible;
 				CommandBox.Text = $"CheckNetIsolation loopbackexempt -a -n=\"{((UWPlatformService)Service.Platform).GetPackageFamilyName()}\"";
-				//KarenStack.Visibility = Visibility.Visible;
+				KarenStack.Visibility = Visibility.Visible;
 			}
 			IsPrimaryButtonEnabled = allow && ValidateProfileName();
 		}
