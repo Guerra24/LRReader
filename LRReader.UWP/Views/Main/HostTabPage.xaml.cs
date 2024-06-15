@@ -116,9 +116,9 @@ namespace LRReader.UWP.Views.Main
 		private void TitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
 		{
 			if (sender.IsVisible)
-				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 32 : 0, 0, 0);
+				TabViewControl.Margin = new Thickness(0, 0, 0, 0);
 			else
-				TabViewControl.Margin = new Thickness(0, Service.Settings.UseVerticalTabs ? 0 : -48, 0, 0);
+				TabViewControl.Margin = new Thickness(0, -48, 0, 0);
 		}
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);
@@ -129,17 +129,7 @@ namespace LRReader.UWP.Views.Main
 		}
 
 		// Move all of this to the ViewModel
-		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
-
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) => AppView.TryEnterFullScreenMode();
-
-		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Bookmarks);
-
-		private void Categories_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Categories);
-
-		private void Search_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.SearchResults);
-
-		private void Tools_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Tools);
 
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.Fullscreen = AppView.IsFullScreenMode;
 

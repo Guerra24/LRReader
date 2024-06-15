@@ -9,6 +9,8 @@ namespace LRReader.UWP.Views.Controls
 
 		protected ModernPageTabWrapper Wrapper = null!;
 
+		private bool _navigating;
+
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
@@ -18,6 +20,9 @@ namespace LRReader.UWP.Views.Controls
 
 		protected void PageButton_Click(object sender, RoutedEventArgs e)
 		{
+			if (_navigating)
+				return;
+			_navigating = true;
 			Wrapper.ModernPageTab.Navigate((ModernPageTabItem)((ModernInput)sender).Tag, (int)((Frame)Parent).Tag);
 		}
 	}

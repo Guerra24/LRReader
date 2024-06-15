@@ -8,17 +8,16 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
-	Loaded="PivotItem_Loaded"
+	Loaded="ModernBasePage_Loaded"
+	Unloaded="ModernBasePage_Unloaded"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
-				<!--
 				<controls:ModernInput Title="Use Vertical Tabs" Glyph="&#xE71D;">
-					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVerticalTabs, Mode=TwoWay}" />
+					<ToggleSwitch x:Name="VerticalTabs" IsOn="{x:Bind Data.SettingsManager.UseVerticalTabs, Mode=TwoWay}" />
 				</controls:ModernInput>
-				-->
 				<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
 				</controls:ModernInput>

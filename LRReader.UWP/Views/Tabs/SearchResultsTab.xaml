@@ -16,7 +16,7 @@
 	mc:Ignorable="d">
 	<muxc:TabViewItem.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
-			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="WordEllipsis" />
+			<TextBlock MaxWidth="200" Text="{x:Bind}" TextTrimming="CharacterEllipsis" />
 		</DataTemplate>
 	</muxc:TabViewItem.HeaderTemplate>
 	<muxc:TabViewItem.IconSource>

@@ -1,6 +1,12 @@
-﻿using LRReader.Shared.ViewModels;
+﻿using System;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using LRReader.Shared.Messages;
+using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.AppCenter.Crashes;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,7 +41,17 @@ namespace LRReader.UWP.Views.Content.Settings
 			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Bottom"));
 		}
 
-		private async void PivotItem_Loaded(object sender, RoutedEventArgs e) => await Data.UpdateThumbnailCacheSize();
+
+		private async void ModernBasePage_Loaded(object sender, RoutedEventArgs e)
+		{
+			VerticalTabs.Toggled += ToggleSwitch_Toggled;
+			await Data.UpdateThumbnailCacheSize();
+		}
+
+		private void ModernBasePage_Unloaded(object sender, RoutedEventArgs e)
+		{
+			VerticalTabs.Toggled -= ToggleSwitch_Toggled;
+		}
 
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -56,5 +72,17 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			((ToggleSwitch)sender).IsOn = await Crashes.IsEnabledAsync();
 		}
+
+		private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+		{
+			var result = await Service.Platform.OpenGenericDialog("Switch tabs mode?", "Yes, restart", closebutton: "Restart later", content: "The app needs to restart to switch tabs mode");
+			if (result == Shared.Models.IDialogResult.Primary)
+			{
+				var res = await CoreApplication.RequestRestartAsync("");
+				if (res == AppRestartFailureReason.NotInForeground || res == AppRestartFailureReason.Other)
+					WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to restart application", "Please restart manually.", 0, NotificationSeverity.Error));
+			}
+		}
+
 	}
 }

@@ -9,6 +9,9 @@
 	xmlns:util="using:LRReader.UWP.Util"
 	xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:helpers="using:LRReader.UWP.Helpers"
+	xmlns:services="using:LRReader.Shared.Services"
 	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
 	NavigationCacheMode="Required"
@@ -26,9 +29,9 @@
 
 	<Grid>
 		<Grid
-			x:Name="TitleBar" Height="40" VerticalAlignment="Top"
+			x:Name="TitleBar" Height="48" VerticalAlignment="Top"
 			Background="Transparent" />
-		<muxc:TabView
+		<controls:ModernTabView
 			x:Name="TabViewControl" VerticalAlignment="Stretch"
 			SelectedItem="{x:Bind Data.CurrentTab, Mode=TwoWay}"
 			TabCloseRequested="TabView_TabCloseRequested"
@@ -45,78 +48,56 @@
 				<Grid x:Name="TabViewStartHeader" />
 			</muxc:TabView.TabStripHeader>
 			<muxc:TabView.TabStripFooter>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.Resources>
-						<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-							<Setter Property="Width" Value="34" />
-							<Setter Property="Height" Value="32" />
-							<Setter Property="Padding" Value="0" />
-							<Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
-						</Style>
-						<Style TargetType="Viewbox">
-							<Setter Property="MaxWidth" Value="16"/>
-							<Setter Property="MaxHeight" Value="16"/>
-						</Style>
-					</Grid.Resources>
-					<StackPanel VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">
-						<Button x:Uid="/Pages/HostTabPage/Bookmarks" Click="Bookmarks_Click">
-							<Viewbox>
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
-							</Viewbox>
-						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Categories" Click="Categories_Click">
-							<Viewbox>
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
-							</Viewbox>
-						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Search" Click="Search_Click">
-							<Viewbox>
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
-							</Viewbox>
-						</Button>
-						<Button x:Uid="/Pages/HostTabPage/Tools" Click="Tools_Click" Visibility="{x:Bind Settings.Profile.HasApiKey, Mode=OneWay}">
-							<Viewbox>
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
-							</Viewbox>
-						</Button>
-					</StackPanel>
-					<Border
-						Grid.Column="2" Width="1" Height="16"
-						Margin="3,0,3,0" VerticalAlignment="Center"
-						Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-					<StackPanel
-						x:Name="TabViewEndHeader" Grid.Column="3" VerticalAlignment="Center"
-						Orientation="Horizontal" Spacing="2">
-						<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" IsTabStop="False">
-							<ContentControl.ContentTransitions>
-								<TransitionCollection>
-									<ContentThemeTransition VerticalOffset="0" />
-								</TransitionCollection>
-							</ContentControl.ContentTransitions>
-						</ContentControl>
-						<Button
-							x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
-							Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
-							<Viewbox>
-								<SymbolIcon Symbol="FullScreen" />
-							</Viewbox>
-						</Button>
-						<Button x:Name="SettingsButton" x:Uid="/Pages/HostTabPage/Settings" Click="SettingsButton_Click">
-							<Viewbox>
-								<SymbolIcon Symbol="Setting" />
-							</Viewbox>
-						</Button>
-					</StackPanel>
-				</Grid>
+				<StackPanel VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">
+					<Button x:Uid="/Pages/HostTabPage/Bookmarks" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Bookmarks}">
+						<Viewbox>
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+						</Viewbox>
+					</Button>
+					<Button x:Uid="/Pages/HostTabPage/Categories" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Categories}">
+						<Viewbox>
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
+						</Viewbox>
+					</Button>
+					<Button x:Uid="/Pages/HostTabPage/Search" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=SearchResults}">
+						<Viewbox>
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
+						</Viewbox>
+					</Button>
+					<Button x:Uid="/Pages/HostTabPage/Tools" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tools}" Visibility="{x:Bind Settings.Profile.HasApiKey, Mode=OneWay}">
+						<Viewbox>
+							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
+						</Viewbox>
+					</Button>
+				</StackPanel>
 			</muxc:TabView.TabStripFooter>
-		</muxc:TabView>
-		<muxc:InfoBar HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32">
+			<controls:ModernTabView.ExtraFooter>
+				<StackPanel
+					x:Name="TabViewEndHeader" VerticalAlignment="Center"
+					Orientation="Horizontal" Spacing="2">
+					<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" IsTabStop="False">
+						<ContentControl.ContentTransitions>
+							<TransitionCollection>
+								<ContentThemeTransition VerticalOffset="0" />
+							</TransitionCollection>
+						</ContentControl.ContentTransitions>
+					</ContentControl>
+					<Button
+						x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
+						Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
+						<Viewbox>
+							<SymbolIcon Symbol="FullScreen" />
+						</Viewbox>
+					</Button>
+					<Button x:Uid="/Pages/HostTabPage/Settings" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Settings}">
+						<Viewbox>
+							<SymbolIcon Symbol="Setting" />
+						</Viewbox>
+					</Button>
+				</StackPanel>
+			</controls:ModernTabView.ExtraFooter>
+		</controls:ModernTabView>
+		<muxc:InfoBar x:Name="NotificationsInfoBar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32">
 			<muxc:InfoBar.Transitions>
 				<TransitionCollection>
 					<EdgeUIThemeTransition Edge="Bottom" />
@@ -135,8 +116,8 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="TabViewControl.Template" Value="{StaticResource MicaTabViewVerticalTemplate}" />
-						<Setter Target="TitleBar.Height" Value="32" />
-						<Setter Target="TabViewControl.Margin" Value="0,32,0,0" />
+						<Setter Target="TitleBar.Height" Value="48" />
+						<Setter Target="NotificationsInfoBar.Margin" Value="282,32,32,32" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

@@ -22,12 +22,16 @@
 	</controls:ModernTab.Resources>
 
 	<muxc:TabViewItem.Header>
-		<StackPanel Orientation="Horizontal">
-			<TextBlock MaxWidth="200" Text="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}" TextTrimming="WordEllipsis" />
-			<TextBlock Visibility="{x:Bind TabContent.Data.ShowReader, Mode=OneWay}">
+		<Grid MaxWidth="200">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+			<TextBlock Visibility="{x:Bind TabContent.Data.ShowReader, Mode=OneWay}" Grid.Column="1">
 				<Run Text=" " />(<Run Text="{x:Bind TabContent.Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{x:Bind TabContent.Data.Pages, Mode=OneWay}" />)
 			</TextBlock>
-		</StackPanel>
+		</Grid>
 	</muxc:TabViewItem.Header>
 	<controls:ModernTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal" Spacing="2">

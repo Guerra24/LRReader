@@ -145,6 +145,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumValueExtension.cs" />
     <Compile Include="Internal\Utils.cs" />
     <Compile Include="Resources\Templates.xaml.cs">
       <DependentUpon>Templates.xaml</DependentUpon>
@@ -205,6 +206,7 @@
       <DependentUpon>ModernPageTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ModernTab.cs" />
+    <Compile Include="Views\Controls\ModernTabView.cs" />
     <Compile Include="Views\Controls\ModernWebView.cs" />
     <Compile Include="Views\Controls\NoBorderListViewItemPresenter.cs" />
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Models;
 
 namespace LRReader.Shared.Services
@@ -34,6 +35,9 @@ namespace LRReader.Shared.Services
 		}
 
 		public void MapTabToType(Tab tab, Type type) => Tabs.Add(tab, type);
+
+		[RelayCommand]
+		public void OpenTab(Tab tab) => OpenTab(tab, true);
 
 		public void OpenTab(Tab tab, params object[] args) => OpenTab(tab, true, args);
 

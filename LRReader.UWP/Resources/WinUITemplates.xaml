@@ -1309,7 +1309,7 @@
 
 	<!--  https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/TabView/TabView_v1.xaml#L14  -->
 
-	<ControlTemplate xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" x:Key="MicaTabViewTemplate" TargetType="muxc:TabView">
+	<ControlTemplate xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" x:Key="MicaTabViewTemplate" TargetType="controls:ModernTabView">
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
@@ -1373,10 +1373,37 @@
 					Margin="3,0,3,0" VerticalAlignment="Center"
 					Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
-				<ContentPresenter
-					x:Name="RightContentPresenter" Grid.Column="3" HorizontalAlignment="Stretch"
-					Content="{TemplateBinding TabStripFooter}"
-					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+				<Grid Grid.Column="3" HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.Resources>
+						<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+							<Setter Property="Width" Value="34" />
+							<Setter Property="Height" Value="32" />
+							<Setter Property="Padding" Value="0" />
+							<Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+						</Style>
+						<Style TargetType="Viewbox">
+							<Setter Property="MaxWidth" Value="16"/>
+							<Setter Property="MaxHeight" Value="16"/>
+						</Style>
+					</Grid.Resources>
+					<ContentPresenter
+						x:Name="RightContentPresenter"
+						Content="{TemplateBinding TabStripFooter}"
+						ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+					<Border
+						Grid.Column="2" Width="1" Height="16"
+						Margin="3,0,3,0" VerticalAlignment="Center"
+						Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+					<ContentPresenter Grid.Column="3"
+						Content="{TemplateBinding ExtraFooter}"
+						ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+				</Grid>
 
 			</Grid>
 
@@ -1387,33 +1414,65 @@
 		</Grid>
 	</ControlTemplate>
 
-	<ControlTemplate xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" x:Key="MicaTabViewVerticalTemplate" TargetType="muxc:TabView">
+	<ControlTemplate xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" x:Key="MicaTabViewVerticalTemplate" TargetType="controls:ModernTabView">
 		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="250" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="48" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 
-			<Grid x:Name="TabContainerGrid" XYFocusKeyboardNavigation="Enabled">
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-
+			<Grid HorizontalAlignment="Stretch" Grid.ColumnSpan="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Grid.Resources>
+					<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+						<Setter Property="Width" Value="34" />
+						<Setter Property="Height" Value="32" />
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+					</Style>
+					<Style TargetType="Viewbox">
+						<Setter Property="MaxWidth" Value="16"/>
+						<Setter Property="MaxHeight" Value="16"/>
+					</Style>
+				</Grid.Resources>
 				<ContentPresenter x:Name="LeftContentPresenter" Content="{TemplateBinding TabStripHeader}" ContentTemplate="{TemplateBinding TabStripHeaderTemplate}" />
+				<ContentPresenter
+					x:Name="RightContentPresenter" Grid.Column="1"
+					Content="{TemplateBinding TabStripFooter}"
+					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+				<Border
+					Grid.Column="3" Width="1" Height="16"
+					Margin="3,0,3,0" VerticalAlignment="Center"
+					Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+				<ContentPresenter Grid.Column="4"
+					Content="{TemplateBinding ExtraFooter}"
+					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+			</Grid>
 
+
+			<Grid x:Name="TabContainerGrid" Grid.Row="1" XYFocusKeyboardNavigation="Enabled">
 				<primitives:TabViewListView
-					x:Name="TabListView" Grid.Row="1"
+					x:Name="TabListView"
 					Margin="{TemplateBinding Padding}"
 					AllowDrop="{TemplateBinding AllowDropTabs}"
 					CanDragItems="{TemplateBinding CanDragTabs}"
 					CanReorderItems="{TemplateBinding CanReorderTabs}"
 					ItemTemplate="{TemplateBinding TabItemTemplate}"
 					ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}"
-					ItemsSource="{TemplateBinding TabItemsSource}">
+					ItemsSource="{TemplateBinding TabItemsSource}"
+					ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+					ScrollViewer.VerticalScrollBarVisibility="Auto"
+					ScrollViewer.VerticalScrollMode="Auto">
 					<primitives:TabViewListView.Template>
 						<ControlTemplate TargetType="primitives:TabViewListView">
 							<Border
@@ -1447,20 +1506,10 @@
 						</ItemsPanelTemplate>
 					</primitives:TabViewListView.ItemsPanel>
 				</primitives:TabViewListView>
-
-				<Border
-					Grid.Row="2" Height="1" Margin="8,3"
-					Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-
-				<ContentPresenter
-					x:Name="RightContentPresenter" Grid.Row="3"
-					Content="{TemplateBinding TabStripFooter}"
-					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
-
 			</Grid>
 
 			<ContentPresenter
-				x:Name="TabContentPresenter" Grid.Column="1"
+				x:Name="TabContentPresenter" Grid.Column="1" Grid.Row="1"
 				Background="{ThemeResource NavigationViewContentBackground}"
 				BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
 				BorderThickness="{ThemeResource NavigationViewContentGridBorderThickness}"
