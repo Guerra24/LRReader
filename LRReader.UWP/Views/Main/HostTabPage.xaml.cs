@@ -5,9 +5,11 @@ using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
+using LRReader.UWP.Services;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
 using Microsoft.UI.Xaml.Controls;
+using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Core;
@@ -70,6 +72,9 @@ namespace LRReader.UWP.Views.Main
 				if (Settings.OpenCategoriesTab)
 					Data.OpenTab(Tab.Categories, false);
 			});
+
+			if (((UWPlatformService)Service.Platform).ExecutionState == ApplicationExecutionState.Terminated)
+				await Service.Persistance.Restore();
 
 			var info = await Updates.CheckForUpdates();
 

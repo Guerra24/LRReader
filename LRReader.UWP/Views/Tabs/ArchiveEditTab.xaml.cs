@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models;
+using LRReader.Shared.Models.Main;
 using LRReader.UWP.Views.Controls;
 
 namespace LRReader.UWP.Views.Tabs
@@ -12,6 +13,8 @@ namespace LRReader.UWP.Views.Tabs
 			TabContent.LoadArchive(archive);
 			this.CustomTabId = "Edit_" + archive.arcid;
 		}
+
+		public override TabState GetTabState() => new IdTabState(Tab, TabContent.Data.Archive.arcid);
 
 	}
 }

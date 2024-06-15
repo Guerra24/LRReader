@@ -54,17 +54,15 @@ namespace LRReader.UWP
 				root = new Root();
 				root.ChangeTheme(Settings.Theme);
 				root.UpdateThemeColors();
-				((UWPlatformService)Platform).SetRoot(root);
+				var platform = (UWPlatformService)Platform;
+				platform.SetRoot(root);
 
 				/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
 					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");*/
 
 				((SolidColorBrush)this.Resources["CustomReaderBackground"]).Color = ColorHelper.ToColor(Settings.ReaderBackground);
 
-				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-				{
-					//TODO: Load state from previously suspended application
-				}
+				platform.SetAppExecState(e.PreviousExecutionState);
 				Window.Current.Content = root;
 			}
 
@@ -87,10 +85,10 @@ namespace LRReader.UWP
 		/// </summary>
 		/// <param name="sender">The source of the suspend request.</param>
 		/// <param name="e">Details about the suspend request.</param>
-		private void OnSuspending(object sender, SuspendingEventArgs e)
+		private async void OnSuspending(object sender, SuspendingEventArgs e)
 		{
 			var deferral = e.SuspendingOperation.GetDeferral();
-			//TODO: Save application state and stop any background activity
+			await Service.Persistance.Suspend();
 			deferral.Complete();
 		}
 

@@ -47,6 +47,7 @@ namespace LRReader.Shared.Services
 			if (!Tabs.TryGetValue(tab, out type))
 				return;
 			var newTab = (ICustomTab)Activator.CreateInstance(type, args);
+			newTab.Tab = tab;
 			var current = GetTabFromId(newTab.CustomTabId);
 			if (current != null)
 			{

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
@@ -22,6 +23,8 @@ namespace LRReader.UWP.Views.Tabs
 			base.Dispose();
 			TabContent.RemoveEvent();
 		}
+
+		public override TabState GetTabState() => new IdTabState(Tab, TabContent.Data.Archive.arcid);
 
 		private void AutoplayButton_Checked(object sender, RoutedEventArgs e) => AutoplayButton.Content = Service.Platform.GetLocalizedString("/Tabs/Archive/AutoplayState/Stop");
 

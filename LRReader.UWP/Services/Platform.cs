@@ -10,6 +10,7 @@ using LRReader.UWP.Views.Tabs;
 using Microsoft.Extensions.Logging;
 using NReco.Logging.File;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Security.ExchangeActiveSyncProvisioning;
@@ -35,6 +36,8 @@ namespace LRReader.UWP.Services
 		private bool _animationsEnabled, _dualScreen;
 
 		private Root? Root;
+
+		public ApplicationExecutionState ExecutionState { get; private set; }
 
 		public UWPlatformService(TabsService tabs, ILoggerFactory loggerFactory, IFilesService files)
 		{
@@ -160,6 +163,8 @@ namespace LRReader.UWP.Services
 		public void SetRoot(Root root) => this.Root = root;
 
 		private void Current_Activated(object sender, WindowActivatedEventArgs e) => Active = e.WindowActivationState != CoreWindowActivationState.Deactivated;
+
+		public void SetAppExecState(ApplicationExecutionState state) => ExecutionState = state;
 
 	}
 }

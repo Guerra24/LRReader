@@ -1,6 +1,9 @@
 ﻿using System;
-using LRReader.Shared.Converters;
+using System.Collections.Generic;
+using LRReader.Shared.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using VersionConverter = LRReader.Shared.Converters.VersionConverter;
 
 namespace LRReader.Shared.Models
 {
@@ -10,9 +13,34 @@ namespace LRReader.Shared.Models
 
 		string CustomTabId { get; set; }
 
+		Tab Tab { get; set; }
+
+		public TabState GetTabState();
+
 		bool IsClosable { get; set; }
 
 		bool BackRequested();
+	}
+
+	public class AppState
+	{
+		public List<TabState> Tabs { get; } = new();
+		public string ProfileUID { get; set; } = null!;
+	}
+
+	public class TabState
+	{
+		[JsonConverter(typeof(StringEnumConverter))]
+		public Tab Tab { get; set; }
+
+		public TabState(Tab tab) => Tab = tab;
+	}
+
+	public class IdTabState : TabState
+	{
+		public string Id { get; set; } = null!;
+
+		public IdTabState(Tab tab, string id) : base(tab) => Id = id;
 	}
 
 	public class ReleaseInfo
