@@ -10,7 +10,6 @@ namespace LRReader.Shared.Models.Main
 
 		public List<string> archives { get; set; } = null!;
 		public string id { get; set; } = null!;
-		public string last_used { get; set; } = null!;
 		public string name { get; set; } = null!;
 		[JsonConverter(typeof(BoolConverter))]
 		public bool pinned { get; set; }

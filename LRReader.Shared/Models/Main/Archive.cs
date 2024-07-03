@@ -27,14 +27,14 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public string LastReadTimeString => lastreadtime == null ? "" : DateTimeOffset.FromUnixTimeSeconds((long)lastreadtime).ToLocalTime().ToString();
 
-		public long? size { get; set; } // dev
+		public long? size { get; set; } // 0.9.10
 
 		[JsonIgnore]
 		public string SizeString => size == null ? "" : string.Format("{0:n2} MB", size / 1024f / 1024f);
 
-		public string? filename { get; set; } // dev
+		public string? filename { get; set; } // 0.9.10
 
-		public string? summary { get; set; } // dev
+		public string? summary { get; set; } // 0.9.10
 
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;

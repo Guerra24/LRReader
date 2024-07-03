@@ -43,6 +43,18 @@ namespace LRReader.Shared.Models
 		public IdTabState(Tab tab, string id) : base(tab) => Id = id;
 	}
 
+	public class ArchiveTabState : IdTabState
+	{
+		public int? Page { get; set; }
+		public bool WasOpen { get; set; }
+
+		public ArchiveTabState(Tab tab, string id, int? page, bool wasOpen) : base(tab, id)
+		{
+			Page = page;
+			WasOpen = wasOpen;
+		}
+	}
+
 	public class ReleaseInfo
 	{
 		public string name { get; set; } = null!;

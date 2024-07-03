@@ -6,7 +6,9 @@ namespace LRReader.Shared.Models.Main
 {
 	public class ServerInfo
 	{
+		[JsonConverter(typeof(HtmlEncodingConverter))]
 		public string name { get; set; } = null!;
+		[JsonConverter(typeof(HtmlEncodingConverter))]
 		public string motd { get; set; } = null!;
 		[JsonConverter(typeof(VersionConverter))]
 		public Version version { get; set; } = null!;

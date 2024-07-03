@@ -116,6 +116,7 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="TabViewControl.Template" Value="{StaticResource MicaTabViewVerticalTemplate}" />
+						<Setter Target="TabViewControl.Padding" Value="0" />
 						<Setter Target="TitleBar.Height" Value="48" />
 						<Setter Target="NotificationsInfoBar.Margin" Value="282,32,32,32" />
 					</VisualState.Setters>

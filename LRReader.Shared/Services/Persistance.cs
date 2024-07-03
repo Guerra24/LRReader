@@ -42,17 +42,16 @@ namespace LRReader.Shared.Services
 					return;
 				foreach (var tab in appState.Tabs)
 				{
-					if (tab is IdTabState idTab && Archives.TryGetArchive(idTab.Id, out var archive))
+					switch (tab.Tab)
 					{
-						switch (tab.Tab)
-						{
-							case Tab.Archive:
-								Archives.OpenTab(archive, false);
-								break;
-							case Tab.ArchiveEdit:
+						case Tab.Archive:
+							if (tab is ArchiveTabState arcTab && Archives.TryGetArchive(arcTab.Id, out var archive))
+								Tabs.OpenTab(Tab.Archive, false, archive, arcTab.Page, arcTab.WasOpen);
+							break;
+						case Tab.ArchiveEdit:
+							if (tab is IdTabState idTab && Archives.TryGetArchive(idTab.Id, out archive))
 								Tabs.OpenTab(Tab.ArchiveEdit, false, archive);
-								break;
-						}
+							break;
 					}
 				}
 				File.Delete(path);

@@ -78,7 +78,6 @@ namespace LRReader.Shared.ViewModels
 			if (result == null)
 				return;
 			category.name = result.name;
-			category.last_used = result.last_used;
 			category.pinned = result.pinned;
 			category.search = result.search;
 			category.archives = result.archives;

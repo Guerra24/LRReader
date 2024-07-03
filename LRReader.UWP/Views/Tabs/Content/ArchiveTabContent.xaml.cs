@@ -51,6 +51,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private bool _transition;
 
+		private bool? _forceOpen;
+		private int? _forceProgress;
+
 		private TimeSpan _previousTime = TimeSpan.Zero;
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
@@ -83,23 +86,25 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await _loadSemaphore.WaitAsync();
 				await Data.HandleConflict();
 				_loadSemaphore.Release();
-				if (Service.Settings.OpenReader)
+				if (_forceOpen ?? Service.Settings.OpenReader)
 				{
 					var page = 0;
 					if (Data.Bookmarked)
 						page = Data.BookmarkProgress;
-					OpenReader(page);
+					OpenReader(_forceProgress ?? page);
 				}
 				_opened = true;
 			}
 		}
 
-		public async void LoadArchive(Archive archive, IList<Archive> next)
+		public async void LoadArchive(Archive archive, IList<Archive>? next = null, int? forceProgress = null, bool? forceOpen = null)
 		{
 			Data.Archive = archive;
 			if (next != null)
 				Data.Group = next;
 			await Data.Reload();
+			_forceProgress = forceProgress;
+			_forceOpen = forceOpen;
 			_loadSemaphore.Release();
 		}
 

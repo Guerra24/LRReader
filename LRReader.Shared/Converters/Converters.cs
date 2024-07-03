@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -99,5 +100,23 @@ public class ArchiveNewConverter : JsonConverter
 	public override bool CanConvert(Type objectType)
 	{
 		return objectType == typeof(bool);
+	}
+}
+
+public class HtmlEncodingConverter : JsonConverter
+{
+	public override bool CanConvert(Type objectType)
+	{
+		return objectType == typeof(string);
+	}
+
+	public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+	{
+		return WebUtility.HtmlDecode((string)reader.Value!);
+	}
+
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+	{
+		throw new NotImplementedException();
 	}
 }
