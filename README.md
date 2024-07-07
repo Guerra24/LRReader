@@ -21,7 +21,7 @@
 
 ### Store
 
-<a href='//www.microsoft.com/store/productId/9MZ6BWWVSWJH'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width="213" height="78"/></a>
+<a href="https://apps.microsoft.com/detail/LRReader/9mz6bwwvswjh?launch=true&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/></a>
 
 If you have troubles accessing the store page. Open this link in your browser:<br>
 `ms-windows-store://pdp/?productid=9MZ6BWWVSWJH`
