@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using CommunityToolkit.WinUI.Behaviors;
 using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
@@ -13,6 +14,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private Button? TogglePaneButton;
 		private SplitView? SplitView;
+		public StackedNotificationsBehavior Notifications { get; private set; } = null!;
 
 		public ModernTabView()
 		{
@@ -29,6 +31,7 @@ namespace LRReader.UWP.Views.Controls
 			base.OnApplyTemplate();
 			TogglePaneButton = GetTemplateChild("TogglePaneButton") as Button;
 			SplitView = GetTemplateChild("SplitView") as SplitView;
+			Notifications = (StackedNotificationsBehavior)GetTemplateChild("Notifications");
 		}
 
 		public object ExtraFooter

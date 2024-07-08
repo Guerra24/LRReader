@@ -97,16 +97,6 @@
 				</StackPanel>
 			</controls:ModernTabView.ExtraFooter>
 		</controls:ModernTabView>
-		<muxc:InfoBar x:Name="NotificationsInfoBar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32">
-			<muxc:InfoBar.Transitions>
-				<TransitionCollection>
-					<EdgeUIThemeTransition Edge="Bottom" />
-				</TransitionCollection>
-			</muxc:InfoBar.Transitions>
-			<interactivity:Interaction.Behaviors>
-				<behaviors:StackedNotificationsBehavior x:Name="Notifications" />
-			</interactivity:Interaction.Behaviors>
-		</muxc:InfoBar>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="Default" />
@@ -118,7 +108,6 @@
 						<Setter Target="TabViewControl.Template" Value="{StaticResource MicaTabViewVerticalTemplate}" />
 						<Setter Target="TabViewControl.Padding" Value="0" />
 						<Setter Target="TitleBar.Height" Value="48" />
-						<Setter Target="NotificationsInfoBar.Margin" Value="282,32,32,32" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

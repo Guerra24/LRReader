@@ -5,7 +5,9 @@
 	xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	xmlns:contract13="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 13)">
+	xmlns:contract13="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 13)"
+	xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
 
 	<!--  https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/GridViewItem_themeresources_21h1.xaml  -->
 	<ResourceDictionary.ThemeDictionaries>
@@ -1412,6 +1414,16 @@
 				x:Name="TabContentPresenter" Grid.Row="1"
 				BorderBrush="{TemplateBinding BorderBrush}"
 				BorderThickness="{TemplateBinding BorderThickness}" />
+			<muxc:InfoBar Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32">
+				<muxc:InfoBar.Transitions>
+					<TransitionCollection>
+						<EdgeUIThemeTransition Edge="Bottom" />
+					</TransitionCollection>
+				</muxc:InfoBar.Transitions>
+				<interactivity:Interaction.Behaviors>
+					<behaviors:StackedNotificationsBehavior x:Name="Notifications" />
+				</interactivity:Interaction.Behaviors>
+			</muxc:InfoBar>
 		</Grid>
 	</ControlTemplate>
 
@@ -1510,12 +1522,24 @@
 						</primitives:TabViewListView>
 					</Grid>
 				</SplitView.Pane>
-				<ContentPresenter
-					x:Name="TabContentPresenter"
-					Background="{ThemeResource NavigationViewContentBackground}"
-					BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
-					BorderThickness="{ThemeResource NavigationViewContentGridBorderThickness}"
-					CornerRadius="{ThemeResource NavigationViewContentGridCornerRadius}" />
+				<Grid>
+					<ContentPresenter
+						x:Name="TabContentPresenter"
+						Background="{ThemeResource NavigationViewContentBackground}"
+						BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
+						BorderThickness="{ThemeResource NavigationViewContentGridBorderThickness}"
+						CornerRadius="{ThemeResource NavigationViewContentGridCornerRadius}" />
+					<muxc:InfoBar HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32">
+						<muxc:InfoBar.Transitions>
+							<TransitionCollection>
+								<EdgeUIThemeTransition Edge="Bottom" />
+							</TransitionCollection>
+						</muxc:InfoBar.Transitions>
+						<interactivity:Interaction.Behaviors>
+							<behaviors:StackedNotificationsBehavior x:Name="Notifications" />
+						</interactivity:Interaction.Behaviors>
+					</muxc:InfoBar>
+				</Grid>
 			</SplitView>
 			<VisualStateManager.VisualStateGroups>
 				<VisualStateGroup x:Name="CommonStates">
