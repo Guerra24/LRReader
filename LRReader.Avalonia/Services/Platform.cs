@@ -40,6 +40,8 @@ namespace LRReader.Avalonia.Services
 
 		public override bool DualScreen => false;
 
+		public override double DualScreenWidth => 0;
+
 		public override void ChangeTheme(AppTheme theme)
 		{
 			throw new NotImplementedException();

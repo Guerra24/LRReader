@@ -6,8 +6,9 @@ using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Animations;
 using CommunityToolkit.WinUI.Media;
 using LRReader.Shared.Extensions;
+using LRReader.Shared.Services;
+using LRReader.UWP.Services;
 using Windows.Foundation;
-using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -50,8 +51,8 @@ namespace LRReader.UWP.Extensions
 		{
 			if (state)
 			{
-				var dpi = DisplayInformation.GetForCurrentView();
-				pane.MinWideModeWidth = dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel - 10;
+				var platform = (UWPlatformService)Service.Platform;
+				pane.MinWideModeWidth = platform.DualScreenWidth - 10;
 			}
 			else
 				pane.MinWideModeWidth = double.MaxValue;

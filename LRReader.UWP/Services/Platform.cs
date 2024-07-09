@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
@@ -13,10 +14,13 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
+using Windows.Foundation.Metadata;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.System;
+using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -35,6 +39,8 @@ namespace LRReader.UWP.Services
 
 		private bool _animationsEnabled, _dualScreen;
 
+		private double _dualScreenWidth;
+
 		private Root? Root;
 
 		public ApplicationExecutionState ExecutionState { get; private set; }
@@ -44,11 +50,27 @@ namespace LRReader.UWP.Services
 			Tabs = tabs;
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
-			if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
 				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
 
-			var device = new EasClientDeviceInformation();
-			_dualScreen = !string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo");
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+			{
+				var device = new EasClientDeviceInformation();
+
+				if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Core" || (!string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo")))
+				{
+					var winEnv = WindowingEnvironment.FindAll(WindowingEnvironmentKind.Overlapped).FirstOrDefault();
+					if (winEnv != null)
+					{
+						var regions = winEnv.GetDisplayRegions();
+						if (regions.Count == 2 && regions[0].WorkAreaSize.Width == regions[1].WorkAreaSize.Width)
+						{
+							_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width;
+							_dualScreen = true;
+						}
+					}
+				}
+			}
 
 			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
 
@@ -103,6 +125,8 @@ namespace LRReader.UWP.Services
 		public override uint HoverTime => UISettings.MouseHoverTime;
 
 		public override bool DualScreen => _dualScreen;
+
+		public override double DualScreenWidth => _dualScreenWidth;
 
 		public override Task<bool> OpenInBrowser(Uri uri) => Launcher.LaunchUriAsync(uri).AsTask();
 

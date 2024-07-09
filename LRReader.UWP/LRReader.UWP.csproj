@@ -723,7 +723,6 @@
     <PRIResource Include="Strings\en\Settings.resw" />
     <PRIResource Include="Strings\es\Items.resw" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

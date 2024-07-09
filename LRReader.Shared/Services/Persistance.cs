@@ -22,12 +22,15 @@ namespace LRReader.Shared.Services
 
 		public async Task Suspend()
 		{
-			var appState = new AppState();
-			appState.ProfileUID = Service.Settings.Profile.UID;
-			foreach (var tab in Tabs.TabItems)
-				appState.Tabs.Add(tab.GetTabState());
+			if (Service.Settings.Profile != null)
+			{
+				var appState = new AppState();
+				appState.ProfileUID = Service.Settings.Profile.UID;
+				foreach (var tab in Tabs.TabItems)
+					appState.Tabs.Add(tab.GetTabState());
 
-			await Files.StoreFileSafe(Path.Combine(Files.Local, "Suspended.json"), JsonConvert.SerializeObject(appState, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
+				await Files.StoreFileSafe(Path.Combine(Files.Local, "Suspended.json"), JsonConvert.SerializeObject(appState, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
+			}
 		}
 
 		public async Task Restore()

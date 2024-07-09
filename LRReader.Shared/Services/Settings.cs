@@ -29,7 +29,7 @@ namespace LRReader.Shared.Services
 		[ObservableProperty]
 		private ObservableCollection<ServerProfile> _profiles = new ObservableCollection<ServerProfile>();
 
-		private ServerProfile? _profile;
+		private ServerProfile _profile = null!;
 		public ServerProfile Profile
 		{
 			get => _profile!;
@@ -37,7 +37,7 @@ namespace LRReader.Shared.Services
 			{
 				if (value != null)
 					SettingsStorage.StoreObjectLocal(value.UID, "ProfileUID");
-				SetProperty(ref _profile, value);
+				SetProperty(ref _profile!, value);
 			}
 		}
 		public bool ProfilesAvailable

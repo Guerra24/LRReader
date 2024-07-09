@@ -1,8 +1,8 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using LRReader.UWP.Services;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -65,8 +65,8 @@ namespace LRReader.UWP.Views.Main
 
 		private void UpdateSplash()
 		{
-			var dpi = DisplayInformation.GetForCurrentView();
-			var threshold = dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel - 10;
+			var platform = (UWPlatformService)Service.Platform;
+			var threshold = platform.DualScreenWidth - 10;
 			if (Service.Platform.DualScreen && ActualWidth > threshold)
 			{
 				Splash.SetValue(Canvas.LeftProperty, 0);
