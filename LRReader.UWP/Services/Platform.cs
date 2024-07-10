@@ -15,6 +15,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation.Metadata;
+using Windows.Graphics.Display;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.System;
 using Windows.System.Profile;
@@ -65,7 +66,16 @@ namespace LRReader.UWP.Services
 						var regions = winEnv.GetDisplayRegions();
 						if (regions.Count == 2 && regions[0].WorkAreaSize.Width == regions[1].WorkAreaSize.Width)
 						{
-							_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width;
+							_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width; // WCOS reports this in virtual size
+							if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+							{
+								// Desktop returns regions as raw pixels so convert them to virtual size
+								var dpi = DisplayInformation.GetForCurrentView();
+								_dualScreenWidth /= dpi.RawPixelsPerViewPixel;
+								//Debug.WriteLine(_dualScreenWidth);
+								// dpi.ScreenWidthInRawPixels on WCOS returns the sum of width of both displays also in virtual size
+								//Debug.WriteLine(dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel);
+							}
 							_dualScreen = true;
 						}
 					}
