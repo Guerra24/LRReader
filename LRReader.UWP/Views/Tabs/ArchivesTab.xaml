@@ -13,7 +13,6 @@
 	d:DesignWidth="400"
 	CustomTabId="Archives"
 	IsClosable="False"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>
 		<muxc:SymbolIconSource Symbol="Library" />

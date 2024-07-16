@@ -12,7 +12,6 @@
 	d:DesignWidth="400"
 	Header="{x:Bind TabContent.ViewModel.Name, Mode=OneWay}"
 	Loaded="TabViewItem_Loaded"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>
 		<muxc:SymbolIconSource Symbol="Edit" />

@@ -95,4 +95,5 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty ExtraFooterProperty = DependencyProperty.Register("ExtraFooter", typeof(object), typeof(ModernTabView), new PropertyMetadata(null));
 		public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register("IsPaneOpen", typeof(bool), typeof(ModernTabView), new PropertyMetadata(true));
 	}
+
 }

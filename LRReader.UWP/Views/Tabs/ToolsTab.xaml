@@ -11,7 +11,6 @@
 	x:Uid="/Tabs/Tools/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />

@@ -12,7 +12,6 @@
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	CustomTabId="Bookmarks"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>
 		<muxc:FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />

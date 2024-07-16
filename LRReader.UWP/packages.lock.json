@@ -428,19 +428,19 @@
       },
       "RestSharp": {
         "type": "Transitive",
-        "resolved": "111.3.0",
-        "contentHash": "+cHtmb3I5efys4scOCo+pWRgJNkwyEI8p39d4VMTbCXpPwsDeGP6OJH+1m4xtYUAZttMp2s4yxagy3usl2X13g==",
+        "resolved": "111.4.0",
+        "contentHash": "GcOIOyYYFm3oCFHbGBwGtDawC9yqvv6m7Ixyt+qeI+/UrPNyCJK31VOPRfEgj5M+3AfigSP6a8jZyFtBZxouTA==",
         "dependencies": {
-          "System.Text.Json": "8.0.3"
+          "System.Text.Json": "8.0.4"
         }
       },
       "RestSharp.Serializers.NewtonsoftJson": {
         "type": "Transitive",
-        "resolved": "111.3.0",
-        "contentHash": "Av/QzJ8ClNgdZPsUld2zvCDKwUJoYWvw4oFGw7KAo7so1IYjM6gxRiYjsOsdrzQ9SfBsxdw5NuZjuZ3wH3pMYg==",
+        "resolved": "111.4.0",
+        "contentHash": "CJl0ynseHsjM+S/sEkQ77GbzTxVLZHsLr0p4ldCje9xIfgqCGnSAFdXzVZc/QFylogFy66KWojBbQmPXJNg8KQ==",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "111.3.0"
+          "RestSharp": "111.4.0"
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
@@ -625,8 +625,8 @@
       },
       "System.Text.Json": {
         "type": "Transitive",
-        "resolved": "8.0.3",
-        "contentHash": "hpagS9joOwv6efWfrMmV9MjQXpiXZH72PgN067Ysfr6AWMSD1/1hEcvh/U5mUpPLezEWsOJSuVrmqDIVD958iA==",
+        "resolved": "8.0.4",
+        "contentHash": "bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
           "System.Buffers": "4.5.1",
@@ -660,8 +660,8 @@
           "Microsoft.Extensions.Logging": "[8.0.0, )",
           "NReco.Logging.File": "[1.2.1, )",
           "Newtonsoft.Json": "[13.0.3, )",
-          "RestSharp": "[111.3.0, )",
-          "RestSharp.Serializers.NewtonsoftJson": "[111.3.0, )",
+          "RestSharp": "[111.4.0, )",
+          "RestSharp.Serializers.NewtonsoftJson": "[111.4.0, )",
           "SixLabors.ImageSharp": "[2.1.8, )"
         }
       }

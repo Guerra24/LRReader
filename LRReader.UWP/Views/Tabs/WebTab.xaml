@@ -13,7 +13,6 @@
 	d:DesignWidth="400"
 	Header="{x:Bind TabContent.Title, Mode=OneWay}"
 	Loaded="TabViewItem_Loaded"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<controls:ModernTab.CustomTabControl>
 		<Button x:Uid="/Generic/RefreshTT" Click="{x:Bind TabContent.Refresh}">

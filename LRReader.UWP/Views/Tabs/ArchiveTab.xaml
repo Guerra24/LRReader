@@ -12,7 +12,6 @@
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	IconSource="{x:Bind (muxc:IconSource)TabContent.Data.Icon, Mode=OneWay}"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	ToolTipService.ToolTip="{x:Bind TabContent.Data.Archive.title, Mode=OneWay}"
 	mc:Ignorable="d">
 

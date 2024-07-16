@@ -13,7 +13,6 @@
 	d:DesignWidth="400"
 	CustomTabId="Settings"
 	Loaded="UserControl_Loaded"
-	Template="{StaticResource MicaTabViewItemTemplate}"
 	mc:Ignorable="d">
 	<muxc:TabViewItem.IconSource>
 		<muxc:SymbolIconSource Symbol="Setting" />
