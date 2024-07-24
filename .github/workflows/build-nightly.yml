@@ -67,6 +67,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
+        fetch-depth: 0
         fetch-tags: true
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v2
