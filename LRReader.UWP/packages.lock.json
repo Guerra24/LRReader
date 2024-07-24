@@ -2,6 +2,17 @@
   "version": 1,
   "dependencies": {
     "UAP,Version=v10.0.17763": {
+      "CommunityToolkit.Labs.Uwp.TokenView": {
+        "type": "Direct",
+        "requested": "[0.1.240722-build.1700, )",
+        "resolved": "0.1.240722-build.1700",
+        "contentHash": "FDKT8w3QJPYNexeuhNXEtvmfbFAsYGW8cRVM/HquBcNowuEl59exzTzEAu+FRRNlVnbywS4/h9iqPSY2G4ygBQ==",
+        "dependencies": {
+          "CommunityToolkit.Uwp.Controls.Primitives": "8.0.230907",
+          "CommunityToolkit.Uwp.Extensions": "8.0.230907",
+          "Microsoft.UI.Xaml": "2.7.0"
+        }
+      },
       "CommunityToolkit.Uwp.Animations": {
         "type": "Direct",
         "requested": "[8.0.240109, )",
@@ -512,8 +523,8 @@
       },
       "SixLabors.ImageSharp": {
         "type": "Transitive",
-        "resolved": "2.1.8",
-        "contentHash": "ML1++vactR5xMW36wHA2nAX3vc6VpR62qYnpopQdLNGbP8BAJ/ckv1IrGIIFRUEQ0JS9EgWr1y1gEa/81f+HaA==",
+        "resolved": "2.1.9",
+        "contentHash": "VcjfKbOExie3RgZGrQL1jJMI4iZ3J9B6ifDo2QpDVJUYhTZKVcKnBhpNOHqbvNjHgadAks1jzhRjB7OZet1PJA==",
         "dependencies": {
           "System.Buffers": "4.5.1",
           "System.Memory": "4.5.4",
@@ -662,7 +673,7 @@
           "Newtonsoft.Json": "[13.0.3, )",
           "RestSharp": "[111.4.0, )",
           "RestSharp.Serializers.NewtonsoftJson": "[111.4.0, )",
-          "SixLabors.ImageSharp": "[2.1.8, )"
+          "SixLabors.ImageSharp": "[2.1.9, )"
         }
       }
     },

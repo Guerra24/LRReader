@@ -423,6 +423,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView">
+      <Version>0.1.240722-build.1700</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Animations">
       <Version>8.0.240109</Version>
     </PackageReference>
