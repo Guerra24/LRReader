@@ -66,6 +66,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-tags: true
     - name: Prepare Env
       uses: microsoft/setup-msbuild@v2
     - name: Auth nuget registry
