@@ -234,6 +234,9 @@
   <data name="ArchiveEdit.Save.Content" xml:space="preserve">
     <value>保存</value>
   </data>
+  <data name="ArchiveEdit.Summary.Header" xml:space="preserve">
+    <value>Summary</value>
+  </data>
   <data name="ArchiveEdit.Tags.Header" xml:space="preserve">
     <value>标签</value>
   </data>

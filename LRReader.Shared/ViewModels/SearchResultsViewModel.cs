@@ -28,7 +28,7 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("ControlsEnabled")]
 		private bool _refreshOnErrorButton = false;
-		public ObservableCollection<Archive> ArchiveList { get; } = new ObservableCollection<Archive>();
+		public ObservableCollection<Archive> ArchiveList { get; } = new();
 		[ObservableProperty]
 		private int _page = 0;
 		[ObservableProperty]
@@ -53,11 +53,12 @@ namespace LRReader.Shared.ViewModels
 			set => SetProperty(ref _controlsEnabled, value);
 		}
 		protected bool _internalLoadingArchives;
-		public ObservableCollection<string> Suggestions = new ObservableCollection<string>();
-		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
+		public ObservableCollection<string> Suggestions = new();
+		public ObservableCollection<string> SortBy = new();
 		[ObservableProperty]
 		private int _sortByIndex = -1;
 		public Order OrderBy = Order.Ascending;
+		public ObservableCollection<string> SuggestedTags = new();
 
 		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api)
 		{
@@ -70,6 +71,8 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
+			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
+				SuggestedTags.Add(tag.GetNamespacedTag());
 			WeakReferenceMessenger.Default.Register(this);
 		}
 

@@ -234,6 +234,9 @@
   <data name="ArchiveEdit.Save.Content" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="ArchiveEdit.Summary.Header" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
   <data name="ArchiveEdit.Tags.Header" xml:space="preserve">
     <value>Etiquetas</value>
   </data>

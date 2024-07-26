@@ -54,6 +54,31 @@
 				<controls:ModernInput x:Uid="/Settings/General/TagsPopup" Glyph="&#xEC42;">
 					<ComboBox x:Name="TagsPopupComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.TagsPopup, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
+				<controls:ModernExpander
+					Title="Suggested tags" Description="Quickly access the most common tags" Glyph="&#xE773;"
+					IsExpanded="{x:Bind Data.SettingsManager.ShowSuggestedTags, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ShowSuggestedTags, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput Title="Max amount of suggested tags" InputHorizontalAlignment="Stretch">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="30" />
+							</Grid.ColumnDefinitions>
+							<Slider
+								IsThumbToolTipEnabled="False" Maximum="100"
+								Minimum="1"
+								TickFrequency="1" TickPlacement="None"
+								Value="{x:Bind Data.SettingsManager.MaxSuggestedTags, Mode=TwoWay}" />
+							<TextBlock
+								Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+								VerticalAlignment="Center">
+								<Run Text="{x:Bind Data.SettingsManager.MaxSuggestedTags, Mode=OneWay}" />
+							</TextBlock>
+						</Grid>
+					</controls:ModernInput>
+				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/App">
 				<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">

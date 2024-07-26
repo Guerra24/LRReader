@@ -35,6 +35,8 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private string _title = "";
 		[ObservableProperty]
+		private string _summary = "";
+		[ObservableProperty]
 		private string _tags = "";
 		[ObservableProperty]
 		private object? _thumbnail;
@@ -83,6 +85,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			Archive = archive;
 			Title = archive.title;
+			Summary = archive.summary;
 			ReloadTagsList(archive.tags);
 
 			await Hide.InvokeAsync(false);
@@ -101,6 +104,7 @@ namespace LRReader.Shared.ViewModels
 				if (result != null)
 				{
 					Title = result.title;
+					Summary = result.summary;
 					ReloadTagsList(result.tags);
 					Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid), decodeHeight: 275);
 				}
@@ -136,10 +140,11 @@ namespace LRReader.Shared.ViewModels
 					tags = Tags;
 				else
 					tags = BuildTags();
-				var result = await ArchivesProvider.UpdateArchive(Archive.arcid, Title, tags);
+				var result = await ArchivesProvider.UpdateArchive(Archive.arcid, Title, tags, Summary);
 				if (result)
 				{
 					Archive.title = Title;
+					Archive.summary = Summary;
 					Archive.tags = tags;
 					Archive.UpdateTags();
 					if (UseTextTags)

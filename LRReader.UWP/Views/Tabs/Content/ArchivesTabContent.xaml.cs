@@ -131,7 +131,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task HandleSearch()
 		{
-			Data.Query = query;
+			Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
 			await Data.ReloadSearch();
 		}
 
@@ -179,6 +179,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
 			Data.OrderBy = (Order)Enum.Parse(typeof(Order), ((RadioMenuFlyoutItem)sender).Tag as string);
+			await HandleSearch();
+		}
+
+		private async void SuggestedTags_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
 			await HandleSearch();
 		}
 

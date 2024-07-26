@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
@@ -48,6 +49,9 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
+			SuggestedTags.Clear();
+			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
+				SuggestedTags.Add(tag.GetNamespacedTag());
 			if (Settings.OpenBookmarksStart && Archives.Archives.Count > 0)
 				foreach (var b in Settings.Profile.Bookmarks)
 				{

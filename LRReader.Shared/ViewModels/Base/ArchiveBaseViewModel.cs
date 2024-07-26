@@ -165,6 +165,9 @@ namespace LRReader.Shared.ViewModels.Base
 				Archive.progress = result.progress;
 				Archive.extension = result.extension;
 				Archive.lastreadtime = result.lastreadtime;
+				Archive.size = result.size;
+				Archive.filename = result.filename;
+				Archive.summary = result.summary;
 				Archive.UpdateTags();
 				OnPropertyChanged("Archive");
 			}

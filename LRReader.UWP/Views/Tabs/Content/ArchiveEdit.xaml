@@ -268,6 +268,12 @@
 							IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 							IsSpellCheckEnabled="False"
 							Text="{x:Bind Data.Title, Mode=TwoWay}" />
+						<TextBox
+							x:Uid="/Tabs/ArchiveEdit/Summary"
+							IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+							IsSpellCheckEnabled="False" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+							MaxHeight="190"
+							Text="{x:Bind Data.Summary, Mode=TwoWay}" />
 						<Grid>
 							<ToggleButton
 								Padding="4.5" HorizontalAlignment="Right" VerticalAlignment="Top"

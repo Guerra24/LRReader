@@ -293,6 +293,26 @@ namespace LRReader.Shared.Services
 			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 
+		public int MaxSuggestedTags
+		{
+			get => SettingsStorage.GetObjectRoamed(25);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
+			}
+		}
+
+		public bool ShowSuggestedTags
+		{
+			get => SettingsStorage.GetObjectRoamed(false);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
+			}
+		}
+
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{
