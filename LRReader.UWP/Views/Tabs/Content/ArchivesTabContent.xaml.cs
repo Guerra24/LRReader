@@ -131,7 +131,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task HandleSearch()
 		{
-			Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
+			if (Service.Settings.ShowSuggestedTags)
+				Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
+			else
+				Data.Query = query;
 			await Data.ReloadSearch();
 		}
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
 using Microsoft.UI.Xaml.Controls;
@@ -130,7 +131,10 @@ namespace LRReader.UWP.Views.Controls
 
 		private async Task HandleSearch()
 		{
-			Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
+			if (Service.Settings.ShowSuggestedTags)
+				Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
+			else
+				Data.Query = query;
 			await Data.ReloadSearch();
 		}
 

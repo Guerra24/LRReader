@@ -272,7 +272,7 @@
 							x:Uid="/Tabs/ArchiveEdit/Summary"
 							IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 							IsSpellCheckEnabled="False" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
-							MaxHeight="190"
+							MaxHeight="190" TextWrapping="Wrap"
 							Text="{x:Bind Data.Summary, Mode=TwoWay}" />
 						<Grid>
 							<ToggleButton
