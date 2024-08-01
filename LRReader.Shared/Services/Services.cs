@@ -55,6 +55,10 @@ namespace LRReader.Shared.Services
 			collection.AddTransient<ArchiveItemViewModel>();
 			collection.AddTransient<CategoryBaseViewModel>();
 			collection.AddTransient<ArchiveImageViewModel>();
+			collection.AddTransient<TankoubonsViewModel>();
+			collection.AddTransient<TankoubonBaseViewModel>();
+			collection.AddTransient<TankoubonViewModel>();
+			collection.AddTransient<TankoubonEditViewModel>();
 
 			collection.AddTransient<ArchiveHitViewModel>();
 			collection.AddTransient<ArchiveHitPreviewViewModel>();

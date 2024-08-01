@@ -1,0 +1,88 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Tabs.Content.Tankoubons"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
+	xmlns:items="using:LRReader.UWP.Views.Items"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:main="using:LRReader.Shared.Models.Main"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	DataContext="{Binding TankoubonsViewModelInstance, Source={StaticResource Locator}}"
+	Loaded="UserControl_Loaded"
+	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<DataTemplate x:Key="StaticTemplate" x:DataType="main:Tankoubon">
+			<items:TankoubonItem />
+		</DataTemplate>
+		<DataTemplate x:Key="AddNewTemplate" x:DataType="main:AddNewTankoubon">
+			<Grid Width="200" Height="297">
+				<SymbolIcon Symbol="Add" />
+			</Grid>
+		</DataTemplate>
+		<local:TankoubonTemplateSelector x:Key="TemplateSelector" AddNewTemplate="{StaticResource AddNewTemplate}" StaticTemplate="{StaticResource StaticTemplate}" />
+		<ext:Shadow x:Name="ElementShadow" />
+	</UserControl.Resources>
+
+	<Grid>
+		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+			<GridView
+				x:Name="CategoriesGrid"
+				ext:Element.ModernShadow="{StaticResource ElementShadow}"
+				ext:GridViewExt.ItemClickCommand="{x:Bind Data.TankoubonClickCommand}"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" IsItemClickEnabled="True"
+				ItemTemplateSelector="{StaticResource TemplateSelector}"
+				ItemsSource="{x:Bind Data.Tankoubons}"
+				KeyboardAcceleratorPlacementMode="Hidden" SelectionMode="None">
+				<GridView.Header>
+					<muxc:PagerControl
+						Margin="0,10,0,10" HorizontalAlignment="Center"
+						DisplayMode="ComboBox"
+						IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+						IsTabStop="False"
+						NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+						SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+						SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
+				</GridView.Header>
+				<GridView.Footer>
+					<muxc:PagerControl
+						Margin="0,10,0,10" HorizontalAlignment="Center" DisplayMode="ComboBox"
+						IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+						NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+						SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+						SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
+				</GridView.Footer>
+				<GridView.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+				</GridView.KeyboardAccelerators>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemContainerStyle>
+					<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Margin" Value="5" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemContainerTransitions>
+					<TransitionCollection>
+						<PopupThemeTransition FromVerticalOffset="200" />
+						<ReorderThemeTransition />
+						<RepositionThemeTransition />
+						<AddDeleteThemeTransition />
+					</TransitionCollection>
+				</GridView.ItemContainerTransitions>
+			</GridView>
+		</muxc:RefreshContainer>
+		<Button
+			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center"
+			Command="{x:Bind Data.RefreshCommand}"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+		<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingCategories, Mode=OneWay}" />
+	</Grid>
+</UserControl>

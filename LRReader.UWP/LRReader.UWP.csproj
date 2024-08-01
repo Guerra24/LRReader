@@ -215,6 +215,9 @@
     <Compile Include="Views\Dialogs\CategoryArchive.xaml.cs">
       <DependentUpon>CategoryArchive.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\CreateTankoubon.xaml.cs">
+      <DependentUpon>CreateTankoubon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\CreateCategory.xaml.cs">
       <DependentUpon>CreateCategory.xaml</DependentUpon>
     </Compile>
@@ -237,6 +240,9 @@
       <DependentUpon>ArchiveHitItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Items\ArchiveImage.cs" />
+    <Compile Include="Views\Items\TankoubonItem.xaml.cs">
+      <DependentUpon>TankoubonItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Items\CategoryItem.xaml.cs">
       <DependentUpon>CategoryItem.xaml</DependentUpon>
     </Compile>
@@ -259,6 +265,15 @@
     <Compile Include="Views\Tabs\ArchiveEditTab.xaml.cs">
       <DependentUpon>ArchiveEditTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tabs\TankoubonEditTab.xaml.cs">
+      <DependentUpon>TankoubonEditTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\TankoubonEdit.xaml.cs">
+      <DependentUpon>TankoubonEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\TankoubonTab.xaml.cs">
+      <DependentUpon>TankoubonTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\ArchivesTab.xaml.cs">
       <DependentUpon>ArchivesTab.xaml</DependentUpon>
     </Compile>
@@ -267,6 +282,15 @@
     </Compile>
     <Compile Include="Views\Tabs\BookmarksTab.xaml.cs">
       <DependentUpon>BookmarksTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\Tankoubon.xaml.cs">
+      <DependentUpon>Tankoubon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\Content\Tankoubons.xaml.cs">
+      <DependentUpon>Tankoubons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\TankoubonsTab.xaml.cs">
+      <DependentUpon>TankoubonsTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\CategoriesTab.xaml.cs">
       <DependentUpon>CategoriesTab.xaml</DependentUpon>
@@ -424,7 +448,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView">
-      <Version>0.1.240722-build.1700</Version>
+      <Version>0.1.240731-build.1703</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Animations">
       <Version>8.0.240109</Version>
@@ -553,6 +577,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\CreateTankoubon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialogs\CreateCategory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -580,6 +608,10 @@
     <Page Include="Views\Items\ArchiveHitItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Items\TankoubonItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Items\CategoryItem.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -609,6 +641,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Tabs\TankoubonEditTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\Content\TankoubonEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\TankoubonTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Tabs\ArchivesTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -618,6 +662,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Tabs\BookmarksTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\Content\Tankoubon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\Content\Tankoubons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Tabs\TankoubonsTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

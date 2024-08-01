@@ -1,0 +1,96 @@
+﻿<UserControl
+	x:Class="LRReader.UWP.Views.Tabs.Content.Tankoubon"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:ext="using:LRReader.UWP.Extensions"
+	xmlns:items="using:LRReader.UWP.Views.Items"
+	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:services="using:LRReader.Shared.Services"
+	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+	DataContext="{Binding TankoubonViewModelInstance, Source={StaticResource Locator}}"
+	Loaded="UserControl_Loaded"
+	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<ext:Shadow x:Name="ElementShadow" />
+		<DataTemplate x:Key="Compact">
+			<items:GenericArchiveItem Style="{StaticResource CompactArchiveItem}" />
+		</DataTemplate>
+		<DataTemplate x:Key="Full">
+			<items:GenericArchiveItem />
+		</DataTemplate>
+		<local:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource Compact}" FullTemplate="{StaticResource Full}" />
+	</UserControl.Resources>
+
+	<Grid>
+		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+			<GridView
+				x:Name="ArchivesGrid"
+				ext:Element.ModernShadow="{StaticResource ElementShadow}"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
+				ItemClick="ArchivesGrid_ItemClick"
+				ItemTemplate="{StaticResource Full}"
+				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
+				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
+				<GridView.Header>
+					<muxc:TwoPaneView
+						ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" PanePriority="Pane1"
+						TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+						<muxc:TwoPaneView.Pane1>
+							<muxc:PagerControl
+								Margin="0,10,0,10" HorizontalAlignment="Center"
+								DisplayMode="ComboBox"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								IsTabStop="False"
+								NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+								SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+								SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
+						</muxc:TwoPaneView.Pane1>
+					</muxc:TwoPaneView>
+				</GridView.Header>
+				<GridView.Footer>
+					<muxc:TwoPaneView
+						ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" PanePriority="Pane1"
+						TallModeConfiguration="SinglePane" WideModeConfiguration="RightLeft">
+						<muxc:TwoPaneView.Pane1>
+							<muxc:PagerControl
+								Margin="0,10,0,10" HorizontalAlignment="Center" DisplayMode="ComboBox"
+								IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+								NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
+								SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+								SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
+						</muxc:TwoPaneView.Pane1>
+					</muxc:TwoPaneView>
+				</GridView.Footer>
+				<GridView.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" />
+				</GridView.KeyboardAccelerators>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemContainerStyle>
+					<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Margin" Value="5" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemContainerTransitions>
+					<TransitionCollection>
+						<PopupThemeTransition FromVerticalOffset="200" />
+						<ReorderThemeTransition />
+						<RepositionThemeTransition />
+					</TransitionCollection>
+				</GridView.ItemContainerTransitions>
+			</GridView>
+		</muxc:RefreshContainer>
+		<Button
+			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Command="{x:Bind Data.RefreshCommand}"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
+	</Grid>
+</UserControl>

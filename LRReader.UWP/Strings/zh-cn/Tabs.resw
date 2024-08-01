@@ -339,6 +339,9 @@
   <data name="Settings.Tab.Header" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="Tankoubons.Tab.Header" xml:space="preserve">
+    <value>Tankoubons</value>
+  </data>
   <data name="Tools.Tab.Header" xml:space="preserve">
     <value>工具</value>
   </data>

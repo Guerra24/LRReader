@@ -190,9 +190,9 @@ namespace LRReader.UWP.Views.Controls
 			await HandleSearch();
 		}
 
-		private void SuggestedTags_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private async void SuggestedTags_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-
+			await HandleSearch();
 		}
 
 		private void ArchivesGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)

@@ -23,8 +23,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="RestSharp" Version="111.4.0" />
-    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="111.4.0" />
+    <PackageReference Include="RestSharp" Version="111.4.1" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="111.4.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.9" />
   </ItemGroup>
 

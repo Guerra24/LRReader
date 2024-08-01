@@ -16,19 +16,19 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Items
 {
-	public sealed partial class CategoryItem : UserControl
+	public sealed partial class TankoubonItem : UserControl
 	{
-		private CategoryBaseViewModel ViewModel;
+		private TankoubonBaseViewModel ViewModel;
 
 		private string _oldID = "";
 
 		private ResourceLoader lang;
 
-		public CategoryItem()
+		public TankoubonItem()
 		{
 			this.InitializeComponent();
 			// TODO: Proper fix
-			ViewModel = Service.Services.GetRequiredService<CategoryBaseViewModel>();
+			ViewModel = Service.Services.GetRequiredService<TankoubonBaseViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
 		}
 
@@ -36,17 +36,17 @@ namespace LRReader.UWP.Views.Items
 		{
 			if (args.NewValue == null)
 				return;
-			ViewModel.Category = (Category)args.NewValue;
+			ViewModel.Tankoubon = (Tankoubon)args.NewValue;
 
-			if (!_oldID.Equals(ViewModel.Category.id))
+			if (!_oldID.Equals(ViewModel.Tankoubon.id))
 			{
 				Overlay.SetVisualOpacity(0);
 				Title.SetVisualOpacity(0);
 				Thumbnail.Source = null;
+				ViewModel.SearchImage = false;
 				ViewModel.MissingImage = false;
-				ViewModel.SearchImage = true;
 
-				var first = ViewModel.Category.archives.FirstOrDefault();
+				var first = ViewModel.Tankoubon.archives.FirstOrDefault();
 				if (first != null)
 				{
 					var image = await Service.ImageProcessing.ByteToBitmap(await Service.Images.GetThumbnailCached(first), decodeHeight: 275) as BitmapImage;
@@ -75,7 +75,7 @@ namespace LRReader.UWP.Views.Items
 					Overlay.SetVisualOpacity(1);
 					Title.SetVisualOpacity(1);
 				}
-				_oldID = ViewModel.Category.id;
+				_oldID = ViewModel.Tankoubon.id;
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace LRReader.UWP.Views.Items
 			var pointerPoint = e.GetCurrentPoint(this);
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse && pointerPoint.Properties.IsMiddleButtonPressed)
 			{
-				Service.Tabs.OpenTab(Tab.SearchResults, false, ViewModel.Category);
+				Service.Tabs.OpenTab(Tab.Tankoubon, false, ViewModel.Tankoubon);
 				e.Handled = true;
 			}
 		}

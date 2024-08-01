@@ -13,6 +13,11 @@ public class DeleteCategoryMessage : ValueChangedMessage<Category>
 	public DeleteCategoryMessage(Category id) : base(id) { }
 }
 
+public class DeleteTankoubonMessage : ValueChangedMessage<Tankoubon>
+{
+	public DeleteTankoubonMessage(Tankoubon tankoubon) : base(tankoubon) { }
+}
+
 public struct Notification
 {
 	public string Title { get; }

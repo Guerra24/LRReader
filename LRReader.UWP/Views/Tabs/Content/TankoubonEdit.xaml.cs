@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels;
 using Newtonsoft.Json;
@@ -15,17 +14,17 @@ using Windows.UI.Xaml.Input;
 namespace LRReader.UWP.Views.Tabs.Content
 {
 
-	public sealed partial class CategoryEdit : UserControl
+	public sealed partial class TankoubonEdit : UserControl
 	{
 
-		public CategoryEditViewModel ViewModel;
+		public TankoubonEditViewModel ViewModel;
 
 		private ResourceLoader lang;
 
-		public CategoryEdit()
+		public TankoubonEdit()
 		{
 			this.InitializeComponent();
-			ViewModel = (CategoryEditViewModel)DataContext;
+			ViewModel = (TankoubonEditViewModel)DataContext;
 			ArchiveList.Data.CustomArchiveCheckEvent = CustomArchiveCheck;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 			VisualStateManager.GoToState(this, "Selected", false);
@@ -33,18 +32,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private bool CustomArchiveCheck(Archive archive)
 		{
-			if (ViewModel.category != null)
-				return !ViewModel.category.archives.Contains(archive.arcid);
-			else
-				return true;
+			return !ViewModel.Tankoubon.archives.Contains(archive.arcid);
 		}
 
-		public async void LoadCategory(Category category) => await ViewModel.LoadCategory(category);
+		public async void Load(Shared.Models.Main.Tankoubon tankoubon) => await ViewModel.Load(tankoubon);
 
 		public async Task Refresh()
 		{
-			await ViewModel.Refresh();
-			await ArchiveList.Data.ReloadSearch();
+			await Task.WhenAll(ViewModel.Refresh(), ArchiveList.Data.ReloadSearch());
 		}
 
 		private async void Refresh_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -59,7 +54,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			CategoryError.Text = "";
 			if (string.IsNullOrEmpty(sender.Text))
 			{
-				CategoryError.Text = ResourceLoader.GetForCurrentView("Dialogs").GetString("CreateCategory/ErrorName");
+				CategoryError.Text = ResourceLoader.GetForCurrentView("Dialogs").GetString("CreateTankoubon/ErrorName");
 				allow = false;
 			}
 			ViewModel.CanSave = allow;
@@ -67,7 +62,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
-			await ViewModel.SaveCategory();
+			await ViewModel.Save();
 		}
 
 		// Add
@@ -85,7 +80,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var deferral = e.GetDeferral();
 			if (e.DataView.Properties.TryGetValue("archivesAdd", out object value) && value is string data)
 				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data)!)
-					await ViewModel.AddToCategory(c.arcid);
+					await ViewModel.AddToTankoubon(c.arcid);
 			deferral.Complete();
 		}
 
@@ -111,7 +106,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			var deferral = e.GetDeferral();
 			if (e.DataView.Properties.TryGetValue("archivesRemove", out object value) && value is string data)
 				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data)!)
-					await ViewModel.RemoveFromCategory(c.arcid);
+					await ViewModel.RemoveFromTankoubon(c.arcid);
 			deferral.Complete();
 		}
 

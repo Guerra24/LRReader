@@ -1,0 +1,31 @@
+﻿<controls:ModernTab
+	x:Class="LRReader.UWP.Views.Tabs.TankoubonEditTab"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:content="using:LRReader.UWP.Views.Tabs.Content"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:LRReader.UWP.Views.Tabs"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	ToolTipService.ToolTip="{x:Bind TabContent.ViewModel.Tankoubon.name, Mode=OneWay}"
+	Loaded="TabViewItem_Loaded"
+	mc:Ignorable="d">
+	<muxc:TabViewItem.IconSource>
+		<muxc:SymbolIconSource Symbol="Edit" />
+	</muxc:TabViewItem.IconSource>
+	<muxc:TabViewItem.Header>
+		<TextBlock MaxWidth="200" Text="{x:Bind TabContent.ViewModel.Tankoubon.name, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+	</muxc:TabViewItem.Header>
+	<controls:ModernTab.CustomTabControl>
+		<Button x:Uid="/Generic/RefreshTT" Click="RefreshButton_Click">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<SymbolIcon Symbol="Refresh" />
+			</Viewbox>
+		</Button>
+	</controls:ModernTab.CustomTabControl>
+
+	<content:TankoubonEdit x:Name="TabContent" />
+</controls:ModernTab>

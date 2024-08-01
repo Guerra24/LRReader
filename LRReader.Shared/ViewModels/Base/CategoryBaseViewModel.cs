@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -18,13 +17,12 @@ namespace LRReader.Shared.ViewModels.Base
 		private readonly TabsService Tabs;
 		protected readonly SettingsService Settings;
 
-		[AllowNull]
 		[ObservableProperty]
-		private Category _category;
+		private Category _category = null!;
 		[ObservableProperty]
-		private bool _missingImage = false;
+		private bool _missingImage;
 		[ObservableProperty]
-		private bool _searchImage = false;
+		private bool _searchImage;
 
 		public bool CanEdit => Settings.Profile.HasApiKey;
 

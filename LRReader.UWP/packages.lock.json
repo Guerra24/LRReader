@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.240722-build.1700, )",
-        "resolved": "0.1.240722-build.1700",
-        "contentHash": "FDKT8w3QJPYNexeuhNXEtvmfbFAsYGW8cRVM/HquBcNowuEl59exzTzEAu+FRRNlVnbywS4/h9iqPSY2G4ygBQ==",
+        "requested": "[0.1.240731-build.1703, )",
+        "resolved": "0.1.240731-build.1703",
+        "contentHash": "YqR0HNFKfSi1D1l1u8a9fewDH6riy5kt1euDyvKHeEPQL5rPrl37ycJDkx2fnJvBcEjQGJWZeYQkUEnaS5KmSQ==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.0.230907",
           "CommunityToolkit.Uwp.Extensions": "8.0.230907",
@@ -439,19 +439,19 @@
       },
       "RestSharp": {
         "type": "Transitive",
-        "resolved": "111.4.0",
-        "contentHash": "GcOIOyYYFm3oCFHbGBwGtDawC9yqvv6m7Ixyt+qeI+/UrPNyCJK31VOPRfEgj5M+3AfigSP6a8jZyFtBZxouTA==",
+        "resolved": "111.4.1",
+        "contentHash": "MhrBdwqYd+ezd3xD+c6eaAVcLJoWI+2TBH7rqX149nbYRkPJJfK/UbrgJVfKN9ZMehOFzo2PmKIZjS1ATnxEAQ==",
         "dependencies": {
           "System.Text.Json": "8.0.4"
         }
       },
       "RestSharp.Serializers.NewtonsoftJson": {
         "type": "Transitive",
-        "resolved": "111.4.0",
-        "contentHash": "CJl0ynseHsjM+S/sEkQ77GbzTxVLZHsLr0p4ldCje9xIfgqCGnSAFdXzVZc/QFylogFy66KWojBbQmPXJNg8KQ==",
+        "resolved": "111.4.1",
+        "contentHash": "6iIOHs7Y6rJ4xCZzByxrP5TwmWlC7CHwrHfQ8JgFLkZ7330n+xr3LdUeMWpP4HBt+Bmz4IsmULKmJXWSf0teGQ==",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "111.4.0"
+          "RestSharp": "111.4.1"
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
@@ -671,8 +671,8 @@
           "Microsoft.Extensions.Logging": "[8.0.0, )",
           "NReco.Logging.File": "[1.2.1, )",
           "Newtonsoft.Json": "[13.0.3, )",
-          "RestSharp": "[111.4.0, )",
-          "RestSharp.Serializers.NewtonsoftJson": "[111.4.0, )",
+          "RestSharp": "[111.4.1, )",
+          "RestSharp.Serializers.NewtonsoftJson": "[111.4.1, )",
           "SixLabors.ImageSharp": "[2.1.9, )"
         }
       }

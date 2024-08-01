@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using RestSharp;
 using static LRReader.Shared.Services.Service;
@@ -34,7 +35,7 @@ public static class TankoubonsProvider
 		return await r.GetResult<TankoubonsItem>().ConfigureAwait(false);
 	}
 
-	public static async Task<bool> CreateTankoubon(string name)
+	public static async Task<Tankoubon?> CreateTankoubon(string name)
 	{
 		var client = Api.Client;
 
@@ -43,7 +44,12 @@ public static class TankoubonsProvider
 
 		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
 
-		return await r.GetResult().ConfigureAwait(false);
+		var res = await r.GetResult<TankoubonCreateApiResult>().ConfigureAwait(false);
+
+		if (res != null)
+			return new Tankoubon() { id = res.tankoubon_id, name = name, archives = new List<string>() };
+		else
+			return null;
 	}
 
 	public static async Task<bool> AddArchive(string id, string archive)
@@ -72,7 +78,7 @@ public static class TankoubonsProvider
 		return await r.GetResult().ConfigureAwait(false);
 	}
 
-	public static async Task<bool> DeleteTankoubon(string id, string archive)
+	public static async Task<bool> DeleteTankoubon(string id)
 	{
 		var client = Api.Client;
 

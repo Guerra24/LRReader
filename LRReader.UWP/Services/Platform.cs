@@ -107,6 +107,9 @@ namespace LRReader.UWP.Services
 			Tabs.MapTabToType(Tab.Settings, typeof(SettingsTab));
 			Tabs.MapTabToType(Tab.Web, typeof(WebTab));
 			Tabs.MapTabToType(Tab.Tools, typeof(ToolsTab));
+			Tabs.MapTabToType(Tab.Tankoubons, typeof(TankoubonsTab));
+			Tabs.MapTabToType(Tab.Tankoubon, typeof(TankoubonTab));
+			Tabs.MapTabToType(Tab.TankoubonEdit, typeof(TankoubonEditTab));
 
 			MapDialogToType(Dialog.CategoryArchive, typeof(CategoryArchive));
 			MapDialogToType(Dialog.CreateCategory, typeof(CreateCategory));
@@ -114,6 +117,7 @@ namespace LRReader.UWP.Services
 			MapDialogToType(Dialog.ServerProfile, typeof(ServerProfileDialog));
 			MapDialogToType(Dialog.ValidateApi, typeof(ValidateApiDialog));
 			MapDialogToType(Dialog.ThumbnailPicker, typeof(ThumbnailPicker));
+			MapDialogToType(Dialog.CreateTankoubon, typeof(CreateTankoubon));
 
 			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });

@@ -16,9 +16,11 @@ namespace LRReader.Shared.ViewModels
 		public ArchivePageViewModel ArchivePageInstance => Service.Services.GetRequiredService<ArchivePageViewModel>();
 		public CategoryEditViewModel CategoryEditInstance => Service.Services.GetRequiredService<CategoryEditViewModel>();
 		public TabsService HostTabPageInstance => Service.Services.GetRequiredService<TabsService>();
-
 		public DeduplicatorToolViewModel DeduplicatorToolViewModelInstance => Service.Services.GetRequiredService<DeduplicatorToolViewModel>();
 		public DeduplicatorHiddenViewModel DeduplicatorHiddenViewModelInstance => Service.Services.GetRequiredService<DeduplicatorHiddenViewModel>();
 		public BulkEditorViewModel BulkEditorViewModelInstance => Service.Services.GetRequiredService<BulkEditorViewModel>();
+		public TankoubonsViewModel TankoubonsViewModelInstance => Service.Services.GetRequiredService<TankoubonsViewModel>();
+		public TankoubonViewModel TankoubonViewModelInstance => Service.Services.GetRequiredService<TankoubonViewModel>();
+		public TankoubonEditViewModel TankoubonEditViewModelInstance => Service.Services.GetRequiredService<TankoubonEditViewModel>();
 	}
 }

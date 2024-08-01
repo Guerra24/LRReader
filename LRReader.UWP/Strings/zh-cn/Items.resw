@@ -162,4 +162,13 @@
   <data name="Category.OpenTab.Text" xml:space="preserve">
     <value>在新标签中打开</value>
   </data>
+  <data name="Tankoubon.Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Tankoubon.Edit.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Tankoubon.OpenTab.Text" xml:space="preserve">
+    <value>Open in new tab</value>
+  </data>
 </root>

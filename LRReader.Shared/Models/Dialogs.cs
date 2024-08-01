@@ -29,6 +29,11 @@ namespace LRReader.Shared.Models
 		bool Integration { get; set; }
 	}
 
+	public interface ICreateTankoubonDialog : IDialog
+	{
+		string Name { get; set; }
+	}
+
 	public enum ConflictMode
 	{
 		Local, Remote

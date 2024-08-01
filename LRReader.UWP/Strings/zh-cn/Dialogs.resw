@@ -187,6 +187,21 @@
   <data name="CreateCategory.SearchQuery.PlaceholderText" xml:space="preserve">
     <value>搜索队列</value>
   </data>
+  <data name="CreateTankoubon.Dialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CreateTankoubon.Dialog.PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CreateTankoubon.Dialog.Title" xml:space="preserve">
+    <value>Tankoubon</value>
+  </data>
+  <data name="CreateTankoubon.ErrorName" xml:space="preserve">
+    <value>Empty tankoubon name</value>
+  </data>
+  <data name="CreateTankoubon.Name.PlaceholderText" xml:space="preserve">
+    <value>Tankoubon Name</value>
+  </data>
   <data name="OpenLink.CloseButtonText" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -234,6 +249,18 @@
   </data>
   <data name="RemoveCategory.Title" xml:space="preserve">
     <value>删除 {0}</value>
+  </data>
+  <data name="RemoveTankoubon.CloseButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="RemoveTankoubon.Content" xml:space="preserve">
+    <value>Are you sure you want to delete it?</value>
+  </data>
+  <data name="RemoveTankoubon.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="RemoveTankoubon.Title" xml:space="preserve">
+    <value>Delete {0}</value>
   </data>
   <data name="ServerProfile.Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>复制</value>

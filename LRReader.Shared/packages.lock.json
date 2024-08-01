@@ -77,21 +77,21 @@
       },
       "RestSharp": {
         "type": "Direct",
-        "requested": "[111.4.0, )",
-        "resolved": "111.4.0",
-        "contentHash": "GcOIOyYYFm3oCFHbGBwGtDawC9yqvv6m7Ixyt+qeI+/UrPNyCJK31VOPRfEgj5M+3AfigSP6a8jZyFtBZxouTA==",
+        "requested": "[111.4.1, )",
+        "resolved": "111.4.1",
+        "contentHash": "MhrBdwqYd+ezd3xD+c6eaAVcLJoWI+2TBH7rqX149nbYRkPJJfK/UbrgJVfKN9ZMehOFzo2PmKIZjS1ATnxEAQ==",
         "dependencies": {
           "System.Text.Json": "8.0.4"
         }
       },
       "RestSharp.Serializers.NewtonsoftJson": {
         "type": "Direct",
-        "requested": "[111.4.0, )",
-        "resolved": "111.4.0",
-        "contentHash": "CJl0ynseHsjM+S/sEkQ77GbzTxVLZHsLr0p4ldCje9xIfgqCGnSAFdXzVZc/QFylogFy66KWojBbQmPXJNg8KQ==",
+        "requested": "[111.4.1, )",
+        "resolved": "111.4.1",
+        "contentHash": "6iIOHs7Y6rJ4xCZzByxrP5TwmWlC7CHwrHfQ8JgFLkZ7330n+xr3LdUeMWpP4HBt+Bmz4IsmULKmJXWSf0teGQ==",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "111.4.0"
+          "RestSharp": "111.4.1"
         }
       },
       "SixLabors.ImageSharp": {
@@ -452,21 +452,21 @@
       },
       "RestSharp": {
         "type": "Direct",
-        "requested": "[111.4.0, )",
-        "resolved": "111.4.0",
-        "contentHash": "GcOIOyYYFm3oCFHbGBwGtDawC9yqvv6m7Ixyt+qeI+/UrPNyCJK31VOPRfEgj5M+3AfigSP6a8jZyFtBZxouTA==",
+        "requested": "[111.4.1, )",
+        "resolved": "111.4.1",
+        "contentHash": "MhrBdwqYd+ezd3xD+c6eaAVcLJoWI+2TBH7rqX149nbYRkPJJfK/UbrgJVfKN9ZMehOFzo2PmKIZjS1ATnxEAQ==",
         "dependencies": {
           "System.Text.Json": "8.0.4"
         }
       },
       "RestSharp.Serializers.NewtonsoftJson": {
         "type": "Direct",
-        "requested": "[111.4.0, )",
-        "resolved": "111.4.0",
-        "contentHash": "CJl0ynseHsjM+S/sEkQ77GbzTxVLZHsLr0p4ldCje9xIfgqCGnSAFdXzVZc/QFylogFy66KWojBbQmPXJNg8KQ==",
+        "requested": "[111.4.1, )",
+        "resolved": "111.4.1",
+        "contentHash": "6iIOHs7Y6rJ4xCZzByxrP5TwmWlC7CHwrHfQ8JgFLkZ7330n+xr3LdUeMWpP4HBt+Bmz4IsmULKmJXWSf0teGQ==",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "111.4.0"
+          "RestSharp": "111.4.1"
         }
       },
       "SixLabors.ImageSharp": {
