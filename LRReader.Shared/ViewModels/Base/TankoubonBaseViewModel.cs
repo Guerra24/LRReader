@@ -58,6 +58,7 @@ namespace LRReader.Shared.ViewModels.Base
 			{
 				WeakReferenceMessenger.Default.Send(new DeleteTankoubonMessage(Tankoubon));
 				Tabs.CloseTabWithId("Tankoubon_" + Tankoubon.id);
+				Tabs.CloseTabWithId("TankoubonEdit_" + Tankoubon.id);
 				await TankoubonsProvider.DeleteTankoubon(Tankoubon.id);
 			}
 		}

@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.240731-build.1703, )",
-        "resolved": "0.1.240731-build.1703",
-        "contentHash": "YqR0HNFKfSi1D1l1u8a9fewDH6riy5kt1euDyvKHeEPQL5rPrl37ycJDkx2fnJvBcEjQGJWZeYQkUEnaS5KmSQ==",
+        "requested": "[0.1.240801-build.1708, )",
+        "resolved": "0.1.240801-build.1708",
+        "contentHash": "aZd4w5obnxmVYAje5Ff/At+9hpB2Eyj+yphrHUjPYGXJbxUuVcv1IIAnH8CIz5SuKTNuvklbGCSAecAAV1BhQQ==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.0.230907",
           "CommunityToolkit.Uwp.Extensions": "8.0.230907",

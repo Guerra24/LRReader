@@ -132,7 +132,7 @@
   <data name="About.Github.Description" xml:space="preserve">
     <value>源代码、建议和支持</value>
   </data>
-  <data name="About.KoFi.Description" xml:space="preserve">
+  <data name="About.GhSponsor.Description" xml:space="preserve">
     <value>捐赠</value>
   </data>
   <data name="About.License.Content" xml:space="preserve">

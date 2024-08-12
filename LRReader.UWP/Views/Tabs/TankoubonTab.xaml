@@ -19,11 +19,18 @@
 		<TextBlock MaxWidth="200" Text="{x:Bind TabContent.Data.Tankoubon.name, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
 	</muxc:TabViewItem.Header>
 	<controls:ModernTab.CustomTabControl>
-		<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.RefreshCommand}">
-			<Viewbox MaxWidth="16" MaxHeight="16">
-				<SymbolIcon Symbol="Refresh" />
-			</Viewbox>
-		</Button>
+		<StackPanel Orientation="Horizontal" Spacing="2">
+			<Button Command="{x:Bind TabContent.Data.EditCommand}">
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<SymbolIcon Symbol="Edit" />
+				</Viewbox>
+			</Button>
+			<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.RefreshCommand}">
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<SymbolIcon Symbol="Refresh" />
+				</Viewbox>
+			</Button>
+		</StackPanel>
 	</controls:ModernTab.CustomTabControl>
 
 	<content:Tankoubon x:Name="TabContent" />

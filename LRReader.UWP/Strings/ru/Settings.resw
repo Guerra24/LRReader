@@ -132,7 +132,7 @@
   <data name="About.Github.Description" xml:space="preserve">
     <value>Исходный код, предложения и поддержка</value>
   </data>
-  <data name="About.KoFi.Description" xml:space="preserve">
+  <data name="About.GhSponsor.Description" xml:space="preserve">
     <value>Пожертвования</value>
   </data>
   <data name="About.License.Content" xml:space="preserve">

@@ -360,7 +360,6 @@
     <Content Include="Assets\LargeTile.scale-400.png" />
     <Content Include="Assets\Other\GitHub-light.png" />
     <Content Include="Assets\Other\GitHub-dark.png" />
-    <Content Include="Assets\Other\Ko-fi.png" />
     <Content Include="Assets\Other\LANraragi-dark.png" />
     <Content Include="Assets\Other\LANraragi-light.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
@@ -448,7 +447,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView">
-      <Version>0.1.240731-build.1703</Version>
+      <Version>0.1.240801-build.1708</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Animations">
       <Version>8.0.240109</Version>

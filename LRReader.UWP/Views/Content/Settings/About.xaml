@@ -56,11 +56,11 @@
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 				<controls:ModernInput
-					x:Uid="/Settings/About/KoFi" Title="Ko-Fi"
+					x:Uid="/Settings/About/GhSponsor" Title="Github Sponsors"
 					Command="{x:Bind Data.OpenLinkCommand}"
-					CommandParameter="https://ko-fi.com/guerra24" IsButton="True" RightGlyph="&#xE8A7;">
+					CommandParameter="https://github.com/sponsors/Guerra24" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
-						<muxc:ImageIcon Height="20" Source="ms-appx:///Assets/Other/Ko-fi.png" />
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB51;" Foreground="#C72335" FontWeight="ExtraBold" />
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 			</controls:ModernGroup>
