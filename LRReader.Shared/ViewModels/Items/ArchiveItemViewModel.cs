@@ -44,10 +44,9 @@ namespace LRReader.Shared.ViewModels.Items
 			using (var key = await KeyedSemaphore.LockAsync($"ArchiveThumb_{_key}"))
 				Thumbnail = await ImageProcessing.ByteToBitmap(img, decodePixelWidth, decodePixelHeight, image: Thumbnail);
 
-			if (Thumbnail != null)
-				await Show.InvokeAsync(Platform.AnimationsEnabled);
-			else
+			if (Thumbnail == null)
 				MissingImage = true;
+			await Show.InvokeAsync(Platform.AnimationsEnabled);
 		}
 
 		public async Task Load(Archive archive, int decodePixelWidth = 0, int decodePixelHeight = 0)

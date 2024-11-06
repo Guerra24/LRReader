@@ -28,7 +28,7 @@
 				DragItemsStarting="{x:Bind DragItemsStartingI, Mode=OneWay}"
 				DragOver="{x:Bind DragOverI, Mode=OneWay}"
 				Drop="{x:Bind DropI, Mode=OneWay}"
-				ItemClick="ArchivesGrid_ItemClick"
+				ext:GridViewExt.ItemClickCommand="{x:Bind Data.ItemClickCommand}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed">
 				<GridView.Header>

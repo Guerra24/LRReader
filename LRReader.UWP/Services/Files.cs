@@ -12,13 +12,13 @@ namespace LRReader.UWP.Services
 
 		public string Local { get; } = ApplicationData.Current.LocalFolder.Path;
 
-		public Task<string> GetFile(string path) => File.ReadAllTextAsync(path);
+		public async Task<string> GetFile(string path) => await File.ReadAllTextAsync(path).ConfigureAwait(false);
 
-		public Task<byte[]> GetFileBytes(string path) => File.ReadAllBytesAsync(path);
+		public async Task<byte[]> GetFileBytes(string path) => await File.ReadAllBytesAsync(path).ConfigureAwait(false);
 
-		public Task StoreFile(string path, string content) => File.WriteAllTextAsync(path, content);
+		public async Task StoreFile(string path, string content) => await File.WriteAllTextAsync(path, content).ConfigureAwait(false);
 
-		public Task StoreFile(string path, byte[] content) => File.WriteAllBytesAsync(path, content);
+		public async Task StoreFile(string path, byte[] content) => await File.WriteAllBytesAsync(path, content).ConfigureAwait(false);
 
 		public async Task StoreFileSafe(string path, string content)
 		{

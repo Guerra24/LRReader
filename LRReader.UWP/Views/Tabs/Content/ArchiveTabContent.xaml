@@ -77,7 +77,7 @@
 											<TextBlock x:Uid="/Tabs/Archive/Pages"/>
 										</Border>
 										<Border Style="{StaticResource CustomTagValue}" >
-											<TextBlock Text="{x:Bind Data.Archive.pagecount, Mode=OneWay}"/>
+											<TextBlock Text="{x:Bind Data.Pages, Mode=OneWay}"/>
 										</Border>
 									</StackPanel>
 									<StackPanel Orientation="Horizontal">

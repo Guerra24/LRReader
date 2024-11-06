@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -108,10 +110,10 @@ namespace LRReader.Shared.ViewModels.Base
 			get
 			{
 				int pages = _pages;
-				if (Bookmarked)
-					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
 				if (pages == 0)
 					pages = Archive.pagecount;
+				if (Bookmarked && pages == 0)
+					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
 				_pages = pages;
 				return _pages;
 			}
@@ -233,6 +235,19 @@ namespace LRReader.Shared.ViewModels.Base
 			else
 			{
 				Tabs.OpenTab(Tab.SearchResults, $"\"{tag.FullTag}\"$");
+			}
+		}
+
+		public async Task OpenTab(IList<Archive> group)
+		{
+			if (Archive.IsTank)
+			{
+				var tank = await TankoubonsProvider.GetTankoubon(Archive.arcid);
+				Tabs.OpenTab(Tab.Tankoubon, false, tank!.result);
+			}
+			else
+			{
+				Archives.OpenTab(Archive, false, group);
 			}
 		}
 	}

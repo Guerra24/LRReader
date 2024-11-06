@@ -9,17 +9,12 @@ namespace LRReader.Shared.ViewModels
 	public class ArchivesPageViewModel : SearchResultsViewModel
 	{
 
-		private readonly TabsService Tabs;
-
 		public ArchivesPageViewModel(
 			SettingsService settings,
 			ArchivesService archives,
 			TabsService tabs,
 			IDispatcherService dispatcher,
-			ApiService api) : base(settings, archives, dispatcher, api)
-		{
-			Tabs = tabs;
-		}
+			ApiService api) : base(settings, archives, dispatcher, api, tabs) { }
 
 		public async Task Refresh()
 		{

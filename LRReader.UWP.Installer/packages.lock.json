@@ -14,15 +14,15 @@
       },
       "Fody": {
         "type": "Direct",
-        "requested": "[6.8.1, )",
-        "resolved": "6.8.1",
-        "contentHash": "pwk2/No1kL1ft+zMT2y0MvzB6W5cpkdOTj+0+T2u7LGJMTw37qtlnHzCSCyvwRiZVoJ/V/DE78eQ/WEcutUVDw=="
+        "requested": "[6.8.2, )",
+        "resolved": "6.8.2",
+        "contentHash": "sjGHrtGS1+kcrv99WXCvujOFBTQp4zCH3ZC9wo2LAtVaJkuLpHghQx3y4k1Q8ZKuDAbEw+HE6ZjPUJQK3ejepQ=="
       },
       "Microsoft.Windows.SDK.Contracts": {
         "type": "Direct",
-        "requested": "[10.0.26100.1, )",
-        "resolved": "10.0.26100.1",
-        "contentHash": "+DzrYQM8WYDw38HZDq3DcOSS6CzNfMNngnIHeja1knyh7r+87cbXOiX7wCwiS3qi9StJ58B63DhPaFD5Sr6q6A==",
+        "requested": "[10.0.26100.1742, )",
+        "resolved": "10.0.26100.1742",
+        "contentHash": "i7FoN7nBn805fgMhkQlSMUNvJVgUXMquDco3ItGc/h3jil9lOPdtoFSpx/NDNdlkNbBh1LW1shbAAeUpEnYZNw==",
         "dependencies": {
           "System.Runtime.InteropServices.WindowsRuntime": "4.3.0",
           "System.Runtime.WindowsRuntime": "4.6.0",

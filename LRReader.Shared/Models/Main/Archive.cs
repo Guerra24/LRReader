@@ -42,6 +42,8 @@ namespace LRReader.Shared.Models.Main
 		public List<string> TagsList { get; set; } = new List<string>();
 		[JsonIgnore]
 		public ObservableCollection<ArchiveTagsGroup> TagsGroups { get; set; } = new ObservableCollection<ArchiveTagsGroup>();
+		[JsonIgnore]
+		public bool IsTank => extension.EndsWith("tank");
 
 		[OnDeserialized]
 		internal void OnDeserializedMethod(StreamingContext context) => UpdateTags();

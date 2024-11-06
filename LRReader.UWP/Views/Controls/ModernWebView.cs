@@ -161,11 +161,11 @@ namespace LRReader.UWP.Views.Controls
 
 		public void Dispose() => WebView.Close();
 
-		private void NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
+		private async void NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
 		{
 			var res = Modern.NavigationStarting(this, new Uri(args.Uri));
-			//if (!res)
-				//await WebView.FadeOutAsync();
+			if (!res)
+				await WebView.FadeOutAsync();
 			args.Cancel = res;
 		}
 
@@ -179,10 +179,10 @@ namespace LRReader.UWP.Views.Controls
 			args.Handled = true;
 		}
 
-		private void CoreWebView2_DOMContentLoaded(CoreWebView2 sender, CoreWebView2DOMContentLoadedEventArgs args)
+		private async void CoreWebView2_DOMContentLoaded(CoreWebView2 sender, CoreWebView2DOMContentLoadedEventArgs args)
 		{
-			//await sender.ExecuteScriptAsync("var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; } div.ido, .option-flyout { border: 1px solid #00000019; border-radius: 4px; background-color: #FFFFFF0D !important; background-clip: padding-box !important; }'; document.head.appendChild(style);");
-			//WebView.FadeIn();
+			await sender.ExecuteScriptAsync("var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; } div.ido, .option-flyout { border: 1px solid #00000019; border-radius: 4px; background-color: #FFFFFF0D !important; background-clip: padding-box !important; }'; document.head.appendChild(style);");
+			WebView.FadeIn();
 		}
 
 	}

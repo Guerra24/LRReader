@@ -132,7 +132,7 @@ namespace LRReader.Shared.Services
 				else
 				{
 					var path = $"{thumbnailCacheDirectory.FullName}/{id!.Substring(0, 2)}/{id}/{page}.cache";
-					if (File.Exists(path) && !forced)
+					if (await Task.Run(() => File.Exists(path)).ConfigureAwait(false) && !forced)
 					{
 						data = await Files.GetFileBytes(path).ConfigureAwait(false);
 						/*if (data.Length == 55876)
@@ -156,7 +156,7 @@ namespace LRReader.Shared.Services
 						//	using (var md5 = System.Security.Cryptography.MD5.Create())
 						//		if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 						//			return null;
-						Directory.CreateDirectory(Path.GetDirectoryName(path));
+						await Task.Run(() => Directory.CreateDirectory(Path.GetDirectoryName(path))).ConfigureAwait(false);
 						await Files.StoreFile(path, data).ConfigureAwait(false);
 					}
 					thumbnailsCache.AddReplace(thumbKey, data);

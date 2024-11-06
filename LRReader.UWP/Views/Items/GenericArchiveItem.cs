@@ -114,7 +114,7 @@ namespace LRReader.UWP.Views.Items
 			await ViewModel.Phase2(DecodePixelWidth, DecodePixelHeight);
 		}
 
-		public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Service.Archives.OpenTab(ViewModel.Archive, false, Group);
+		public async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => await ViewModel.OpenTab(Group);
 
 		public async void DownloadMenuItem_Click(object sender, RoutedEventArgs e)
 		{
@@ -182,13 +182,13 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private void Control_PointerPressed(object sender, PointerRoutedEventArgs e)
+		private async void Control_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(this);
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse && pointerPoint.Properties.IsMiddleButtonPressed)
 			{
-				Service.Archives.OpenTab(ViewModel.Archive, false, Group);
 				e.Handled = true;
+				await ViewModel.OpenTab(Group);
 			}
 		}
 

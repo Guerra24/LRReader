@@ -32,7 +32,7 @@
 				x:Name="ArchivesGrid"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
 				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
-				ItemClick="ArchivesGrid_ItemClick"
+				ext:GridViewExt.ItemClickCommand="{x:Bind Data.ItemClickCommand}"
 				ItemTemplate="{StaticResource Full}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">

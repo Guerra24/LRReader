@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
@@ -17,6 +19,7 @@ namespace LRReader.Shared.ViewModels
 	{
 		protected readonly SettingsService Settings;
 		protected readonly ArchivesService Archives;
+		protected readonly TabsService Tabs;
 		private readonly IDispatcherService Dispatcher;
 		private readonly ApiService Api;
 
@@ -60,12 +63,13 @@ namespace LRReader.Shared.ViewModels
 		public Order OrderBy = Order.Ascending;
 		public ObservableCollection<string> SuggestedTags = new();
 
-		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api)
+		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api, TabsService tabs)
 		{
 			Settings = settings;
 			Dispatcher = dispatcher;
 			Archives = archives;
 			Api = api;
+			Tabs = tabs;
 
 			foreach (var n in Archives.Namespaces)
 				SortBy.Add(n);
@@ -120,7 +124,13 @@ namespace LRReader.Shared.ViewModels
 							continue;
 						var archive = Archives.GetArchive(a.arcid);
 						if (archive != null)
+						{
 							await Dispatcher.RunAsync(() => ArchiveList.Add(archive), 10);
+						}
+						else
+						{
+							await Dispatcher.RunAsync(() => ArchiveList.Add(a), 10);
+						}
 					}
 				});
 			}
@@ -139,6 +149,21 @@ namespace LRReader.Shared.ViewModels
 			var random = new Random();
 			var item = list.ElementAt(random.Next(list.Count - 1));
 			Archives.OpenTab(item.Value);
+		}
+
+		[RelayCommand]
+		private async Task ItemClick(GridViewExtParameter item)
+		{
+			var archive = (Archive)item.Item;
+			if (archive.IsTank)
+			{
+				var tank = await TankoubonsProvider.GetTankoubon(archive.arcid);
+				Tabs.OpenTab(Tab.Tankoubon, item.Ctrl, tank!.result);
+			}
+			else
+			{
+				Archives.OpenTab(archive, item.Ctrl, ArchiveList.ToList());
+			}
 		}
 
 		public void Receive(DeleteArchiveMessage message)

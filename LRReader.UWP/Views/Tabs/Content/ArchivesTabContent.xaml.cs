@@ -49,8 +49,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			reloading = false;
 		}
 
-		private void ArchivesGrid_ItemClick(object sender, ItemClickEventArgs e) => Service.Archives.OpenTab((Archive)e.ClickedItem, (CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, Data.ArchiveList.ToList());
-
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
 		public async void SearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
