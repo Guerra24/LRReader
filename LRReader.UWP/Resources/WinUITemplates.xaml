@@ -1769,7 +1769,7 @@
 					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
 			</Grid>
 
-			<SplitView x:Name="SplitView" Grid.Row="1" IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" OpenPaneLength="250" CompactPaneLength="48" DisplayMode="CompactOverlay" PaneBackground="Transparent" BorderThickness="0" CornerRadius="0,8,8,0">
+			<SplitView x:Name="SplitView" Grid.Row="1" IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" OpenPaneLength="249" CompactPaneLength="48" DisplayMode="CompactOverlay" PaneBackground="Transparent" BorderThickness="0" CornerRadius="0,8,8,0">
 				<SplitView.Pane>
 					<Grid x:Name="TabContainerGrid" XYFocusKeyboardNavigation="Enabled">
 						<Grid.RowDefinitions>

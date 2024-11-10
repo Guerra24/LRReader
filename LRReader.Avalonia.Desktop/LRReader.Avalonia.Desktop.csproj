@@ -6,6 +6,7 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <TrimMode>copyused</TrimMode>
+    <Platforms>x64;ARM64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="logo.ico" />

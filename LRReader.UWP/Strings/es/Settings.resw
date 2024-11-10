@@ -552,4 +552,10 @@
   <data name="Reader.Map.Title" xml:space="preserve">
     <value>Show pages map</value>
   </data>
+  <data name="Reader.ReaderAnimations.Title" xml:space="preserve">
+    <value>Animaciones</value>
+  </data>
+  <data name="Reader.PageChange.Title" xml:space="preserve">
+    <value>Al cambiar página</value>
+  </data>
 </root>

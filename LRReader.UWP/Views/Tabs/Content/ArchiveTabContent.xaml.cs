@@ -58,6 +58,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
 
+		private bool Animate => Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations;
+
 		public ArchiveTabContent()
 		{
 			this.InitializeComponent();
@@ -118,7 +120,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 
-			if (Service.Platform.AnimationsEnabled && item != null && !Data.UseVerticalReader)
+			if (Animate && item != null && !Data.UseVerticalReader)
 			{
 				var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Thumbnail");
 				if (image != null && !(image.ActualWidth == 0 || image.ActualHeight == 0))
@@ -142,7 +144,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			if (Data.Archive.isnew)
 				_wasNew = true;
-			if (Service.Platform.AnimationsEnabled)
+			if (Animate)
 			{
 				FadeIn.Start(ReaderBackground);
 				await FadeIn.StartAsync(ScrollViewer);
@@ -166,7 +168,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			_transition = true;
 			await PlayStop(false);
-			var animate = Service.Platform.AnimationsEnabled;
 			ConnectedAnimation? animLeft = null, animRight = null;
 
 			if (!Data.UseVerticalReader)
@@ -175,7 +176,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				var right = ReaderImage.FindDescendant("RightImage");
 				ReaderImage.disableAnimation = true;
 
-				if (animate)
+				if (Animate)
 				{
 					if (Data.ReaderContent.LeftImage != null && left != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
 					{
@@ -210,7 +211,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			leftTarget = leftTarget.Clamp(0, count - 1);
 			rightTarget = rightTarget.Clamp(0, count - 1);
 			await ImagesGrid.SmoothScrollIntoViewWithIndexAsync(leftTarget, disableAnimation: false);
-			if (animate)
+			if (Animate)
 			{
 				var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail");
 				var rightThumb = ImagesGrid.ContainerFromIndex(rightTarget).FindDescendant("Thumbnail");
@@ -288,14 +289,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (Data.ShowReader)
 			{
 				_wasNew = await Data.SaveReaderData(_wasNew);
-				if (Service.Platform.AnimationsEnabled)
+				if (Animate)
 					await FadeOut.StartAsync(ScrollViewer);
 				else
 					ScrollViewer.SetVisualOpacity(0);
 			}
 			else
 			{
-				if (Service.Platform.AnimationsEnabled)
+				if (Animate)
 					await ImagesGrid.FadeOutAsync();
 				else
 					ImagesGrid.SetVisualOpacity(0);
@@ -322,7 +323,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				else
 					await ChangePage();
 
-				if (Service.Platform.AnimationsEnabled)
+				if (Animate)
 					await FadeIn.StartAsync(ScrollViewer);
 				else
 					ScrollViewer.SetVisualOpacity(1);
@@ -330,7 +331,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			else
 			{
-				if (Service.Platform.AnimationsEnabled)
+				if (Animate)
 					await ImagesGrid.FadeInAsync();
 				else
 					ImagesGrid.SetVisualOpacity(1);
@@ -664,7 +665,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				_lastZoom = zoom;
 				var yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
-				ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Service.Platform.AnimationsEnabled);
+				ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Animate);
 			}
 		}
 

@@ -18,6 +18,14 @@
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
+				<controls:ModernExpander x:Uid="/Settings/Reader/ReaderAnimations" Glyph="&#xe945;" IsExpanded="{x:Bind Data.SettingsManager.ReaderAnimations, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ReaderAnimations, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput x:Uid="/Settings/Reader/PageChange">
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.PageChangeAnimation, Mode=TwoWay}" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
 				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 				</controls:ModernInput>

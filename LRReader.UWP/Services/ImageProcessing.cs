@@ -1,9 +1,13 @@
 ﻿#nullable enable
 using System;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using ImageMagick;
 using LRReader.Shared.Services;
+using SixLabors.ImageSharp;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
@@ -37,24 +41,46 @@ namespace LRReader.UWP.Services
 
 			using var ms = new MemoryStream(bytes);
 			var ras = ms.AsRandomAccessStream();
-			if (transcode)
+			var requiresIM = RequiresIM(bytes);
+			if (transcode || requiresIM)
 			{
 				await semaphore.WaitAsync();
 				try
 				{
-					var decoder = await BitmapDecoder.CreateAsync(ras);
-					using var softwareBitmap = await decoder.GetSoftwareBitmapAsync();
-					SoftwareBitmap? newSource = null;
-					if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
-						newSource = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-					using (var converted = new InMemoryRandomAccessStream())
+					if (requiresIM)
 					{
-						var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, converted);
-						encoder.SetSoftwareBitmap(newSource ?? softwareBitmap);
-						await encoder.FlushAsync();
-						await image.SetSourceAsync(converted);
+						using var magick = new MagickImage();
+						magick.Read(ms);
+						using var pixels = magick.GetPixels();
+						using (var converted = new InMemoryRandomAccessStream())
+						{
+							var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
+							encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, magick.Width, magick.Height, 96, 96, pixels.ToByteArray(PixelMapping.BGRA));
+							await encoder.FlushAsync();
+							await image.SetSourceAsync(converted);
+						}
+						/*var wb = new WriteableBitmap((int)magick.Width, (int)magick.Height);
+						var pixelsArray = pixels.ToByteArray(PixelMapping.BGRA)!;
+						using (var stream = wb.PixelBuffer.AsStream())
+							await stream.WriteAsync(pixelsArray, 0, pixelsArray.Length);
+						return wb;*/
 					}
-					newSource?.Dispose();
+					else
+					{
+						var decoder = await BitmapDecoder.CreateAsync(ras);
+						using var softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+						SoftwareBitmap? newSource = null;
+						if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
+							newSource = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+						using (var converted = new InMemoryRandomAccessStream())
+						{
+							var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
+							encoder.SetSoftwareBitmap(newSource ?? softwareBitmap);
+							await encoder.FlushAsync();
+							await image.SetSourceAsync(converted);
+						}
+						newSource?.Dispose();
+					}
 				}
 				catch
 				{
@@ -91,8 +117,17 @@ namespace LRReader.UWP.Services
 				using var ms = new MemoryStream(bytes);
 				try
 				{
-					var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
-					return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+					if (RequiresIM(bytes))
+					{
+						using var magick = new MagickImage();
+						magick.Ping(ms);
+						return new Size((int)magick.Width, (int)magick.Height);
+					}
+					else
+					{
+						var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
+						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+					}
 				}
 				catch
 				{
@@ -100,6 +135,14 @@ namespace LRReader.UWP.Services
 				}
 			}
 			return size;
+		}
+
+		private bool RequiresIM(byte[] bytes)
+		{
+			var jxlCodestream = bytes[0] == 0xff && bytes[1] == 0x0A;
+			var jxlContainer = bytes[0] == 0 && bytes[1] == 0 && bytes[2] == 0 && bytes[3] == 0xC && bytes[4] == 'J' && bytes[5] == 'X' && bytes[6] == 'L' && bytes[7] == ' ' && bytes[8] == 0xD && bytes[9] == 0xA && bytes[10] == 0x87 && bytes[11] == 0xA;
+
+			return jxlCodestream || jxlContainer;
 		}
 
 	}

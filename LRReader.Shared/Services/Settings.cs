@@ -313,6 +313,26 @@ namespace LRReader.Shared.Services
 			}
 		}
 
+		public bool ReaderAnimations
+		{
+			get => SettingsStorage.GetObjectRoamed(true);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
+			}
+		}
+
+		public bool PageChangeAnimation
+		{
+			get => SettingsStorage.GetObjectRoamed(true);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
+			}
+		}
+
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{

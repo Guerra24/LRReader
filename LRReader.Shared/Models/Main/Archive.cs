@@ -25,7 +25,7 @@ namespace LRReader.Shared.Models.Main
 		public long lastreadtime { get; set; }
 
 		[JsonIgnore]
-		public string LastReadTimeString =>  DateTimeOffset.FromUnixTimeSeconds(lastreadtime).ToLocalTime().ToString();
+		public string LastReadTimeString =>  DateTimeOffset.FromUnixTimeSeconds(lastreadtime).DateTime.ToLocalTime().ToString();
 
 		public long size { get; set; }
 
@@ -83,9 +83,8 @@ namespace LRReader.Shared.Models.Main
 				if (group == null)
 					group = AddTagsGroup(tmp, @namespace);
 				var tag = parts[parts.Length - 1];
-				if (parts[0].Equals("date_added"))
-					if (long.TryParse(tag, out long unixTime))
-						tag = DateTimeOffset.FromUnixTimeSeconds(unixTime).ToLocalTime().ToString();
+				if ((parts[0].Equals("date_added") && long.TryParse(tag, out long unixTime)) || (parts[0].Equals("timestamp") && long.TryParse(tag, out unixTime)))
+					tag = DateTimeOffset.FromUnixTimeSeconds(unixTime).DateTime.ToLocalTime().ToString();
 				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag, Namespace = @namespace });
 			}
 			tmp.Sort((a, b) => string.Compare(a.Namespace, b.Namespace));

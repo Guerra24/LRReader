@@ -62,7 +62,7 @@ namespace LRReader.UWP.Views.Items
 
 		public async Task FadeOutPage()
 		{
-			if (!Service.Platform.AnimationsEnabled)
+			if (!(Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations && Service.Settings.PageChangeAnimation))
 				return;
 			if (disableAnimation)
 			{
@@ -77,11 +77,11 @@ namespace LRReader.UWP.Views.Items
 
 		public void FadeInPage()
 		{
-			if (!Service.Platform.AnimationsEnabled)
+			if (!(Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations))
 				return;
 			var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
 			var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
-			if (openLeft != null || openRight != null)
+			if (openLeft != null || openRight != null || !Service.Settings.PageChangeAnimation)
 				ImagesRoot.SetVisualOpacity(1);
 			else
 				FadeIn.Start(ImagesRoot);

@@ -211,6 +211,19 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
+        }
+      },
+      "Magick.NET.Core": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "xChjeg8OT6l/ZBFJl+8ojSQQhKYgMt1f9X3g0HJ6sTvWZxj3j0eZrsKCguFSBAtz/gsdzpaSjJBKGtP5ZSaJhA=="
+      },
       "Microsoft.AppCenter": {
         "type": "Transitive",
         "resolved": "5.0.6",
@@ -668,6 +681,7 @@
           "Caching.dll": "[2.0.0.1, )",
           "CommunityToolkit.Mvvm": "[8.3.2, )",
           "KeyedSemaphores": "[5.0.0, )",
+          "Magick.NET-Q8-x64": "[14.0.0, )",
           "Microsoft.AppCenter.Crashes": "[5.0.6, )",
           "Microsoft.Extensions.DependencyInjection": "[8.0.1, )",
           "Microsoft.Extensions.Logging": "[8.0.1, )",
@@ -715,6 +729,14 @@
         "contentHash": "l0nZfss+pE9lmTSPslHof9fwglc6PGWeL+Ai8lclZLCJvAstKbN3WOHIaXg2m5YqaRScvQM6yQ/oR4lZK0xMUw==",
         "dependencies": {
           "Win2D.uwp": "1.27.0"
+        }
+      },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
         }
       },
       "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -779,6 +801,14 @@
           "Win2D.uwp": "1.27.0"
         }
       },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
+        }
+      },
       "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -839,6 +869,14 @@
         "contentHash": "l0nZfss+pE9lmTSPslHof9fwglc6PGWeL+Ai8lclZLCJvAstKbN3WOHIaXg2m5YqaRScvQM6yQ/oR4lZK0xMUw==",
         "dependencies": {
           "Win2D.uwp": "1.27.0"
+        }
+      },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
         }
       },
       "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -903,6 +941,14 @@
           "Win2D.uwp": "1.27.0"
         }
       },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
+        }
+      },
       "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -963,6 +1009,14 @@
         "contentHash": "l0nZfss+pE9lmTSPslHof9fwglc6PGWeL+Ai8lclZLCJvAstKbN3WOHIaXg2m5YqaRScvQM6yQ/oR4lZK0xMUw==",
         "dependencies": {
           "Win2D.uwp": "1.27.0"
+        }
+      },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
         }
       },
       "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -1027,6 +1081,14 @@
           "Win2D.uwp": "1.27.0"
         }
       },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
+        }
+      },
       "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -1087,6 +1149,14 @@
         "contentHash": "l0nZfss+pE9lmTSPslHof9fwglc6PGWeL+Ai8lclZLCJvAstKbN3WOHIaXg2m5YqaRScvQM6yQ/oR4lZK0xMUw==",
         "dependencies": {
           "Win2D.uwp": "1.27.0"
+        }
+      },
+      "Magick.NET-Q8-x64": {
+        "type": "Transitive",
+        "resolved": "14.0.0",
+        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "dependencies": {
+          "Magick.NET.Core": "14.0.0"
         }
       },
       "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
