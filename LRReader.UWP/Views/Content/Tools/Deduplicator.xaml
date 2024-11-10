@@ -9,7 +9,6 @@
 	xmlns:items1="using:LRReader.UWP.Views.Items"
 	xmlns:local="using:LRReader.UWP.Views.Content.Tools"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:mtuuc="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	DataContext="{Binding DeduplicatorToolViewModelInstance, Source={StaticResource Locator}}"
@@ -98,7 +97,7 @@
 										x:Name="HowItWorks" x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True"
 										PreferredPlacement="Left"
 										Target="{x:Bind Help}">
-										<mtuuc:MarkdownTextBlock x:Uid="/Tools/Deduplicator/HowItWorks" Background="Transparent" />
+										<WebView Height="330" Width="300" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Deduplicator/HowItWorks/Text, Map=Tools}" />
 									</muxc:TeachingTip>
 								</StackPanel>
 							</controls:ModernExpander.Input>

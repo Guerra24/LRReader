@@ -8,6 +8,8 @@ using CommunityToolkit.WinUI.Media;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
+using Markdig;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -17,6 +19,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
@@ -105,6 +108,49 @@ namespace LRReader.UWP.Extensions
 		public static object GetCommandParameter(KeyboardAccelerator ka) => ka.GetValue(CommandParameterProperty);
 	}
 
+
+	public static class WebViewExt
+	{
+		public static readonly DependencyProperty MarkdownProperty = DependencyProperty.RegisterAttached("Markdown", typeof(string), typeof(WebViewExt), new PropertyMetadata(""));
+		public static readonly DependencyProperty MarkdownBaseProperty = DependencyProperty.RegisterAttached("MarkdownBase", typeof(string), typeof(WebViewExt), new PropertyMetadata(""));
+		public static readonly DependencyProperty MarkdownReadyProperty = DependencyProperty.RegisterAttached("MarkdownReady", typeof(bool), typeof(WebViewExt), new PropertyMetadata(false));
+
+		private static readonly MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+		public static void SetMarkdown(WebView webView, string markdown)
+		{
+			webView.SetValue(MarkdownProperty, markdown);
+			if (!(bool)webView.GetValue(MarkdownReadyProperty))
+			{
+				webView.NavigationCompleted += async (sender, args) =>
+				{
+					var heightString = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollHeight.toString()" });
+					if (int.TryParse(heightString, out var height))
+						webView.Height = height;
+				};
+				webView.SetValue(MarkdownReadyProperty, true);
+			}
+			webView.SetMarkdownBase(markdown);
+		}
+		public static string GetMarkdown(WebView webView) => (string)webView.GetValue(MarkdownProperty);
+
+		public static void SetMarkdownBase(this WebView webView, string markdown)
+		{
+			var color = (Color)Application.Current.Resources["TextFillColorPrimary"];
+			var selectedColor = (Color)Application.Current.Resources["TextOnAccentFillColorSelectedText"];
+			var selectedBg = (Color)Application.Current.Resources["SystemAccentColor"];
+			webView.NavigateToString($"<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>md</title><style>body{{font-family: \"Segoe UI\"; font-size: 14px; color: #{color.R:X2}{color.G:X2}{color.B:X2}; margin: 0;}} ::selection{{color: #{selectedColor.R:X2}{selectedColor.G:X2}{selectedColor.B:X2}; background-color: #{selectedBg.R:X2}{selectedBg.G:X2}{selectedBg.B:X2};}} img {{max-width: 80%;}}</style></head><body>{Markdown.ToHtml(markdown, pipeline)}</body></html>");
+			webView.NavigationStarting += (sender, args) =>
+			{
+				args.Cancel = true;
+				Service.Platform.OpenInBrowser(args.Uri);
+			};
+		}
+
+		public static string GetMarkdownBase(WebView webView) => "";
+
+	}
+
 	public class Element : DependencyObject
 	{
 		public static readonly DependencyProperty ModernShadowProperty = DependencyProperty.RegisterAttached("ModernShadow", typeof(Shadow), typeof(Element), new PropertyMetadata(null));
@@ -190,4 +236,17 @@ namespace LRReader.UWP.Extensions
 				popup.HorizontalOffset = horizontalOffset;
 		}
 	}
+
+	[MarkupExtensionReturnType(ReturnType = typeof(string))]
+	public class LangStringExtension : MarkupExtension
+	{
+		public string Map { get; set; } = null!;
+		public string Key { get; set; } = null!;
+
+		protected override object ProvideValue()
+		{
+			return ResourceLoader.GetForCurrentView(Map).GetString(Key);
+		}
+	}
+
 }

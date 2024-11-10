@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Services;
-using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using TenMica;
 using Windows.Foundation.Metadata;
