@@ -13,8 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-    <PackageReference Include="Magick.NET-Q8-arm64" Version="14.0.0" Condition="'$(Platform)' == 'ARM64'" />
-    <PackageReference Include="Magick.NET-Q8-x64" Version="14.0.0" Condition="'$(Platform)' == 'x64'" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.6" Condition="'$(TargetFramework)' == 'uap10.0.17763'" />
     <PackageReference Include="Caching.dll" Version="2.0.0.1" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />

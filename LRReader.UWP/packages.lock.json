@@ -192,10 +192,10 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -612,7 +612,7 @@
           "Caching.dll": "[2.0.0.1, )",
           "CommunityToolkit.Mvvm": "[8.3.2, )",
           "KeyedSemaphores": "[5.0.0, )",
-          "Magick.NET-Q8-x64": "[14.0.0, )",
+          "Magick.NET-Q8-AnyCPU": "[14.0.0, )",
           "Microsoft.AppCenter.Crashes": "[5.0.6, )",
           "Microsoft.Extensions.DependencyInjection": "[8.0.1, )",
           "Microsoft.Extensions.Logging": "[8.0.1, )",
@@ -661,10 +661,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -731,10 +731,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -801,10 +801,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -871,10 +871,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -941,10 +941,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -1011,10 +1011,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
@@ -1081,10 +1081,10 @@
           "Win2D.uwp": "1.27.0"
         }
       },
-      "Magick.NET-Q8-x64": {
+      "Magick.NET-Q8-AnyCPU": {
         "type": "Transitive",
         "resolved": "14.0.0",
-        "contentHash": "Gt/JUVHeD+KoqYecG8TAgTAZfumiqC2MSOfTNTYuZpbOGNS0inechzHpJQEYLlKqHBUxrhXpVUHjG1ZTCnY6Rw==",
+        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
         "dependencies": {
           "Magick.NET.Core": "14.0.0"
         }
