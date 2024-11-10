@@ -93,16 +93,6 @@
           "System.Text.Json": "8.0.4"
         }
       },
-      "RestSharp.Serializers.NewtonsoftJson": {
-        "type": "Direct",
-        "requested": "[112.1.0, )",
-        "resolved": "112.1.0",
-        "contentHash": "d/Ro5KeCKw2p0XVQrAKG0CUiG6VO4YeXLxIm5sHj8fwaIk2IlrtMOKoJJprsEUyJfq1Z9Qv8E1yN2rPFPuRVzw==",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "112.1.0"
-        }
-      },
       "SixLabors.ImageSharp": {
         "type": "Direct",
         "requested": "[2.1.9, )",
@@ -544,16 +534,6 @@
         "contentHash": "bOUGNZqhhv/QeCXHTKEUil846yBjwWXpzPKjO67kFvaAOoF361z7jLY5BMnuZ6WD2WQRA750sNMcK7MSPCQ5Mg==",
         "dependencies": {
           "System.Text.Json": "8.0.4"
-        }
-      },
-      "RestSharp.Serializers.NewtonsoftJson": {
-        "type": "Direct",
-        "requested": "[112.1.0, )",
-        "resolved": "112.1.0",
-        "contentHash": "d/Ro5KeCKw2p0XVQrAKG0CUiG6VO4YeXLxIm5sHj8fwaIk2IlrtMOKoJJprsEUyJfq1Z9Qv8E1yN2rPFPuRVzw==",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "112.1.0"
         }
       },
       "SixLabors.ImageSharp": {

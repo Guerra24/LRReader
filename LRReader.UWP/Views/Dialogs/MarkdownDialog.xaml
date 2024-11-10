@@ -23,7 +23,7 @@
 									MinHeight="{ThemeResource ContentDialogMinHeight}"
 									MaxWidth="670"
 									MaxHeight="{ThemeResource ContentDialogMaxHeight}"
-									HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+									HorizontalAlignment="Stretch" VerticalAlignment="Center"
 									Background="{TemplateBinding Background}"
 									BackgroundSizing="InnerBorderEdge"
 									BorderBrush="{TemplateBinding BorderBrush}"
@@ -267,5 +267,5 @@
 		</Style>
 	</ContentDialog.Resources>
 
-	<WebView x:Name="WebView" DefaultBackgroundColor="Transparent" />
+	<WebView x:Name="WebView" MaxHeight="612" DefaultBackgroundColor="Transparent" />
 </ContentDialog>

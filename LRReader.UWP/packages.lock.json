@@ -400,15 +400,6 @@
           "System.Text.Json": "8.0.4"
         }
       },
-      "RestSharp.Serializers.NewtonsoftJson": {
-        "type": "Transitive",
-        "resolved": "112.1.0",
-        "contentHash": "d/Ro5KeCKw2p0XVQrAKG0CUiG6VO4YeXLxIm5sHj8fwaIk2IlrtMOKoJJprsEUyJfq1Z9Qv8E1yN2rPFPuRVzw==",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3",
-          "RestSharp": "112.1.0"
-        }
-      },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
         "resolved": "2.2.12-rel-31116-00",
@@ -628,7 +619,6 @@
           "NReco.Logging.File": "[1.2.1, )",
           "Newtonsoft.Json": "[13.0.3, )",
           "RestSharp": "[112.1.0, )",
-          "RestSharp.Serializers.NewtonsoftJson": "[112.1.0, )",
           "SixLabors.ImageSharp": "[2.1.9, )"
         }
       }

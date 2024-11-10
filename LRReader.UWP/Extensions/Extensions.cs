@@ -117,15 +117,14 @@ namespace LRReader.UWP.Extensions
 
 		private static readonly MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 
-		public static void SetMarkdown(WebView webView, string markdown)
+		public static void SetMarkdown(this WebView webView, string markdown)
 		{
 			webView.SetValue(MarkdownProperty, markdown);
 			if (!(bool)webView.GetValue(MarkdownReadyProperty))
 			{
-				webView.NavigationCompleted += async (sender, args) =>
+				webView.ScriptNotify += (sender, args) =>
 				{
-					var heightString = await webView.InvokeScriptAsync("eval", new[] { "document.body.scrollHeight.toString()" });
-					if (int.TryParse(heightString, out var height))
+					if (double.TryParse(args.Value, out var height))
 						webView.Height = height;
 				};
 				webView.SetValue(MarkdownReadyProperty, true);
@@ -139,7 +138,51 @@ namespace LRReader.UWP.Extensions
 			var color = (Color)Application.Current.Resources["TextFillColorPrimary"];
 			var selectedColor = (Color)Application.Current.Resources["TextOnAccentFillColorSelectedText"];
 			var selectedBg = (Color)Application.Current.Resources["SystemAccentColor"];
-			webView.NavigateToString($"<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>md</title><style>body{{font-family: \"Segoe UI\"; font-size: 14px; color: #{color.R:X2}{color.G:X2}{color.B:X2}; margin: 0;}} ::selection{{color: #{selectedColor.R:X2}{selectedColor.G:X2}{selectedColor.B:X2}; background-color: #{selectedBg.R:X2}{selectedBg.G:X2}{selectedBg.B:X2};}} img {{max-width: 80%;}}</style></head><body>{Markdown.ToHtml(markdown, pipeline)}</body></html>");
+			webView.NavigateToString($$"""
+				<!DOCTYPE html>
+				<html>
+				<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>md</title>
+					<style>
+						body {
+							font-family: "Segoe UI";
+							font-size: 14px;
+							color: #{{color.R:X2}}{{color.G:X2}}{{color.B:X2}};
+							margin: 0;
+						}
+						::selection {
+							color: #{{selectedColor.R:X2}}{{selectedColor.G:X2}}{{selectedColor.B:X2}};
+							background-color: #{{selectedBg.R:X2}}{{selectedBg.G:X2}}{{selectedBg.B:X2}};
+						}
+						img {
+							max-width: 80%;
+						}
+						* {
+							box-sizing: border-box;
+						}
+					</style>
+					<script>
+						window.addEventListener("resize", () => {
+							const rect = document.querySelector('html').getBoundingClientRect();
+							window.external.notify(rect.height.toString());
+						});
+						document.addEventListener("DOMContentLoaded", (event) => {
+							const rect = document.querySelector('html').getBoundingClientRect();
+							window.external.notify(rect.height.toString());
+							requestAnimationFrame(() => {
+								const rect = document.querySelector('html').getBoundingClientRect();
+								window.external.notify(rect.height.toString());
+							});
+						});
+					</script>
+				</head>
+				<body>
+					{{Markdown.ToHtml(markdown, pipeline)}}
+				</body>
+				</html>
+				""");
 			webView.NavigationStarting += (sender, args) =>
 			{
 				args.Cancel = true;

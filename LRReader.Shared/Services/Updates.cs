@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
 using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
 
 namespace LRReader.Shared.Services
 {
@@ -29,7 +28,7 @@ namespace LRReader.Shared.Services
 			var uri = new Uri("https://api.guerra24.net/");
 #endif
 			var options = new RestClientOptions(uri) { UserAgent = "LRReader" };
-			client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson());
+			client = new RestClient(options);
 		}
 
 		public abstract Task<CheckForUpdatesResult> CheckForUpdates();

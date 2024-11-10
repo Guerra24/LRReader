@@ -3,7 +3,6 @@
 using Microsoft.AppCenter.Crashes;
 #endif
 using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace LRReader.Shared.Services
 				return false;
 			var options = new RestClientOptions(profile.ServerAddress) { UserAgent = "LRReader" };
 			Client?.Dispose();
-			Client = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(), useClientFactory: true);
+			Client = new RestClient(options, useClientFactory: true);
 			if (!string.IsNullOrEmpty(profile.ServerApiKey))
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));

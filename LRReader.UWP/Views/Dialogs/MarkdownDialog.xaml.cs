@@ -10,7 +10,7 @@ namespace LRReader.UWP.Views.Dialogs
 		{
 			this.InitializeComponent();
 			this.Title = title;
-			WebView.SetMarkdownBase(text);
+			WebView.SetMarkdown(text);
 		}
 	}
 }
