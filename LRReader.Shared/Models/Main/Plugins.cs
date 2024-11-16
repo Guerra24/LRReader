@@ -34,7 +34,7 @@ namespace LRReader.Shared.Models.Main
 		public string name { get; set; } = null!;
 		public string @namespace { get; set; } = null!;
 		public string oneshot_arg { get; set; } = null!;
-		public List<PluginParameter> parameters { get; set; } = null!;
+		//public List<PluginParameter> parameters { get; set; } = null!;
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PluginType type { get; set; }
 		public string version { get; set; } = null!;
