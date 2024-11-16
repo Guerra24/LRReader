@@ -33,32 +33,32 @@
       },
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "BmANAnR5Xd4Oqw7yQ75xOAYODybZQRzdeNucg7kS5wWKd2PNnMdYtJ2Vciy0QLylRmv42DGl5+AFL9izA6F1Rw==",
+        "requested": "[9.0.0, )",
+        "resolved": "9.0.0",
+        "contentHash": "MCPrg7v3QgNMr0vX4vzRXvkNGgLg8vKWX0nKCWUxu2uPyMsaRgiRc1tHBnbTcfJMhMKj2slE/j2M9oGkd25DNw==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0"
         }
       },
       "Microsoft.Extensions.Logging": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "4x+pzsQEbqxhNf1QYRr5TDkLP9UsLT3A6MdRKDDEgrW7h1ljiEPgTNhKYUhNCCAaVpQECVQ+onA91PTPnIp6Lw==",
+        "requested": "[9.0.0, )",
+        "resolved": "9.0.0",
+        "contentHash": "crjWyORoug0kK7RSNJBTeSE6VX8IQgLf3nUpTB9m62bPXp/tzbnOsnbe8TXEG0AASNaKZddnpHKw7fET8E++Pg==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "8.0.1",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
-          "Microsoft.Extensions.Options": "8.0.2",
-          "System.Diagnostics.DiagnosticSource": "8.0.1"
+          "Microsoft.Extensions.DependencyInjection": "9.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Options": "9.0.0",
+          "System.Diagnostics.DiagnosticSource": "9.0.0"
         }
       },
       "Newtonsoft.Json": {
@@ -108,8 +108,8 @@
       },
       "Magick.NET.Core": {
         "type": "Transitive",
-        "resolved": "14.0.0",
-        "contentHash": "xChjeg8OT6l/ZBFJl+8ojSQQhKYgMt1f9X3g0HJ6sTvWZxj3j0eZrsKCguFSBAtz/gsdzpaSjJBKGtP5ZSaJhA=="
+        "resolved": "14.1.0",
+        "contentHash": "OLqzlPECgD2HVBz2FyiueRXsChoYi30WOyj35CHc/v02u46GsEPOIFHEUBhGKqQ/Pl+NCeE4fdIEGeDofib7KA=="
       },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "Transitive",
@@ -152,17 +152,17 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.0.2",
-        "contentHash": "3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg=="
+        "resolved": "9.0.0",
+        "contentHash": "+6f2qv2a3dLwd5w6JanPIPs47CxRbnk+ZocMJUhv9NxP88VlOcJYZs9jY+MYSjxvady08bUZn6qgiNh7DadGgg=="
       },
       "Microsoft.Extensions.Logging.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.0.2",
-        "contentHash": "nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
+        "resolved": "9.0.0",
+        "contentHash": "g0UfujELzlLbHoVG8kPKVBaW470Ewi+jnptGS9KUi6jcb+k2StujtK3m26DFSGGwQ/+bVgZfsWqNzlP6YOejvw==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
           "System.Buffers": "4.5.1",
-          "System.Diagnostics.DiagnosticSource": "8.0.1",
+          "System.Diagnostics.DiagnosticSource": "9.0.0",
           "System.Memory": "4.5.5"
         }
       },
@@ -177,11 +177,11 @@
       },
       "Microsoft.Extensions.Options": {
         "type": "Transitive",
-        "resolved": "8.0.2",
-        "contentHash": "dWGKvhFybsaZpGmzkGCbNNwBD1rVlWzrZKANLW/CcbFJpCEceMCGzT7zZwHOGBCbwM0SzBuceMj5HN1LKV1QqA==",
+        "resolved": "9.0.0",
+        "contentHash": "y2146b3jrPI3Q0lokKXdKLpmXqakYbDIPDV6r3M8SqvSf45WwOTzkyfDpxnZXJsJQEpAsAqjUq5Pu8RCJMjubg==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Primitives": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Primitives": "9.0.0",
           "System.ComponentModel.Annotations": "5.0.0"
         }
       },
@@ -198,8 +198,8 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g==",
+        "resolved": "9.0.0",
+        "contentHash": "N3qEBzmLMYiASUlKxxFIISP4AiwuPTHF5uCh+2CWSwwzAJiIYx0kBJsS30cp1nvhSySFAVi30jecD307jV+8Kg==",
         "dependencies": {
           "System.Memory": "4.5.5",
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -217,8 +217,8 @@
       },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "vaoWjvkG1aenR2XdjaVivlCV9fADfgyhW5bZtXT23qaEea0lWiUljdQuze4E31vKM7ZWJaSUsbYIKE3rnzfZUg==",
+        "resolved": "9.0.0",
+        "contentHash": "ddppcFpnbohLWdYKr/ZeLZHmmI+DXFgZ3Snq+/E7SwcdW4UnvxmaugkwGywvGVWkHPGCSZjCP+MLzu23AL5SDw==",
         "dependencies": {
           "System.Memory": "4.5.5",
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -287,11 +287,11 @@
     ".NETStandard,Version=v2.1/win10-arm": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -306,11 +306,11 @@
     ".NETStandard,Version=v2.1/win10-arm-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -325,11 +325,11 @@
     ".NETStandard,Version=v2.1/win10-arm64-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -344,11 +344,11 @@
     ".NETStandard,Version=v2.1/win10-x64": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -363,11 +363,11 @@
     ".NETStandard,Version=v2.1/win10-x64-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -382,11 +382,11 @@
     ".NETStandard,Version=v2.1/win10-x86": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -401,11 +401,11 @@
     ".NETStandard,Version=v2.1/win10-x86-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "System.Text.Encoding.CodePages": {
@@ -451,11 +451,11 @@
       },
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.AppCenter.Crashes": {
@@ -470,26 +470,26 @@
       },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "BmANAnR5Xd4Oqw7yQ75xOAYODybZQRzdeNucg7kS5wWKd2PNnMdYtJ2Vciy0QLylRmv42DGl5+AFL9izA6F1Rw==",
+        "requested": "[9.0.0, )",
+        "resolved": "9.0.0",
+        "contentHash": "MCPrg7v3QgNMr0vX4vzRXvkNGgLg8vKWX0nKCWUxu2uPyMsaRgiRc1tHBnbTcfJMhMKj2slE/j2M9oGkd25DNw==",
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "Microsoft.Extensions.Logging": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "4x+pzsQEbqxhNf1QYRr5TDkLP9UsLT3A6MdRKDDEgrW7h1ljiEPgTNhKYUhNCCAaVpQECVQ+onA91PTPnIp6Lw==",
+        "requested": "[9.0.0, )",
+        "resolved": "9.0.0",
+        "contentHash": "crjWyORoug0kK7RSNJBTeSE6VX8IQgLf3nUpTB9m62bPXp/tzbnOsnbe8TXEG0AASNaKZddnpHKw7fET8E++Pg==",
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
-          "Microsoft.Extensions.DependencyInjection": "8.0.1",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
-          "Microsoft.Extensions.Options": "8.0.2",
-          "System.Diagnostics.DiagnosticSource": "8.0.1"
+          "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
+          "Microsoft.Extensions.DependencyInjection": "9.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Options": "9.0.0",
+          "System.Diagnostics.DiagnosticSource": "9.0.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -551,8 +551,8 @@
       },
       "Magick.NET.Core": {
         "type": "Transitive",
-        "resolved": "14.0.0",
-        "contentHash": "xChjeg8OT6l/ZBFJl+8ojSQQhKYgMt1f9X3g0HJ6sTvWZxj3j0eZrsKCguFSBAtz/gsdzpaSjJBKGtP5ZSaJhA=="
+        "resolved": "14.1.0",
+        "contentHash": "OLqzlPECgD2HVBz2FyiueRXsChoYi30WOyj35CHc/v02u46GsEPOIFHEUBhGKqQ/Pl+NCeE4fdIEGeDofib7KA=="
       },
       "Microsoft.AppCenter": {
         "type": "Transitive",
@@ -566,8 +566,8 @@
       },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "3WA9q9yVqJp222P3x1wYIGDAkpjAku0TMUaaQV22g6L67AI0LdOIrVS7Ht2vJfLHGSPVuqN94vIr15qn+HEkHw==",
+        "resolved": "9.0.0",
+        "contentHash": "owmu2Cr3IQ8yQiBleBHlGk8dSQ12oaF2e7TpzwJKEl4m84kkZJjEY1n33L67Y3zM5jPOjmmbdHjbfiL0RqcMRQ==",
         "dependencies": {
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
@@ -608,21 +608,21 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.0.2",
-        "contentHash": "3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg==",
+        "resolved": "9.0.0",
+        "contentHash": "+6f2qv2a3dLwd5w6JanPIPs47CxRbnk+ZocMJUhv9NxP88VlOcJYZs9jY+MYSjxvady08bUZn6qgiNh7DadGgg==",
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
+          "Microsoft.Bcl.AsyncInterfaces": "9.0.0",
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "Microsoft.Extensions.Logging.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.0.2",
-        "contentHash": "nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
+        "resolved": "9.0.0",
+        "contentHash": "g0UfujELzlLbHoVG8kPKVBaW470Ewi+jnptGS9KUi6jcb+k2StujtK3m26DFSGGwQ/+bVgZfsWqNzlP6YOejvw==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
           "System.Buffers": "4.5.1",
-          "System.Diagnostics.DiagnosticSource": "8.0.1",
+          "System.Diagnostics.DiagnosticSource": "9.0.0",
           "System.Memory": "4.5.5"
         }
       },
@@ -637,11 +637,11 @@
       },
       "Microsoft.Extensions.Options": {
         "type": "Transitive",
-        "resolved": "8.0.2",
-        "contentHash": "dWGKvhFybsaZpGmzkGCbNNwBD1rVlWzrZKANLW/CcbFJpCEceMCGzT7zZwHOGBCbwM0SzBuceMj5HN1LKV1QqA==",
+        "resolved": "9.0.0",
+        "contentHash": "y2146b3jrPI3Q0lokKXdKLpmXqakYbDIPDV6r3M8SqvSf45WwOTzkyfDpxnZXJsJQEpAsAqjUq5Pu8RCJMjubg==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Primitives": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Primitives": "9.0.0",
           "System.ComponentModel.Annotations": "5.0.0"
         }
       },
@@ -658,8 +658,8 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g==",
+        "resolved": "9.0.0",
+        "contentHash": "N3qEBzmLMYiASUlKxxFIISP4AiwuPTHF5uCh+2CWSwwzAJiIYx0kBJsS30cp1nvhSySFAVi30jecD307jV+8Kg==",
         "dependencies": {
           "System.Memory": "4.5.5",
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -816,8 +816,8 @@
       },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "vaoWjvkG1aenR2XdjaVivlCV9fADfgyhW5bZtXT23qaEea0lWiUljdQuze4E31vKM7ZWJaSUsbYIKE3rnzfZUg==",
+        "resolved": "9.0.0",
+        "contentHash": "ddppcFpnbohLWdYKr/ZeLZHmmI+DXFgZ3Snq+/E7SwcdW4UnvxmaugkwGywvGVWkHPGCSZjCP+MLzu23AL5SDw==",
         "dependencies": {
           "System.Memory": "4.5.5",
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -892,11 +892,11 @@
     "UAP,Version=v10.0.17763/win10-arm": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -934,11 +934,11 @@
     "UAP,Version=v10.0.17763/win10-arm-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -976,11 +976,11 @@
     "UAP,Version=v10.0.17763/win10-arm64-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -1018,11 +1018,11 @@
     "UAP,Version=v10.0.17763/win10-x64": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -1060,11 +1060,11 @@
     "UAP,Version=v10.0.17763/win10-x64-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -1102,11 +1102,11 @@
     "UAP,Version=v10.0.17763/win10-x86": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
@@ -1144,11 +1144,11 @@
     "UAP,Version=v10.0.17763/win10-x86-aot": {
       "Magick.NET-Q8-AnyCPU": {
         "type": "Direct",
-        "requested": "[14.0.0, )",
-        "resolved": "14.0.0",
-        "contentHash": "6jT+OhvqsX/BM2+89xvBvkD0I3Vx9QDMwLFXZLtBvnRpB/JogqtZfPju5xnqzXPytAeHT9EhGBBTyiV0scE1xA==",
+        "requested": "[14.1.0, )",
+        "resolved": "14.1.0",
+        "contentHash": "gYLmo9A5poHpwpDdDVlZLqJShES8wTR7ASTS8rl247vz0EsrGWJAH6vQ6FPzIHiwstFWsq9lDYb9ENv/tfs0CA==",
         "dependencies": {
-          "Magick.NET.Core": "14.0.0"
+          "Magick.NET.Core": "14.1.0"
         }
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
