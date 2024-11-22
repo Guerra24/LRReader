@@ -1,7 +1,7 @@
 ﻿using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
-using Newtonsoft.Json;
 
 namespace LRReader.Shared.Services
 {
@@ -22,14 +22,14 @@ namespace LRReader.Shared.Services
 
 		public async Task Suspend()
 		{
-			if (Service.Settings.Profile != null)
+			if (Settings.Profile != null)
 			{
 				var appState = new AppState();
-				appState.ProfileUID = Service.Settings.Profile.UID;
+				appState.ProfileUID = Settings.Profile.UID;
 				foreach (var tab in Tabs.TabItems)
 					appState.Tabs.Add(tab.GetTabState());
 
-				await Files.StoreFileSafe(Path.Combine(Files.Local, "Suspended.json"), JsonConvert.SerializeObject(appState, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
+				await Files.StoreFileSafe(Path.Combine(Files.Local, "Suspended.json"), JsonSerializer.Serialize(appState, JsonSettings.Options));
 			}
 		}
 
@@ -40,8 +40,8 @@ namespace LRReader.Shared.Services
 				return;
 			try
 			{
-				var appState = JsonConvert.DeserializeObject<AppState>(await Files.GetFile(path), new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto })!;
-				if (Service.Settings.Profile.UID != appState.ProfileUID)
+				var appState = JsonSerializer.Deserialize<AppState>(await Files.GetFile(path), JsonSettings.Options)!;
+				if (Settings.Profile.UID != appState.ProfileUID)
 					return;
 				foreach (var tab in appState.Tabs)
 				{

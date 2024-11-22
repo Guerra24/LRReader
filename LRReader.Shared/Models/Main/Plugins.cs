@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json.Serialization;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -16,7 +12,7 @@ namespace LRReader.Shared.Models.Main
 	{
 
 		public string desc { get; set; } = null!;
-		[JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public PluginParameterType type { get; set; }
 	}
 
@@ -25,7 +21,7 @@ namespace LRReader.Shared.Models.Main
 		Login, Metadata, Script, All
 	}
 
-	public class Plugin
+	public class Plugin : IJsonOnDeserialized
 	{
 
 		public string author { get; set; } = null!;
@@ -35,15 +31,14 @@ namespace LRReader.Shared.Models.Main
 		public string @namespace { get; set; } = null!;
 		public string oneshot_arg { get; set; } = null!;
 		//public List<PluginParameter> parameters { get; set; } = null!;
-		[JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public PluginType type { get; set; }
 		public string version { get; set; } = null!;
 		public string? login_from { get; set; }
 
 		public bool HasArg { get; set; }
 
-		[OnDeserialized]
-		internal void OnDeserializedMethod(StreamingContext context)
+		void IJsonOnDeserialized.OnDeserialized()
 		{
 			HasArg = !string.IsNullOrEmpty(oneshot_arg);
 			if (HasArg)
@@ -65,32 +60,6 @@ namespace LRReader.Shared.Models.Main
 	{
 		public PluginResultData data { get; set; } = null!;
 		public string type { get; set; } = null!;
-	}
-
-	public class PluginParameterTypeConverter : JsonConverter
-	{
-
-		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-		{
-		}
-
-		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-		{
-			switch (reader.Value?.ToString())
-			{
-				case "string":
-					return PluginParameterType.String;
-				case "bool":
-					return PluginParameterType.Bool;
-				default:
-					throw new JsonReaderException($"Type not supported: {reader.Value}");
-			}
-		}
-
-		public override bool CanConvert(Type objectType)
-		{
-			return objectType == typeof(Version);
-		}
 	}
 
 }

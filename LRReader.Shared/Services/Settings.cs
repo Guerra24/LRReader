@@ -1,10 +1,9 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-#if WINDOWS_UWP
+#if false
 using Microsoft.AppCenter.Crashes;
 #endif
 using CommunityToolkit.Mvvm.ComponentModel;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +11,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 #if WINDOWS_UWP
 using Windows.Storage.Pickers;
 using Windows.Storage;
@@ -360,14 +360,14 @@ namespace LRReader.Shared.Services
 				try
 				{
 #if WINDOWS_UWP
-					FileIO.WriteTextAsync(ProfilesFile, JsonConvert.SerializeObject(Profiles)).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+					FileIO.WriteTextAsync(ProfilesFile, JsonSerializer.Serialize(Profiles, JsonSettings.Options)).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
 #else
-					Files.StoreFileSafe(ProfilesPathLocation, JsonConvert.SerializeObject(Profiles)).ConfigureAwait(false).GetAwaiter().GetResult();
+					Files.StoreFileSafe(ProfilesPathLocation, JsonSerializer.Serialize(Profiles, JsonSettings.Options)).ConfigureAwait(false).GetAwaiter().GetResult();
 #endif
 				}
 				catch (Exception e)
 				{
-#if WINDOWS_UWP
+#if false
 					Crashes.TrackError(e);
 #endif
 				}
@@ -398,10 +398,10 @@ namespace LRReader.Shared.Services
 			}
 
 			ProfilesPathLocation = ProfilesFile.Path;
-			Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await FileIO.ReadTextAsync(ProfilesFile)) ?? new ObservableCollection<ServerProfile>();
+			Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(await FileIO.ReadTextAsync(ProfilesFile), JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
 #else
 			if (File.Exists(ProfilesPathLocation))
-				Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(await Files.GetFile(ProfilesPathLocation)) ?? new ObservableCollection<ServerProfile>();
+				Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(await Files.GetFile(ProfilesPathLocation), JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
 #endif
 
 			UpgradeSettings();
@@ -474,7 +474,7 @@ namespace LRReader.Shared.Services
 						var profiles = SettingsStorage.GetObjectRoamed<string>("Profiles");
 						if (profiles != null)
 						{
-							Profiles = JsonConvert.DeserializeObject<ObservableCollection<ServerProfile>>(profiles) ?? new ObservableCollection<ServerProfile>();
+							Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(profiles, JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
 						}
 						SettingsStorage.DeleteObjectRoamed("Profiles");
 						break;

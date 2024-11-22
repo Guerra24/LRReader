@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared;
 
@@ -10,4 +12,14 @@ public static class AsyncActionExtensions
 	{
 		return action?.Invoke(obj) ?? Task.CompletedTask;
 	}
+}
+
+public static class JsonSettings
+{
+	public static JsonSerializerOptions Options = new() {
+		PropertyNameCaseInsensitive = true,
+		NumberHandling = JsonNumberHandling.AllowReadingFromString,
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+		IncludeFields = true
+	};
 }

@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.Messaging;
+using LRReader.Shared;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
-using Newtonsoft.Json;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -74,7 +75,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (file != null)
 			{
 				CachedFileManager.DeferUpdates(file);
-				await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(Service.Settings.Profile.Bookmarks));
+				await FileIO.WriteTextAsync(file, JsonSerializer.Serialize(Service.Settings.Profile.Bookmarks, JsonSettings.Options));
 				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
 				if (status == FileUpdateStatus.Complete)
 				{
@@ -103,7 +104,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				List<Shared.Models.Main.BookmarkedArchive>? bookmarks;
 				try
 				{
-					bookmarks = JsonConvert.DeserializeObject<List<Shared.Models.Main.BookmarkedArchive>>(await FileIO.ReadTextAsync(file))!;
+					bookmarks = JsonSerializer.Deserialize<List<Shared.Models.Main.BookmarkedArchive>>(await FileIO.ReadTextAsync(file), JsonSettings.Options)!;
 				}
 				catch (Exception e)
 				{

@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using LRReader.Shared.Services;
@@ -16,7 +15,7 @@ namespace LRReader.UWP.Services
 
 		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
 
-		[return: NotNullIfNotNull("def")]
+		//[return: NotNullIfNotNull("def")]
 		public T? GetObjectLocal<T>(T? def, [CallerMemberName] string? key = null)
 		{
 			var val = localSettings.Values[key];
@@ -25,7 +24,7 @@ namespace LRReader.UWP.Services
 
 		public T? GetObjectRoamed<T>([CallerMemberName] string? key = null) => GetObjectRoamed<T>(default, key);
 
-		[return: NotNullIfNotNull("def")]
+		//[return: NotNullIfNotNull("def")]
 		public T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null)
 		{
 			var val = roamedSettings.Values[key];

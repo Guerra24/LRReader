@@ -1,5 +1,5 @@
 ﻿using LRReader.Shared.Services;
-#if WINDOWS_UWP
+#if false
 using Microsoft.AppCenter.Crashes;
 #endif
 using System;
@@ -71,7 +71,7 @@ namespace LRReader.Shared.Tools
 			}
 			catch (Exception e)
 			{
-#if WINDOWS_UWP
+#if false
 				Crashes.TrackError(e);
 #endif
 			}

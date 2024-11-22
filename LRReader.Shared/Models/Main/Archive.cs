@@ -1,18 +1,17 @@
 ﻿using LRReader.Shared.Converters;
 using LRReader.Shared.Extensions;
-#if WINDOWS_UWP
+#if false
 using Microsoft.AppCenter.Crashes;
 #endif
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace LRReader.Shared.Models.Main
 {
-	public class Archive : IEquatable<Archive>
+	public class Archive : IEquatable<Archive>, IJsonOnDeserialized
 	{
 		public string arcid { get; set; } = null!;
 		[JsonConverter(typeof(ArchiveNewConverter))]
@@ -25,7 +24,7 @@ namespace LRReader.Shared.Models.Main
 		public long lastreadtime { get; set; }
 
 		[JsonIgnore]
-		public string LastReadTimeString =>  DateTimeOffset.FromUnixTimeSeconds(lastreadtime).DateTime.ToLocalTime().ToString();
+		public string LastReadTimeString => DateTimeOffset.FromUnixTimeSeconds(lastreadtime).DateTime.ToLocalTime().ToString();
 
 		public long size { get; set; }
 
@@ -45,8 +44,7 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public bool IsTank => extension.EndsWith("tank");
 
-		[OnDeserialized]
-		internal void OnDeserializedMethod(StreamingContext context) => UpdateTags();
+		void IJsonOnDeserialized.OnDeserialized() => UpdateTags();
 
 		public void UpdateTags()
 		{
@@ -70,7 +68,7 @@ namespace LRReader.Shared.Models.Main
 			{
 				// Drop original collection, can cause more COMExceptions
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
-#if WINDOWS_UWP
+#if false
 				Crashes.TrackError(e);
 #endif
 			}
@@ -105,7 +103,7 @@ namespace LRReader.Shared.Models.Main
 			catch (Exception e)
 			{
 				// Handle damaged collection just in case
-#if WINDOWS_UWP
+#if false
 				Crashes.TrackError(e);
 #endif
 			}

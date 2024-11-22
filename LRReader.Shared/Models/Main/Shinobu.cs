@@ -1,5 +1,5 @@
-﻿using LRReader.Shared.Converters;
-using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using LRReader.Shared.Converters;
 
 namespace LRReader.Shared.Models.Main
 {

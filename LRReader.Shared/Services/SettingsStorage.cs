@@ -33,7 +33,7 @@ namespace LRReader.Shared.Services
 
 	public class StubSettingsStorageService : ISettingsStorageService
 	{
-		public Task Init() => Task.Delay(1);
+		public Task Init() => Task.CompletedTask;
 
 		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
 

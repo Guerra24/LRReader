@@ -2,8 +2,8 @@
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Crashes;
+//using Microsoft.AppCenter;
+//using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
@@ -24,7 +24,7 @@ namespace LRReader.UWP
 
 		public App()
 		{
-			AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
+			//AppCenter.Start(Secrets.AppCenterId, typeof(Crashes));
 			Init.EarlyInit();
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
@@ -98,7 +98,7 @@ namespace LRReader.UWP
 			if (e.Exception is LayoutCycleException)
 				return;
 			e.Handled = true;
-			Crashes.TrackError(e.Exception);
+			//Crashes.TrackError(e.Exception);
 			// TODO: Do better
 			await Service.Platform.OpenGenericDialog("Internal Error", "Continue", content: e.Message);
 		}

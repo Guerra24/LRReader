@@ -1,5 +1,5 @@
 ﻿using LRReader.Shared.Models.Main;
-#if WINDOWS_UWP
+#if false
 using Microsoft.AppCenter.Crashes;
 #endif
 using RestSharp;

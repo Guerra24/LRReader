@@ -1,10 +1,11 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using LRReader.Shared;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.ViewModels;
-using Newtonsoft.Json;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -79,7 +80,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			var deferral = e.GetDeferral();
 			if (e.DataView.Properties.TryGetValue("archivesAdd", out object value) && value is string data)
-				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data)!)
+				foreach (var c in JsonSerializer.Deserialize<List<Archive>>(data, JsonSettings.Options)!)
 					await ViewModel.AddToTankoubon(c.arcid);
 			deferral.Complete();
 		}
@@ -88,7 +89,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			e.Data.RequestedOperation = DataPackageOperation.Link;
 			if (e.Items.Any())
-				e.Data.Properties.Add("archivesAdd", JsonConvert.SerializeObject(e.Items.ToList()));
+				e.Data.Properties.Add("archivesAdd", JsonSerializer.Serialize(e.Items.ToList(), JsonSettings.Options));
 		}
 
 		// Remove
@@ -105,7 +106,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			var deferral = e.GetDeferral();
 			if (e.DataView.Properties.TryGetValue("archivesRemove", out object value) && value is string data)
-				foreach (var c in JsonConvert.DeserializeObject<List<Archive>>(data)!)
+				foreach (var c in JsonSerializer.Deserialize<List<Archive>>(data, JsonSettings.Options)!)
 					await ViewModel.RemoveFromTankoubon(c.arcid);
 			deferral.Complete();
 		}
@@ -114,7 +115,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			e.Data.RequestedOperation = DataPackageOperation.Move;
 			if (e.Items.Any())
-				e.Data.Properties.Add("archivesRemove", JsonConvert.SerializeObject(e.Items.ToList()));
+				e.Data.Properties.Add("archivesRemove", JsonSerializer.Serialize(e.Items.ToList(), JsonSettings.Options));
 		}
 
 	}

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using LRReader.Shared.Services;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using VersionConverter = LRReader.Shared.Converters.VersionConverter;
 
 namespace LRReader.Shared.Models
@@ -28,9 +27,11 @@ namespace LRReader.Shared.Models
 		public string ProfileUID { get; set; } = null!;
 	}
 
+	[JsonDerivedType(typeof(IdTabState), 0)]
+	[JsonDerivedType(typeof(ArchiveTabState), 1)]
 	public class TabState
 	{
-		[JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public Tab Tab { get; set; }
 
 		public TabState(Tab tab) => Tab = tab;

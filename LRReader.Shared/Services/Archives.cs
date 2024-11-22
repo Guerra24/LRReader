@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-using Newtonsoft.Json;
 
 namespace LRReader.Shared.Services
 {
@@ -68,13 +68,13 @@ namespace LRReader.Shared.Services
 			{
 				try
 				{
-					var index = Files.GetFile($"{MetadataPath}/Index-v3.json");
-					var tags = Files.GetFile($"{MetadataPath}/Tags-v1.json");
-					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v1.json");
-					var categories = Files.GetFile($"{MetadataPath}/Categories-v1.json");
-					Archives = JsonConvert.DeserializeObject<Dictionary<string, Archive>>(await index) ?? new();
-					TagStats = JsonConvert.DeserializeObject<List<TagStats>>(await tags) ?? new();
-					Namespaces = JsonConvert.DeserializeObject<List<string>>(await namespaces) ?? new();
+					var index = Files.GetFile($"{MetadataPath}/Index-v4.json");
+					var tags = Files.GetFile($"{MetadataPath}/Tags-v2.json");
+					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v2.json");
+					var categories = Files.GetFile($"{MetadataPath}/Categories-v2.json");
+					Archives = JsonSerializer.Deserialize<Dictionary<string, Archive>>(await index, JsonSettings.Options) ?? new();
+					TagStats = JsonSerializer.Deserialize<List<TagStats>>(await tags, JsonSettings.Options) ?? new();
+					Namespaces = JsonSerializer.Deserialize<List<string>>(await namespaces, JsonSettings.Options) ?? new();
 					//Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
 				}
 				catch (Exception)
@@ -96,19 +96,19 @@ namespace LRReader.Shared.Services
 			if (resultA != null)
 			{
 				var temp = resultA.ToDictionary(c => c.arcid, c => c);
-				await Files.StoreFile($"{path}/Index-v3.json", JsonConvert.SerializeObject(temp));
+				await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
 				Archives = temp;
 			}
 			if (resultT != null)
 			{
-				await Files.StoreFile($"{path}/Tags-v1.json", JsonConvert.SerializeObject(resultT));
+				await Files.StoreFile($"{path}/Tags-v2.json", JsonSerializer.Serialize(resultT, JsonSettings.Options));
 				foreach (var t in resultT)
 				{
 					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 						Namespaces.Add(t.@namespace);
 					TagStats.Add(t);
 				}
-				await Files.StoreFile($"{path}/Namespaces-v1.json", JsonConvert.SerializeObject(Namespaces));
+				await Files.StoreFile($"{path}/Namespaces-v2.json", JsonSerializer.Serialize(Namespaces, JsonSettings.Options));
 			}
 			/*var resultC = await CategoriesProvider.GetCategories();
 			if (resultC != null)

@@ -4,7 +4,6 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
-using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -57,19 +56,19 @@ namespace LRReader.UWP.Views.Content.Settings
 			Data.SortByIndex = -1;
 		}
 
-		private async void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
+		private void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
 		{
 			if (!Data.SettingsManager.Profile.AcceptedDisclaimer)
 			{
 				var value = ((ToggleSwitch)sender).IsOn;
 				Data.SettingsManager.CrashReporting = value;
-				await Crashes.SetEnabledAsync(value);
+				//await Crashes.SetEnabledAsync(value);
 			}
 		}
 
-		private async void TrackCrashes_Loading(FrameworkElement sender, object args)
+		private void TrackCrashes_Loading(FrameworkElement sender, object args)
 		{
-			((ToggleSwitch)sender).IsOn = await Crashes.IsEnabledAsync();
+			//((ToggleSwitch)sender).IsOn = await Crashes.IsEnabledAsync();
 		}
 
 		private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)

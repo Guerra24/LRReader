@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+#if IMAGE_MAGICK
 using ImageMagick;
+#endif
 using LRReader.Shared.Services;
-using SixLabors.ImageSharp;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
@@ -41,12 +40,17 @@ namespace LRReader.UWP.Services
 
 			using var ms = new MemoryStream(bytes);
 			var ras = ms.AsRandomAccessStream();
+#if IMAGE_MAGICK
 			var requiresIM = RequiresIM(bytes);
 			if (transcode || requiresIM)
+#else
+			if (transcode)
+#endif
 			{
 				await semaphore.WaitAsync();
 				try
 				{
+#if IMAGE_MAGICK
 					if (requiresIM)
 					{
 						using var magick = new MagickImage();
@@ -67,6 +71,7 @@ namespace LRReader.UWP.Services
 					}
 					else
 					{
+#endif
 						var decoder = await BitmapDecoder.CreateAsync(ras);
 						using var softwareBitmap = await decoder.GetSoftwareBitmapAsync();
 						SoftwareBitmap? newSource = null;
@@ -80,7 +85,9 @@ namespace LRReader.UWP.Services
 							await image.SetSourceAsync(converted);
 						}
 						newSource?.Dispose();
+#if IMAGE_MAGICK
 					}
+#endif
 				}
 				catch
 				{
@@ -117,6 +124,7 @@ namespace LRReader.UWP.Services
 				using var ms = new MemoryStream(bytes);
 				try
 				{
+#if IMAGE_MAGICK
 					if (RequiresIM(bytes))
 					{
 						using var magick = new MagickImage();
@@ -125,9 +133,12 @@ namespace LRReader.UWP.Services
 					}
 					else
 					{
+#endif
 						var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
 						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+#if IMAGE_MAGICK
 					}
+#endif
 				}
 				catch
 				{
@@ -137,6 +148,7 @@ namespace LRReader.UWP.Services
 			return size;
 		}
 
+#if IMAGE_MAGICK
 		private bool RequiresIM(byte[] bytes)
 		{
 			var jxlCodestream = bytes[0] == 0xff && bytes[1] == 0x0A;
@@ -144,6 +156,7 @@ namespace LRReader.UWP.Services
 
 			return jxlCodestream || jxlContainer;
 		}
+#endif
 
 	}
 }

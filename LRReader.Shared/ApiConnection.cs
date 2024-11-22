@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace LRReader.Shared;
@@ -102,7 +102,7 @@ public static class ApiExtensions
 			try
 			{
 				if (restResponse.Content != null)
-					value = JsonConvert.DeserializeObject<T>(restResponse.Content);
+					value = JsonSerializer.Deserialize<T>(restResponse.Content, JsonSettings.Options);
 			}
 			catch (Exception e)
 			{
@@ -152,7 +152,7 @@ public static class ApiExtensions
 			try
 			{
 				if (restResponse.Content != null)
-					return JsonConvert.DeserializeObject<GenericApiResult>(restResponse.Content);
+					return JsonSerializer.Deserialize<GenericApiResult>(restResponse.Content, JsonSettings.Options);
 				else
 					return default;
 			}

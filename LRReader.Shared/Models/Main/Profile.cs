@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Services;
-using Newtonsoft.Json;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -34,6 +34,11 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public string ServerAddressBrowser => ServerAddress.TrimEnd('/');
 
+
+		[JsonConstructor]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+		public ServerProfile() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
 		public ServerProfile(string name, string address, string key, bool integration)
 		{
@@ -74,6 +79,11 @@ namespace LRReader.Shared.Models.Main
 		public string archiveID { get; set; }
 		public int page { get; set; }
 		public int totalPages { get; set; }
+
+		[JsonConstructor]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+		public BookmarkedArchive() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
 		public BookmarkedArchive(string id)
 		{
