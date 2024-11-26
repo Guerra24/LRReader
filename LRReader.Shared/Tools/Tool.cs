@@ -1,11 +1,9 @@
-﻿using LRReader.Shared.Services;
-#if false
-using Microsoft.AppCenter.Crashes;
-#endif
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using LRReader.Shared.Services;
+using Sentry;
 
 namespace LRReader.Shared.Tools
 {
@@ -71,9 +69,7 @@ namespace LRReader.Shared.Tools
 			}
 			catch (Exception e)
 			{
-#if false
-				Crashes.TrackError(e);
-#endif
+				SentrySdk.CaptureException(e);
 			}
 			GC.Collect();
 			GC.WaitForPendingFinalizers();

@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
+using Sentry;
 
 namespace LRReader.Shared.Services
 {
@@ -59,8 +61,9 @@ namespace LRReader.Shared.Services
 				}
 				File.Delete(path);
 			}
-			catch
+			catch (Exception e)
 			{
+				SentrySdk.CaptureException(e);
 			}
 		}
 	}

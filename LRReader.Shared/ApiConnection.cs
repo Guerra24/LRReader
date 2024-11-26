@@ -124,7 +124,7 @@ public static class ApiExtensions
 				Crashes.TrackError(e, properties, attachments);*/ // We are getting bad data from the instance, send stack trace
 				ex = e;
 			}
-			return new Tuple<T?, Exception?>(value, ex);
+			return (value, ex);
 		}).ConfigureAwait(false);
 		if (data.Item1 != null)
 			switch (restResponse.StatusCode)

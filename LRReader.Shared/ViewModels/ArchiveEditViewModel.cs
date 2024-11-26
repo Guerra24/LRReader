@@ -1,18 +1,16 @@
-﻿using LRReader.Shared.Messages;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-#if false
-using Microsoft.AppCenter.Crashes;
-#endif
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+using Sentry;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -112,9 +110,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-#if false
-				Crashes.TrackError(e);
-#endif
+				SentrySdk.CaptureException(e);
 			}
 		}
 
@@ -160,9 +156,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-#if false
-				Crashes.TrackError(e);
-#endif
+				SentrySdk.CaptureException(e);
 			}
 		}
 
@@ -207,9 +201,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-#if false
-				Crashes.TrackError(e);
-#endif
+				SentrySdk.CaptureException(e);
 			}
 		}
 

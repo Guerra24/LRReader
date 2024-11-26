@@ -1,13 +1,11 @@
-﻿using LRReader.Shared.Converters;
-using LRReader.Shared.Extensions;
-#if false
-using Microsoft.AppCenter.Crashes;
-#endif
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.Json.Serialization;
+using LRReader.Shared.Converters;
+using LRReader.Shared.Extensions;
+using Sentry;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -51,7 +49,7 @@ namespace LRReader.Shared.Models.Main
 			TagsClean = "";
 			if (tags == null) // TODO: v0.7.7 returns null tags when there are no plugins enabled.
 				tags = ""; // Use empty string as fallback instead
-			var separatedTags = tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			var separatedTags = tags.Split([','], StringSplitOptions.RemoveEmptyEntries);
 			foreach (var s in separatedTags)
 				TagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
 			TagsClean = TagsClean.Trim().TrimEnd(',');
@@ -68,14 +66,12 @@ namespace LRReader.Shared.Models.Main
 			{
 				// Drop original collection, can cause more COMExceptions
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
-#if false
-				Crashes.TrackError(e);
-#endif
+				SentrySdk.CaptureException(e);
 			}
 			var tmp = new List<ArchiveTagsGroup>();
 			foreach (var s in separatedTags)
 			{
-				var parts = s.Trim().Split(new char[] { ':' }, 2);
+				var parts = s.Trim().Split([':'], 2);
 				var @namespace = parts.Length == 2 ? parts[0] : "other";
 				var group = tmp.FirstOrDefault(tg => tg.Namespace.Equals(@namespace));
 				if (group == null)
@@ -103,9 +99,7 @@ namespace LRReader.Shared.Models.Main
 			catch (Exception e)
 			{
 				// Handle damaged collection just in case
-#if false
-				Crashes.TrackError(e);
-#endif
+				SentrySdk.CaptureException(e);
 			}
 		}
 

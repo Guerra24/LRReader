@@ -132,7 +132,7 @@ namespace LRReader.Shared.Tools
 				{
 					Logger.LogInformation(e, "LoadThumb {0}", pair.Key);
 				}
-				return new Tuple<string, Image<Rgb24>?>(pair.Key, image);
+				return (pair.Key, image);
 			})))).AsEnumerable().ToList();
 
 			List<string> removed = new List<string>();

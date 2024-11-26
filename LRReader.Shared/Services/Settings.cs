@@ -1,17 +1,15 @@
-﻿using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
-#if false
-using Microsoft.AppCenter.Crashes;
-#endif
-using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using Sentry;
 #if WINDOWS_UWP
 using Windows.Storage.Pickers;
 using Windows.Storage;
@@ -367,9 +365,7 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception e)
 				{
-#if false
-					Crashes.TrackError(e);
-#endif
+					SentrySdk.CaptureException(e);
 				}
 			});
 		}
