@@ -59,7 +59,7 @@ namespace LRReader.Shared.Internal
 	// https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskscheduler
 	// Provides a task scheduler that ensures a maximum concurrency level while
 	// running on top of the thread pool.
-	internal class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
+	public class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
 	{
 		// Indicates whether the current thread is processing work items.
 		[ThreadStatic]

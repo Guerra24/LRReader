@@ -394,11 +394,20 @@ namespace LRReader.Shared.Services
 			}
 
 			ProfilesPathLocation = ProfilesFile.Path;
-			Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(await FileIO.ReadTextAsync(ProfilesFile), JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
+			try
+			{
+				Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(await FileIO.ReadTextAsync(ProfilesFile), JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
 #else
-			if (File.Exists(ProfilesPathLocation))
-				Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(await Files.GetFile(ProfilesPathLocation), JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
+			try
+			{
+				if (File.Exists(ProfilesPathLocation))
+					Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(await Files.GetFile(ProfilesPathLocation), JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
 #endif
+			}
+			catch
+			{
+				Profiles = new ObservableCollection<ServerProfile>();
+			}
 
 			UpgradeSettings();
 

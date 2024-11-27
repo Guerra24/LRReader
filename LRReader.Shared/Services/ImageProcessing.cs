@@ -8,7 +8,7 @@ namespace LRReader.Shared.Services
 	public abstract class ImageProcessingService
 	{
 
-		public abstract Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? image = default);
+		public abstract Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? image = default);
 
 		public virtual async Task<Size> GetImageSize(byte[]? bytes)
 		{

@@ -9,12 +9,10 @@
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Platforms>AnyCPU</Platforms>
-    <DefineConstants Condition=" '$(UseImageMagick)' == 'true' ">$(DefineConstants);IMAGE_MAGICK</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.2.0" Condition=" '$(UseImageMagick)' == 'true' " />
     <PackageReference Include="Caching.dll" Version="2.0.0.1" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />

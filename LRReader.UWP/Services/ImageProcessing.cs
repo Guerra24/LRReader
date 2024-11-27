@@ -1,11 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
-#if IMAGE_MAGICK
-using ImageMagick;
-#endif
+using JxlNet;
+using LRReader.Shared.Internal;
 using LRReader.Shared.Services;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
@@ -16,14 +14,15 @@ namespace LRReader.UWP.Services
 {
 	public class UWPImageProcessingService : ImageProcessingService
 	{
-		private SemaphoreSlim semaphore;
+
+		private TaskFactory TaskFactory;
 
 		public UWPImageProcessingService()
 		{
-			semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
+			TaskFactory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(Math.Clamp(Environment.ProcessorCount / 2, 1, 4)));
 		}
 
-		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? img = default)
+		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default)
 		{
 			if (bytes == null)
 				return null;
@@ -37,77 +36,103 @@ namespace LRReader.UWP.Services
 				image.DecodePixelWidth = decodeWidth;
 			if (decodeHeight > 0)
 				image.DecodePixelHeight = decodeHeight;
-
-			using var ms = new MemoryStream(bytes);
-			var ras = ms.AsRandomAccessStream();
-#if IMAGE_MAGICK
-			var requiresIM = RequiresIM(bytes);
-			if (transcode || requiresIM)
-#else
-			if (transcode)
-#endif
+			try
 			{
-				await semaphore.WaitAsync();
-				try
+				if (IsJxl(bytes))
 				{
-#if IMAGE_MAGICK
-					if (requiresIM)
+					using (var converted = new InMemoryRandomAccessStream())
 					{
-						using var magick = new MagickImage();
-						magick.Read(ms);
-						using var pixels = magick.GetPixels();
-						using (var converted = new InMemoryRandomAccessStream())
+						var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
+						var ok = await TaskFactory.StartNew(() =>
 						{
-							var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
-							encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, magick.Width, magick.Height, 96, 96, pixels.ToByteArray(PixelMapping.BGRA));
+							unsafe
+							{
+								var decoder = Jxl.JxlDecoderCreate(null);
+								try
+								{
+									fixed (byte* input = bytes)
+									{
+										Jxl.JxlDecoderSetInput(decoder, input, (UIntPtr)bytes.Length);
+										Jxl.JxlDecoderCloseInput(decoder);
+										Jxl.JxlDecoderSubscribeEvents(decoder, (int)(JxlDecoderStatus.JXL_DEC_BASIC_INFO | JxlDecoderStatus.JXL_DEC_FRAME | JxlDecoderStatus.JXL_DEC_FULL_IMAGE));
+
+										var status = Jxl.JxlDecoderProcessInput(decoder);
+
+										if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
+											return false;
+
+										var info = new JxlBasicInfo();
+										Jxl.JxlDecoderGetBasicInfo(decoder, &info);
+
+										status = Jxl.JxlDecoderProcessInput(decoder);
+
+										if (status != JxlDecoderStatus.JXL_DEC_FRAME)
+											return false;
+
+										byte[] buffer = new byte[info.xsize * info.ysize * 4];
+										fixed (byte* output = buffer)
+										{
+											var pixelFormat = new JxlPixelFormat();
+											pixelFormat.data_type = JxlDataType.JXL_TYPE_UINT8;
+											pixelFormat.endianness = JxlEndianness.JXL_NATIVE_ENDIAN;
+											pixelFormat.num_channels = 4;
+											pixelFormat.align = (UIntPtr)0;
+
+											UIntPtr size = new();
+											Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
+
+											if (info.xsize * info.ysize * sizeof(byte) * 4 != size.ToUInt64())
+											{
+												return false;
+											}
+											if ((ulong)(buffer.Length * sizeof(byte)) != size.ToUInt64())
+											{
+												return false;
+											}
+
+											Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (UIntPtr)(buffer.Length * sizeof(byte)));
+
+											status = Jxl.JxlDecoderProcessInput(decoder);
+
+											if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
+												return false;
+
+											encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Ignore, info.xsize, info.ysize, 96, 96, buffer);
+
+											status = Jxl.JxlDecoderProcessInput(decoder);
+
+											if (status != JxlDecoderStatus.JXL_DEC_SUCCESS)
+												return false;
+										}
+									}
+								}
+								finally
+								{
+									Jxl.JxlDecoderDestroy(decoder);
+								}
+							}
+							return true;
+						});
+						if (ok)
+						{
 							await encoder.FlushAsync();
 							await image.SetSourceAsync(converted);
 						}
-						/*var wb = new WriteableBitmap((int)magick.Width, (int)magick.Height);
-						var pixelsArray = pixels.ToByteArray(PixelMapping.BGRA)!;
-						using (var stream = wb.PixelBuffer.AsStream())
-							await stream.WriteAsync(pixelsArray, 0, pixelsArray.Length);
-						return wb;*/
-					}
-					else
-					{
-#endif
-						var decoder = await BitmapDecoder.CreateAsync(ras);
-						using var softwareBitmap = await decoder.GetSoftwareBitmapAsync();
-						SoftwareBitmap? newSource = null;
-						if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || softwareBitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
-							newSource = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-						using (var converted = new InMemoryRandomAccessStream())
+						else
 						{
-							var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
-							encoder.SetSoftwareBitmap(newSource ?? softwareBitmap);
-							await encoder.FlushAsync();
-							await image.SetSourceAsync(converted);
+							return null;
 						}
-						newSource?.Dispose();
-#if IMAGE_MAGICK
 					}
-#endif
 				}
-				catch
+				else
 				{
-					return null;
-				}
-				finally
-				{
-					semaphore.Release();
+					using var ms = new MemoryStream(bytes);
+					await image.SetSourceAsync(ms.AsRandomAccessStream());
 				}
 			}
-			else
+			catch
 			{
-				try
-				{
-					await image.SetSourceAsync(ras);
-				}
-				catch
-				{
-					return null;
-				}
+				return null;
 			}
 			return image;
 		}
@@ -121,42 +146,56 @@ namespace LRReader.UWP.Services
 			var size = await base.GetImageSize(bytes);
 			if (size.IsEmpty)
 			{
-				using var ms = new MemoryStream(bytes);
 				try
 				{
-#if IMAGE_MAGICK
-					if (RequiresIM(bytes))
+					if (IsJxl(bytes))
 					{
-						using var magick = new MagickImage();
-						magick.Ping(ms);
-						return new Size((int)magick.Width, (int)magick.Height);
+						unsafe
+						{
+							var decoder = Jxl.JxlDecoderCreate(null);
+							try
+							{
+								fixed (byte* p = bytes)
+								{
+									Jxl.JxlDecoderSetInput(decoder, p, (UIntPtr)bytes.Length);
+									Jxl.JxlDecoderCloseInput(decoder);
+									Jxl.JxlDecoderSubscribeEvents(decoder, (int)JxlDecoderStatus.JXL_DEC_BASIC_INFO);
+									var status = Jxl.JxlDecoderProcessInput(decoder);
+									if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
+										return Size.Empty;
+									var info = new JxlBasicInfo();
+									Jxl.JxlDecoderGetBasicInfo(decoder, &info);
+									return new Size((int)info.xsize, (int)info.ysize);
+								}
+							}
+							finally
+							{
+								Jxl.JxlDecoderDestroy(decoder);
+							}
+						}
 					}
 					else
 					{
-#endif
+						using var ms = new MemoryStream(bytes);
 						var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
 						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
-#if IMAGE_MAGICK
 					}
-#endif
 				}
 				catch
 				{
-					return new Size(0, 0);
+					return Size.Empty;
 				}
 			}
 			return size;
 		}
 
-#if IMAGE_MAGICK
-		private bool RequiresIM(byte[] bytes)
+		private bool IsJxl(byte[] bytes)
 		{
 			var jxlCodestream = bytes[0] == 0xff && bytes[1] == 0x0A;
 			var jxlContainer = bytes[0] == 0 && bytes[1] == 0 && bytes[2] == 0 && bytes[3] == 0xC && bytes[4] == 'J' && bytes[5] == 'X' && bytes[6] == 'L' && bytes[7] == ' ' && bytes[8] == 0xD && bytes[9] == 0xA && bytes[10] == 0x87 && bytes[11] == 0xA;
 
 			return jxlCodestream || jxlContainer;
 		}
-#endif
 
 	}
 }
