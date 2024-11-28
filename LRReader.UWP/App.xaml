@@ -4,19 +4,17 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 	<Application.Resources>
-		<ResourceDictionary>
-			<ViewModelLocator xmlns="using:LRReader.Shared.ViewModels" x:Key="Locator" />
-			<ResourceDictionary.MergedDictionaries>
-				<controls:XamlControlsResources>
-					<controls:XamlControlsResources.MergedDictionaries>
-						<ResourceDictionary Source="ms-appx:///Resources/ThemeDictionary.xaml" />
-						<ResourceDictionary Source="ms-appx:///Resources/Converters.xaml" />
-						<ResourceDictionary Source="ms-appx:///Resources/WinUITemplates.xaml" />
-						<Templates xmlns="using:LRReader.UWP.Resources" />
-					</controls:XamlControlsResources.MergedDictionaries>
-				</controls:XamlControlsResources>
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
+		<controls:XamlControlsResources>
+			<controls:XamlControlsResources.MergedDictionaries>
+				<ResourceDictionary>
+					<ViewModelLocator xmlns="using:LRReader.Shared.ViewModels" x:Key="Locator" />
+				</ResourceDictionary>
+				<ResourceDictionary Source="ms-appx:///Resources/ThemeDictionary.xaml" />
+				<ResourceDictionary Source="ms-appx:///Resources/Converters.xaml" />
+				<ResourceDictionary Source="ms-appx:///Resources/WinUITemplates.xaml" />
+				<Templates xmlns="using:LRReader.UWP.Resources" />
+			</controls:XamlControlsResources.MergedDictionaries>
+		</controls:XamlControlsResources>
 	</Application.Resources>
 
 </Application>

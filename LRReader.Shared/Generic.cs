@@ -14,6 +14,8 @@ public static class AsyncActionExtensions
 	}
 }
 
+// Disable reflection mode
+// <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
 public static class JsonSettings
 {
 	public static JsonSerializerOptions Options = new() {
