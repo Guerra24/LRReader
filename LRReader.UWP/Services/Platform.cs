@@ -51,39 +51,6 @@ namespace LRReader.UWP.Services
 			Tabs = tabs;
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
-				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
-
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
-			{
-				var device = new EasClientDeviceInformation();
-
-				if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Core" || (!string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo")))
-				{
-					var winEnv = WindowingEnvironment.FindAll(WindowingEnvironmentKind.Overlapped).FirstOrDefault();
-					if (winEnv != null)
-					{
-						var regions = winEnv.GetDisplayRegions();
-						if (regions.Count == 2 && regions[0].WorkAreaSize.Width == regions[1].WorkAreaSize.Width)
-						{
-							_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width; // WCOS reports this in virtual size
-							if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
-							{
-								// Desktop returns regions as raw pixels so convert them to virtual size
-								var dpi = DisplayInformation.GetForCurrentView();
-								_dualScreenWidth /= dpi.RawPixelsPerViewPixel;
-								//Debug.WriteLine(_dualScreenWidth);
-								// dpi.ScreenWidthInRawPixels on WCOS returns the sum of width of both displays also in virtual size
-								//Debug.WriteLine(dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel);
-							}
-							_dualScreen = true;
-						}
-					}
-				}
-			}
-
-			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
-
 			MapPageToType(Pages.Loading, typeof(LoadingPage));
 			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
 			MapPageToType(Pages.HostTab, typeof(HostTabPage));
@@ -121,6 +88,39 @@ namespace LRReader.UWP.Services
 
 			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });
+
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
+				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
+
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+			{
+				var device = new EasClientDeviceInformation();
+
+				if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Core" || (!string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo")))
+				{
+					var winEnv = WindowingEnvironment.FindAll(WindowingEnvironmentKind.Overlapped).FirstOrDefault();
+					if (winEnv != null)
+					{
+						var regions = winEnv.GetDisplayRegions();
+						if (regions.Count == 2 && regions[0].WorkAreaSize.Width == regions[1].WorkAreaSize.Width)
+						{
+							_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width; // WCOS reports this in virtual size
+							if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+							{
+								// Desktop returns regions as raw pixels so convert them to virtual size
+								var dpi = DisplayInformation.GetForCurrentView();
+								_dualScreenWidth /= dpi.RawPixelsPerViewPixel;
+								//Debug.WriteLine(_dualScreenWidth);
+								// dpi.ScreenWidthInRawPixels on WCOS returns the sum of width of both displays also in virtual size
+								//Debug.WriteLine(dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel);
+							}
+							_dualScreen = true;
+						}
+					}
+				}
+			}
+
+			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
 
 			Window.Current.Activated += Current_Activated;
 		}

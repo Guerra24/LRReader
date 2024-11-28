@@ -52,7 +52,8 @@ namespace LRReader.UWP
 					options.Environment = "stable";
 #endif
 					options.AutoSessionTracking = true;
-					options.Release = Platform.Version.ToString();
+					var ver = Package.Current.Id.Version;
+					options.Release = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
 					options.CacheDirectoryPath = Files.Local;
 				});
 				SentrySdk.ConfigureScope(scope =>
@@ -108,9 +109,6 @@ namespace LRReader.UWP
 				root.UpdateThemeColors();
 				var platform = (UWPlatformService)Platform;
 				platform.SetRoot(root);
-
-				/*if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
-					this.Resources["SymbolThemeFontFamily"] = new FontFamily("Segoe Fluent Icons");*/
 
 				((SolidColorBrush)this.Resources["CustomReaderBackground"]).Color = ColorHelper.ToColor(Settings.ReaderBackground);
 
