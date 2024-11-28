@@ -19,7 +19,7 @@ namespace LRReader.UWP.Services
 
 		public UWPImageProcessingService()
 		{
-			TaskFactory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(Math.Clamp(Environment.ProcessorCount / 2, 1, 4)));
+			TaskFactory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(Math.Clamp(Environment.ProcessorCount / 4, 1, 4)));
 		}
 
 		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default)
@@ -47,8 +47,10 @@ namespace LRReader.UWP.Services
 						{
 							unsafe
 							{
+								var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
 								var decoder = Jxl.JxlDecoderCreate(null);
-								// Find a way to use the parallel runner due to low end cpus
+								Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
+
 								try
 								{
 									fixed (byte* input = bytes)
@@ -64,6 +66,8 @@ namespace LRReader.UWP.Services
 
 										var info = new JxlBasicInfo();
 										Jxl.JxlDecoderGetBasicInfo(decoder, &info);
+
+										JxlThreads.JxlResizableParallelRunnerSetThreads(runner, (UIntPtr)JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
 
 										status = Jxl.JxlDecoderProcessInput(decoder);
 
@@ -109,6 +113,7 @@ namespace LRReader.UWP.Services
 								}
 								finally
 								{
+									JxlThreads.JxlResizableParallelRunnerDestroy(runner);
 									Jxl.JxlDecoderDestroy(decoder);
 								}
 							}
