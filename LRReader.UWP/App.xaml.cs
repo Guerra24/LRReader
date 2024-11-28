@@ -31,51 +31,50 @@ namespace LRReader.UWP
 		public App()
 		{
 			Init.EarlyInit();
-			SentrySdk.Init(static options =>
+			if (Settings.CrashReporting)
 			{
-				options.Dsn = "";
-				options.Debug = true;
-				options.DiagnosticLevel = SentryLevel.Debug;
-				options.TracesSampleRate = 1.0;
-				options.ProfilesSampleRate = 1.0f;
-				options.IsGlobalModeEnabled = true;
 #if !DEBUG
+				SentrySdk.Init(options =>
+				{
+					options.Dsn = Secrets.SentryDsn;
+					options.IsGlobalModeEnabled = true;
 #if SIDELOAD
-				options.Distribution = "sideload";
-				options.Environment = "stable";
+					options.Distribution = "sideload";
+					options.Environment = "stable";
 #elif NIGHTLY
-				options.Distribution = "sideload";
-				options.Environment = "nightly";
+					options.Distribution = "sideload";
+					options.Environment = "nightly";
 #else
-				options.Distribution = "store";
-				options.Environment = "stable";
+					options.Distribution = "store";
+					options.Environment = "stable";
 #endif
-#endif
-				options.AutoSessionTracking = true;
-				options.Release = Platform.Version.ToString();
-				options.CacheDirectoryPath = Files.Local;
-			});
-			SentrySdk.ConfigureScope(scope =>
-			{
-				EasClientDeviceInformation deviceInfo = new();
-				var versionInfo = AnalyticsInfo.VersionInfo;
-				ulong v = ulong.Parse(versionInfo.DeviceFamilyVersion);
-				ulong v1 = (v & 0xFFFF000000000000L) >> 48;
-				ulong v2 = (v & 0x0000FFFF00000000L) >> 32;
-				ulong v3 = (v & 0x00000000FFFF0000L) >> 16;
-				ulong v4 = (v & 0x000000000000FFFFL);
+					options.AutoSessionTracking = true;
+					options.Release = Platform.Version.ToString();
+					options.CacheDirectoryPath = Files.Local;
+				});
+				SentrySdk.ConfigureScope(scope =>
+				{
+					EasClientDeviceInformation deviceInfo = new();
+					var versionInfo = AnalyticsInfo.VersionInfo;
+					ulong v = ulong.Parse(versionInfo.DeviceFamilyVersion);
+					ulong v1 = (v & 0xFFFF000000000000L) >> 48;
+					ulong v2 = (v & 0x0000FFFF00000000L) >> 32;
+					ulong v3 = (v & 0x00000000FFFF0000L) >> 16;
+					ulong v4 = (v & 0x000000000000FFFFL);
 
-				if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 12))
-					scope.Contexts.OperatingSystem.Name = versionInfo.ProductName;
-				else
-					scope.Contexts.OperatingSystem.Name = deviceInfo.OperatingSystem;
-				scope.Contexts.OperatingSystem.Version = $"{v1}.{v2}.{v3}";
-				scope.Contexts.OperatingSystem.Build = $"{v4}";
-				scope.Contexts.Device.Architecture = RuntimeInformation.OSArchitecture.ToString();
-				scope.Contexts.Device.ProcessorCount = Environment.ProcessorCount;
-				scope.Contexts.Device.Family = versionInfo.DeviceFamily;
-				scope.Contexts.Device.Model = string.IsNullOrEmpty(deviceInfo.SystemSku) ? deviceInfo.SystemProductName : deviceInfo.SystemSku;
-			});
+					if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 12))
+						scope.Contexts.OperatingSystem.Name = versionInfo.ProductName;
+					else
+						scope.Contexts.OperatingSystem.Name = deviceInfo.OperatingSystem;
+					scope.Contexts.OperatingSystem.Version = $"{v1}.{v2}.{v3}";
+					scope.Contexts.OperatingSystem.Build = $"{v4}";
+					scope.Contexts.Device.Architecture = RuntimeInformation.OSArchitecture.ToString();
+					scope.Contexts.Device.ProcessorCount = Environment.ProcessorCount;
+					scope.Contexts.Device.Family = versionInfo.DeviceFamily;
+					scope.Contexts.Device.Model = string.IsNullOrEmpty(deviceInfo.SystemSku) ? deviceInfo.SystemProductName : deviceInfo.SystemSku;
+				});
+#endif
+			}
 			this.UnhandledException += App_UnhandledException;
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;

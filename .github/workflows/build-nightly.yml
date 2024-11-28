@@ -85,7 +85,7 @@ jobs:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
         CERT_GPG: ${{ secrets.CERT_GPG }}
         CERT_BASE64: ${{ secrets.CERT_BASE64 }}
-        APPCENTER_APP_ID: ${{ secrets.APPCENTER_APP_ID }}
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "$(Get-Location)/LRReader.UWP/Package.appxmanifest" -Force
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
@@ -97,10 +97,19 @@ jobs:
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
+    - name: Setup sentry-cli
+      uses: matbour/setup-sentry-cli@v2
+      with:
+        version: 2.39.1
+        token: ${{ secrets.SENTRY_TOKEN }}
+        organization: ${{ secrets.SENTRY_ORG }}
+        project: ${{ secrets.SENTRY_PROJECT }}
     - name: Upload Symbols
       run: |
         Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
-        Remove-Item $(Get-ChildItem *.appxsym -File)
+        Get-ChildItem *.appxsym -File | Rename-Item -NewName { [IO.Path]::ChangeExtension($_.name, "zip") }
+        foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --wait $file }
+        Remove-Item $(Get-ChildItem *.zip -File)
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:

@@ -7,7 +7,6 @@ using LRReader.UWP.Views.Controls;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -43,12 +42,14 @@ namespace LRReader.UWP.Views.Content.Settings
 		private async void ModernBasePage_Loaded(object sender, RoutedEventArgs e)
 		{
 			VerticalTabs.Toggled += ToggleSwitch_Toggled;
+			CrashReport.Toggled += TrackCrashes_Toggled;
 			await Data.UpdateThumbnailCacheSize();
 		}
 
 		private void ModernBasePage_Unloaded(object sender, RoutedEventArgs e)
 		{
 			VerticalTabs.Toggled -= ToggleSwitch_Toggled;
+			CrashReport.Toggled -= TrackCrashes_Toggled;
 		}
 
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -56,19 +57,15 @@ namespace LRReader.UWP.Views.Content.Settings
 			Data.SortByIndex = -1;
 		}
 
-		private void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
+		private async void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
 		{
-			if (!Data.SettingsManager.Profile.AcceptedDisclaimer)
+			var result = await Service.Platform.OpenGenericDialog("Toggle error and crash logs reporting?", "Yes, restart", closebutton: "Restart later", content: "The app needs to restart to apply changes");
+			if (result == Shared.Models.IDialogResult.Primary)
 			{
-				var value = ((ToggleSwitch)sender).IsOn;
-				Data.SettingsManager.CrashReporting = value;
-				//await Crashes.SetEnabledAsync(value);
+				var res = await CoreApplication.RequestRestartAsync("");
+				if (res == AppRestartFailureReason.NotInForeground || res == AppRestartFailureReason.Other)
+					WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to restart application", "Please restart manually.", 0, NotificationSeverity.Error));
 			}
-		}
-
-		private void TrackCrashes_Loading(FrameworkElement sender, object args)
-		{
-			//((ToggleSwitch)sender).IsOn = await Crashes.IsEnabledAsync();
 		}
 
 		private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)

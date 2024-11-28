@@ -7,4 +7,4 @@ The App does not collect any user information in any way.
 The App does not track usage in any way.
 
 ### Error and crash reports
-AppCenter is used to collect logs without any user information. You may opt-out by disabling collection in the app settings.
+Sentry is used to collect logs without any user information. You may opt-out by disabling collection in the app settings.
