@@ -48,6 +48,7 @@ namespace LRReader.UWP.Services
 							unsafe
 							{
 								var decoder = Jxl.JxlDecoderCreate(null);
+								// Find a way to use the parallel runner due to low end cpus
 								try
 								{
 									fixed (byte* input = bytes)
