@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
 using System.Security;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
@@ -12,8 +11,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Core;
-using Windows.Security.ExchangeActiveSyncProvisioning;
-using Windows.System.Profile;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -31,7 +29,9 @@ namespace LRReader.UWP
 		public App()
 		{
 			Init.EarlyInit();
-			if (Settings.CrashReporting)
+			// Manually read setting to prevent services from initializing too early
+			var crashReporting = ApplicationData.Current.LocalSettings.Values["CrashReporting"];
+			if ((bool)(crashReporting ?? true))
 			{
 #if !DEBUG
 				SentrySdk.Init(options =>
