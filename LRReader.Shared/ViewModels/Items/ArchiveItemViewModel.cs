@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using KeyedSemaphores;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
@@ -22,6 +22,8 @@ namespace LRReader.Shared.ViewModels.Items
 
 		private Guid _key = Guid.NewGuid();
 
+		private CancellationTokenSource Cts = new();
+
 		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives, ApiService api, PlatformService platform, TabsService tabs, ImageProcessingService imageProcessing) : base(settings, archives, api, platform, tabs)
 		{
 			ImageProcessing = imageProcessing;
@@ -40,9 +42,21 @@ namespace LRReader.Shared.ViewModels.Items
 
 		public async Task Phase2(int decodePixelWidth = 0, int decodePixelHeight = 0)
 		{
-			var img = await Service.Images.GetThumbnailCached(Archive.arcid);
-			using (var key = await KeyedSemaphore.LockAsync($"ArchiveThumb_{_key}"))
-				Thumbnail = await ImageProcessing.ByteToBitmap(img, decodePixelWidth, decodePixelHeight, image: Thumbnail);
+			Cts.Cancel();
+			Cts.Dispose();
+			Cts = new();
+			var token = Cts.Token;
+			await Hide.InvokeAsync(false);
+
+			var img = await Service.Images.GetThumbnailCached(Archive.arcid, cancellationToken: token);
+
+			if (token.IsCancellationRequested)
+				return;
+
+			Thumbnail = await ImageProcessing.ByteToBitmap(img, decodePixelWidth, decodePixelHeight, image: Thumbnail, cancellationToken: token);
+
+			if (token.IsCancellationRequested)
+				return;
 
 			if (Thumbnail == null)
 				MissingImage = true;

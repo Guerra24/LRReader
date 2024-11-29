@@ -116,6 +116,18 @@
           "System.Memory": "4.5.5"
         }
       },
+      "Microsoft.Net.Native.Compiler": {
+        "type": "Direct",
+        "requested": "[2.2.12-rel-33220-00, )",
+        "resolved": "2.2.12-rel-33220-00",
+        "contentHash": "iZCbN7n/WKtqW/PNTx0D0iwxIsQszk0PamMk54uRPpKXjuNSVQhO9AZnykKQeLPf1vf5oVR7Gc60WjLIgZXs0Q==",
+        "dependencies": {
+          "runtime.win10-arm.Microsoft.Net.Native.Compiler": "2.2.12-rel-33220-00",
+          "runtime.win10-arm64.Microsoft.Net.Native.Compiler": "2.2.12-rel-33220-00",
+          "runtime.win10-x64.Microsoft.Net.Native.Compiler": "2.2.12-rel-33220-00",
+          "runtime.win10-x86.Microsoft.Net.Native.Compiler": "2.2.12-rel-33220-00"
+        }
+      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -316,17 +328,6 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
-      "Microsoft.Net.Native.Compiler": {
-        "type": "Transitive",
-        "resolved": "2.2.12-rel-31116-00",
-        "contentHash": "DuANSYEBO7qcIeqzI1mShJMweuQVBycbCRUW6mIb1QxorSiWLSWEJZNv/X7TdW3dcjfZdZFVsEWDCnJUolIPrQ==",
-        "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
-          "runtime.win10-arm64.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
-          "runtime.win10-x64.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
-          "runtime.win10-x86.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00"
-        }
-      },
       "Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
         "resolved": "2.2.14",
@@ -375,16 +376,16 @@
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.12-rel-31116-00",
-        "contentHash": "JAieAWjpAsAKq2OLgJpKHafrk1gxHTq0nSie1sEKAYjnlBhVIx17ypAX1NLhjMJZ3TkqhktOGm/2r0qTXBAqWg==",
+        "resolved": "2.2.12-rel-33220-00",
+        "contentHash": "VD3d8HFgTE6hs8t2qoChgYk2ALzQk2FYI+ndOzgiyQ/xObPGmIyMCu/tCuARIGrsIilGyAq+gLfCeUwaTIurSA==",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
+          "runtime.win10-arm.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-33220-00"
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.8-rel-31116-00",
-        "contentHash": "bdNrkqMK7TUyqJjMJj9sXFpTtJg5+cKmGTPERymWldQ7/OxzoA1VGV4nFFRS4ciycxIqoA9amP0sr5SdTaSjDg=="
+        "resolved": "2.2.8-rel-33220-00",
+        "contentHash": "8sx/xXw3DvL+YIMF/Zz65FJFYCPTzoXnIsOxy0VYYVRTCPXfKN/ya5LJHHNfH2kneAx6ra1ooJpjMj16E2/9XA=="
       },
       "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
@@ -393,29 +394,29 @@
       },
       "runtime.win10-arm64.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.12-rel-31116-00",
-        "contentHash": "Rs9fywhVdnJTqegZnSXJ2v0w7oX3xyZ5P1+v9wNlm7mkSb+dEcxgXwrkqTJe9shmLUOOFz8Dm37LbtIPHNzR1A==",
+        "resolved": "2.2.12-rel-33220-00",
+        "contentHash": "ucgVkMzmjXM+oDEYkifpv90s7RQby+BeZ9CDoruXkQdDtzuvRPGLLL1Y8oR9nPABXnpgWqlhlhCv0gCWhF1ljg==",
         "dependencies": {
-          "runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
+          "runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-33220-00"
         }
       },
       "runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.8-rel-31116-00",
-        "contentHash": "mNZPhhxOKUQSgYuBDezHPYFMwP9LYDmVEEHl7bTVAPbfcnxPHdSv6WwJglYlwQRQh+3NSgYRW4WcTxpETkD0AA=="
+        "resolved": "2.2.8-rel-33220-00",
+        "contentHash": "KvBrA0U++41HHCWkfrKVav0tOcqb32A83Il9jWaNYfpmGYltSSuE+wDQWyyhpwGDXvQreCLjiSDXcX/MlL1iqQ=="
       },
       "runtime.win10-x64.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.12-rel-31116-00",
-        "contentHash": "dAJj40m9Tm6AQ/P7iQxuEN8sVvj6v9TDyulcP7ayvp+FkpR8VyGZWJMSxaMEjr1qVeMRuMCv1JV5DLMCWZvisg==",
+        "resolved": "2.2.12-rel-33220-00",
+        "contentHash": "vrsXCdKuYs42Ibl6p/VVgAy3asuSGiWXEaIeXucis65YrxsWfZMgQa5TiP/66n+w4ameDq4VPf+ssIrsHKUsrg==",
         "dependencies": {
-          "runtime.win10-x64.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
+          "runtime.win10-x64.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-33220-00"
         }
       },
       "runtime.win10-x64.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.8-rel-31116-00",
-        "contentHash": "kXqhwE+XmgRn9Z1QWkGfIcDKg/pCLJcbRL5w8NWT6jliAx81sjHzquDut3ljPwOC856AUI2WMnBopu0Bf/m4BQ=="
+        "resolved": "2.2.8-rel-33220-00",
+        "contentHash": "QGpPKz+cK+P+pp4eVWwzgHhZ6MioW1g3e98iI6Z1kXw1TFff95488LVH9QZ2KYpVucoWs8Av9TA6ABEIGtKi3w=="
       },
       "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
@@ -424,16 +425,16 @@
       },
       "runtime.win10-x86.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.12-rel-31116-00",
-        "contentHash": "9T8n/l5Ny4rOlL4yGs81wy4AzypMhUgrrtPBqlv46QbKWhHf44EpFKfI6JU+MkJbSh7mZYywBEfmivT0v6gnNA==",
+        "resolved": "2.2.12-rel-33220-00",
+        "contentHash": "Kexbn9dOswgCQ5cNXdczXS0Up8KH7cA48U7aTkAfAUtZX6xJeurmpJ0zdMVgwmR/3e1ZUzdrtIQqm88TWrVrXA==",
         "dependencies": {
-          "runtime.win10-x86.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
+          "runtime.win10-x86.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-33220-00"
         }
       },
       "runtime.win10-x86.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.8-rel-31116-00",
-        "contentHash": "5RGA27cl3z0lf9zsctLBjW2GQoGYeBrg8pesqWLQnb1Ch8q8IZ6pyOwWFUsnXGuYW59OyCfoQGzHFq5Q/73EiQ=="
+        "resolved": "2.2.8-rel-33220-00",
+        "contentHash": "Lg7Gjww1ePCU80USd+hOUWZKceVoE3ErFfo+elwS60jeghip8YGRh7uiebts4dJgj+Mhl6qk0QIeDvM4wKcK+A=="
       },
       "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",

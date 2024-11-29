@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Caching;
 using KeyedSemaphores;
@@ -48,7 +49,7 @@ public class ImagesService : IService
 				imagesSizeCache.Clear();
 				thumbnailsCache.Clear();
 				var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-				files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14)).ToList().ForEach(file => file.Delete());
+				files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14) || file.Length == 0).ToList().ForEach(file => file.Delete());
 				var directories = thumbnailCacheDirectory.GetDirectories();
 				foreach (var dir in directories)
 				{
@@ -107,15 +108,17 @@ public class ImagesService : IService
 		}
 	}
 
-	public async Task<byte[]?> GetThumbnailCached(string? id, int page = 0, bool forced = false, bool ignoreCache = false)
+	public async Task<byte[]?> GetThumbnailCached(string? id, int page = 0, bool forced = false, bool ignoreCache = false, CancellationToken cancellationToken = default)
 	{
 		if (string.IsNullOrEmpty(id))
 			return null;
 		var thumbKey = $"{id}.{page}";
 		if (ignoreCache)
-			return await GetThumbnailRaw(id!, page).ConfigureAwait(false);
+			return await GetThumbnailRaw(id!, page, cancellationToken).ConfigureAwait(false);
 		using (var key = await KeyedSemaphore.LockAsync(thumbKey).ConfigureAwait(false))
 		{
+			if (cancellationToken.IsCancellationRequested)
+				return null;
 			if (thumbnailsCache.TryGet(thumbKey, out var data) && !forced)
 			{
 				return data;
@@ -125,6 +128,8 @@ public class ImagesService : IService
 				var path = $"{thumbnailCacheDirectory.FullName}/{id!.Substring(0, 2)}/{id}/{page}.cache";
 				if (await Task.Run(() => File.Exists(path)).ConfigureAwait(false) && !forced)
 				{
+					if (cancellationToken.IsCancellationRequested)
+						return null;
 					data = await Files.GetFileBytes(path).ConfigureAwait(false);
 					/*if (data.Length == 55876)
 						using (var md5 = System.Security.Cryptography.MD5.Create())
@@ -140,9 +145,12 @@ public class ImagesService : IService
 				}
 				else
 				{
-					data = await GetThumbnailRaw(id, page).ConfigureAwait(false);
-					if (data == null)
+					data = await GetThumbnailRaw(id, page, cancellationToken).ConfigureAwait(false);
+					if (data == null || data.Length == 0)
 						return null;
+					if (cancellationToken.IsCancellationRequested)
+						return null;
+					// While overloaded the api might return ok but without any content
 					//if (data.Length == 55876)
 					//	using (var md5 = System.Security.Cryptography.MD5.Create())
 					//		if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
@@ -156,15 +164,20 @@ public class ImagesService : IService
 		}
 	}
 
-	private async Task<byte[]?> GetThumbnailRaw(string id, int page = 0)
+	private async Task<byte[]?> GetThumbnailRaw(string id, int page = 0, CancellationToken cancellationToken = default)
 	{
-		var data = await ArchivesProvider.GetThumbnail(id, true, page).ConfigureAwait(false);
-		if (data == null)
-			return null;
-		if (data.Thumbnail != null)
-			return data.Thumbnail;
-		if (data.Job != null && await data.Job.WaitForMinionJob().ConfigureAwait(false))
-			return await GetThumbnailRaw(id, page).ConfigureAwait(false);
+		while (true)
+		{
+			if (cancellationToken.IsCancellationRequested)
+				return null;
+			var data = await ArchivesProvider.GetThumbnail(id, true, page).ConfigureAwait(false);
+			if (data == null)
+				return null;
+			if (data.Thumbnail != null)
+				return data.Thumbnail;
+			if (data.Job != null && !await data.Job.WaitForMinionJob(cancellationToken).ConfigureAwait(false))
+				break;
+		}
 		return null;
 	}
 

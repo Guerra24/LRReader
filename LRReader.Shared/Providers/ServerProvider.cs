@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using LRReader.Shared.Models.Main;
 using RestSharp;
@@ -79,10 +80,12 @@ namespace LRReader.Shared.Providers
 	public static class MinionExtentions
 	{
 
-		public static async Task<bool> WaitForMinionJob<T>(this T minionJob) where T : MinionJob
+		public static async Task<bool> WaitForMinionJob<T>(this T minionJob, CancellationToken cancellationToken = default) where T : MinionJob
 		{
 			while (true)
 			{
+				if (cancellationToken.IsCancellationRequested)
+					return false;
 				var job = await ServerProvider.GetMinionStatus(minionJob.job).ConfigureAwait(false);
 				if (job == null || job.state == null)
 					return false;

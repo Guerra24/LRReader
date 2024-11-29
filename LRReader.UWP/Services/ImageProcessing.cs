@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using JxlNet;
 using LRReader.Shared.Internal;
@@ -22,7 +23,7 @@ namespace LRReader.UWP.Services
 			TaskFactory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(Math.Clamp(Environment.ProcessorCount / 4, 1, 4)));
 		}
 
-		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default)
+		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default, CancellationToken cancellationToken = default)
 		{
 			if (bytes == null)
 				return null;
@@ -43,16 +44,21 @@ namespace LRReader.UWP.Services
 					using (var converted = new InMemoryRandomAccessStream())
 					{
 						var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
+						if (cancellationToken.IsCancellationRequested)
+							return null;
 						var ok = await TaskFactory.StartNew(() =>
 						{
+							if (cancellationToken.IsCancellationRequested)
+								return false;
 							unsafe
 							{
 								var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
 								var decoder = Jxl.JxlDecoderCreate(null);
 								Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
-
 								try
 								{
+									if (cancellationToken.IsCancellationRequested)
+										return false;
 									fixed (byte* input = bytes)
 									{
 										Jxl.JxlDecoderSetInput(decoder, input, (UIntPtr)bytes.Length);
@@ -61,6 +67,8 @@ namespace LRReader.UWP.Services
 
 										var status = Jxl.JxlDecoderProcessInput(decoder);
 
+										if (cancellationToken.IsCancellationRequested)
+											return false;
 										if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
 											return false;
 
@@ -71,6 +79,8 @@ namespace LRReader.UWP.Services
 
 										status = Jxl.JxlDecoderProcessInput(decoder);
 
+										if (cancellationToken.IsCancellationRequested)
+											return false;
 										if (status != JxlDecoderStatus.JXL_DEC_FRAME)
 											return false;
 
@@ -95,10 +105,15 @@ namespace LRReader.UWP.Services
 												return false;
 											}
 
+											if (cancellationToken.IsCancellationRequested)
+												return false;
+
 											Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (UIntPtr)(buffer.Length * sizeof(byte)));
 
 											status = Jxl.JxlDecoderProcessInput(decoder);
 
+											if (cancellationToken.IsCancellationRequested)
+												return false;
 											if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
 												return false;
 
@@ -121,6 +136,8 @@ namespace LRReader.UWP.Services
 						});
 						if (ok)
 						{
+							if (cancellationToken.IsCancellationRequested)
+								return null;
 							await encoder.FlushAsync();
 							await image.SetSourceAsync(converted);
 						}
@@ -132,6 +149,8 @@ namespace LRReader.UWP.Services
 				}
 				else
 				{
+					if (cancellationToken.IsCancellationRequested)
+						return null;
 					using var ms = new MemoryStream(bytes);
 					await image.SetSourceAsync(ms.AsRandomAccessStream());
 				}

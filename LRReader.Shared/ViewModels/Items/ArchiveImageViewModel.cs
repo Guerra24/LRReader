@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using KeyedSemaphores;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 
@@ -39,6 +39,8 @@ namespace LRReader.Shared.ViewModels.Items
 
 		private Guid _key = Guid.NewGuid();
 
+		private CancellationTokenSource Cts = new();
+
 		public ArchiveImageViewModel(PlatformService platform, ImagesService images, ImageProcessingService imageProcessing)
 		{
 			Platform = platform;
@@ -59,6 +61,7 @@ namespace LRReader.Shared.ViewModels.Items
 
 		public async Task Phase2()
 		{
+			await Hide.InvokeAsync(false);
 			if (!HideOverlay)
 				Page = Set.Page.ToString();
 			if (!HideOverlay && ShowExtraDetails)
@@ -71,14 +74,27 @@ namespace LRReader.Shared.ViewModels.Items
 
 		public async Task Phase3()
 		{
-			var img = await Images.GetThumbnailCached(Set.Id, Set.Page);
-			using (var key = await KeyedSemaphore.LockAsync($"PageThumb_{_key}"))
-				Thumbnail = await ImageProcessing.ByteToBitmap(img, decodeHeight: 275, image: Thumbnail);
+			Cts.Cancel();
+			Cts.Dispose();
+			Cts = new();
+			var token = Cts.Token;
+			await Hide.InvokeAsync(false);
+
+			var img = await Images.GetThumbnailCached(Set.Id, Set.Page, cancellationToken: token);
+
+			if (token.IsCancellationRequested)
+				return;
+
+			Thumbnail = await ImageProcessing.ByteToBitmap(img, decodeHeight: 275, image: Thumbnail, cancellationToken: token);
+
+			if (token.IsCancellationRequested)
+				return;
 
 			if (Thumbnail != null)
 				await Show.InvokeAsync(Platform.AnimationsEnabled);
 			else
 				MissingImage = true;
+
 		}
 
 		public async Task LoadImage(ImagePageSet set)

@@ -32,7 +32,7 @@ namespace LRReader.Shared.Services
 				return false;
 			var options = new RestClientOptions(profile.ServerAddress) { UserAgent = "LRReader" };
 			Client?.Dispose();
-			Client = new RestClient(options, useClientFactory: true);
+			Client = new RestClient(options);
 			if (!string.IsNullOrEmpty(profile.ServerApiKey))
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
