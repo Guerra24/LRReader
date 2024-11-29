@@ -21,12 +21,12 @@ public class BoolConverter : JsonConverter<bool>
 
 		if (reader.TokenType == JsonTokenType.String)
 		{
-			return reader.GetString() switch
+			return reader.GetString()!.ToLower() switch
 			{
 				"0" => false,
 				"1" => true,
-				"True" => true,
-				"False" => false,
+				"true" => true,
+				"false" => false,
 				_ => false
 			};
 		}
@@ -88,12 +88,12 @@ public class ArchiveNewConverter : JsonConverter<bool>
 
 		if (reader.TokenType == JsonTokenType.String)
 		{
-			return reader.GetString() switch
+			return reader.GetString()!.ToLower() switch
 			{
 				"none" => false,
 				"block" => true,
-				"True" => true,
-				"False" => false,
+				"true" => true,
+				"false" => false,
 				_ => false
 			};
 		}
