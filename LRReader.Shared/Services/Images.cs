@@ -166,8 +166,10 @@ public class ImagesService : IService
 
 	private async Task<byte[]?> GetThumbnailRaw(string id, int page = 0, CancellationToken cancellationToken = default)
 	{
-		while (true)
+		int retries = 20;
+		while (retries >= 0)
 		{
+			retries--;
 			if (cancellationToken.IsCancellationRequested)
 				return null;
 			var data = await ArchivesProvider.GetThumbnail(id, true, page).ConfigureAwait(false);

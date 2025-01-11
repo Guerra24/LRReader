@@ -90,10 +90,9 @@ namespace LRReader.Shared.ViewModels.Items
 			if (token.IsCancellationRequested)
 				return;
 
-			if (Thumbnail != null)
-				await Show.InvokeAsync(Platform.AnimationsEnabled);
-			else
+			if (Thumbnail == null)
 				MissingImage = true;
+			await Show.InvokeAsync(Platform.AnimationsEnabled);
 
 		}
 
@@ -125,12 +124,11 @@ namespace LRReader.Shared.ViewModels.Items
 				Resolution = $"{size.Width}x{size.Height}";
 			}
 
-			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page), decodeHeight: 275, image: Thumbnail);
+			Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Set.Id, Set.Page, forced), decodeHeight: 275, image: Thumbnail);
 
-			if (Thumbnail != null)
-				await Show.InvokeAsync(Platform.AnimationsEnabled);
-			else
+			if (Thumbnail == null)
 				MissingImage = true;
+			await Show.InvokeAsync(Platform.AnimationsEnabled);
 			_loading = false;
 		}
 	}

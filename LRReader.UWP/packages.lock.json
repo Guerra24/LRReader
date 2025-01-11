@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.241127-build.1823, )",
-        "resolved": "0.1.241127-build.1823",
-        "contentHash": "i8QcDR30chE7eNU9x2e30FzW28XFmzpmTv00Fh8UvtX7aYfdSQqBJoaoba+SWF9o3vfZvZkfrtGlIFQs8n2e2w==",
+        "requested": "[0.1.241129-build.1830, )",
+        "resolved": "0.1.241129-build.1830",
+        "contentHash": "JEyRm4kK46t4kXXRPfx//qpcGycB7vcvdtl8Jd05HNOwG2UNKDRRFgX/UUN3O3wo88vmZHpROfTuKNQ085DXBg==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.0.230907",
           "CommunityToolkit.Uwp.Extensions": "8.0.230907",
@@ -109,9 +109,9 @@
       },
       "Markdig": {
         "type": "Direct",
-        "requested": "[0.38.0, )",
-        "resolved": "0.38.0",
-        "contentHash": "zKy3JFjQvr1wbuMtbfcZVjNNCIqHxSCjGMq/CBcyNsY/MPsxqcS3o8M7CZ2kcMGGIw5LI2ZZd8rFUaFeV6SvrQ==",
+        "requested": "[0.40.0, )",
+        "resolved": "0.40.0",
+        "contentHash": "4ve14zs+gt1irldTQE3y5FLAHuzmhW7T99lAAvVipe/q2LWT/nUCO0iICb9TXGvMX6n7Z1OZroFXkdSy91rO8w==",
         "dependencies": {
           "System.Memory": "4.5.5"
         }
@@ -142,11 +142,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -179,13 +179,13 @@
       },
       "CommunityToolkit.Mvvm": {
         "type": "Transitive",
-        "resolved": "8.3.2",
-        "contentHash": "m8EolE1A0Updj68WTsZSGI6VWb6mUqHPh7QFo0kt7+JPhYMNXRS1ch8TS/oITAdcxTLrwMOp3ku1KjeG1/Zdpg==",
+        "resolved": "8.4.0",
+        "contentHash": "tqVU8yc/ADO9oiTRyTnwhFN68hCwvkliMierptWOudIAvWY1mWCh5VFh+guwHJmpMwfg0J0rY+yyd5Oy7ty9Uw==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
           "System.ComponentModel.Annotations": "5.0.0",
-          "System.Memory": "4.5.5",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+          "System.Memory": "4.6.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.1.0"
         }
       },
       "KeyedSemaphores": {
@@ -443,8 +443,8 @@
       },
       "Sentry": {
         "type": "Transitive",
-        "resolved": "4.13.0",
-        "contentHash": "Wfw3M1WpFcrYaGzPm7QyUTfIOYkVXQ1ry6p4WYjhbLz9fPwV23SGQZTFDpdox67NHM0V0g1aoQ4YKLm4ANtEEg==",
+        "resolved": "5.0.1",
+        "contentHash": "h1rKFYXx58dUtAcsWpTlJGHhG1bpy0JjGh8b2sRKw2wdk3NKCGd8KTLSWnzIqIjjZP2PNeUZFUyDeWVKs8Dk2A==",
         "dependencies": {
           "System.Reflection.Metadata": "5.0.0",
           "System.Text.Json": "6.0.10"
@@ -576,13 +576,13 @@
         "type": "Project",
         "dependencies": {
           "Caching.dll": "[2.0.0.1, )",
-          "CommunityToolkit.Mvvm": "[8.3.2, )",
+          "CommunityToolkit.Mvvm": "[8.4.0, )",
           "KeyedSemaphores": "[5.0.0, )",
           "Microsoft.Extensions.DependencyInjection": "[9.0.0, )",
           "Microsoft.Extensions.Logging": "[9.0.0, )",
           "NReco.Logging.File": "[1.2.2, )",
           "RestSharp": "[112.1.0, )",
-          "Sentry": "[4.13.0, )",
+          "Sentry": "[5.0.1, )",
           "SixLabors.ImageSharp": "[2.1.9, )",
           "System.Text.Json": "[9.0.0, )"
         }
@@ -613,11 +613,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -679,11 +679,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -745,11 +745,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -811,11 +811,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -877,11 +877,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -943,11 +943,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -1009,11 +1009,11 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.6-custom.231105a, )",
-        "resolved": "2.8.6-custom.231105a",
-        "contentHash": "sY+ge7xawtnzqBTa4wDCr/K6z2kGmtWElk1R7/Mf6hARXYrQPhsgJSq82hOYAUWOVQc53cr2E5aP0j6Xu9t/jQ==",
+        "requested": "[2.8.7-prerelease.241119001, )",
+        "resolved": "2.8.7-prerelease.241119001",
+        "contentHash": "XuMfIMVLR0XpKfldmIe/cGyI+pogWMC/+hTmSpXr9HLCbeR6gmXZFjP7pHIaRGvAEbr8znMBASAPJctl3BUcUA==",
         "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
+          "Microsoft.Web.WebView2": "1.0.2849.39"
         }
       },
       "Microsoft.Web.WebView2": {

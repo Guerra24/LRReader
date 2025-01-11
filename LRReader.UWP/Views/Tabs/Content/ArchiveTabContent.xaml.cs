@@ -269,6 +269,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void RebuildReader()
 		{
+			// Reentrancy can crash here
 			int page = 0;
 			if (Data.ShowReader)
 			{

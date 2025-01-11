@@ -6,7 +6,7 @@ on:
 jobs:
   # buildAvaloniaLinuxX64:
   #   name: Build Avalonia Linux X64
-  #   runs-on: windows-2022
+  #   runs-on: windows-2025
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
   #       path: LRReader.Avalonia.Desktop/publish/linux-x64
   # buildAvaloniaMacOSX64:
   #   name: Build Avalonia macOS X64
-  #   runs-on: windows-2022
+  #   runs-on: windows-2025
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
   #       path: LRReader.Avalonia.Desktop/publish/macos-x64
   # buildAvaloniaWinX64:
   #   name: Build Avalonia Windows X64
-  #   runs-on: windows-2022
+  #   runs-on: windows-2025
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
   #       path: LRReader.Avalonia.Desktop/publish/win-x64
   buildUWP:
     name: Sideload
-    runs-on: windows-2022
+    runs-on: windows-2025
     permissions:
       packages: read
     steps:
@@ -127,7 +127,7 @@ jobs:
         path: LRReader.UWP/AppPackages
   buildInstaller:
     name: Installer
-    runs-on: windows-2022
+    runs-on: windows-2025
     permissions:
       packages: read
     strategy:

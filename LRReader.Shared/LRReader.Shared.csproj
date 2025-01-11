@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Caching.dll" Version="2.0.0.1" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
@@ -23,7 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="RestSharp" Version="112.1.0" />
-    <PackageReference Include="Sentry" Version="4.13.0" />
+    <PackageReference Include="Sentry" Version="5.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.9" />
     <PackageReference Include="System.Text.Json" Version="9.0.0" />
   </ItemGroup>
