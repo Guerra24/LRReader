@@ -363,6 +363,7 @@
     <Content Include="..\LICENSE.md">
       <Link>LICENSE.md</Link>
     </Content>
+    <Content Include="CertInstaller.exe" Visible="False" Condition="Exists('CertInstaller.exe')" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -447,14 +448,15 @@
     <PackageReference Include="Microsoft.Web.WebView2">
       <Version>1.0.2903.40</Version>
     </PackageReference>
-    <PackageReference Include="TenMica">
-      <Version>1.0.0-beta</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj">
       <Project>{cb0af1c0-a296-4e1d-85b9-a564868b7c0e}</Project>
       <Name>LRReader.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj">
+      <Project>{074f295f-813d-4091-8d16-7ea1b8d7d50e}</Project>
+      <Name>LRReader.UWP.Servicing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -735,6 +737,12 @@
     <PRIResource Include="Strings\en\Settings.resw" />
     <PRIResource Include="Strings\es\Items.resw" />
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.26100.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

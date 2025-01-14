@@ -6,7 +6,8 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap uap5 mp rescap">
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap uap5 mp rescap desktop">
 
   <Identity
     Name="Guerra24.LRReader"
@@ -52,13 +53,16 @@
         <uap:Extension Category="windows.appService">
           <uap:AppService Name="KarenMonitor" />
         </uap:Extension>
+		<desktop:Extension Category="windows.fullTrustProcess" Executable="CertInstaller.exe" />
       </Extensions>
     </Application>
   </Applications>
 
   <Capabilities>
     <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="allowElevation" />
     <Capability Name="internetClient" />
-    <Capability Name="privateNetworkClientServer"/>
+    <Capability Name="privateNetworkClientServer" />
   </Capabilities>
 </Package>

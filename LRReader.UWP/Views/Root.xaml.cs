@@ -1,8 +1,4 @@
 ﻿using LRReader.Shared.Services;
-using Microsoft.UI.Xaml.Controls;
-using TenMica;
-using Windows.Foundation.Metadata;
-using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -15,14 +11,6 @@ namespace LRReader.UWP.Views
 		public Root()
 		{
 			this.InitializeComponent();
-			if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13) && AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Desktop"))
-			{
-				Background = new TenMicaBrush();
-			}
-			else
-			{
-				BackdropMaterial.SetApplyToRootOrPageBackground(this, true);
-			}
 		}
 
 		public void ChangeTheme(AppTheme theme)
@@ -31,18 +19,12 @@ namespace LRReader.UWP.Views
 			{
 				case AppTheme.System:
 					RequestedTheme = ElementTheme.Default;
-					if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13) && AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Desktop"))
-						((TenMicaBrush)Background).ThemeForced = false;
 					break;
 				case AppTheme.Dark:
 					RequestedTheme = ElementTheme.Dark;
-					if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13) && AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Desktop"))
-						((TenMicaBrush)Background).ForcedTheme = ApplicationTheme.Dark;
 					break;
 				case AppTheme.Light:
 					RequestedTheme = ElementTheme.Light;
-					if (!ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13) && AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Desktop"))
-						((TenMicaBrush)Background).ForcedTheme = ApplicationTheme.Light;
 					break;
 			}
 		}

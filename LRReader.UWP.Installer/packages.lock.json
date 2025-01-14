@@ -51,6 +51,9 @@
         "dependencies": {
           "System.Runtime.WindowsRuntime": "4.6.0"
         }
+      },
+      "lrreader.uwp.servicing": {
+        "type": "Project"
       }
     },
     ".NETFramework,Version=v4.7.2/win-arm64": {},

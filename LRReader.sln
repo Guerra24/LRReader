@@ -18,6 +18,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRReader.UWP.Installer", "L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LRReader.Avalonia.Desktop", "LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj", "{518346D5-128B-4761-B7B5-F31AA39FC63D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.UWP.Servicing", "LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj", "{074F295F-813D-4091-8D16-7EA1B8D7D50E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRReader.UWP.Servicing.CertInstaller", "LRReader.UWP.Servicing.CertInstaller\LRReader.UWP.Servicing.CertInstaller.csproj", "{CA99B4DF-22E2-432B-832D-5ED659F94F52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -70,6 +74,22 @@ Global
 		{518346D5-128B-4761-B7B5-F31AA39FC63D}.Release|ARM64.Build.0 = Release|Any CPU
 		{518346D5-128B-4761-B7B5-F31AA39FC63D}.Release|x64.ActiveCfg = Release|Any CPU
 		{518346D5-128B-4761-B7B5-F31AA39FC63D}.Release|x64.Build.0 = Release|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Debug|x64.Build.0 = Debug|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Release|ARM64.Build.0 = Release|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Release|x64.ActiveCfg = Release|Any CPU
+		{074F295F-813D-4091-8D16-7EA1B8D7D50E}.Release|x64.Build.0 = Release|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Release|ARM64.Build.0 = Release|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA99B4DF-22E2-432B-832D-5ED659F94F52}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

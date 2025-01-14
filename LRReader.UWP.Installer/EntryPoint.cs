@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
+using LRReader.UWP.Servicing;
 
 namespace LRReader.UWP.Installer
 {
@@ -15,10 +16,12 @@ namespace LRReader.UWP.Installer
 				switch (args[0])
 				{
 					case "--install-cert":
-						ok = CertUtil.InstallCertificate(Variables.CertUrl, Variables.CertThumb).GetAwaiter().GetResult();
+						ok = CertUtil.InstallCertificate(CertInfo.CertUrl, CertInfo.CertThumb).GetAwaiter().GetResult();
+						ok = CertUtil.InstallCertificate(CertInfo.CertUrlV2, CertInfo.CertThumbV2).GetAwaiter().GetResult();
 						break;
 					case "--uninstall-cert":
-						ok = CertUtil.UninstallCertificate(Variables.CertThumb);
+						ok = CertUtil.UninstallCertificate(CertInfo.CertThumb);
+						ok = CertUtil.UninstallCertificate(CertInfo.CertThumbV2);
 						break;
 				}
 				CertUtil.Close();

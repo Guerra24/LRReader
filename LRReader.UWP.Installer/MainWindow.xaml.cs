@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shell;
+using LRReader.UWP.Servicing;
 using Windows.Management.Deployment;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -64,7 +65,7 @@ namespace LRReader.UWP.Installer
 			else
 			{
 				pm = await Task.Run(() => new PackageManager());
-				CertFound = CertUtil.FindCertificate(Variables.CertThumb);
+				CertFound = CertUtil.FindCertificate(CertInfo.CertThumb) && CertUtil.FindCertificate(CertInfo.CertThumbV2);
 				var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
 				if (pkg != null && CertFound)
 				{

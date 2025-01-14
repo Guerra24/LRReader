@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo.ico" />
+    <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Costura.Fody">
@@ -42,6 +43,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
+    <ProjectReference Include="..\LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj" />
   </ItemGroup>
 </Project>

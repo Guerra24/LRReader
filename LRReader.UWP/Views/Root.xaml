@@ -5,6 +5,8 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	ActualThemeChanged="{x:Bind UpdateThemeColors}"
 	mc:Ignorable="d">
 

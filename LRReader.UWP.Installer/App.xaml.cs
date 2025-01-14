@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using LRReader.UWP.Servicing;
 
 namespace LRReader.UWP.Installer
 {
