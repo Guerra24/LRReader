@@ -34,7 +34,7 @@ namespace LRReader.UWP
 			Init.EarlyInit();
 			// Manually read setting to prevent services from initializing too early
 			var crashReporting = ApplicationData.Current.LocalSettings.Values["CrashReporting"];
-			if ((bool)(crashReporting ?? true))
+			if ((bool)(crashReporting ?? true) && Uri.IsWellFormedUriString(Secrets.SentryDsn, UriKind.Absolute))
 			{
 #if !DEBUG
 				SentrySdk.Init(options =>
