@@ -140,7 +140,10 @@ namespace LRReader.UWP.Services
 			{
 				CertUtil.Open();
 				if (ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0) && !CertUtil.FindCertificate(CertInfo.CertThumbV2))
+				{
 					await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
+					await Task.Delay(1000);
+				}
 
 				Logger.LogInformation("Source: {0}", check.Link);
 				var pm = new PackageManager();
@@ -206,7 +209,10 @@ namespace LRReader.UWP.Services
 			{
 				CertUtil.Open();
 				if (ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0) && !CertUtil.FindCertificate(CertInfo.CertThumbV2))
+				{
 					await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
+					await Task.Delay(1000);
+				}
 
 				Logger.LogInformation("Source: {0}", Current.GetAppInstallerInfo().Uri);
 				var pm = new PackageManager();
