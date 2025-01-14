@@ -363,7 +363,7 @@
     <Content Include="..\LICENSE.md">
       <Link>LICENSE.md</Link>
     </Content>
-    <Content Include="CertInstaller.exe" Visible="False" Condition="Exists('CertInstaller.exe')" />
+    <Content Include="zServicing\CertInstaller.exe" Visible="False" Condition="Exists('zServicing\CertInstaller.exe')" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
