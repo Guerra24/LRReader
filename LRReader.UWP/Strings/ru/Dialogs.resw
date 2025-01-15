@@ -304,4 +304,17 @@
   <data name="ThumbnailPicker.Dialog.Title" xml:space="preserve">
     <value>Выберите уменьшенное изображение</value>
   </data>
+  <data name="UpdateCerts.CloseButtonText" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="UpdateCerts.Content" xml:space="preserve">
+    <value>The app needs to update its code-signing certificates to keep receiving updates.
+You can skip it, but it won't be able to install further updates.</value>
+  </data>
+  <data name="UpdateCerts.PrimaryButtonText" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateCerts.Title" xml:space="preserve">
+    <value>Update certificates</value>
+  </data>
 </root>

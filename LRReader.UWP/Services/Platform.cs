@@ -23,7 +23,6 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Symbol = LRReader.Shared.Services.Symbol;
 using SymbolIconSource = Microsoft.UI.Xaml.Controls.SymbolIconSource;
@@ -155,7 +154,7 @@ namespace LRReader.UWP.Services
 			await DialogSemaphore.WaitAsync();
 			try
 			{
-				var dialog = new ContentDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
+				var dialog = new GenericDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
 				return (IDialogResult)(int)await dialog.ShowAsync();
 			}
 			finally

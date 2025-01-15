@@ -1,8 +1,15 @@
-﻿using LRReader.Shared.Services;
+﻿using System;
+using System.Threading.Tasks;
+using LRReader.Shared.Models;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Services;
+using LRReader.UWP.Servicing;
+using Sentry;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -55,6 +62,29 @@ namespace LRReader.UWP.Views.Main
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+			try
+			{
+				CertUtil.Open();
+				if (ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0) && !CertUtil.FindCertificate(CertInfo.CertThumbV2))
+				{
+					await Task.Delay(1000);
+					var res = await Service.Platform.OpenGenericDialog(
+						Service.Platform.GetLocalizedString("Dialogs/UpdateCerts/Title"),
+						Service.Platform.GetLocalizedString("Dialogs/UpdateCerts/PrimaryButtonText"),
+						closebutton: Service.Platform.GetLocalizedString("Dialogs/UpdateCerts/CloseButtonText"),
+						content: new TextBlock { Text = Service.Platform.GetLocalizedString("Dialogs/UpdateCerts/Content") });
+					if (res == IDialogResult.Primary)
+						await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
+				}
+			}
+			catch (Exception ex)
+			{
+				SentrySdk.CaptureException(ex);
+			}
+			finally
+			{
+				CertUtil.Close();
+			}
 			await ViewModel.Startup();
 		}
 

@@ -9,7 +9,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	x:Uid="/Dialogs/ThumbnailPicker/Dialog"
-	mc:Ignorable="d">
+	mc:Ignorable="d"
+	PrimaryButtonStyle="{StaticResource AccentButtonStyle}">
 
 	<ContentDialog.Resources>
 		<Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:ThumbnailPicker">

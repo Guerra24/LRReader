@@ -9,6 +9,7 @@
 	x:Uid="/Dialogs/CategoryArchive/Dialog"
 	Loaded="ContentDialog_Loaded"
 	Style="{StaticResource DefaultContentDialogStyle}"
+	PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
 	mc:Ignorable="d">
 
 	<StackPanel Spacing="5">

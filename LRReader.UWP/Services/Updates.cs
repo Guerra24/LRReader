@@ -6,13 +6,11 @@ using CommunityToolkit.WinUI.Helpers;
 using LRReader.Shared;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
-using LRReader.UWP.Servicing;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using Sentry;
 using Windows.ApplicationModel;
 using Windows.Foundation;
-using Windows.Foundation.Metadata;
 using Windows.Management.Deployment;
 using Windows.Services.Store;
 
@@ -138,13 +136,6 @@ namespace LRReader.UWP.Services
 			Logger.LogInformation("Download and install");
 			try
 			{
-				CertUtil.Open();
-				if (ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0) && !CertUtil.FindCertificate(CertInfo.CertThumbV2))
-				{
-					await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
-					await Task.Delay(1000);
-				}
-
 				Logger.LogInformation("Source: {0}", check.Link);
 				var pm = new PackageManager();
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
@@ -160,10 +151,6 @@ namespace LRReader.UWP.Services
 				SentrySdk.CaptureException(e);
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
-			}
-			finally
-			{
-				CertUtil.Close();
 			}
 		}
 	}
@@ -207,13 +194,6 @@ namespace LRReader.UWP.Services
 			Logger.LogInformation("Download and install");
 			try
 			{
-				CertUtil.Open();
-				if (ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0) && !CertUtil.FindCertificate(CertInfo.CertThumbV2))
-				{
-					await FullTrustProcessLauncher.LaunchFullTrustProcessForCurrentAppAsync();
-					await Task.Delay(1000);
-				}
-
 				Logger.LogInformation("Source: {0}", Current.GetAppInstallerInfo().Uri);
 				var pm = new PackageManager();
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
@@ -229,10 +209,6 @@ namespace LRReader.UWP.Services
 				SentrySdk.CaptureException(e);
 				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
-			}
-			finally
-			{
-				CertUtil.Close();
 			}
 		}
 	}

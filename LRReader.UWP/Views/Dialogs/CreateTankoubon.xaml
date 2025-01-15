@@ -8,6 +8,7 @@
 	x:Uid="/Dialogs/CreateTankoubon/Dialog"
 	IsPrimaryButtonEnabled="False"
 	Style="{StaticResource DefaultContentDialogStyle}"
+	PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
 	mc:Ignorable="d">
 
 	<StackPanel Spacing="10">
