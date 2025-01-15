@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -92,7 +91,7 @@ namespace LRReader.UWP.Installer
 
 			if (!CertFound)
 			{
-				var result = await LaunchAdmin("--install-cert");
+				var result = await ProcessUtil.LaunchAdmin(Assembly.GetExecutingAssembly().Location, "--install-cert");
 				if (result != 0)
 				{
 					TitleText.Visibility = Progress.Visibility = Visibility.Collapsed;
@@ -170,7 +169,7 @@ namespace LRReader.UWP.Installer
 		private async void UninstallCert_Click(object sender, RoutedEventArgs e)
 		{
 			Buttons.Visibility = Visibility.Collapsed;
-			if (await LaunchAdmin("--uninstall-cert") == -99)
+			if (await ProcessUtil.LaunchAdmin(Assembly.GetExecutingAssembly().Location, "--uninstall-cert") == -99)
 				Error.Text = "Admin permissions are required for certificate removal";
 			else
 				Close();
@@ -191,25 +190,10 @@ namespace LRReader.UWP.Installer
 					Error.Text = "Unable to uninstall, please uninstall from start menu";
 				}
 			}
-			if (await LaunchAdmin("--uninstall-cert") == -99)
+			if (await ProcessUtil.LaunchAdmin(Assembly.GetExecutingAssembly().Location, "--uninstall-cert") == -99)
 				Error.Text = "Admin permissions are required for certificate removal";
 			else
 				Close();
-		}
-
-		private async Task<int> LaunchAdmin(string command)
-		{
-			using var process = new Process();
-			process.StartInfo.Verb = "runas";
-			process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
-			process.StartInfo.Arguments = command;
-			try
-			{
-				await process.StartAndWaitForExitAsync();
-				return process.ExitCode;
-			}
-			catch (Win32Exception) { }
-			return -99;
 		}
 
 		/*private void Window_ActualThemeChanged(object sender, RoutedEventArgs e)
