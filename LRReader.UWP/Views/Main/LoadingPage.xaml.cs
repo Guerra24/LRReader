@@ -62,6 +62,7 @@ namespace LRReader.UWP.Views.Main
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+#if SIDELOAD || NIGHTLY
 			try
 			{
 				CertUtil.Open();
@@ -85,6 +86,7 @@ namespace LRReader.UWP.Views.Main
 			{
 				CertUtil.Close();
 			}
+#endif
 			await ViewModel.Startup();
 		}
 

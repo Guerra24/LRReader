@@ -7,12 +7,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AssemblyName>CertInstaller</AssemblyName>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="logo.ico" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj" />
@@ -31,7 +26,6 @@
 
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
-    <Resource Include="logo.ico" />
   </ItemGroup>
 
 </Project>
