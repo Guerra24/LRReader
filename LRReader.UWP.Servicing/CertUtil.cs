@@ -26,8 +26,23 @@ public static class CertUtil
 		if (!found)
 		{
 			using var client = new HttpClient();
-			var data = await client.GetByteArrayAsync(new Uri(url));
-			var cert = new X509Certificate2(data);
+			var data = await client.GetByteArrayAsync(new Uri(url)).ConfigureAwait(false);
+			using var cert = new X509Certificate2(data);
+			if (!cert.Thumbprint.Equals(thumb.ToUpper()))
+				return false;
+			Store.Add(cert);
+		}
+		return true;
+	}
+
+	// Workaround second process deadlocking when downloading cert
+	// Remove once 1809 is dropped
+	public static bool InstallCertificate(byte[] data, string thumb)
+	{
+		var found = FindCertificate(thumb);
+		if (!found)
+		{
+			using var cert = new X509Certificate2(data);
 			if (!cert.Thumbprint.Equals(thumb.ToUpper()))
 				return false;
 			Store.Add(cert);

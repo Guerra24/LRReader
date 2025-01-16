@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
 

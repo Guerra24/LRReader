@@ -21,16 +21,15 @@ public static class ProcessExtension
 
 public static class ProcessUtil
 {
-	public static async Task<int> LaunchAdmin(string exe, string? command = null)
+	public static async Task<int> LaunchAdmin(string exe, string command = "")
 	{
 		using var process = new Process();
 		process.StartInfo.Verb = "runas";
 		process.StartInfo.FileName = exe;
-		if (command != null)
-			process.StartInfo.Arguments = command;
+		process.StartInfo.Arguments = command;
 		try
 		{
-			await process.StartAndWaitForExitAsync();
+			await process.StartAndWaitForExitAsync().ConfigureAwait(false);
 			return process.ExitCode;
 		}
 		catch (Win32Exception) { }

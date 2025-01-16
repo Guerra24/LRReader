@@ -7,7 +7,9 @@
     <Type Name="Microsoft.Extensions.Options.IValidateOptions{}" Activate="Required Public" />
     <Type Name="Microsoft.Extensions.Options.IOptionsChangeTokenSource{}" Activate="Required Public" />
     <Namespace Name="Microsoft.Extensions.Logging" Dynamic="Required All" />
-    <Assembly Name="Sentry" Dynamic="Required All" />
+    <Type Name="Sentry.Integrations.AutoSessionTrackingIntegration" Dynamic="Required All"/>
+    <Type Name="Sentry.Integrations.AppDomainUnhandledExceptionIntegration" Dynamic="Required All"/>
+    <Type Name="Sentry.Integrations.UnobservedTaskExceptionIntegration" Dynamic="Required All"/>
 
     <Type Name="NReco.Logging.File.FileLoggerProvider" Activate="Required Public" />
 

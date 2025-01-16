@@ -53,7 +53,7 @@
         <uap:Extension Category="windows.appService">
           <uap:AppService Name="KarenMonitor" />
         </uap:Extension>
-		<desktop:Extension Category="windows.fullTrustProcess" Executable="zServicing\CertInstaller.exe" />
+        <desktop:Extension Category="windows.fullTrustProcess" Executable="zServicing\CertInstaller.exe" />
       </Extensions>
     </Application>
   </Applications>

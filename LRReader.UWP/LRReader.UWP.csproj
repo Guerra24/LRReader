@@ -59,6 +59,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
     <SuppressXamlWarnings>1501</SuppressXamlWarnings>
+    <EnableGatekeeperAnalysis>true</EnableGatekeeperAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -84,12 +85,19 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
     <SuppressXamlWarnings>1501</SuppressXamlWarnings>
+    <EnableGatekeeperAnalysis>true</EnableGatekeeperAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Nightly)' == 'true'">
     <DefineConstants>$(DefineConstants);NIGHTLY</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Sideload)' == 'true'">
     <DefineConstants>$(DefineConstants);SIDELOAD</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Use64BitCompiler>true</Use64BitCompiler>
+    <OutOfProcPDB>true</OutOfProcPDB>
+    <Use64BitRhbind>true</Use64BitRhbind>
+    <Use64BitIlc>true</Use64BitIlc>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
