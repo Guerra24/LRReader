@@ -7,6 +7,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AssemblyName>CertInstaller</AssemblyName>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
