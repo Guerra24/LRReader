@@ -25,7 +25,7 @@ internal static class Program
 				// Wait 10 seconds before killing process
 				// We can randomly deadlock on some systems (arm64 for some mysterious reason) so make sure we don't keep a cpu thread at 100% usage
 				Thread.Sleep(10000);
-				Process.GetCurrentProcess().Kill();
+				Environment.FailFast(null);
 			}
 			catch (ThreadInterruptedException) { }
 		});
