@@ -156,6 +156,9 @@ namespace LRReader.UWP.Extensions
 							color: #{{selectedColor.R:X2}}{{selectedColor.G:X2}}{{selectedColor.B:X2}};
 							background-color: #{{selectedBg.R:X2}}{{selectedBg.G:X2}}{{selectedBg.B:X2}};
 						}
+						a {
+						    color: #{{selectedBg.R:X2}}{{selectedBg.G:X2}}{{selectedBg.B:X2}};
+						}
 						img {
 							max-width: 80%;
 						}

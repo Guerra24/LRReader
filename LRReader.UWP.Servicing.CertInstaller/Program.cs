@@ -20,14 +20,10 @@ internal static class Program
 #endif
 		var killer = new Thread(() =>
 		{
-			try
-			{
-				// Wait 10 seconds before killing process
-				// We can randomly deadlock on some systems (arm64 for some mysterious reason) so make sure we don't keep a cpu thread at 100% usage
-				Thread.Sleep(10000);
-				Environment.FailFast(null);
-			}
-			catch (ThreadInterruptedException) { }
+			// Wait 10 seconds before killing process
+			// We can randomly deadlock on some systems (arm64 for some mysterious reason) so make sure we don't keep a cpu thread at 100% usage
+			Thread.Sleep(10000);
+			Environment.Exit(0);
 		});
 		killer.Start();
 		using var identity = WindowsIdentity.GetCurrent();
@@ -49,11 +45,11 @@ internal static class Program
 		if (File.Exists(args[0]))
 		{
 			var data = File.ReadAllBytes(args[0]);
+			File.Delete(args[0]);
 			CertUtil.Open(OpenFlags.ReadWrite);
 			CertUtil.InstallCertificate(data, CertInfo.CertThumbV2);
 			CertUtil.Close();
-			File.Delete(args[0]);
 		}
-		killer.Interrupt();
+		Environment.Exit(0);
 	}
 }

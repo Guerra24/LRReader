@@ -51,6 +51,7 @@ namespace LRReader.UWP
 					options.Distribution = "store";
 					options.Environment = "stable";
 #endif
+					options.StackTraceMode = StackTraceMode.Original;
 					options.AutoSessionTracking = true;
 					var ver = Package.Current.Id.Version;
 					options.Release = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
