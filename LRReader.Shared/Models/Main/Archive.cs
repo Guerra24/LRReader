@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Text.Json.Serialization;
 using LRReader.Shared.Converters;
-using LRReader.Shared.Extensions;
 using Sentry;
 
 namespace LRReader.Shared.Models.Main
@@ -36,11 +36,13 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]
-		public List<string> TagsList { get; set; } = new List<string>();
-		[JsonIgnore]
-		public ObservableCollection<ArchiveTagsGroup> TagsGroups { get; set; } = new ObservableCollection<ArchiveTagsGroup>();
+		public ObservableCollection<ArchiveTagsGroup> TagsGroups { get; set; } = new();
 		[JsonIgnore]
 		public bool IsTank => extension.EndsWith("tank");
+		[JsonIgnore]
+		public float Rating = -1;
+		[JsonIgnore]
+		private List<ArchiveTagsGroup> VirtualTags { get; set; } = new();
 
 		void IJsonOnDeserialized.OnDeserialized() => UpdateTags();
 
@@ -49,13 +51,9 @@ namespace LRReader.Shared.Models.Main
 			TagsClean = "";
 			if (tags == null) // TODO: v0.7.7 returns null tags when there are no plugins enabled.
 				tags = ""; // Use empty string as fallback instead
-			var separatedTags = tags.Split([','], StringSplitOptions.RemoveEmptyEntries);
-			foreach (var s in separatedTags)
+			foreach (var s in tags.Split([','], StringSplitOptions.RemoveEmptyEntries))
 				TagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
 			TagsClean = TagsClean.Trim().TrimEnd(',');
-			TagsList.Clear();
-			foreach (var s in separatedTags)
-				TagsList.Add(s.Trim());
 
 			// TODO: Apparently we can crash here with a COMException
 			try
@@ -68,33 +66,10 @@ namespace LRReader.Shared.Models.Main
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
 				SentrySdk.CaptureException(e);
 			}
-			var tmp = new List<ArchiveTagsGroup>();
-			foreach (var s in separatedTags)
-			{
-				var parts = s.Trim().Split([':'], 2);
-				var @namespace = parts.Length == 2 ? parts[0] : "other";
-				var group = tmp.FirstOrDefault(tg => tg.Namespace.Equals(@namespace));
-				if (group == null)
-					group = AddTagsGroup(tmp, @namespace);
-				var tag = parts[parts.Length - 1];
-				if ((parts[0].Equals("date_added") && long.TryParse(tag, out long unixTime)) || (parts[0].Equals("timestamp") && long.TryParse(tag, out unixTime)))
-					tag = DateTimeOffset.FromUnixTimeSeconds(unixTime).DateTime.ToLocalTime().ToString();
-				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag, Namespace = @namespace });
-			}
-			tmp.Sort((a, b) => string.Compare(a.Namespace, b.Namespace));
-			var c = tmp.Find(g => g.Namespace.Equals("other"));
-			if (c != null)
-			{
-				tmp.Remove(c);
-				tmp.Add(c);
-			}
+			BuildVirtualTags();
 			try
 			{
-				tmp.ForEach(g =>
-				{
-					g.Namespace = g.Namespace.UpperFirstLetter().Replace('_', ' ');
-					TagsGroups.Add(g);
-				});
+				VirtualTags.ForEach(g => TagsGroups.Add(g));
 			}
 			catch (Exception e)
 			{
@@ -103,11 +78,84 @@ namespace LRReader.Shared.Models.Main
 			}
 		}
 
-		private ArchiveTagsGroup AddTagsGroup(List<ArchiveTagsGroup> list, string @namespace)
+		public void BuildVirtualTags()
 		{
-			var group = new ArchiveTagsGroup() { Namespace = @namespace };
-			list.Add(group);
+			VirtualTags.Clear();
+			foreach (var s in tags.Split([','], StringSplitOptions.RemoveEmptyEntries))
+			{
+				var parts = s.Trim().Split([':'], 2);
+				var @namespace = parts.Length == 2 ? parts[0] : "other";
+				var tag = parts[parts.Length - 1];
+				var group = AddOrGetNamespace(@namespace);
+				if ((@namespace.Equals("date_added") || @namespace.Equals("timestamp")) && long.TryParse(tag, out var unixTime))
+					tag = DateTimeOffset.FromUnixTimeSeconds(unixTime).DateTime.ToLocalTime().ToString();
+				if (@namespace.Equals("rating", StringComparison.InvariantCultureIgnoreCase))
+					Rating = tag.Count(t => t.Equals('⭐'));
+				group.Tags.Add(new ArchiveTagsGroupTag { FullTag = s.Trim(), Tag = tag, Namespace = @namespace });
+			}
+		}
+
+		public string BuildStringTags()
+		{
+			var builder = new StringBuilder();
+			foreach (var @namespace in VirtualTags)
+				foreach (var tag in @namespace.Tags)
+				{
+					builder.Append(tag.FullTag);
+					builder.Append(", ");
+				}
+			return builder.ToString().Trim([',', ' ']);
+		}
+
+		private ArchiveTagsGroup AddOrGetNamespace(string @namespace)
+		{
+			var group = VirtualTags.FirstOrDefault(tg => tg.Namespace.Equals(@namespace));
+			if (group == null)
+			{
+				group = new ArchiveTagsGroup() { Namespace = @namespace };
+				VirtualTags.Add(group);
+				VirtualTags.Sort((a, b) =>
+				{
+					if (a.Namespace.Equals("other"))
+						return 1;
+					else if (b.Namespace.Equals("other"))
+						return -1;
+					else
+						return string.Compare(a.Namespace, b.Namespace);
+				});
+			}
 			return group;
+		}
+
+		public void RemoveNamespace(string @namespace)
+		{
+			VirtualTags.RemoveAll(group => group.Namespace.Equals(@namespace));
+		}
+
+		public void SetRating(int rating)
+		{
+			Rating = rating;
+			var @namespace = AddOrGetNamespace("rating");
+			if (rating > 0)
+			{
+				var tag = new string('⭐', rating);
+				if (@namespace.Tags.Any())
+				{
+					var virtualTag = @namespace.Tags.First();
+					virtualTag.Tag = tag;
+					virtualTag.FullTag = $"rating:{tag}";
+				}
+				else
+				{
+					@namespace.Tags.Add(new ArchiveTagsGroupTag { FullTag = $"rating:{tag}", Tag = tag, Namespace = "rating" });
+				}
+			}
+			else
+			{
+				@namespace.Tags.Clear();
+				RemoveNamespace("rating");
+			}
+			tags = BuildStringTags();
 		}
 
 		public override bool Equals(object obj)
@@ -201,9 +249,7 @@ namespace LRReader.Shared.Models.Main
 	public class ArchiveTagsGroupTag
 	{
 		public string FullTag = null!;
-
 		public string Tag = null!;
-
 		public string Namespace = null!;
 	}
 

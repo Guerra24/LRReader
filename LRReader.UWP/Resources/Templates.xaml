@@ -410,6 +410,18 @@
 									Click="{x:Bind Remove_Click}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutSubItem Text="Rating">
+									<MenuFlyoutSubItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+									</MenuFlyoutSubItem.Icon>
+									<muxc:RadioMenuFlyoutItem Text="&#xE735;" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="Rating" />
+									<muxc:RadioMenuFlyoutItem Text="&#xE735; &#xE735;" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="Rating" />
+									<muxc:RadioMenuFlyoutItem Text="&#xE735; &#xE735; &#xE735;" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="Rating" />
+									<muxc:RadioMenuFlyoutItem Text="&#xE735; &#xE735; &#xE735; &#xE735;" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="Rating" />
+									<muxc:RadioMenuFlyoutItem Text="&#xE735; &#xE735; &#xE735; &#xE735; &#xE735;" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="Rating" />
+									<MenuFlyoutSeparator />
+									<MenuFlyoutItem Text="Clear" />
+								</MenuFlyoutSubItem>
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"

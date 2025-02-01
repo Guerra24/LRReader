@@ -49,7 +49,7 @@
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						<Grid VerticalAlignment="Top" Style="{ThemeResource NamespaceStyle}">
-							<TextBlock Foreground="{ThemeResource TextFillColorPrimaryBrush}" Text="{x:Bind Namespace}" />
+							<TextBlock Foreground="{ThemeResource TextFillColorPrimaryBrush}" Text="{x:Bind Namespace, Converter={StaticResource TagNamespaceConverter}}" />
 						</Grid>
 						<GridView
 							Grid.Column="1" Margin="0" Padding="0"

@@ -87,7 +87,7 @@ namespace LRReader.Internal
 			batch.Completed += delegate
 			{
 				visual.Opacity = 1.0f;
-				OnHideAnimationCompleted(element);
+				OnHideAnimationCompleted(element); // System.AccessViolationException
 			};
 		}
 

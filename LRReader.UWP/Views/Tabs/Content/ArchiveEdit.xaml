@@ -2,7 +2,6 @@
 	x:Class="LRReader.UWP.Views.Tabs.Content.ArchiveEdit"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:converters="using:LRReader.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
@@ -14,9 +13,6 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<converters:StringToColorConverter x:Key="StringToColorConverter" />
-		<converters:DisabledTextConverter x:Key="DisabledTextConverter" />
-		<converters:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
 		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
 			<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
 			<Setter Property="FontSize" Value="12" />

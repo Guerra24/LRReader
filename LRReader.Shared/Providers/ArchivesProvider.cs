@@ -158,15 +158,15 @@ public static class ArchivesProvider
 		return await r.GetResult().ConfigureAwait(false);
 	}
 
-	public static async Task<bool> UpdateArchive(string id, string title = "", string tags = "", string summary = "")
+	public static async Task<bool> UpdateArchive(string id, string? title = null, string? tags = null, string? summary = null)
 	{
 		var client = Api.Client;
 
 		var rq = new RestRequest("api/archives/{id}/metadata");
 		rq.AddUrlSegment("id", id);
-		rq.AddQueryParameter("title", title);
-		rq.AddQueryParameter("tags", tags);
-		rq.AddQueryParameter("summary", summary);
+		if (title != null) rq.AddQueryParameter("title", title);
+		if (tags != null) rq.AddQueryParameter("tags", tags);
+		if (summary != null) rq.AddQueryParameter("summary", summary);
 
 		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -231,11 +232,14 @@ namespace LRReader.Shared.ViewModels
 
 		private string BuildTags()
 		{
-			var result = "";
+			var builder = new StringBuilder();
 			foreach (var t in TagsList)
-				if (!(t is AddTag))
-					result += t.Tag + ", ";
-			return result.Trim().TrimEnd(',');
+				if (t is not AddTag)
+				{
+					builder.Append(t.Tag);
+					builder.Append(", ");
+				}
+			return builder.ToString().Trim([',', ' ']);
 		}
 
 		private void HandleTagCommand(EditableTag? tag)
@@ -258,7 +262,7 @@ namespace LRReader.Shared.ViewModels
 		private void ReloadTagsList(string tags)
 		{
 			TagsList.Clear();
-			foreach (var t in tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).OrderByDescending(t => t.Contains(":")).ThenBy(t => t.Trim()))
+			foreach (var t in tags.Split([','], StringSplitOptions.RemoveEmptyEntries).OrderByDescending(t => t.Contains(":")).ThenBy(t => t.Trim()))
 				TagsList.Add(ColorTag(new EditableTag { Tag = t.Trim(), Command = TagCommand }));
 			TagsList.Add(new AddTag { Command = TagCommand });
 			Tags = BuildTags();

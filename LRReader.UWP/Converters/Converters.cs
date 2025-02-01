@@ -1,12 +1,13 @@
 ﻿#nullable enable
 using System;
+using LRReader.Shared.Extensions;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace LRReader.Converters
+namespace LRReader.UWP.Converters
 {
 
 	public class EnumConverter : IValueConverter
@@ -87,6 +88,20 @@ namespace LRReader.Converters
 			if (value is BitmapImage image)
 				return image;
 			return null!;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class TagNamespaceConverter : IValueConverter
+	{
+
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return ((string)value).UpperFirstLetter().Replace('_', ' ');
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)

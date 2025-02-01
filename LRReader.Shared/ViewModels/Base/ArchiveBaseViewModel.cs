@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace LRReader.Shared.ViewModels.Base
 		private readonly TabsService Tabs;
 
 		[ObservableProperty]
-		private bool _refreshOnErrorButton = false;
+		private bool _refreshOnErrorButton;
 
 		private bool _controlsEnabled;
 		public bool ControlsEnabled
@@ -65,7 +64,7 @@ namespace LRReader.Shared.ViewModels.Base
 			get => _bookmarkedArchive;
 			set
 			{
-				 if (SetProperty(ref _bookmarkedArchive, value ?? new BookmarkedArchive("") { totalPages = -1 }))
+				if (SetProperty(ref _bookmarkedArchive, value ?? new BookmarkedArchive("") { totalPages = -1 }))
 				{
 					OnPropertyChanged("Bookmarked");
 					OnPropertyChanged("Pages");
@@ -144,6 +143,17 @@ namespace LRReader.Shared.ViewModels.Base
 		public object Icon
 		{
 			get => Platform.GetSymbol(Bookmarked ? Symbol.Favorite : Symbol.Pictures);
+		}
+
+		public double Rating
+		{
+			get => Archive.Rating;
+			set
+			{
+				Archive.SetRating((int)value);
+				OnPropertyChanged(nameof(Rating));
+				Task.Run(async () => await ArchivesProvider.UpdateArchive(Archive.arcid, tags: Archive.tags).ConfigureAwait(false));
+			}
 		}
 
 		public ArchiveBaseViewModel(SettingsService settings, ArchivesService archives, ApiService api, PlatformService platform, TabsService tabs)
