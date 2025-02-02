@@ -289,6 +289,7 @@ namespace LRReader.Shared.ViewModels
 			await LoadImages(animate);
 			await CreateImageSets();
 			OnPropertyChanged("Icon");
+			OnPropertyChanged(nameof(Rating));
 			ControlsEnabled = true;
 			_loading = false;
 		}
@@ -318,6 +319,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
 			OnPropertyChanged("Icon");
+			OnPropertyChanged(nameof(Rating));
 		}
 
 		public async Task LoadImages(bool animate = true)

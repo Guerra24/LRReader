@@ -18,5 +18,6 @@
 	<converters2:EnumConverter x:Key="EnumConverter" />
 	<converters2:EnumToInt x:Key="EnumToInt" />
 	<converters2:TagNamespaceConverter x:Key="TagNamespaceConverter" />
+	<converters2:RatingConverter x:Key="RatingConverter" />
 
 </ResourceDictionary>

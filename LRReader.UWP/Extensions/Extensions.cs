@@ -295,4 +295,28 @@ namespace LRReader.UWP.Extensions
 		}
 	}
 
+	[MarkupExtensionReturnType(ReturnType = typeof(int))]
+	public class IntExtension : MarkupExtension
+	{
+
+		public int Value { get; set; }
+
+		protected override object ProvideValue()
+		{
+			return Value;
+		}
+	}
+
+	[MarkupExtensionReturnType(ReturnType = typeof(double))]
+	public class DoubleExtension : MarkupExtension
+	{
+
+		public double Value { get; set; }
+
+		protected override object ProvideValue()
+		{
+			return Value;
+		}
+	}
+
 }

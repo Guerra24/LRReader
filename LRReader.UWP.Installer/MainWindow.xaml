@@ -21,7 +21,7 @@
 		<TaskbarItemInfo x:Name="TaskbarProgress" />
 	</Window.TaskbarItemInfo>
 
-	<Grid Margin="1,1,1,0">
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition />
@@ -32,7 +32,7 @@
 		</Grid.RowDefinitions>
 		<ui:TitleBar
 			x:Name="Titlebar" Title="LRReader" Grid.ColumnSpan="2"
-			Padding="12,8" Height="32" />
+			Padding="8,8" Height="32" />
 		<Border x:Name="LeftBorder" Grid.RowSpan="2">
 			<Grid>
 				<Grid.RowDefinitions>

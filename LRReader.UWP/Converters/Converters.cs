@@ -109,4 +109,20 @@ namespace LRReader.UWP.Converters
 			throw new NotImplementedException();
 		}
 	}
+
+	public class RatingConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return (double)value == (double)parameter;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			if ((bool)value)
+				return parameter;
+			else
+				return double.NaN;
+		}
+	}
 }

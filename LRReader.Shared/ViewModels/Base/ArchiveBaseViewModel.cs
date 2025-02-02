@@ -44,6 +44,7 @@ namespace LRReader.Shared.ViewModels.Base
 					BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
 					OnPropertyChanged("IsNew");
 					OnPropertyChanged("Pages");
+					OnPropertyChanged("Rating");
 				}
 			}
 		}
@@ -150,6 +151,8 @@ namespace LRReader.Shared.ViewModels.Base
 			get => Archive.Rating;
 			set
 			{
+				if (double.IsNaN(value))
+					return;
 				Archive.SetRating((int)value);
 				OnPropertyChanged(nameof(Rating));
 				Task.Run(async () => await ArchivesProvider.UpdateArchive(Archive.arcid, tags: Archive.tags).ConfigureAwait(false));
@@ -260,5 +263,6 @@ namespace LRReader.Shared.ViewModels.Base
 				Archives.OpenTab(Archive, false, group);
 			}
 		}
+
 	}
 }

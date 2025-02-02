@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
@@ -19,8 +18,6 @@ namespace LRReader.Shared.ViewModels.Items
 
 		public event AsyncAction<bool>? Show;
 		public event AsyncAction<bool>? Hide;
-
-		private Guid _key = Guid.NewGuid();
 
 		private CancellationTokenSource Cts = new();
 
