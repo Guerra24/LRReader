@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Caching;
 using KeyedSemaphores;
+using LRReader.Shared.Formats.JpegXL;
 using LRReader.Shared.Providers;
 using Sentry;
 
@@ -37,6 +38,7 @@ public class ImagesService : IService
 		imagesSizeCache = new LRUCache<string, Size>(10000, 100);
 		thumbnailsCache = new LRUCache<string, byte[]>(5000, 100);
 		thumbnailCacheDirectory = Directory.CreateDirectory(Files.LocalCache + "/Images/Thumbnails");
+		SixLabors.ImageSharp.Configuration.Default.Configure(new JpegXLConfigurationModule());
 	}
 
 	public Task Init()

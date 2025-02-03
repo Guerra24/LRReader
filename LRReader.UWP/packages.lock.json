@@ -107,15 +107,6 @@
           "Win2D.uwp": "1.28.1"
         }
       },
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Markdig": {
         "type": "Direct",
         "requested": "[0.40.0, )",
@@ -186,6 +177,14 @@
           "System.ComponentModel.Annotations": "5.0.0",
           "System.Memory": "4.6.0",
           "System.Runtime.CompilerServices.Unsafe": "6.1.0"
+        }
+      },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
         }
       },
       "KeyedSemaphores": {
@@ -443,8 +442,8 @@
       },
       "Sentry": {
         "type": "Transitive",
-        "resolved": "5.0.1",
-        "contentHash": "h1rKFYXx58dUtAcsWpTlJGHhG1bpy0JjGh8b2sRKw2wdk3NKCGd8KTLSWnzIqIjjZP2PNeUZFUyDeWVKs8Dk2A==",
+        "resolved": "5.1.0",
+        "contentHash": "G9ynQGBc937yO+TFda09WQfTHKiwqVN8pgtM7LU6o2ciu8WVAE8IceSW0olp6nI9nWj99DtV/KAS2OKGK4B+Vg==",
         "dependencies": {
           "System.Reflection.Metadata": "5.0.0",
           "System.Text.Json": "6.0.10"
@@ -577,12 +576,13 @@
         "dependencies": {
           "Caching.dll": "[2.0.0.1, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
+          "JxlNet": "[0.11.1, )",
           "KeyedSemaphores": "[5.0.0, )",
           "Microsoft.Extensions.DependencyInjection": "[9.0.1, )",
           "Microsoft.Extensions.Logging": "[9.0.1, )",
           "NReco.Logging.File": "[1.2.2, )",
           "RestSharp": "[112.1.0, )",
-          "Sentry": "[5.0.1, )",
+          "Sentry": "[5.1.0, )",
           "SixLabors.ImageSharp": "[2.1.9, )",
           "System.Text.Json": "[9.0.1, )"
         }
@@ -592,15 +592,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-arm": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -629,6 +620,14 @@
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
       },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
+      },
       "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -649,15 +648,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-arm-aot": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -686,6 +676,14 @@
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
       },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
+      },
       "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -706,15 +704,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-arm64-aot": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -743,6 +732,14 @@
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
       },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
+      },
       "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -763,15 +760,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x64": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -800,6 +788,14 @@
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
       },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
+      },
       "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -820,15 +816,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x64-aot": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -857,6 +844,14 @@
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
       },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
+      },
       "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -877,15 +872,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x86": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -914,6 +900,14 @@
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
       },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
+      },
       "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.14",
@@ -934,15 +928,6 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x86-aot": {
-      "JxlNet": {
-        "type": "Direct",
-        "requested": "[0.11.1, )",
-        "resolved": "0.11.1",
-        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
-        "dependencies": {
-          "System.Memory": "4.6.0"
-        }
-      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.14, )",
@@ -970,6 +955,14 @@
         "requested": "[1.0.2957.106, )",
         "resolved": "1.0.2957.106",
         "contentHash": "eHc2yKD//d1a6Razu6jl373RGKdzLhxDBk/wc/i//tC9+nEVXcO38pvjZwR2s0C34y+0trzKvbGHffrEx7vyVw=="
+      },
+      "JxlNet": {
+        "type": "Transitive",
+        "resolved": "0.11.1",
+        "contentHash": "DpCIMSO4QCkqoThXnN3TfylLmlb4+ALRdUA+hwdb18y5UZl1+R8vKCO9iCLQYZ6md2vudJph6gW3GVFKZSysQw==",
+        "dependencies": {
+          "System.Memory": "4.6.0"
+        }
       },
       "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",

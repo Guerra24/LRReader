@@ -173,38 +173,9 @@ namespace LRReader.UWP.Services
 			{
 				try
 				{
-					if (IsJxl(bytes))
-					{
-						unsafe
-						{
-							var decoder = Jxl.JxlDecoderCreate(null);
-							try
-							{
-								fixed (byte* p = bytes)
-								{
-									Jxl.JxlDecoderSetInput(decoder, p, (UIntPtr)bytes.Length);
-									Jxl.JxlDecoderCloseInput(decoder);
-									Jxl.JxlDecoderSubscribeEvents(decoder, (int)JxlDecoderStatus.JXL_DEC_BASIC_INFO);
-									var status = Jxl.JxlDecoderProcessInput(decoder);
-									if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
-										return Size.Empty;
-									var info = new JxlBasicInfo();
-									Jxl.JxlDecoderGetBasicInfo(decoder, &info);
-									return new Size((int)info.xsize, (int)info.ysize);
-								}
-							}
-							finally
-							{
-								Jxl.JxlDecoderDestroy(decoder);
-							}
-						}
-					}
-					else
-					{
-						using var ms = new MemoryStream(bytes);
-						var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
-						return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
-					}
+					using var ms = new MemoryStream(bytes);
+					var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
+					return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
 				}
 				catch
 				{
