@@ -71,7 +71,7 @@
 										Text="{x:Bind Data.Archive.title, Mode=OneWay}"
 										TextWrapping="WrapWholeWords" />
 								</Grid>
-								<muxc:RatingControl Value="{x:Bind Data.Rating, Mode=TwoWay}" Margin="4,0,0,-4" HorizontalAlignment="Left" />
+								<muxc:RatingControl Value="{x:Bind Data.Rating, Mode=TwoWay}" Margin="4,0,0,-4" HorizontalAlignment="Left" IsReadOnly="{x:Bind services:Service.Settings.Profile.HasApiKey, Converter={StaticResource BoolNegationConverter}}" />
 								<ct:WrapPanel HorizontalSpacing="4" VerticalSpacing="4">
 									<StackPanel Orientation="Horizontal">
 										<Border Style="{StaticResource CustomTag}">

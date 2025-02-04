@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LRReader.UWP.Extensions;
 using Microsoft.UI.Xaml.Controls;
@@ -130,6 +131,14 @@ namespace LRReader.UWP.Views.Controls
 		private ModernWebView Modern;
 		private WebView2 WebView;
 		private bool Initialized;
+		private string Css = """
+			body, html {
+				background: transparent !important;
+			}
+			p.ip, #return {
+				display: none !important;
+			}
+			""";
 
 		public EdgeChromeWebView(ModernWebView modern)
 		{
@@ -181,7 +190,11 @@ namespace LRReader.UWP.Views.Controls
 
 		private async void CoreWebView2_DOMContentLoaded(CoreWebView2 sender, CoreWebView2DOMContentLoadedEventArgs args)
 		{
-			await sender.ExecuteScriptAsync("var style = document.createElement('style'); style.innerHTML = 'body, html { background: transparent !important; } p.ip { display: none !important; } div.ido, .option-flyout { border: 1px solid #00000019; border-radius: 4px; background-color: #FFFFFF0D !important; background-clip: padding-box !important; }'; document.head.appendChild(style);");
+			await sender.ExecuteScriptAsync($$"""
+				var style = document.createElement('style');
+				style.innerHTML = '{{Regex.Replace(Css, @"\t|\n|\r", " ")}}';
+				document.head.appendChild(style);
+				""");
 			WebView.FadeIn();
 		}
 

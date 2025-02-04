@@ -64,11 +64,13 @@
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 						</Viewbox>
 					</Button>
+					<!--
 					<Button Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tankoubons}">
 						<Viewbox>
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF572;" />
 						</Viewbox>
 					</Button>
+					-->
 					<Button x:Uid="/Pages/HostTabPage/Tools" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tools}" Visibility="{x:Bind Settings.Profile.HasApiKey, Mode=OneWay}">
 						<Viewbox>
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />

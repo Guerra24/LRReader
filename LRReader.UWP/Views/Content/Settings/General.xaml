@@ -15,7 +15,7 @@
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
-				<controls:ModernInput Title="Use Vertical Tabs" Glyph="&#xE71D;">
+				<controls:ModernInput x:Uid="/Settings/General/VerticalTabs" Glyph="&#xE71D;">
 					<ToggleSwitch x:Name="VerticalTabs" IsOn="{x:Bind Data.SettingsManager.UseVerticalTabs, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/Categories" Glyph="&#xE8B7;">
@@ -54,13 +54,11 @@
 				<controls:ModernInput x:Uid="/Settings/General/TagsPopup" Glyph="&#xEC42;">
 					<ComboBox x:Name="TagsPopupComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.TagsPopup, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
-				<controls:ModernExpander
-					Title="Suggested tags" Description="Quickly access the most common tags" Glyph="&#xE773;"
-					IsExpanded="{x:Bind Data.SettingsManager.ShowSuggestedTags, Mode=OneWay}">
+				<controls:ModernExpander x:Uid="/Settings/General/SuggestedTags" Glyph="&#xE773;" IsExpanded="{x:Bind Data.SettingsManager.ShowSuggestedTags, Mode=OneWay}">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ShowSuggestedTags, Mode=TwoWay}" />
 					</controls:ModernExpander.Input>
-					<controls:ModernInput Title="Max amount of suggested tags" InputHorizontalAlignment="Stretch">
+					<controls:ModernInput x:Uid="/Settings/General/SuggestedTagsLimit" InputHorizontalAlignment="Stretch">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />

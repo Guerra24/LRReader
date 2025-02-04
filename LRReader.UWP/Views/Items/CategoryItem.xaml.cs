@@ -44,7 +44,7 @@ namespace LRReader.UWP.Views.Items
 				Title.SetVisualOpacity(0);
 				Thumbnail.Source = null;
 				ViewModel.MissingImage = false;
-				ViewModel.SearchImage = true;
+				ViewModel.SearchImage = false;
 
 				var first = ViewModel.Category.archives.FirstOrDefault();
 				if (first != null)

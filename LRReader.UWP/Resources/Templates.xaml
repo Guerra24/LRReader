@@ -122,6 +122,19 @@
 									Click="{x:Bind Remove_Click}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+									<MenuFlyoutSubItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+									</MenuFlyoutSubItem.Icon>
+									<!-- Wha... turns out GroupName is a global (app-wide) property so make sure we make it unique -->
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=1}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735;"  />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=2}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=3}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=4}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=5}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735; &#xE735;" />
+									<MenuFlyoutSeparator />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=-1}}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" x:Uid="/Items/Archive/NoRating" />
+								</MenuFlyoutSubItem>
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
@@ -204,6 +217,19 @@
 									Click="{x:Bind Remove_Click}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+									<MenuFlyoutSubItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+									</MenuFlyoutSubItem.Icon>
+									<!-- Wha... turns out GroupName is a global (app-wide) property so make sure we make it unique -->
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=1}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735;"  />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=2}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=3}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=4}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=5}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735; &#xE735;" />
+									<MenuFlyoutSeparator />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=-1}}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" x:Uid="/Items/Archive/NoRating" />
+								</MenuFlyoutSubItem>
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
@@ -308,6 +334,19 @@
 									Click="{x:Bind Remove_Click}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+									<MenuFlyoutSubItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+									</MenuFlyoutSubItem.Icon>
+									<!-- Wha... turns out GroupName is a global (app-wide) property so make sure we make it unique -->
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=1}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735;"  />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=2}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=3}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=4}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=5}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735; &#xE735;" />
+									<MenuFlyoutSeparator />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=-1}}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" x:Uid="/Items/Archive/NoRating" />
+								</MenuFlyoutSubItem>
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"
 									Command="{x:Bind ViewModel.EditCommand}"
@@ -411,7 +450,7 @@
 									Click="{x:Bind Remove_Click}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
-								<MenuFlyoutSubItem Text="Rating">
+								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutSubItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 									</MenuFlyoutSubItem.Icon>
@@ -422,7 +461,7 @@
 									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=4}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735;" />
 									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=5}}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735; &#xE735;" />
 									<MenuFlyoutSeparator />
-									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=-1}}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="No rating" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{Binding ViewModel.Rating, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource RatingConverter}, ConverterParameter={extensions:Double Value=-1}}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" x:Uid="/Items/Archive/NoRating" />
 								</MenuFlyoutSubItem>
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Edit"

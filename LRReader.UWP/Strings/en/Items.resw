@@ -135,8 +135,14 @@
   <data name="Archive.New.Text" xml:space="preserve">
     <value>New!</value>
   </data>
+  <data name="Archive.NoRating.Text" xml:space="preserve">
+    <value>No rating</value>
+  </data>
   <data name="Archive.OpenTab.Text" xml:space="preserve">
     <value>Open in new tab</value>
+  </data>
+  <data name="Archive.Rating.Text" xml:space="preserve">
+    <value>Rating</value>
   </data>
   <data name="Archive.Unbookmark.Text" xml:space="preserve">
     <value>Unbookmark</value>
