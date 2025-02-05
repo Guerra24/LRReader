@@ -21,7 +21,12 @@ namespace LRReader.Shared.ViewModels.Tools
 		public DeduplicatorHiddenViewModel(SettingsService settings)
 		{
 			Settings = settings;
-			foreach (var item in settings.Profile.MarkedAsNonDuplicated)
+		}
+
+		public void Refresh()
+		{
+			HiddenArchives.Clear();
+			foreach (var item in Settings.Profile.MarkedAsNonDuplicated)
 				HiddenArchives.Add(item);
 		}
 

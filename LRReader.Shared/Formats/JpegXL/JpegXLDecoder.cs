@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using JxlNet;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
@@ -9,9 +10,9 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace LRReader.Shared.Formats.JpegXL
 {
-	public sealed class JpegXLDecoder : IImageDecoder, IImageInfoDetector
+	public sealed class JpegXLDecoder : IImageDecoder
 	{
-		public Image<TPixel> Decode<TPixel>(Configuration configuration, Stream stream, CancellationToken cancellationToken) where TPixel : unmanaged, IPixel<TPixel>
+		public Image<TPixel> Decode<TPixel>(DecoderOptions options, Stream stream) where TPixel : unmanaged, IPixel<TPixel>
 		{
 			unsafe
 			{
@@ -71,11 +72,11 @@ namespace LRReader.Shared.Formats.JpegXL
 							if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
 								throw new Exception();
 
-							var image = new Image<TPixel>(configuration, (int)info.xsize, (int)info.ysize);
+							var image = new Image<TPixel>(options.Configuration, (int)info.xsize, (int)info.ysize);
 
 							var buf = MemoryMarshal.Cast<byte, Rgb24>(buffer);
 							for (int y = 0; y < image.Height; y++)
-								PixelOperations<TPixel>.Instance.FromRgb24(configuration, buf.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, buf.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 
 							status = Jxl.JxlDecoderProcessInput(decoder);
 
@@ -94,9 +95,19 @@ namespace LRReader.Shared.Formats.JpegXL
 			}
 		}
 
-		public Image Decode(Configuration configuration, Stream stream, CancellationToken cancellationToken) => Decode<Rgb24>(configuration, stream, cancellationToken);
+		public Image Decode(DecoderOptions options, Stream stream) => Decode<Rgb24>(options, stream);
 
-		public IImageInfo Identify(Configuration configuration, Stream stream, CancellationToken cancellationToken)
+		public Task<Image<TPixel>> DecodeAsync<TPixel>(DecoderOptions options, Stream stream, CancellationToken cancellationToken = default) where TPixel : unmanaged, IPixel<TPixel>
+		{
+			return Task.FromResult(Decode<TPixel>(options, stream));
+		}
+
+		public Task<Image> DecodeAsync(DecoderOptions options, Stream stream, CancellationToken cancellationToken = default)
+		{
+			return Task.FromResult(Decode(options, stream));
+		}
+
+		public ImageInfo Identify(DecoderOptions options, Stream stream)
 		{
 			unsafe
 			{
@@ -115,7 +126,7 @@ namespace LRReader.Shared.Formats.JpegXL
 							throw new Exception();
 						var info = new JxlBasicInfo();
 						Jxl.JxlDecoderGetBasicInfo(decoder, &info);
-						return new JpegXLImageInfo() { Width = (int)info.xsize, Height = (int)info.ysize, PixelType = new PixelTypeInfo((int)info.bits_per_sample) };
+						return new ImageInfo(new PixelTypeInfo((int)info.bits_per_sample), new Size((int)info.xsize, (int)info.ysize), null);
 					}
 				}
 				finally
@@ -123,6 +134,11 @@ namespace LRReader.Shared.Formats.JpegXL
 					Jxl.JxlDecoderDestroy(decoder);
 				}
 			}
+		}
+
+		public Task<ImageInfo> IdentifyAsync(DecoderOptions options, Stream stream, CancellationToken cancellationToken = default)
+		{
+			return Task.FromResult(Identify(options, stream));
 		}
 	}
 }

@@ -65,7 +65,7 @@ namespace LRReader.Shared.Services
 
 			// Tool's Pages
 			collection.AddSingleton<DeduplicatorToolViewModel>();
-			collection.AddTransient<DeduplicatorHiddenViewModel>();
+			collection.AddSingleton<DeduplicatorHiddenViewModel>();
 			collection.AddSingleton<BulkEditorViewModel>();
 
 			services?.Invoke(collection);
@@ -103,6 +103,8 @@ namespace LRReader.Shared.Services
 
 		// Insanity
 		public static SettingsPageViewModel SettingsPageViewModel => Services.GetRequiredService<SettingsPageViewModel>();
+		public static DeduplicatorToolViewModel DeduplicatorToolViewModel => Services.GetRequiredService<DeduplicatorToolViewModel>();
+		public static DeduplicatorHiddenViewModel DeduplicatorHiddenViewModel => Services.GetRequiredService<DeduplicatorHiddenViewModel>();
 
 	}
 

@@ -143,7 +143,6 @@ namespace LRReader.UWP
 			deferral.Complete();
 		}
 
-		[SecurityCritical]
 		private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			// Let it go down otherwise we get stuck and that's worse

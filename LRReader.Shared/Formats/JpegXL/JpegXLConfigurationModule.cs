@@ -1,8 +1,9 @@
 ﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 
 namespace LRReader.Shared.Formats.JpegXL
 {
-	public sealed class JpegXLConfigurationModule : IConfigurationModule
+	public sealed class JpegXLConfigurationModule : IImageFormatConfigurationModule
 	{
 		public void Configure(Configuration configuration)
 		{

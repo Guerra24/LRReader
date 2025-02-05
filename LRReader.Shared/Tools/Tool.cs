@@ -72,8 +72,6 @@ namespace LRReader.Shared.Tools
 				SentrySdk.CaptureException(e);
 			}
 			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
 			return result;
 		}
 
