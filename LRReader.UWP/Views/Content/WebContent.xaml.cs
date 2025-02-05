@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
 using Windows.UI.Xaml.Controls;

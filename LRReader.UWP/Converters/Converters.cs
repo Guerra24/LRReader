@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using LRReader.Shared.Extensions;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -10,7 +9,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace LRReader.UWP.Converters
 {
 
-	public class EnumConverter : IValueConverter
+	public partial class EnumConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
@@ -31,7 +30,7 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public class EnumToInt : IValueConverter
+	public partial class EnumToInt : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
@@ -44,7 +43,7 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public class DisabledTextConverter : IValueConverter
+	public partial class DisabledTextConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
@@ -57,7 +56,7 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public class StringToColorConverter : IValueConverter
+	public partial class StringToColorConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
@@ -81,7 +80,7 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public class ObjectToBitmapImage : IValueConverter
+	public partial class ObjectToBitmapImage : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
@@ -96,7 +95,7 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public class TagNamespaceConverter : IValueConverter
+	public partial class TagNamespaceConverter : IValueConverter
 	{
 
 		public object Convert(object value, Type targetType, object parameter, string language)
@@ -110,17 +109,20 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public class RatingConverter : IValueConverter
+	//TODO: Fix with MarkupExtension
+	public partial class RatingConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			return (double)value == (double)parameter;
+			if (parameter == null)
+				return false;
+			return (double)value == double.Parse((string)parameter);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
 			if ((bool)value)
-				return parameter;
+				return double.Parse((string)parameter);
 			else
 				return double.NaN;
 		}

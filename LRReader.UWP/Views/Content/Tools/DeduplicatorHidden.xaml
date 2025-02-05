@@ -9,7 +9,6 @@
 	xmlns:items1="using:LRReader.UWP.Views.Items"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-	DataContext="{Binding DeduplicatorHiddenViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<ext:Shadow x:Name="ElementShadow" />

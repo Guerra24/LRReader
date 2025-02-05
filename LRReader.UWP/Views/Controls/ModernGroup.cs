@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Markup;
 namespace LRReader.UWP.Views.Controls
 {
 	[ContentProperty(Name = "Items")]
-	public sealed class ModernGroup : ContentControl
+	public sealed partial class ModernGroup : ContentControl
 	{
 		public ModernGroup()
 		{

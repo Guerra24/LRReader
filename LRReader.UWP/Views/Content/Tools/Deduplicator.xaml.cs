@@ -1,11 +1,11 @@
-﻿#nullable enable
-using System;
-using CommunityToolkit.WinUI.Animations;
+﻿using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,7 +28,7 @@ namespace LRReader.UWP.Views.Content.Tools
 		public Deduplicator()
 		{
 			this.InitializeComponent();
-			Data = (DeduplicatorToolViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<DeduplicatorToolViewModel>();
 			for (int i = Environment.ProcessorCount; i > 0; i--)
 				WorkerThreads.Items.Add(i);
 			Details.SetVisualOpacity(0);

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using LRReader.Shared.Extensions;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,7 +22,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Main()
 		{
 			this.InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Settings");
 		}
 

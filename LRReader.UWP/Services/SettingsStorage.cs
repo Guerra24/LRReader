@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using LRReader.Shared.Services;
 using Windows.Storage;

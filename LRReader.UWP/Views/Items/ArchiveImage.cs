@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
@@ -14,7 +13,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace LRReader.UWP.Views.Items
 {
-	public sealed class ArchiveImage : Control
+	public sealed partial class ArchiveImage : Control
 	{
 		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseIn);
 		private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseOut);

@@ -1,15 +1,18 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;uap10.0.17763</TargetFrameworks>
+    <TargetFrameworks>net9.0-windows10.0.26100.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>13.0</LangVersion>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-    <ExtrasUwpMetaPackageVersion>6.2.14</ExtrasUwpMetaPackageVersion>
-    <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Platforms>AnyCPU</Platforms>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.26100.0'">
+    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,14 +23,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
     <PackageReference Include="NReco.Logging.File" Version="1.2.2" />
-    <PackageReference Include="PolySharp" Version="1.15.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="Sentry" Version="5.1.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.9" />
-    <PackageReference Include="System.Text.Json" Version="9.0.1" />
   </ItemGroup>
 
 </Project>

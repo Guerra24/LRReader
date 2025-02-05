@@ -1,9 +1,10 @@
-﻿using System;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -19,7 +20,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public General()
 		{
 			this.InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Settings");
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/System"));
 			ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Dark"));

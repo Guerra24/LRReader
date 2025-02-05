@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Windows.System;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
@@ -10,7 +9,7 @@ using Windows.UI.Xaml.Markup;
 namespace LRReader.UWP.Views.Controls
 {
 	[ContentProperty(Name = "Control")]
-	public sealed class ModernInput : ContentControl
+	public sealed partial class ModernInput : ContentControl
 	{
 		public ModernInput()
 		{

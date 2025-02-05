@@ -1,5 +1,6 @@
-﻿#nullable enable
+﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -15,7 +16,7 @@ namespace LRReader.UWP.Views.Main
 		public FirstRunPage()
 		{
 			this.InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

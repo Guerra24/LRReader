@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Controls
 {
-	public class ModernBasePage : Page
+	public partial class ModernBasePage : Page
 	{
 
 		protected ModernPageTabWrapper Wrapper = null!;

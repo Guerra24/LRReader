@@ -8,7 +8,6 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:services="using:LRReader.Shared.Services"
-	DataContext="{Binding LoadingPageInstance, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
 	SizeChanged="Page_SizeChanged"

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using CommunityToolkit.WinUI;
+﻿using CommunityToolkit.WinUI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -7,7 +6,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 namespace LRReader.UWP.Views.Controls
 {
 	// Why
-	public class NoBorderListViewItemPresenter : ListViewItemPresenter
+	public partial class NoBorderListViewItemPresenter : ListViewItemPresenter
 	{
 		public NoBorderListViewItemPresenter()
 		{

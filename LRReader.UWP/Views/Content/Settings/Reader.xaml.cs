@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.ViewModels;
+﻿using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,7 +17,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Reader()
 		{
 			this.InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 
 			var lang = ResourceLoader.GetForCurrentView("Settings");
 			ReminderModeRadio.Items.Add(lang.GetString("Reader/ReminderMode/All"));

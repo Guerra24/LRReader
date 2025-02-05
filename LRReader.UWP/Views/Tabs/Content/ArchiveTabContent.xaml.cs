@@ -1,11 +1,4 @@
-﻿#nullable enable
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Extensions;
@@ -14,6 +7,12 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Items;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Storage;
@@ -70,7 +69,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ElementCompositionPreview.GetElementVisual(ReaderThumbnailOverlay).Properties.InsertVector3("Translation", new Vector3(0, 317, 0));
 			*/
 
-			Data = (ArchivePageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<ArchivePageViewModel>();
 			Data.ZoomChangedEvent += FitImages;
 			Data.RebuildReader += RebuildReader;
 

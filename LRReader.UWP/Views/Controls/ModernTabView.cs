@@ -1,5 +1,4 @@
-﻿#nullable enable
-using CommunityToolkit.WinUI.Behaviors;
+﻿using CommunityToolkit.WinUI.Behaviors;
 using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
@@ -7,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Controls
 {
-	public class ModernTabView : TabView
+	public partial class ModernTabView : TabView
 	{
 
 		private const int SPLIT = 888;

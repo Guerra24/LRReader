@@ -1,13 +1,13 @@
-﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.WinUI.Animations;
+﻿using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -24,7 +24,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchiveEdit()
 		{
 			this.InitializeComponent();
-			Data = (ArchiveEditViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<ArchiveEditViewModel>();
 			Data.Show += Show;
 			Data.Hide += Hide;
 		}
@@ -70,7 +70,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		}
 	}
 
-	public class TagTemplateSelector : DataTemplateSelector
+	public partial class TagTemplateSelector : DataTemplateSelector
 	{
 		public DataTemplate EditableTemplate { get; set; } = null!;
 		public DataTemplate AddTemplate { get; set; } = null!;

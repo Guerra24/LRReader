@@ -12,7 +12,6 @@
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	xmlns:helpers="using:LRReader.UWP.Helpers"
 	xmlns:services="using:LRReader.Shared.Services"
-	DataContext="{Binding HostTabPageInstance, Source={StaticResource Locator}}"
 	KeyboardAcceleratorPlacementMode="Hidden"
 	NavigationCacheMode="Required"
 	mc:Ignorable="d">

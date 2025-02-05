@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using LRReader.Shared.Models;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Services;
 using LRReader.UWP.Servicing;
+using Microsoft.Extensions.DependencyInjection;
 using Sentry;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -30,7 +31,7 @@ namespace LRReader.UWP.Views.Main
 		{
 			this.InitializeComponent();
 			CoreView = CoreApplication.GetCurrentView();
-			ViewModel = (LoadingPageViewModel)DataContext;
+			ViewModel = Service.Services.GetRequiredService<LoadingPageViewModel>();
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -6,7 +6,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Loaded="ModernBasePage_Loaded"
 	Unloaded="ModernBasePage_Unloaded"
 	mc:Ignorable="d">

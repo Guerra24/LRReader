@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ using Windows.UI.Xaml.Media;
 
 namespace LRReader.UWP.Views.Controls
 {
-	public class ModernWebView : UserControl, IDisposable
+	public partial class ModernWebView : UserControl, IDisposable
 	{
 		private static List<string> Allowed = new List<string>() { "/upload", "/batch", "/config", "/config/plugins", "/logs" };
 
@@ -126,7 +125,7 @@ namespace LRReader.UWP.Views.Controls
 
 	}
 
-	public class EdgeChromeWebView : UserControl, IWebView
+	public partial class EdgeChromeWebView : UserControl, IWebView
 	{
 		private ModernWebView Modern;
 		private WebView2 WebView;
@@ -200,7 +199,7 @@ namespace LRReader.UWP.Views.Controls
 
 	}
 
-	public class EdgeHTMLWebView : UserControl, IWebView
+	public partial class EdgeHTMLWebView : UserControl, IWebView
 	{
 		private ModernWebView Modern;
 		private WebView WebView;

@@ -1,6 +1,7 @@
 [*.cs]
-
-#Core editorconfig formatting - indentation
-
-#use hard tabs for indentation
 indent_style = tab
+
+[*.csproj]
+indent_style = space
+tab_width = 2
+indent_size = 2

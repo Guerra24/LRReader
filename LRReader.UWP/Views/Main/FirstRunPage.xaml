@@ -3,11 +3,11 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:local="using:LRReader.UWP.Views.Main"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
 	SizeChanged="Page_SizeChanged"
@@ -68,7 +68,7 @@
 								Background="{ThemeResource ExpanderHeaderBackground}"
 								BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}"
 								BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}"
-								Command="{Binding SettingsPageInstance.ContinueProfileCommand, Source={StaticResource Locator}}"
+								Command="{x:Bind services:Service.SettingsPageViewModel.ContinueProfileCommand}"
 								CommandParameter="{x:Bind}"
 								CornerRadius="{ThemeResource ControlCornerRadius}">
 								<Grid>
@@ -92,12 +92,12 @@
 												<MenuFlyout Placement="Bottom">
 													<MenuFlyoutItem
 														x:Uid="/Settings/Profiles/Edit"
-														Command="{Binding SettingsPageInstance.EditProfileCommand, Source={StaticResource Locator}}"
+														Command="{x:Bind services:Service.SettingsPageViewModel.EditProfileCommand}"
 														CommandParameter="{x:Bind}"
 														Icon="Edit" />
 													<MenuFlyoutItem
 														x:Uid="/Settings/Profiles/Delete"
-														Command="{Binding SettingsPageInstance.RemoveProfileCommand, Source={StaticResource Locator}}"
+														Command="{x:Bind services:Service.SettingsPageViewModel.RemoveProfileCommand}"
 														CommandParameter="{x:Bind}"
 														Icon="Delete" />
 												</MenuFlyout>

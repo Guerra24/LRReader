@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -145,7 +144,6 @@ namespace LRReader.UWP
 		}
 
 		[SecurityCritical]
-		[HandleProcessCorruptedStateExceptions]
 		private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			// Let it go down otherwise we get stuck and that's worse

@@ -6,10 +6,10 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:items="using:LRReader.Shared.Models.Main"
 	xmlns:local="using:LRReader.UWP.Views.Content.Settings"
+	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Name="Root"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -76,12 +76,12 @@
 										<MenuFlyout Placement="Bottom">
 											<MenuFlyoutItem
 												x:Uid="/Settings/Profiles/Edit"
-												Command="{Binding SettingsPageInstance.EditProfileCommand, Source={StaticResource Locator}}"
+												Command="{x:Bind services:Service.SettingsPageViewModel.EditProfileCommand}"
 												CommandParameter="{x:Bind}"
 												Icon="Edit" />
 											<MenuFlyoutItem
 												x:Uid="/Settings/Profiles/Delete"
-												Command="{Binding SettingsPageInstance.RemoveProfileCommand, Source={StaticResource Locator}}"
+												Command="{x:Bind services:Service.SettingsPageViewModel.RemoveProfileCommand}"
 												CommandParameter="{x:Bind}"
 												Icon="Delete" />
 										</MenuFlyout>

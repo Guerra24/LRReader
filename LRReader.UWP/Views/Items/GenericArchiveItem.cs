@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ using ParallaxView = Microsoft.UI.Xaml.Controls.ParallaxView;
 
 namespace LRReader.UWP.Views.Items
 {
-	public sealed class GenericArchiveItem : Control
+	public sealed partial class GenericArchiveItem : Control
 	{
 		private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(150), easingMode: EasingMode.EaseIn);
 

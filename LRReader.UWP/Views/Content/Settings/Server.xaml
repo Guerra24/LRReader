@@ -8,7 +8,6 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:tools="using:LRReader.UWP.Views.Content.Tools"
 	xmlns:content="using:LRReader.UWP.Views.Content"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">

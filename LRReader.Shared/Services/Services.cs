@@ -101,6 +101,9 @@ namespace LRReader.Shared.Services
 		public static ILogger<T> Logger<T>() => Services.GetRequiredService<ILogger<T>>();
 		public static Persistance Persistance => Services.GetRequiredService<Persistance>();
 
+		// Insanity
+		public static SettingsPageViewModel SettingsPageViewModel => Services.GetRequiredService<SettingsPageViewModel>();
+
 	}
 
 	public interface IService

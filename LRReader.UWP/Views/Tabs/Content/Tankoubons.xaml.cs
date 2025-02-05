@@ -1,6 +1,7 @@
-﻿#nullable enable
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,7 +20,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Tankoubons()
 		{
 			this.InitializeComponent();
-			Data = (TankoubonsViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<TankoubonsViewModel>();
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -46,7 +47,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 	}
 
-	public class TankoubonTemplateSelector : DataTemplateSelector
+	public partial class TankoubonTemplateSelector : DataTemplateSelector
 	{
 		public DataTemplate StaticTemplate { get; set; } = null!;
 		public DataTemplate AddNewTemplate { get; set; } = null!;

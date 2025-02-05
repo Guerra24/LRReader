@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using LRReader.Shared.Models.Main;
 using Windows.ApplicationModel.DataTransfer;

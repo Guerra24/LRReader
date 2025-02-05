@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Linq;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;

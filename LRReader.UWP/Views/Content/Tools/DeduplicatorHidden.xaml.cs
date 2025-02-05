@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.ViewModels.Tools;
+﻿using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels.Tools;
+using Microsoft.Extensions.DependencyInjection;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Tools
@@ -11,7 +13,7 @@ namespace LRReader.UWP.Views.Content.Tools
 		public DeduplicatorHidden()
 		{
 			this.InitializeComponent();
-			Data = (DeduplicatorHiddenViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<DeduplicatorHiddenViewModel>();
 		}
 
 	}

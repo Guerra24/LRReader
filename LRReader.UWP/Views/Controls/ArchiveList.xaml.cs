@@ -1,17 +1,15 @@
-﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Input;
-using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -35,7 +33,7 @@ namespace LRReader.UWP.Views.Controls
 		public ArchiveList()
 		{
 			this.InitializeComponent();
-			Data = (SearchResultsViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SearchResultsViewModel>();
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)

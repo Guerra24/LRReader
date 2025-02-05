@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.ViewModels;
+﻿using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings
@@ -10,7 +12,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public Updates()
 		{
 			this.InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 		}
 
 	}

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -66,7 +65,7 @@ namespace LRReader.UWP.Views.Controls
 		public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register("ToolTip", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
 	}
 
-	public class ItemTemplateSelector : DataTemplateSelector
+	public partial class ItemTemplateSelector : DataTemplateSelector
 	{
 		public DataTemplate LastItem { get; set; } = null!;
 		public DataTemplate OtherItem { get; set; } = null!;

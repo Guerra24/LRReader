@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
@@ -15,7 +14,7 @@ namespace LRReader.UWP.Views.Controls
 
 	public delegate bool GoBackTabEvent();
 
-	public class ModernTab : TabViewItem, ICustomTab
+	public partial class ModernTab : TabViewItem, ICustomTab
 	{
 		//private bool _open;
 

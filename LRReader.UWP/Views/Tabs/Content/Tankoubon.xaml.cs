@@ -1,11 +1,10 @@
-﻿#nullable enable
-using System.Linq;
-using System.Threading.Tasks;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using System.Linq;
 using Windows.Devices.Input;
 using Windows.System;
 using Windows.UI.Core;
@@ -27,7 +26,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Tankoubon()
 		{
 			this.InitializeComponent();
-			Data = (TankoubonViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<TankoubonViewModel>();
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -1,14 +1,14 @@
-﻿#nullable enable
-using System;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views.Controls;
 using LRReader.UWP.Views.Dialogs;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
@@ -36,7 +36,7 @@ namespace LRReader.UWP.Views.Main
 		public HostTabPage()
 		{
 			this.InitializeComponent();
-			Data = (TabsService)DataContext;
+			Data = Service.Services.GetRequiredService<TabsService>();
 			Settings = Service.Settings;
 
 			CoreView = CoreApplication.GetCurrentView();

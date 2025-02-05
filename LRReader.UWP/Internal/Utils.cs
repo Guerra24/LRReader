@@ -15,7 +15,7 @@ namespace LRReader.Internal
 {
 	// TODO: port to native.
 #pragma warning disable CS8305 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-	public class DefaultElementAnimator : ElementAnimator
+	public partial class DefaultElementAnimator : ElementAnimator
 	{
 		private const double DefaultAnimationDurationInMs = 150.0;
 		public static double AnimationSlowdownFactor { get; set; }

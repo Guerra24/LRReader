@@ -1,7 +1,9 @@
-﻿using System;
-using CommunityToolkit.WinUI.Helpers;
+﻿using CommunityToolkit.WinUI.Helpers;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Dialogs;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -19,7 +21,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		public About()
 		{
 			this.InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 
 			switch (this.ActualTheme)
 			{

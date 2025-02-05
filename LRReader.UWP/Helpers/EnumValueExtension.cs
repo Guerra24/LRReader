@@ -1,11 +1,10 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Windows.UI.Xaml.Markup;
 
 namespace LRReader.UWP.Helpers
 {
 	[MarkupExtensionReturnType(ReturnType = typeof(object))]
-	public class EnumValueExtension : MarkupExtension
+	public partial class EnumValueExtension : MarkupExtension
 	{
 		public Type Type { get; set; } = null!;
 

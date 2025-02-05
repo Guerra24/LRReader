@@ -284,7 +284,7 @@ namespace LRReader.UWP.Extensions
 	}
 
 	[MarkupExtensionReturnType(ReturnType = typeof(string))]
-	public class LangStringExtension : MarkupExtension
+	public partial class LangStringExtension : MarkupExtension
 	{
 		public string Map { get; set; } = null!;
 		public string Key { get; set; } = null!;
@@ -295,8 +295,9 @@ namespace LRReader.UWP.Extensions
 		}
 	}
 
+	/*
 	[MarkupExtensionReturnType(ReturnType = typeof(int))]
-	public class IntExtension : MarkupExtension
+	public partial class IntExtension : MarkupExtension
 	{
 
 		public int Value { get; set; }
@@ -308,7 +309,7 @@ namespace LRReader.UWP.Extensions
 	}
 
 	[MarkupExtensionReturnType(ReturnType = typeof(double))]
-	public class DoubleExtension : MarkupExtension
+	public partial class DoubleExtension : MarkupExtension
 	{
 
 		public double Value { get; set; }
@@ -317,6 +318,6 @@ namespace LRReader.UWP.Extensions
 		{
 			return Value;
 		}
-	}
+	}*/
 
 }

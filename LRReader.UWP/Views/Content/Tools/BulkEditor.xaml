@@ -9,7 +9,6 @@
 	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Windows.UI.Xaml.Controls"
-	DataContext="{Binding BulkEditorViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<Style x:Key="ListViewCompact" TargetType="ListView">

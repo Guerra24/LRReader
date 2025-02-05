@@ -12,7 +12,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logo.ico</ApplicationIcon>
-	<Title>LRReader Installer</Title>
+    <Title>LRReader Installer</Title>
     <Description>LRReader Standalone Installer</Description>
   </PropertyGroup>
   <PropertyGroup>

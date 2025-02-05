@@ -1,16 +1,16 @@
-﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -32,7 +32,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public Bookmarks()
 		{
 			this.InitializeComponent();
-			Data = (BookmarksTabViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<BookmarksTabViewModel>();
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 		}
 
@@ -130,7 +130,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		}
 	}
 
-	public class BookmarkTemplateSelector : DataTemplateSelector
+	public partial class BookmarkTemplateSelector : DataTemplateSelector
 	{
 		public DataTemplate CompactTemplate { get; set; } = null!;
 		public DataTemplate FullTemplate { get; set; } = null!;

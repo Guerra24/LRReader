@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LRReader.UWP": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -1,16 +1,14 @@
-﻿#nullable enable
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Items;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Input;
-using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -31,7 +29,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public ArchivesTabContent()
 		{
 			this.InitializeComponent();
-			Data = (ArchivesPageViewModel)DataContext;
+			Data = Service.Services.GetRequiredService<ArchivesPageViewModel>();
 		}
 
 		private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -217,7 +215,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 	}
 
-	public class ArchiveTemplateSelector : DataTemplateSelector
+	public partial class ArchiveTemplateSelector : DataTemplateSelector
 	{
 		public DataTemplate CompactTemplate { get; set; } = null!;
 		public DataTemplate FullTemplate { get; set; } = null!;

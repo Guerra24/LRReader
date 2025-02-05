@@ -11,7 +11,6 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs.Content"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-	DataContext="{Binding TankoubonEditViewModelInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>

@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:internal="using:LRReader.Internal"
-	xmlns:muxcm="using:Microsoft.UI.Xaml.Media">
+	xmlns:internal="using:LRReader.Internal">
 	<internal:DefaultElementAnimator x:Key="ItemsRepeaterAnimator" />
 	<SolidColorBrush x:Key="CustomReaderBackground" Color="Black" />
 

@@ -8,7 +8,6 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	DataContext="{Binding SettingsPageInstance, Source={StaticResource Locator}}"
 	mc:Ignorable="d">
 
 	<Page.Resources>

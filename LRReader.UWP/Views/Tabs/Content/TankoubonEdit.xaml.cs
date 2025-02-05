@@ -1,11 +1,12 @@
-﻿#nullable enable
+﻿using LRReader.Shared;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
+using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using LRReader.Shared;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -25,7 +26,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		public TankoubonEdit()
 		{
 			this.InitializeComponent();
-			ViewModel = (TankoubonEditViewModel)DataContext;
+			ViewModel = Service.Services.GetRequiredService<TankoubonEditViewModel>();
 			ArchiveList.Data.CustomArchiveCheckEvent = CustomArchiveCheck;
 			lang = ResourceLoader.GetForCurrentView("Tabs");
 			VisualStateManager.GoToState(this, "Selected", false);
