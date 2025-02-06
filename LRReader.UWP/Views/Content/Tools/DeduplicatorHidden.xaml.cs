@@ -14,11 +14,8 @@ namespace LRReader.UWP.Views.Content.Tools
 		{
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<DeduplicatorHiddenViewModel>();
-		}
-
-		private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-		{
 			Data.Refresh();
 		}
+
 	}
 }

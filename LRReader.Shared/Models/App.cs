@@ -31,7 +31,7 @@ namespace LRReader.Shared.Models
 	[JsonDerivedType(typeof(ArchiveTabState), 1)]
 	public class TabState
 	{
-		[JsonConverter(typeof(JsonStringEnumConverter))]
+		[JsonConverter(typeof(JsonStringEnumConverter<Tab>))]
 		public Tab Tab { get; set; }
 
 		public TabState(Tab tab) => Tab = tab;

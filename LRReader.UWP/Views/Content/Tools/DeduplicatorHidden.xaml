@@ -10,7 +10,6 @@
 	xmlns:items1="using:LRReader.UWP.Views.Items"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:services="using:LRReader.Shared.Services"
-	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<ext:Shadow x:Name="ElementShadow" />

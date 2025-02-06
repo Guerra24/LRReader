@@ -13,7 +13,7 @@ namespace LRReader.Shared.Models.Main
 	{
 		public string? name { get; set; }
 		public string desc { get; set; } = null!;
-		[JsonConverter(typeof(JsonStringEnumConverter))]
+		[JsonConverter(typeof(JsonStringEnumConverter<PluginParameterType>))]
 		public PluginParameterType type { get; set; }
 	}
 
@@ -32,7 +32,7 @@ namespace LRReader.Shared.Models.Main
 		public string @namespace { get; set; } = null!;
 		public string oneshot_arg { get; set; } = null!;
 		public List<PluginParameter> parameters { get; set; } = null!;
-		[JsonConverter(typeof(JsonStringEnumConverter))]
+		[JsonConverter(typeof(JsonStringEnumConverter<PluginType>))]
 		public PluginType type { get; set; }
 		public string version { get; set; } = null!;
 		public string? login_from { get; set; }

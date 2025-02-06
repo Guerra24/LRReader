@@ -26,17 +26,9 @@ namespace LRReader.Shared.Services
 
 		public string Local => "";
 
-		public async Task<string> GetFile(string path)
-		{
-			await Task.CompletedTask;
-			return "";
-		}
+		public Task<string> GetFile(string path) => Task.FromResult("");
 
-		public async Task<byte[]> GetFileBytes(string path)
-		{
-			await Task.CompletedTask;
-			return new byte[0];
-		}
+		public Task<byte[]> GetFileBytes(string path) => Task.FromResult(new byte[0]);
 
 		public Task StoreFile(string path, string content) => Task.CompletedTask;
 
