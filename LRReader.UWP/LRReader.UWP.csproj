@@ -1,17 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
   <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == 'AnyCPU' ">x64</Platform>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Nullable>enable</Nullable>
     <UseUwp>true</UseUwp>
-    <Platforms>x64;arm64</Platforms>
+    <Platforms>x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
     <DefaultLanguage>en</DefaultLanguage>
-    <PublishAot>true</PublishAot>
+    <PublishAot>false</PublishAot>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
     <RootNamespace>LRReader.UWP</RootNamespace>
     <AssemblyName>LRReader.UWP</AssemblyName>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
@@ -25,12 +29,12 @@
     <AppxLogTelemetryFromSideloadingScript>False</AppxLogTelemetryFromSideloadingScript>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
+    <AppxTestLayoutEnabled>False</AppxTestLayoutEnabled>
     <Win32Resource>Resources\MiddleClickScrolling-CursorType.res</Win32Resource>
     <Nullable>enable</Nullable>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CsWinRTAotWarningLevel>2</CsWinRTAotWarningLevel>
-    <MicrosoftWindowsSDKBuildToolsMSIXPackageVersion>1.2.20250107.1</MicrosoftWindowsSDKBuildToolsMSIXPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Nightly)' == 'true'">
@@ -47,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250129-build.2033" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250206-build.2040" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250129-preview2" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.250129-preview2" />
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives" Version="8.2.250129-preview2" />
@@ -59,7 +63,7 @@
     <PackageReference Include="CommunityToolkit.Uwp.Triggers" Version="8.2.250129-preview2" />
     <PackageReference Include="Markdig" Version="0.40.0" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2957.106" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
   </ItemGroup>
 
   <ItemGroup>
@@ -134,11 +138,26 @@
     <Message Text="Sideload Build" Importance="High" Condition="'$(Sideload)' == 'true'" />
   </Target>
 
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <AppxPackageDir>$(AppxPackageDirInProjectDir)</AppxPackageDir>
+    <AppxPackageTestDir Condition="'$(AppxPackageDir)' != ''">$(AppxPackageDir)$(ProjectName)\</AppxPackageTestDir>
+  </PropertyGroup>
+
   <!-- Fixes xBind inside template inside style inside resource dictionary with code-behind class -->
   <Target Name="FixupXamlCompiler" BeforeTargets="CoreCompile">
     <PropertyGroup>
       <File>$(IntermediateOutputPath)Resources\Templates.g.cs</File>
     </PropertyGroup>
     <WriteLinesToFile File="$(File)" Lines="$([System.IO.File]::ReadAllText($(File)).Replace('(global::Windows.UI.Xaml.Data.IValueConverter) (this.localResources.ContainsKey(key) ? this.localResources[key] : global::Windows.UI.Xaml.Application.Current.Resources[key]);','(global::Windows.UI.Xaml.Data.IValueConverter) global::Windows.UI.Xaml.Application.Current.Resources[key];'))" Overwrite="true" />
+  </Target>
+  <!-- Fixes MSIX tooling deleting intermediate msix and other files required for sideload -->
+  <Target Name="_DeleteAppxOutputFolderIfNecessary">
+    <Message Importance="High" Text="Remove _DeleteAppxOutputFolderIfNecessary" />
+  </Target>
+  <!-- Remove uneeded files -->
+  <Target Name="_AddWindowsInstallScriptToTestLayout">
+    <Message Importance="High" Text="Remove _AddWindowsInstallScriptToTestLayout" />
   </Target>
 </Project>

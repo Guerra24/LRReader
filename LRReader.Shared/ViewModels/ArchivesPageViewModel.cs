@@ -39,14 +39,14 @@ namespace LRReader.Shared.ViewModels
 
 		public void LoadBookmarks()
 		{
-			SortBy.Clear();
+			/*SortBy.Clear();
 			foreach (var n in Archives.Namespaces)
 				SortBy.Add(n);
 			SortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
 			SuggestedTags.Clear();
 			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
-				SuggestedTags.Add(tag.GetNamespacedTag());
+				SuggestedTags.Add(tag.GetNamespacedTag());*/
 			if (Settings.OpenBookmarksStart && Archives.Archives.Count > 0)
 				foreach (var b in Settings.Profile.Bookmarks)
 				{

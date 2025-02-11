@@ -30,16 +30,17 @@ jobs:
         CERT_BASE64: ${{ secrets.CERT_BASE64 }}
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
+        [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
+        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
+        $Thumbprint = (Import-PfxCertificate .\Cert.pfx -Password (ConvertTo-SecureString "${env:CERT_PASSWORD}" -AsPlainText -Force) -CertStoreLocation Cert:\CurrentUser\My).Thumbprint
+        Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
         [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
-        [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
-        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
         MSBuild LRReader.UWP.Servicing.CertInstaller\LRReader.UWP.Servicing.CertInstaller.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=AnyCPU
         Move-Item -Path "./LRReader.UWP.Servicing.CertInstaller/bin/Release/net472/CertInstaller.exe" -Destination "./LRReader.UWP/zServicing/CertInstaller.exe" -Force
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode="SideloadOnly" /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="" /p:PackageCertificateKeyFile="..\Cert.pfx" /p:PackageCertificatePassword="${env:CERT_PASSWORD}" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)"
-        Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
@@ -142,7 +143,7 @@ jobs:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly" /p:AppxPackageSigningEnabled=false
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:UapAppxPackageBuildMode="StoreOnly" /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:

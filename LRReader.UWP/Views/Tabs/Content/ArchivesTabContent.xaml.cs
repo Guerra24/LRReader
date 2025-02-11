@@ -139,8 +139,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			reloading = true;
 			Data.ControlsEnabled = false;
 			await Data.Refresh();// THIS ---------------
-			AscFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Ascending;
-			DesFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Descending;
 			await HandleSearch();
 			Data.ControlsEnabled = true;
 			reloading = false;

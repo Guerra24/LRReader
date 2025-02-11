@@ -19,8 +19,8 @@
     <PackageReference Include="Caching.dll" Version="2.0.0.1" />
     <PackageReference Include="JxlNet" Version="0.11.1.1" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="NReco.Logging.File" Version="1.2.2" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="Sentry" Version="5.1.0" />
