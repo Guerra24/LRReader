@@ -175,7 +175,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
-			Data.OrderBy = (Order)Enum.Parse(typeof(Order), ((RadioMenuFlyoutItem)sender).Tag as string);
+			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (string)((RadioMenuFlyoutItem)sender).Tag);
 			await HandleSearch();
 		}
 

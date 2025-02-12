@@ -292,7 +292,7 @@ namespace LRReader.Shared.ViewModels
 		public string? Color { get; set; }
 		public RelayCommand<EditableTag> Command { get; internal set; } = null!;
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is AddTag || this is AddTag)
 				return false;

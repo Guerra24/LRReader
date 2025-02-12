@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using LRReader.UWP.Extensions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,6 +18,7 @@ namespace LRReader.UWP.Views.Dialogs
 		public CategoryArchive(string archiveID, string title)
 		{
 			this.InitializeComponent();
+			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
 			Title = title;
 			Data = new CategoryArchiveViewModel(archiveID);
 			Data.SelectedCategories = CategoriesList.SelectedItems;

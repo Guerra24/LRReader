@@ -34,7 +34,7 @@ namespace LRReader.UWP.Views.Content.Tools
 			Details.SetVisualOpacity(0);
 		}
 
-		private void RightScroller_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		private void RightScroller_ViewChanged(object? sender, ScrollViewerViewChangedEventArgs e)
 		{
 			if (!e.IsIntermediate)
 			{
@@ -48,7 +48,7 @@ namespace LRReader.UWP.Views.Content.Tools
 			}
 		}
 
-		private void LeftScroller_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		private void LeftScroller_ViewChanged(object? sender, ScrollViewerViewChangedEventArgs e)
 		{
 			if (!e.IsIntermediate)
 			{
@@ -93,7 +93,7 @@ namespace LRReader.UWP.Views.Content.Tools
 
 		private void Flyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs e) => e.Cancel = !Service.Platform.Active;
 
-		private async void CloseButton_Click(object sender, RoutedEventArgs e)
+		private async void CloseButton_Click(object? sender, RoutedEventArgs e)
 		{
 			LeftFlyout.Hide();
 			RightFlyout.Hide();

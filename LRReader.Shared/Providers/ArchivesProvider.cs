@@ -117,8 +117,8 @@ public static class ArchivesProvider
 		{
 			case HttpStatusCode.OK:
 				var download = new DownloadPayload();
-				var header = r.ContentHeaders.First(h => h.Name?.Equals("Content-Disposition") ?? false).Value;
-				var parms = header?.Split(';').Select(s => s.Trim());
+				var header = r.ContentHeaders!.First(h => h.Name.Equals("Content-Disposition")).Value;
+				var parms = header.Split(';').Select(s => s.Trim());
 				var natr = parms.First(s => s.StartsWith("filename"));
 				var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
 

@@ -40,7 +40,7 @@ namespace LRReader.UWP.Services
 
 		private double _dualScreenWidth;
 
-		private Root? Root;
+		private Root Root = null!;
 
 		public ApplicationExecutionState ExecutionState { get; private set; }
 
@@ -49,6 +49,7 @@ namespace LRReader.UWP.Services
 			Tabs = tabs;
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
+#pragma warning disable CA1416 // Validate platform compatibility
 			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
 				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
 
@@ -79,6 +80,7 @@ namespace LRReader.UWP.Services
 					}
 				}
 			}
+#pragma warning restore CA1416 // Validate platform compatibility
 
 			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
 
@@ -144,7 +146,7 @@ namespace LRReader.UWP.Services
 
 		public override string GetLocalizedString(string key)
 		{
-			var split = key.Split(new[] { '/' }, 2);
+			var split = key.Split(['/'], 2);
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
@@ -162,7 +164,7 @@ namespace LRReader.UWP.Services
 			}
 		}
 
-		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) => Root?.FrameContent.Navigate(GetPage(page), parameter, CreateTransition<NavigationTransitionInfo>(transition));
+		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) => Root.FrameContent.Navigate(GetPage(page), parameter, CreateTransition<NavigationTransitionInfo>(transition));
 
 		public override void CopyToClipboard(string text)
 		{
@@ -172,7 +174,7 @@ namespace LRReader.UWP.Services
 			Clipboard.SetContent(dataPackage);
 		}
 
-		public override void ChangeTheme(AppTheme theme) => Root?.ChangeTheme(theme);
+		public override void ChangeTheme(AppTheme theme) => Root.ChangeTheme(Theme = theme);
 
 		public string GetPackageFamilyName() => Package.Current.Id.FamilyName;
 

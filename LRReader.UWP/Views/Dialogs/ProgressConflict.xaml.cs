@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
+using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 
@@ -13,6 +15,7 @@ namespace LRReader.UWP.Views.Dialogs
 		public ProgressConflict(int local, int remote, int total)
 		{
 			this.InitializeComponent();
+			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
 
 			var lang = ResourceLoader.GetForCurrentView("Dialogs");
 			ProgressOptions.Items.Add(lang.GetString("ProgressConflict/Local").AsFormat(local, total));

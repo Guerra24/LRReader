@@ -6,6 +6,7 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
@@ -18,6 +19,7 @@ namespace LRReader.UWP.Views.Dialogs
 		public ThumbnailPicker(string id)
 		{
 			this.InitializeComponent();
+			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
 			this.id = id;
 		}
 

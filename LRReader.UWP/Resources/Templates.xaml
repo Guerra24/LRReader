@@ -634,13 +634,6 @@
 									</Storyboard>
 								</VisualState>
 								<VisualState x:Name="Disabled">
-									<VisualState.StateTriggers>
-										<ct:IsEqualStateTrigger Value="{TemplateBinding IsEnabled}">
-											<ct:IsEqualStateTrigger.To>
-												<x:Boolean>False</x:Boolean>
-											</ct:IsEqualStateTrigger.To>
-										</ct:IsEqualStateTrigger>
-									</VisualState.StateTriggers>
 									<Storyboard>
 										<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Background">
 											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
@@ -773,13 +766,6 @@
 									</Storyboard>
 								</VisualState>
 								<VisualState x:Name="Disabled">
-									<VisualState.StateTriggers>
-										<ct:IsEqualStateTrigger Value="{TemplateBinding IsEnabled}">
-											<ct:IsEqualStateTrigger.To>
-												<x:Boolean>False</x:Boolean>
-											</ct:IsEqualStateTrigger.To>
-										</ct:IsEqualStateTrigger>
-									</VisualState.StateTriggers>
 									<Storyboard>
 										<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Background">
 											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />

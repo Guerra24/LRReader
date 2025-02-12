@@ -122,7 +122,7 @@ namespace LRReader.Shared.Internal
 							}
 
 							// Get the next item from the queue
-							item = _tasks.First.Value;
+							item = _tasks.First!.Value;
 							_tasks.RemoveFirst();
 						}
 

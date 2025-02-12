@@ -100,7 +100,7 @@ namespace LRReader.UWP.Views.Main
 			WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
 
-		private void HostTabPage_BackRequested(object sender, BackRequestedEventArgs e)
+		private void HostTabPage_BackRequested(object? sender, BackRequestedEventArgs e)
 		{
 			e.Handled = Data.CurrentTab!.BackRequested();
 		}

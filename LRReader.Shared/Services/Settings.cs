@@ -30,7 +30,7 @@ namespace LRReader.Shared.Services
 		private ServerProfile _profile = null!;
 		public ServerProfile Profile
 		{
-			get => _profile!;
+			get => _profile;
 			set
 			{
 				if (value != null)
@@ -484,12 +484,12 @@ namespace LRReader.Shared.Services
 			SettingsVersionRoamed = CurrentRoamedVersion;
 		}
 
-		private void ProfilesChanges(object sender, NotifyCollectionChangedEventArgs e)
+		private void ProfilesChanges(object? sender, NotifyCollectionChangedEventArgs e)
 		{
 			SaveProfiles();
 			if (e.Action == NotifyCollectionChangedAction.Remove)
 			{
-				foreach (var item in e.OldItems)
+				foreach (var item in e.OldItems!)
 				{
 					if (item is ServerProfile profile)
 					{
@@ -512,7 +512,7 @@ namespace LRReader.Shared.Services
 
 		public void ModifyProfile(string uid, string name, string address, string apikey, bool integration)
 		{
-			var profile = Profiles.FirstOrDefault(p => p.UID.Equals(uid));
+			var profile = Profiles.First(p => p.UID.Equals(uid));
 			profile.Name = name;
 			profile.ServerAddress = address;
 			profile.ServerApiKey = apikey;

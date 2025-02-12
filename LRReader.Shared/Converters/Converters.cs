@@ -116,7 +116,7 @@ public class HtmlEncodingConverter : JsonConverter<string>
 
 	public override string Read(ref Utf8JsonReader reader, Type objectType, JsonSerializerOptions serializer)
 	{
-		return WebUtility.HtmlDecode(reader.GetString());
+		return WebUtility.HtmlDecode(reader.GetString() ?? "");
 	}
 
 	public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions serializer)

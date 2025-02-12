@@ -621,7 +621,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 3));
 		}
 
-		private async void Preload(ReaderImageSet set)
+		private async void Preload(ReaderImageSet? set)
 		{
 			if (set == null)
 				return;
@@ -691,7 +691,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await ReaderImage.ResizeHeight((int)Math.Round(ScrollViewer.ExtentHeight));
 		}
 
-		private void CompositionTarget_Rendering(object sender, object e)
+		private void CompositionTarget_Rendering(object? sender, object e)
 		{
 			var timings = (RenderingEventArgs)e;
 			var delta = timings.RenderingTime.TotalSeconds - _previousTime.TotalSeconds;

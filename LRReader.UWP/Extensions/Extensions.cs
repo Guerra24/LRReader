@@ -46,6 +46,20 @@ namespace LRReader.UWP.Extensions
 
 	}
 
+	public static class AppExtensions
+	{
+		public static ElementTheme ToXamlTheme(this AppTheme theme)
+		{
+			return theme switch
+			{
+				AppTheme.System => ElementTheme.Default,
+				AppTheme.Dark => ElementTheme.Dark,
+				AppTheme.Light => ElementTheme.Light,
+				_ => throw new NotImplementedException()
+			};
+		}
+	}
+
 	public class TwoPaneViewExt : DependencyObject
 	{
 		public static readonly DependencyProperty EnableDualScreenProperty = DependencyProperty.RegisterAttached("EnableDualScreen", typeof(bool), typeof(TwoPaneView), new PropertyMetadata(false));

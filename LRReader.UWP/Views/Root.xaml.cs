@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -13,21 +14,7 @@ namespace LRReader.UWP.Views
 			this.InitializeComponent();
 		}
 
-		public void ChangeTheme(AppTheme theme)
-		{
-			switch (theme)
-			{
-				case AppTheme.System:
-					RequestedTheme = ElementTheme.Default;
-					break;
-				case AppTheme.Dark:
-					RequestedTheme = ElementTheme.Dark;
-					break;
-				case AppTheme.Light:
-					RequestedTheme = ElementTheme.Light;
-					break;
-			}
-		}
+		public void ChangeTheme(AppTheme theme) => RequestedTheme = theme.ToXamlTheme();
 
 		public void UpdateThemeColors()
 		{

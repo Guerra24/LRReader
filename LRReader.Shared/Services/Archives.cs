@@ -126,7 +126,7 @@ namespace LRReader.Shared.Services
 			return null;
 		}
 
-		public bool TryGetArchive(string id, out Archive archive) => Archives.TryGetValue(id, out archive);
+		public bool TryGetArchive(string id, out Archive? archive) => Archives.TryGetValue(id, out archive);
 
 		public bool HasArchive(string id) => Archives.ContainsKey(id);
 

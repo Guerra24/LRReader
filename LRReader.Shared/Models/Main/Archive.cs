@@ -158,7 +158,7 @@ namespace LRReader.Shared.Models.Main
 			tags = BuildStringTags();
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is null)
 				return false;
@@ -176,7 +176,7 @@ namespace LRReader.Shared.Models.Main
 			return arcid.GetHashCode();
 		}
 
-		public bool Equals(Archive other)
+		public bool Equals(Archive? other)
 		{
 			if (other is null)
 				return false;
@@ -215,7 +215,7 @@ namespace LRReader.Shared.Models.Main
 			this.Page = page;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return obj is ImagePageSet set &&
 				   (Image?.Equals(set.Image) ?? Page == set.Page);
@@ -273,7 +273,7 @@ namespace LRReader.Shared.Models.Main
 
 		public string Right { get; set; } = null!;
 
-		public override bool Equals(object obj) => obj is ArchiveHit hit &&
+		public override bool Equals(object? obj) => obj is ArchiveHit hit &&
 			((Left.Equals(hit.Left) && Right.Equals(hit.Right)) || (Left.Equals(hit.Right) && Right.Equals(hit.Left)));
 
 		public override int GetHashCode() => Left.GetHashCode() + Right.GetHashCode();

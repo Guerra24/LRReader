@@ -242,7 +242,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		private async void SaveSetting(object value, [CallerMemberName] string? propertyName = null) => await Karen.SaveSetting((SettingType)Enum.Parse(typeof(SettingType), propertyName), value);
+		private async void SaveSetting(object value, [CallerMemberName] string propertyName = null!) => await Karen.SaveSetting((SettingType)Enum.Parse(typeof(SettingType), propertyName), value);
 
 		public async Task UpdateServerInfo()
 		{

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
+using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 
@@ -13,6 +15,7 @@ namespace LRReader.UWP.Views.Dialogs
 		public CreateCategory(bool edit)
 		{
 			this.InitializeComponent();
+			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
 			if (edit)
 				PrimaryButtonText = ResourceLoader.GetForCurrentView("Generic").GetString("Save");

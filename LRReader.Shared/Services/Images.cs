@@ -157,7 +157,7 @@ public class ImagesService : IService
 					//	using (var md5 = System.Security.Cryptography.MD5.Create())
 					//		if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
 					//			return null;
-					await Task.Run(() => Directory.CreateDirectory(Path.GetDirectoryName(path))).ConfigureAwait(false);
+					await Task.Run(() => Directory.CreateDirectory(Path.GetDirectoryName(path)!)).ConfigureAwait(false);
 					await Files.StoreFile(path, data).ConfigureAwait(false);
 				}
 				thumbnailsCache.AddReplace(thumbKey, data);

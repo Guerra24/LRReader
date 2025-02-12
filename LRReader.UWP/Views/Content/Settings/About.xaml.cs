@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.WinUI.Helpers;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 
-			switch (this.ActualTheme)
+			switch (ActualTheme)
 			{
 				case ElementTheme.Light:
 					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-light.png");
@@ -32,19 +31,16 @@ namespace LRReader.UWP.Views.Content.Settings
 					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-dark.png");
 					break;
 			}
-
-			var Listener = new ThemeListener();
-			Listener.ThemeChanged += Listener_ThemeChanged;
 		}
 
-		private void Listener_ThemeChanged(ThemeListener sender)
+		private void Page_ActualThemeChanged(FrameworkElement sender, object args)
 		{
-			switch (sender.CurrentTheme)
+			switch (ActualTheme)
 			{
-				case ApplicationTheme.Light:
+				case ElementTheme.Light:
 					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-light.png");
 					break;
-				case ApplicationTheme.Dark:
+				case ElementTheme.Dark:
 					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-dark.png");
 					break;
 			}
@@ -72,5 +68,6 @@ namespace LRReader.UWP.Views.Content.Settings
 			var dialog = new MarkdownDialog(lang.GetString("About/Privacy"), await FileIO.ReadTextAsync(file));
 			await dialog.ShowAsync();
 		}
+
 	}
 }

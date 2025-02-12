@@ -40,7 +40,7 @@ namespace LRReader.UWP.Views.Tabs
 			await Data.CheckForUpdates();
 		}
 
-		private async void DispatcherTimer_Tick(object sender, object e)
+		private async void DispatcherTimer_Tick(object? sender, object e)
 		{
 			await Data.UpdateShinobuStatus();
 			await Data.UpdateServerInfo();

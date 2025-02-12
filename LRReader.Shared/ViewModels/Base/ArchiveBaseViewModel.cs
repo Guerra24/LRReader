@@ -224,8 +224,7 @@ namespace LRReader.Shared.ViewModels.Base
 		{
 			if (tag.Namespace.Equals("source", StringComparison.OrdinalIgnoreCase))
 			{
-				Uri result;
-				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out result))
+				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out var result))
 				{
 					var dialogResult = await Platform.OpenGenericDialog(
 						Platform.GetLocalizedString("Dialogs/OpenLink/Title"),

@@ -14,6 +14,15 @@ namespace LRReader.UWP.Views.Controls
 		public ModernInput()
 		{
 			this.DefaultStyleKey = typeof(ModernInput);
+			IsEnabledChanged += ModernInput_IsEnabledChanged;
+		}
+
+		private void ModernInput_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if ((bool)e.NewValue)
+				VisualStateManager.GoToState(this, "Normal", true);
+			else
+				VisualStateManager.GoToState(this, "Disabled", true);
 		}
 
 		public object Control

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.Services;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
@@ -18,6 +19,7 @@ namespace LRReader.UWP.Views.Dialogs
 		public ServerProfileDialog(bool edit)
 		{
 			this.InitializeComponent();
+			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
 			if (edit)
 				PrimaryButtonText = ResourceLoader.GetForCurrentView("Generic").GetString("Save");

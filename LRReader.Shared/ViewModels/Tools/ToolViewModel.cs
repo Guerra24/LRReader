@@ -51,13 +51,12 @@ namespace LRReader.Shared.ViewModels.Tools
 		}
 		public int CurrentStepPlusOne => Math.Min(CurrentStep + 1, MaxSteps);
 		public bool Indeterminate => CurrentProgress == -2;
-		private object? _toolStatus;
-		[DisallowNull]
-		public object? ToolStatus
+		private object _toolStatus = null!;
+		public object ToolStatus
 		{
 			get
 			{
-				return Platform.GetLocalizedString(_toolStatus?.GetType().GetMember(_toolStatus.ToString())[0].GetCustomAttribute<DescriptionAttribute>(false).Description ?? "");
+				return Platform.GetLocalizedString(_toolStatus.GetType().GetMember(_toolStatus.ToString()!)[0].GetCustomAttribute<DescriptionAttribute>(false)?.Description ?? "");
 			}
 
 			set => SetProperty(ref _toolStatus, value);

@@ -163,7 +163,7 @@ namespace LRReader.UWP.Views.Items
 			if (_open && !TagsFlyout.IsOpen)
 			{
 				_open = false;
-				var placement = (FlyoutPlacementMode)typeof(TagsPopupLocation).GetMember(Service.Settings.TagsPopup.ToString())[0].GetCustomAttribute<IntAttribute>(false).Value;
+				var placement = (FlyoutPlacementMode)typeof(TagsPopupLocation).GetMember(Service.Settings.TagsPopup.ToString())[0].GetCustomAttribute<IntAttribute>(false)!.Value;
 				TagsFlyout.ShowAt(TagsGrid, new FlyoutShowOptions
 				{
 					Position = e.GetCurrentPoint(TagsGrid).Position,

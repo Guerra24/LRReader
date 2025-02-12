@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.WinUI.Helpers;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +21,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 
-			switch (this.ActualTheme)
+			switch (ActualTheme)
 			{
 				case ElementTheme.Light:
 					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-light.png");
@@ -31,19 +30,16 @@ namespace LRReader.UWP.Views.Content.Settings
 					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-dark.png");
 					break;
 			}
-
-			var Listener = new ThemeListener();
-			Listener.ThemeChanged += Listener_ThemeChanged;
 		}
 
-		private void Listener_ThemeChanged(ThemeListener sender)
+		private void ModernBasePage_ActualThemeChanged(FrameworkElement sender, object args)
 		{
-			switch (sender.CurrentTheme)
+			switch (ActualTheme)
 			{
-				case ApplicationTheme.Light:
+				case ElementTheme.Light:
 					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-light.png");
 					break;
-				case ApplicationTheme.Dark:
+				case ElementTheme.Dark:
 					Logo.Source = GetIcon("ms-appx:///Assets/Other/LANraragi-dark.png");
 					break;
 			}

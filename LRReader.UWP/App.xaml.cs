@@ -1,12 +1,10 @@
-﻿using System;
-using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
-using System.Security;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views;
 using Sentry;
 using Sentry.Protocol;
+using System;
+using System.Runtime.InteropServices;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
@@ -50,7 +48,6 @@ namespace LRReader.UWP
 					options.Distribution = "store";
 					options.Environment = "stable";
 #endif
-					options.StackTraceMode = StackTraceMode.Original;
 					options.AutoSessionTracking = true;
 					var ver = Package.Current.Id.Version;
 					options.Release = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";

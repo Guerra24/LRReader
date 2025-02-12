@@ -37,6 +37,7 @@ namespace LRReader.Shared.Services
 		public abstract bool DualScreen { get; }
 		public abstract double DualScreenWidth { get; }
 		public bool Active { get; protected set; }
+		public AppTheme Theme { get; protected set; }
 
 		public abstract void Init();
 		public abstract void ChangeTheme(AppTheme theme);
@@ -60,7 +61,7 @@ namespace LRReader.Shared.Services
 
 		public Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args) => OpenDialog<IDialog>(dialog, args);
 
-		public async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[] args) where D : IDialog
+		public async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog
 		{
 			await DialogSemaphore.WaitAsync();
 			try
@@ -76,7 +77,7 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		public D CreateDialog<D>(Dialog dialog, params object?[] args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args);
+		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args)!;
 
 		public abstract Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null);
 
@@ -88,7 +89,7 @@ namespace LRReader.Shared.Services
 
 		public void MapTransitionToType(PagesTransition transition, Type type) => Transitions.Add(transition, type);
 
-		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition]);
+		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition])!;
 
 		public abstract Task<bool> CheckAppInstalled(string package);
 	}
@@ -110,7 +111,7 @@ namespace LRReader.Shared.Services
 
 		public override Task<bool> OpenInBrowser(Uri uri)
 		{
-			return Task.Run(() => false);
+			return Task.FromResult(false);
 		}
 
 		public override string GetLocalizedString(string key) => key;
