@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -34,7 +35,7 @@ namespace LRReader.Shared.Services
 			Dispatcher = dispatcher;
 		}
 
-		public void MapTabToType(Tab tab, Type type) => Tabs.Add(tab, type);
+		public void MapTabToType(Tab tab, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type) => Tabs.Add(tab, type);
 
 		[RelayCommand]
 		public void OpenTab(Tab tab) => OpenTab(tab, true);

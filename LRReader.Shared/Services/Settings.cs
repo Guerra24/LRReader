@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using Sentry;
+using System.Diagnostics.CodeAnalysis;
 #if WINDOWS_UWP
 using Windows.Storage.Pickers;
 using Windows.Storage;
@@ -18,6 +19,7 @@ using Windows.Storage.AccessCache;
 
 namespace LRReader.Shared.Services
 {
+	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 	public partial class SettingsService : ObservableObject, IService, IDisposable
 	{
 		private readonly ISettingsStorageService SettingsStorage;

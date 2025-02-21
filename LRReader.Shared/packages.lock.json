@@ -2,11 +2,11 @@
   "version": 1,
   "dependencies": {
     "net9.0-windows10.0.26100": {
-      "Caching.dll": {
+      "Caching": {
         "type": "Direct",
-        "requested": "[2.0.0.1, )",
-        "resolved": "2.0.0.1",
-        "contentHash": "/fImQ2aVuUrAkEKgO72MdoBYkVoYvWDiNSGF9UJ7demJXuTNHpMnIqTh4ZCDHQccFSSRKzmDpndyl9owgxw7iA==",
+        "requested": "[3.1.3, )",
+        "resolved": "3.1.3",
+        "contentHash": "LXvqiQdAGJrVjd9CetSwaJpn5MNuKT1g5JGtBb6q4UKBF/RTpF2a08U9tke5Igns8hmUQBRt1H9qJCDMcL/P3w==",
         "dependencies": {
           "Microsoft.CSharp": "4.7.0"
         }
@@ -53,6 +53,12 @@
           "Microsoft.Extensions.Options": "9.0.2"
         }
       },
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[9.0.2, )",
+        "resolved": "9.0.2",
+        "contentHash": "+KFnCLVPicEq99ko0tq+ycTvNLXHw0tImmTZjPloB/DOFLPT56KLfk5aS7wbgXRPzYhXTTBYLGaABea5mke77w=="
+      },
       "NReco.Logging.File": {
         "type": "Direct",
         "requested": "[1.2.2, )",
@@ -72,9 +78,9 @@
       },
       "Sentry": {
         "type": "Direct",
-        "requested": "[5.1.0, )",
-        "resolved": "5.1.0",
-        "contentHash": "G9ynQGBc937yO+TFda09WQfTHKiwqVN8pgtM7LU6o2ciu8WVAE8IceSW0olp6nI9nWj99DtV/KAS2OKGK4B+Vg=="
+        "requested": "[5.1.1, )",
+        "resolved": "5.1.1",
+        "contentHash": "FvdRStUwxXtt9g4fHaGQ5/a9otA6RiLznyTdkyCzIoUbOupwS4WNGF8CGvqDJifkltCJZj+4J8K4/f2RqFVuzg=="
       },
       "SixLabors.ImageSharp": {
         "type": "Direct",

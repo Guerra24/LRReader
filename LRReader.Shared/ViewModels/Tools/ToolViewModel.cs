@@ -1,21 +1,19 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using LRReader.Shared.Services;
+using LRReader.Shared.Tools;
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using LRReader.Shared.Services;
-using LRReader.Shared.Tools;
 
 namespace LRReader.Shared.ViewModels.Tools
 {
 
-	public abstract class ToolViewModel<T> : ObservableObject
+	public abstract partial class ToolViewModel<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T> : ObservableObject  where T : Enum
 	{
 		protected readonly PlatformService Platform;
-
-		public AsyncRelayCommand ExecuteCommand { get; }
 
 		private int _maxProgress;
 		public int MaxProgress
@@ -51,48 +49,24 @@ namespace LRReader.Shared.ViewModels.Tools
 		}
 		public int CurrentStepPlusOne => Math.Min(CurrentStep + 1, MaxSteps);
 		public bool Indeterminate => CurrentProgress == -2;
-		private object _toolStatus = null!;
-		public object ToolStatus
-		{
-			get
-			{
-				return Platform.GetLocalizedString(_toolStatus.GetType().GetMember(_toolStatus.ToString()!)[0].GetCustomAttribute<DescriptionAttribute>(false)?.Description ?? "");
-			}
-
-			set => SetProperty(ref _toolStatus, value);
-		}
-		private string? _estimatedTime;
-		[DisallowNull]
-		public string? EstimatedTime
-		{
-			get => _estimatedTime;
-			set => SetProperty(ref _estimatedTime, value);
-		}
+		[ObservableProperty]
+		[NotifyPropertyChangedFor(nameof(ToolStatusMessage))]
+		private T _toolStatus = default!;
+		public string ToolStatusMessage => Platform.GetLocalizedString(typeof(T).GetMember(ToolStatus!.ToString()!)[0].GetCustomAttribute<DescriptionAttribute>(false)?.Description ?? "");
+		[ObservableProperty]
+		private string _estimatedTime = "";
+		[ObservableProperty]
 		private int _threads = Math.Max(Environment.ProcessorCount, 1);
-		public int Threads
-		{
-			get => _threads;
-			set => SetProperty(ref _threads, value);
-		}
+		[ObservableProperty]
 		private string? _errorTitle;
-		public string? ErrorTitle
-		{
-			get => _errorTitle;
-			set => SetProperty(ref _errorTitle, value);
-		}
+		[ObservableProperty]
 		private string? _errorDescription;
-		public string? ErrorDescription
-		{
-			get => _errorDescription;
-			set => SetProperty(ref _errorDescription, value);
-		}
 
 		protected Progress<ToolProgress<T>> Progress;
 
 		public ToolViewModel(PlatformService platform)
 		{
 			Platform = platform;
-			ExecuteCommand = new AsyncRelayCommand(Execute);
 			Progress = new Progress<ToolProgress<T>>(p =>
 			{
 				ToolStatus = p.Status!;
@@ -107,6 +81,7 @@ namespace LRReader.Shared.ViewModels.Tools
 			});
 		}
 
+		[RelayCommand]
 		protected abstract Task Execute();
 
 	}

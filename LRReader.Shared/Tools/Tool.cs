@@ -8,7 +8,7 @@ using Sentry;
 namespace LRReader.Shared.Tools
 {
 
-	public struct ToolProgress<T>
+	public struct ToolProgress<T> where T : Enum
 	{
 		public T Status { get; set; }
 		public int MaxProgress { get; set; }
@@ -47,7 +47,7 @@ namespace LRReader.Shared.Tools
 
 	}
 
-	public abstract class Tool<T, P, R, E> where P : IToolParams
+	public abstract class Tool<T, P, R, E> where P : IToolParams where T : Enum
 	{
 
 		private readonly PlatformService Platform;

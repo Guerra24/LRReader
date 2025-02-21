@@ -12,23 +12,17 @@ using Sentry;
 
 namespace LRReader.Shared.Services;
 
-public class RawImage
-{
-	public byte[] Data { get; set; } = null!;
-	public Size Size { get; set; }
-}
-
 public class ImagesService : IService
 {
 	private readonly IFilesService Files;
 	private readonly ImageProcessingService ImageProcessing;
 
+	// Implement persistence
+	// https://github.com/jchristn/Caching?tab=readme-ov-file#persistence
 	private LRUCache<string, byte[]> imagesCache;
 	private LRUCache<string, Size> imagesSizeCache;
 	private LRUCache<string, byte[]> thumbnailsCache;
 	private DirectoryInfo thumbnailCacheDirectory;
-
-	//private static readonly string NoThumbHash = "BE17DA00E485ECAFDCB25101EE4FBA34";
 
 	public ImagesService(IFilesService files, ImageProcessingService imageProcessing)
 	{
@@ -133,17 +127,6 @@ public class ImagesService : IService
 					if (cancellationToken.IsCancellationRequested)
 						return null;
 					data = await Files.GetFileBytes(path).ConfigureAwait(false);
-					/*if (data.Length == 55876)
-						using (var md5 = System.Security.Cryptography.MD5.Create())
-							if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
-							{
-								File.Delete(path);
-								data = await GetThumbnailRaw(id, page);
-								if (data == null)
-									return null;
-								Directory.CreateDirectory(Path.GetDirectoryName(path));
-								await Files.StoreFile(path, data);
-							}*/
 				}
 				else
 				{
@@ -153,10 +136,6 @@ public class ImagesService : IService
 					if (cancellationToken.IsCancellationRequested)
 						return null;
 					// While overloaded the api might return ok but without any content
-					//if (data.Length == 55876)
-					//	using (var md5 = System.Security.Cryptography.MD5.Create())
-					//		if (NoThumbHash.Equals(string.Concat(md5.ComputeHash(data).Select(x => x.ToString("X2")))))
-					//			return null;
 					await Task.Run(() => Directory.CreateDirectory(Path.GetDirectoryName(path)!)).ConfigureAwait(false);
 					await Files.StoreFile(path, data).ConfigureAwait(false);
 				}
@@ -195,10 +174,7 @@ public class ImagesService : IService
 		return Task.Run(() =>
 		{
 			var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-			long size = 0;
-			foreach (var file in files)
-				size += file.Length;
-			return string.Format("{0:n2} MB", size / 1024f / 1024f);
+			return string.Format("{0:n2} MB", files.Sum(f => f.Length) / 1024f / 1024f);
 		});
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using LRReader.Shared.Models;
@@ -57,7 +58,7 @@ namespace LRReader.Shared.Services
 
 		public object GetSymbol(Symbol symbol) => Symbols[symbol];
 
-		public void MapDialogToType(Dialog tab, Type type) => Dialogs.Add(tab, type);
+		public void MapDialogToType(Dialog tab, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type) => Dialogs.Add(tab, type);
 
 		public Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args) => OpenDialog<IDialog>(dialog, args);
 
@@ -77,18 +78,20 @@ namespace LRReader.Shared.Services
 			}
 		}
 
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2072")]
 		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args)!;
 
 		public abstract Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null);
 
-		public void MapPageToType(Pages page, Type type) => Pages.Add(page, type);
+		public void MapPageToType(Pages page, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type) => Pages.Add(page, type);
 
 		public abstract void GoToPage(Pages page, PagesTransition transition, object? parameter = null);
 
 		public Type GetPage(Pages page) => Pages[page];
 
-		public void MapTransitionToType(PagesTransition transition, Type type) => Transitions.Add(transition, type);
+		public void MapTransitionToType(PagesTransition transition, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type) => Transitions.Add(transition, type);
 
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2072")]
 		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition])!;
 
 		public abstract Task<bool> CheckAppInstalled(string package);

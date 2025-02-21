@@ -196,7 +196,7 @@
 								</TransitionCollection>
 							</StackPanel.Transitions>
 							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{x:Bind Data.ToolStatus.ToString(), Mode=OneWay}" />
+								<TextBlock Text="{x:Bind Data.ToolStatusMessage, Mode=OneWay}" />
 								<TextBlock Visibility="{x:Bind Data.Indeterminate, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 									<Run />
 									<Run Text="{x:Bind Data.CurrentProgress, Mode=OneWay}" />
