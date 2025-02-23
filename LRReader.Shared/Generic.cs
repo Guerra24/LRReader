@@ -64,6 +64,8 @@ public static class JsonSettings
 [JsonSerializable(typeof(List<Plugin>))]
 [JsonSerializable(typeof(List<ArchiveCategories>))]
 [JsonSerializable(typeof(List<Category>))]
+[JsonSerializable(typeof(UpdateChangelog))]
+[JsonSerializable(typeof(VersionSupportedRange))]
 public partial class JsonSourceGenerationContext : JsonSerializerContext
 {
 

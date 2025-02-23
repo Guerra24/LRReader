@@ -8,7 +8,6 @@ using LRReader.UWP.Views.Items;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -63,7 +62,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 					item.Parallax.Source = ArchivesGrid;
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		public async void ExportBookmarks()
 		{
 			var savePicker = new FileSavePicker();
@@ -94,7 +92,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		public async void ImportBookmarks()
 		{
 			var openPicker = new FileOpenPicker();

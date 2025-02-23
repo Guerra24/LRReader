@@ -1,12 +1,11 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using RestSharp;
+using System;
+using System.Net;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared;
 
@@ -93,7 +92,6 @@ public static class ApiExtensions
 			return default;
 	}
 
-	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 	public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this RestResponse restResponse)
 	{
 		var apiResponse = new GenericApiResponse<T>();
@@ -147,7 +145,6 @@ public static class ApiExtensions
 		return apiResponse;
 	}
 
-	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 	public static async Task<GenericApiResult> GetError(this RestResponse restResponse)
 	{
 		var error = await Task.Run(() =>

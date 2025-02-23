@@ -4,9 +4,9 @@
     "net9.0-windows10.0.26100": {
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.250206-build.2040, )",
-        "resolved": "0.1.250206-build.2040",
-        "contentHash": "0oO6SXZpvnAn8F2PSmZ0XOs6iVmOUPCoan3pdzZqZ8pLAsaImJGD+tKHjjlYHd801oUc18pzZ8x7sVu1wH4kQQ==",
+        "requested": "[0.1.250220-build.2047, )",
+        "resolved": "0.1.250220-build.2047",
+        "contentHash": "LW1AIBHu4vY4XGlxOJgwkWtwl49pKFxkmvR9Q9U/rWdGzsXNItjORWje5oDSjLHHAwHl3zGUX5XfAqVc1VetAA==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.2.241223-build.1367",
           "CommunityToolkit.Uwp.Extensions": "8.2.241223-build.1367",
@@ -95,16 +95,6 @@
           "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
           "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001",
           "Win2D.uwp": "1.28.1"
-        }
-      },
-      "CommunityToolkit.Uwp.Triggers": {
-        "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "eaGQIF+q0Nyz2K+DwOEe/dL1Jmba1LwwpPRpESawV+doYRCRNWDf+rWo8BabhC/V3HTClACgIoj4HwhKZXMX2w==",
-        "dependencies": {
-          "CommunityToolkit.Uwp.Helpers": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
         }
       },
       "Markdig": {

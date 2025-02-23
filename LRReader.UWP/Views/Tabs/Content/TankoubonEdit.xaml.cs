@@ -4,7 +4,6 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -78,7 +77,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		private async void CategoryArchives_Drop(object sender, DragEventArgs e)
 		{
 			var deferral = e.GetDeferral();
@@ -88,7 +86,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			deferral.Complete();
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		private void ArchivesGrid_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
 		{
 			e.Data.RequestedOperation = DataPackageOperation.Link;
@@ -106,7 +103,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		private async void ArchivesGrid_Drop(object sender, DragEventArgs e)
 		{
 			var deferral = e.GetDeferral();
@@ -116,7 +112,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			deferral.Complete();
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		private void CategoryArchives_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
 		{
 			e.Data.RequestedOperation = DataPackageOperation.Move;

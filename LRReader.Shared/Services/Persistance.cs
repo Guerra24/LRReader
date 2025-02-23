@@ -1,10 +1,9 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using LRReader.Shared.Models;
+using Sentry;
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using LRReader.Shared.Models;
-using Sentry;
 
 namespace LRReader.Shared.Services
 {
@@ -23,7 +22,6 @@ namespace LRReader.Shared.Services
 			Archives = archives;
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		public async Task Suspend()
 		{
 			if (Settings.Profile != null)
@@ -37,7 +35,6 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		public async Task Restore()
 		{
 			var path = Path.Combine(Files.Local, "Suspended.json");

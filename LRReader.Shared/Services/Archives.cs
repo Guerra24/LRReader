@@ -1,14 +1,13 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using LRReader.Shared.Messages;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
-using LRReader.Shared.Messages;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
 
 namespace LRReader.Shared.Services
 {
@@ -39,7 +38,6 @@ namespace LRReader.Shared.Services
 			metadataDirectory = Directory.CreateDirectory(Files.LocalCache + "/Metadata");
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		public async Task ReloadArchives()
 		{
 			Archives.Clear();
@@ -86,7 +84,6 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026")]
 		private async Task Update(string path)
 		{
 			Directory.CreateDirectory(path);
