@@ -37,7 +37,7 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+		<muxc:RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">
 			<GridView
 				x:Name="ImagesGrid" Padding="0,0,0,64"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"

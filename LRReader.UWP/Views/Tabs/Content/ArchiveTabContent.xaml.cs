@@ -50,7 +50,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private bool _transition;
 
-		private bool? _forceOpen;
+		private bool _open;
 		private int? _forceProgress;
 
 		private TimeSpan _previousTime = TimeSpan.Zero;
@@ -87,7 +87,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await _loadSemaphore.WaitAsync();
 				await Data.HandleConflict();
 				_loadSemaphore.Release();
-				if (_forceOpen ?? Service.Settings.OpenReader)
+				if (_open)
 				{
 					var page = 0;
 					if (Data.Bookmarked)
@@ -98,25 +98,26 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		public async void LoadArchive(Archive archive, IList<Archive>? next = null, int? forceProgress = null, bool? forceOpen = null)
+		public async void LoadArchive(Archive archive, IList<Archive>? next = null, int? forceProgress = null, bool open = false)
 		{
 			Data.Archive = archive;
 			if (next != null)
 				Data.Group = next;
+			if (_open = open || Service.Settings.OpenReader)
+				RefreshContainer.Visibility = Visibility.Collapsed;
 			await Data.Reload();
 			_forceProgress = forceProgress;
-			_forceOpen = forceOpen;
 			_loadSemaphore.Release();
 		}
 
 		private async void OpenReader(int page, object? item = null)
 		{
-			if (_transition)
-				return;
-			_transition = true;
 			var readerSet = Data.ArchiveImagesReader.FirstOrDefault(s => s.Page >= page);
 			if (readerSet == null)
 				return;
+			if (_transition)
+				return;
+			_transition = true;
 			var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 
 			if (Animate && item != null && !Data.UseVerticalReader)
@@ -145,8 +146,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				_wasNew = true;
 			if (Animate)
 			{
-				FadeIn.Start(ReaderBackground);
-				await FadeIn.StartAsync(ScrollViewer);
+				await Task.WhenAll(FadeIn.StartAsync(ReaderBackground), FadeIn.StartAsync(ScrollViewer));
 			}
 			else
 			{
@@ -166,17 +166,24 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (_transition)
 				return;
 			_transition = true;
+			if (RefreshContainer.Visibility == Visibility.Collapsed)
+			{
+				RefreshContainer.Visibility = Visibility.Visible;
+				RefreshContainer.UpdateLayout();
+				await Task.Delay(100); // Otherwise scrollings into view breaks
+			}
+
 			await PlayStop(false);
 			ConnectedAnimation? animLeft = null, animRight = null;
 
 			if (!Data.UseVerticalReader)
 			{
-				var left = ReaderImage.FindDescendant("LeftImage");
-				var right = ReaderImage.FindDescendant("RightImage");
 				ReaderImage.disableAnimation = true;
 
 				if (Animate)
 				{
+					var left = ReaderImage.FindDescendant("LeftImage");
+					var right = ReaderImage.FindDescendant("RightImage");
 					if (Data.ReaderContent.LeftImage != null && left != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
 					{
 						animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
@@ -209,17 +216,18 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 			leftTarget = leftTarget.Clamp(0, count - 1);
 			rightTarget = rightTarget.Clamp(0, count - 1);
-			await ImagesGrid.SmoothScrollIntoViewWithIndexAsync(leftTarget, disableAnimation: false);
+			var delay = ImagesGrid.ContainerFromIndex(leftTarget) == null ? 200 : 50; // Man
+			await ImagesGrid.SmoothScrollIntoViewWithIndexAsync(leftTarget, disableAnimation: true);
+			await Task.Delay(delay);
 			if (Animate)
 			{
-				var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget).FindDescendant("Thumbnail");
-				var rightThumb = ImagesGrid.ContainerFromIndex(rightTarget).FindDescendant("Thumbnail");
+				var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget)?.FindDescendant("Thumbnail");
+				var rightThumb = ImagesGrid.ContainerFromIndex(rightTarget)?.FindDescendant("Thumbnail");
 				if (Data.ReaderContent.LeftImage != null && leftThumb != null && Data.ArchiveImages.Count > leftTarget)
 					animLeft?.TryStart(leftThumb);
 				if (Data.ReaderContent.RightImage != null && rightThumb != null && Data.ArchiveImages.Count > rightTarget)
 					animRight?.TryStart(rightThumb);
-				FadeOut.Start(ReaderBackground);
-				await FadeOut.StartAsync(ScrollViewer);
+				await Task.WhenAll(FadeOut.StartAsync(ReaderBackground), FadeOut.StartAsync(ScrollViewer));
 				await Task.Delay(200); // Give it a sec
 			}
 			else
@@ -233,6 +241,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 			_transition = false;
 			_changePage = false;
+			_open = false;
 		}
 
 		private async void NextArchive() => await NextArchiveAsync();

@@ -164,10 +164,13 @@ public class ImagesService : IService
 		return null;
 	}
 
-	public Task DeleteThumbnailCache()
-	{
-		return Task.Run(() => thumbnailCacheDirectory.GetDirectories().ToList().ForEach(dir => dir.Delete(true)));
-	}
+	public Task DeleteThumbnailCache() => Task.Run(() =>
+											   {
+												   imagesCache.Clear();
+												   imagesSizeCache.Clear();
+												   thumbnailsCache.Clear();
+												   thumbnailCacheDirectory.GetDirectories().ToList().ForEach(dir => dir.Delete(true));
+											   });
 
 	public Task<string> GetThumbnailCacheSize()
 	{

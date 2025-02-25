@@ -22,7 +22,7 @@ namespace LRReader.UWP.Views.Tabs
 		{
 			this.InitializeComponent();
 			this.CustomTabId = "Archive_" + archive.arcid;
-			TabContent.LoadArchive(archive, forceProgress: progress, forceOpen: wasOpen);
+			TabContent.LoadArchive(archive, forceProgress: progress, open: wasOpen);
 			//AutoplayButton.Content = Service.Platform.GetLocalizedString("/Tabs/Archive/AutoplayState/Play");
 		}
 
