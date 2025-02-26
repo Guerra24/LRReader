@@ -150,8 +150,9 @@ namespace LRReader.UWP.Services
 				{
 					if (cancellationToken.IsCancellationRequested)
 						return null;
-					using var ms = new MemoryStream(bytes);
-					await image.SetSourceAsync(ms.AsRandomAccessStream());
+					using var ms = new MemoryStream(bytes, 0, bytes.Length, false, true);
+					using var stream = ms.AsRandomAccessStream();
+					await image.SetSourceAsync(stream);
 				}
 			}
 			catch
@@ -172,8 +173,9 @@ namespace LRReader.UWP.Services
 			{
 				try
 				{
-					using var ms = new MemoryStream(bytes);
-					var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());
+					using var ms = new MemoryStream(bytes, 0, bytes.Length, false, true);
+					using var stream = ms.AsRandomAccessStream();
+					var decoder = await BitmapDecoder.CreateAsync(stream);
 					return new Size((int)decoder.PixelWidth, (int)decoder.PixelHeight);
 				}
 				catch
