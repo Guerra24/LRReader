@@ -40,6 +40,7 @@ namespace LRReader.Shared.Services
 
 		public async Task ReloadArchives()
 		{
+			await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 			Archives.Clear();
 			TagStats.Clear();
 			Namespaces.Clear();

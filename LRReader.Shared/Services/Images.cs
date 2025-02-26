@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Caching;
 using KeyedSemaphores;
+using LRReader.Shared.Extensions;
 using LRReader.Shared.Formats.JpegXL;
 using LRReader.Shared.Providers;
 using Sentry;
@@ -35,48 +36,47 @@ public class ImagesService : IService
 		SixLabors.ImageSharp.Configuration.Default.Configure(new JpegXLConfigurationModule());
 	}
 
-	public Task Init()
+	public async Task Init()
 	{
-		return Task.Run(() =>
+		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+		try
 		{
-			try
+			imagesCache.Clear();
+			imagesSizeCache.Clear();
+			thumbnailsCache.Clear();
+			var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
+			files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14) || file.Length == 0).ToList().ForEach(file => file.Delete());
+			var directories = thumbnailCacheDirectory.GetDirectories();
+			foreach (var dir in directories)
 			{
-				imagesCache.Clear();
-				imagesSizeCache.Clear();
-				thumbnailsCache.Clear();
-				var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-				files.Where(file => file.CreationTime < DateTime.Now.AddDays(-14) || file.Length == 0).ToList().ForEach(file => file.Delete());
-				var directories = thumbnailCacheDirectory.GetDirectories();
-				foreach (var dir in directories)
-				{
-					var archives = dir.GetDirectories();
-					archives.Where(dir => dir.GetFiles().Length == 0).ToList().ForEach(dir => dir.Delete());
-				}
-				directories.Where(dir => dir.GetDirectories().Length == 0).ToList().ForEach(dir => dir.Delete());
+				var archives = dir.GetDirectories();
+				archives.Where(dir => dir.GetFiles().Length == 0).ToList().ForEach(dir => dir.Delete());
 			}
-			catch (Exception e)
-			{
-				SentrySdk.CaptureException(e);
-			}
-		});
+			directories.Where(dir => dir.GetDirectories().Length == 0).ToList().ForEach(dir => dir.Delete());
+		}
+		catch (Exception e)
+		{
+			SentrySdk.CaptureException(e);
+		}
 	}
 
 	public async Task<Size> GetImageSizeCached(string? path)
 	{
 		if (string.IsNullOrEmpty(path))
 			return new Size(0, 0);
-		using (var key = await KeyedSemaphore.LockAsync(path + "size").ConfigureAwait(false))
+		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+		if (imagesSizeCache.TryGet(path!, out var size))
 		{
-			if (imagesSizeCache.TryGet(path!, out var size))
+			return size;
+		}
+		else
+		{
+			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
 			{
-				return size;
-			}
-			else
-			{
-				var image = await GetImageCached(path).ConfigureAwait(false);
+				var image = await GetImageCached(path);
 				if (image == null)
 					return Size.Empty;
-				size = await ImageProcessing.GetImageSize(image).ConfigureAwait(false);
+				size = await ImageProcessing.GetImageSize(image);
 				imagesSizeCache.AddReplace(path!, size);
 				return size;
 			}
@@ -87,15 +87,16 @@ public class ImagesService : IService
 	{
 		if (string.IsNullOrEmpty(path))
 			return null;
-		using (var key = await KeyedSemaphore.LockAsync(path!).ConfigureAwait(false))
+		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+		if (imagesCache.TryGet(path!, out var image) && !forced)
 		{
-			if (imagesCache.TryGet(path!, out var image) && !forced)
+			return image;
+		}
+		else
+		{
+			using (var key = await KeyedSemaphore.LockAsync(path!))
 			{
-				return image;
-			}
-			else
-			{
-				image = await ArchivesProvider.GetImage(path!).ConfigureAwait(false);
+				image = await ArchivesProvider.GetImage(path!);
 				if (image == null)
 					return null;
 				imagesCache.AddReplace(path!, image);
@@ -108,36 +109,39 @@ public class ImagesService : IService
 	{
 		if (string.IsNullOrEmpty(id))
 			return null;
+		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 		var thumbKey = $"{id}.{page}";
 		if (ignoreCache)
-			return await GetThumbnailRaw(id!, page, cancellationToken).ConfigureAwait(false);
-		using (var key = await KeyedSemaphore.LockAsync(thumbKey).ConfigureAwait(false))
+			return await GetThumbnailRaw(id!, page, cancellationToken);
+		if (cancellationToken.IsCancellationRequested)
+			return null;
+		if (thumbnailsCache.TryGet(thumbKey, out var data) && !forced)
 		{
-			if (cancellationToken.IsCancellationRequested)
-				return null;
-			if (thumbnailsCache.TryGet(thumbKey, out var data) && !forced)
+			return data;
+		}
+		else
+		{
+			using (var key = await KeyedSemaphore.LockAsync(thumbKey))
 			{
-				return data;
-			}
-			else
-			{
+				if (cancellationToken.IsCancellationRequested)
+					return null;
 				var path = $"{thumbnailCacheDirectory.FullName}/{id!.Substring(0, 2)}/{id}/{page}.cache";
-				if (await Task.Run(() => File.Exists(path)).ConfigureAwait(false) && !forced)
+				if (File.Exists(path) && !forced)
 				{
 					if (cancellationToken.IsCancellationRequested)
 						return null;
-					data = await Files.GetFileBytes(path).ConfigureAwait(false);
+					data = await Files.GetFileBytes(path);
 				}
 				else
 				{
-					data = await GetThumbnailRaw(id, page, cancellationToken).ConfigureAwait(false);
+					data = await GetThumbnailRaw(id, page, cancellationToken);
 					if (data == null || data.Length == 0)
 						return null;
 					if (cancellationToken.IsCancellationRequested)
 						return null;
 					// While overloaded the api might return ok but without any content
-					await Task.Run(() => Directory.CreateDirectory(Path.GetDirectoryName(path)!)).ConfigureAwait(false);
-					await Files.StoreFile(path, data).ConfigureAwait(false);
+					Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+					await Files.StoreFile(path, data);
 				}
 				thumbnailsCache.AddReplace(thumbKey, data);
 				return data;
@@ -153,31 +157,31 @@ public class ImagesService : IService
 			retries--;
 			if (cancellationToken.IsCancellationRequested)
 				return null;
-			var data = await ArchivesProvider.GetThumbnail(id, true, page).ConfigureAwait(false);
+			var data = await ArchivesProvider.GetThumbnail(id, true, page);
 			if (data == null)
 				return null;
 			if (data.Thumbnail != null)
 				return data.Thumbnail;
-			if (data.Job != null && !await data.Job.WaitForMinionJob(cancellationToken).ConfigureAwait(false))
+			if (data.Job != null && !await data.Job.WaitForMinionJob(cancellationToken))
 				break;
 		}
 		return null;
 	}
 
-	public Task DeleteThumbnailCache() => Task.Run(() =>
-											   {
-												   imagesCache.Clear();
-												   imagesSizeCache.Clear();
-												   thumbnailsCache.Clear();
-												   thumbnailCacheDirectory.GetDirectories().ToList().ForEach(dir => dir.Delete(true));
-											   });
-
-	public Task<string> GetThumbnailCacheSize()
+	public async Task DeleteThumbnailCache()
 	{
-		return Task.Run(() =>
-		{
-			var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-			return string.Format("{0:n2} MB", files.Sum(f => f.Length) / 1024f / 1024f);
-		});
+		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+
+		imagesCache.Clear();
+		imagesSizeCache.Clear();
+		thumbnailsCache.Clear();
+		thumbnailCacheDirectory.GetDirectories().ToList().ForEach(dir => dir.Delete(true));
+	}
+
+	public async Task<string> GetThumbnailCacheSize()
+	{
+		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+		var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
+		return string.Format("{0:n2} MB", files.Sum(f => f.Length) / 1024f / 1024f);
 	}
 }

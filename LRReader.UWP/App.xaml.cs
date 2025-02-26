@@ -5,6 +5,7 @@ using Sentry;
 using Sentry.Protocol;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
@@ -28,6 +29,7 @@ namespace LRReader.UWP
 
 		public App()
 		{
+			Thread.CurrentThread.Name = "Application";
 			Init.EarlyInit();
 			// Manually read setting to prevent services from initializing too early
 			var crashReporting = ApplicationData.Current.LocalSettings.Values["CrashReporting"];

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace LRReader.Shared.Extensions;
 
@@ -36,5 +40,26 @@ public class GridViewExtParameter
 	{
 		Ctrl = ctrl;
 		Item = item;
+	}
+}
+
+public static class MinionExtentions
+{
+
+	public static async Task<bool> WaitForMinionJob<T>(this T minionJob, CancellationToken cancellationToken = default) where T : MinionJob
+	{
+		while (true)
+		{
+			if (cancellationToken.IsCancellationRequested)
+				return false;
+			var job = await ServerProvider.GetMinionStatus(minionJob.job).ConfigureAwait(false);
+			if (job == null || job.state == null)
+				return false;
+			if (job.state.Equals("finished"))
+				return true;
+			if (job.state.Equals("failed"))
+				return false;
+			await Task.Delay(100).ConfigureAwait(false);
+		}
 	}
 }

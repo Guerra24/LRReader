@@ -21,9 +21,9 @@ namespace LRReader.Shared.Providers
 			rq.AddParameter("sortby", sortby);
 			rq.AddParameter("order", order.String());
 
-			var r = await client.ExecuteGetAsync(rq);
+			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
-			return await r.GetResult<ArchiveSearch>();
+			return await r.GetResult<ArchiveSearch>().ConfigureAwait(false);
 		}
 
 		public static async Task<bool> DiscardCache()
@@ -32,9 +32,9 @@ namespace LRReader.Shared.Providers
 
 			var rq = new RestRequest("api/search/cache");
 
-			var r = await client.ExecuteDeleteAsync(rq);
+			var r = await client.ExecuteDeleteAsync(rq).ConfigureAwait(false);
 
-			return await r.GetResult();
+			return await r.GetResult().ConfigureAwait(false);
 		}
 	}
 
