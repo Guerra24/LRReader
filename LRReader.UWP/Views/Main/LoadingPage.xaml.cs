@@ -1,16 +1,9 @@
-﻿using LRReader.Shared.Models;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Services;
-using LRReader.UWP.Servicing;
 using Microsoft.Extensions.DependencyInjection;
-using Sentry;
-using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -63,7 +56,7 @@ namespace LRReader.UWP.Views.Main
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-#if SIDELOAD || NIGHTLY
+#if false
 			try
 			{
 				CertUtil.Open();

@@ -48,7 +48,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
-    <ProjectReference Include="..\LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
