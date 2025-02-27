@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using LRReader.Shared.Models;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using LRReader.UWP.Views;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
 using LRReader.UWP.Views.Tabs;
-using Microsoft.Extensions.Logging;
-using NReco.Logging.File;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
@@ -44,7 +42,7 @@ namespace LRReader.UWP.Services
 
 		public ApplicationExecutionState ExecutionState { get; private set; }
 
-		public UWPlatformService(TabsService tabs, ILoggerFactory loggerFactory, IFilesService files)
+		public UWPlatformService(TabsService tabs, IFilesService files)
 		{
 			Tabs = tabs;
 			_animationsEnabled = UISettings.AnimationsEnabled;
@@ -84,40 +82,37 @@ namespace LRReader.UWP.Services
 
 			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
 
-			MapPageToType(Pages.Loading, typeof(LoadingPage));
-			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
-			MapPageToType(Pages.HostTab, typeof(HostTabPage));
+			MapPageToType<LoadingPage>(Pages.Loading);
+			MapPageToType<FirstRunPage>(Pages.FirstRun);
+			MapPageToType<HostTabPage>(Pages.HostTab);
 
-			MapTransitionToType(PagesTransition.None, typeof(SuppressNavigationTransitionInfo));
-			MapTransitionToType(PagesTransition.DrillIn, typeof(DrillInNavigationTransitionInfo));
-#if DEBUG || NIGHTLY
-			loggerFactory.AddFile(files.LocalCache + string.Format("/Logs/{0:yyyy}-{0:MM}-{0:dd}.log", DateTime.UtcNow));
-#endif
+			MapTransitionToType<SuppressNavigationTransitionInfo>(PagesTransition.None);
+			MapTransitionToType<DrillInNavigationTransitionInfo>(PagesTransition.DrillIn);
 		}
 
 		public override void Init()
 		{
-			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
-			Tabs.MapTabToType(Tab.Archive, typeof(ArchiveTab));
-			Tabs.MapTabToType(Tab.ArchiveEdit, typeof(ArchiveEditTab));
-			Tabs.MapTabToType(Tab.Bookmarks, typeof(BookmarksTab));
-			Tabs.MapTabToType(Tab.Categories, typeof(CategoriesTab));
-			Tabs.MapTabToType(Tab.CategoryEdit, typeof(CategoryEditTab));
-			Tabs.MapTabToType(Tab.SearchResults, typeof(SearchResultsTab));
-			Tabs.MapTabToType(Tab.Settings, typeof(SettingsTab));
-			Tabs.MapTabToType(Tab.Web, typeof(WebTab));
-			Tabs.MapTabToType(Tab.Tools, typeof(ToolsTab));
-			Tabs.MapTabToType(Tab.Tankoubons, typeof(TankoubonsTab));
-			Tabs.MapTabToType(Tab.Tankoubon, typeof(TankoubonTab));
-			Tabs.MapTabToType(Tab.TankoubonEdit, typeof(TankoubonEditTab));
+			Tabs.MapTabToType<ArchivesTab>(Tab.Archives);
+			Tabs.MapTabToType<ArchiveTab>(Tab.Archive);
+			Tabs.MapTabToType<ArchiveEditTab>(Tab.ArchiveEdit);
+			Tabs.MapTabToType<BookmarksTab>(Tab.Bookmarks);
+			Tabs.MapTabToType<CategoriesTab>(Tab.Categories);
+			Tabs.MapTabToType<CategoryEditTab>(Tab.CategoryEdit);
+			Tabs.MapTabToType<SearchResultsTab>(Tab.SearchResults);
+			Tabs.MapTabToType<SettingsTab>(Tab.Settings);
+			Tabs.MapTabToType<WebTab>(Tab.Web);
+			Tabs.MapTabToType<ToolsTab>(Tab.Tools);
+			Tabs.MapTabToType<TankoubonsTab>(Tab.Tankoubons);
+			Tabs.MapTabToType<TankoubonTab>(Tab.Tankoubon);
+			Tabs.MapTabToType<TankoubonEditTab>(Tab.TankoubonEdit);
 
-			MapDialogToType(Dialog.CategoryArchive, typeof(CategoryArchive));
-			MapDialogToType(Dialog.CreateCategory, typeof(CreateCategory));
-			MapDialogToType(Dialog.ProgressConflict, typeof(ProgressConflict));
-			MapDialogToType(Dialog.ServerProfile, typeof(ServerProfileDialog));
-			MapDialogToType(Dialog.ValidateApi, typeof(ValidateApiDialog));
-			MapDialogToType(Dialog.ThumbnailPicker, typeof(ThumbnailPicker));
-			MapDialogToType(Dialog.CreateTankoubon, typeof(CreateTankoubon));
+			MapDialogToType<CategoryArchive>(Dialog.CategoryArchive);
+			MapDialogToType<CreateCategory>(Dialog.CreateCategory);
+			MapDialogToType<ProgressConflict>(Dialog.ProgressConflict);
+			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
+			MapDialogToType<ValidateApiDialog>(Dialog.ValidateApi);
+			MapDialogToType<ThumbnailPicker>(Dialog.ThumbnailPicker);
+			MapDialogToType<CreateTankoubon>(Dialog.CreateTankoubon);
 
 			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });

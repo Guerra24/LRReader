@@ -62,6 +62,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 					item.Parallax.Source = ArchivesGrid;
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		public async void ExportBookmarks()
 		{
 			var savePicker = new FileSavePicker();
@@ -92,6 +94,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		public async void ImportBookmarks()
 		{
 			var openPicker = new FileOpenPicker();

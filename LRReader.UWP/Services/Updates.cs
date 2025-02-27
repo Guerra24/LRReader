@@ -1,13 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.WinUI.Helpers;
+﻿using CommunityToolkit.WinUI.Helpers;
 using LRReader.Shared;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using Sentry;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;
@@ -97,19 +96,15 @@ namespace LRReader.UWP.Services
 
 	public class SideloadUpdatesService : UpdatesService
 	{
-		private readonly ILogger<SideloadUpdatesService> Logger;
 
-		public SideloadUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
+		public SideloadUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings)
 		{
-			Logger = logger;
 		}
 
 		public override bool CanAutoUpdate() => true;
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
-			Logger.LogInformation("Checking for updates");
-
 			var rq = new RestRequest("lrr/upgrade/check");
 			rq.AddParameter("version", Platform.Version.ToString());
 			var r = await client.ExecuteGetAsync(rq);
@@ -129,13 +124,10 @@ namespace LRReader.UWP.Services
 		{
 			if (check == null)
 			{
-				Logger.LogInformation("Check is null");
 				return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
-			Logger.LogInformation("Download and install");
 			try
 			{
-				Logger.LogInformation("Source: {0}", check.Link);
 				var pm = new PackageManager();
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(new Uri(check.Link), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
@@ -148,7 +140,6 @@ namespace LRReader.UWP.Services
 			catch (Exception e)
 			{
 				SentrySdk.CaptureException(e);
-				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
 		}
@@ -156,13 +147,11 @@ namespace LRReader.UWP.Services
 
 	public class NightlyUpdatesService : UpdatesService
 	{
-		private readonly ILogger<SideloadUpdatesService> Logger;
 
 		private Package Current;
 
-		public NightlyUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings, ILogger<SideloadUpdatesService> logger) : base(platform, settingsStorage, settings)
+		public NightlyUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings)
 		{
-			Logger = logger;
 			Current = Package.Current;
 		}
 
@@ -170,30 +159,25 @@ namespace LRReader.UWP.Services
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
-			Logger.LogInformation("Checking for updates");
 			try
 			{
 				// We can't use Current here cause it crashes on 1809...
 				var pm = new PackageManager();
 				var package = pm.FindPackageForUser(string.Empty, Current.Id.FullName);
 				var result = await package.CheckUpdateAvailabilityAsync();
-				Logger.LogInformation("Result: {0}", result.Availability);
 				return new CheckForUpdatesResult { Result = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
 			}
 			catch (Exception e)
 			{
 				SentrySdk.CaptureException(e);
-				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new CheckForUpdatesResult { Result = false, ErrorCode = e.HResult, ErrorMessage = e.Message };
 			}
 		}
 
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
-			Logger.LogInformation("Download and install");
 			try
 			{
-				Logger.LogInformation("Source: {0}", Current.GetAppInstallerInfo().Uri);
 				var pm = new PackageManager();
 				var downloadTask = pm.AddPackageByAppInstallerFileAsync(Current.GetAppInstallerInfo().Uri, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, pm.GetDefaultPackageVolume());
 				downloadTask.Progress = (info, prog) => progress?.Report(prog.percentage / 100d);
@@ -206,7 +190,6 @@ namespace LRReader.UWP.Services
 			catch (Exception e)
 			{
 				SentrySdk.CaptureException(e);
-				Logger.LogError("Thrown exception: {0}\n{1}", e.Message, e.StackTrace);
 				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
 			}
 		}

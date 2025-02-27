@@ -1,9 +1,9 @@
-﻿using System;
+﻿using LRReader.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using LRReader.Shared.Models;
 
 namespace LRReader.Shared.Services
 {
@@ -46,19 +46,19 @@ namespace LRReader.Shared.Services
 		public abstract Task<bool> OpenInBrowser(Uri uri);
 		public abstract void CopyToClipboard(string text);
 
-		private readonly Dictionary<Dialog, Type> Dialogs = new Dictionary<Dialog, Type>();
+		private readonly Dictionary<Dialog, AotDictionaryHelper> Dialogs = new();
 
 		private readonly Dictionary<Symbol, object> Symbols = new Dictionary<Symbol, object>();
 
-		private readonly Dictionary<Pages, Type> Pages = new Dictionary<Pages, Type>();
+		private readonly Dictionary<Pages, AotDictionaryHelper> Pages = new();
 
-		private readonly Dictionary<PagesTransition, Type> Transitions = new Dictionary<PagesTransition, Type>();
+		private readonly Dictionary<PagesTransition, AotDictionaryHelper> Transitions = new();
 
 		public void MapSymbolToSymbol(Symbol symbol, object backing) => Symbols.Add(symbol, backing);
 
 		public object GetSymbol(Symbol symbol) => Symbols[symbol];
 
-		public void MapDialogToType(Dialog tab, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type) => Dialogs.Add(tab, type);
+		public void MapDialogToType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] D>(Dialog tab) where D : IDialog => Dialogs.Add(tab, new AotDictionaryHelper(typeof(D)));
 
 		public Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args) => OpenDialog<IDialog>(dialog, args);
 
@@ -78,21 +78,19 @@ namespace LRReader.Shared.Services
 			}
 		}
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2072")]
-		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog], args)!;
+		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog].Type, args)!;
 
 		public abstract Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null);
 
-		public void MapPageToType(Pages page, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type) => Pages.Add(page, type);
+		public void MapPageToType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] P>(Pages page) where P : class => Pages.Add(page, new AotDictionaryHelper(typeof(P)));
 
 		public abstract void GoToPage(Pages page, PagesTransition transition, object? parameter = null);
 
-		public Type GetPage(Pages page) => Pages[page];
+		public Type GetPage(Pages page) => Pages[page].Type;
 
-		public void MapTransitionToType(PagesTransition transition, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type) => Transitions.Add(transition, type);
+		public void MapTransitionToType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(PagesTransition transition) where T : class => Transitions.Add(transition, new AotDictionaryHelper(typeof(T)));
 
-		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2072")]
-		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition])!;
+		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition].Type)!;
 
 		public abstract Task<bool> CheckAppInstalled(string package);
 	}

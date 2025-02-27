@@ -22,6 +22,8 @@ namespace LRReader.Shared.Services
 			Archives = archives;
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		public async Task Suspend()
 		{
 			if (Settings.Profile != null)
@@ -34,6 +36,8 @@ namespace LRReader.Shared.Services
 				await Files.StoreFileSafe(Path.Combine(Files.Local, "Suspended.json"), JsonSerializer.Serialize(appState, JsonSettings.Options));
 			}
 		}
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 
 		public async Task Restore()
 		{

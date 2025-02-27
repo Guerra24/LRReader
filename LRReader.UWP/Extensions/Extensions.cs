@@ -58,6 +58,13 @@ namespace LRReader.UWP.Extensions
 				_ => throw new NotImplementedException()
 			};
 		}
+		public static FlyoutPlacementMode ToFlyoutPlacement(this TagsPopupLocation location) => location switch
+		{
+			TagsPopupLocation.Top => FlyoutPlacementMode.RightEdgeAlignedBottom,
+			TagsPopupLocation.Middle => FlyoutPlacementMode.Right,
+			TagsPopupLocation.Bottom => FlyoutPlacementMode.RightEdgeAlignedTop,
+			_ => FlyoutPlacementMode.Auto,
+		};
 	}
 
 	public class TwoPaneViewExt : DependencyObject

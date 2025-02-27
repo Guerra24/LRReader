@@ -92,6 +92,8 @@ public static class ApiExtensions
 			return default;
 	}
 
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 	public static async Task<GenericApiResponse<T>> GetResultInternal<T>(this RestResponse restResponse)
 	{
 		var apiResponse = new GenericApiResponse<T>();
@@ -145,6 +147,8 @@ public static class ApiExtensions
 		return apiResponse;
 	}
 
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 	public static async Task<GenericApiResult> GetError(this RestResponse restResponse)
 	{
 		var error = await Task.Run(() =>

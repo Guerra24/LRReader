@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using LRReader.Shared.Services;
 using VersionConverter = LRReader.Shared.Converters.VersionConverter;
@@ -95,5 +96,16 @@ namespace LRReader.Shared.Models
 
 	public class DeduplicatorMetadata
 	{
+	}
+
+	public class AotDictionaryHelper
+	{
+		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+		public Type Type { get; }
+
+		public AotDictionaryHelper([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type)
+		{
+			Type = type;
+		}
 	}
 }

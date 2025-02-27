@@ -358,6 +358,8 @@ namespace LRReader.Shared.Services
 
 		public bool FirstStartup = true;
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		public SettingsService(ISettingsStorageService settingsStorage, IFilesService files, PlatformService platform)
 		{
 			SettingsStorage = settingsStorage;
@@ -380,6 +382,8 @@ namespace LRReader.Shared.Services
 			});
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		public async Task Init()
 		{
 #if WINDOWS_UWP
@@ -445,6 +449,8 @@ namespace LRReader.Shared.Services
 			}
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private void UpgradeSettings()
 		{
 			int localVersion = SettingsVersionLocal;
@@ -595,11 +601,8 @@ namespace LRReader.Shared.Services
 	}
 	public enum TagsPopupLocation
 	{
-		[Int(12)]
 		Top,
-		[Int(3)]
 		Middle,
-		[Int(11)]
 		Bottom
 	}
 }

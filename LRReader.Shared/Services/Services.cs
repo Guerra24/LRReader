@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using LRReader.Shared.Tools;
+﻿using LRReader.Shared.Tools;
 using LRReader.Shared.ViewModels;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {
@@ -22,7 +21,7 @@ namespace LRReader.Shared.Services
 		public static void BuildServices(ConfigureServices? services = null)
 		{
 			var collection = new ServiceCollection();
-			collection.AddLogging();
+			//collection.AddLogging();
 
 			// Services
 			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
@@ -82,7 +81,6 @@ namespace LRReader.Shared.Services
 			await SettingsStorage.Init();
 			await Settings.Init();
 			await Images.Init();
-			Logger<Service>().LogInformation("Services initialized");
 		}
 
 		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
@@ -98,7 +96,6 @@ namespace LRReader.Shared.Services
 		public static ApiService Api => Services.GetRequiredService<ApiService>();
 		public static TabsService Tabs => Services.GetRequiredService<TabsService>();
 		public static IKarenService Karen => Services.GetRequiredService<IKarenService>();
-		public static ILogger<T> Logger<T>() => Services.GetRequiredService<ILogger<T>>();
 		public static Persistance Persistance => Services.GetRequiredService<Persistance>();
 
 		// Insanity

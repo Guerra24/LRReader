@@ -2,7 +2,6 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -58,15 +57,13 @@ namespace LRReader.Shared.Tools
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
-		private readonly ILogger<DeduplicationTool> Logger;
 
-		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform, ILogger<DeduplicationTool> logger) : base(platform)
+		public DeduplicationTool(SettingsService settings, ImagesService images, ArchivesService archives, PlatformService platform) : base(platform)
 		{
 			Settings = settings;
 			Images = images;
 			Archives = archives;
 			Platform = platform;
-			Logger = logger;
 		}
 
 		protected override async Task<ToolResult<List<ArchiveHit>, List<string>>> Process(DeduplicatorParams @params, int threads)
@@ -108,7 +105,6 @@ namespace LRReader.Shared.Tools
 					while (tries > 0)
 					{
 						Thread.Sleep(delay * (6 - tries)); // TODO Good ol' Thread.Sleep
-						Logger.LogInformation("LoadThumb {0} {1}", pair.Key, tries);
 						var bytes = Images.GetThumbnailCached(pair.Key).ConfigureAwait(false).GetAwaiter().GetResult();
 						if (bytes != null)
 						{
@@ -128,9 +124,8 @@ namespace LRReader.Shared.Tools
 						UpdateProgress(DeduplicatorStatus.PreloadAndDecode, archives.Count, itemCount);
 					}
 				}
-				catch (Exception e)
+				catch
 				{
-					Logger.LogInformation(e, "LoadThumb {0}", pair.Key);
 				}
 				return (pair.Key, image);
 			})))).AsEnumerable().ToList();

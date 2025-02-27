@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -25,11 +26,11 @@ namespace LRReader.UWP.Views.Controls
 			//this.DefaultStyleKey = typeof(ModernTab);
 			if (Service.Settings.UseVerticalTabs)
 			{
-				Template = (ControlTemplate)App.Current.Resources["MicaVerticalTabViewItemTemplate"];
+				Template = Application.Current.Resources["MicaVerticalTabViewItemTemplate"].As<ControlTemplate>();
 			}
 			else
 			{
-				Template = (ControlTemplate)App.Current.Resources["MicaTabViewItemTemplate"];
+				Template = Application.Current.Resources["MicaTabViewItemTemplate"].As<ControlTemplate>();
 			}
 			//Thumbnail = new();
 		}

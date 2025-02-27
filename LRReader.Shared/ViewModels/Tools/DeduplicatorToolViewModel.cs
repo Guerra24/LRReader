@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -39,6 +40,7 @@ namespace LRReader.Shared.ViewModels.Tools
 		}
 	}
 
+	[UnconditionalSuppressMessage("AOT", "IL3050")]
 	public partial class DeduplicatorToolViewModel : ToolViewModel<DeduplicatorStatus>
 	{
 		private readonly SettingsService Settings;

@@ -77,6 +77,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private async void CategoryArchives_Drop(object sender, DragEventArgs e)
 		{
 			var deferral = e.GetDeferral();
@@ -86,6 +88,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			deferral.Complete();
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private void ArchivesGrid_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
 		{
 			e.Data.RequestedOperation = DataPackageOperation.Link;
@@ -103,6 +107,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private async void ArchivesGrid_Drop(object sender, DragEventArgs e)
 		{
 			var deferral = e.GetDeferral();
@@ -112,6 +118,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 			deferral.Complete();
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private void CategoryArchives_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
 		{
 			e.Data.RequestedOperation = DataPackageOperation.Move;

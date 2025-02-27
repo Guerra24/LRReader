@@ -11,12 +11,10 @@
     <Platforms>x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
     <DefaultLanguage>en</DefaultLanguage>
-    <PublishAot>false</PublishAot>
-    <PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>true</PublishAot>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
     <RootNamespace>LRReader.UWP</RootNamespace>
     <AssemblyName>LRReader.UWP</AssemblyName>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
@@ -158,5 +156,34 @@
   <!-- Remove uneeded files -->
   <Target Name="_AddWindowsInstallScriptToTestLayout">
     <Message Importance="High" Text="Remove _AddWindowsInstallScriptToTestLayout" />
+  </Target>
+  <!-- Override the entire thing because it copies more than what it needs... -->
+  <Target Name="_GenerateAppxSymbolPackage" Condition="Exists ('$(MsPdbCmfExeFullpath)') And '@(PDBPayload)' != ''" Inputs="$(MSBuildAllProjects);@(PDBPayload);@(FinalAppxManifest)" Outputs="$(AppxSymbolPackageOutput)" DependsOnTargets="_EnsurePdbCmfExeFullPath">
+    <ItemGroup>
+      <FilesToCopy Include="$(OutputPath)native\*.pdb" />
+    </ItemGroup>
+    <PropertyGroup>
+      <ReconstituteFastlinkPdbs Condition="'$(ReconstituteFastlinkPdbs)' == ''">true</ReconstituteFastlinkPdbs>
+    </PropertyGroup>
+    <Message Importance="High" Text="Fix _GenerateAppxSymbolPackage" />
+    <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)"
+                               InputPdbs="@(FilesToCopy)"
+                               ProjectName="$(MSBuildProjectName)"
+                               StripPrivateSymbols="$(StripPrivateSymbols)"
+                               IntermediateSymbolRoot="$(AppxSymbolIntermediateDir)"
+                               ReconstituteFastlinkPdbs="$(ReconstituteFastlinkPdbs)"
+                               AppxSymbolPackageOutput="$(AppxSymbolPackageOutput)"
+                               VsTelemetrySession="$(VsTelemetrySession)">
+      <Output TaskParameter="OutputPdbs" ItemName="OutputPdbFiles" />
+    </WinAppSdkGenerateAppxSymbolPackage>
+
+    <ItemGroup>
+      <FinalAppxSymbolPackageItem Include="$(AppxSymbolPackageOutput)" />
+      <PackagingFileWrites Include="@(FinalAppxSymbolPackageItem)" />
+      <FileWrites Include="@(OutputPdbFiles)" />
+      <PackagingDirectoryWrites Include="$(AppxSymbolIntermediateDir)" />
+    </ItemGroup>
+
+    <Message Text="$(MSBuildProjectName) -> $(AppxSymbolPackageOutput)" />
   </Target>
 </Project>

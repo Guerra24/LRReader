@@ -28,14 +28,14 @@ namespace LRReader.Shared.Services
 		private bool _fullscreen;
 		public bool Windowed => !Fullscreen;
 
-		private Dictionary<Tab, Type> Tabs = new Dictionary<Tab, Type>();
+		private Dictionary<Tab, AotDictionaryHelper> Tabs = new();
 
 		public TabsService(IDispatcherService dispatcher)
 		{
 			Dispatcher = dispatcher;
 		}
 
-		public void MapTabToType(Tab tab, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type) => Tabs.Add(tab, type);
+		public void MapTabToType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(Tab tab) where T : ICustomTab => Tabs.Add(tab, new AotDictionaryHelper(typeof(T)));
 
 		[RelayCommand]
 		public void OpenTab(Tab tab) => OpenTab(tab, true);
@@ -44,9 +44,7 @@ namespace LRReader.Shared.Services
 
 		public async void OpenTab(Tab tab, bool switchToTab = true, params object?[]? args)
 		{
-			if (!Tabs.TryGetValue(tab, out var type))
-				return;
-			var newTab = (ICustomTab)Activator.CreateInstance(type, args)!;
+			var newTab = (ICustomTab)Activator.CreateInstance(Tabs[tab].Type, args)!;
 			newTab.Tab = tab;
 			var current = GetTabFromId(newTab.CustomTabId);
 			if (current != null)

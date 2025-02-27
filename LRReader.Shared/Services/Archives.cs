@@ -40,6 +40,8 @@ namespace LRReader.Shared.Services
 			metadataDirectory = Directory.CreateDirectory(Files.LocalCache + "/Metadata");
 		}
 
+		[UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[UnconditionalSuppressMessage("AOT", "IL3050")]
 		public async Task ReloadArchives()
 		{
 			await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
@@ -87,6 +89,8 @@ namespace LRReader.Shared.Services
 			}
 		}
 
+		[UnconditionalSuppressMessage("Trimming", "IL2026")]
+		[UnconditionalSuppressMessage("AOT", "IL3050")]
 		private async Task Update(string path)
 		{
 			Directory.CreateDirectory(path);
