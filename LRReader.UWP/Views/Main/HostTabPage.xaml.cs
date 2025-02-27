@@ -180,5 +180,5 @@ namespace LRReader.UWP.Views.Main
 			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log.Content);
 			await dialog.ShowAsync();
 		}
-	}
+    }
 }

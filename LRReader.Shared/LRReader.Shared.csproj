@@ -24,7 +24,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="NReco.Logging.File" Version="1.2.2" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
-    <PackageReference Include="Sentry" Version="5.1.1" />
+    <PackageReference Include="Sentry" Version="5.2.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
   </ItemGroup>
 

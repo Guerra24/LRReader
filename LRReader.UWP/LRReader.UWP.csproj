@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250220-build.2047" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250226-build.2050" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250129-preview2" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.250129-preview2" />
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives" Version="8.2.250129-preview2" />

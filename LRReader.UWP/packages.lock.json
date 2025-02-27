@@ -4,9 +4,9 @@
     "net9.0-windows10.0.26100": {
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.250220-build.2047, )",
-        "resolved": "0.1.250220-build.2047",
-        "contentHash": "LW1AIBHu4vY4XGlxOJgwkWtwl49pKFxkmvR9Q9U/rWdGzsXNItjORWje5oDSjLHHAwHl3zGUX5XfAqVc1VetAA==",
+        "requested": "[0.1.250226-build.2050, )",
+        "resolved": "0.1.250226-build.2050",
+        "contentHash": "qDE6kuZepR6JZu+CrBJifkw6mCYNglwM5PHFrT3RxD8262TyTddnDL38kWmQ1yEU3bkyFTL9amWONc0eqe+3ew==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.2.241223-build.1367",
           "CommunityToolkit.Uwp.Extensions": "8.2.241223-build.1367",
@@ -297,8 +297,8 @@
       },
       "Sentry": {
         "type": "Transitive",
-        "resolved": "5.1.1",
-        "contentHash": "FvdRStUwxXtt9g4fHaGQ5/a9otA6RiLznyTdkyCzIoUbOupwS4WNGF8CGvqDJifkltCJZj+4J8K4/f2RqFVuzg=="
+        "resolved": "5.2.0",
+        "contentHash": "b3aZSOU2CjlIIFRtPRbXParKQ+9PF+JOqkSD7Gxq6PiR07t1rnK+crPtdrWMXfW6PVo/s67trCJ+fuLsgTeADw=="
       },
       "SixLabors.ImageSharp": {
         "type": "Transitive",
@@ -326,7 +326,7 @@
           "Microsoft.Extensions.Logging": "[9.0.2, )",
           "NReco.Logging.File": "[1.2.2, )",
           "RestSharp": "[112.1.0, )",
-          "Sentry": "[5.1.1, )",
+          "Sentry": "[5.2.0, )",
           "SixLabors.ImageSharp": "[3.1.6, )"
         }
       },
