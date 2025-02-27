@@ -164,7 +164,7 @@ jobs:
   purgeUWPCache:
     name: Purge UWP Nightly cache
     needs: buildUWP
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
