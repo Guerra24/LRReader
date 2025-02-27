@@ -58,6 +58,8 @@ namespace LRReader.Shared.ViewModels.Base
 					case IDialogResult.Secondary:
 						listMode = false;
 						break;
+					case IDialogResult.None:
+						return;
 				}
 			}
 

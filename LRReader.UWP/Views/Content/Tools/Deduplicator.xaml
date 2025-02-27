@@ -228,10 +228,17 @@
 									<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
 									<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
 								</TextBlock>
-								<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+								<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" Visibility="{x:Bind services:Service.Settings.UseIncrementalCaching, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 							</StackPanel>
 						</Grid>
 					</controls:ModernGroup>
+					<muxc:InfoBar Title="Disable incremental caching to use deduplicator" Severity="Warning" IsClosable="False" IsOpen="{x:Bind services:Service.Settings.UseIncrementalCaching, Mode=OneWay}">
+						<muxc:InfoBar.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</muxc:InfoBar.Transitions>
+					</muxc:InfoBar>
 					<muxc:InfoBar
 						Title="{x:Bind Data.ErrorTitle, Mode=OneWay}"
 						IsClosable="False"

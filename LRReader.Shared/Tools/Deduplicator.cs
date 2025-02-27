@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using LRReader.Shared.Internal;
+﻿using LRReader.Shared.Internal;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
@@ -14,6 +6,14 @@ using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Tools
 {
@@ -80,7 +80,7 @@ namespace LRReader.Shared.Tools
 			int delay = @params.Delay;
 			bool skipMissing = @params.SkipMissing;
 
-			var archives = Archives.Archives;
+			var archives = Archives.Archives.ToDictionary();
 			var thumbnailJob = await ArchivesProvider.RegenerateThumbnails();
 			if (thumbnailJob is null)
 				return EarlyExit(Platform.GetLocalizedString("Tools/Deduplicator/NoThumbTask/Title"), Platform.GetLocalizedString("Tools/Deduplicator/NoThumbTask/Message"));

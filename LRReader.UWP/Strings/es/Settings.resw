@@ -559,7 +559,7 @@
     <value>Al cambiar página</value>
   </data>
   <data name="General.VerticalTabs.Title" xml:space="preserve">
-    <value>Use vertical tabs (beta)</value>
+    <value>Vertical tabs (beta)</value>
   </data>
   <data name="General.SuggestedTags.Description" xml:space="preserve">
     <value>Quickly access the most common tags</value>

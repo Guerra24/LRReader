@@ -8,6 +8,7 @@ using System;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -44,6 +45,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			VerticalTabs.Toggled += ToggleSwitch_Toggled;
 			CrashReport.Toggled += TrackCrashes_Toggled;
+			IncrementalCaching.Toggled += IncrementalCaching_Toggled;
 			await Data.UpdateThumbnailCacheSize();
 		}
 
@@ -51,6 +53,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			VerticalTabs.Toggled -= ToggleSwitch_Toggled;
 			CrashReport.Toggled -= TrackCrashes_Toggled;
+			IncrementalCaching.Toggled -= IncrementalCaching_Toggled;
 		}
 
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -77,6 +80,24 @@ namespace LRReader.UWP.Views.Content.Settings
 				var res = await CoreApplication.RequestRestartAsync("");
 				if (res == AppRestartFailureReason.NotInForeground || res == AppRestartFailureReason.Other)
 					WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to restart application", "Please restart manually.", 0, NotificationSeverity.Error));
+			}
+		}
+
+		private async void IncrementalCaching_Toggled(object? sender, RoutedEventArgs e)
+		{
+			var state = (ToggleSwitch)sender!;
+			if (state.IsOn == Service.Settings.UseIncrementalCaching)
+				return;
+			Service.Settings.UseIncrementalCaching = !Service.Settings.UseIncrementalCaching;
+			var result = await Service.Platform.OpenGenericDialog("Switch caching mode?", "Yes, reload profile", closebutton: "Cancel", content: "The app needs to reload the profile to switch caching mode");
+			if (result == Shared.Models.IDialogResult.Primary)
+			{
+				Service.Tabs.CloseAllTabs();
+				Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
+			}
+			else
+			{
+				Service.Settings.UseIncrementalCaching = !Service.Settings.UseIncrementalCaching;
 			}
 		}
 

@@ -54,7 +54,7 @@ namespace LRReader.Shared.ViewModels
 				{
 					foreach (var b in Settings.Profile.Bookmarks)
 					{
-						var archive = Archives.GetArchive(b.archiveID);
+						var archive = await Archives.GetOrAddArchive(b.archiveID);
 						if (archive != null)
 							await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
 					}

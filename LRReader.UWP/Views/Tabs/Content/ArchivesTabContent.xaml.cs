@@ -41,7 +41,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			AscFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Ascending;
 			DesFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Descending;
 			Data.ControlsEnabled = false; // THIS ---------------
-			Data.LoadBookmarks();
+			await Data.LoadBookmarks();
 			await HandleSearch();
 			Data.ControlsEnabled = true;
 			reloading = false;

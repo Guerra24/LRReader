@@ -1,10 +1,11 @@
-﻿using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using LRReader.Shared.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared;
 
@@ -59,6 +60,7 @@ public static class JsonSettings
 [JsonSerializable(typeof(List<BookmarkedArchive>))]
 [JsonSerializable(typeof(ObservableCollection<ServerProfile>))]
 [JsonSerializable(typeof(Dictionary<string, Archive>))]
+[JsonSerializable(typeof(ConcurrentDictionary<string, Archive>))]
 [JsonSerializable(typeof(List<TagStats>))]
 [JsonSerializable(typeof(List<string>))]
 [JsonSerializable(typeof(List<Plugin>))]

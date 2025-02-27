@@ -91,7 +91,7 @@ namespace LRReader.Shared.ViewModels
 				{
 					foreach (var a in result.result.archives)
 					{
-						var archive = Archives.GetArchive(a);
+						var archive = await Archives.GetOrAddArchive(a);
 						if (archive != null)
 							await Dispatcher.RunAsync(() => ArchiveList.Add(archive), 10);
 					}

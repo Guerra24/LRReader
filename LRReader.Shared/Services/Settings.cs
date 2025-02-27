@@ -331,6 +331,16 @@ namespace LRReader.Shared.Services
 			}
 		}
 
+		public bool UseIncrementalCaching
+		{
+			get => SettingsStorage.GetObjectRoamed(false);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
+			}
+		}
+
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
 		{

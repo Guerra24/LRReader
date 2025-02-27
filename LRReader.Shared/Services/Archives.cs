@@ -3,7 +3,9 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -19,7 +21,7 @@ namespace LRReader.Shared.Services
 		private readonly TabsService Tabs;
 		private readonly ApiService Api;
 
-		public Dictionary<string, Archive> Archives { get; private set; } = new();
+		public ConcurrentDictionary<string, Archive> Archives { get; private set; } = new();
 		public List<TagStats> TagStats { get; private set; } = new();
 		public List<string> Namespaces { get; private set; } = new();
 		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
@@ -73,7 +75,7 @@ namespace LRReader.Shared.Services
 					var tags = Files.GetFile($"{MetadataPath}/Tags-v2.json");
 					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v2.json");
 					var categories = Files.GetFile($"{MetadataPath}/Categories-v2.json");
-					Archives = JsonSerializer.Deserialize<Dictionary<string, Archive>>(await index, JsonSettings.Options) ?? new();
+					Archives = JsonSerializer.Deserialize<ConcurrentDictionary<string, Archive>>(await index, JsonSettings.Options) ?? new();
 					TagStats = JsonSerializer.Deserialize<List<TagStats>>(await tags, JsonSettings.Options) ?? new();
 					Namespaces = JsonSerializer.Deserialize<List<string>>(await namespaces, JsonSettings.Options) ?? new();
 					//Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
@@ -88,22 +90,23 @@ namespace LRReader.Shared.Services
 		private async Task Update(string path)
 		{
 			Directory.CreateDirectory(path);
-			var resultATask = ArchivesProvider.GetArchives();
-			var resultTTask = DatabaseProvider.GetTagStats();
-			await Task.WhenAll(resultATask, resultTTask);
-			var resultA = resultATask.Result;
-			var resultT = resultTTask.Result;
 
-			if (resultA != null)
+			if (!Settings.UseIncrementalCaching)
 			{
-				var temp = resultA.ToDictionary(c => c.arcid, c => c);
-				await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
-				Archives = temp;
+				var archives = await ArchivesProvider.GetArchives();
+				if (archives != null)
+				{
+					var temp = new ConcurrentDictionary<string, Archive>(archives.ToDictionary(c => c.arcid, c => c));
+					await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
+					Archives = temp;
+				}
 			}
-			if (resultT != null)
+
+			var tagStats = await DatabaseProvider.GetTagStats();
+			if (tagStats != null)
 			{
-				await Files.StoreFile($"{path}/Tags-v2.json", JsonSerializer.Serialize(resultT, JsonSettings.Options));
-				foreach (var t in resultT)
+				await Files.StoreFile($"{path}/Tags-v2.json", JsonSerializer.Serialize(tagStats, JsonSettings.Options));
+				foreach (var t in tagStats)
 				{
 					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 						Namespaces.Add(t.@namespace);
@@ -120,6 +123,18 @@ namespace LRReader.Shared.Services
 			}*/
 		}
 
+		public async Task<Archive?> GetOrAddArchive(string id)
+		{
+			var archive = GetArchive(id);
+			if (Settings.UseIncrementalCaching && archive == null)
+			{
+				archive = await ArchivesProvider.GetArchive(id);
+				if (archive != null)
+					Archives.TryAdd(id, archive);
+			}
+			return archive;
+		}
+
 		public Archive? GetArchive(string id)
 		{
 			if (Archives.TryGetValue(id, out var archive))
@@ -127,7 +142,7 @@ namespace LRReader.Shared.Services
 			return null;
 		}
 
-		public bool TryGetArchive(string id, out Archive? archive) => Archives.TryGetValue(id, out archive);
+		public bool TryGetArchive(string id, [MaybeNullWhen(false)] out Archive archive) => Archives.TryGetValue(id, out archive);
 
 		public bool HasArchive(string id) => Archives.ContainsKey(id);
 
@@ -153,7 +168,7 @@ namespace LRReader.Shared.Services
 				WeakReferenceMessenger.Default.Send(new DeleteArchiveMessage(Archives[id]));
 				Tabs.CloseTabWithId("Edit_" + id);
 				Tabs.CloseTabWithId("Archive_" + id);
-				Archives.Remove(id);
+				Archives.TryRemove(id, out var _);
 			}
 			else
 			{

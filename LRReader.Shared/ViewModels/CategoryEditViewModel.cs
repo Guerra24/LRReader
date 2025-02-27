@@ -53,7 +53,7 @@ namespace LRReader.Shared.ViewModels
 			var removeMissing = new List<string>();
 			foreach (var a in category.archives)
 			{
-				var archive = Archives.GetArchive(a);
+				var archive = await Archives.GetOrAddArchive(a);
 				if (archive != null)
 					CategoryArchives.Add(archive);
 				else
@@ -91,7 +91,7 @@ namespace LRReader.Shared.ViewModels
 			var removeMissing = new List<string>();
 			foreach (var a in category.archives)
 			{
-				var archive = Archives.GetArchive(a);
+				var archive = await Archives.GetOrAddArchive(a);
 				if (archive != null)
 					CategoryArchives.Add(archive);
 				else

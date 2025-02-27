@@ -81,6 +81,9 @@
 				<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">
 					<ComboBox x:Name="ThemeComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
+				<controls:ModernInput Title="Incremental caching (experimental)" Glyph="&#xF5EF;">
+					<ToggleSwitch x:Name="IncrementalCaching" IsOn="{x:Bind Data.SettingsManager.UseIncrementalCaching, Mode=OneWay}" />
+				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Glyph="&#xE8B9;">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">

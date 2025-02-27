@@ -53,7 +53,7 @@ namespace LRReader.Shared.ViewModels
 			var removeMissing = new List<string>();
 			foreach (var a in Tankoubon.archives)
 			{
-				var archive = Archives.GetArchive(a);
+				var archive = await Archives.GetOrAddArchive(a);
 				if (archive != null)
 					TankoubonArchives.Add(archive);
 				else
