@@ -1,6 +1,5 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
-using LRReader.UWP.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Windows.ApplicationModel.Resources;
@@ -58,14 +57,14 @@ namespace LRReader.UWP.Views.Content.Settings
 		private async void License_Click(object sender, RoutedEventArgs e)
 		{
 			var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///LICENSE.md"));
-			var dialog = new MarkdownDialog(lang.GetString("About/License"), await FileIO.ReadTextAsync(file));
+			var dialog = Service.Platform.CreateDialog(Dialog.Markdown, lang.GetString("About/License"), await FileIO.ReadTextAsync(file));
 			await dialog.ShowAsync();
 		}
 
 		private async void Privacy_Click(object sender, RoutedEventArgs e)
 		{
 			var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Privacy.md"));
-			var dialog = new MarkdownDialog(lang.GetString("About/Privacy"), await FileIO.ReadTextAsync(file));
+			var dialog = Service.Platform.CreateDialog(Dialog.Markdown, lang.GetString("About/Privacy"), await FileIO.ReadTextAsync(file));
 			await dialog.ShowAsync();
 		}
 

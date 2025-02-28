@@ -113,6 +113,7 @@ namespace LRReader.UWP.Services
 			MapDialogToType<ValidateApiDialog>(Dialog.ValidateApi);
 			MapDialogToType<ThumbnailPicker>(Dialog.ThumbnailPicker);
 			MapDialogToType<CreateTankoubon>(Dialog.CreateTankoubon);
+			MapDialogToType<MarkdownDialog>(Dialog.Markdown);
 
 			MapSymbolToSymbol(Symbol.Favorite, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new SymbolIconSource { Symbol = Windows.UI.Xaml.Controls.Symbol.Pictures });

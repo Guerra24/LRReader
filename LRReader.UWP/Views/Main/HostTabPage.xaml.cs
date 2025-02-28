@@ -4,7 +4,6 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views.Controls;
-using LRReader.UWP.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -162,6 +161,7 @@ namespace LRReader.UWP.Views.Main
 			}
 		}
 
+		// Move this to the VM layer
 		private async Task ShowWhatsNew()
 		{
 			var ver = Version.Parse(SettingsStorage.GetObjectLocal(new Version(0, 0, 0, 0).ToString(), "_version"));
@@ -177,8 +177,8 @@ namespace LRReader.UWP.Views.Main
 			if (string.IsNullOrEmpty(log.Name) || string.IsNullOrEmpty(log.Content))
 				return;
 
-			var dialog = new MarkdownDialog(lang.GetString("HostTab/ChangelogTitle"), log.Content);
+			var dialog = Platform.CreateDialog(Dialog.Markdown, lang.GetString("HostTab/ChangelogTitle"), log.Content);
 			await dialog.ShowAsync();
 		}
-    }
+	}
 }

@@ -1,10 +1,10 @@
 ﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -40,15 +40,9 @@ namespace LRReader.UWP.Views.Content.Settings
 			}
 			if (profile == Data.SettingsManager.Profile)
 				return;
-			var dialog = new ContentDialog()
-			{
-				Title = lang.GetString("General/SwitchProfile/Title"),
-				Content = lang.GetString("General/SwitchProfile/Content").AsFormat("\n"),
-				PrimaryButtonText = lang.GetString("General/SwitchProfile/PrimaryButtonText"),
-				CloseButtonText = lang.GetString("General/SwitchProfile/CloseButtonText")
-			};
-			var result = await dialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
+
+			var result = await Service.Platform.OpenGenericDialog(lang.GetString("General/SwitchProfile/Title"), lang.GetString("General/SwitchProfile/PrimaryButtonText"), closebutton: lang.GetString("General/SwitchProfile/CloseButtonText"), content: lang.GetString("General/SwitchProfile/Content").AsFormat("\n"));
+			if (result == IDialogResult.Primary)
 			{
 				Data.SettingsManager.Profile = profile;
 				Service.Tabs.CloseAllTabs();

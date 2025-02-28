@@ -80,6 +80,8 @@ namespace LRReader.Shared.Services
 
 		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog].Type, args)!;
 
+		public IDialog CreateDialog(Dialog dialog, params object?[]? args) => CreateDialog<IDialog>(dialog, args);
+
 		public abstract Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null);
 
 		public void MapPageToType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] P>(Pages page) where P : class => Pages.Add(page, new AotDictionaryHelper(typeof(P)));

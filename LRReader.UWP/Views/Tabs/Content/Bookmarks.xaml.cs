@@ -115,15 +115,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 					WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ImportError"), e.Message, 0, NotificationSeverity.Error));
 					return;
 				}
-				var dialog = new ContentDialog()
-				{
-					Title = lang.GetString("Bookmarks/ImportDialog/Title"),
-					Content = lang.GetString("Bookmarks/ImportDialog/Content").AsFormat("\n"),
-					PrimaryButtonText = lang.GetString("Bookmarks/ImportDialog/PrimaryButtonText"),
-					CloseButtonText = lang.GetString("Bookmarks/ImportDialog/CloseButtonText")
-				};
-				var result = await dialog.ShowAsync();
-				if (result == ContentDialogResult.Primary)
+				var result = await Service.Platform.OpenGenericDialog(lang.GetString("Bookmarks/ImportDialog/Title"), lang.GetString("Bookmarks/ImportDialog/PrimaryButtonText"), closebutton: lang.GetString("Bookmarks/ImportDialog/CloseButtonText"), content: lang.GetString("Bookmarks/ImportDialog/Content").AsFormat("\n"));
+				if (result == Shared.Models.IDialogResult.Primary)
 				{
 					Service.Settings.Profile.Bookmarks = bookmarks;
 					Service.Settings.SaveProfiles();

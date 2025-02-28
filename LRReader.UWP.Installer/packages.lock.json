@@ -30,11 +30,11 @@
       },
       "WPF-UI": {
         "type": "Direct",
-        "requested": "[4.0.1, )",
-        "resolved": "4.0.1",
-        "contentHash": "1ZH6oTmyNYv1BZ6Y4i+YfvTUqwoM66XCPWls+u+dMuqeqr14MQ22VDDF/84yf7Si502K6c1t9CK+vA6KcrV1Vg==",
+        "requested": "[4.0.2, )",
+        "resolved": "4.0.2",
+        "contentHash": "BWyHaAhj2CtbhLEUMI16x3ZHWYyLhMfoq5r7+z5UfHl8hoyNJubrHrIY53n8qDML/DpTTbI8NTBrFw3NDKtglA==",
         "dependencies": {
-          "WPF-UI.Abstractions": "4.0.1"
+          "WPF-UI.Abstractions": "4.0.2"
         }
       },
       "System.Runtime.InteropServices.WindowsRuntime": {
@@ -57,8 +57,8 @@
       },
       "WPF-UI.Abstractions": {
         "type": "Transitive",
-        "resolved": "4.0.1",
-        "contentHash": "wa3HTgrqwUcrJyqjYeyjJW6NZca7CQT78dlXq5Zr8wgcspqJtmhVSfD/AcsCyHNb266QlKCa9isZn507T06/wQ=="
+        "resolved": "4.0.2",
+        "contentHash": "WDLoNejRVTyQTWNtmlbseRzFQQADlnpehC4l66pqVGevY5nsQDpSMzkb5gVzGXBDHJoAW5V/7KyarKnfDq6leQ=="
       },
       "lrreader.uwp.servicing": {
         "type": "Project"
