@@ -94,7 +94,7 @@ jobs:
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
         Invoke-Expression "./Util/Version.ps1"
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Nightly=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Nightly=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
@@ -109,7 +109,7 @@ jobs:
       run: |
         Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
         Get-ChildItem *.appxsym -File | Rename-Item -NewName { [IO.Path]::ChangeExtension($_.name, "zip") }
-        foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --wait $file }
+        foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --include-sources --wait $file }
         Remove-Item $(Get-ChildItem *.zip -File)
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -153,7 +153,7 @@ jobs:
         APP_VERSION: Nightly
       run: |
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }}
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:

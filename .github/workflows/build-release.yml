@@ -38,7 +38,7 @@ jobs:
         [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)" /p:GenerateAppxPackageOnBuild=true
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)" /p:GenerateAppxPackageOnBuild=true
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
@@ -53,7 +53,7 @@ jobs:
       run: |
         Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
         Get-ChildItem *.appxsym -File | Rename-Item -NewName { [IO.Path]::ChangeExtension($_.name, "zip") }
-        foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --wait $file }
+        foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --include-sources --wait $file  }
         Remove-Item $(Get-ChildItem *.zip -File)
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
@@ -105,7 +105,7 @@ jobs:
         $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
         $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }}
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:

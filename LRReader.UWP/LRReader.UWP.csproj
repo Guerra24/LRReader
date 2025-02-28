@@ -166,14 +166,7 @@
       <ReconstituteFastlinkPdbs Condition="'$(ReconstituteFastlinkPdbs)' == ''">true</ReconstituteFastlinkPdbs>
     </PropertyGroup>
     <Message Importance="High" Text="Fix _GenerateAppxSymbolPackage" />
-    <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)"
-                               InputPdbs="@(FilesToCopy)"
-                               ProjectName="$(MSBuildProjectName)"
-                               StripPrivateSymbols="$(StripPrivateSymbols)"
-                               IntermediateSymbolRoot="$(AppxSymbolIntermediateDir)"
-                               ReconstituteFastlinkPdbs="$(ReconstituteFastlinkPdbs)"
-                               AppxSymbolPackageOutput="$(AppxSymbolPackageOutput)"
-                               VsTelemetrySession="$(VsTelemetrySession)">
+    <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)" InputPdbs="@(FilesToCopy)" ProjectName="$(MSBuildProjectName)" StripPrivateSymbols="$(StripPrivateSymbols)" IntermediateSymbolRoot="$(AppxSymbolIntermediateDir)" ReconstituteFastlinkPdbs="$(ReconstituteFastlinkPdbs)" AppxSymbolPackageOutput="$(AppxSymbolPackageOutput)" VsTelemetrySession="$(VsTelemetrySession)">
       <Output TaskParameter="OutputPdbs" ItemName="OutputPdbFiles" />
     </WinAppSdkGenerateAppxSymbolPackage>
 
@@ -184,6 +177,6 @@
       <PackagingDirectoryWrites Include="$(AppxSymbolIntermediateDir)" />
     </ItemGroup>
 
-    <Message Text="$(MSBuildProjectName) -> $(AppxSymbolPackageOutput)" />
+    <Message Text="$(MSBuildProjectName) -&gt; $(AppxSymbolPackageOutput)" />
   </Target>
 </Project>
