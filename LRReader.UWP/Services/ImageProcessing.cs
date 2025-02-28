@@ -60,7 +60,7 @@ namespace LRReader.UWP.Services
 										return false;
 									fixed (byte* input = bytes)
 									{
-										Jxl.JxlDecoderSetInput(decoder, input, (UIntPtr)bytes.Length);
+										Jxl.JxlDecoderSetInput(decoder, input, (nuint)bytes.Length);
 										Jxl.JxlDecoderCloseInput(decoder);
 										Jxl.JxlDecoderSubscribeEvents(decoder, (int)(JxlDecoderStatus.JXL_DEC_BASIC_INFO | JxlDecoderStatus.JXL_DEC_FRAME | JxlDecoderStatus.JXL_DEC_FULL_IMAGE));
 
@@ -74,7 +74,7 @@ namespace LRReader.UWP.Services
 										var info = new JxlBasicInfo();
 										Jxl.JxlDecoderGetBasicInfo(decoder, &info);
 
-										JxlThreads.JxlResizableParallelRunnerSetThreads(runner, (UIntPtr)JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
+										JxlThreads.JxlResizableParallelRunnerSetThreads(runner, JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
 
 										status = Jxl.JxlDecoderProcessInput(decoder);
 
@@ -90,9 +90,9 @@ namespace LRReader.UWP.Services
 											pixelFormat.data_type = JxlDataType.JXL_TYPE_UINT8;
 											pixelFormat.endianness = JxlEndianness.JXL_NATIVE_ENDIAN;
 											pixelFormat.num_channels = 4;
-											pixelFormat.align = (UIntPtr)0;
+											pixelFormat.align = 0;
 
-											UIntPtr size = new();
+											nuint size = new();
 											Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
 
 											if (info.xsize * info.ysize * sizeof(byte) * 4 != size.ToUInt64())
@@ -107,7 +107,7 @@ namespace LRReader.UWP.Services
 											if (cancellationToken.IsCancellationRequested)
 												return false;
 
-											Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (UIntPtr)(buffer.Length * sizeof(byte)));
+											Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (nuint)(buffer.Length * sizeof(byte)));
 
 											status = Jxl.JxlDecoderProcessInput(decoder);
 

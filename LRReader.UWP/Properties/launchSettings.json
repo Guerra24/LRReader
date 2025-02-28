@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "LRReader.UWP": {
+    "Local Machine": {
       "commandName": "MsixPackage",
       "nativeDebugging": false
     }
