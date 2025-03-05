@@ -81,6 +81,7 @@ namespace LRReader.Shared.Services
 			await SettingsStorage.Init();
 			await Settings.Init();
 			await Images.Init();
+			await ImageProcessing.Init();
 		}
 
 		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();

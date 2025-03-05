@@ -48,10 +48,10 @@ namespace LRReader.UWP.Services
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
 #pragma warning disable CA1416 // Validate platform compatibility
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
+			if (WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
 				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
 
-			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+			if (WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
 			{
 				var device = new EasClientDeviceInformation();
 
@@ -193,6 +193,8 @@ namespace LRReader.UWP.Services
 				return false;
 			}
 		}
+
+		public override bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion) => ApiInformation.IsApiContractPresent(contractName, majorVersion);
 
 		public void SetRoot(Root root) => this.Root = root;
 

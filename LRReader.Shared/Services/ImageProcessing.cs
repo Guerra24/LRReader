@@ -6,8 +6,10 @@ using Size = System.Drawing.Size;
 
 namespace LRReader.Shared.Services
 {
-	public abstract class ImageProcessingService
+	public abstract class ImageProcessingService : IService
 	{
+
+		public abstract Task Init();
 
 		public abstract Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? image = default, CancellationToken cancellationToken = default);
 

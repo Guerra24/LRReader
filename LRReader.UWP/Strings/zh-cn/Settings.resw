@@ -570,4 +570,10 @@
   <data name="General.SuggestedTagsLimit.Title" xml:space="preserve">
     <value>Max amount of suggested tags</value>
   </data>
+  <data name="Reader.JpegXLNotice.Content" xml:space="preserve">
+    <value>Install to view JPEG XL content</value>
+  </data>
+  <data name="Reader.JpegXLNoticeInfo.Title" xml:space="preserve">
+    <value>Missing JPEG XL Image Extentions</value>
+  </data>
 </root>

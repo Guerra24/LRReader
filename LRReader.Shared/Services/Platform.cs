@@ -95,6 +95,8 @@ namespace LRReader.Shared.Services
 		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition].Type)!;
 
 		public abstract Task<bool> CheckAppInstalled(string package);
+
+		public abstract bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion);
 	}
 
 	public class StubPlatformService : PlatformService
@@ -112,10 +114,7 @@ namespace LRReader.Shared.Services
 
 		public override double DualScreenWidth => 0;
 
-		public override Task<bool> OpenInBrowser(Uri uri)
-		{
-			return Task.FromResult(false);
-		}
+		public override Task<bool> OpenInBrowser(Uri uri) => Task.FromResult(false);
 
 		public override string GetLocalizedString(string key) => key;
 
@@ -128,5 +127,7 @@ namespace LRReader.Shared.Services
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) { }
 
 		public override Task<bool> CheckAppInstalled(string package) => Task.FromResult(false);
+
+		public override bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion) => false;
 	}
 }

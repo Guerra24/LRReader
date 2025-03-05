@@ -14,12 +14,21 @@ namespace LRReader.UWP.Services
 {
 	public class UWPImageProcessingService : ImageProcessingService
 	{
+		private readonly PlatformService Platform;
 
+		private readonly bool UseOsJpegXL;
 		private TaskFactory TaskFactory;
 
-		public UWPImageProcessingService()
+		public UWPImageProcessingService(PlatformService platform)
 		{
+			Platform = platform;
 			TaskFactory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(Math.Clamp(Environment.ProcessorCount / 4, 1, 4)));
+		}
+
+		public override async Task Init()
+		{
+			//UseOsJpegXL = Platform.WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 19) && await Platform.CheckAppInstalled("Microsoft.JPEG-XLImageExtension_8wekyb3d8bbwe");
+			await Task.CompletedTask;
 		}
 
 		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default, CancellationToken cancellationToken = default)
@@ -38,7 +47,7 @@ namespace LRReader.UWP.Services
 				image.DecodePixelHeight = decodeHeight;
 			try
 			{
-				if (IsJxl(bytes))
+				if (!UseOsJpegXL && IsJxl(bytes))
 				{
 					using (var converted = new InMemoryRandomAccessStream())
 					{

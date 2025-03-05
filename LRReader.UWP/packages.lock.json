@@ -4,9 +4,9 @@
     "net9.0-windows10.0.26100": {
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.250226-build.2050, )",
-        "resolved": "0.1.250226-build.2050",
-        "contentHash": "qDE6kuZepR6JZu+CrBJifkw6mCYNglwM5PHFrT3RxD8262TyTddnDL38kWmQ1yEU3bkyFTL9amWONc0eqe+3ew==",
+        "requested": "[0.1.250305-build.2058, )",
+        "resolved": "0.1.250305-build.2058",
+        "contentHash": "KxoPCiZkPbha87Mbb+blll7zbuNdNYqzLsv2LuJ0kpMypLwZgYJO6aO76xxX7u+FrR7pY/K+wWtUdOG7YEcolA==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.2.241223-build.1367",
           "CommunityToolkit.Uwp.Extensions": "8.2.241223-build.1367",
