@@ -34,6 +34,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CsWinRTAotWarningLevel>2</CsWinRTAotWarningLevel>
+    <DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Nightly)' == 'true'">

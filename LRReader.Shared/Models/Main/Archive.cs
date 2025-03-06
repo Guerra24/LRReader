@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using LRReader.Shared.Converters;
+#if x64
 using Sentry;
+#endif
 
 namespace LRReader.Shared.Models.Main
 {
@@ -64,7 +66,9 @@ namespace LRReader.Shared.Models.Main
 			{
 				// Drop original collection, can cause more COMExceptions
 				TagsGroups = new ObservableCollection<ArchiveTagsGroup>();
+#if x64
 				SentrySdk.CaptureException(e);
+#endif
 			}
 			BuildVirtualTags();
 			try
@@ -74,7 +78,9 @@ namespace LRReader.Shared.Models.Main
 			catch (Exception e)
 			{
 				// Handle damaged collection just in case
+#if x64
 				SentrySdk.CaptureException(e);
+#endif
 			}
 		}
 

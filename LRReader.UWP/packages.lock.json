@@ -214,8 +214,8 @@
       },
       "SixLabors.ImageSharp": {
         "type": "Transitive",
-        "resolved": "3.1.6",
-        "contentHash": "dHQ5jugF9v+5/LCVHCWVzaaIL6WOehqJy6eju/0VFYFPEj2WtqkGPoEV9EVQP83dHsdoqYaTuWpZdwAd37UwfA=="
+        "resolved": "3.1.7",
+        "contentHash": "9fIOOAsyLFid6qKypM2Iy0Z3Q9yoanV8VoYAHtI2sYGMNKzhvRTjgFDHonIiVe+ANtxIxM6SuqUzj0r91nItpA=="
       },
       "System.Threading.Tasks.Extensions": {
         "type": "Transitive",
@@ -237,7 +237,7 @@
           "Microsoft.Extensions.DependencyInjection": "[9.0.2, )",
           "RestSharp": "[112.1.0, )",
           "Sentry": "[5.2.0, )",
-          "SixLabors.ImageSharp": "[3.1.6, )"
+          "SixLabors.ImageSharp": "[3.1.7, )"
         }
       }
     },
