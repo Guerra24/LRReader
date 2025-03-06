@@ -3,6 +3,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
@@ -96,6 +97,7 @@ namespace LRReader.Shared.Tools
 			var tmpTimer = DateTime.Now;
 
 			int count = 0;
+			var decoderOptions = new DecoderOptions { SkipMetadata = true };
 			var tmp = (await Task.WhenAll(archives.Select(pair => factory.StartNew(() =>
 			{
 				int tries = 5;
@@ -108,7 +110,7 @@ namespace LRReader.Shared.Tools
 						var bytes = Images.GetThumbnailCached(pair.Key).ConfigureAwait(false).GetAwaiter().GetResult();
 						if (bytes != null)
 						{
-							image = Image.Load<Rgb24>(bytes);
+							image = Image.Load<Rgb24>(decoderOptions, bytes);
 							image.Mutate(i => i.Resize(width, 0));
 							break;
 						}

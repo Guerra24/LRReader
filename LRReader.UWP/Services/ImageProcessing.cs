@@ -16,7 +16,7 @@ namespace LRReader.UWP.Services
 	{
 		private readonly PlatformService Platform;
 
-		private readonly bool UseOsJpegXL;
+		//private readonly bool UseOsJpegXL;
 		private TaskFactory TaskFactory;
 
 		public UWPImageProcessingService(PlatformService platform)
@@ -47,7 +47,7 @@ namespace LRReader.UWP.Services
 				image.DecodePixelHeight = decodeHeight;
 			try
 			{
-				if (!UseOsJpegXL && IsJxl(bytes))
+				if (/*!UseOsJpegXL && */IsJxl(bytes))
 				{
 					using (var converted = new InMemoryRandomAccessStream())
 					{

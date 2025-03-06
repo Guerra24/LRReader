@@ -13,7 +13,7 @@ using LRReader.Shared.Services;
 
 namespace LRReader.Shared.ViewModels
 {
-	public delegate bool CustomArchiveCheck(Archive archive);
+	public delegate bool CustomArchiveCheck(ArchiveIdOnly archive);
 
 	public partial class SearchResultsViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
 	{

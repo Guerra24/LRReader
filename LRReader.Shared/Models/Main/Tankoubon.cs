@@ -7,7 +7,7 @@ namespace LRReader.Shared.Models.Main
 		public List<string> archives { get; set; } = null!;
 		public string id { get; set; } = null!;
 		public string name { get; set; } = null!;
-		public List<Archive>? full_data { get; set; }
+		public List<ArchiveIdOnly>? full_data { get; set; }
 
 		public override string ToString()
 		{

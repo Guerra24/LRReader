@@ -65,7 +65,7 @@ public class ImagesService : IService
 		if (string.IsNullOrEmpty(path))
 			return new Size(0, 0);
 		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
-		if (imagesSizeCache.TryGet(path!, out var size))
+		if (imagesSizeCache.TryGet(path, out var size))
 		{
 			return size;
 		}
@@ -88,7 +88,7 @@ public class ImagesService : IService
 		if (string.IsNullOrEmpty(path))
 			return null;
 		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
-		if (imagesCache.TryGet(path!, out var image) && !forced)
+		if (imagesCache.TryGet(path, out var image) && !forced)
 		{
 			return image;
 		}

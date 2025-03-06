@@ -32,7 +32,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			VisualStateManager.GoToState(this, "Selected", false);
 		}
 
-		private bool CustomArchiveCheck(Archive archive)
+		private bool CustomArchiveCheck(ArchiveIdOnly archive)
 		{
 			if (ViewModel.category != null)
 				return !ViewModel.category.archives.Contains(archive.arcid);

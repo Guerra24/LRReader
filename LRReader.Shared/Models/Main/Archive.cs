@@ -229,7 +229,7 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveSearch
 	{
-		public List<Archive> data { get; set; } = null!;
+		public List<ArchiveIdOnly> data { get; set; } = null!;
 		public int draw { get; set; }
 		public int recordsFiltered { get; set; }
 		public int recordsTotal { get; set; }
@@ -283,5 +283,37 @@ namespace LRReader.Shared.Models.Main
 	{
 		public MinionJob? Job;
 		public byte[]? Thumbnail;
+	}
+
+	public class ArchiveIdOnly : IEquatable<ArchiveIdOnly>
+	{
+		public string arcid { get; set; } = null!;
+
+		public override bool Equals(object? obj)
+		{
+			if (obj is null)
+				return false;
+			if (obj is ArchiveIdOnly other)
+			{
+				if (other == this)
+					return true;
+				return arcid.Equals(other.arcid);
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return arcid.GetHashCode();
+		}
+
+		public bool Equals(ArchiveIdOnly? other)
+		{
+			if (other is null)
+				return false;
+			if (other == this)
+				return true;
+			return arcid.Equals(other.arcid);
+		}
 	}
 }

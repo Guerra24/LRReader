@@ -53,6 +53,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _open;
 		private int? _forceProgress;
 
+		private int gcCounter;
+
 		private TimeSpan _previousTime = TimeSpan.Zero;
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
@@ -242,6 +244,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_transition = false;
 			_changePage = false;
 			_open = false;
+			gcCounter = 0;
 		}
 
 		private async void NextArchive() => await NextArchiveAsync();
@@ -624,6 +627,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			await ReaderImage.ChangePage(Data.ReaderContent);
 			ReaderImage.FadeInPage();
+			gcCounter++;
+			if (gcCounter > 20)
+			{
+				// Turns out CsWinRT creates a lot of trash in the heap so we need to clear it to prevent stalls
+				GC.Collect(0, GCCollectionMode.Forced, false, false);
+				gcCounter = 0;
+			}
 
 			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 1));
 			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 2));
