@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- Also remove this thing once sentry supports arm64 -->
+    <Platform Condition=" '$(Platform)' == 'AnyCPU' ">x64</Platform>
     <TargetFrameworks>net9.0-windows10.0.26100.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>13.0</LangVersion>
