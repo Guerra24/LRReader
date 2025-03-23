@@ -26,6 +26,9 @@ namespace LRReader.UWP.Views.Content.Settings
 				<x:String>All archives</x:String>
 				<x:String>Only "New" Archives</x:String>
 			 */
+			ClearNew.Items.Add(lang.GetString("Reader/ClearNew/Original"));
+			ClearNew.Items.Add(lang.GetString("Reader/ClearNew/Web"));
+			ClearNew.Items.Add(lang.GetString("Reader/ClearNew/Custom"));
 		}
 
 		private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)

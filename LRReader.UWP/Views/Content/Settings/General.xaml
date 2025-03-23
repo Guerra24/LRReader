@@ -88,7 +88,7 @@
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
 							<Run x:Uid="/Settings/General/Size" />
-							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay}" />
+							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
 						</TextBlock>
 						<muxc:ProgressRing
 							Width="30" Height="30" Margin="0,0,10,0"

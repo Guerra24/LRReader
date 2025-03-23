@@ -62,8 +62,6 @@ namespace LRReader.UWP.Views.Content.Tools
 			}
 		}
 
-		private void Help_Click(object sender, RoutedEventArgs e) => HowItWorks.IsOpen = true;
-
 		private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			await FadeOut.StartAsync(Results);

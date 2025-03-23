@@ -12,6 +12,7 @@
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	mc:Ignorable="d">
 
 	<Page.Resources>
@@ -92,12 +93,18 @@
 						<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
 							<controls:ModernExpander.Input>
 								<StackPanel>
-									<Button x:Name="Help" x:Uid="/Tools/Deduplicator/Help" Click="Help_Click" />
+									<Button x:Name="Help" x:Uid="/Tools/Deduplicator/Help">
+										<interactivity:Interaction.Behaviors>
+											<interactivity:EventTriggerBehavior EventName="Click">
+												<interactivity:ChangePropertyAction TargetObject="{x:Bind HowItWorks}" PropertyName="IsOpen" Value="True" />
+											</interactivity:EventTriggerBehavior>
+										</interactivity:Interaction.Behaviors>
+									</Button>
 									<muxc:TeachingTip
 										x:Name="HowItWorks" x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True"
 										PreferredPlacement="Left"
 										Target="{x:Bind Help}">
-										<WebView Height="330" Width="300" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Deduplicator/HowItWorks/Text, Map=Tools}" />
+										<WebView Height="330" Width="294" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Deduplicator/HowItWorks/Text, Map=Tools}" />
 									</muxc:TeachingTip>
 								</StackPanel>
 							</controls:ModernExpander.Input>
@@ -446,7 +453,7 @@
 					Grid.Row="11" Grid.Column="1" Margin="4,0"
 					HorizontalAlignment="Right"
 					Style="{ThemeResource PropertyTitleStyle}">
-					<TextBlock Text="{x:Bind Data.LeftArchive.Archive.SizeString, Mode=OneWay}" />
+					<TextBlock Text="{x:Bind Data.LeftArchive.Archive.size, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
 				</Grid>
 				<controls:ArchiveTags
 					Grid.Row="13" Grid.Column="1" Margin="4,0"
@@ -531,7 +538,7 @@
 					Grid.Row="11" Grid.Column="3" Margin="4,0"
 					HorizontalAlignment="Left"
 					Style="{ThemeResource PropertyTitleStyle}">
-					<TextBlock Text="{x:Bind Data.RightArchive.Archive.SizeString, Mode=OneWay}" />
+					<TextBlock Text="{x:Bind Data.RightArchive.Archive.size, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
 				</Grid>
 				<controls:ArchiveTags
 					Grid.Row="13" Grid.Column="3" Margin="4,0"

@@ -109,7 +109,7 @@
 											<TextBlock x:Uid="/Tabs/Archive/Size"/>
 										</Border>
 										<Border Style="{StaticResource CustomTagValue}" >
-											<TextBlock Text="{x:Bind Data.Archive.SizeString, Mode=OneWay}"/>
+											<TextBlock Text="{x:Bind Data.Archive.size, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}"/>
 										</Border>
 									</StackPanel>
 								</ct:WrapPanel>

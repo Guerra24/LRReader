@@ -245,6 +245,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_changePage = false;
 			_open = false;
 			gcCounter = 0;
+			Data.PageCounter = 0;
 		}
 
 		private async void NextArchive() => await NextArchiveAsync();
@@ -573,6 +574,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await GoRight();
 			if (Data.UseAutoplay)
 				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayAfterChangeDelay));
+			Data.PageCounter++;
 			_changingPage = false;
 		}
 
@@ -587,6 +589,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await GoLeft();
 			if (Data.UseAutoplay)
 				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayAfterChangeDelay));
+			Data.PageCounter--;
 			_changingPage = false;
 		}
 

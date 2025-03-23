@@ -185,6 +185,8 @@ namespace LRReader.Shared.ViewModels
 
 		private bool _loading, _abort;
 
+		public int PageCounter;
+
 		public ArchivePageViewModel(
 			SettingsService settings,
 			ArchivesService archives,
@@ -233,11 +235,30 @@ namespace LRReader.Shared.ViewModels
 		public async Task<bool> SaveReaderData(bool _wasNew)
 		{
 			int currentPage = ReaderContent.Page;
-			int count = Pages;
+			int count = Pages - 1;
+			bool clearNew = false;
 
-			if (currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1)))
+			switch (Settings.ClearNew)
 			{
-				if (Archive.isnew)
+				case ClearNewMode.Original:
+					clearNew = currentPage >= count - Math.Min(10, Math.Ceiling(count * 0.1));
+					break;
+				case ClearNewMode.Web:
+					clearNew = true;
+					break;
+				case ClearNewMode.Custom:
+					if (Settings.ClearOnLastPage && currentPage == count)
+						clearNew = true;
+					if (Settings.ClearMoreThan25 && currentPage >= Math.Ceiling(count * 0.25))
+						clearNew = true;
+					if (Settings.ClearAtLeast10 && PageCounter >= 10)
+						clearNew = true;
+					break;
+			}
+
+			if (clearNew)
+			{
+				//if (Archive.isnew)
 				{
 					await ClearNew();
 					Archive.isnew = false;
@@ -253,21 +274,17 @@ namespace LRReader.Shared.ViewModels
 						Bookmarked = false;
 				}
 			}
-			else if (!Bookmarked)
+			var mode = Settings.BookmarkReminderMode;
+			if (!Bookmarked && Settings.BookmarkReminder && ((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
 			{
-				var mode = Service.Settings.BookmarkReminderMode;
-				if (Service.Settings.BookmarkReminder &&
-					((_wasNew && mode == BookmarkReminderMode.New) || mode == BookmarkReminderMode.All))
-				{
-					var result = await Platform.OpenGenericDialog(
-						Platform.GetLocalizedString("Tabs/Archive/AddBookmark/Title"),
-						Platform.GetLocalizedString("Tabs/Archive/AddBookmark/PrimaryButtonText"),
-						closebutton: Platform.GetLocalizedString("Tabs/Archive/AddBookmark/CloseButtonText")
-						);
-					if (result == IDialogResult.Primary)
-						Bookmarked = true;
-					_wasNew = false;
-				}
+				var result = await Platform.OpenGenericDialog(
+					Platform.GetLocalizedString("Tabs/Archive/AddBookmark/Title"),
+					Platform.GetLocalizedString("Tabs/Archive/AddBookmark/PrimaryButtonText"),
+					closebutton: Platform.GetLocalizedString("Tabs/Archive/AddBookmark/CloseButtonText")
+					);
+				if (result == IDialogResult.Primary)
+					Bookmarked = true;
+				_wasNew = false;
 			}
 			if (Bookmarked)
 			{

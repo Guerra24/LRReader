@@ -8,10 +8,14 @@
 	xmlns:internal="using:LRReader.Internal"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:converters2="using:LRReader.UWP.Converters"
+	xmlns:extensions="using:LRReader.UWP.Extensions"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	mc:Ignorable="d">
 
 	<Page.Resources>
 		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+		<converters2:ClearNewEnabledConverter x:Key="ClearNewEnabledConverter" />
 	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -88,6 +92,32 @@
 				<controls:ModernInput x:Uid="/Settings/Reader/AutoOpen" Glyph="&#xE78B;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.OpenReader, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernExpander x:Uid="/Settings/Reader/ClearNewModeSelector" Glyph="&#xf7bb;" IsExpanded="{x:Bind Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}">
+					<controls:ModernExpander.Input>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<muxc:TeachingTip x:Name="ClearNewHelp" x:Uid="/Settings/Reader/ClearNewTeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left" Target="{x:Bind Help}">
+								<WebView Height="200" Width="294" DefaultBackgroundColor="Transparent" extensions:WebViewExt.MarkdownJustify="True" extensions:WebViewExt.MarkdownBase="{extensions:LangString Key=Reader/ClearNewTeachingTipText, Map=Settings}" />
+							</muxc:TeachingTip>
+							<Button x:Name="Help" x:Uid="/Settings/Reader/ClearNewHelp">
+								<interactivity:Interaction.Behaviors>
+									<interactivity:EventTriggerBehavior EventName="Click">
+										<interactivity:ChangePropertyAction TargetObject="{x:Bind ClearNewHelp}" PropertyName="IsOpen" Value="True" />
+									</interactivity:EventTriggerBehavior>
+								</interactivity:Interaction.Behaviors>
+							</Button>
+							<ComboBox x:Name="ClearNew" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.ClearNew, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+						</StackPanel>
+					</controls:ModernExpander.Input>
+					<controls:ModernInput x:Uid="/Settings/Reader/ClearNewMode/OnLastPage">
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ClearOnLastPage, Mode=TwoWay}" IsEnabled="{x:Bind Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}" />
+					</controls:ModernInput>
+					<controls:ModernInput x:Uid="/Settings/Reader/ClearNewMode/MoreThan25Percent">
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ClearMoreThan25, Mode=TwoWay}" IsEnabled="{x:Bind Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}" />
+					</controls:ModernInput>
+					<controls:ModernInput x:Uid="/Settings/Reader/ClearNewMode/AtLeast10Pages">
+						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.ClearAtLeast10, Mode=TwoWay}" IsEnabled="{x:Bind Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
 				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch" RightColumnWidth="1*">
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -115,7 +145,7 @@
 				<controls:ModernInput x:Uid="/Settings/Reader/VerticalReader" Glyph="&#xE8C4;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xE8A0;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+				<controls:ModernInput x:Uid="/Settings/Reader/RTL" Glyph="&#xEA5B;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.ReadRTL, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernExpander
@@ -143,7 +173,7 @@
 					</controls:ModernInput>
 				</controls:ModernExpander>
 				<controls:ModernExpander
-					x:Uid="/Settings/Reader/TwoPages" Glyph="&#xF57C;"
+					x:Uid="/Settings/Reader/TwoPages" Glyph="&#xE89A;"
 					IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
 					IsExpanded="{x:Bind Data.SettingsManager.TwoPages, Mode=OneWay}">
 					<controls:ModernExpander.Input>

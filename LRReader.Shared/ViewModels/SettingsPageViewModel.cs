@@ -149,7 +149,8 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
-		public string ThumbnailCacheSize = "";
+		[ObservableProperty]
+		public long _thumbnailCacheSize;
 		[ObservableProperty]
 		private bool _progressCache;
 
@@ -285,7 +286,6 @@ namespace LRReader.Shared.ViewModels
 				return;
 			ProgressCache = true;
 			ThumbnailCacheSize = await Images.GetThumbnailCacheSize();
-			OnPropertyChanged("ThumbnailCacheSize");
 			ProgressCache = false;
 		}
 

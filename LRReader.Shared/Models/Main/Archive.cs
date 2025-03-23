@@ -28,9 +28,6 @@ namespace LRReader.Shared.Models.Main
 
 		public long size { get; set; }
 
-		[JsonIgnore]
-		public string SizeString => string.Format("{0:n2} MB", size / 1024f / 1024f);
-
 		public string filename { get; set; } = null!;
 
 		public string summary { get; set; } = null!;

@@ -182,10 +182,10 @@ public class ImagesService : IService
 		thumbnailCacheDirectory.GetDirectories().ToList().ForEach(dir => dir.Delete(true));
 	}
 
-	public async Task<string> GetThumbnailCacheSize()
+	public async Task<long> GetThumbnailCacheSize()
 	{
 		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 		var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
-		return string.Format("{0:n2} MB", files.Sum(f => f.Length) / 1024f / 1024f);
+		return files.Sum(f => f.Length);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using LRReader.Shared.Extensions;
+using LRReader.Shared.Services;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -125,6 +126,19 @@ namespace LRReader.UWP.Converters
 				return double.Parse((string)parameter);
 			else
 				return double.NaN;
+		}
+	}
+
+	public partial class ClearNewEnabledConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return (ClearNewMode)value == Enum.Parse<ClearNewMode>((string)parameter);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

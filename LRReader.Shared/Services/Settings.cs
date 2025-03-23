@@ -292,7 +292,6 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectRoamed(true);
 			set => SettingsStorage.StoreObjectRoamed(value);
 		}
-
 		public int MaxSuggestedTags
 		{
 			get => SettingsStorage.GetObjectRoamed(25);
@@ -302,7 +301,6 @@ namespace LRReader.Shared.Services
 				OnPropertyChanged();
 			}
 		}
-
 		public bool ShowSuggestedTags
 		{
 			get => SettingsStorage.GetObjectRoamed(false);
@@ -312,7 +310,6 @@ namespace LRReader.Shared.Services
 				OnPropertyChanged();
 			}
 		}
-
 		public bool ReaderAnimations
 		{
 			get => SettingsStorage.GetObjectRoamed(true);
@@ -322,7 +319,6 @@ namespace LRReader.Shared.Services
 				OnPropertyChanged();
 			}
 		}
-
 		public bool PageChangeAnimation
 		{
 			get => SettingsStorage.GetObjectRoamed(true);
@@ -332,7 +328,6 @@ namespace LRReader.Shared.Services
 				OnPropertyChanged();
 			}
 		}
-
 		public bool UseIncrementalCaching
 		{
 			get => SettingsStorage.GetObjectRoamed(false);
@@ -341,6 +336,30 @@ namespace LRReader.Shared.Services
 				SettingsStorage.StoreObjectRoamed(value);
 				OnPropertyChanged();
 			}
+		}
+		public ClearNewMode ClearNew
+		{
+			get => (ClearNewMode)SettingsStorage.GetObjectRoamed((int)ClearNewMode.Original);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed((int)value);
+				OnPropertyChanged();
+			}
+		}
+		public bool ClearOnLastPage
+		{
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
+		public bool ClearMoreThan25
+		{
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
+		public bool ClearAtLeast10
+		{
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 
 		public static readonly int CurrentLocalVersion = 4;
@@ -608,5 +627,9 @@ namespace LRReader.Shared.Services
 		Top,
 		Middle,
 		Bottom
+	}
+	public enum ClearNewMode
+	{
+		Original, Web, Custom
 	}
 }

@@ -135,6 +135,7 @@ namespace LRReader.UWP.Extensions
 		public static readonly DependencyProperty MarkdownProperty = DependencyProperty.RegisterAttached("Markdown", typeof(string), typeof(WebViewExt), new PropertyMetadata(""));
 		public static readonly DependencyProperty MarkdownBaseProperty = DependencyProperty.RegisterAttached("MarkdownBase", typeof(string), typeof(WebViewExt), new PropertyMetadata(""));
 		public static readonly DependencyProperty MarkdownReadyProperty = DependencyProperty.RegisterAttached("MarkdownReady", typeof(bool), typeof(WebViewExt), new PropertyMetadata(false));
+		public static readonly DependencyProperty MarkdownJustifyProperty = DependencyProperty.RegisterAttached("MarkdownJustify", typeof(bool), typeof(WebViewExt), new PropertyMetadata(false));
 
 		private static readonly MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 
@@ -172,6 +173,7 @@ namespace LRReader.UWP.Extensions
 							font-size: 14px;
 							color: #{{color.R:X2}}{{color.G:X2}}{{color.B:X2}};
 							margin: 0;
+							{{(webView.GetMarkdownJustify() ? "text-align: justify;" : "")}}
 						}
 						::selection {
 							color: #{{selectedColor.R:X2}}{{selectedColor.G:X2}}{{selectedColor.B:X2}};
@@ -215,6 +217,10 @@ namespace LRReader.UWP.Extensions
 		}
 
 		public static string GetMarkdownBase(WebView webView) => "";
+
+		public static void SetMarkdownJustify(this WebView webView, bool justify) => webView.SetValue(MarkdownJustifyProperty, justify);
+
+		public static bool GetMarkdownJustify(this WebView webView) => (bool)webView.GetValue(MarkdownJustifyProperty);
 
 	}
 
@@ -334,6 +340,17 @@ namespace LRReader.UWP.Extensions
 	{
 
 		public double Value { get; set; }
+
+		protected override object ProvideValue()
+		{
+			return Value;
+		}
+	}
+
+	[MarkupExtensionReturnType(ReturnType = typeof(ClearNewMode))]
+	public partial class ClearNewModeEnumExtension : MarkupExtension
+	{
+		public ClearNewMode Value { get; set; }
 
 		protected override object ProvideValue()
 		{

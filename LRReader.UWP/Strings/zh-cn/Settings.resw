@@ -576,4 +576,40 @@
   <data name="Reader.JpegXLNoticeInfo.Title" xml:space="preserve">
     <value>Missing JPEG XL Image Extentions</value>
   </data>
+  <data name="Reader.ClearNew.Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Reader.ClearNew.Original" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="Reader.ClearNew.Web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="Reader.ClearNewHelp.Content" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Reader.ClearNewMode.AtLeast10Pages.Title" xml:space="preserve">
+    <value>Have read/viewed at least 10 pages</value>
+  </data>
+  <data name="Reader.ClearNewMode.MoreThan25Percent.Title" xml:space="preserve">
+    <value>Any page above the 25% of total pages</value>
+  </data>
+  <data name="Reader.ClearNewMode.OnLastPage.Title" xml:space="preserve">
+    <value>On the last page</value>
+  </data>
+  <data name="Reader.ClearNewModeSelector.Title" xml:space="preserve">
+    <value>Mark as read</value>
+  </data>
+  <data name="Reader.ClearNewTeachingTip.Title" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Reader.ClearNewTeachingTipText" xml:space="preserve">
+    <value>**Original:** Read past 90% of total pages, always limited to the last 10 pages.
+
+**Web:** Same as the web reader.
+
+**Custom:** Based on the selected options.
+
+If custom is selected, make sure at least one option is enabled; otherwise, archives will never be marked as read.</value>
+  </data>
 </root>
