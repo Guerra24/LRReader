@@ -95,15 +95,12 @@
 				<controls:ModernExpander x:Uid="/Settings/Reader/ClearNewModeSelector" Glyph="&#xf7bb;" IsExpanded="{x:Bind Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}">
 					<controls:ModernExpander.Input>
 						<StackPanel Orientation="Horizontal" Spacing="8">
-							<muxc:TeachingTip x:Name="ClearNewHelp" x:Uid="/Settings/Reader/ClearNewTeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left" Target="{x:Bind Help}">
-								<WebView Height="200" Width="294" DefaultBackgroundColor="Transparent" extensions:WebViewExt.MarkdownJustify="True" extensions:WebViewExt.MarkdownBase="{extensions:LangString Key=Reader/ClearNewTeachingTipText, Map=Settings}" />
-							</muxc:TeachingTip>
-							<Button x:Name="Help" x:Uid="/Settings/Reader/ClearNewHelp">
-								<interactivity:Interaction.Behaviors>
-									<interactivity:EventTriggerBehavior EventName="Click">
-										<interactivity:ChangePropertyAction TargetObject="{x:Bind ClearNewHelp}" PropertyName="IsOpen" Value="True" />
-									</interactivity:EventTriggerBehavior>
-								</interactivity:Interaction.Behaviors>
+							<Button x:Uid="/Settings/Reader/ClearNewHelp">
+								<extensions:TeachingTipButtonExtension.TeachingTip>
+									<muxc:TeachingTip x:Uid="/Settings/Reader/ClearNewTeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
+										<WebView Height="200" Width="294" DefaultBackgroundColor="Transparent" extensions:WebViewExt.MarkdownJustify="True" extensions:WebViewExt.MarkdownBase="{extensions:LangString Key=Reader/ClearNewTeachingTipText, Map=Settings}" />
+									</muxc:TeachingTip>
+								</extensions:TeachingTipButtonExtension.TeachingTip>
 							</Button>
 							<ComboBox x:Name="ClearNew" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.ClearNew, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 						</StackPanel>

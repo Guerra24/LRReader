@@ -142,12 +142,6 @@
         "resolved": "1.2.20250107.1",
         "contentHash": "o/6BbqYGWfWAHiaFnSPoNKVKEU8M675+2pRwvkXFawhOgZDzzDKNvQULYLkWSZ5vBgsajfCJ+jnbFvAve0Pq1A=="
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed": {
-        "type": "Direct",
-        "requested": "[3.0.0, )",
-        "resolved": "3.0.0",
-        "contentHash": "SUPaCmyxi6245iN3cDBzu1gzfjOSEIXrBm+95oqO5XJP1BwA/LQxiDXfPl6JjN3EiCdZVs7Z0pjOYiDBZHgdvg=="
-      },
       "Caching": {
         "type": "Transitive",
         "resolved": "3.1.3",
@@ -202,6 +196,11 @@
         "type": "Transitive",
         "resolved": "9.0.3",
         "contentHash": "TfaHPSe39NyL2wxkisRxXK7xvHGZYBZ+dy3r+mqGvnxKgAPdHkMu3QMQZI4pquP6W5FIQBqs8FJpWV8ffCgDqQ=="
+      },
+      "Microsoft.Xaml.Behaviors.Uwp.Managed": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "SUPaCmyxi6245iN3cDBzu1gzfjOSEIXrBm+95oqO5XJP1BwA/LQxiDXfPl6JjN3EiCdZVs7Z0pjOYiDBZHgdvg=="
       },
       "RestSharp": {
         "type": "Transitive",

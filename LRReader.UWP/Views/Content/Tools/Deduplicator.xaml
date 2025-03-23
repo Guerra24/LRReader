@@ -92,21 +92,13 @@
 					<controls:ModernGroup Margin="0">
 						<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
 							<controls:ModernExpander.Input>
-								<StackPanel>
-									<Button x:Name="Help" x:Uid="/Tools/Deduplicator/Help">
-										<interactivity:Interaction.Behaviors>
-											<interactivity:EventTriggerBehavior EventName="Click">
-												<interactivity:ChangePropertyAction TargetObject="{x:Bind HowItWorks}" PropertyName="IsOpen" Value="True" />
-											</interactivity:EventTriggerBehavior>
-										</interactivity:Interaction.Behaviors>
-									</Button>
-									<muxc:TeachingTip
-										x:Name="HowItWorks" x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True"
-										PreferredPlacement="Left"
-										Target="{x:Bind Help}">
-										<WebView Height="330" Width="294" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Deduplicator/HowItWorks/Text, Map=Tools}" />
-									</muxc:TeachingTip>
-								</StackPanel>
+								<Button x:Uid="/Tools/Deduplicator/Help">
+									<ext:TeachingTipButtonExtension.TeachingTip>
+										<muxc:TeachingTip x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
+											<WebView Height="330" Width="294" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Deduplicator/HowItWorks/Text, Map=Tools}" />
+										</muxc:TeachingTip>
+									</ext:TeachingTipButtonExtension.TeachingTip>
+								</Button>
 							</controls:ModernExpander.Input>
 							<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 								<muxc:NumberBox

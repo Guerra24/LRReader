@@ -1,14 +1,15 @@
-﻿using System;
-using System.Numerics;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.WinUI;
+﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Animations;
 using CommunityToolkit.WinUI.Media;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Markdig;
+using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Numerics;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.System;
@@ -292,6 +293,27 @@ namespace LRReader.UWP.Extensions
 				ThemeShadow = new ThemeShadow();
 			else*/
 			DropShadow = new AttachedCardShadow { BlurRadius = 8, CornerRadius = 4, Color = Colors.Black, Offset = "0,2", Opacity = 0.16 };
+		}
+	}
+
+	public static class TeachingTipButtonExtension
+	{
+		public static readonly DependencyProperty TeachingTipProperty = DependencyProperty.RegisterAttached("TeachingTip", typeof(TeachingTip), typeof(TeachingTipButtonExtension), new PropertyMetadata(null));
+
+		public static void SetTeachingTip(this Button button, TeachingTip teachingTip)
+		{
+			button.Click -= Button_Click;
+			button.Click += Button_Click;
+			teachingTip.Target = button;
+			button.SetValue(TeachingTipProperty, teachingTip);
+		}
+
+		public static TeachingTip GetTeachingTip(this Button button) => (TeachingTip)button.GetValue(TeachingTipProperty);
+
+		private static void Button_Click(object sender, RoutedEventArgs e)
+		{
+			var button = (Button)sender;
+			button.GetTeachingTip().IsOpen = true;
 		}
 	}
 
