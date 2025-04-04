@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using LRReader.UWP.Extensions;
+﻿using CommunityToolkit.WinUI;
 using LRReader.UWP.Views.Content;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
@@ -26,17 +26,11 @@ namespace LRReader.UWP.Views.Controls
 			this.InitializeComponent();
 		}
 
-		public string Title
-		{
-			get => (string)GetValue(TitleProperty);
-			set => SetValue(TitleProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial string? Title { get; set; }
 
-		public Type Initial
-		{
-			get => (Type)GetValue(InitialProperty);
-			set => SetValue(InitialProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial Type? Initial { get; set; }
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -44,7 +38,7 @@ namespace LRReader.UWP.Views.Controls
 				return;
 			_loaded = true;
 			if (Initial != null)
-				Navigate(new ModernPageTabItem { Title = Title, Page = Initial }, 0);
+				Navigate(new ModernPageTabItem { Title = Title!, Page = Initial }, 0);
 		}
 
 		public bool GoBack()
@@ -176,9 +170,6 @@ namespace LRReader.UWP.Views.Controls
 			if (ContentMain.Content is IDisposable main) main.Dispose();
 			if (ContentExtra.Content is IDisposable extra) extra.Dispose();
 		}
-
-		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernPageTab), new PropertyMetadata(null));
-		public static readonly DependencyProperty InitialProperty = DependencyProperty.Register("Initial", typeof(Type), typeof(ModernPageTab), new PropertyMetadata(null));
 	}
 
 	public class ModernPageTabItem

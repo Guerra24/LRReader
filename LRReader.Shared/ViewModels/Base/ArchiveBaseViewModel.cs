@@ -153,6 +153,8 @@ namespace LRReader.Shared.ViewModels.Base
 			{
 				if (double.IsNaN(value))
 					return;
+				if (Archive.Rating == value)
+					return;
 				Archive.SetRating((int)value);
 				OnPropertyChanged(nameof(Rating));
 				Task.Run(async () => await ArchivesProvider.UpdateArchive(Archive.arcid, tags: Archive.tags).ConfigureAwait(false));

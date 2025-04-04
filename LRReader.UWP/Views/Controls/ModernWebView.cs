@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.WinUI;
 using LRReader.UWP.Extensions;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -16,11 +16,8 @@ namespace LRReader.UWP.Views.Controls
 	{
 		private static List<string> Allowed = new List<string>() { "/upload", "/batch", "/config", "/config/plugins", "/logs" };
 
-		public string Title
-		{
-			get => (string)GetValue(TitleProperty);
-			private set => SetValue(TitleProperty, value);
-		}
+		[GeneratedDependencyProperty(DefaultValue = "")]
+		public partial string Title { get; private set; }
 
 		public event Action? OnCloseRequested;
 
@@ -113,8 +110,6 @@ namespace LRReader.UWP.Views.Controls
 			catch { }
 			return false;
 		}
-
-		public static DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernWebView), new PropertyMetadata(""));
 	}
 
 	public interface IWebView : IDisposable

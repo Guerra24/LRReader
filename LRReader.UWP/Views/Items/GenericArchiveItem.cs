@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI.Animations;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
@@ -62,17 +63,11 @@ namespace LRReader.UWP.Views.Items
 			Parallax = GetTemplateChild("Parallax") as ParallaxView;
 		}
 
-		public int DecodePixelWidth
-		{
-			get => (int)GetValue(DecodePixelWidthProperty);
-			set => SetValue(DecodePixelWidthProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial int DecodePixelWidth { get; set; }
 
-		public int DecodePixelHeight
-		{
-			get => (int)GetValue(DecodePixelHeightProperty);
-			set => SetValue(DecodePixelHeightProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial int DecodePixelHeight { get; set; }
 
 		private Task Show(bool animate)
 		{
@@ -187,8 +182,5 @@ namespace LRReader.UWP.Views.Items
 				await ViewModel.OpenTab(Group);
 			}
 		}
-
-		public static readonly DependencyProperty DecodePixelWidthProperty = DependencyProperty.Register("DecodePixelWidth", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
-		public static readonly DependencyProperty DecodePixelHeightProperty = DependencyProperty.Register("DecodePixelHeight", typeof(int), typeof(GenericArchiveItem), new PropertyMetadata(0));
 	}
 }

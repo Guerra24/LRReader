@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
+﻿using CommunityToolkit.WinUI;
 using LRReader.Shared.Models.Main;
+using System.Collections.Generic;
+using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,27 +29,16 @@ namespace LRReader.UWP.Views.Controls
 				ItemClickCommand.Execute(e.ClickedItem);
 		}
 
-		public ICommand ItemClickCommand
-		{
-			get => (ICommand)GetValue(ItemClickCommandProperty);
-			set => SetValue(ItemClickCommandProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial ICommand? ItemClickCommand { get; set; }
 
-		public ICollection<ArchiveTagsGroup> ItemsSource
-		{
-			get => (ICollection<ArchiveTagsGroup>)GetValue(ItemsSourceProperty);
-			set => SetValue(ItemsSourceProperty, value);
-		}
+		[GeneratedDependencyProperty(DefaultValueCallback = "GetDefaultItemSource")]
+		public partial ICollection<ArchiveTagsGroup> ItemsSource { get; set; }
 
-		public double MaxTagsWidth
-		{
-			get => (double)GetValue(MaxTagsWidthProperty);
-			set => SetValue(MaxTagsWidthProperty, value);
-		}
+		private static ICollection<ArchiveTagsGroup> GetDefaultItemSource() => new List<ArchiveTagsGroup>();
 
-		public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<ArchiveTagsGroup>), typeof(ArchiveTags), new PropertyMetadata(new List<ArchiveTagsGroup>()));
-		public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(ArchiveTags), new PropertyMetadata(null));
-		public static readonly DependencyProperty MaxTagsWidthProperty = DependencyProperty.Register("MaxTagsWidth", typeof(double), typeof(ArchiveTags), new PropertyMetadata(double.MaxValue));
+		[GeneratedDependencyProperty(DefaultValue = double.MaxValue)]
+		public partial double MaxTagsWidth { get; set; }
 
 		private void TagsList_Loaded(object sender, RoutedEventArgs e)
 		{

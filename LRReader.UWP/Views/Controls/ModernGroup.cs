@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Windows.UI.Xaml;
+﻿using CommunityToolkit.WinUI;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
@@ -20,12 +20,7 @@ namespace LRReader.UWP.Views.Controls
 			set => SetValue(ContentProperty, value);
 		}
 
-		public string Title
-		{
-			get => (string)GetValue(TitleProperty);
-			set => SetValue(TitleProperty, value);
-		}
-
-		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernGroup), new PropertyMetadata(""));
+		[GeneratedDependencyProperty(DefaultValue = "")]
+		public partial string Title { get; set; }
 	}
 }

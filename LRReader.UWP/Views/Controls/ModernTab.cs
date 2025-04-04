@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.WinUI;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using WinRT;
 
@@ -70,23 +67,14 @@ namespace LRReader.UWP.Views.Controls
 				_open = false;
 		}*/
 
-		public object CustomTabControl
-		{
-			get => GetValue(CustomTabControlProperty);
-			set => SetValue(CustomTabControlProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial object? CustomTabControl { get; set; }
 
-		public string CustomTabId
-		{
-			get => (string)GetValue(CustomTabIdProperty);
-			set => SetValue(CustomTabIdProperty, value);
-		}
+		[GeneratedDependencyProperty(DefaultValue = "")]
+		public partial string CustomTabId { get; set; }
 
-		public RenderTargetBitmap Thumbnail
-		{
-			get => (RenderTargetBitmap)GetValue(ThumbnailProperty);
-			set => SetValue(ThumbnailProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial RenderTargetBitmap? Thumbnail { get; set; }
 
 		public Tab Tab { get; set; }
 
@@ -104,9 +92,5 @@ namespace LRReader.UWP.Views.Controls
 				return false;
 			return GoBack.Invoke();
 		}
-
-		public static readonly DependencyProperty CustomTabControlProperty = DependencyProperty.Register("CustomTabControl", typeof(object), typeof(ModernTab), new PropertyMetadata(null));
-		public static readonly DependencyProperty CustomTabIdProperty = DependencyProperty.Register("CustomTabId", typeof(string), typeof(ModernTab), new PropertyMetadata(""));
-		public static readonly DependencyProperty ThumbnailProperty = DependencyProperty.Register("Thumbnail", typeof(RenderTargetBitmap), typeof(ModernTab), new PropertyMetadata(null));
 	}
 }

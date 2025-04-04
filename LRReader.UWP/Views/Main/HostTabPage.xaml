@@ -77,17 +77,11 @@
 					</Button>
 				</StackPanel>
 			</muxc:TabView.TabStripFooter>
+			<controls:ModernTabView.TabTools>
+				<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" VerticalAlignment="Center" IsTabStop="False" />
+			</controls:ModernTabView.TabTools>
 			<controls:ModernTabView.ExtraFooter>
-				<StackPanel
-					x:Name="TabViewEndHeader" VerticalAlignment="Center"
-					Orientation="Horizontal" Spacing="2">
-					<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" IsTabStop="False">
-						<ContentControl.ContentTransitions>
-							<TransitionCollection>
-								<ContentThemeTransition VerticalOffset="0" />
-							</TransitionCollection>
-						</ContentControl.ContentTransitions>
-					</ContentControl>
+				<StackPanel x:Name="TabViewEndHeader" VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">
 					<Button
 						x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
 						Visibility="{x:Bind Data.Windowed, Mode=OneWay}">

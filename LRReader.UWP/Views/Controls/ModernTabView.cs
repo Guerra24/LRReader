@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI.Behaviors;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
@@ -33,17 +34,14 @@ namespace LRReader.UWP.Views.Controls
 			Notifications = (StackedNotificationsBehavior)GetTemplateChild("Notifications");
 		}
 
-		public object ExtraFooter
-		{
-			get => GetValue(ExtraFooterProperty);
-			set => SetValue(ExtraFooterProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial UIElement? TabTools { get; set; }
 
-		public bool IsPaneOpen
-		{
-			get => (bool)GetValue(IsPaneOpenProperty);
-			set => SetValue(IsPaneOpenProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial UIElement? ExtraFooter { get; set; }
+
+		[GeneratedDependencyProperty(DefaultValue = true)]
+		public partial bool IsPaneOpen { get; set; }
 
 		private void PaneToggle_Click(object sender, RoutedEventArgs e)
 		{
@@ -90,9 +88,6 @@ namespace LRReader.UWP.Views.Controls
 					IsPaneOpen = false;
 			}
 		}
-
-		public static readonly DependencyProperty ExtraFooterProperty = DependencyProperty.Register("ExtraFooter", typeof(object), typeof(ModernTabView), new PropertyMetadata(null));
-		public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register("IsPaneOpen", typeof(bool), typeof(ModernTabView), new PropertyMetadata(true));
 	}
 
 }

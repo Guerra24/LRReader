@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using CommunityToolkit.WinUI;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
@@ -219,11 +220,8 @@ namespace LRReader.UWP.Views.Controls
 		}
 
 		// Dependency
-		public bool RandomVisible
-		{
-			get => (bool)GetValue(RandomVisibleProperty);
-			set => SetValue(RandomVisibleProperty, value);
-		}
+		[GeneratedDependencyProperty(DefaultValue = true)]
+		public partial bool RandomVisible { get; set; }
 
 		public new bool AllowDrop
 		{
@@ -279,14 +277,7 @@ namespace LRReader.UWP.Views.Controls
 			set => ArchivesGrid.ItemTemplateSelector = value;
 		}
 
-		public bool HandleF5
-		{
-			get => (bool)GetValue(HandleF5Property);
-			set => SetValue(HandleF5Property, value);
-		}
-
-		public static readonly DependencyProperty RandomVisibleProperty = DependencyProperty.Register("RandomVisible", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
-		public static readonly DependencyProperty HandleF5Property = DependencyProperty.Register("HandleF5", typeof(bool), typeof(ArchiveList), new PropertyMetadata(true));
-
+		[GeneratedDependencyProperty(DefaultValue = true)]
+		public partial bool HandleF5 { get; set; }
 	}
 }

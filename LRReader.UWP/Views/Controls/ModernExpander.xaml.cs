@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Controls;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -15,54 +16,26 @@ namespace LRReader.UWP.Views.Controls
 			Items = new List<object>();
 		}
 
-		public object Input
-		{
-			get => GetValue(InputProperty);
-			set => SetValue(InputProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial object? Input { get; set; }
 
-		public string Title
-		{
-			get => (string)GetValue(TitleProperty);
-			set => SetValue(TitleProperty, value);
-		}
-		public string Description
-		{
-			get => (string)GetValue(DescriptionProperty);
-			set => SetValue(DescriptionProperty, value);
-		}
+		[GeneratedDependencyProperty(DefaultValue = "")]
+		public partial string Title { get; set; }
 
-		public IList<object> Items
-		{
-			get => (IList<object>)GetValue(ItemsProperty);
-			set => SetValue(ItemsProperty, value);
-		}
+		[GeneratedDependencyProperty(DefaultValue = "")]
+		public partial string Description { get; set; }
 
-		public string Glyph
-		{
-			get => (string)GetValue(GlyphProperty);
-			set => SetValue(GlyphProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial IList<object>? Items { get; set; }
 
-		public IconElement Icon
-		{
-			get => (IconElement)GetValue(IconProperty);
-			set => SetValue(IconProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial string? Glyph { get; set; }
 
-		public string ToolTip
-		{
-			get => (string)GetValue(ToolTipProperty);
-			set => SetValue(ToolTipProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial IconElement? Icon { get; set; }
 
-		public static readonly DependencyProperty InputProperty = DependencyProperty.Register("Input", typeof(object), typeof(ModernExpander), new PropertyMetadata(null));
-		public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
-		public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ModernExpander), new PropertyMetadata(""));
-		public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IList<object>), typeof(ModernExpander), new PropertyMetadata(null));
-		public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register("Glyph", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
-		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(IconElement), typeof(ModernExpander), new PropertyMetadata(null));
-		public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register("ToolTip", typeof(string), typeof(ModernExpander), new PropertyMetadata(null));
+		[GeneratedDependencyProperty]
+		public partial string? ToolTip { get; set; }
 	}
 
 	public partial class ItemTemplateSelector : DataTemplateSelector

@@ -1683,6 +1683,7 @@
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 					<Grid.Resources>
 						<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
@@ -1700,11 +1701,14 @@
 						x:Name="RightContentPresenter"
 						Content="{TemplateBinding TabStripFooter}"
 						ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+					<ContentPresenter Grid.Column="2"
+						Content="{TemplateBinding TabTools}"
+						ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
 					<Border
-						Grid.Column="2" Width="1" Height="16"
+						Grid.Column="3" Width="1" Height="16"
 						Margin="3,0,3,0" VerticalAlignment="Center"
 						Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-					<ContentPresenter Grid.Column="3"
+					<ContentPresenter Grid.Column="4"
 						Content="{TemplateBinding ExtraFooter}"
 						ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
 				</Grid>
@@ -1742,6 +1746,7 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<Grid.Resources>
 					<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
@@ -1760,11 +1765,14 @@
 					x:Name="RightContentPresenter" Grid.Column="1"
 					Content="{TemplateBinding TabStripFooter}"
 					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+				<ContentPresenter Grid.Column="3"
+					Content="{TemplateBinding TabTools}"
+					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
 				<Border
-					Grid.Column="3" Width="1" Height="16"
+					Grid.Column="4" Width="1" Height="16"
 					Margin="3,0,3,0" VerticalAlignment="Center"
 					Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-				<ContentPresenter Grid.Column="4"
+				<ContentPresenter Grid.Column="5"
 					Content="{TemplateBinding ExtraFooter}"
 					ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
 			</Grid>

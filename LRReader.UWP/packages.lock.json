@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     "net9.0-windows10.0.26100": {
+      "CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator": {
+        "type": "Direct",
+        "requested": "[0.1.250319-build.2093, )",
+        "resolved": "0.1.250319-build.2093",
+        "contentHash": "Sae6yb4bIl9035HZp83jpX8lSJG3gGbpInhjaQGLSxgE0h3XXQBT7L+3S41DnmngPUFc8Q2UriihZX9X/0h1Jw=="
+      },
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
         "requested": "[0.1.250319-build.2093, )",
@@ -15,85 +21,85 @@
       },
       "CommunityToolkit.Uwp.Animations": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "NooKu/gVTLYwi2YynnhsucwrCXf0qIUWf3a+/dfF7WbAvcYJVre6iN5NIQV5+fHCW0RZolOlVxFVR+70TJaNzQ==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "tj+UOMlxhJFf0gXY3M2WhmQ8WJOsfoYAZlXxuBqvg1E/NsKOI59+LUNDmxtF2Ab5ZUgZCzgPqXQwx6OzY2ignQ==",
         "dependencies": {
-          "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
+          "CommunityToolkit.Uwp.Extensions": "8.2.250402",
+          "Microsoft.UI.Xaml": "2.8.7"
         }
       },
       "CommunityToolkit.Uwp.Behaviors": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "NlQJtuMifs2eACe2BVZ56D3CdkVE+XbSvcIPeOJH6XcRyuGBBk/NDT0yXpub0pk5I0VYeTp7ug7GO49qlZYLRA==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "0vgCbWOBRMZZmwOA6hdOthIDAoue5MfD3Yi6q6AjlB7IuVIYpIS/w7I5Zc/KyAI5TNgoeaQb4CTKARkdRwn33w==",
         "dependencies": {
-          "CommunityToolkit.Uwp.Animations": "8.2.250129-preview2",
-          "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001",
+          "CommunityToolkit.Uwp.Animations": "8.2.250402",
+          "CommunityToolkit.Uwp.Extensions": "8.2.250402",
+          "Microsoft.UI.Xaml": "2.8.7",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "3.0.0"
         }
       },
       "CommunityToolkit.Uwp.Controls.Primitives": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "AFa9OLEJnH4m2BVOWly8rpCB/0/uVrSi/NVJ8IkIT/DlouXVli2K65N+aFqMc5yBwQmtvxCycj5QA3kk9F6JFQ==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "mzxJYSvIW4ReMOhe18M5ZV9ETHSl+pB4ikXpyxSZdtPs6pU54fYqQ3rxhBWdgEUVzi9cnMxIBGtLOqYr+JWg0Q==",
         "dependencies": {
-          "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
+          "CommunityToolkit.Uwp.Extensions": "8.2.250402",
+          "Microsoft.UI.Xaml": "2.8.7"
         }
       },
       "CommunityToolkit.Uwp.Controls.Sizers": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "57DPJEB8PAj+Q5gIrIVl8zQ5JWUlpLqCs8kGlY1VwaXcgcdp/DFjmv9slYuO65UI31dsjvrAdIdNiMy+dbQdRA==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "PsPCpX+T8W9que570Ze/qfLRvL5S/UN2sjq5QTHaSaOumkZPulTf2OqsOY7hKqDRxHnAvABZ8Ha6T11quIiUzg==",
         "dependencies": {
-          "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
+          "CommunityToolkit.Uwp.Extensions": "8.2.250402",
+          "Microsoft.UI.Xaml": "2.8.7"
         }
       },
       "CommunityToolkit.Uwp.Converters": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "EgzeYcLqbwNNUaSeyhMjDHg65eafovwHIrwEcGGNlW5e4gPXIvVBatHIMJ8Zuunp4eQSHGIgX78lccu0Uk2GPw==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "p5putB/HYfFaObg5AI2dnPt5IioXFfxYFaydHhn9w0I4Ab9K334r4VbrifjoGuMsrpmriWgNTndgSwD1jky5pw==",
         "dependencies": {
           "CommunityToolkit.Common": "8.2.1",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
+          "Microsoft.UI.Xaml": "2.8.7"
         }
       },
       "CommunityToolkit.Uwp.Extensions": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "SnIAoWSaoBz6g1kLwXT1bp/VTBf7MGYU+MnnOsBz2egNSpxoiHkwzCIOPCv8ROAe2A08B+UqkrNSKs6qZTQPug==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "GC0RBXQaprgaYW9eb0FxZOmQREoUiMIVmv1Fc6ipMQJ66MN7ohrj2tz6yaU/F5JefG9maMSKmyWpmnopMraIHQ==",
         "dependencies": {
           "CommunityToolkit.Common": "8.2.1",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
+          "Microsoft.UI.Xaml": "2.8.7"
         }
       },
       "CommunityToolkit.Uwp.Helpers": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "MwRpvmMBULIWBoDQnwN3MG5/laESCI2t8HSfThRp/mDWOifXVLU56J6bOFGHcN8xoMDemTf+QXBePbTp5+V+rg==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "qlkusqHLMpS4bVy4hC1ivF/3mWcBl1CdXP3XbGNn9KFZ3ka07mHsrJ+/BgNS7/d14xtot/4LE0uCDwv5ZrczTg==",
         "dependencies": {
-          "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001"
+          "CommunityToolkit.Uwp.Extensions": "8.2.250402",
+          "Microsoft.UI.Xaml": "2.8.7"
         }
       },
       "CommunityToolkit.Uwp.Media": {
         "type": "Direct",
-        "requested": "[8.2.250129-preview2, )",
-        "resolved": "8.2.250129-preview2",
-        "contentHash": "NcUyPmNcqk8JwbDf3sSybs/lJMKEXLWLfntqqdeba8irF0lYeF39WFaapIfweNv8zTYNHweArUnM5uiw/UmdCQ==",
+        "requested": "[8.2.250402, )",
+        "resolved": "8.2.250402",
+        "contentHash": "ugPU3is/QWLCz2MtcyhIDKEV0jod+/zXwrdr4w/eyfmBvEuJdf5rrFvrohEjzMp6b9fgJouj/ExuBpWSO/7YYw==",
         "dependencies": {
-          "CommunityToolkit.Uwp.Animations": "8.2.250129-preview2",
-          "CommunityToolkit.Uwp.Extensions": "8.2.250129-preview2",
-          "Microsoft.UI.Xaml": "2.8.7-prerelease.241119001",
+          "CommunityToolkit.Uwp.Animations": "8.2.250402",
+          "CommunityToolkit.Uwp.Extensions": "8.2.250402",
+          "Microsoft.UI.Xaml": "2.8.7",
           "Win2D.uwp": "1.28.1"
         }
       },
@@ -209,8 +215,8 @@
       },
       "Sentry": {
         "type": "Transitive",
-        "resolved": "5.4.0",
-        "contentHash": "fXjF+bn7uOSPjrALfY+GQGhaeXFXfAX8XrSWeUJOek/hhIss1hhi/l2AJPefjVdaNWyb1muJAdUUZnBofZjlvw=="
+        "resolved": "5.5.0",
+        "contentHash": "6LHLNBTtAOiYpGRCk2Z9637HU1jg82XXmKSVomt62h6p29pf8vS57n1En4naYQmJqkjU9TRf/9xHlv+n5vOSmA=="
       },
       "SixLabors.ImageSharp": {
         "type": "Transitive",
@@ -236,7 +242,7 @@
           "KeyedSemaphores": "[5.0.0, )",
           "Microsoft.Extensions.DependencyInjection": "[9.0.3, )",
           "RestSharp": "[112.1.0, )",
-          "Sentry": "[5.4.0, )",
+          "Sentry": "[5.5.0, )",
           "SixLabors.ImageSharp": "[3.1.7, )"
         }
       }

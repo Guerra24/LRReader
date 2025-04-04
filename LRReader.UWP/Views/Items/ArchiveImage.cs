@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -107,17 +108,15 @@ namespace LRReader.UWP.Views.Items
 			VisualStateManager.GoToState(this, "Hidden", true);
 		}
 
-		public bool KeepOverlayOpen
+		[GeneratedDependencyProperty]
+		public partial bool KeepOverlayOpen { get; set; }
+
+		partial void OnKeepOverlayOpenChanged(bool newValue)
 		{
-			get => (bool)GetValue(KeepOverlayOpenProperty);
-			set
-			{
-				if (value)
-					VisualStateManager.GoToState(this, "Visible", false);
-				else
-					VisualStateManager.GoToState(this, "Hidden", false);
-				SetValue(KeepOverlayOpenProperty, value);
-			}
+			if (newValue)
+				VisualStateManager.GoToState(this, "Visible", false);
+			else
+				VisualStateManager.GoToState(this, "Hidden", false);
 		}
 
 		public bool HideOverlay
@@ -129,9 +128,6 @@ namespace LRReader.UWP.Views.Items
 		{
 			set => Data.ShowExtraDetails = value;
 		}
-
-		public static readonly DependencyProperty KeepOverlayOpenProperty = DependencyProperty.Register("KeepOverlayOpen", typeof(bool), typeof(ArchiveImage), new PropertyMetadata(false));
-
 	}
 
 }

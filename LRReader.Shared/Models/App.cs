@@ -9,7 +9,7 @@ namespace LRReader.Shared.Models
 {
 	public interface ICustomTab : IDisposable
 	{
-		object CustomTabControl { get; set; }
+		object? CustomTabControl { get; set; }
 
 		string CustomTabId { get; set; }
 

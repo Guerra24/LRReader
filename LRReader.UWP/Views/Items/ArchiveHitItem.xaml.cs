@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows.Input;
+﻿using CommunityToolkit.WinUI;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -30,23 +31,14 @@ namespace LRReader.UWP.Views.Items
 			Data = Service.Services.GetRequiredService<ArchiveHitViewModel>();
 		}
 
-		public bool ShowRemove
-		{
-			get => (bool)GetValue(ShowRemoveProperty);
-			set => SetValue(ShowRemoveProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial bool ShowRemove { get; set; }
 
-		public ICommand RemoveCommand
-		{
-			get => (ICommand)GetValue(RemoveCommandProperty);
-			set => SetValue(RemoveCommandProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial ICommand? RemoveCommand { get; set; }
 
-		public ICommand MarkNonDuplicateCommand
-		{
-			get => (ICommand)GetValue(MarkNonDuplicateCommandProperty);
-			set => SetValue(MarkNonDuplicateCommandProperty, value);
-		}
+		[GeneratedDependencyProperty]
+		public partial ICommand? MarkNonDuplicateCommand { get; set; }
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
@@ -100,13 +92,8 @@ namespace LRReader.UWP.Views.Items
 
 		private void Remove_Click(object sender, RoutedEventArgs e)
 		{
-			if (RemoveCommand.CanExecute(Data.ArchiveHit))
+			if (RemoveCommand!.CanExecute(Data.ArchiveHit))
 				RemoveCommand.Execute(Data.ArchiveHit);
 		}
-
-		public static readonly DependencyProperty ShowRemoveProperty = DependencyProperty.Register("ShowRemove", typeof(bool), typeof(ArchiveHitItem), new PropertyMetadata(false));
-		public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.RegisterAttached("RemoveCommand", typeof(ICommand), typeof(ArchiveHitItem), new PropertyMetadata(null));
-		public static readonly DependencyProperty MarkNonDuplicateCommandProperty = DependencyProperty.RegisterAttached("MarkNonDuplicateCommand", typeof(ICommand), typeof(ArchiveHitItem), new PropertyMetadata(null));
-
 	}
 }
