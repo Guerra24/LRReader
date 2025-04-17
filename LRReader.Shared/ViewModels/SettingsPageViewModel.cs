@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Extensions;
@@ -13,6 +7,13 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Windows.System.UserProfile;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -318,7 +319,7 @@ namespace LRReader.Shared.ViewModels
 				if (!(address.StartsWith("http://") || address.StartsWith("https://")))
 					address = "http://" + address;
 				SettingsManager.ModifyProfile(profile.UID, dialog.Name, address, dialog.ApiKey, dialog.Integration);
-				Api.RefreshSettings(profile);
+				Api.RefreshSettings(profile, GlobalizationPreferences.Languages[0]);
 			}
 		}
 

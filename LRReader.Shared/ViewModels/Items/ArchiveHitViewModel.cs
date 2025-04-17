@@ -1,15 +1,15 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Items
 {
@@ -76,15 +76,15 @@ namespace LRReader.Shared.ViewModels.Items
 				return;
 			_internalLoadingImages = true;
 			RefreshOnErrorButton = false;
-			if (animate)
-				LoadingImages = true;
 			var result = await ArchivesProvider.ExtractArchive(Archive.arcid);
 			if (result != null)
-				await result.WaitForMinionJob();
-			if (animate)
-				LoadingImages = false;
-			if (result != null)
 			{
+				if (result.job > 0)
+				{
+					LoadingImages = animate && true;
+					await result.WaitForMinionJob();
+					LoadingImages = false;
+				}
 				Pages = result.pages.Count;
 				var sizeTask = Task.Run(async () =>
 				{

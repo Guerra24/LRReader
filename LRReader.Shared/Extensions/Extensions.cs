@@ -43,7 +43,7 @@ public class GridViewExtParameter
 	}
 }
 
-public static class MinionExtentions
+public static class MinionExtensions
 {
 
 	public static async Task<bool> WaitForMinionJob<T>(this T minionJob, CancellationToken cancellationToken = default) where T : MinionJob

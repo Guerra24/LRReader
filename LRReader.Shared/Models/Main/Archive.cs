@@ -189,7 +189,7 @@ namespace LRReader.Shared.Models.Main
 		}
 	}
 
-	public class ArchiveImages : MinionJob
+	public class ArchiveImages : MinionJob // Remove once support for 0.9.40 is removed
 	{
 		public List<string> pages { get; set; } = null!;
 	}

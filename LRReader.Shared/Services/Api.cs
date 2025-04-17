@@ -12,21 +12,12 @@ namespace LRReader.Shared.Services
 	public class ApiService
 	{
 
-		private readonly PlatformService Platform;
-		private readonly SettingsService Settings;
-
 		public ServerInfo ServerInfo = null!;
 		public ControlFlags ControlFlags = new ControlFlags();
 
 		public RestClient Client { get; private set; } = null!;
 
-		public ApiService(PlatformService platform, SettingsService settings)
-		{
-			Platform = platform;
-			Settings = settings;
-		}
-
-		public bool RefreshSettings(ServerProfile profile)
+		public bool RefreshSettings(ServerProfile profile, string lang)
 		{
 			if (!Uri.IsWellFormedUriString(profile.ServerAddress, UriKind.Absolute))
 				return false;
@@ -37,6 +28,7 @@ namespace LRReader.Shared.Services
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
 				Client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
+				Client.AddDefaultHeader("Accept-Language", lang);
 			}
 			return true;
 		}

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.System.UserProfile;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -110,7 +111,8 @@ namespace LRReader.Shared.ViewModels
 			Retry = false;
 			Active = true;
 			int retires = 0;
-			if (!Api.RefreshSettings(Settings.Profile))
+
+			if (!Api.RefreshSettings(Settings.Profile, GlobalizationPreferences.Languages[0]))
 			{
 				Status = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddress");
 				StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddressSub");

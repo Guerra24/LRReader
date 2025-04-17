@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
@@ -11,6 +6,11 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -345,16 +345,16 @@ namespace LRReader.Shared.ViewModels
 				return;
 			_internalLoadingImages = true;
 			RefreshOnErrorButton = false;
-			if (animate)
-				LoadingIndeterminate = LoadingImages = true;
 			ArchiveImages.Clear();
 			var result = await ArchivesProvider.ExtractArchive(Archive.arcid);
 			if (result != null)
-				await result.WaitForMinionJob();
-			if (animate)
-				LoadingIndeterminate = LoadingImages = false;
-			if (result != null)
 			{
+				if (result.job > 0)
+				{
+					LoadingIndeterminate = LoadingImages = animate && true;
+					await result.WaitForMinionJob();
+					LoadingIndeterminate = LoadingImages = false;
+				}
 				await Task.Run(async () =>
 				{
 					foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))

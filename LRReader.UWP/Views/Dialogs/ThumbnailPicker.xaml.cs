@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using LRReader.Shared.Extensions;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
@@ -43,9 +43,9 @@ namespace LRReader.UWP.Views.Dialogs
 				{
 					var result = await ArchivesProvider.ExtractArchive(id);
 					if (result != null)
-						await result.WaitForMinionJob();
-					if (result != null)
 					{
+						if (result.job > 0)
+							await result.WaitForMinionJob();
 						await Task.Run(async () =>
 						{
 							foreach (var (s, index) in result.pages.Select((item, index) => (item, index)))
