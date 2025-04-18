@@ -35,5 +35,11 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			((SolidColorBrush)Application.Current.Resources["CustomReaderBackground"]).Color = args.NewColor;
 		}
+
+		private async void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			await Data.RefreshCategories();
+		}
+
 	}
 }

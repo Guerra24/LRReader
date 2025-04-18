@@ -25,6 +25,7 @@ namespace LRReader.Shared.Services
 		public List<TagStats> TagStats { get; private set; } = new();
 		public List<string> Namespaces { get; private set; } = new();
 		//		public Dictionary<string, Category> Categories = new Dictionary<string, Category>();
+		public string BookmarkLink { get; set; } = string.Empty;
 
 		private string MetadataPath = "";
 
@@ -62,6 +63,11 @@ namespace LRReader.Shared.Services
 			MetadataPath = $"{metadataDirectory.FullName}/{profile.UID}";
 
 			SettingsStorage.DeleteObjectLocal("CacheTimestamp");
+
+			if (Api.ControlFlags.V0940)
+				BookmarkLink = (await CategoriesProvider.GetBookmarkLink())?.category_id ?? "";
+			else
+				BookmarkLink = string.Empty;
 
 			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(MetadataPath) || Api.ControlFlags.BrokenCache)
 			{

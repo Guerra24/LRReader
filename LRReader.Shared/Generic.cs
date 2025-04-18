@@ -49,7 +49,7 @@ public static class JsonSettings
 [JsonSerializable(typeof(TankoubonsItem))]
 [JsonSerializable(typeof(GenericApiResult))]
 [JsonSerializable(typeof(DeleteArchiveResult))]
-[JsonSerializable(typeof(CategoryCreatedApiResult))]
+[JsonSerializable(typeof(CategoryId))]
 [JsonSerializable(typeof(TankoubonCreateApiResult))]
 [JsonSerializable(typeof(DatabaseCleanResult))]
 [JsonSerializable(typeof(UsePluginResult))]

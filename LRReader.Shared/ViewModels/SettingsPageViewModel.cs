@@ -154,6 +154,9 @@ namespace LRReader.Shared.ViewModels
 		public long _thumbnailCacheSize;
 		[ObservableProperty]
 		private bool _progressCache;
+		public ObservableCollection<Category> Categories = new();
+		[ObservableProperty]
+		private Category? _bookmarkLink;
 
 		public MinionJob? thumbnailJob;
 
@@ -246,7 +249,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		private async void SaveSetting(object value, [CallerMemberName] string propertyName = null!) => await Karen.SaveSetting((SettingType)Enum.Parse(typeof(SettingType), propertyName), value);
+		private async void SaveSetting(object value, [CallerMemberName] string propertyName = null!) => await Karen.SaveSetting(Enum.Parse<SettingType>(propertyName), value);
 
 		public async Task UpdateServerInfo()
 		{
@@ -383,7 +386,6 @@ namespace LRReader.Shared.ViewModels
 			ProgressCache = true;
 			await Images.DeleteThumbnailCache();
 			ThumbnailCacheSize = await Images.GetThumbnailCacheSize();
-			OnPropertyChanged("ThumbnailCacheSize");
 			ProgressCache = false;
 		}
 
@@ -408,5 +410,46 @@ namespace LRReader.Shared.ViewModels
 
 		[RelayCommand]
 		private async Task ResetProfilesLocation() => await SettingsManager.ResetProfilesLocation();
+
+		public async Task RefreshCategories()
+		{
+			Categories.Clear();
+			if (!Api.ControlFlags.V0940)
+				return;
+			var result = await CategoriesProvider.GetCategories();
+			if (result != null)
+			{
+				foreach (var a in result.OrderBy(c => !c.pinned))
+				{
+					Categories.Add(a);
+					if (a.id.Equals(Service.Archives.BookmarkLink))
+						BookmarkLink = a;
+				}
+			}
+		}
+
+		async partial void OnBookmarkLinkChanged(Category? value)
+		{
+			if (!Api.ControlFlags.V0940)
+				return;
+			if (value != null)
+			{
+				if (value.id.Equals(Service.Archives.BookmarkLink))
+					return;
+				await CategoriesProvider.SetBookmarkLink(value.id);
+				Service.Archives.BookmarkLink = value.id;
+			}
+		}
+
+		[RelayCommand]
+		private async Task ClearBookmarkLink()
+		{
+			if (!Api.ControlFlags.V0940)
+				return;
+			await CategoriesProvider.DeleteBookmarkLink();
+			Service.Archives.BookmarkLink = string.Empty;
+			BookmarkLink = null;
+		}
+
 	}
 }

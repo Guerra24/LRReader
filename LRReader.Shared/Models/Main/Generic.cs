@@ -27,11 +27,6 @@ namespace LRReader.Shared.Models.Main
 		public string? Json { get; set; }
 	}
 
-	public class CategoryCreatedApiResult : GenericApiResult
-	{
-		public string category_id { get; set; } = null!;
-	}
-
 	public class TankoubonCreateApiResult : GenericApiResult
 	{
 		public string tankoubon_id { get; set; } = null!;

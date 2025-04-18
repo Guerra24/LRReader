@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using RestSharp;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers;
@@ -50,7 +50,7 @@ public static class CategoriesProvider
 
 		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
 
-		var result = await r.GetResultInternal<CategoryCreatedApiResult>().ConfigureAwait(false);
+		var result = await r.GetResultInternal<CategoryId>().ConfigureAwait(false);
 
 		if (!string.IsNullOrEmpty(r.ErrorMessage))
 		{
@@ -133,4 +133,37 @@ public static class CategoriesProvider
 		return await r.GetResult<Category>().ConfigureAwait(false);
 	}
 
+	public static async Task<CategoryId?> GetBookmarkLink()
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/categories/bookmark_link");
+
+		var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult<CategoryId>().ConfigureAwait(false);
+	}
+
+	public static async Task<CategoryId?> SetBookmarkLink(string id)
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/categories/bookmark_link/{id}");
+		rq.AddUrlSegment("id", id);
+
+		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult<CategoryId>().ConfigureAwait(false);
+	}
+
+	public static async Task<CategoryId?> DeleteBookmarkLink()
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/categories/bookmark_link");
+
+		var r = await client.ExecuteDeleteAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult<CategoryId>().ConfigureAwait(false);
+	}
 }

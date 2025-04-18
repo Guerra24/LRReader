@@ -81,11 +81,17 @@ namespace LRReader.Shared.Services
 	{
 		public bool ProgressTracking = false;
 
+		public bool V0940;
+
 		public bool BrokenCache;
+
+		public bool V0940Edit => V0940 & Service.Settings.Profile.HasApiKey;
 
 		public void Check(ServerInfo serverInfo)
 		{
 			BrokenCache = true;
+
+			V0940 = serverInfo.version >= new Version(0, 9, 40);
 
 			ProgressTracking = serverInfo.server_tracks_progress;
 		}

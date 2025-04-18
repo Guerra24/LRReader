@@ -51,4 +51,9 @@ namespace LRReader.Shared.Models.Main
 		}
 	}
 
+	public class CategoryId : GenericApiResult
+	{
+		public string category_id { get; set; } = null!;
+	}
+
 }
