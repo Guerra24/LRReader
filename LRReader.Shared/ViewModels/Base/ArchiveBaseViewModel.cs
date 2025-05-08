@@ -109,9 +109,7 @@ namespace LRReader.Shared.ViewModels.Base
 		{
 			get
 			{
-				int pages = _pages;
-				if (pages == 0)
-					pages = Archive.pagecount;
+				int pages = Archive.pagecount;
 				if (Bookmarked && pages == 0)
 					pages = BookmarkedArchive.totalPages > 0 ? BookmarkedArchive.totalPages : _pages;
 				_pages = pages;

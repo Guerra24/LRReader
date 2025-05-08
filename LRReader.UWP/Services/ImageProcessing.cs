@@ -129,7 +129,8 @@ namespace LRReader.UWP.Services
 
 											status = Jxl.JxlDecoderProcessInput(decoder);
 
-											if (status != JxlDecoderStatus.JXL_DEC_SUCCESS)
+											// JXL_DEC_FRAME means animation, we don't support that so display a single frame instead
+											if (status != JxlDecoderStatus.JXL_DEC_SUCCESS && status != JxlDecoderStatus.JXL_DEC_FRAME)
 												return false;
 										}
 									}

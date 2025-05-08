@@ -19,9 +19,9 @@
       },
       "Microsoft.Windows.SDK.Contracts": {
         "type": "Direct",
-        "requested": "[10.0.26100.1742, )",
-        "resolved": "10.0.26100.1742",
-        "contentHash": "i7FoN7nBn805fgMhkQlSMUNvJVgUXMquDco3ItGc/h3jil9lOPdtoFSpx/NDNdlkNbBh1LW1shbAAeUpEnYZNw==",
+        "requested": "[10.0.26100.3916, )",
+        "resolved": "10.0.26100.3916",
+        "contentHash": "YTNzhP4gujBcpmjbehZp7e+POrDEH6h3u0ewllNSw31m7bs3AY2HEndD/Lev6dypgjdW0OtRWdgosC/rySHvEQ==",
         "dependencies": {
           "System.Runtime.InteropServices.WindowsRuntime": "4.3.0",
           "System.Runtime.WindowsRuntime": "4.6.0",
