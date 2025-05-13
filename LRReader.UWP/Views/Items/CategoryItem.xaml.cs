@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Windows.ApplicationModel.Resources;
+using System;
+using System.Linq;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,14 +20,11 @@ namespace LRReader.UWP.Views.Items
 
 		private string _oldID = "";
 
-		private ResourceLoader lang;
-
 		public CategoryItem()
 		{
 			this.InitializeComponent();
 			// TODO: Proper fix
 			ViewModel = Service.Services.GetRequiredService<CategoryBaseViewModel>();
-			lang = ResourceLoader.GetForCurrentView("Dialogs");
 		}
 
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
