@@ -109,11 +109,14 @@ namespace LRReader.Shared.Services
 						var bookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(ba => ba.archiveID == archiveId);
 						if (bookmarkedArchive != null)
 						{
-							bookmarkedArchive.page = archive!.progress;
+							if (Api.ControlFlags.ProgressTracking)
+								bookmarkedArchive.page = archive!.progress - 1;
 						}
 						else
 						{
 							bookmarkedArchive = new(archiveId);
+							if (Api.ControlFlags.ProgressTracking)
+								bookmarkedArchive.page = archive!.progress - 1;
 							bookmarkedArchive.totalPages = archive!.pagecount;
 							Settings.Profile.Bookmarks.Add(bookmarkedArchive);
 						}
