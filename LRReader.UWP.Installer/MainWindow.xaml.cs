@@ -63,7 +63,7 @@ namespace LRReader.UWP.Installer
 			else
 			{
 				pm = await Task.Run(() => new PackageManager());
-				CertFound = CertUtil.FindCertificate(CertInfo.CertThumb) && CertUtil.FindCertificate(CertInfo.CertThumbV2);
+				CertFound = CertUtil.FindCertificate(CertInfo.CertThumbV2);
 				var pkg = pm.FindPackagesForUser(string.Empty, Variables.PackageFamilyName).FirstOrDefault();
 				if (pkg != null && CertFound)
 				{

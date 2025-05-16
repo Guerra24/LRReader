@@ -16,7 +16,6 @@ namespace LRReader.UWP.Installer
 				switch (args[0])
 				{
 					case "--install-cert":
-						ok = CertUtil.InstallCertificate(CertInfo.CertUrl, CertInfo.CertThumb).GetAwaiter().GetResult();
 						ok = CertUtil.InstallCertificate(CertInfo.CertUrlV2, CertInfo.CertThumbV2).GetAwaiter().GetResult();
 						break;
 					case "--uninstall-cert":

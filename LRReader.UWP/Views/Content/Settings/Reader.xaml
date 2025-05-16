@@ -256,6 +256,9 @@
 						</Button>
 					</StackPanel>
 				</controls:ModernInput>
+				<controls:ModernInput Title="Synchronize bookmarks" Description="Always keep bookmarks synchronized with the selected category" Glyph="&#xE8f7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V0940Edit}">
+					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.Profile.SynchronizeBookmarks, Mode=OneWay}" Toggled="SyncBookmarks_Toggled" />
+				</controls:ModernInput>
 				<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" Glyph="&#xEB50;" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">
 					<controls:ModernExpander.Input>
 						<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=TwoWay}" />

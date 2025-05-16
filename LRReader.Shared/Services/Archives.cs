@@ -93,6 +93,34 @@ namespace LRReader.Shared.Services
 					await Update(MetadataPath);
 				}
 			}
+
+			if (!string.IsNullOrEmpty(BookmarkLink) && Api.ControlFlags.V0940Edit && Settings.Profile.SynchronizeBookmarks)
+			{
+				var bookmarks = await CategoriesProvider.GetCategory(BookmarkLink);
+				if (bookmarks != null)
+				{
+					var toRemove = Settings.Profile.Bookmarks.ExceptBy(bookmarks.archives, ba => ba.archiveID).ToList();
+
+					toRemove.ForEach(bookmark => Settings.Profile.Bookmarks.Remove(bookmark));
+
+					foreach (var archiveId in bookmarks.archives)
+					{
+						var archive = GetArchive(archiveId);
+						var bookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(ba => ba.archiveID == archiveId);
+						if (bookmarkedArchive != null)
+						{
+							bookmarkedArchive.page = archive!.progress;
+						}
+						else
+						{
+							bookmarkedArchive = new(archiveId);
+							bookmarkedArchive.totalPages = archive!.pagecount;
+							Settings.Profile.Bookmarks.Add(bookmarkedArchive);
+						}
+					}
+				}
+				Settings.SaveProfiles();
+			}
 		}
 
 		[UnconditionalSuppressMessage("Trimming", "IL2026")]

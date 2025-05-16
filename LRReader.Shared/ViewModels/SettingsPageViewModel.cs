@@ -421,6 +421,8 @@ namespace LRReader.Shared.ViewModels
 			{
 				foreach (var a in result.OrderBy(c => !c.pinned))
 				{
+					if (!string.IsNullOrEmpty(a.search))
+						continue;
 					Categories.Add(a);
 					if (a.id.Equals(Service.Archives.BookmarkLink))
 						BookmarkLink = a;

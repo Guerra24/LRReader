@@ -41,5 +41,11 @@ namespace LRReader.UWP.Views.Content.Settings
 			await Data.RefreshCategories();
 		}
 
+		private void SyncBookmarks_Toggled(object sender, RoutedEventArgs e)
+		{
+			var toggleSwitch = (ToggleSwitch)sender;
+			Data.SettingsManager.Profile.SynchronizeBookmarks = toggleSwitch.IsOn;
+			Data.SettingsManager.SaveProfiles();
+		}
 	}
 }

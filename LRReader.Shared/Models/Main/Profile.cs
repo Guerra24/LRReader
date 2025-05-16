@@ -6,7 +6,7 @@ using LRReader.Shared.Services;
 
 namespace LRReader.Shared.Models.Main
 {
-	public class ServerProfile : ObservableObject
+	public partial class ServerProfile : ObservableObject
 	{
 		public int Version { get; set; }
 		public string UID { get; set; }
@@ -18,6 +18,9 @@ namespace LRReader.Shared.Models.Main
 		public List<ArchiveHit> MarkedAsNonDuplicated { get; set; }
 		public int CacheTimestamp { get; set; }
 		public bool Integration { get; set; }
+
+		[ObservableProperty]
+		public bool _synchronizeBookmarks;
 
 		[JsonIgnore]
 		public bool HasApiKey
@@ -76,14 +79,12 @@ namespace LRReader.Shared.Models.Main
 
 	public class BookmarkedArchive : ObservableObject
 	{
-		public string archiveID { get; set; }
+		public string archiveID { get; set; } = null!;
 		public int page { get; set; }
 		public int totalPages { get; set; }
 
 		[JsonConstructor]
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 		public BookmarkedArchive() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
 		public BookmarkedArchive(string id)
 		{

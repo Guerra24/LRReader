@@ -91,11 +91,15 @@ namespace LRReader.Shared.ViewModels.Base
 						}
 						else
 						{
+							if (!string.IsNullOrEmpty(Archives.BookmarkLink) && Api.ControlFlags.V0940Edit)
+								_ = CategoriesProvider.AddArchiveToCategory(Archives.BookmarkLink, Archive.arcid);
 							Settings.Profile.Bookmarks.Add(BookmarkedArchive = new BookmarkedArchive(Archive.arcid) { totalPages = Pages });
 						}
 					}
 					else
 					{
+						if (!string.IsNullOrEmpty(Archives.BookmarkLink) && Api.ControlFlags.V0940Edit)
+							_ = CategoriesProvider.RemoveArchiveFromCategory(Archives.BookmarkLink, Archive.arcid);
 						Settings.Profile.Bookmarks.RemoveAll(b => b.archiveID.Equals(Archive.arcid));
 						BookmarkedArchive = new BookmarkedArchive("") { totalPages = -1 };
 					}

@@ -6,12 +6,14 @@ using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 
 namespace LRReader.Shared.ViewModels
 {
 	public partial class BookmarksTabViewModel : ObservableObject, IRecipient<DeleteArchiveMessage>
 	{
+		private readonly ApiService Api;
 		private readonly SettingsService Settings;
 		private readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
@@ -27,8 +29,9 @@ namespace LRReader.Shared.ViewModels
 
 		public bool Empty => ArchiveList.Count == 0;
 
-		public BookmarksTabViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher)
+		public BookmarksTabViewModel(ApiService api, SettingsService settings, ArchivesService archives, IDispatcherService dispatcher)
 		{
+			Api = api;
 			Settings = settings;
 			Archives = archives;
 			Dispatcher = dispatcher;
@@ -66,6 +69,22 @@ namespace LRReader.Shared.ViewModels
 			if (animate)
 				LoadingArchives = false;
 			_internalLoadingArchives = false;
+		}
+
+		[RelayCommand]
+		public async Task Migrate()
+		{
+			Settings.Profile.SynchronizeBookmarks = true;
+			foreach (var bookmark in Settings.Profile.Bookmarks)
+			{
+				await CategoriesProvider.AddArchiveToCategory(Archives.BookmarkLink, bookmark.archiveID);
+				if (Api.ControlFlags.ProgressTracking)
+				{
+					var archive = Archives.GetArchive(bookmark.archiveID);
+					await ArchivesProvider.UpdateProgress(bookmark.archiveID, archive!.progress = bookmark.page + 1);
+				}
+			}
+			Settings.SaveProfiles();
 		}
 
 		public void Receive(DeleteArchiveMessage message)

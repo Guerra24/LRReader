@@ -50,8 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.250513-build.2121" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250513-build.2121" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.250513-build.2126" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250513-build.2126" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives" Version="8.2.250402" />

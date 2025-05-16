@@ -4,15 +4,15 @@
     "net9.0-windows10.0.26100": {
       "CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator": {
         "type": "Direct",
-        "requested": "[0.1.250513-build.2121, )",
-        "resolved": "0.1.250513-build.2121",
-        "contentHash": "jYMnUfjRyQ5iQirzjQFcHbREFVTisSKGlCTXxxEMXqr9l7GEGlPg/fkpGBZMT7Y7pWMrpOQF9NHpkECmyBFg2A=="
+        "requested": "[0.1.250513-build.2126, )",
+        "resolved": "0.1.250513-build.2126",
+        "contentHash": "raeI+tnoG8A7FWxd3Hjws115ubqAzCvvpuwdT8GcychLah2yF7JqBMWBvtWZ1sI8l/eLdNS86PnmXnQECXtrBQ=="
       },
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.250513-build.2121, )",
-        "resolved": "0.1.250513-build.2121",
-        "contentHash": "qZPkGyySI6FP9UC42xMcHz+tf6k7p9WVrah6QrwGvJoi+N0I/v+udUleUd24WxsZpEtuk27kgEHe+WHSq98TNg==",
+        "requested": "[0.1.250513-build.2126, )",
+        "resolved": "0.1.250513-build.2126",
+        "contentHash": "0BLDChmE9iveidE60iKe06xS8eA/iMCM8tYVlWUSIlrXP0tnHibQpG2hVsq1JdzVkhV8LuMnP2rXbBDjd9btqA==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.2.250402",
           "CommunityToolkit.Uwp.Extensions": "8.2.250402",
