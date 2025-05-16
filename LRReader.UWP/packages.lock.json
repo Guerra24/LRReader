@@ -144,9 +144,9 @@
       },
       "Microsoft.Windows.SDK.BuildTools.MSIX": {
         "type": "Direct",
-        "requested": "[1.3.20250314.1, )",
-        "resolved": "1.3.20250314.1",
-        "contentHash": "NSAlllz+7LdH414GPQg+Gm7iAlhmQhzeQOdhMGZk/PQ+MQuW35ftfuwNGlljd4HYuL5ONmSTxWkLsvKf+aSRQw=="
+        "requested": "[1.7.20250508.1, )",
+        "resolved": "1.7.20250508.1",
+        "contentHash": "omgDNQElO0w0wY20I7XLGHISyn7Z4quh9Pc+Gp9XkRHJgiks7ARDhq4Vu+DK32bDoCBrFe1CLK4ovete4QiuVw=="
       },
       "Caching": {
         "type": "Transitive",

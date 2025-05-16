@@ -15,6 +15,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.20250508.1</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
     <RootNamespace>LRReader.UWP</RootNamespace>
     <AssemblyName>LRReader.UWP</AssemblyName>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
