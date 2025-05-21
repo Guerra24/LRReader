@@ -186,4 +186,37 @@
 
     <Message Text="$(MSBuildProjectName) -&gt; $(AppxSymbolPackageOutput)" />
   </Target>
+  <!-- Override this entire thing... same as previous target -->
+  <Target Name="_GenerateAppxUploadSymbolPackage"
+          Condition="'$(AppxSymbolPackageEnabled)' == 'true' and 
+                     '@(PDBUploadPayload)' != '' and 
+                     '$(BuildAppxUploadPackageForUap)' == 'true'"
+          Inputs="$(MSBuildAllProjects);@(PDBUploadPayload);@(FinalAppxManifest)"
+          Outputs="$(AppxUploadSymbolPackageOutput)">
+    <ItemGroup>
+      <FilesToCopy Include="$(OutputPath)native\*.pdb" />
+    </ItemGroup>
+    <PropertyGroup>
+      <ReconstituteFastlinkPdbs Condition="'$(ReconstituteFastlinkPdbs)' == ''">true</ReconstituteFastlinkPdbs>
+      <MsPdbCmfExeFullpath Condition="'$(MSBuildExtensionsPath64)' != ''">$(PdbCmfx64ExeFullPath)</MsPdbCmfExeFullpath>
+      <MsPdbCmfExeFullpath Condition="'$(MSBuildExtensionsPath64)' == ''">$(PdbCmfx86ExeFullPath)</MsPdbCmfExeFullpath>
+    </PropertyGroup>
+
+    <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)" InputPdbs="@(FilesToCopy)" ProjectName="$(MSBuildProjectName)" IntermediateSymbolRoot="$(AppxUploadSymbolIntermediateDir)" StripPrivateSymbols="$(StripPrivateSymbols)" ReconstituteFastlinkPdbs="$(ReconstituteFastlinkUploadPdbs)" AppxSymbolPackageOutput="$(AppxUploadSymbolPackageOutput)" VsTelemetrySession="$(VsTelemetrySession)">
+      <Output TaskParameter="OutputPdbs" ItemName="OutputPdbUploadFiles" />
+    </WinAppSdkGenerateAppxSymbolPackage>
+
+    <ItemGroup>
+      <FinalAppxUploadSymbolPackageItem Include="$(AppxUploadSymbolPackageOutput)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackagingFileWrites Include="@(FinalAppxUploadSymbolPackageItem)" />
+      <FileWrites Include="@(OutputPdbUploadFiles)" />
+      <PackagingDirectoryWrites Include="$(AppxUploadSymbolIntermediateDir)" />
+    </ItemGroup>
+
+    <Message Text="$(MSBuildProjectName) -> $(AppxUploadSymbolPackageOutput)" />
+
+  </Target>
 </Project>
