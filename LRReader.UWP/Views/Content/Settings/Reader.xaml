@@ -170,7 +170,7 @@
 				</controls:ModernExpander>
 				-->
 			</controls:ModernGroup>
-			<controls:ModernGroup Title="Look and feel">
+			<controls:ModernGroup x:Uid="/Settings/Reader/LookAndFeelGroup">
 				<controls:ModernInput x:Uid="/Settings/Reader/Zoom" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch" RightColumnWidth="1*">
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -246,17 +246,17 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/Reader/BookmarksGroup">
-				<controls:ModernInput Title="Category" Description="Store bookmarks in the selected category" Glyph="&#xE8B7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V0940Edit}">
+				<controls:ModernInput x:Uid="/Settings/Reader/BookmarkCategory" Glyph="&#xE8B7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V0940Edit}">
 					<StackPanel Orientation="Horizontal">
 						<ComboBox
-							PlaceholderText="Select a category..." MinWidth="250"
+							x:Uid="/Settings/Reader/BookmarkCategoryCombo" MinWidth="250"
 							ItemsSource="{x:Bind Data.Categories, Mode=OneWay}" SelectedItem="{x:Bind Data.BookmarkLink, Mode=TwoWay}" />
 						<Button x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8" VerticalAlignment="Bottom" Command="{x:Bind Data.ClearBookmarkLinkCommand}">
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 						</Button>
 					</StackPanel>
 				</controls:ModernInput>
-				<controls:ModernInput Title="Synchronize bookmarks" Description="Always keep bookmarks synchronized with the selected category" Glyph="&#xE8f7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V0940Edit}">
+				<controls:ModernInput x:Uid="/Settings/Reader/BookmarkSync" Glyph="&#xE8f7;" IsEnabled="{x:Bind services:Service.Api.ControlFlags.V0940Edit}">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.Profile.SynchronizeBookmarks, Mode=OneWay}" Toggled="SyncBookmarks_Toggled" />
 				</controls:ModernInput>
 				<controls:ModernExpander x:Uid="/Settings/Reader/Reminder" Glyph="&#xEB50;" IsExpanded="{x:Bind Data.SettingsManager.BookmarkReminder, Mode=OneWay}">

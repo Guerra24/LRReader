@@ -17,11 +17,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly SettingsService Settings;
 		private readonly ArchivesService Archives;
 		private readonly IDispatcherService Dispatcher;
-
-		[ObservableProperty]
-		private bool _loadingArchives = false;
-		[ObservableProperty]
-		private bool _refreshOnErrorButton = false;
+		private readonly PlatformService Platform;
 
 		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
 
@@ -29,12 +25,13 @@ namespace LRReader.Shared.ViewModels
 
 		public bool Empty => ArchiveList.Count == 0;
 
-		public BookmarksTabViewModel(ApiService api, SettingsService settings, ArchivesService archives, IDispatcherService dispatcher)
+		public BookmarksTabViewModel(ApiService api, SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, PlatformService platform)
 		{
 			Api = api;
 			Settings = settings;
 			Archives = archives;
 			Dispatcher = dispatcher;
+			Platform = platform;
 			WeakReferenceMessenger.Default.Register(this);
 		}
 
@@ -47,44 +44,45 @@ namespace LRReader.Shared.ViewModels
 			if (_internalLoadingArchives)
 				return;
 			_internalLoadingArchives = true;
-			RefreshOnErrorButton = false;
 			ArchiveList.Clear();
-			if (animate)
-				LoadingArchives = true;
-			if (Archives.Archives.Count > 0)
+			await Task.Run(async () =>
 			{
-				await Task.Run(async () =>
+				foreach (var b in Settings.Profile.Bookmarks)
 				{
-					foreach (var b in Settings.Profile.Bookmarks)
-					{
-						var archive = await Archives.GetOrAddArchive(b.archiveID);
-						if (archive != null)
-							await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
-					}
-				});
-				OnPropertyChanged("Empty");
-			}
-			else
-				RefreshOnErrorButton = true;
-			if (animate)
-				LoadingArchives = false;
+					var archive = await Archives.GetOrAddArchive(b.archiveID);
+					if (archive != null)
+						await Dispatcher.RunAsync(() => ArchiveList.Add(archive));
+				}
+			});
+			OnPropertyChanged("Empty");
 			_internalLoadingArchives = false;
 		}
 
 		[RelayCommand]
 		public async Task Migrate()
 		{
-			Settings.Profile.SynchronizeBookmarks = true;
-			foreach (var bookmark in Settings.Profile.Bookmarks)
+			if (!string.IsNullOrEmpty(Archives.BookmarkLink))
 			{
-				await CategoriesProvider.AddArchiveToCategory(Archives.BookmarkLink, bookmark.archiveID);
-				if (Api.ControlFlags.ProgressTracking)
+				Settings.Profile.SynchronizeBookmarks = true;
+				foreach (var bookmark in Settings.Profile.Bookmarks)
 				{
-					var archive = Archives.GetArchive(bookmark.archiveID);
-					await ArchivesProvider.UpdateProgress(bookmark.archiveID, archive!.progress = bookmark.page + 1);
+					await CategoriesProvider.AddArchiveToCategory(Archives.BookmarkLink, bookmark.archiveID);
+					if (Api.ControlFlags.ProgressTracking)
+					{
+						var archive = Archives.GetArchive(bookmark.archiveID);
+						await ArchivesProvider.UpdateProgress(bookmark.archiveID, archive!.progress = bookmark.page + 1);
+					}
 				}
+				Settings.SaveProfiles();
+				WeakReferenceMessenger.Default.Send(new ShowNotification(Platform.GetLocalizedString("Tabs/Bookmarks/MigrationCompleted"), null));
 			}
-			Settings.SaveProfiles();
+			else
+			{
+				await Platform.OpenGenericDialog(
+					Platform.GetLocalizedString("Tabs/Bookmarks/MigrateDialog/Title"),
+					Platform.GetLocalizedString("Tabs/Bookmarks/MigrateDialog/PrimaryButtonText"),
+					content: Platform.GetLocalizedString("Tabs/Bookmarks/MigrateDialog/Content"));
+			}
 		}
 
 		public void Receive(DeleteArchiveMessage message)

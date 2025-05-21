@@ -33,7 +33,7 @@
 				</Viewbox>
 				<Button.Flyout>
 					<MenuFlyout Placement="Bottom">
-						<MenuFlyoutItem Text="Migrate to server" Command="{x:Bind TabContent.Data.MigrateCommand}" IsEnabled="{x:Bind services:Service.Settings.Profile.SynchronizeBookmarks, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" Visibility="{x:Bind services:Service.Api.ControlFlags.V0940Edit, Converter={StaticResource BoolToVisibilityConverter}}" Icon="SyncFolder" />
+						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Migrate" Command="{x:Bind TabContent.Data.MigrateCommand}" IsEnabled="{x:Bind services:Service.Settings.Profile.SynchronizeBookmarks, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" Visibility="{x:Bind services:Service.Api.ControlFlags.V0940Edit, Converter={StaticResource BoolToVisibilityConverter}}" Icon="SyncFolder" />
 						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Export" Click="ExportButton_Click" Icon="Download" />
 						<MenuFlyoutItem x:Uid="/Tabs/Bookmarks/Import" Click="ImportButton_Click" Icon="ImportAll" />
 					</MenuFlyout>

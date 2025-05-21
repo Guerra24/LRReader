@@ -63,23 +63,31 @@ namespace LRReader.UWP.Views.Content.Settings
 
 		private async void TrackCrashes_Toggled(object sender, RoutedEventArgs e)
 		{
-			var result = await Service.Platform.OpenGenericDialog("Toggle error and crash logs reporting?", "Yes, restart", closebutton: "Restart later", content: "The app needs to restart to apply changes");
+			var result = await Service.Platform.OpenGenericDialog(
+				Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/Title"),
+				Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/PrimaryButtonText"), 
+				closebutton: Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/CloseButtonText"),
+				content: Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/Content"));
 			if (result == Shared.Models.IDialogResult.Primary)
 			{
 				var res = await CoreApplication.RequestRestartAsync("");
 				if (res == AppRestartFailureReason.NotInForeground || res == AppRestartFailureReason.Other)
-					WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to restart application", "Please restart manually.", 0, NotificationSeverity.Error));
+					WeakReferenceMessenger.Default.Send(new ShowNotification(Service.Platform.GetLocalizedString("Settings/General/UnableRestart/Title"), Service.Platform.GetLocalizedString("Settings/General/UnableRestart/Content"), 0, NotificationSeverity.Error));
 			}
 		}
 
 		private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
 		{
-			var result = await Service.Platform.OpenGenericDialog("Switch tabs mode?", "Yes, restart", closebutton: "Restart later", content: "The app needs to restart to switch tabs mode");
+			var result = await Service.Platform.OpenGenericDialog(
+				Service.Platform.GetLocalizedString("Settings/General/VerticalTabsDialog/Title"),
+				Service.Platform.GetLocalizedString("Settings/General/VerticalTabsDialog/PrimaryButtonText"),
+				closebutton: Service.Platform.GetLocalizedString("Settings/General/VerticalTabsDialog/CloseButtonText"),
+				content: Service.Platform.GetLocalizedString("Settings/General/VerticalTabsDialog/Content"));
 			if (result == Shared.Models.IDialogResult.Primary)
 			{
 				var res = await CoreApplication.RequestRestartAsync("");
 				if (res == AppRestartFailureReason.NotInForeground || res == AppRestartFailureReason.Other)
-					WeakReferenceMessenger.Default.Send(new ShowNotification("Unable to restart application", "Please restart manually.", 0, NotificationSeverity.Error));
+					WeakReferenceMessenger.Default.Send(new ShowNotification(Service.Platform.GetLocalizedString("Settings/General/UnableRestart/Title"), Service.Platform.GetLocalizedString("Settings/General/UnableRestart/Content"), 0, NotificationSeverity.Error));
 			}
 		}
 
@@ -89,7 +97,11 @@ namespace LRReader.UWP.Views.Content.Settings
 			if (state.IsOn == Service.Settings.UseIncrementalCaching)
 				return;
 			Service.Settings.UseIncrementalCaching = !Service.Settings.UseIncrementalCaching;
-			var result = await Service.Platform.OpenGenericDialog("Switch caching mode?", "Yes, reload profile", closebutton: "Cancel", content: "The app needs to reload the profile to switch caching mode");
+			var result = await Service.Platform.OpenGenericDialog(
+				Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/Title"),
+				Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/PrimaryButtonText"), 
+				closebutton: Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/CloseButtonText"),
+				content: Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/Content"));
 			if (result == Shared.Models.IDialogResult.Primary)
 			{
 				Service.Tabs.CloseAllTabs();

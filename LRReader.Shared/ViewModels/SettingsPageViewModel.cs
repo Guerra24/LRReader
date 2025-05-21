@@ -419,7 +419,7 @@ namespace LRReader.Shared.ViewModels
 			var result = await CategoriesProvider.GetCategories();
 			if (result != null)
 			{
-				foreach (var a in result.OrderBy(c => !c.pinned))
+				foreach (var a in result)
 				{
 					if (!string.IsNullOrEmpty(a.search))
 						continue;

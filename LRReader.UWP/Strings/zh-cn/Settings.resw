@@ -612,4 +612,67 @@
 
 If custom is selected, make sure at least one option is enabled; otherwise, archives will never be marked as read.</value>
   </data>
+  <data name="General.CrashRestartDialog.CloseButtonText" xml:space="preserve">
+    <value>Restart later</value>
+  </data>
+  <data name="General.CrashRestartDialog.Content" xml:space="preserve">
+    <value>The app needs to restart to apply changes</value>
+  </data>
+  <data name="General.CrashRestartDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Yes, restart</value>
+  </data>
+  <data name="General.CrashRestartDialog.Title" xml:space="preserve">
+    <value>Toggle error and crash logs reporting?</value>
+  </data>
+  <data name="General.IncrementalCache.Title" xml:space="preserve">
+    <value>Incremental caching (experimental)</value>
+  </data>
+  <data name="General.SwitchCacheModeDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="General.SwitchCacheModeDialog.Content" xml:space="preserve">
+    <value>The app needs to reload the profile to switch caching mode</value>
+  </data>
+  <data name="General.SwitchCacheModeDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Yes, reload profile</value>
+  </data>
+  <data name="General.SwitchCacheModeDialog.Title" xml:space="preserve">
+    <value>Switch caching mode?</value>
+  </data>
+  <data name="General.UnableRestart.Content" xml:space="preserve">
+    <value>Please restart manually</value>
+  </data>
+  <data name="General.UnableRestart.Title" xml:space="preserve">
+    <value>Unable to restart application</value>
+  </data>
+  <data name="General.VerticalTabsDialog.CloseButtonText" xml:space="preserve">
+    <value>Restart later</value>
+  </data>
+  <data name="General.VerticalTabsDialog.Content" xml:space="preserve">
+    <value>The app needs to restart to switch tabs mode</value>
+  </data>
+  <data name="General.VerticalTabsDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Yes, restart</value>
+  </data>
+  <data name="General.VerticalTabsDialog.Title" xml:space="preserve">
+    <value>Switch tabs mode?</value>
+  </data>
+  <data name="Reader.BookmarkCategory.Description" xml:space="preserve">
+    <value>Store bookmarks in the selected category</value>
+  </data>
+  <data name="Reader.BookmarkCategory.Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Reader.BookmarkCategoryCombo.PlaceholderText" xml:space="preserve">
+    <value>Select a category...</value>
+  </data>
+  <data name="Reader.BookmarkSync.Description" xml:space="preserve">
+    <value>Always keep bookmarks synchronized with the selected category</value>
+  </data>
+  <data name="Reader.BookmarkSync.Title" xml:space="preserve">
+    <value>Synchronize bookmarks</value>
+  </data>
+  <data name="Reader.LookAndFeelGroup.Title" xml:space="preserve">
+    <value>Look and feel</value>
+  </data>
 </root>
