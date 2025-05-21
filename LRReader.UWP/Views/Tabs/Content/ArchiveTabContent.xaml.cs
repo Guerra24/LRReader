@@ -142,7 +142,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });
 			}
 			else
-				await ChangePage();
+				await ChangePage(false);
 
 			if (Data.Archive.isnew)
 				_wasNew = true;
@@ -393,21 +393,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space ||
 				 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
 				e.Handled = true;
-
-			switch (e.Key)
-			{
-				case VirtualKey.Right:
-				case VirtualKey.D:
-					NextPage();
-					break;
-				case VirtualKey.Left:
-				case VirtualKey.A:
-					PrevPage();
-					break;
-				case VirtualKey.Escape:
-					CloseReader();
-					break;
-			}
 		}
 
 		private void ReaderControl_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -440,10 +425,21 @@ namespace LRReader.UWP.Views.Tabs.Content
 				case VirtualKey.Down:
 				case VirtualKey.Space:
 				case VirtualKey.S:
-					if (Math.Ceiling(offset) >= ScrollViewer.ScrollableHeight && Service.Settings.ScrollToChangePage)
+					if ((ScrollViewer.ScrollableHeight - offset) < 5 && Service.Settings.ScrollToChangePage)
 						NextPage(true);
 					else
 						ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
+					break;
+				case VirtualKey.Right:
+				case VirtualKey.D:
+					NextPage();
+					break;
+				case VirtualKey.Left:
+				case VirtualKey.A:
+					PrevPage();
+					break;
+				case VirtualKey.Escape:
+					CloseReader();
 					break;
 			}
 		}
@@ -489,7 +485,16 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
-			_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
+			var point = pointerPoint.Position;
+			double distance = ScrollViewer.ActualWidth / 6.0;
+			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+			{
+				_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
+			}
+			else
+			{
+				_changePage = pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed;
+			}
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
 			{
 				if (pointerPoint.Properties.IsXButton1Pressed)
@@ -507,7 +512,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 					return;
 				}
 			}
-			_changePage = pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed;
 		}
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -543,14 +547,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (point.X < distance)
 				{
 					PrevPage();
+					_changePage = false;
 					return true;
 				}
 				else if (point.X > ScrollViewer.ActualWidth - distance)
 				{
 					NextPage();
+					_changePage = false;
 					return true;
 				}
-				_changePage = false;
 			}
 			return false;
 		}
@@ -624,7 +629,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		private async Task ChangePage()
+		private async Task ChangePage(bool preload = true)
 		{
 			if (Data.UseVerticalReader)
 				return;
@@ -638,12 +643,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 				gcCounter = 0;
 			}
 
-			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 1));
-			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 2));
-			Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 3));
+			if (preload)
+			{
+				await Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 1));
+				await Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 2));
+				await Preload(Data.ArchiveImagesReader.ElementAtOrDefault(Data.ReaderIndex + 3));
+			}
 		}
 
-		private async void Preload(ReaderImageSet? set)
+		private async Task Preload(ReaderImageSet? set)
 		{
 			if (set == null)
 				return;
