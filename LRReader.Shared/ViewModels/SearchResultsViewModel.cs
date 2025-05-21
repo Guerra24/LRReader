@@ -68,9 +68,8 @@ namespace LRReader.Shared.ViewModels
 			get => _archiveStyle;
 			set
 			{
-				if (value != ArchiveStyle._InvalidIgnore)
+				if (value != ArchiveStyle._InvalidIgnore && SetProperty(ref _archiveStyle, value))
 				{
-					SetProperty(ref _archiveStyle, value);
 					var tmp = ArchiveList.ToList();
 					ArchiveList.Clear();
 					Dispatcher.Run(async () =>
@@ -97,7 +96,7 @@ namespace LRReader.Shared.ViewModels
 			if (Settings.ShowSuggestedTags)
 				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
 					SuggestedTags.Add(tag.GetNamespacedTag());
-			ArchiveStyle = Settings.ArchiveStyle;
+			_archiveStyle = Settings.ArchiveStyle;
 			WeakReferenceMessenger.Default.Register(this);
 		}
 
