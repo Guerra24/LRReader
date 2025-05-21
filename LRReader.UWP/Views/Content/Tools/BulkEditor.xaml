@@ -55,6 +55,7 @@
 			</Setter>
 		</Style>
 		<Thickness x:Key="FlyoutContentPadding">8,7,8,9</Thickness>
+		<controls:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" Style="{x:Bind ArchiveList.Data.ArchiveStyle, Mode=OneWay}" CompactTemplate="{StaticResource CompactArchive}" FullTemplate="{StaticResource FullArchive}" ThumbnailOnlyTemplate="{StaticResource ThumbnailOnlyArchive}" />
 	</Page.Resources>
 
 	<Grid>
@@ -143,12 +144,6 @@
 				</Button>
 			</StackPanel>
 		</Grid>
-		<controls:ArchiveList
-			x:Name="ArchiveList" Grid.Row="1" ItemClickEnabled="False"
-			RandomVisible="False" SelectionMode="Extended">
-			<DataTemplate>
-				<items:GenericArchiveItem />
-			</DataTemplate>
-		</controls:ArchiveList>
+		<controls:ArchiveList x:Name="ArchiveList" Grid.Row="1" ItemClickEnabled="False" RandomVisible="False" SelectionMode="Extended" ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}" />
 	</Grid>
 </Page>

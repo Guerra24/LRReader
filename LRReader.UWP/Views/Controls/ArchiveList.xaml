@@ -64,24 +64,24 @@
 									Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
 									Orientation="Horizontal">
 									<ToggleButton
-										x:Uid="/Tabs/Archives/Untagged" Width="150" Margin="0,0,5,0"
+										x:Uid="/Tabs/Archives/Untagged" Width="150"
 										Click="FilterToggle_Click"
 										IsChecked="{x:Bind Data.UntaggedOnly, Mode=TwoWay}"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 									<ToggleButton
-										x:Uid="/Tabs/Archives/New" Width="150" Margin="5,0,5,0"
+										x:Uid="/Tabs/Archives/New" Width="150" Margin="10,0,0,0"
 										Click="FilterToggle_Click"
 										IsChecked="{x:Bind Data.NewOnly, Mode=TwoWay}"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 									<Button
-										x:Uid="/Tabs/Archives/Random" Width="150" Margin="5,0,0,0"
-										Click="{x:Bind Data.OpenRandom}"
+										x:Uid="/Tabs/Archives/Random" Width="150" Margin="10,0,0,0"
+										Click="{x:Bind Data.OpenRandom}" Visibility="{x:Bind RandomVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 								</StackPanel>
 								<StackPanel
 									Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
 									Orientation="Horizontal" Spacing="10">
-									<Button ToolTipService.ToolTip="{ext:LangString Key=Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
+									<Button ToolTipService.ToolTip="{ext:LangString Key=Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" Visibility="{x:Bind ArchiveStyleButtonVisibility, Mode=OneWay}">
 										<Button.Flyout>
 											<MenuFlyout>
 												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Default}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Default}" />
@@ -89,7 +89,7 @@
 												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Compact}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Compact}" />
 											</MenuFlyout>
 										</Button.Flyout>
-										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE771;" />
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xECA5;" />
 									</Button>
 									<Button
 										x:Uid="/Tabs/Archives/Order" Padding="8"
@@ -114,10 +114,11 @@
 										SelectionChanged="SortBy_SelectionChanged" />
 									<Button
 										x:Uid="/Tabs/Archives/Clear" Padding="8"
-										Click="ClearButton_Click" Margin="0,0,42,0"
+										Click="ClearButton_Click"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 									</Button>
+									<Border Width="32" Visibility="{x:Bind ArchiveStyleButtonVisibility, Mode=OneWay}" />
 								</StackPanel>
 								<muxc:PagerControl
 									Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Center"

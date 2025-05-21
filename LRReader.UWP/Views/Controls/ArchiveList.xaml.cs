@@ -290,5 +290,8 @@ namespace LRReader.UWP.Views.Controls
 		public event Func<Task>? OnRefresh;
 
 		public event Func<Task>? OnLoad;
+
+		[GeneratedDependencyProperty(DefaultValue = Visibility.Visible)]
+		public partial Visibility ArchiveStyleButtonVisibility { get; set; }
 	}
 }

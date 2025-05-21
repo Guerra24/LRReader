@@ -82,7 +82,7 @@
 				x:Name="ArchiveList" Grid.Column="2" AllowDrop="True"
 				CanDragItems="True" DragItemsStarting="ArchivesGrid_DragItemsStarting" DragOver="ArchivesGrid_DragOver"
 				Drop="ArchivesGrid_Drop" HandleF5="False" ItemClickEnabled="False"
-				RandomVisible="False" SelectionMode="Extended">
+				RandomVisible="False" SelectionMode="Extended" ArchiveStyleButtonVisibility="Collapsed">
 				<controls1:ArchiveList.ItemDataTemplate>
 					<DataTemplate>
 						<items:GenericArchiveItem Style="{StaticResource CategoryEditArchive}" />

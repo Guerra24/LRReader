@@ -39,7 +39,7 @@
 				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Archives">
-				<controls:ModernInput x:Uid="/Settings/General/ArchivesStyle" Glyph="&#xE771;">
+				<controls:ModernInput x:Uid="/Settings/General/ArchivesStyle" Glyph="&#xECA5;">
 					<ComboBox x:Name="ArchiveStyle" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.ArchiveStyle, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/TagsPopup" Glyph="&#xEC42;">
