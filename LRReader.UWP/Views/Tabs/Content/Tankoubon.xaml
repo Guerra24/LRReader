@@ -16,13 +16,6 @@
 
 	<UserControl.Resources>
 		<ext:Shadow x:Name="ElementShadow" />
-		<DataTemplate x:Key="Compact">
-			<items:GenericArchiveItem Style="{StaticResource CompactArchiveItem}" />
-		</DataTemplate>
-		<DataTemplate x:Key="Full">
-			<items:GenericArchiveItem />
-		</DataTemplate>
-		<local:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource Compact}" FullTemplate="{StaticResource Full}" />
 	</UserControl.Resources>
 
 	<Grid>
@@ -32,7 +25,7 @@
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
 				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" ContainerContentChanging="ArchivesGrid_ContainerContentChanging" IsItemClickEnabled="True"
 				ItemClick="ArchivesGrid_ItemClick"
-				ItemTemplate="{StaticResource Full}"
+				ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}"
 				ItemsSource="{x:Bind Data.ArchiveList, Mode=OneWay}"
 				KeyboardAcceleratorPlacementMode="Hidden" PointerPressed="ArchivesGrid_PointerPressed" SelectionMode="None">
 				<GridView.Header>

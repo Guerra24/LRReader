@@ -75,8 +75,9 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
-			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
-				SuggestedTags.Add(tag.GetNamespacedTag());
+			if (Settings.ShowSuggestedTags)
+				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
+					SuggestedTags.Add(tag.GetNamespacedTag());
 			WeakReferenceMessenger.Default.Register(this);
 		}
 
@@ -94,6 +95,10 @@ namespace LRReader.Shared.ViewModels
 
 		public async Task ReloadSearch()
 		{
+			SuggestedTags.Clear();
+			if (Settings.ShowSuggestedTags)
+				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
+					SuggestedTags.Add(tag.GetNamespacedTag());
 			await LoadPage(0);
 		}
 

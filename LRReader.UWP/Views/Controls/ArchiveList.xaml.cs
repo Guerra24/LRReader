@@ -27,7 +27,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public SearchResultsViewModel Data;
 
-		private bool loaded;
+		private bool loaded, ready;
 
 		private string query = "";
 
@@ -45,7 +45,10 @@ namespace LRReader.UWP.Views.Controls
 			AscFlyoutItem.IsChecked = Settings.OrderByDefault == Order.Ascending;
 			DesFlyoutItem.IsChecked = Settings.OrderByDefault == Order.Descending;
 
-			await Refresh();
+			if (OnLoad != null)
+				await OnLoad();
+			await HandleSearch();
+			ready = true;
 		}
 
 		private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
@@ -122,7 +125,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private async void PagerControl_SelectedIndexChanged(PagerControl sender, PagerControlSelectedIndexChangedEventArgs args)
 		{
-			if (loaded)
+			if (ready)
 				await Data.LoadPage(args.NewPageIndex);
 		}
 
@@ -138,6 +141,8 @@ namespace LRReader.UWP.Views.Controls
 		public async Task Refresh()
 		{
 			Data.ControlsEnabled = false;
+			if (OnRefresh != null)
+				await OnRefresh();
 			await HandleSearch();
 			Data.ControlsEnabled = true;
 		}
@@ -183,7 +188,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
-			Data.OrderBy = (Order)Enum.Parse(typeof(Order), (string)((RadioMenuFlyoutItem)sender).Tag);
+			Data.OrderBy = Enum.Parse<Order>((string)((RadioMenuFlyoutItem)sender).Tag);
 			await HandleSearch();
 		}
 
@@ -279,5 +284,9 @@ namespace LRReader.UWP.Views.Controls
 
 		[GeneratedDependencyProperty(DefaultValue = true)]
 		public partial bool HandleF5 { get; set; }
+
+		public event Func<Task>? OnRefresh;
+
+		public event Func<Task>? OnLoad;
 	}
 }

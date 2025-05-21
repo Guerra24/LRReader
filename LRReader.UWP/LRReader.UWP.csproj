@@ -201,22 +201,18 @@
       <MsPdbCmfExeFullpath Condition="'$(MSBuildExtensionsPath64)' != ''">$(PdbCmfx64ExeFullPath)</MsPdbCmfExeFullpath>
       <MsPdbCmfExeFullpath Condition="'$(MSBuildExtensionsPath64)' == ''">$(PdbCmfx86ExeFullPath)</MsPdbCmfExeFullpath>
     </PropertyGroup>
-
+    <Message Importance="High" Text="Fix _GenerateAppxSymbolPackage" />
     <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)" InputPdbs="@(FilesToCopy)" ProjectName="$(MSBuildProjectName)" IntermediateSymbolRoot="$(AppxUploadSymbolIntermediateDir)" StripPrivateSymbols="$(StripPrivateSymbols)" ReconstituteFastlinkPdbs="$(ReconstituteFastlinkUploadPdbs)" AppxSymbolPackageOutput="$(AppxUploadSymbolPackageOutput)" VsTelemetrySession="$(VsTelemetrySession)">
       <Output TaskParameter="OutputPdbs" ItemName="OutputPdbUploadFiles" />
     </WinAppSdkGenerateAppxSymbolPackage>
 
     <ItemGroup>
       <FinalAppxUploadSymbolPackageItem Include="$(AppxUploadSymbolPackageOutput)" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackagingFileWrites Include="@(FinalAppxUploadSymbolPackageItem)" />
       <FileWrites Include="@(OutputPdbUploadFiles)" />
       <PackagingDirectoryWrites Include="$(AppxUploadSymbolIntermediateDir)" />
     </ItemGroup>
 
-    <Message Text="$(MSBuildProjectName) -> $(AppxUploadSymbolPackageOutput)" />
-
+    <Message Text="$(MSBuildProjectName) -&gt; $(AppxUploadSymbolPackageOutput)" />
   </Target>
 </Project>

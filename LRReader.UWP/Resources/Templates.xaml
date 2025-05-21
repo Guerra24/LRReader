@@ -424,6 +424,107 @@
 		</Setter>
 	</Style>
 
+	<Style x:Key="ThumbnailOnlyArchiveItem" TargetType="items:GenericArchiveItem">
+		<Setter Property="Width" Value="200" />
+		<Setter Property="DecodePixelHeight" Value="275" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="items:GenericArchiveItem">
+					<Grid x:Name="Root" Background="Transparent">
+						<Grid.Resources>
+							<Flyout x:Name="TagsFlyout" FlyoutPresenterStyle="{StaticResource TagsFlyoutStylePresenter}">
+								<controls:ArchiveTags ItemClickCommand="{x:Bind ViewModel.TagClickCommand}" ItemsSource="{x:Bind ViewModel.Archive.TagsGroups, Mode=OneWay}" MaxTagsWidth="300" />
+							</Flyout>
+						</Grid.Resources>
+						<Grid.ContextFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Bookmark"
+									Click="{x:Bind Add_Click}"
+									Icon="Favorite"
+									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Unbookmark"
+									Background="{ThemeResource UnbookmarkItem}"
+									Click="{x:Bind Remove_Click}"
+									Icon="Unfavorite"
+									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
+								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+									<MenuFlyoutSubItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+									</MenuFlyoutSubItem.Icon>
+									<!-- Wha... turns out GroupName is a global (app-wide) property so make sure we make it unique -->
+									<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind ViewModel.Rating, Mode=TwoWay, Converter={StaticResource RatingConverter}, ConverterParameter=1}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735;"  />
+									<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind ViewModel.Rating, Mode=TwoWay, Converter={StaticResource RatingConverter}, ConverterParameter=2}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind ViewModel.Rating, Mode=TwoWay, Converter={StaticResource RatingConverter}, ConverterParameter=3}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind ViewModel.Rating, Mode=TwoWay, Converter={StaticResource RatingConverter}, ConverterParameter=4}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735;" />
+									<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind ViewModel.Rating, Mode=TwoWay, Converter={StaticResource RatingConverter}, ConverterParameter=5}" FontFamily="{StaticResource SymbolThemeFontFamily}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" Text="&#xE735; &#xE735; &#xE735; &#xE735; &#xE735;" />
+									<MenuFlyoutSeparator />
+									<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind ViewModel.Rating, Mode=TwoWay,Converter={StaticResource RatingConverter}, ConverterParameter=-1}" GroupName="{x:Bind ViewModel.Archive.arcid, Mode=OneWay}" x:Uid="/Items/Archive/NoRating" />
+								</MenuFlyoutSubItem>
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Edit"
+									Command="{x:Bind ViewModel.EditCommand}"
+									Icon="Edit"
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
+								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+									<MenuFlyoutItem.Icon>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
+									</MenuFlyoutItem.Icon>
+								</MenuFlyoutItem>
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Download"
+									Click="{x:Bind DownloadMenuItem_Click}"
+									Icon="Download"
+									IsEnabled="{x:Bind ViewModel.Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Delete"
+									Command="{x:Bind ViewModel.DeleteCommand}"
+									Icon="Delete"
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
+							</MenuFlyout>
+						</Grid.ContextFlyout>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="275" />
+						</Grid.RowDefinitions>
+						<Border HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="{ThemeResource ControlCornerRadius}">
+							<Image x:Name="Thumbnail" MaxHeight="275" Source="{x:Bind ViewModel.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
+						</Border>
+						<Grid>
+							<Grid Visibility="{x:Bind ViewModel.MissingImage, Mode=OneWay}">
+								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+							</Grid>
+							<Grid Visibility="{x:Bind ViewModel.Downloading, Mode=OneWay}">
+								<Grid.Background>
+									<media:BackdropBlurBrush Amount="4.0" />
+								</Grid.Background>
+								<Rectangle Fill="{ThemeResource ThumbnailSmoke}" />
+								<muxc:ProgressBar Background="Transparent" IsIndeterminate="True" />
+							</Grid>
+							<Grid
+								Margin="4,0,0,4" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+								Style="{StaticResource ItemOverlayGrid}"
+								Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}">
+								<TextBlock Padding="6,2" FontSize="16" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}">
+									<Run Text="{x:Bind ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.Pages, Mode=OneWay}" />
+								</TextBlock>
+							</Grid>
+							<Grid
+								Margin="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+								Style="{StaticResource ItemOverlayGrid}"
+								Visibility="{x:Bind ViewModel.IsNew, Mode=OneWay}">
+								<TextBlock x:Uid="/Items/Archive/New" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" Padding="6,2" FontSize="16" />
+							</Grid>
+						</Grid>
+						<Grid x:Name="TagsGrid" Height="24" VerticalAlignment="Bottom" Background="Transparent" PointerEntered="{x:Bind TagsGrid_PointerEntered}" PointerExited="{x:Bind TagsGrid_PointerExited}"/>
+						<Grid Height="24" VerticalAlignment="Top" Background="Transparent" ToolTipService.ToolTip="{x:Bind ViewModel.Archive.title, Mode=OneWay}"/>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
 	<Style x:Key="DefaultArchiveItem" TargetType="items:GenericArchiveItem">
 		<Setter Property="Width" Value="200" />
 		<Setter Property="DecodePixelHeight" Value="275" />
@@ -531,16 +632,24 @@
 							x:Name="TagsGrid" Grid.Row="2"
 							PointerEntered="{x:Bind TagsGrid_PointerEntered}"
 							PointerExited="{x:Bind TagsGrid_PointerExited}">
-							<TextBlock
-								Grid.Row="2" Padding="2,0"
-								Text="{x:Bind ViewModel.Archive.TagsClean, Mode=OneWay}"
-								TextTrimming="CharacterEllipsis" />
+							<TextBlock Padding="2,0" Text="{x:Bind ViewModel.Archive.TagsClean, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
 						</Grid>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	<DataTemplate x:Key="CompactArchive">
+		<items:GenericArchiveItem Style="{StaticResource CompactArchiveItem}" />
+	</DataTemplate>
+	<DataTemplate x:Key="FullArchive">
+		<items:GenericArchiveItem />
+	</DataTemplate>
+	<DataTemplate x:Key="ThumbnailOnlyArchive">
+		<items:GenericArchiveItem Style="{StaticResource ThumbnailOnlyArchiveItem}" />
+	</DataTemplate>
+	<controls:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource CompactArchive}" FullTemplate="{StaticResource FullArchive}" ThumbnailOnlyTemplate="{StaticResource ThumbnailOnlyArchive}" />
 
 	<Style BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput" />
 

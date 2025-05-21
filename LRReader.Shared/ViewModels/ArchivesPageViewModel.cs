@@ -6,35 +6,22 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class ArchivesPageViewModel : SearchResultsViewModel
+	public class ArchivesPageViewModel
 	{
+		private readonly SettingsService Settings;
+		private readonly ArchivesService Archives;
+		private readonly TabsService Tabs;
 
-		public ArchivesPageViewModel(
-			SettingsService settings,
-			ArchivesService archives,
-			TabsService tabs,
-			IDispatcherService dispatcher,
-			ApiService api) : base(settings, archives, dispatcher, api, tabs) { }
+		public ArchivesPageViewModel(SettingsService settings, ArchivesService archives, TabsService tabs)
+		{
+			Settings = settings;
+			Archives = archives;
+			Tabs = tabs;
+		}
 
 		public async Task Refresh()
 		{
-			if (_internalLoadingArchives)
-				return;
-			_internalLoadingArchives = true;
-			RefreshOnErrorButton = false;
-			ArchiveList.Clear();
-			LoadingArchives = true;
-			foreach (var b in Settings.Profile.Bookmarks)
-			{
-				var archive = Archives.GetArchive(b.archiveID);
-				if (archive != null)
-					Tabs.CloseTabWithId(archive.title);
-			}
 			await Archives.ReloadArchives();
-			await LoadBookmarks();
-			Page = 0;
-			LoadingArchives = false;
-			_internalLoadingArchives = false;
 		}
 
 		public async Task LoadBookmarks()
@@ -54,7 +41,7 @@ namespace LRReader.Shared.ViewModels
 					if (archive != null)
 						Archives.OpenTab(archive, false);
 					else
-						WeakReferenceMessenger.Default.Send(new ShowNotification("Bookmarked Archive with ID[" + b.archiveID + "] not found.", "", severity: NotificationSeverity.Warning));
+						WeakReferenceMessenger.Default.Send(new ShowNotification($"Bookmarked archive with ID {b.archiveID} not found", null, severity: NotificationSeverity.Warning));
 				}
 			if (Settings.UseIncrementalCaching)
 			{

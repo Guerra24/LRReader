@@ -1,5 +1,4 @@
 ﻿using LRReader.UWP.Views.Controls;
-using Windows.UI.Xaml;
 
 namespace LRReader.UWP.Views.Tabs
 {
@@ -10,7 +9,7 @@ namespace LRReader.UWP.Views.Tabs
 			this.InitializeComponent();
 		}
 
-		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+		private async void RefreshButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
 			await TabContent.Refresh();
 		}
