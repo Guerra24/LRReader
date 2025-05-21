@@ -335,13 +335,9 @@ namespace LRReader.UWP.Extensions
 	[MarkupExtensionReturnType(ReturnType = typeof(string))]
 	public partial class LangStringExtension : MarkupExtension
 	{
-		public string Map { get; set; } = null!;
 		public string Key { get; set; } = null!;
 
-		protected override object ProvideValue()
-		{
-			return ResourceLoader.GetForCurrentView(Map).GetString(Key);
-		}
+		protected override object ProvideValue() => Service.Platform.GetLocalizedString(Key);
 	}
 
 	/*

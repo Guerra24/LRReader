@@ -141,4 +141,19 @@ namespace LRReader.UWP.Converters
 			throw new NotImplementedException();
 		}
 	}
+
+	public partial class ArchiveStyleConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return (ArchiveStyle)value == Enum.Parse<ArchiveStyle>((string)parameter);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			if (!(bool)value)
+				return ArchiveStyle._InvalidIgnore;
+			return Enum.Parse<ArchiveStyle>((string)parameter);
+		}
+	}
 }

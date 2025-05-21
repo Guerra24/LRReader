@@ -80,9 +80,19 @@
 								</StackPanel>
 								<StackPanel
 									Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
-									Orientation="Horizontal">
+									Orientation="Horizontal" Spacing="10">
+									<Button ToolTipService.ToolTip="{ext:LangString Key=Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
+										<Button.Flyout>
+											<MenuFlyout>
+												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Default}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Default}" />
+												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=ThumbnailOnly}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/ThumbnailOnly}" />
+												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Compact}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Compact}" />
+											</MenuFlyout>
+										</Button.Flyout>
+										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE771;" />
+									</Button>
 									<Button
-										x:Uid="/Tabs/Archives/Order" Margin="0,0,10,0" Padding="8"
+										x:Uid="/Tabs/Archives/Order" Padding="8"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
 										<Button.Flyout>
 											<MenuFlyout>
@@ -97,31 +107,18 @@
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE8CB;" />
 									</Button>
 									<ComboBox
-										x:Uid="/Tabs/Archives/SortBy" MinWidth="150" HorizontalAlignment="Stretch"
+										x:Uid="/Tabs/Archives/SortBy" MinWidth="150"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
 										ItemsSource="{x:Bind Data.SortBy, Mode=OneWay}"
 										SelectedIndex="{x:Bind Data.SortByIndex, Mode=TwoWay}"
 										SelectionChanged="SortBy_SelectionChanged" />
 									<Button
-										x:Uid="/Tabs/Archives/Clear" Margin="10,0,0,0" Padding="8"
-										Click="ClearButton_Click"
+										x:Uid="/Tabs/Archives/Clear" Padding="8"
+										Click="ClearButton_Click" Margin="0,0,42,0"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}">
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 									</Button>
 								</StackPanel>
-								<!--<StackPanel
-							Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
-							Orientation="Horizontal">
-							<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72B;" />
-							</Button>
-							<TextBlock
-								Margin="10,0" VerticalAlignment="Center" FontSize="22"
-								Text="{x:Bind Data.DisplayPage, Mode=OneWay}" />
-							<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
-								<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72A;" />
-							</Button>
-						</StackPanel>-->
 								<muxc:PagerControl
 									Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Center"
 									DisplayMode="ComboBox"
@@ -147,17 +144,6 @@
 								SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />
 						</muxc:TwoPaneView.Pane1>
 					</muxc:TwoPaneView>
-					<!--<StackPanel Margin="0,10,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
-						<Button Margin="0,0,5,0" Click="PrevButton_Click" IsEnabled="{x:Bind Data.HasPrevPage, Mode=OneWay}">
-							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72B;" />
-						</Button>
-						<TextBlock
-							Margin="10,0" VerticalAlignment="Center" FontSize="22"
-							Text="{x:Bind Data.DisplayPage, Mode=OneWay}" />
-						<Button Margin="5,0,0,0" Click="NextButton_Click" IsEnabled="{x:Bind Data.HasNextPage, Mode=OneWay}">
-							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72A;" />
-						</Button>
-					</StackPanel>-->
 				</GridView.Footer>
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind HandleF5, Mode=OneWay}" />
@@ -185,7 +171,6 @@
 		<Button
 			x:Uid="/Generic/RetryBtn" HorizontalAlignment="Center" Click="Button_Click"
 			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
-		<!--<muxc:ProgressRing Width="80" Height="80" IsActive="{x:Bind Data.LoadingArchives, Mode=OneWay}" />-->
 		<!--  Force non rounded items in Win10 due to border not working with them enabled  -->
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="CommonState">

@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class ArchivesPageViewModel
+	public partial class ArchivesPageViewModel
 	{
 		private readonly SettingsService Settings;
 		private readonly ArchivesService Archives;
-		private readonly TabsService Tabs;
 
-		public ArchivesPageViewModel(SettingsService settings, ArchivesService archives, TabsService tabs)
+		public ArchivesPageViewModel(SettingsService settings, ArchivesService archives)
 		{
 			Settings = settings;
 			Archives = archives;
-			Tabs = tabs;
 		}
 
 		public async Task Refresh()

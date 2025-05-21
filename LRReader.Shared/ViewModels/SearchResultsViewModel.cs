@@ -62,6 +62,25 @@ namespace LRReader.Shared.ViewModels
 		private int _sortByIndex = -1;
 		public Order OrderBy = Order.Ascending;
 		public ObservableCollection<string> SuggestedTags = new();
+		private ArchiveStyle _archiveStyle;
+		public ArchiveStyle ArchiveStyle
+		{
+			get => _archiveStyle;
+			set
+			{
+				if (value != ArchiveStyle._InvalidIgnore)
+				{
+					SetProperty(ref _archiveStyle, value);
+					var tmp = ArchiveList.ToList();
+					ArchiveList.Clear();
+					Dispatcher.Run(async () =>
+					{
+						foreach (var item in tmp)
+							await Dispatcher.RunAsync(() => ArchiveList.Add(item), 10);
+					});
+				}
+			}
+		}
 
 		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api, TabsService tabs)
 		{
@@ -78,6 +97,7 @@ namespace LRReader.Shared.ViewModels
 			if (Settings.ShowSuggestedTags)
 				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
 					SuggestedTags.Add(tag.GetNamespacedTag());
+			ArchiveStyle = Settings.ArchiveStyle;
 			WeakReferenceMessenger.Default.Register(this);
 		}
 

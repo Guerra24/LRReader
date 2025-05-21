@@ -8,5 +8,9 @@
 	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	mc:Ignorable="d">
 
+	<UserControl.Resources>
+		<controls:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" Style="{x:Bind ArchiveList.Data.ArchiveStyle, Mode=OneWay}" CompactTemplate="{StaticResource CompactArchive}" FullTemplate="{StaticResource FullArchive}" ThumbnailOnlyTemplate="{StaticResource ThumbnailOnlyArchive}" />
+	</UserControl.Resources>
+
 	<controls:ArchiveList x:Name="ArchiveList" ItemClickEnabled="True" SelectionMode="None" ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}" OnRefresh="ArchiveList_OnRefresh" OnLoad="ArchiveList_OnLoad" />
 </UserControl>

@@ -675,4 +675,19 @@ If custom is selected, make sure at least one option is enabled; otherwise, arch
   <data name="Reader.LookAndFeelGroup.Title" xml:space="preserve">
     <value>Look and feel</value>
   </data>
+  <data name="General.ArchiveStyle.Compact" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="General.ArchiveStyle.Default" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="General.ArchiveStyle.ThumbnailOnly" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="General.Archives.Title" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="General.ArchivesStyle.Title" xml:space="preserve">
+    <value>Style</value>
+  </data>
 </root>

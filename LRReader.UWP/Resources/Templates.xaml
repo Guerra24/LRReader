@@ -649,7 +649,6 @@
 	<DataTemplate x:Key="ThumbnailOnlyArchive">
 		<items:GenericArchiveItem Style="{StaticResource ThumbnailOnlyArchiveItem}" />
 	</DataTemplate>
-	<controls:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource CompactArchive}" FullTemplate="{StaticResource FullArchive}" ThumbnailOnlyTemplate="{StaticResource ThumbnailOnlyArchive}" />
 
 	<Style BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput" />
 

@@ -92,7 +92,7 @@
 							<Button x:Uid="/Settings/Reader/ClearNewHelp">
 								<extensions:TeachingTipButtonExtension.TeachingTip>
 									<muxc:TeachingTip x:Uid="/Settings/Reader/ClearNewTeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-										<WebView Height="200" Width="294" DefaultBackgroundColor="Transparent" extensions:WebViewExt.MarkdownJustify="True" extensions:WebViewExt.MarkdownBase="{extensions:LangString Key=Reader/ClearNewTeachingTipText, Map=Settings}" />
+										<WebView Height="200" Width="294" DefaultBackgroundColor="Transparent" extensions:WebViewExt.MarkdownJustify="True" extensions:WebViewExt.MarkdownBase="{extensions:LangString Key=Settings/Reader/ClearNewTeachingTipText}" />
 									</muxc:TeachingTip>
 								</extensions:TeachingTipButtonExtension.TeachingTip>
 							</Button>

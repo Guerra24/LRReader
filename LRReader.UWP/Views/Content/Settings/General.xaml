@@ -13,6 +13,14 @@
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup x:Uid="/Settings/General/App">
+				<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">
+					<ComboBox x:Name="ThemeComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;">
+					<ToggleSwitch x:Name="CrashReport" IsOn="{x:Bind Data.SettingsManager.CrashReporting, Mode=TwoWay}" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Tabs">
 				<controls:ModernInput x:Uid="/Settings/General/VerticalTabs" Glyph="&#xE71D;">
 					<ToggleSwitch x:Name="VerticalTabs" IsOn="{x:Bind Data.SettingsManager.UseVerticalTabs, Mode=TwoWay}" />
@@ -29,8 +37,32 @@
 				<controls:ModernInput x:Uid="/Settings/General/CompactMarks" Glyph="&#xF0E2;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.CompactBookmarks, Mode=TwoWay}" />
 				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup x:Uid="/Settings/General/Archives">
+				<controls:ModernInput x:Uid="/Settings/General/ArchivesStyle" Glyph="&#xE771;">
+					<ComboBox x:Name="ArchiveStyle" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.ArchiveStyle, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/TagsPopup" Glyph="&#xEC42;">
+					<ComboBox x:Name="TagsPopupComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.TagsPopup, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/VisualTags" Glyph="&#xE8EC;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.UseVisualTags, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/IncrementalCache" Glyph="&#xF5EF;">
+					<ToggleSwitch x:Name="IncrementalCaching" IsOn="{x:Bind Data.SettingsManager.UseIncrementalCaching, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Glyph="&#xE8B9;">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+							<Run x:Uid="/Settings/General/Size" />
+							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
+						</TextBlock>
+						<muxc:ProgressRing
+							Width="30" Height="30" Margin="0,0,10,0"
+							VerticalAlignment="Center" IsActive="True"
+							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
+						<Button x:Uid="/Settings/General/ClearThumbCache" Command="{x:Bind Data.ClearThumbnailCacheCommand}" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+					</StackPanel>
 				</controls:ModernInput>
 			</controls:ModernGroup>
 			<controls:ModernGroup x:Uid="/Settings/General/Search">
@@ -49,9 +81,6 @@
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/General/OrderBy" Glyph="&#xE8CB;">
 					<ComboBox x:Name="OrderByComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/TagsPopup" Glyph="&#xEC42;">
-					<ComboBox x:Name="TagsPopupComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.TagsPopup, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 				</controls:ModernInput>
 				<controls:ModernExpander x:Uid="/Settings/General/SuggestedTags" Glyph="&#xE773;" IsExpanded="{x:Bind Data.SettingsManager.ShowSuggestedTags, Mode=OneWay}">
 					<controls:ModernExpander.Input>
@@ -76,30 +105,6 @@
 						</Grid>
 					</controls:ModernInput>
 				</controls:ModernExpander>
-			</controls:ModernGroup>
-			<controls:ModernGroup x:Uid="/Settings/General/App">
-				<controls:ModernInput x:Uid="/Settings/General/Theme" Glyph="&#xE790;">
-					<ComboBox x:Name="ThemeComboBox" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/IncrementalCache" Glyph="&#xF5EF;">
-					<ToggleSwitch x:Name="IncrementalCaching" IsOn="{x:Bind Data.SettingsManager.UseIncrementalCaching, Mode=OneWay}" />
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/ThumbCache" Glyph="&#xE8B9;">
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
-							<Run x:Uid="/Settings/General/Size" />
-							<Run Text="{x:Bind Data.ThumbnailCacheSize, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
-						</TextBlock>
-						<muxc:ProgressRing
-							Width="30" Height="30" Margin="0,0,10,0"
-							VerticalAlignment="Center" IsActive="True"
-							Visibility="{x:Bind Data.ProgressCache, Mode=OneWay}" />
-						<Button x:Uid="/Settings/General/ClearThumbCache" Command="{x:Bind Data.ClearThumbnailCacheCommand}" IsEnabled="{x:Bind Data.ProgressCache, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-					</StackPanel>
-				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/General/CrashReport" Glyph="&#xEBE8;">
-					<ToggleSwitch x:Name="CrashReport" IsOn="{x:Bind Data.SettingsManager.CrashReporting, Mode=TwoWay}" />
-				</controls:ModernInput>
 			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>

@@ -26,8 +26,7 @@ namespace LRReader.Shared.Services
 		private readonly IFilesService Files;
 		private readonly PlatformService Platform;
 
-		[ObservableProperty]
-		private ObservableCollection<ServerProfile> _profiles = new ObservableCollection<ServerProfile>();
+		public ObservableCollection<ServerProfile> Profiles { get; private set; } = new();
 
 		private ServerProfile _profile = null!;
 		public ServerProfile Profile
@@ -361,6 +360,11 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectRoamed(false);
 			set => SettingsStorage.StoreObjectRoamed(value);
 		}
+		public ArchiveStyle ArchiveStyle
+		{
+			get => (ArchiveStyle)SettingsStorage.GetObjectLocal((int)ArchiveStyle.Default);
+			set => SettingsStorage.StoreObjectLocal((int)value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
@@ -631,5 +635,9 @@ namespace LRReader.Shared.Services
 	public enum ClearNewMode
 	{
 		Original, Web, Custom
+	}
+	public enum ArchiveStyle
+	{
+		Default, ThumbnailOnly, Compact, _InvalidIgnore = -1
 	}
 }

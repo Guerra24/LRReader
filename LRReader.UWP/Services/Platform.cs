@@ -5,6 +5,7 @@ using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
 using LRReader.UWP.Views.Tabs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -39,6 +40,8 @@ namespace LRReader.UWP.Services
 		private double _dualScreenWidth;
 
 		private Root Root = null!;
+
+		private Dictionary<string, string> LocalizationCache = new();
 
 		public ApplicationExecutionState ExecutionState { get; private set; }
 
@@ -142,8 +145,10 @@ namespace LRReader.UWP.Services
 
 		public override string GetLocalizedString(string key)
 		{
+			if (LocalizationCache.TryGetValue(key, out var val))
+				return val;
 			var split = key.Split(['/'], 2);
-			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
+			return LocalizationCache[key] = ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
 		public override async Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content)

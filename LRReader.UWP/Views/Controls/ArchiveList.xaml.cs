@@ -31,6 +31,8 @@ namespace LRReader.UWP.Views.Controls
 
 		private string query = "";
 
+		private string random = $"ArchiveList_{new Random().Next().ToString()}";
+
 		public ArchiveList()
 		{
 			this.InitializeComponent();
@@ -131,7 +133,7 @@ namespace LRReader.UWP.Views.Controls
 
 		private async Task HandleSearch()
 		{
-			if (Service.Settings.ShowSuggestedTags)
+			if (Settings.ShowSuggestedTags)
 				Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
 			else
 				Data.Query = query;

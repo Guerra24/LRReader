@@ -95,7 +95,7 @@
 								<Button x:Uid="/Tools/Deduplicator/Help">
 									<ext:TeachingTipButtonExtension.TeachingTip>
 										<muxc:TeachingTip x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-											<WebView Height="330" Width="294" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Deduplicator/HowItWorks/Text, Map=Tools}" />
+											<WebView Height="330" Width="294" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" />
 										</muxc:TeachingTip>
 									</ext:TeachingTipButtonExtension.TeachingTip>
 								</Button>

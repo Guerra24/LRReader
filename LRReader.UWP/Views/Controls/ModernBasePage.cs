@@ -23,6 +23,8 @@ namespace LRReader.UWP.Views.Controls
 			/*if (_navigating)
 				return;
 			_navigating = true;*/
+			if (Parent == null)
+				return;
 			Wrapper.ModernPageTab.Navigate((ModernPageTabItem)((ModernInput)sender).Tag, (int)((Frame)Parent).Tag);
 		}
 	}

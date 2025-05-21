@@ -459,17 +459,20 @@
   <data name="MainPage.Title" xml:space="preserve">
     <value>Ajustes</value>
   </data>
-  <data name="FeedbackPage.Title" xml:space="preserve">
-    <value>Feedback</value>
-  </data>
   <data name="ProfilesPage.Title" xml:space="preserve">
     <value>Perfiles</value>
+  </data>
+  <data name="FeedbackPage.Title" xml:space="preserve">
+    <value>Feedback</value>
   </data>
   <data name="Reader.CustomBackground.Title" xml:space="preserve">
     <value>Color de fondo</value>
   </data>
   <data name="FeedbackPage.Description" xml:space="preserve">
     <value>Cambios y solicitudes de características</value>
+  </data>
+  <data name="Updates.AutoUpdates.Title" xml:space="preserve">
+    <value>Actualizaciones automáticas</value>
   </data>
   <data name="Profiles.AddProfile.ToolTipService.ToolTip" xml:space="preserve">
     <value>Crear</value>
@@ -491,6 +494,12 @@
   </data>
   <data name="Profiles.RemoveDialog.Title" xml:space="preserve">
     <value>Eliminar perfil</value>
+  </data>
+  <data name="Reader.NextArchive.Description" xml:space="preserve">
+    <value>Pasar al siguiente archivo al final</value>
+  </data>
+  <data name="Reader.NextArchive.Title" xml:space="preserve">
+    <value>Abrir siguiente archivo</value>
   </data>
   <data name="Profiles.AutoLogin.Title" xml:space="preserve">
     <value>Conectarse al inicio</value>
@@ -536,15 +545,6 @@
   </data>
   <data name="Reader.WebPNoticeInfo.Title" xml:space="preserve">
     <value>Faltan extensiones de imagen WebP</value>
-  </data>
-  <data name="Updates.AutoUpdates.Title" xml:space="preserve">
-    <value>Actualizaciones automáticas</value>
-  </data>
-  <data name="Reader.NextArchive.Description" xml:space="preserve">
-    <value>Pasar al siguiente archivo al final</value>
-  </data>
-  <data name="Reader.NextArchive.Title" xml:space="preserve">
-    <value>Abrir siguiente archivo</value>
   </data>
   <data name="Reader.Map.Description" xml:space="preserve">
     <value>Show page list on hover at the bottom of the reader</value>
@@ -674,5 +674,20 @@ If custom is selected, make sure at least one option is enabled; otherwise, arch
   </data>
   <data name="Reader.LookAndFeelGroup.Title" xml:space="preserve">
     <value>Look and feel</value>
+  </data>
+  <data name="General.ArchiveStyle.Compact" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="General.ArchiveStyle.Default" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="General.ArchiveStyle.ThumbnailOnly" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="General.Archives.Title" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="General.ArchivesStyle.Title" xml:space="preserve">
+    <value>Style</value>
   </data>
 </root>

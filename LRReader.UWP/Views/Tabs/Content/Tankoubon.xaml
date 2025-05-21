@@ -11,11 +11,13 @@
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
 		<ext:Shadow x:Name="ElementShadow" />
+		<controls:ArchiveTemplateSelector x:Key="ArchiveTemplateSelector" CompactTemplate="{StaticResource CompactArchive}" FullTemplate="{StaticResource FullArchive}" ThumbnailOnlyTemplate="{StaticResource ThumbnailOnlyArchive}" />
 	</UserControl.Resources>
 
 	<Grid>

@@ -38,6 +38,10 @@ namespace LRReader.UWP.Views.Content.Settings
 			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Top"));
 			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Middle"));
 			TagsPopupComboBox.Items.Add(lang.GetString("General/PopupLocation/Bottom"));
+
+			ArchiveStyle.Items.Add(lang.GetString("General/ArchiveStyle/Default"));
+			ArchiveStyle.Items.Add(lang.GetString("General/ArchiveStyle/ThumbnailOnly"));
+			ArchiveStyle.Items.Add(lang.GetString("General/ArchiveStyle/Compact"));
 		}
 
 
