@@ -147,6 +147,7 @@
   <PropertyGroup>
     <AppxPackageDir>$(AppxPackageDirInProjectDir)</AppxPackageDir>
     <AppxPackageTestDir Condition="'$(AppxPackageDir)' != ''">$(AppxPackageDir)$(ProjectName)\</AppxPackageTestDir>
+    <AppxBundleAutoResourcePackageQualifiers>Scale|DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
   </PropertyGroup>
 
   <!-- Fixes xBind inside template inside style inside resource dictionary with code-behind class -->
@@ -201,7 +202,7 @@
       <MsPdbCmfExeFullpath Condition="'$(MSBuildExtensionsPath64)' != ''">$(PdbCmfx64ExeFullPath)</MsPdbCmfExeFullpath>
       <MsPdbCmfExeFullpath Condition="'$(MSBuildExtensionsPath64)' == ''">$(PdbCmfx86ExeFullPath)</MsPdbCmfExeFullpath>
     </PropertyGroup>
-    <Message Importance="High" Text="Fix _GenerateAppxSymbolPackage" />
+    <Message Importance="High" Text="Fix _GenerateAppxUploadSymbolPackage" />
     <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)" InputPdbs="@(FilesToCopy)" ProjectName="$(MSBuildProjectName)" IntermediateSymbolRoot="$(AppxUploadSymbolIntermediateDir)" StripPrivateSymbols="$(StripPrivateSymbols)" ReconstituteFastlinkPdbs="$(ReconstituteFastlinkUploadPdbs)" AppxSymbolPackageOutput="$(AppxUploadSymbolPackageOutput)" VsTelemetrySession="$(VsTelemetrySession)">
       <Output TaskParameter="OutputPdbs" ItemName="OutputPdbUploadFiles" />
     </WinAppSdkGenerateAppxSymbolPackage>
