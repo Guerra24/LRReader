@@ -4,6 +4,7 @@ using Microsoft.AppCenter.Crashes;
 #endif
 using RestSharp;
 using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,21 @@ namespace LRReader.Shared.Services
 		{
 			if (!Uri.IsWellFormedUriString(profile.ServerAddress, UriKind.Absolute))
 				return false;
-			var options = new RestClientOptions(profile.ServerAddress) { UserAgent = "LRReader" };
+			var options = new RestClientOptions(profile.ServerAddress)
+			{
+				UserAgent = "LRReader",
+				ConfigureMessageHandler = (handler) =>
+				{
+					// Restsharp uses HttpClientHandler by default but we do not want that so kill it
+					handler.Dispose();
+					var socket = new SocketsHttpHandler();
+					socket.MaxConnectionsPerServer = Math.Min(Environment.ProcessorCount * 2, 20); // Limit this so that mojo does not think we are dos'ing it
+					socket.PooledConnectionIdleTimeout = TimeSpan.FromSeconds(5); // Mojo default idle timeout
+					socket.UseCookies = false;
+					socket.AutomaticDecompression = System.Net.DecompressionMethods.All;
+					return socket;
+				}
+			};
 			Client?.Dispose();
 			Client = new RestClient(options);
 			if (!string.IsNullOrEmpty(profile.ServerApiKey))
