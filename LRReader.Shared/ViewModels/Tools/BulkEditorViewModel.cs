@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
 {
@@ -44,20 +44,21 @@ namespace LRReader.Shared.ViewModels.Tools
 		}
 
 		[RelayCommand]
-		public async Task DeleteArchives(IList<object> archives)
+		public async Task DeleteArchives(IList<object> selected)
 		{
-			if (archives.Count == 0)
+			var items = selected.ToList().Cast<Archive>().ToList();
+			if (items.Count == 0)
 				return;
-			foreach (var a in archives.ToList().Cast<Archive>())
+			foreach (var a in items)
 				await Archives.DeleteArchive(a.arcid);
 		}
 
 		[RelayCommand]
-		public async Task ChangeCategory(IList<object> archives)
+		public async Task ChangeCategory(IList<object> selected)
 		{
-			if (archives.Count == 0)
+			var items = selected.ToList().Cast<Archive>().ToList();
+			if (items.Count == 0)
 				return;
-			var items = archives.ToList().Cast<Archive>();
 			if (MoveToCategory)
 			{
 				foreach (var a in items)
