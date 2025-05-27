@@ -150,6 +150,19 @@ jobs:
       run: |
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:UapAppxPackageBuildMode=StoreOnly /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
+    - name: Setup sentry-cli
+      uses: matbour/setup-sentry-cli@v2
+      with:
+        version: 2.39.1
+        token: ${{ secrets.SENTRY_TOKEN }}
+        organization: ${{ secrets.SENTRY_ORG }}
+        project: ${{ secrets.SENTRY_PROJECT }}
+    - name: Upload Symbols
+      run: |
+        Set-Location "./LRReader.UWP/AppPackages/LRReader.UWP"
+        Get-ChildItem *.appxsym -File | Rename-Item -NewName { [IO.Path]::ChangeExtension($_.name, "zip") }
+        foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --include-sources --wait $file  }
+        Remove-Item $(Get-ChildItem *.zip -File)
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:

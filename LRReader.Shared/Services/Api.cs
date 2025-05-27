@@ -31,7 +31,7 @@ namespace LRReader.Shared.Services
 					handler.Dispose();
 					var socket = new SocketsHttpHandler();
 					socket.MaxConnectionsPerServer = Math.Min(Environment.ProcessorCount * 2, 20); // Limit this so that mojo does not think we are dos'ing it
-					socket.PooledConnectionIdleTimeout = TimeSpan.FromSeconds(5); // Mojo default idle timeout
+					socket.PooledConnectionIdleTimeout = TimeSpan.FromSeconds(30); // Mojo default idle timeout
 					socket.UseCookies = false;
 					socket.AutomaticDecompression = System.Net.DecompressionMethods.All;
 					return socket;

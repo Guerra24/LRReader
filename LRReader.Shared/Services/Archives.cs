@@ -105,7 +105,7 @@ namespace LRReader.Shared.Services
 
 					foreach (var archiveId in bookmarks.archives)
 					{
-						var archive = GetArchive(archiveId);
+						var archive = await GetOrAddArchive(archiveId);
 						var bookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(ba => ba.archiveID == archiveId);
 						if (bookmarkedArchive != null)
 						{
