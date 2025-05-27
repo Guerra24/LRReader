@@ -70,6 +70,7 @@ public static class JsonSettings
 [JsonSerializable(typeof(List<Category>))]
 [JsonSerializable(typeof(UpdateChangelog))]
 [JsonSerializable(typeof(VersionSupportedRange))]
+[JsonSerializable(typeof(CheckForUpdatesResult))]
 public partial class JsonSourceGenerationContext : JsonSerializerContext
 {
 
