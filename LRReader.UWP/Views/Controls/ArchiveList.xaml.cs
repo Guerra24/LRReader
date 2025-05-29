@@ -131,22 +131,18 @@ namespace LRReader.UWP.Views.Controls
 				await Data.LoadPage(args.NewPageIndex);
 		}
 
-		private async Task HandleSearch()
+		private async Task HandleSearch(bool reload = false)
 		{
 			if (Settings.ShowSuggestedTags)
 				Data.Query = string.Join(',', query.Trim(','), string.Join(',', SuggestedTags.SelectedItems)).Trim(',');
 			else
 				Data.Query = query;
-			await Data.ReloadSearch();
+			await Data.ReloadSearch(reload);
 		}
 
 		public async Task Refresh()
 		{
-			Data.ControlsEnabled = false;
-			if (OnRefresh != null)
-				await OnRefresh();
-			await HandleSearch();
-			Data.ControlsEnabled = true;
+			await HandleSearch(true);
 		}
 
 		private async void ArchivesGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -287,7 +283,17 @@ namespace LRReader.UWP.Views.Controls
 		[GeneratedDependencyProperty(DefaultValue = true)]
 		public partial bool HandleF5 { get; set; }
 
-		public event Func<Task>? OnRefresh;
+		public event Func<Task>? OnRefresh
+		{
+			add
+			{
+				Data.OnRefresh += value;
+			}
+			remove
+			{
+				Data.OnRefresh -= value;
+			}
+		}
 
 		public event Func<Task>? OnLoad;
 

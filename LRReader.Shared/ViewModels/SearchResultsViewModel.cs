@@ -81,6 +81,8 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
+		public event Func<Task>? OnRefresh;
+
 		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api, TabsService tabs)
 		{
 			Settings = settings;
@@ -93,7 +95,7 @@ namespace LRReader.Shared.ViewModels
 				SortBy.Add(n);
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
-			if (Settings.ShowSuggestedTags)
+			//if (Settings.ShowSuggestedTags)
 				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
 					SuggestedTags.Add(tag.GetNamespacedTag());
 			_archiveStyle = Settings.ArchiveStyle;
@@ -112,24 +114,29 @@ namespace LRReader.Shared.ViewModels
 				await LoadPage(Page - 1);
 		}
 
-		public async Task ReloadSearch()
+		public async Task ReloadSearch(bool reload = false)
 		{
-			SuggestedTags.Clear();
-			if (Settings.ShowSuggestedTags)
-				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
-					SuggestedTags.Add(tag.GetNamespacedTag());
-			await LoadPage(0);
+			await LoadPage(0, reload);
 		}
 
-		public async Task LoadPage(int page)
+		public async Task LoadPage(int page, bool reload = false)
 		{
 			if (_internalLoadingArchives)
 				return;
-			ControlsEnabled = false;
 			_internalLoadingArchives = true;
+			ControlsEnabled = false;
 			RefreshOnErrorButton = false;
 			LoadingArchives = true;
 			ArchiveList.Clear();
+			if (reload)
+			{
+				if (OnRefresh != null)
+					await OnRefresh();
+				/*SuggestedTags.Clear();
+				if (Settings.ShowSuggestedTags)
+					foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
+						SuggestedTags.Add(tag.GetNamespacedTag());*/
+			}
 			Page = page;
 			string sortby;
 			if (SortByIndex == -1)
@@ -159,8 +166,8 @@ namespace LRReader.Shared.ViewModels
 			else
 				RefreshOnErrorButton = true;
 			LoadingArchives = false;
-			_internalLoadingArchives = false;
 			ControlsEnabled = true;
+			_internalLoadingArchives = false;
 		}
 
 		public void OpenRandom()
