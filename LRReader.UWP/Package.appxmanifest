@@ -10,7 +10,7 @@
   <Identity
     Name="63705Guerra24.LRReader"
     Publisher="CN=690E488B-1B49-4006-8D8D-14F81EFE17C5"
-    Version="1.9.2.0" />
+    Version="1.9.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="eccfefd4-5961-4ad1-894e-3000dc4fe01a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
