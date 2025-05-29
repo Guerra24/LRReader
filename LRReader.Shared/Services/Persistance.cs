@@ -3,9 +3,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-#if x64
 using Sentry;
-#endif
 
 namespace LRReader.Shared.Services
 {
@@ -69,9 +67,7 @@ namespace LRReader.Shared.Services
 			}
 			catch (Exception e)
 			{
-#if x64
 				SentrySdk.CaptureException(e);
-#endif
 			}
 		}
 	}

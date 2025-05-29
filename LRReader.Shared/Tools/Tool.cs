@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using LRReader.Shared.Services;
-#if x64
 using Sentry;
-#endif
 
 namespace LRReader.Shared.Tools
 {
@@ -71,9 +69,7 @@ namespace LRReader.Shared.Tools
 			}
 			catch (Exception e)
 			{
-#if x64
 				SentrySdk.CaptureException(e);
-#endif
 			}
 			GC.Collect();
 			return result;

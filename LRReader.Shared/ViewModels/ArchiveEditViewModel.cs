@@ -11,9 +11,7 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-#if x64
 using Sentry;
-#endif
 
 namespace LRReader.Shared.ViewModels
 {
@@ -113,9 +111,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-#if x64
 				SentrySdk.CaptureException(e);
-#endif
 			}
 		}
 
@@ -161,9 +157,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-#if x64
 				SentrySdk.CaptureException(e);
-#endif
 			}
 		}
 
@@ -208,9 +202,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			catch (Exception e)
 			{
-#if x64
 				SentrySdk.CaptureException(e);
-#endif
 			}
 		}
 

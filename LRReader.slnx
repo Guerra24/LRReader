@@ -8,9 +8,7 @@
   </Folder>
   <Project Path="LRReader.Avalonia.Desktop/LRReader.Avalonia.Desktop.csproj" />
   <Project Path="LRReader.Avalonia/LRReader.Avalonia.csproj" />
-  <Project Path="LRReader.Shared/LRReader.Shared.csproj">
-    <Platform Solution="*|x64" Project="x64" />
-  </Project>
+  <Project Path="LRReader.Shared/LRReader.Shared.csproj" />
   <Project Path="LRReader.UWP.Installer/LRReader.UWP.Installer.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />

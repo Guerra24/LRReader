@@ -9,9 +9,7 @@ using KeyedSemaphores;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Formats.JpegXL;
 using LRReader.Shared.Providers;
-#if x64
 using Sentry;
-#endif
 
 namespace LRReader.Shared.Services;
 
@@ -58,9 +56,7 @@ public class ImagesService : IService
 		}
 		catch (Exception e)
 		{
-#if x64
 			SentrySdk.CaptureException(e);
-#endif
 		}
 	}
 

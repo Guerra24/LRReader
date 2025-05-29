@@ -18,10 +18,8 @@ using Windows.UI.Xaml.Media;
 using static LRReader.Shared.Services.Service;
 using ColorHelper = CommunityToolkit.WinUI.Helpers.ColorHelper;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
-#if x64
 using Sentry;
 using Sentry.Protocol;
-#endif
 
 namespace LRReader.UWP
 {
@@ -33,8 +31,6 @@ namespace LRReader.UWP
 		{
 			Thread.CurrentThread.Name = "Application";
 			Init.EarlyInit();
-			// If-def-out sentry entirely on non-x64 platforms
-#if x64
 			// Manually read setting to prevent services from initializing too early
 			var crashReporting = ApplicationData.Current.LocalSettings.Values["CrashReporting"];
 			if ((bool)(crashReporting ?? true) && Uri.IsWellFormedUriString(Secrets.SentryDsn, UriKind.Absolute))
@@ -82,7 +78,6 @@ namespace LRReader.UWP
 				});
 #endif
 			}
-#endif
 			this.UnhandledException += App_UnhandledException;
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
@@ -143,9 +138,7 @@ namespace LRReader.UWP
 		{
 			var deferral = e.SuspendingOperation.GetDeferral();
 			await Service.Persistance.Suspend();
-#if x64
 			await SentrySdk.FlushAsync(TimeSpan.FromSeconds(2));
-#endif
 			deferral.Complete();
 		}
 
@@ -156,14 +149,13 @@ namespace LRReader.UWP
 			if (exception is LayoutCycleException)
 				return;
 			e.Handled = true;
-#if x64
 			exception.Data[Mechanism.HandledKey] = false;
 			exception.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
 
 			SentrySdk.CaptureException(exception);
 
 			SentrySdk.Flush(TimeSpan.FromSeconds(2));
-#endif
+
 			Dispatcher.Run(async () => await Platform.OpenGenericDialog("Internal Error", "Continue", content: exception.Message));
 		}
 	}

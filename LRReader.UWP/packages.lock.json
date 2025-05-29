@@ -215,8 +215,8 @@
       },
       "Sentry": {
         "type": "Transitive",
-        "resolved": "5.8.0",
-        "contentHash": "LDn/jT68oZ3/3l7eAmf8CLv2es4HC6M6yufmwOF2sTxsk1F8fieueDPDgrfd2xwQZqK6HLq3EFq2ZE2WG8YX5g=="
+        "resolved": "5.8.1",
+        "contentHash": "05sX5zfRhvpPyudIR5l6X+2cza/bf92w19E4fk2moiIoQXgFXaCKU3Bx4i3tTeXakyFzxNrzGfP/Uoc6Qk8x5Q=="
       },
       "SixLabors.ImageSharp": {
         "type": "Transitive",
@@ -242,7 +242,7 @@
           "KeyedSemaphores": "[5.0.0, )",
           "Microsoft.Extensions.DependencyInjection": "[9.0.5, )",
           "RestSharp": "[112.1.0, )",
-          "Sentry": "[5.8.0, )",
+          "Sentry": "[5.8.1, )",
           "SixLabors.ImageSharp": "[3.1.8, )"
         }
       }

@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
-#if x64
 using Sentry;
-#endif
 #if WINDOWS_UWP
 using Windows.Storage.Pickers;
 using Windows.Storage;
@@ -402,9 +400,7 @@ namespace LRReader.Shared.Services
 				}
 				catch (Exception e)
 				{
-#if x64
 					SentrySdk.CaptureException(e);
-#endif
 				}
 			});
 		}
