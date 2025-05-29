@@ -41,7 +41,12 @@ namespace LRReader.Shared.Models.Main
 		[JsonIgnore]
 		private List<ArchiveTagsGroup> VirtualTags { get; set; } = new();
 
-		void IJsonOnDeserialized.OnDeserialized() => UpdateTags();
+		void IJsonOnDeserialized.OnDeserialized()
+		{
+			UpdateTags();
+			if (progress == 0)
+				progress = 1;
+		}
 
 		public void UpdateTags()
 		{

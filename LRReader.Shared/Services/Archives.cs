@@ -106,19 +106,27 @@ namespace LRReader.Shared.Services
 					foreach (var archiveId in bookmarks.archives)
 					{
 						var archive = await GetOrAddArchive(archiveId);
-						var bookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(ba => ba.archiveID == archiveId);
-						if (bookmarkedArchive != null)
+						if (archive != null)
 						{
-							if (Api.ControlFlags.ProgressTracking)
-								bookmarkedArchive.page = archive!.progress - 1;
+
+							var bookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(ba => ba.archiveID == archiveId);
+							if (bookmarkedArchive != null)
+							{
+								if (Api.ControlFlags.ProgressTracking)
+									bookmarkedArchive.page = archive.progress - 1;
+							}
+							else
+							{
+								bookmarkedArchive = new(archiveId);
+								if (Api.ControlFlags.ProgressTracking)
+									bookmarkedArchive.page = archive.progress - 1;
+								bookmarkedArchive.totalPages = archive.pagecount;
+								Settings.Profile.Bookmarks.Add(bookmarkedArchive);
+							}
 						}
 						else
 						{
-							bookmarkedArchive = new(archiveId);
-							if (Api.ControlFlags.ProgressTracking)
-								bookmarkedArchive.page = archive!.progress - 1;
-							bookmarkedArchive.totalPages = archive!.pagecount;
-							Settings.Profile.Bookmarks.Add(bookmarkedArchive);
+							await CategoriesProvider.RemoveArchiveFromCategory(BookmarkLink, archiveId);
 						}
 					}
 				}
