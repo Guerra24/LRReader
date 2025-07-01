@@ -106,7 +106,7 @@ namespace LRReader.UWP.Services
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
 			var rq = new RestRequest("lrr/upgrade/check");
-			rq.AddParameter("version", Platform.Version.ToString());
+			rq.AddParameter("version", "1.9.2.0");
 			var r = await client.ExecuteGetAsync(rq);
 			var updatesResult = await r.GetResultInternal<CheckForUpdatesResult>();
 			if (!string.IsNullOrEmpty(r.ErrorMessage))

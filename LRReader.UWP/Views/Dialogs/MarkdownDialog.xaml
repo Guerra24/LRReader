@@ -5,6 +5,7 @@
 	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Dialogs"
+	xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	PrimaryButtonText="Ok"
 	PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
@@ -24,7 +25,7 @@
 									MinHeight="{ThemeResource ContentDialogMinHeight}"
 									MaxWidth="670"
 									MaxHeight="{ThemeResource ContentDialogMaxHeight}"
-									HorizontalAlignment="Stretch" VerticalAlignment="Center"
+									HorizontalAlignment="Center" VerticalAlignment="Center"
 									Background="{TemplateBinding Background}"
 									BackgroundSizing="InnerBorderEdge"
 									BorderBrush="{TemplateBinding BorderBrush}"
@@ -42,47 +43,48 @@
 										</Grid.RowDefinitions>
 										<ScrollViewer
 											x:Name="ContentScrollViewer" HorizontalScrollBarVisibility="Disabled" IsTabStop="False"
-											VerticalScrollBarVisibility="Disabled" ZoomMode="Disabled" Visibility="Collapsed"/>
-										<Grid
-											Padding="{StaticResource ContentDialogPadding}"
-											Background="{ThemeResource ContentDialogTopOverlay}"
-											BorderBrush="{ThemeResource ContentDialogSeparatorBorderBrush}"
-											BorderThickness="{StaticResource ContentDialogSeparatorThickness}">
-											<Grid.RowDefinitions>
-												<RowDefinition Height="Auto" />
-												<RowDefinition Height="*" />
-											</Grid.RowDefinitions>
-											<ContentControl
-												x:Name="Title"
-												Margin="{StaticResource ContentDialogTitleMargin}"
-												HorizontalAlignment="Left" VerticalAlignment="Top"
-												Content="{TemplateBinding Title}"
-												ContentTemplate="{TemplateBinding TitleTemplate}"
-												FontFamily="XamlAutoFontFamily" FontSize="20" FontWeight="SemiBold"
-												Foreground="{TemplateBinding Foreground}"
-												IsTabStop="False">
-												<ContentControl.Template>
-													<ControlTemplate TargetType="ContentControl">
-														<ContentPresenter
-															Margin="{TemplateBinding Padding}"
-															HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-															VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-															Content="{TemplateBinding Content}"
-															ContentTemplate="{TemplateBinding ContentTemplate}"
-															ContentTransitions="{TemplateBinding ContentTransitions}"
-															MaxLines="2" TextWrapping="Wrap" />
-													</ControlTemplate>
-												</ContentControl.Template>
-											</ContentControl>
-											<ContentPresenter
-												x:Name="Content" Grid.Row="1"
-												Content="{TemplateBinding Content}"
-												ContentTemplate="{TemplateBinding ContentTemplate}"
-												FontFamily="{StaticResource ContentControlThemeFontFamily}"
-												FontSize="{StaticResource ControlContentThemeFontSize}"
-												Foreground="{TemplateBinding Foreground}"
-												TextWrapping="Wrap" />
-										</Grid>
+											VerticalScrollBarVisibility="Disabled" ZoomMode="Disabled">
+											<Grid
+												Padding="{StaticResource ContentDialogPadding}"
+												Background="{ThemeResource ContentDialogTopOverlay}"
+												BorderBrush="{ThemeResource ContentDialogSeparatorBorderBrush}"
+												BorderThickness="{StaticResource ContentDialogSeparatorThickness}">
+												<Grid.RowDefinitions>
+													<RowDefinition Height="Auto" />
+													<RowDefinition Height="*" />
+												</Grid.RowDefinitions>
+												<ContentControl
+													x:Name="Title"
+													Margin="{StaticResource ContentDialogTitleMargin}"
+													HorizontalAlignment="Left" VerticalAlignment="Top"
+													Content="{TemplateBinding Title}"
+													ContentTemplate="{TemplateBinding TitleTemplate}"
+													FontFamily="XamlAutoFontFamily" FontSize="20" FontWeight="SemiBold"
+													Foreground="{TemplateBinding Foreground}"
+													IsTabStop="False">
+													<ContentControl.Template>
+														<ControlTemplate TargetType="ContentControl">
+															<ContentPresenter
+																Margin="{TemplateBinding Padding}"
+																HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+																VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+																Content="{TemplateBinding Content}"
+																ContentTemplate="{TemplateBinding ContentTemplate}"
+																ContentTransitions="{TemplateBinding ContentTransitions}"
+																MaxLines="2" TextWrapping="Wrap" />
+														</ControlTemplate>
+													</ContentControl.Template>
+												</ContentControl>
+												<ContentPresenter
+													x:Name="Content" Grid.Row="1"
+													Content="{TemplateBinding Content}"
+													ContentTemplate="{TemplateBinding ContentTemplate}"
+													FontFamily="{StaticResource ContentControlThemeFontFamily}"
+													FontSize="{StaticResource ControlContentThemeFontSize}"
+													Foreground="{TemplateBinding Foreground}"
+													TextWrapping="Wrap" />
+											</Grid>
+										</ScrollViewer>
 										<Grid
 											x:Name="CommandSpace" Grid.Row="1"
 											Padding="{StaticResource ContentDialogPadding}"
@@ -268,5 +270,12 @@
 		</Style>
 	</ContentDialog.Resources>
 
-	<WebView x:Name="WebView" MaxHeight="612" DefaultBackgroundColor="Transparent" />
+
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<labs:MarkdownTextBlock Text="{x:Bind Text}" UseSoftlineBreakAsHardlineBreak="True">
+			<labs:MarkdownTextBlock.Config>
+				<labs:MarkdownConfig />
+			</labs:MarkdownTextBlock.Config>
+		</labs:MarkdownTextBlock>
+	</ScrollViewer>
 </ContentDialog>

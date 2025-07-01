@@ -9,13 +9,14 @@ namespace LRReader.UWP.Views.Dialogs
 {
 	public sealed partial class MarkdownDialog : ContentDialog, IDialog
 	{
+		private string Text;
 
 		public MarkdownDialog(string title, string text)
 		{
 			this.InitializeComponent();
 			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
-			this.Title = title;
-			WebView.SetMarkdown(text);
+			Title = title;
+			Text = text;
 		}
 
 		public new async Task<IDialogResult> ShowAsync() => (IDialogResult)(int)await base.ShowAsync();

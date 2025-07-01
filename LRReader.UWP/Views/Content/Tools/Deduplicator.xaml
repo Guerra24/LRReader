@@ -13,6 +13,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 	mc:Ignorable="d">
 
 	<Page.Resources>
@@ -95,7 +96,11 @@
 								<Button x:Uid="/Tools/Deduplicator/Help">
 									<ext:TeachingTipButtonExtension.TeachingTip>
 										<muxc:TeachingTip x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-											<WebView Height="330" Width="294" DefaultBackgroundColor="Transparent" ext:WebViewExt.MarkdownBase="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" />
+											<labs:MarkdownTextBlock Text="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" UseSoftlineBreakAsHardlineBreak="True">
+												<labs:MarkdownTextBlock.Config>
+													<labs:MarkdownConfig />
+												</labs:MarkdownTextBlock.Config>
+											</labs:MarkdownTextBlock>
 										</muxc:TeachingTip>
 									</ext:TeachingTipButtonExtension.TeachingTip>
 								</Button>

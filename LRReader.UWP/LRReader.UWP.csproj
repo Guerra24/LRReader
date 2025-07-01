@@ -15,7 +15,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.20250508.1</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
+    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.20250528.2</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
     <RootNamespace>LRReader.UWP</RootNamespace>
     <AssemblyName>LRReader.UWP</AssemblyName>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
@@ -50,8 +50,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.250513-build.2126" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250513-build.2126" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.250701-build.2165" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.250626-build.2162" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250626-build.2162" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives" Version="8.2.250402" />
@@ -60,9 +61,9 @@
     <PackageReference Include="CommunityToolkit.Uwp.Extensions" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Helpers" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Media" Version="8.2.250402" />
-    <PackageReference Include="Markdig" Version="0.41.1" />
+    <PackageReference Include="Markdig" Version="0.41.3" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3351.48" />
   </ItemGroup>
 
   <ItemGroup>
@@ -187,12 +188,7 @@
     <Message Text="$(MSBuildProjectName) -&gt; $(AppxSymbolPackageOutput)" />
   </Target>
   <!-- Override this entire thing... same as previous target -->
-  <Target Name="_GenerateAppxUploadSymbolPackage"
-          Condition="'$(AppxSymbolPackageEnabled)' == 'true' and 
-                     '@(PDBUploadPayload)' != '' and 
-                     '$(BuildAppxUploadPackageForUap)' == 'true'"
-          Inputs="$(MSBuildAllProjects);@(PDBUploadPayload);@(FinalAppxManifest)"
-          Outputs="$(AppxUploadSymbolPackageOutput)">
+  <Target Name="_GenerateAppxUploadSymbolPackage" Condition="'$(AppxSymbolPackageEnabled)' == 'true' and &#xD;&#xA;                     '@(PDBUploadPayload)' != '' and &#xD;&#xA;                     '$(BuildAppxUploadPackageForUap)' == 'true'" Inputs="$(MSBuildAllProjects);@(PDBUploadPayload);@(FinalAppxManifest)" Outputs="$(AppxUploadSymbolPackageOutput)">
     <ItemGroup>
       <FilesToCopy Include="$(OutputPath)native\*.pdb" />
     </ItemGroup>
