@@ -190,7 +190,7 @@
     <Message Text="$(MSBuildProjectName) -&gt; $(AppxSymbolPackageOutput)" />
   </Target>
   <!-- Override this entire thing... same as previous target -->
-  <Target Name="_GenerateAppxUploadSymbolPackage" Condition="'$(AppxSymbolPackageEnabled)' == 'true' and &#xD;&#xA;                     '@(PDBUploadPayload)' != '' and &#xD;&#xA;                     '$(BuildAppxUploadPackageForUap)' == 'true'" Inputs="$(MSBuildAllProjects);@(PDBUploadPayload);@(FinalAppxManifest)" Outputs="$(AppxUploadSymbolPackageOutput)">
+  <Target Name="_GenerateAppxUploadSymbolPackage" Condition="'$(AppxSymbolPackageEnabled)' == 'true' and '@(PDBUploadPayload)' != '' and '$(BuildAppxUploadPackageForUap)' == 'true'" Inputs="$(MSBuildAllProjects);@(PDBUploadPayload);@(FinalAppxManifest)" Outputs="$(AppxUploadSymbolPackageOutput)">
     <ItemGroup>
       <FilesToCopy Include="$(OutputPath)native\*.pdb" />
     </ItemGroup>
