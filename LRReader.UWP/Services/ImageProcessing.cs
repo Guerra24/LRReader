@@ -1,13 +1,14 @@
-﻿using System;
+﻿using JxlNet;
+using LRReader.Shared.Internal;
+using LRReader.Shared.Services;
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using JxlNet;
-using LRReader.Shared.Internal;
-using LRReader.Shared.Services;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 using Size = System.Drawing.Size;
 
 namespace LRReader.UWP.Services
@@ -31,6 +32,7 @@ namespace LRReader.UWP.Services
 			await Task.CompletedTask;
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default, CancellationToken cancellationToken = default)
 		{
 			if (bytes == null)
@@ -62,9 +64,9 @@ namespace LRReader.UWP.Services
 							{
 								var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
 								var decoder = Jxl.JxlDecoderCreate(null);
-								Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
 								try
 								{
+									Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
 									if (cancellationToken.IsCancellationRequested)
 										return false;
 									fixed (byte* input = bytes)

@@ -3,10 +3,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using CommunityToolkit.WinUI;
 using System;
 using System.Linq;
 using System.Threading;
-using CommunityToolkit.WinUI;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.System;
@@ -16,6 +16,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using WinRT;
 
 namespace Microsoft.Toolkit.Uwp.UI
 {
@@ -102,6 +103,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 		}
 #pragma warning restore CS0419 // Ambiguous reference in cref attribute
 
+		[DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
 		private static void OnHorizontalScrollBarMarginPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
 		{
 			if (sender is FrameworkElement baseElement)
@@ -122,6 +124,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 			}
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(ScrollViewer))]
 		private static bool ChangeHorizontalScrollBarMarginProperty(FrameworkElement sender)
 		{
 			if (sender == null)
@@ -146,6 +149,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 			return true;
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
 		private static void ChangeHorizontalScrollBarMarginProperty(object sender, RoutedEventArgs routedEventArgs)
 		{
 			if (sender is FrameworkElement baseElement)
@@ -157,6 +161,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 			}
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
 		private static void OnVerticalScrollBarMarginPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
 		{
 			if (sender is FrameworkElement baseElement)
@@ -177,6 +182,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 			}
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(ScrollViewer))]
 		private static bool ChangeVerticalScrollBarMarginProperty(FrameworkElement sender)
 		{
 			if (sender == null)
@@ -201,6 +207,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 			return true;
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
 		private static void ChangeVerticalScrollBarMarginProperty(object sender, RoutedEventArgs routedEventArgs)
 		{
 			ChangeVerticalScrollBarMarginProperty(sender as FrameworkElement);
@@ -232,6 +239,8 @@ namespace Microsoft.Toolkit.Uwp.UI
 		/// </summary>
 		/// <param name="d">Holds the dependency object</param>
 		/// <param name="e">Holds the dependency object args</param>
+		[DynamicWindowsRuntimeCast(typeof(ScrollViewer))]
+		[DynamicWindowsRuntimeCast(typeof(FrameworkElement))]
 		private static void OnEnableMiddleClickScrollingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			if (d is ScrollViewer scrollViewer)
@@ -328,6 +337,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 		/// This function will be called for every small interval by <see cref="Timer"/>
 		/// </summary>
 		/// <param name="state">Default param for <see cref="Timer"/>. In this function it will be `null`</param>
+		[DynamicWindowsRuntimeCast(typeof(DispatcherQueue))]
 		private static void Scroll(object state)
 		{
 			var dispatcherQueue = state as DispatcherQueue;
@@ -368,6 +378,7 @@ namespace Microsoft.Toolkit.Uwp.UI
 			return _isDeferredMovingStarted || (_isPressed && !_isDeferredMovingStarted);
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(ScrollViewer))]
 		private static void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			// Unsubscribe if deferred moving is started

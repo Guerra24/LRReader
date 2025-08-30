@@ -1,11 +1,12 @@
-﻿using System;
-using LRReader.Shared.Extensions;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Services;
+using System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 
 namespace LRReader.UWP.Converters
 {
@@ -83,6 +84,7 @@ namespace LRReader.UWP.Converters
 
 	public partial class ObjectToBitmapImage : IValueConverter
 	{
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
 			if (value is BitmapImage image)

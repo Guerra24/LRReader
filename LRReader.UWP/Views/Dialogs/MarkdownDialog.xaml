@@ -2,10 +2,9 @@
 	x:Class="LRReader.UWP.Views.Dialogs.MarkdownDialog"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+	xmlns:ct="using:CommunityToolkit.WinUI.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:LRReader.UWP.Views.Dialogs"
-	xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	PrimaryButtonText="Ok"
 	PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
@@ -272,10 +271,10 @@
 
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
-		<labs:MarkdownTextBlock Text="{x:Bind Text}" UseSoftlineBreakAsHardlineBreak="True">
-			<labs:MarkdownTextBlock.Config>
-				<labs:MarkdownConfig />
-			</labs:MarkdownTextBlock.Config>
-		</labs:MarkdownTextBlock>
+		<ct:MarkdownTextBlock Text="{x:Bind Text}" UseSoftlineBreakAsHardlineBreak="True">
+			<ct:MarkdownTextBlock.Config>
+				<ct:MarkdownConfig />
+			</ct:MarkdownTextBlock.Config>
+		</ct:MarkdownTextBlock>
 	</ScrollViewer>
 </ContentDialog>

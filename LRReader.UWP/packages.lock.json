@@ -4,9 +4,9 @@
     "net9.0-windows10.0.26100": {
       "CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock": {
         "type": "Direct",
-        "requested": "[0.1.250701-build.2165, )",
-        "resolved": "0.1.250701-build.2165",
-        "contentHash": "O9ioUkiANVBGdERLYZa9svQnuMi3uMenMo/U5MW2ecKq8yhXoctc1plvAJnOPDM32+9aM3GoU40ypIgYJvfKag==",
+        "requested": "[0.1.250829-build.2245, )",
+        "resolved": "0.1.250829-build.2245",
+        "contentHash": "z696UhWhIGmqP5N1D/3o/wYCHr37KvHiBDZCSHkBujP3+GCmVZ4Ddmi3vInyiej61nwbd7YXwUP5+x9jgJioUA==",
         "dependencies": {
           "HtmlAgilityPack": "1.11.71",
           "Markdig": "0.38.0",
@@ -16,15 +16,15 @@
       },
       "CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator": {
         "type": "Direct",
-        "requested": "[0.1.250626-build.2162, )",
-        "resolved": "0.1.250626-build.2162",
-        "contentHash": "JYZBCdpbDNQAAB1T7M4N2wUbkyf664XKlRS5DU0PM+aG3CDKPwBt5dp7BTFaxE+eykgv/ORQsW7tAvL7xHyIDg=="
+        "requested": "[0.1.250829-build.2245, )",
+        "resolved": "0.1.250829-build.2245",
+        "contentHash": "ihN66WFcLm1LKVMDGNsvdIpqut//x3eJXaTfUsU3MmVPJxFsb+02x5XPjLMks5Ef5Dk6BqKIakx4+EQogfDiYQ=="
       },
       "CommunityToolkit.Labs.Uwp.TokenView": {
         "type": "Direct",
-        "requested": "[0.1.250626-build.2162, )",
-        "resolved": "0.1.250626-build.2162",
-        "contentHash": "VDTZhXX89UcMjHfHNWOfVWPXisUeni/2LaYykuZsVgxCULwQqKt+8RGLYxI3LaHWVZplp3uhHc+dmZFzR65R/g==",
+        "requested": "[0.1.250828-build.2223, )",
+        "resolved": "0.1.250828-build.2223",
+        "contentHash": "VRqnxQvjstmrc9Bf9r/yjHczHKFj0Qpe6ZUFdqvg3ET4Yf/idIrM25pGgjXseL+JDX+/dqIT8egz9NIeyKAkLw==",
         "dependencies": {
           "CommunityToolkit.Uwp.Controls.Primitives": "8.2.250402",
           "CommunityToolkit.Uwp.Extensions": "8.2.250402",
@@ -123,15 +123,15 @@
       },
       "Microsoft.DotNet.ILCompiler": {
         "type": "Direct",
-        "requested": "[9.0.5, )",
-        "resolved": "9.0.5",
-        "contentHash": "rfDodV68TLSUgVM6ZQusuUXD7GAIqwCKJWlPtfsd99iLlLbeGfqUQE7Xo8xLa1ju5GCdSBO0q35suzZ8ppclpA=="
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "cMwVh5hsxAhv+oMHQdgcXodt2kDpfviofBO4IXupSAHJW2vZOZOOIhvPWRGO6NeGcP8SR4OpSwktRqb0i79KFA=="
       },
       "Microsoft.NET.ILLink.Tasks": {
         "type": "Direct",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "TXy3SbJzGXQbxxIxCjdrp8bwEyTDImyYNpTpd6v7P3JL2Y7dno8EYG7dPezfYTa5SoWKdhbH9cbnwHHs3BR5gA=="
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "rd1CbIsMtVPtZNTIVD6Xydue//klYOOQIDpRgu3BHtv17AlpRs74/6QFbcYgMm/jL+naVU2T3OFLxVSLV5lQLQ=="
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
@@ -144,9 +144,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.3351.48, )",
-        "resolved": "1.0.3351.48",
-        "contentHash": "UIzXdl3x3H2MX2es7+BHYT3pLkLoT7090omqla9S3MQQCma0slwiY+CXBM6x0LmdLTpksoQ6XUqOAXrtxjtklQ=="
+        "requested": "[1.0.3405.78, )",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
       },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Direct",
@@ -156,9 +156,9 @@
       },
       "Microsoft.Windows.SDK.BuildTools.MSIX": {
         "type": "Direct",
-        "requested": "[1.7.20250528.2, )",
-        "resolved": "1.7.20250528.2",
-        "contentHash": "E8zM9rI9T5bTHtgkjSBZyS9HxJhuFFCknQ91xwzfoUV0nY+WJom2m25852tYXv+PhbGV/C90GsRCKj41tYRpLA=="
+        "requested": "[1.7.20250829.1, )",
+        "resolved": "1.7.20250829.1",
+        "contentHash": "IMdvRmCIZnBS5GkYnv0po1bcx6U1OF39pqA4TphQ9evDzpCRoSE19/PkDvlUNNrBavTsLIEJgd/TAIFner75ow=="
       },
       "Caching": {
         "type": "Transitive",
@@ -209,16 +209,16 @@
       },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "vS65HMo5RS10DD543fknsyVDxihMcVxVn3/hNaILgBxWYnOLxWIeCIO9X0QFuCvPRNjClvXe9Aj8KaQNx7vFkQ==",
+        "resolved": "9.0.8",
+        "contentHash": "JJjI2Fa+QtZcUyuNjbKn04OjIUX5IgFGFu/Xc+qvzh1rXdZHLcnqqVXhR4093bGirTwacRlHiVg1XYI9xum6QQ==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.6"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.8"
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
+        "resolved": "9.0.8",
+        "contentHash": "xY3lTjj4+ZYmiKIkyWitddrp1uL5uYiweQjqo4BKBw01ZC4HhcfgLghDpPZcUlppgWAFqFy9SgkiYWOMx365pw=="
       },
       "Microsoft.Xaml.Behaviors.Uwp.Managed": {
         "type": "Transitive",
@@ -237,13 +237,13 @@
       },
       "Sentry": {
         "type": "Transitive",
-        "resolved": "5.11.2",
-        "contentHash": "oDzBGBUt8O/dzvSiGRePJVXKYVQdAV3D6bOdK0oSjR4AERVdEHfEHaFtXb0Mr4tGkhy7ZILeTyRUX0V62cCYEg=="
+        "resolved": "5.14.1",
+        "contentHash": "hB1zDDOAwk9lIDOR5sLS6fNiNDKgFpn/QA9kJyj0p84I38NCn7CDkdDikaDynb1WcYCH2a5c6Ab2/GRVeTuysw=="
       },
       "SixLabors.ImageSharp": {
         "type": "Transitive",
-        "resolved": "3.1.10",
-        "contentHash": "R1HEPcqx3v+kvlOTPouP0g/Nzzud9pHtjlgGbFax3Ivaz8kkaGfS2EPfyDGpmfoTUQ3nQ5wxdhYyYa9fwYA9cw=="
+        "resolved": "3.1.11",
+        "contentHash": "JfPLyigLthuE50yi6tMt7Amrenr/fA31t2CvJyhy/kQmfulIBAqo5T/YFUSRHtuYPXRSaUHygFeh6Qd933EoSw=="
       },
       "System.Threading.Tasks.Extensions": {
         "type": "Transitive",
@@ -262,28 +262,28 @@
           "CommunityToolkit.Mvvm": "[8.4.0, )",
           "JxlNet": "[0.11.1.1, )",
           "KeyedSemaphores": "[5.0.0, )",
-          "Microsoft.Extensions.DependencyInjection": "[9.0.6, )",
+          "Microsoft.Extensions.DependencyInjection": "[9.0.8, )",
           "RestSharp": "[112.1.0, )",
-          "Sentry": "[5.11.2, )",
-          "SixLabors.ImageSharp": "[3.1.10, )"
+          "Sentry": "[5.14.1, )",
+          "SixLabors.ImageSharp": "[3.1.11, )"
         }
       }
     },
     "net9.0-windows10.0.26100/win-arm64": {
       "Microsoft.DotNet.ILCompiler": {
         "type": "Direct",
-        "requested": "[9.0.5, )",
-        "resolved": "9.0.5",
-        "contentHash": "rfDodV68TLSUgVM6ZQusuUXD7GAIqwCKJWlPtfsd99iLlLbeGfqUQE7Xo8xLa1ju5GCdSBO0q35suzZ8ppclpA==",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "cMwVh5hsxAhv+oMHQdgcXodt2kDpfviofBO4IXupSAHJW2vZOZOOIhvPWRGO6NeGcP8SR4OpSwktRqb0i79KFA==",
         "dependencies": {
-          "runtime.win-arm64.Microsoft.DotNet.ILCompiler": "9.0.5"
+          "runtime.win-arm64.Microsoft.DotNet.ILCompiler": "9.0.8"
         }
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.3351.48, )",
-        "resolved": "1.0.3351.48",
-        "contentHash": "UIzXdl3x3H2MX2es7+BHYT3pLkLoT7090omqla9S3MQQCma0slwiY+CXBM6x0LmdLTpksoQ6XUqOAXrtxjtklQ=="
+        "requested": "[1.0.3405.78, )",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
       },
       "JxlNet": {
         "type": "Transitive",
@@ -292,8 +292,8 @@
       },
       "runtime.win-arm64.Microsoft.DotNet.ILCompiler": {
         "type": "Transitive",
-        "resolved": "9.0.5",
-        "contentHash": "5HsAA+h0z5VQXctMRnYzlI/1gijt7dfu8xxnC2nuG+mPs85MDIN8+pxXQtA3s+z2X0TILoeIz77XRLRdT46lhQ=="
+        "resolved": "9.0.8",
+        "contentHash": "qOogsyX3pGlZlTbjgjzBP5U99R6IGVywQKDqGZee3JqwBxjT7le9ymYeS4dRkYF7Rh/7pOc8Jg+Zk/5plM834A=="
       },
       "Win2D.uwp": {
         "type": "Transitive",
@@ -304,18 +304,18 @@
     "net9.0-windows10.0.26100/win-x64": {
       "Microsoft.DotNet.ILCompiler": {
         "type": "Direct",
-        "requested": "[9.0.5, )",
-        "resolved": "9.0.5",
-        "contentHash": "rfDodV68TLSUgVM6ZQusuUXD7GAIqwCKJWlPtfsd99iLlLbeGfqUQE7Xo8xLa1ju5GCdSBO0q35suzZ8ppclpA==",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "cMwVh5hsxAhv+oMHQdgcXodt2kDpfviofBO4IXupSAHJW2vZOZOOIhvPWRGO6NeGcP8SR4OpSwktRqb0i79KFA==",
         "dependencies": {
-          "runtime.win-x64.Microsoft.DotNet.ILCompiler": "9.0.5"
+          "runtime.win-x64.Microsoft.DotNet.ILCompiler": "9.0.8"
         }
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.3351.48, )",
-        "resolved": "1.0.3351.48",
-        "contentHash": "UIzXdl3x3H2MX2es7+BHYT3pLkLoT7090omqla9S3MQQCma0slwiY+CXBM6x0LmdLTpksoQ6XUqOAXrtxjtklQ=="
+        "requested": "[1.0.3405.78, )",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
       },
       "JxlNet": {
         "type": "Transitive",
@@ -324,8 +324,8 @@
       },
       "runtime.win-x64.Microsoft.DotNet.ILCompiler": {
         "type": "Transitive",
-        "resolved": "9.0.5",
-        "contentHash": "/x+iKUhSOhYrbaEr9x78wZmBk7Le8FlY9Xwx7uENRFCZ7K5sGrTffkJiig22EzYuALh8SeixjSzVFS0nm5+NgQ=="
+        "resolved": "9.0.8",
+        "contentHash": "VnA7D8XxNK1cNc2wlHCkdgDiTzCktzIixNYw0kyG7cy7fxXA07vkdLFXP72Cct4/7c7i8PL6JK3eTDqK/x6quQ=="
       },
       "Win2D.uwp": {
         "type": "Transitive",

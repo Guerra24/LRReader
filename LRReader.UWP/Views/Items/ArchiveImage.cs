@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
+using WinRT;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -53,6 +54,7 @@ namespace LRReader.UWP.Views.Items
 				Root.SetVisualOpacity(0);
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(Grid))]
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();

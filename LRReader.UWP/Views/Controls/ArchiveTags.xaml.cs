@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -15,6 +16,7 @@ namespace LRReader.UWP.Views.Controls
 			this.InitializeComponent();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
 		private void Tags_CopyTag(object sender, RoutedEventArgs e)
 		{
 			var dataPackage = new DataPackage();
@@ -40,6 +42,7 @@ namespace LRReader.UWP.Views.Controls
 		[GeneratedDependencyProperty(DefaultValue = double.MaxValue)]
 		public partial double MaxTagsWidth { get; set; }
 
+		[DynamicWindowsRuntimeCast(typeof(GridView))]
 		private void TagsList_Loaded(object sender, RoutedEventArgs e)
 		{
 			var grid = sender as GridView;

@@ -1,25 +1,23 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using LRReader.UWP.Views;
+using Sentry;
+using Sentry.Protocol;
 using System;
-using System.Runtime.InteropServices;
 using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Core;
-using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
-using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using WinRT;
 using static LRReader.Shared.Services.Service;
 using ColorHelper = CommunityToolkit.WinUI.Helpers.ColorHelper;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
-using Sentry;
-using Sentry.Protocol;
 
 namespace LRReader.UWP
 {
@@ -88,6 +86,7 @@ namespace LRReader.UWP
 		/// will be used such as when the application is launched to open a specific file.
 		/// </summary>
 		/// <param name="e">Details about the launch request and process.</param>
+		[DynamicWindowsRuntimeCast(typeof(SolidColorBrush))]
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			Root? root = Window.Current.Content as Root;
@@ -121,6 +120,7 @@ namespace LRReader.UWP
 			Window.Current.Activate();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(AppServiceTriggerDetails))]
 		protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
 		{
 			if (args.TaskInstance.TriggerDetails is AppServiceTriggerDetails)

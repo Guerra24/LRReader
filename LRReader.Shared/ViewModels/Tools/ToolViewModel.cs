@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace LRReader.Shared.ViewModels.Tools
 {
 
-	public abstract partial class ToolViewModel<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T> : ObservableObject  where T : Enum
+	public abstract partial class ToolViewModel<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T> : ObservableObject where T : Enum
 	{
 		protected readonly PlatformService Platform;
 

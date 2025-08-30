@@ -1,9 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Items
 {
@@ -20,6 +20,7 @@ namespace LRReader.Shared.ViewModels.Items
 		public event AsyncAction<bool>? Hide;
 
 		private CancellationTokenSource Cts = new();
+		private Task<byte[]?> Data = null!;
 
 		public ArchiveItemViewModel(SettingsService settings, ArchivesService archives, ApiService api, PlatformService platform, TabsService tabs, ImageProcessingService imageProcessing) : base(settings, archives, api, platform, tabs)
 		{
@@ -35,17 +36,21 @@ namespace LRReader.Shared.ViewModels.Items
 		{
 			Archive = archive;
 			MissingImage = false;
+			Cts.Cancel();
+			Cts.Dispose();
+			Cts = new();
+			Data = Service.Images.GetThumbnailCached(Archive.arcid, cancellationToken: Cts.Token);
 		}
 
 		public async Task Phase2(int decodePixelWidth = 0, int decodePixelHeight = 0)
 		{
-			Cts.Cancel();
-			Cts.Dispose();
-			Cts = new();
 			var token = Cts.Token;
 			await Hide.InvokeAsync(false);
 
-			var img = await Service.Images.GetThumbnailCached(Archive.arcid, cancellationToken: token);
+			if (token.IsCancellationRequested)
+				return;
+
+			var img = await Data;
 
 			if (token.IsCancellationRequested)
 				return;

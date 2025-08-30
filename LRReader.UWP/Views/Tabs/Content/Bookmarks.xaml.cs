@@ -76,21 +76,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 			StorageFile file = await savePicker.PickSaveFileAsync();
 			if (file != null)
 			{
-				CachedFileManager.DeferUpdates(file);
 				await FileIO.WriteTextAsync(file, JsonSerializer.Serialize(Service.Settings.Profile.Bookmarks, JsonSettings.Options));
 				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
-				if (status == FileUpdateStatus.Complete)
-				{
-					WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ExportComplete"), lang.GetString("Bookmarks/ExportCompleteFile").AsFormat(file.Path), 8000, NotificationSeverity.Informational));
-				}
-				else
-				{
-					WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ExportError"), lang.GetString("Bookmarks/ExportErrorFile").AsFormat(file.Path), 8000, NotificationSeverity.Informational));
-				}
-			}
-			else
-			{
-				//cancel
+				WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ExportComplete"), lang.GetString("Bookmarks/ExportCompleteFile").AsFormat(file.Path), 8000, NotificationSeverity.Informational));
+				//WeakReferenceMessenger.Default.Send(new ShowNotification(lang.GetString("Bookmarks/ExportError"), lang.GetString("Bookmarks/ExportErrorFile").AsFormat(file.Path), 8000, NotificationSeverity.Informational));
 			}
 		}
 

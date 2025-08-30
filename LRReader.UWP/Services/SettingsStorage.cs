@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using LRReader.Shared.Services;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using LRReader.Shared.Services;
 using Windows.Storage;
 
 namespace LRReader.UWP.Services;

@@ -9,9 +9,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:converters2="using:LRReader.UWP.Converters"
-	xmlns:extensions="using:LRReader.UWP.Extensions"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:services="using:LRReader.Shared.Services"
+	xmlns:ct="using:CommunityToolkit.WinUI.Controls"
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
@@ -90,11 +91,15 @@
 					<controls:ModernExpander.Input>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<Button x:Uid="/Settings/Reader/ClearNewHelp">
-								<extensions:TeachingTipButtonExtension.TeachingTip>
+								<ext:ButtonExtension.TeachingTip>
 									<muxc:TeachingTip x:Uid="/Settings/Reader/ClearNewTeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-										<WebView Height="200" Width="294" DefaultBackgroundColor="Transparent" extensions:WebViewExt.MarkdownJustify="True" extensions:WebViewExt.MarkdownBase="{extensions:LangString Key=Settings/Reader/ClearNewTeachingTipText}" />
+										<ct:MarkdownTextBlock Text="{ext:LangString Key=Settings/Reader/ClearNewTeachingTipText}" UseSoftlineBreakAsHardlineBreak="True">
+											<ct:MarkdownTextBlock.Config>
+												<ct:MarkdownConfig />
+											</ct:MarkdownTextBlock.Config>
+										</ct:MarkdownTextBlock>
 									</muxc:TeachingTip>
-								</extensions:TeachingTipButtonExtension.TeachingTip>
+								</ext:ButtonExtension.TeachingTip>
 							</Button>
 							<ComboBox x:Name="ClearNew" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.ClearNew, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
 						</StackPanel>

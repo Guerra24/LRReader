@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Base
 {
@@ -41,7 +41,11 @@ namespace LRReader.Shared.ViewModels.Base
 			{
 				if (SetProperty(ref _archive, value))
 				{
-					BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => b.archiveID.Equals(Archive.arcid));
+					var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => Archive.arcid.Equals(b.archiveID));
+					if (bookmark != null)
+					{
+						BookmarkedArchive = bookmark;
+					}
 					OnPropertyChanged("IsNew");
 					OnPropertyChanged("Pages");
 					OnPropertyChanged("Rating");

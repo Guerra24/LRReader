@@ -1,9 +1,9 @@
 ﻿using LRReader.Shared.Models;
+using Sentry;
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Sentry;
 
 namespace LRReader.Shared.Services
 {

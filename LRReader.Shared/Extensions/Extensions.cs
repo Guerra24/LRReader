@@ -1,8 +1,8 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using System;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.Extensions;
 

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LRReader.Shared.Services;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LRReader.Shared.Services;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -77,7 +77,7 @@ namespace LRReader.Shared.Models.Main
 		}
 	}
 
-	public class BookmarkedArchive : ObservableObject
+	public partial class BookmarkedArchive : ObservableObject
 	{
 		public string archiveID { get; set; } = null!;
 		public int page { get; set; }

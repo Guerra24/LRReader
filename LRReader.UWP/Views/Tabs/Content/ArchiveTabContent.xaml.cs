@@ -17,7 +17,6 @@ using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Provider;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -26,6 +25,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using WinRT;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
 
@@ -721,6 +721,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await ReaderImage.ResizeHeight((int)Math.Round(ScrollViewer.ExtentHeight));
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(RenderingEventArgs))]
 		private void CompositionTarget_Rendering(object? sender, object e)
 		{
 			var timings = (RenderingEventArgs)e;
@@ -775,24 +776,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			StorageFile file = await savePicker.PickSaveFileAsync();
 			Data.Downloading = false;
 			if (file != null)
-			{
-				CachedFileManager.DeferUpdates(file);
 				await FileIO.WriteBytesAsync(file, download.Data);
-				FileUpdateStatus status =
-					await CachedFileManager.CompleteUpdatesAsync(file);
-				if (status == FileUpdateStatus.Complete)
-				{
-					//save
-				}
-				else
-				{
-					// not saved
-				}
-			}
-			else
-			{
-				//cancel
-			}
 		}
 
 		private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)

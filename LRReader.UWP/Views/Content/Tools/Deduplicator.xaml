@@ -13,7 +13,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-	xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
+	xmlns:ct="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d">
 
 	<Page.Resources>
@@ -94,15 +94,15 @@
 						<controls:ModernExpander x:Uid="/Tools/Deduplicator/Expander">
 							<controls:ModernExpander.Input>
 								<Button x:Uid="/Tools/Deduplicator/Help">
-									<ext:TeachingTipButtonExtension.TeachingTip>
+									<ext:ButtonExtension.TeachingTip>
 										<muxc:TeachingTip x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-											<labs:MarkdownTextBlock Text="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" UseSoftlineBreakAsHardlineBreak="True">
-												<labs:MarkdownTextBlock.Config>
-													<labs:MarkdownConfig />
-												</labs:MarkdownTextBlock.Config>
-											</labs:MarkdownTextBlock>
+											<ct:MarkdownTextBlock Text="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" UseSoftlineBreakAsHardlineBreak="True">
+												<ct:MarkdownTextBlock.Config>
+													<ct:MarkdownConfig />
+												</ct:MarkdownTextBlock.Config>
+											</ct:MarkdownTextBlock>
 										</muxc:TeachingTip>
-									</ext:TeachingTipButtonExtension.TeachingTip>
+									</ext:ButtonExtension.TeachingTip>
 								</Button>
 							</controls:ModernExpander.Input>
 							<controls:ModernInput x:Uid="/Tools/Deduplicator/PixelThreshold" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
 using LRReader.UWP.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -31,6 +32,7 @@ namespace LRReader.UWP.Views.Items
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using LRReader.Shared.Services;
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using LRReader.Shared.Services;
 using Windows.Storage;
 
 namespace LRReader.UWP.Services

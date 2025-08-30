@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SixLabors.ImageSharp.Formats;
+using System;
 using System.Diagnostics.CodeAnalysis;
-using SixLabors.ImageSharp.Formats;
 
 namespace LRReader.Shared.Formats.JpegXL
 {

@@ -13,6 +13,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.System.UserProfile;
 
 namespace LRReader.Shared.ViewModels
@@ -20,6 +22,7 @@ namespace LRReader.Shared.ViewModels
 	public partial class SettingsPageViewModel : ObservableObject
 	{
 		private readonly ImagesService Images;
+		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
 		private readonly UpdatesService Updates;
 		private readonly ApiService Api;
@@ -169,6 +172,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			SettingsManager = settings;
 			Images = images;
+			Archives = archives;
 			Platform = platform;
 			Updates = updates;
 			Api = api;
@@ -186,12 +190,6 @@ namespace LRReader.Shared.ViewModels
 			SetProperty(ref HeifMissing, !await Platform.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
 			SetProperty(ref WebPMissing, !await Platform.CheckAppInstalled("Microsoft.WebpImageExtension_8wekyb3d8bbwe"), nameof(WebPMissing));
 			//SetProperty(ref JpegXLMissing, Platform.WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 19) && !await Platform.CheckAppInstalled("Microsoft.JPEG-XLImageExtension_8wekyb3d8bbwe"), nameof(JpegXLMissing));
-		}
-
-
-		public async Task<DownloadPayload?> DownloadDB()
-		{
-			return await DatabaseProvider.BackupJSON();
 		}
 
 		public async Task UpdateShinobuStatus()
@@ -424,7 +422,7 @@ namespace LRReader.Shared.ViewModels
 					if (!string.IsNullOrEmpty(a.search))
 						continue;
 					Categories.Add(a);
-					if (a.id.Equals(Service.Archives.BookmarkLink))
+					if (a.id.Equals(Archives.BookmarkLink))
 						BookmarkLink = a;
 				}
 			}
@@ -436,10 +434,10 @@ namespace LRReader.Shared.ViewModels
 				return;
 			if (value != null)
 			{
-				if (value.id.Equals(Service.Archives.BookmarkLink))
+				if (value.id.Equals(Archives.BookmarkLink))
 					return;
 				await CategoriesProvider.SetBookmarkLink(value.id);
-				Service.Archives.BookmarkLink = value.id;
+				Archives.BookmarkLink = value.id;
 			}
 		}
 
@@ -449,8 +447,27 @@ namespace LRReader.Shared.ViewModels
 			if (!Api.ControlFlags.V0940)
 				return;
 			await CategoriesProvider.DeleteBookmarkLink();
-			Service.Archives.BookmarkLink = string.Empty;
+			Archives.BookmarkLink = string.Empty;
 			BookmarkLink = null;
+		}
+
+		[RelayCommand]
+		private async Task DownloadDatabase()
+		{
+			var download = await DatabaseProvider.BackupJSON();
+			if (download == null)
+				return;
+
+#if WINDOWS_UWP
+			var savePicker = new FileSavePicker();
+			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+			savePicker.FileTypeChoices.Add(download.Type + " File", new List<string>() { download.Type });
+			savePicker.SuggestedFileName = download.Name;
+
+			var file = await savePicker.PickSaveFileAsync();
+			if (file != null)
+				await FileIO.WriteBytesAsync(file, download.Data);
+#endif
 		}
 
 	}

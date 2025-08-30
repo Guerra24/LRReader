@@ -1,16 +1,16 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Providers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using LRReader.Shared.Models.Main;
-using LRReader.Shared.Providers;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class CategoryArchiveViewModel : ObservableObject
+	public partial class CategoryArchiveViewModel : ObservableObject
 	{
 		public string archiveID;
 

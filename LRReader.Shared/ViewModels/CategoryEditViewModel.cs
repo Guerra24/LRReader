@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
-	public class CategoryEditViewModel : ObservableObject
+	public partial class CategoryEditViewModel : ObservableObject
 	{
 		private readonly ArchivesService Archives;
 		private readonly ApiService Api;

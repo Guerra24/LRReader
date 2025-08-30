@@ -6,7 +6,6 @@ using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -20,38 +19,6 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
-
-			switch (ActualTheme)
-			{
-				case ElementTheme.Light:
-					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-light.png");
-					break;
-				case ElementTheme.Dark:
-					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-dark.png");
-					break;
-			}
-		}
-
-		private void Page_ActualThemeChanged(FrameworkElement sender, object args)
-		{
-			switch (ActualTheme)
-			{
-				case ElementTheme.Light:
-					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-light.png");
-					break;
-				case ElementTheme.Dark:
-					GithubLogo.Source = GetIcon("ms-appx:///Assets/Other/Github-dark.png");
-					break;
-			}
-		}
-
-		private BitmapImage GetIcon(string uri)
-		{
-			var image = new BitmapImage();
-			image.DecodePixelType = DecodePixelType.Logical;
-			image.DecodePixelHeight = 20;
-			image.UriSource = new Uri(uri);
-			return image;
 		}
 
 		private async void License_Click(object sender, RoutedEventArgs e)

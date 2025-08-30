@@ -26,6 +26,8 @@
 			<SolidColorBrush x:Key="ReaderBackground" Color="White" />
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#939393" />
 			<SolidColorBrush x:Key="ThumbnailSmoke" Opacity="0.5" Color="#FFFFFF" />
+			<ImageSource x:Key="LRRLogo">/Assets/Other/LANraragi-light.png</ImageSource>
+			<ImageSource x:Key="GithubLogo">/Assets/Other/GitHub-light.png</ImageSource>
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<Color x:Key="MicaFallback">Black</Color>
@@ -47,6 +49,8 @@
 			<SolidColorBrush x:Key="ReaderBackground" Color="Black" />
 			<SolidColorBrush x:Key="ArchiveTagsLine" Color="#7C7C7C" />
 			<SolidColorBrush x:Key="ThumbnailSmoke" Opacity="0.5" Color="#000000" />
+			<ImageSource x:Key="LRRLogo">/Assets/Other/LANraragi-dark.png</ImageSource>
+			<ImageSource x:Key="GithubLogo">/Assets/Other/GitHub-dark.png</ImageSource>
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

@@ -35,18 +35,18 @@
       },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Direct",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "vS65HMo5RS10DD543fknsyVDxihMcVxVn3/hNaILgBxWYnOLxWIeCIO9X0QFuCvPRNjClvXe9Aj8KaQNx7vFkQ==",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "JJjI2Fa+QtZcUyuNjbKn04OjIUX5IgFGFu/Xc+qvzh1rXdZHLcnqqVXhR4093bGirTwacRlHiVg1XYI9xum6QQ==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.6"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.8"
         }
       },
       "Microsoft.NET.ILLink.Tasks": {
         "type": "Direct",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "TXy3SbJzGXQbxxIxCjdrp8bwEyTDImyYNpTpd6v7P3JL2Y7dno8EYG7dPezfYTa5SoWKdhbH9cbnwHHs3BR5gA=="
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "rd1CbIsMtVPtZNTIVD6Xydue//klYOOQIDpRgu3BHtv17AlpRs74/6QFbcYgMm/jL+naVU2T3OFLxVSLV5lQLQ=="
       },
       "RestSharp": {
         "type": "Direct",
@@ -56,15 +56,15 @@
       },
       "Sentry": {
         "type": "Direct",
-        "requested": "[5.11.2, )",
-        "resolved": "5.11.2",
-        "contentHash": "oDzBGBUt8O/dzvSiGRePJVXKYVQdAV3D6bOdK0oSjR4AERVdEHfEHaFtXb0Mr4tGkhy7ZILeTyRUX0V62cCYEg=="
+        "requested": "[5.14.1, )",
+        "resolved": "5.14.1",
+        "contentHash": "hB1zDDOAwk9lIDOR5sLS6fNiNDKgFpn/QA9kJyj0p84I38NCn7CDkdDikaDynb1WcYCH2a5c6Ab2/GRVeTuysw=="
       },
       "SixLabors.ImageSharp": {
         "type": "Direct",
-        "requested": "[3.1.10, )",
-        "resolved": "3.1.10",
-        "contentHash": "R1HEPcqx3v+kvlOTPouP0g/Nzzud9pHtjlgGbFax3Ivaz8kkaGfS2EPfyDGpmfoTUQ3nQ5wxdhYyYa9fwYA9cw=="
+        "requested": "[3.1.11, )",
+        "resolved": "3.1.11",
+        "contentHash": "JfPLyigLthuE50yi6tMt7Amrenr/fA31t2CvJyhy/kQmfulIBAqo5T/YFUSRHtuYPXRSaUHygFeh6Qd933EoSw=="
       },
       "Microsoft.Bcl.HashCode": {
         "type": "Transitive",
@@ -78,8 +78,8 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
+        "resolved": "9.0.8",
+        "contentHash": "xY3lTjj4+ZYmiKIkyWitddrp1uL5uYiweQjqo4BKBw01ZC4HhcfgLghDpPZcUlppgWAFqFy9SgkiYWOMx365pw=="
       },
       "System.Threading.Tasks.Extensions": {
         "type": "Transitive",

@@ -6,7 +6,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	ActualThemeChanged="Page_ActualThemeChanged"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -52,7 +51,7 @@
 					Command="{x:Bind Data.OpenLinkCommand}"
 					CommandParameter="https://github.com/Guerra24/LRReader" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
-						<muxc:ImageIcon x:Name="GithubLogo" Height="20" Source="ms-appx:///Assets/Other/GitHub-dark.png" />
+						<muxc:ImageIcon Height="20" Source="{ThemeResource GithubLogo}" />
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 				<controls:ModernInput

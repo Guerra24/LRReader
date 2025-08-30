@@ -1,15 +1,16 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.WinUI.Animations;
+﻿using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -30,6 +31,7 @@ namespace LRReader.UWP.Views.Items
 			this.InitializeComponent();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		public async Task ChangePage(ReaderImageSet set)
 		{
 			await decodePixel.WaitAsync();
@@ -82,6 +84,7 @@ namespace LRReader.UWP.Views.Items
 			openRight?.TryStart(RightImage);
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		public async Task ResizeHeight(int height)
 		{
 			if (_height == height)
@@ -95,6 +98,7 @@ namespace LRReader.UWP.Views.Items
 			decodePixel.Release();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		public async Task ResizeWidth(int width)
 		{
 			if (_width == width)

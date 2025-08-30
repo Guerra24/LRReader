@@ -8,7 +8,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:tools="using:LRReader.UWP.Views.Content.Tools"
 	xmlns:content="using:LRReader.UWP.Views.Content"
-	ActualThemeChanged="ModernBasePage_ActualThemeChanged"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -20,7 +20,7 @@
 					Description="{x:Bind Sys:String.Format(x:Null, '{0} - {1}', Data.ServerInfo.version, Data.ServerInfo.version_name), Mode=OneWay}"
 					ToolTip="{x:Bind Data.ServerInfo.version_desc, Mode=OneWay}">
 					<controls:ModernExpander.Icon>
-						<muxc:ImageIcon x:Name="Logo" Height="20" Source="ms-appx:///Assets/Other/LANraragi-dark.png" />
+						<muxc:ImageIcon Height="20" Source="{ThemeResource LRRLogo}" />
 					</controls:ModernExpander.Icon>
 					<StackPanel>
 						<TextBlock x:Uid="/Settings/Server/ApiRequired" Margin="0,0,0,10" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
@@ -125,9 +125,10 @@
 									<StackPanel>
 										<TextBlock x:Uid="/Settings/Server/RegenThumbNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
 										<Button
-											x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center" Click="RegenThumb_Click"
+											x:Uid="/Settings/Server/RegenThumbYes" HorizontalAlignment="Center"
 											Command="{x:Bind Data.RegenThumbnailsCommand}"
-											CommandParameter="{x:Bind RegenThumbForced.IsChecked}" />
+											CommandParameter="{x:Bind RegenThumbForced.IsChecked}"
+											ext:ButtonExtension.HideFlyout="{x:Bind RegenThumbsFlyout}"/>
 									</StackPanel>
 								</Flyout>
 							</Button.Flyout>
@@ -158,7 +159,7 @@
 					<Button x:Uid="/Settings/Server/RescanContentButton" Command="{x:Bind Data.RescanContentCommand}" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Server/BackupDB" Glyph="&#xE74E;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
-					<Button x:Uid="/Settings/Server/BackupDBButton" Click="DownloadDBButton_Click" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+					<Button x:Uid="/Settings/Server/BackupDBButton" Command="{x:Bind Data.DownloadDatabaseCommand}" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Server/ClearNew" Glyph="&#xE75C;" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
 					<Button x:Uid="/Settings/Server/ClearNewButton" IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}">
@@ -167,8 +168,10 @@
 								<StackPanel>
 									<TextBlock x:Uid="/Settings/Server/ClearNewNotice" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
 									<Button
-										x:Uid="/Settings/Server/ClearNewYes" HorizontalAlignment="Center" Click="ClearAllNewButton_Click"
-										Command="{x:Bind Data.ClearAllNewCommand}" />
+										x:Uid="/Settings/Server/ClearNewYes"
+										HorizontalAlignment="Center"
+										Command="{x:Bind Data.ClearAllNewCommand}"
+										ext:ButtonExtension.HideFlyout="{x:Bind ClearNewFlyout}" />
 								</StackPanel>
 							</Flyout>
 						</Button.Flyout>
@@ -222,8 +225,10 @@
 								<StackPanel>
 									<TextBlock Text="This will reinstall the distro and reload the application" Margin="0,0,0,12" Style="{ThemeResource BaseTextBlockStyle}" />
 									<Button
-											Content="Yes, repair and reload" HorizontalAlignment="Center" Click="Repair_Click"
-											Command="{x:Bind Data.RepairCommand}" />
+										Content="Yes, repair and reload"
+										HorizontalAlignment="Center"
+										Command="{x:Bind Data.RepairCommand}"
+										ext:ButtonExtension.HideFlyout="{x:Bind RepairFlyout}" />
 								</StackPanel>
 							</Flyout>
 						</Button.Flyout>

@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -40,6 +41,7 @@ namespace LRReader.UWP.Views.Items
 		[GeneratedDependencyProperty]
 		public partial ICommand? MarkNonDuplicateCommand { get; set; }
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)

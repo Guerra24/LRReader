@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace LRReader.Shared.ViewModels.Items
 {
 
-	public class ArchiveHitViewModel : ObservableObject
+	public partial class ArchiveHitViewModel : ObservableObject
 	{
 		[AllowNull]
 		private ArchiveHit _archiveHit;

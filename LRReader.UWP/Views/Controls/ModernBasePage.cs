@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -18,6 +19,7 @@ namespace LRReader.UWP.Views.Controls
 				Wrapper = wrapper;
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(Frame))]
 		protected void PageButton_Click(object sender, RoutedEventArgs e)
 		{
 			/*if (_navigating)

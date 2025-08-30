@@ -8,7 +8,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
-	xmlns:ext="using:LRReader.UWP.Extensions"
+	xmlns:ct="using:CommunityToolkit.WinUI.Controls"
 	mc:Ignorable="d">
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
@@ -24,7 +24,11 @@
 					Title="{x:Bind Data.Changelog.Name, Mode=OneWay}"
 					Glyph="&#xE896;" IsExpanded="True"
 					Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
-					<WebView DefaultBackgroundColor="Transparent" ext:WebViewExt.Markdown="{x:Bind Data.Changelog.Content, Mode=OneWay}" />
+					<ct:MarkdownTextBlock Text="{x:Bind Data.Changelog.Content, Mode=OneWay}" UseSoftlineBreakAsHardlineBreak="True">
+						<ct:MarkdownTextBlock.Config>
+							<ct:MarkdownConfig />
+						</ct:MarkdownTextBlock.Config>
+					</ct:MarkdownTextBlock>
 				</controls:ModernExpander>
 				<StackPanel Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
 					<StackPanel Margin="8">

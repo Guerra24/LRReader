@@ -15,6 +15,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
+using WinRT;
 using static LRReader.Shared.Services.Service;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;
@@ -184,6 +185,7 @@ namespace LRReader.UWP.Views.Controls
 				await HandleSearch();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(RadioMenuFlyoutItem))]
 		private async void OrderBy_Click(object sender, RoutedEventArgs e)
 		{
 			Data.OrderBy = Enum.Parse<Order>((string)((RadioMenuFlyoutItem)sender).Tag);

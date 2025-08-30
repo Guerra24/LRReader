@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using LRReader.Shared.Extensions;
+﻿using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using LRReader.Shared.Models;
+using LRReader.Shared.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LRReader.Shared.Models;
-using LRReader.Shared.Services;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
+using WinRT;
 
 namespace LRReader.UWP.Services
 {
@@ -14,7 +15,7 @@ namespace LRReader.UWP.Services
 		private BackgroundTaskDeferral? Deferral;
 		private AppServiceConnection? Connection;
 
-
+		[DynamicWindowsRuntimeCast(typeof(AppServiceTriggerDetails))]
 		public void Connect(object args)
 		{
 			var instance = (IBackgroundTaskInstance)args;

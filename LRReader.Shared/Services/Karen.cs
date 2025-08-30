@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LRReader.Shared.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using LRReader.Shared.Models;
 
 namespace LRReader.Shared.Services
 {

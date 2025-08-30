@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -23,7 +23,7 @@ namespace LRReader.Shared.ViewModels
 
 		private bool _loading;
 
-		public TankoubonEditViewModel(PlatformService platform, TabsService tabs, SettingsService settings, ArchivesService archives, ApiService api): base(platform, tabs, settings)
+		public TankoubonEditViewModel(PlatformService platform, TabsService tabs, SettingsService settings, ArchivesService archives, ApiService api) : base(platform, tabs, settings)
 		{
 			Archives = archives;
 			Api = api;

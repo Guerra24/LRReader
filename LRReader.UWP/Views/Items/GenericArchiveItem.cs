@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
+using WinRT;
 using ParallaxView = Microsoft.UI.Xaml.Controls.ParallaxView;
 
 namespace LRReader.UWP.Views.Items
@@ -52,6 +52,10 @@ namespace LRReader.UWP.Views.Items
 			PointerPressed += Control_PointerPressed;
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(Grid))]
+		[DynamicWindowsRuntimeCast(typeof(Image))]
+		[DynamicWindowsRuntimeCast(typeof(Flyout))]
+		[DynamicWindowsRuntimeCast(typeof(ParallaxView))]
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
@@ -126,23 +130,7 @@ namespace LRReader.UWP.Views.Items
 			StorageFile file = await savePicker.PickSaveFileAsync();
 			ViewModel.Downloading = false;
 			if (file != null)
-			{
-				CachedFileManager.DeferUpdates(file);
 				await FileIO.WriteBytesAsync(file, download.Data);
-				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
-				if (status == FileUpdateStatus.Complete)
-				{
-					//save
-				}
-				else
-				{
-					// not saved
-				}
-			}
-			else
-			{
-				//cancel
-			}
 		}
 
 		public void Add_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = true;

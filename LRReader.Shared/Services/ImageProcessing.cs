@@ -1,7 +1,7 @@
-﻿using System.IO;
+﻿using SixLabors.ImageSharp;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using SixLabors.ImageSharp;
 using Size = System.Drawing.Size;
 
 namespace LRReader.Shared.Services

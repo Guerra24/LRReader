@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Messages;
@@ -9,6 +6,9 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {

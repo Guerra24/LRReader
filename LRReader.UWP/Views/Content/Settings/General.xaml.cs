@@ -9,6 +9,7 @@ using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using WinRT;
 
 namespace LRReader.UWP.Views.Content.Settings
 {
@@ -69,7 +70,7 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			var result = await Service.Platform.OpenGenericDialog(
 				Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/Title"),
-				Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/PrimaryButtonText"), 
+				Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/PrimaryButtonText"),
 				closebutton: Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/CloseButtonText"),
 				content: Service.Platform.GetLocalizedString("Settings/General/CrashRestartDialog/Content"));
 			if (result == Shared.Models.IDialogResult.Primary)
@@ -95,6 +96,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			}
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
 		private async void IncrementalCaching_Toggled(object? sender, RoutedEventArgs e)
 		{
 			var state = (ToggleSwitch)sender!;
@@ -103,7 +105,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			Service.Settings.UseIncrementalCaching = !Service.Settings.UseIncrementalCaching;
 			var result = await Service.Platform.OpenGenericDialog(
 				Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/Title"),
-				Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/PrimaryButtonText"), 
+				Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/PrimaryButtonText"),
 				closebutton: Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/CloseButtonText"),
 				content: Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/Content"));
 			if (result == Shared.Models.IDialogResult.Primary)

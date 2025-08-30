@@ -10,7 +10,6 @@ using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -23,6 +22,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using WinRT;
 using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
 
 namespace LRReader.UWP.Extensions
@@ -229,6 +229,7 @@ namespace LRReader.UWP.Extensions
 	{
 		public static readonly DependencyProperty ModernShadowProperty = DependencyProperty.RegisterAttached("ModernShadow", typeof(Shadow), typeof(Element), new PropertyMetadata(null));
 
+		[DynamicWindowsRuntimeCast(typeof(ListViewBase))]
 		public static void SetModernShadow(FrameworkElement element, Shadow shadow)
 		{
 			element.SetValue(ModernShadowProperty, shadow);
@@ -275,8 +276,10 @@ namespace LRReader.UWP.Extensions
 			}
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(GridViewItem))]
 		private static void GridViewItem_PointerEntered(object sender, PointerRoutedEventArgs e) => ((GridViewItem)sender).Translation = new Vector3(0, 0, 32);
 
+		[DynamicWindowsRuntimeCast(typeof(GridViewItem))]
 		private static void GridViewItem_PointerExited(object sender, PointerRoutedEventArgs e) => ((GridViewItem)sender).Translation = new Vector3(0, 0, 14);
 	}
 
@@ -296,9 +299,9 @@ namespace LRReader.UWP.Extensions
 		}
 	}
 
-	public static class TeachingTipButtonExtension
+	public static class ButtonExtension
 	{
-		public static readonly DependencyProperty TeachingTipProperty = DependencyProperty.RegisterAttached("TeachingTip", typeof(TeachingTip), typeof(TeachingTipButtonExtension), new PropertyMetadata(null));
+		public static readonly DependencyProperty TeachingTipProperty = DependencyProperty.RegisterAttached("TeachingTip", typeof(TeachingTip), typeof(ButtonExtension), new PropertyMetadata(null));
 
 		public static void SetTeachingTip(this Button button, TeachingTip teachingTip)
 		{
@@ -308,13 +311,26 @@ namespace LRReader.UWP.Extensions
 			button.SetValue(TeachingTipProperty, teachingTip);
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(TeachingTip))]
 		public static TeachingTip GetTeachingTip(this Button button) => (TeachingTip)button.GetValue(TeachingTipProperty);
 
+		[DynamicWindowsRuntimeCast(typeof(Button))]
 		private static void Button_Click(object sender, RoutedEventArgs e)
 		{
 			var button = (Button)sender;
 			button.GetTeachingTip().IsOpen = true;
 		}
+
+		public static readonly DependencyProperty HideFlyoutProperty = DependencyProperty.RegisterAttached("HideFlyout", typeof(Flyout), typeof(ButtonExtension), new PropertyMetadata(null));
+
+		public static void SetHideFlyout(this ButtonBase button, Flyout flyout)
+		{
+			button.Click += (_, _) => flyout.Hide();
+			button.SetValue(HideFlyoutProperty, flyout);
+		}
+
+		[DynamicWindowsRuntimeCast(typeof(Flyout))]
+		public static Flyout GetHideFlyout(this ButtonBase button) => (Flyout)button.GetValue(HideFlyoutProperty);
 	}
 
 	public static class PopupExtension

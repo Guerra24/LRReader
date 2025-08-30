@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using LRReader.Shared.Extensions;
@@ -10,6 +6,10 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -96,8 +96,8 @@ namespace LRReader.Shared.ViewModels
 			SortByIndex = _sortByIndex = SortBy.IndexOf(Settings.SortByDefault);
 			OrderBy = Settings.OrderByDefault;
 			//if (Settings.ShowSuggestedTags)
-				foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
-					SuggestedTags.Add(tag.GetNamespacedTag());
+			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
+				SuggestedTags.Add(tag.GetNamespacedTag());
 			_archiveStyle = Settings.ArchiveStyle;
 			WeakReferenceMessenger.Default.Register(this);
 		}

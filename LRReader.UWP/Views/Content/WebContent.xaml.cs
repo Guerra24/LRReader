@@ -1,8 +1,9 @@
-﻿using System;
-using LRReader.Shared.Services;
+﻿using LRReader.Shared.Services;
 using LRReader.UWP.Views.Controls;
+using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using WinRT;
 
 namespace LRReader.UWP.Views.Content
 {
@@ -27,6 +28,7 @@ namespace LRReader.UWP.Views.Content
 			base.OnNavigatingFrom(e);
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(Frame))]
 		private void WebView_OnCloseRequested()
 		{
 			Wrapper.ModernPageTab.GoBack((int)((Frame)Parent).Tag);

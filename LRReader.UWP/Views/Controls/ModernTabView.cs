@@ -4,6 +4,7 @@ using LRReader.Shared.Services;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -26,6 +27,8 @@ namespace LRReader.UWP.Views.Controls
 			}
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(Button))]
+		[DynamicWindowsRuntimeCast(typeof(SplitView))]
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();

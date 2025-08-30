@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LRReader.Shared.Converters;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using LRReader.Shared.Converters;
 
 namespace LRReader.Shared.Models.Main
 {

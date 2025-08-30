@@ -1,11 +1,11 @@
-﻿using System;
+﻿using LRReader.Shared.Converters;
+using Sentry;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
-using LRReader.Shared.Converters;
-using Sentry;
 
 namespace LRReader.Shared.Models.Main
 {

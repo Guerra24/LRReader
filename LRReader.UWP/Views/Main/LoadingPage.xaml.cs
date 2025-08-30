@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using WinRT;
 
 namespace LRReader.UWP.Views.Main
 {
@@ -27,6 +28,7 @@ namespace LRReader.UWP.Views.Main
 			ViewModel = Service.Services.GetRequiredService<LoadingPageViewModel>();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(SplashScreen))]
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);

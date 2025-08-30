@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT;
 
 namespace LRReader.UWP.Views.Items
 {
@@ -27,6 +28,7 @@ namespace LRReader.UWP.Views.Items
 			ViewModel = Service.Services.GetRequiredService<CategoryBaseViewModel>();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		private async void UserControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
 		{
 			if (args.NewValue == null)

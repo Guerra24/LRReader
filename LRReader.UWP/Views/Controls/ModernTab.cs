@@ -32,6 +32,7 @@ namespace LRReader.UWP.Views.Controls
 			//Thumbnail = new();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(Flyout))]
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();

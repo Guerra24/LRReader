@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using WinRT;
 using ColorChangedEventArgs = Microsoft.UI.Xaml.Controls.ColorChangedEventArgs;
 using ColorPicker = Microsoft.UI.Xaml.Controls.ColorPicker;
 
@@ -31,6 +32,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			ClearNew.Items.Add(lang.GetString("Reader/ClearNew/Custom"));
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(SolidColorBrush))]
 		private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
 		{
 			((SolidColorBrush)Application.Current.Resources["CustomReaderBackground"]).Color = args.NewColor;
@@ -41,6 +43,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			await Data.RefreshCategories();
 		}
 
+		[DynamicWindowsRuntimeCast(typeof(ToggleSwitch))]
 		private void SyncBookmarks_Toggled(object sender, RoutedEventArgs e)
 		{
 			var toggleSwitch = (ToggleSwitch)sender;
