@@ -55,8 +55,8 @@ namespace LRReader.UWP
 				});
 				SentrySdk.ConfigureScope(scope =>
 				{
-					EasClientDeviceInformation deviceInfo = new();
-					var versionInfo = AnalyticsInfo.VersionInfo;
+					Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation deviceInfo = new();
+					var versionInfo = Windows.System.Profile.AnalyticsInfo.VersionInfo;
 					ulong v = ulong.Parse(versionInfo.DeviceFamilyVersion);
 					ulong v1 = (v & 0xFFFF000000000000L) >> 48;
 					ulong v2 = (v & 0x0000FFFF00000000L) >> 32;
@@ -69,7 +69,7 @@ namespace LRReader.UWP
 						scope.Contexts.OperatingSystem.Name = deviceInfo.OperatingSystem;
 					scope.Contexts.OperatingSystem.Version = $"{v1}.{v2}.{v3}";
 					scope.Contexts.OperatingSystem.Build = $"{v4}";
-					scope.Contexts.Device.Architecture = RuntimeInformation.OSArchitecture.ToString();
+					scope.Contexts.Device.Architecture = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString();
 					scope.Contexts.Device.ProcessorCount = Environment.ProcessorCount;
 					scope.Contexts.Device.Family = versionInfo.DeviceFamily;
 					scope.Contexts.Device.Model = string.IsNullOrEmpty(deviceInfo.SystemSku) ? deviceInfo.SystemProductName : deviceInfo.SystemSku;

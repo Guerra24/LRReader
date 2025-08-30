@@ -37,9 +37,8 @@ namespace LRReader.Shared.ViewModels.Items
 		public event AsyncAction<bool>? Show;
 		public event AsyncAction<bool>? Hide;
 
-		private Guid _key = Guid.NewGuid();
-
 		private CancellationTokenSource Cts = new();
+		private Task<byte[]?> Data = null!;
 
 		public ArchiveImageViewModel(PlatformService platform, ImagesService images, ImageProcessingService imageProcessing)
 		{
@@ -51,17 +50,20 @@ namespace LRReader.Shared.ViewModels.Items
 		public async Task Phase0()
 		{
 			await Hide.InvokeAsync(false);
+			Cts.Cancel();
+			Cts.Dispose();
+			Cts = new();
 		}
 
 		public void Phase1(ImagePageSet set)
 		{
 			Set = set;
 			MissingImage = false;
+			Data = Images.GetThumbnailCached(Set.Id, Set.Page, cancellationToken: Cts.Token);
 		}
 
 		public async Task Phase2()
 		{
-			await Hide.InvokeAsync(false);
 			if (!HideOverlay)
 				Page = Set.Page.ToString();
 			if (!HideOverlay && ShowExtraDetails)
@@ -74,13 +76,12 @@ namespace LRReader.Shared.ViewModels.Items
 
 		public async Task Phase3()
 		{
-			Cts.Cancel();
-			Cts.Dispose();
-			Cts = new();
 			var token = Cts.Token;
-			await Hide.InvokeAsync(false);
 
-			var img = await Images.GetThumbnailCached(Set.Id, Set.Page, cancellationToken: token);
+			if (token.IsCancellationRequested)
+				return;
+
+			var img = await Data;
 
 			if (token.IsCancellationRequested)
 				return;

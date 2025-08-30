@@ -30,22 +30,21 @@ namespace LRReader.Shared.ViewModels.Items
 		public async Task Phase0()
 		{
 			await Hide.InvokeAsync(false);
+			Cts.Cancel();
+			Cts.Dispose();
+			Cts = new();
 		}
 
 		public void Phase1(Archive archive)
 		{
 			Archive = archive;
 			MissingImage = false;
-			Cts.Cancel();
-			Cts.Dispose();
-			Cts = new();
 			Data = Service.Images.GetThumbnailCached(Archive.arcid, cancellationToken: Cts.Token);
 		}
 
 		public async Task Phase2(int decodePixelWidth = 0, int decodePixelHeight = 0)
 		{
 			var token = Cts.Token;
-			await Hide.InvokeAsync(false);
 
 			if (token.IsCancellationRequested)
 				return;
