@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0-windows10.0.26100.0</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows10.0.26100.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <LangVersion>13.0</LangVersion>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Platforms>AnyCPU</Platforms>
@@ -14,18 +13,18 @@
     <CsWinRTEnableManifestFreeActivation>false</CsWinRTEnableManifestFreeActivation>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.26100.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-windows10.0.26100.0'">
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Caching" Version="3.1.3" />
-    <PackageReference Include="JxlNet" Version="0.11.1.1" />
+    <PackageReference Include="JxlNet" Version="0.11.1.2" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.1.25451.107" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
-    <PackageReference Include="Sentry" Version="5.14.1" />
+    <PackageReference Include="Sentry" Version="5.15.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
   </ItemGroup>
 
