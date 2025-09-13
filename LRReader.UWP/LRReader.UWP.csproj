@@ -68,11 +68,14 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3485.44" />
   </ItemGroup>
 
+<!-- This requires a bit of work
   <ItemGroup>
+    <NativeLibrary Include="jxl.lib" />
+    <NativeLibrary Include="jxl_threads.lib" />
     <DirectPInvoke Include="jxl" />
     <DirectPInvoke Include="jxl_threads" />
   </ItemGroup>
-
+-->
   <ItemGroup>
     <SDKReference Include="Microsoft.VCLibs.Desktop, Version=14.0" />
   </ItemGroup>
