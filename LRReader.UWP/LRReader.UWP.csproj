@@ -34,7 +34,7 @@
     <AppxTestLayoutEnabled>False</AppxTestLayoutEnabled>
     <Win32Resource>Resources\MiddleClickScrolling-CursorType.res</Win32Resource>
     <Nullable>enable</Nullable>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!--<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>-->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CsWinRTAotWarningLevel>3</CsWinRTAotWarningLevel>
     <CsWinRTEnableManifestFreeActivation>false</CsWinRTEnableManifestFreeActivation>

@@ -79,13 +79,13 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 #    - name: Auth nuget registry
 #      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
-    - name: Prepare nuget cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.nuget/packages
-        key: nuget-uwp-${{ hashFiles('LRReader.Shared/packages.lock.json', 'LRReader.UWP/packages.lock.json') }}
-        restore-keys: |
-          nuget-uwp-
+#    - name: Prepare nuget cache
+#      uses: actions/cache@v4
+#      with:
+#        path: ~/.nuget/packages
+#        key: nuget-uwp-${{ hashFiles('LRReader.Shared/packages.lock.json', 'LRReader.UWP/packages.lock.json') }}
+#        restore-keys: |
+#          nuget-uwp-
     - name: Build
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -100,7 +100,9 @@ jobs:
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
         Invoke-Expression "./Util/Version.ps1"
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Nightly=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true
+        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
+        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Nightly=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
@@ -147,19 +149,19 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 #    - name: Auth nuget registry
 #      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
-    - name: Prepare nuget cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.nuget/packages
-        key: nuget-installer-${{ hashFiles('LRReader.UWP.Installer/packages.lock.json') }}
-        restore-keys: |
-          nuget-installer-
+#    - name: Prepare nuget cache
+#      uses: actions/cache@v4
+#      with:
+#        path: ~/.nuget/packages
+#        key: nuget-installer-${{ hashFiles('LRReader.UWP.Installer/packages.lock.json') }}
+#        restore-keys: |
+#          nuget-installer-
     - name: Build
       env:
         APP_VERSION: Nightly
       run: |
         Invoke-Expression "./Util/ConfigureInstaller.ps1"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:RestoreLockedMode=true /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
+        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
