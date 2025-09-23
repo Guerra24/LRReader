@@ -53,8 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.250910-build.2249" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.250829-build.2245" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.250919-build.2256" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.250919-build.2256" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250828-build.2223" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.250402" />
@@ -144,7 +144,6 @@
       <Link>LICENSE.md</Link>
     </Content>
     <None Include="Package.StoreAssociation.xml" />
-    <None Include="packages.lock.json" />
     <Content Include="zServicing\CertInstaller.exe" Visible="False" Condition="Exists('zServicing\CertInstaller.exe')" />
   </ItemGroup>
 

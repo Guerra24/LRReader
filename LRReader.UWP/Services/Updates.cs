@@ -42,10 +42,10 @@ namespace LRReader.UWP.Services
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
-			if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable || NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
-				return new CheckForUpdatesResult { Result = false };
 			try
 			{
+				if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable || NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
+					return new CheckForUpdatesResult { Result = false };
 				var result = new CheckForUpdatesResult();
 				var packageUpdates = await Context.GetAppAndOptionalStorePackageUpdatesAsync();
 				result.Result = packageUpdates.Count > 0;
@@ -69,10 +69,10 @@ namespace LRReader.UWP.Services
 
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
-			if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable || NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
-				return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/NoNetwork") };
 			try
 			{
+				if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable || NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
+					return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/NoNetwork") };
 				var packageUpdates = await Context.GetAppAndOptionalStorePackageUpdatesAsync();
 				if (packageUpdates.Count == 0)
 					return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/NotFound") };

@@ -3,9 +3,12 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using RestSharp;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using static LRReader.Shared.Services.Service;
 
@@ -117,14 +120,12 @@ public static class ArchivesProvider
 		{
 			case HttpStatusCode.OK:
 				var download = new DownloadPayload();
-				var header = r.ContentHeaders!.First(h => h.Name.Equals("Content-Disposition")).Value;
-				var parms = header.Split(';').Select(s => s.Trim());
-				var natr = parms.First(s => s.StartsWith("filename"));
-				var nameAndType = natr.Substring(natr.IndexOf("\"") + 1, natr.Length - natr.IndexOf("\"") - 2);
+				var value = Encoding.UTF8.GetString(Encoding.Latin1.GetBytes(r.GetContentHeaderValue("Content-Disposition")!));
+				var contentDisposition = ContentDispositionHeaderValue.Parse(value);
 
 				download.Data = r.RawBytes!;
-				download.Name = nameAndType.Substring(0, nameAndType.LastIndexOf("."));
-				download.Type = nameAndType.Substring(nameAndType.LastIndexOf("."));
+				download.Name = Path.GetFileNameWithoutExtension(contentDisposition.FileName!);
+				download.Type = Path.GetExtension(contentDisposition.FileName!);
 				return download;
 			default:
 				var error = await r.GetError();
