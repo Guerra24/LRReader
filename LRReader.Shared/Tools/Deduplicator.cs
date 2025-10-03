@@ -130,7 +130,7 @@ namespace LRReader.Shared.Tools
 				{
 				}
 				return (pair.Key, image);
-			})))).AsEnumerable().ToList();
+			})))).ToList();
 
 			List<string> removed = new List<string>();
 			tmp.RemoveAll(pair =>
@@ -227,7 +227,7 @@ namespace LRReader.Shared.Tools
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static int Diff(ushort a, ushort b) => Math.Abs(a - b);
+		private static int Diff(byte a, byte b) => Math.Abs(a - b);
 	}
 
 }

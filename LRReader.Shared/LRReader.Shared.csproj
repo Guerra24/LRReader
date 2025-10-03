@@ -24,7 +24,7 @@
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.1.25451.107" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
-    <PackageReference Include="Sentry" Version="5.15.1" />
+    <PackageReference Include="Sentry" Version="5.16.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
   </ItemGroup>
 

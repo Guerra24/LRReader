@@ -1,6 +1,9 @@
 [*.cs]
 indent_style = tab
 
+[*.xaml]
+indent_style = tab
+
 [*.csproj]
 indent_style = space
 tab_width = 2

@@ -96,11 +96,7 @@
 								<Button x:Uid="/Tools/Deduplicator/Help">
 									<ext:ButtonExtension.TeachingTip>
 										<muxc:TeachingTip x:Uid="/Tools/Deduplicator/TeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-											<ct:MarkdownTextBlock Text="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" UseSoftlineBreakAsHardlineBreak="True">
-												<ct:MarkdownTextBlock.Config>
-													<ct:MarkdownConfig />
-												</ct:MarkdownTextBlock.Config>
-											</ct:MarkdownTextBlock>
+											<ct:MarkdownTextBlock Text="{ext:LangString Key=Tools/Deduplicator/HowItWorks/Text}" UseSoftlineBreakAsHardlineBreak="True" />
 										</muxc:TeachingTip>
 									</ext:ButtonExtension.TeachingTip>
 								</Button>

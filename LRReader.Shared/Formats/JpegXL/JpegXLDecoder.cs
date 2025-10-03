@@ -44,19 +44,19 @@ namespace LRReader.Shared.Formats.JpegXL
 						if (status != JxlDecoderStatus.JXL_DEC_FRAME)
 							throw new Exception();
 
-						byte[] buffer = new byte[info.xsize * info.ysize * 3];
+						byte[] buffer = new byte[info.xsize * info.ysize * info.num_color_channels];
 						fixed (byte* output = buffer)
 						{
 							var pixelFormat = new JxlPixelFormat();
 							pixelFormat.data_type = JxlDataType.JXL_TYPE_UINT8;
 							pixelFormat.endianness = JxlEndianness.JXL_NATIVE_ENDIAN;
-							pixelFormat.num_channels = 3;
+							pixelFormat.num_channels = info.num_color_channels;
 							pixelFormat.align = 0;
 
 							nuint size = new();
 							Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
 
-							if (info.xsize * info.ysize * sizeof(byte) * 3 != size.ToUInt64())
+							if (info.xsize * info.ysize * sizeof(byte) * info.num_color_channels != size.ToUInt64())
 							{
 								throw new Exception();
 							}
@@ -73,10 +73,25 @@ namespace LRReader.Shared.Formats.JpegXL
 								throw new Exception();
 
 							var image = new Image<TPixel>(options.Configuration, (int)info.xsize, (int)info.ysize);
+							image.Frames.RootFrame.DangerousTryGetSinglePixelMemory(out var pixels);
 
-							var buf = MemoryMarshal.Cast<byte, Rgb24>(buffer);
-							for (int y = 0; y < image.Height; y++)
-								PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, buf.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+							switch (info.num_color_channels)
+							{
+								case 1:
+									var r8 = MemoryMarshal.Cast<byte, L8>(buffer);
+									PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8, pixels.Span);
+									break;
+								case 3:
+									var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(buffer);
+									PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
+									break;
+								case 4:
+									var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(buffer);
+									PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
+									break;
+								default:
+									throw new Exception();
+							}
 
 							status = Jxl.JxlDecoderProcessInput(decoder);
 

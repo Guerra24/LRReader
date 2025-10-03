@@ -93,11 +93,7 @@
 							<Button x:Uid="/Settings/Reader/ClearNewHelp">
 								<ext:ButtonExtension.TeachingTip>
 									<muxc:TeachingTip x:Uid="/Settings/Reader/ClearNewTeachingTip" IsLightDismissEnabled="True" PreferredPlacement="Left">
-										<ct:MarkdownTextBlock Text="{ext:LangString Key=Settings/Reader/ClearNewTeachingTipText}" UseSoftlineBreakAsHardlineBreak="True">
-											<ct:MarkdownTextBlock.Config>
-												<ct:MarkdownConfig />
-											</ct:MarkdownTextBlock.Config>
-										</ct:MarkdownTextBlock>
+										<ct:MarkdownTextBlock Text="{ext:LangString Key=Settings/Reader/ClearNewTeachingTipText}" UseSoftlineBreakAsHardlineBreak="True" />
 									</muxc:TeachingTip>
 								</ext:ButtonExtension.TeachingTip>
 							</Button>

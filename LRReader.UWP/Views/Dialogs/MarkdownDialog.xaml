@@ -271,10 +271,6 @@
 
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
-		<ct:MarkdownTextBlock Text="{x:Bind Text}" UseSoftlineBreakAsHardlineBreak="True">
-			<ct:MarkdownTextBlock.Config>
-				<ct:MarkdownConfig />
-			</ct:MarkdownTextBlock.Config>
-		</ct:MarkdownTextBlock>
+		<ct:MarkdownTextBlock Text="{x:Bind Text}" UseSoftlineBreakAsHardlineBreak="True" />
 	</ScrollViewer>
 </ContentDialog>
