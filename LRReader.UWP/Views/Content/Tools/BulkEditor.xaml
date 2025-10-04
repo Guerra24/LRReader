@@ -8,7 +8,8 @@
 	xmlns:local="using:LRReader.UWP.Views.Content.Tools"
 	xmlns:main="using:LRReader.Shared.Models.Main"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:muxc="using:Windows.UI.Xaml.Controls"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<Style x:Key="ListViewCompact" TargetType="ListView">
@@ -63,22 +64,83 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<Grid MaxWidth="1000" Margin="0,0,0,8" Padding="10,0">
+		<Grid MaxWidth="1000" Margin="0,0,0,8" Padding="10,0" RowSpacing="8">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
 			<StackPanel Orientation="Horizontal" Spacing="4">
-				<!--<Button>
+				<Button IsEnabled="{x:Bind Data.Running, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<StackPanel Orientation="Horizontal" Spacing="8">
-						<muxc:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE8EC;" />
-						<TextBlock Text="Replace tag" />
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE75C;" />
+						<TextBlock Text="Clear tags" />
 					</StackPanel>
-				</Button>-->
-				<Button>
+					<Button.Flyout>
+						<Flyout x:Name="ClearTagsFlyout" Placement="Bottom">
+							<StackPanel Spacing="8">
+								<TextBlock x:Uid="/Tools/BulkEditor/SelectedArchives" />
+								<ListView ItemsSource="{x:Bind ArchiveList.SelectedItems}" Style="{StaticResource ListViewCompact}" />
+								<Button Content="Clear tags" HorizontalAlignment="Right" Style="{ThemeResource AccentButtonStyle}">
+									<Button.Flyout>
+										<Flyout>
+											<StackPanel Spacing="12">
+												<TextBlock x:Uid="/Tools/BulkEditor/DeleteSure" Style="{ThemeResource BaseTextBlockStyle}" />
+												<Button
+													x:Uid="/Tools/BulkEditor/DeleteYes" HorizontalAlignment="Center"
+													Command="{x:Bind Data.ClearTagsCommand}"
+													CommandParameter="{x:Bind ArchiveList.SelectedItems}"
+													ext:ButtonExtension.HideFlyout="{x:Bind ClearTagsFlyout}" />
+											</StackPanel>
+										</Flyout>
+									</Button.Flyout>
+								</Button>
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<Button IsEnabled="{x:Bind Data.Running, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<StackPanel Orientation="Horizontal" Spacing="8">
-						<muxc:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE8B7;" />
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE8EC;" />
+						<TextBlock Text="Run plugin" />
+					</StackPanel>
+					<Button.Flyout>
+						<Flyout x:Name="RunPluginFlyout" Opened="{x:Bind Data.LoadPlugins}" Placement="Bottom">
+							<StackPanel Spacing="8">
+								<TextBlock x:Uid="/Tools/BulkEditor/SelectedArchives" />
+								<ListView ItemsSource="{x:Bind ArchiveList.SelectedItems}" Style="{StaticResource ListViewCompact}" />
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="1*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<ComboBox PlaceholderText="Select a plugin" ItemsSource="{x:Bind Data.Plugins}" SelectedItem="{x:Bind Data.Plugin, Mode=TwoWay}" />
+									<Button Grid.Column="1" Content="Run plugin" Style="{ThemeResource AccentButtonStyle}">
+										<Button.Flyout>
+											<Flyout>
+												<StackPanel Spacing="12">
+													<TextBlock x:Uid="/Tools/BulkEditor/DeleteSure" Style="{ThemeResource BaseTextBlockStyle}" />
+													<Button
+														x:Uid="/Tools/BulkEditor/DeleteYes" HorizontalAlignment="Center"
+														Command="{x:Bind Data.RunPluginCommand}"
+														CommandParameter="{x:Bind ArchiveList.SelectedItems}"
+														ext:ButtonExtension.HideFlyout="{x:Bind RunPluginFlyout}" />
+												</StackPanel>
+											</Flyout>
+										</Button.Flyout>
+									</Button>
+								</Grid>
+							</StackPanel>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<Button IsEnabled="{x:Bind Data.Running, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE8B7;" />
 						<TextBlock x:Uid="/Tools/BulkEditor/ChangeCategory" />
 					</StackPanel>
 					<Button.Flyout>
 						<Flyout x:Name="CategoryFlyout" Opened="{x:Bind Data.Load}" Placement="Bottom">
-							<StackPanel Spacing="4">
+							<StackPanel Spacing="8">
 								<TextBlock x:Uid="/Tools/BulkEditor/SelectedArchives" />
 								<ListView ItemsSource="{x:Bind ArchiveList.SelectedItems}" Style="{StaticResource ListViewCompact}" />
 								<Grid>
@@ -101,10 +163,10 @@
 												<StackPanel Spacing="12">
 													<TextBlock x:Uid="/Tools/BulkEditor/DeleteSure" Style="{ThemeResource BaseTextBlockStyle}" />
 													<Button
-														x:Uid="/Tools/BulkEditor/DeleteYes" HorizontalAlignment="Center" Click="HideFlyout_Click"
+														x:Uid="/Tools/BulkEditor/DeleteYes" HorizontalAlignment="Center"
 														Command="{x:Bind Data.ChangeCategoryCommand}"
 														CommandParameter="{x:Bind ArchiveList.SelectedItems}"
-														Tag="{x:Bind CategoryFlyout}" />
+														ext:ButtonExtension.HideFlyout="{x:Bind CategoryFlyout}" />
 												</StackPanel>
 											</Flyout>
 										</Button.Flyout>
@@ -114,14 +176,14 @@
 						</Flyout>
 					</Button.Flyout>
 				</Button>
-				<Button>
+				<Button IsEnabled="{x:Bind Data.Running, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<StackPanel Orientation="Horizontal" Spacing="8">
-						<muxc:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE74D;" />
+						<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE74D;" />
 						<TextBlock x:Uid="/Tools/BulkEditor/DeleteSelected" />
 					</StackPanel>
 					<Button.Flyout>
 						<Flyout x:Name="DeleteFlyout" Placement="Bottom">
-							<StackPanel Spacing="4">
+							<StackPanel Spacing="8">
 								<TextBlock x:Uid="/Tools/BulkEditor/SelectedArchives" />
 								<ListView ItemsSource="{x:Bind ArchiveList.SelectedItems}" Style="{StaticResource ListViewCompact}" />
 								<Button x:Uid="/Tools/BulkEditor/Delete" HorizontalAlignment="Right" Style="{ThemeResource AccentButtonStyle}">
@@ -130,10 +192,10 @@
 											<StackPanel Spacing="12">
 												<TextBlock x:Uid="/Tools/BulkEditor/DeleteSure" Style="{ThemeResource BaseTextBlockStyle}" />
 												<Button
-													x:Uid="/Tools/BulkEditor/DeleteYes" HorizontalAlignment="Center" Click="HideFlyout_Click"
+													x:Uid="/Tools/BulkEditor/DeleteYes" HorizontalAlignment="Center"
 													Command="{x:Bind Data.DeleteArchivesCommand}"
 													CommandParameter="{x:Bind ArchiveList.SelectedItems}"
-													Tag="{x:Bind DeleteFlyout}" />
+													ext:ButtonExtension.HideFlyout="{x:Bind DeleteFlyout}" />
 											</StackPanel>
 										</Flyout>
 									</Button.Flyout>
@@ -143,6 +205,11 @@
 					</Button.Flyout>
 				</Button>
 			</StackPanel>
+			<muxc:ProgressBar Grid.Row="1" Margin="8,0" Opacity="{x:Bind Data.Running, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}" Minimum="0" Maximum="{x:Bind Data.MaxItems, Mode=OneWay}" Value="{x:Bind Data.Progress, Mode=OneWay}">
+				<muxc:ProgressBar.OpacityTransition>
+					<ScalarTransition />
+				</muxc:ProgressBar.OpacityTransition>
+			</muxc:ProgressBar>
 		</Grid>
 		<controls:ArchiveList x:Name="ArchiveList" Grid.Row="1" ItemClickEnabled="False" RandomVisible="False" SelectionMode="Extended" ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}" />
 	</Grid>

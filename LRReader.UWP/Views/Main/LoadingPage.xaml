@@ -8,6 +8,7 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ext="using:LRReader.UWP.Extensions"
 	xmlns:services="using:LRReader.Shared.Services"
+	xmlns:animations="using:CommunityToolkit.WinUI.Animations"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
 	SizeChanged="Page_SizeChanged"
@@ -40,11 +41,17 @@
 						<StackPanel VerticalAlignment="Top" Spacing="5">
 							<TextBlock HorizontalAlignment="Center" FontSize="18" Text="{x:Bind ViewModel.Status, Mode=OneWay}" />
 							<TextBlock HorizontalAlignment="Center" FontSize="17" Text="{x:Bind ViewModel.StatusSub, Mode=OneWay}" />
-							<Grid HorizontalAlignment="Center" Visibility="{x:Bind ViewModel.Retry, Mode=OneWay}">
+							<Grid HorizontalAlignment="Center" Margin="0,4,0,0" Visibility="{x:Bind ViewModel.Retry, Mode=OneWay}">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="150" />
 									<ColumnDefinition Width="150" />
 								</Grid.ColumnDefinitions>
+								<animations:Implicit.ShowAnimations>
+									<animations:OpacityAnimation From="0" To="1.0" Duration="0:0:0.150" />
+								</animations:Implicit.ShowAnimations>
+								<animations:Implicit.HideAnimations>
+									<animations:OpacityAnimation From="1.0" To="0" Duration="0:0:0.150" />
+								</animations:Implicit.HideAnimations>
 								<Button x:Uid="/Pages/LoadingPage/ChangeProfile" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ChangeCommand}" />
 								<Button
 									x:Uid="/Pages/LoadingPage/Retry" Grid.Column="1" HorizontalAlignment="Center"

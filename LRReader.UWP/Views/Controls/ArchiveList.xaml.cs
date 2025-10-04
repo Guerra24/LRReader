@@ -122,10 +122,6 @@ namespace LRReader.UWP.Views.Controls
 			await Refresh();
 		}
 
-		private async void PrevButton_Click(object sender, RoutedEventArgs e) => await Data.PrevPage();
-
-		private async void NextButton_Click(object sender, RoutedEventArgs e) => await Data.NextPage();
-
 		private async void PagerControl_SelectedIndexChanged(PagerControl sender, PagerControlSelectedIndexChangedEventArgs args)
 		{
 			if (ready)

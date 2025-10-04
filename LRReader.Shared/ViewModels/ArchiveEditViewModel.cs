@@ -216,7 +216,7 @@ namespace LRReader.Shared.ViewModels
 			}
 			PluginTagsList.Clear();
 			Plugins.Clear();
-			plugins.ForEach(p => Plugins.Add(p));
+			plugins.ForEach(Plugins.Add);
 			CurrentPlugin = Plugins.ElementAt(0);
 			UsePluginCommand.NotifyCanExecuteChanged();
 			AddAllTags.NotifyCanExecuteChanged();
