@@ -32,11 +32,8 @@ public partial class BulkEditorViewModel : ObservableObject
 
 	partial void OnRunningChanged(bool value)
 	{
-		if (value)
-		{
-			Progress = 0;
-			MaxItems = 0;
-		}
+		Progress = 0;
+		MaxItems = 0;
 	}
 
 	[ObservableProperty]
@@ -90,8 +87,8 @@ public partial class BulkEditorViewModel : ObservableObject
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
-			await Archives.DeleteArchive(a.arcid);
 			Progress++;
+			await Archives.DeleteArchive(a.arcid);
 		}
 		Running = false;
 	}
@@ -106,12 +103,12 @@ public partial class BulkEditorViewModel : ObservableObject
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
+			Progress++;
 			if (MoveToCategory)
 				foreach (var c in Categories)
 					if (c.archives.Contains(a.arcid))
 						await CategoriesProvider.RemoveArchiveFromCategory(c.id, a.arcid);
 			await CategoriesProvider.AddArchiveToCategory(SelectedCategory?.id ?? "", a.arcid);
-			Progress++;
 		}
 		MoveToCategory = false;
 		Running = false;
@@ -127,6 +124,7 @@ public partial class BulkEditorViewModel : ObservableObject
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
+			Progress++;
 			await ArchivesProvider.UpdateArchive(a.arcid, tags: a.tags = "");
 			a.UpdateTags();
 		}
@@ -145,6 +143,7 @@ public partial class BulkEditorViewModel : ObservableObject
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
+			Progress++;
 			var result = await ServerProvider.UsePlugin(Plugin.@namespace, a.arcid);
 			if (result != null && result.success && !string.IsNullOrEmpty(result.data.new_tags))
 			{
@@ -154,7 +153,6 @@ public partial class BulkEditorViewModel : ObservableObject
 				a.UpdateTags();
 				await ArchivesProvider.UpdateArchive(a.arcid, tags: a.tags);
 			}
-			Progress++;
 		}
 		Running = false;
 	}

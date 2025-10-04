@@ -205,11 +205,7 @@
 					</Button.Flyout>
 				</Button>
 			</StackPanel>
-			<muxc:ProgressBar Grid.Row="1" Margin="8,0" Opacity="{x:Bind Data.Running, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}" Minimum="0" Maximum="{x:Bind Data.MaxItems, Mode=OneWay}" Value="{x:Bind Data.Progress, Mode=OneWay}">
-				<muxc:ProgressBar.OpacityTransition>
-					<ScalarTransition />
-				</muxc:ProgressBar.OpacityTransition>
-			</muxc:ProgressBar>
+			<muxc:ProgressBar Grid.Row="1" Margin="8,0" Minimum="0" Maximum="{x:Bind Data.MaxItems, Mode=OneWay}" Value="{x:Bind Data.Progress, Mode=OneWay}" />
 		</Grid>
 		<controls:ArchiveList x:Name="ArchiveList" Grid.Row="1" ItemClickEnabled="False" RandomVisible="False" SelectionMode="Extended" ItemTemplateSelector="{StaticResource ArchiveTemplateSelector}" />
 	</Grid>

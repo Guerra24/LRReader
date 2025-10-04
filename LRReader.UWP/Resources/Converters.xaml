@@ -12,7 +12,6 @@
 	<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
 	<converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
 	<converters:FileSizeToFriendlyStringConverter x:Key="FileSizeToFriendlyStringConverter" />
-	<converters:BoolToObjectConverter x:Name="BoolToOpacityConverter" TrueValue="1" FalseValue="0" />
 
 	<converters2:StringToColorConverter x:Key="StringToColorConverter" />
 	<converters2:DisabledTextConverter x:Key="DisabledTextConverter" />
