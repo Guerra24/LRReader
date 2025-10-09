@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Local Machine": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "nativeDebugging": false
     }
   }
 }

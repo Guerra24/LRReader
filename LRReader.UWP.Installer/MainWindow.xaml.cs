@@ -98,7 +98,7 @@ namespace LRReader.UWP.Installer
 				}
 				switch (result)
 				{
-					case 1:
+					case -1:
 						Error.Text = "An invalid certificate has been detected";
 						return;
 					case -99:
