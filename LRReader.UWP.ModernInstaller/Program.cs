@@ -5,25 +5,21 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using TerraFX.Interop.Windows;
-using TerraFX.Interop.WinRT;
 using static LRReader.UWP.Installer.Interop.ErrorHelpers;
 using static TerraFX.Interop.Windows.MB;
-using static TerraFX.Interop.Windows.SW;
-using static TerraFX.Interop.Windows.SWP;
+using static TerraFX.Interop.Windows.SM;
 using static TerraFX.Interop.Windows.Windows;
 using static TerraFX.Interop.Windows.WM;
 using static TerraFX.Interop.Windows.WS;
-using static TerraFX.Interop.Windows.SM;
-using static TerraFX.Interop.WinRT.WinRT;
 
 namespace LRReader.UWP.Installer;
 
 internal class Program
 {
-	static private App? _xamlApp = null;
+	private static App? _xamlApp = null;
 
 	[STAThread]
-	static unsafe int Main(string[] args)
+	public static unsafe int Main(string[] args)
 	{
 		if (Environment.OSVersion.Version < new Version(10, 0, 19041, 0))
 		{
@@ -83,15 +79,6 @@ internal class Program
 			var hwnd = CreateWindowExA(WS_EX_NOREDIRECTIONBITMAP, lpszClassName, lpWindowName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 976, 521, HWND.NULL, HMENU.NULL, wc.hInstance, null);
 			ThrowLastErrorIfDefault(hwnd);
 
-			var margins = new MARGINS();
-			margins.cxLeftWidth = -1;
-			margins.cxRightWidth = -1;
-			margins.cyBottomHeight = -1;
-			margins.cyTopHeight = -1;
-			DwmExtendFrameIntoClientArea(hwnd, &margins);
-			var type = DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MAINWINDOW;
-			DwmSetWindowAttribute(hwnd, (uint)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, &type, sizeof(DWM_SYSTEMBACKDROP_TYPE));
-
 			MSG msg;
 			while (GetMessageA(&msg, HWND.NULL, 0, 0))
 			{
@@ -116,8 +103,7 @@ internal class Program
 		switch (uMsg)
 		{
 			case WM_CREATE:
-				SetWindowPos(hWnd, HWND.NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-				OnWindowCreate(hWnd);
+				_xamlApp = new(hWnd);
 				break;
 			case WM_SIZE:
 				{
@@ -158,9 +144,12 @@ internal class Program
 					param->rgrc[0].top += 0;
 					param->rgrc[0].right -= border;
 					param->rgrc[0].bottom -= border;
-					return 0;
+					break;
 				}
-				break;
+				else
+				{
+					return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+				}
 			case WM_NCHITTEST:
 				{
 					var x = LOWORD(lParam);
@@ -182,7 +171,6 @@ internal class Program
 				}
 			case WM_SETFOCUS:
 				_xamlApp?.OnSetFocus();
-
 				break;
 			case WM_DESTROY:
 				_xamlApp?.Dispose();
@@ -195,10 +183,4 @@ internal class Program
 		return 0;
 	}
 
-	private unsafe static void OnWindowCreate(HWND hwnd)
-	{
-		RoInitialize(RO_INIT_TYPE.RO_INIT_SINGLETHREADED);
-		_xamlApp = new(hwnd);
-		ShowWindow(hwnd, SW_SHOWNORMAL);
-	}
 }
