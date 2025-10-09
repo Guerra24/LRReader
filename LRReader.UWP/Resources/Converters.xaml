@@ -4,9 +4,9 @@
 	xmlns:converters="using:CommunityToolkit.WinUI.Converters"
 	xmlns:converters2="using:LRReader.UWP.Converters">
 
-	<converters:BoolToVisibilityConverter x:Name="BoolToVisibilityConverter" />
-	<converters:BoolToVisibilityConverter x:Name="NegateBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible" />
-	<converters:BoolNegationConverter x:Name="BoolNegationConverter" />
+	<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+	<converters:BoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible" />
+	<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 	<converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 	<converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToObjectConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
 	<converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />

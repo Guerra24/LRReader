@@ -1,0 +1,17 @@
+﻿<Application    
+	x:Class="LRReader.UWP.Installer.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:LRReader.UWP.Installer.Converters">
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="ms-appx:///Mile.Xaml.Styles.SunValley.xbf" />
+				<ResourceDictionary>
+					<converters:InstallStateToVisibilityConverter x:Key="InstallStateToVisibilityConverter" />
+					<converters:ProgressBarIsIndeterminateConverter x:Key="ProgressBarIsIndeterminateConverter" />
+				</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

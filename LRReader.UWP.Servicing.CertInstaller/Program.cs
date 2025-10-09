@@ -46,9 +46,9 @@ internal static class Program
 		{
 			var data = File.ReadAllBytes(args[0]);
 			File.Delete(args[0]);
-			CertUtil.Open(OpenFlags.ReadWrite);
-			CertUtil.InstallCertificate(data, CertInfo.CertThumbV2);
-			CertUtil.Close();
+			LegacyCertUtil.Open(OpenFlags.ReadWrite);
+			LegacyCertUtil.InstallCertificate(data, CertInfo.CertThumbV2);
+			LegacyCertUtil.Close();
 		}
 		Environment.Exit(0);
 	}

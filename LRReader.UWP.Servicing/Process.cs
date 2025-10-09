@@ -24,6 +24,7 @@ public static class ProcessUtil
 	public static async Task<int> LaunchAdmin(string exe, string command = "")
 	{
 		using var process = new Process();
+		process.StartInfo.UseShellExecute = true;
 		process.StartInfo.Verb = "runas";
 		process.StartInfo.FileName = exe;
 		process.StartInfo.Arguments = command;

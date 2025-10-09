@@ -53,8 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.251002-build.2316" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.251002-build.2314" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.251006-build.2319" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.251006-build.2319" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250828-build.2223" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.250402" />
@@ -66,7 +66,7 @@
     <PackageReference Include="CommunityToolkit.Uwp.Media" Version="8.2.250402" />
     <PackageReference Include="Markdig" Version="0.42.0" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3485.44" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
   </ItemGroup>
 
 <!-- This requires a bit of work

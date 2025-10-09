@@ -11,19 +11,19 @@ namespace LRReader.UWP.Installer
 		{
 			if (args != null && args.Length > 0)
 			{
-				CertUtil.Open(OpenFlags.ReadWrite);
+				LegacyCertUtil.Open(OpenFlags.ReadWrite);
 				bool ok = false;
 				switch (args[0])
 				{
 					case "--install-cert":
-						ok = CertUtil.InstallCertificate(CertInfo.CertUrlV2, CertInfo.CertThumbV2).GetAwaiter().GetResult();
+						ok = LegacyCertUtil.InstallCertificate(CertInfo.CertUrlV2, CertInfo.CertThumbV2).GetAwaiter().GetResult();
 						break;
 					case "--uninstall-cert":
-						ok = CertUtil.UninstallCertificate(CertInfo.CertThumb);
-						ok = CertUtil.UninstallCertificate(CertInfo.CertThumbV2);
+						ok = LegacyCertUtil.UninstallCertificate(CertInfo.CertThumb);
+						ok = LegacyCertUtil.UninstallCertificate(CertInfo.CertThumbV2);
 						break;
 				}
-				CertUtil.Close();
+				LegacyCertUtil.Close();
 				return ok ? 0 : -1;
 			}
 			else

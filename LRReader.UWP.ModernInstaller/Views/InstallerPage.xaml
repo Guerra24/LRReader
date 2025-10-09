@@ -1,0 +1,70 @@
+<Page
+	x:Class="LRReader.UWP.Installer.Views.InstallerPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:LRReader.UWP.Installer"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Loaded="Page_Loaded"
+	mc:Ignorable="d">
+
+	<Grid Margin="0,-32,0,0">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition Height="282" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<TextBlock Visibility="{x:Bind Data.ShowProgress, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="21" Text="We're getting LRReader ready for you..." />
+			<Grid Grid.Row="1">
+				<Image x:Name="Logo" VerticalAlignment="Center" Margin="0,0,0,8" Height="100" />
+			</Grid>
+			<Grid Grid.Row="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<!-- THIS NEEDS TO SHOW UP -->
+				<StackPanel VerticalAlignment="Center" Orientation="Vertical" Visibility="Collapsed">
+					<TextBlock HorizontalAlignment="Center" Text="{x:Bind Data.Error, Mode=OneWay}" Margin="0,0,0,8" />
+					<!--<HyperlinkButton HorizontalAlignment="Center" Content="Open Settings" NavigateUri="ms-settings:developers" Margin="0,0,0,8" />-->
+				</StackPanel>
+				<ProgressBar Grid.Row="1" MaxWidth="250" Maximum="100" Minimum="0" Value="{x:Bind Data.InstallProgress, Mode=OneWay}" IsIndeterminate="{x:Bind Data.InstallProgress, Mode=OneWay, Converter={StaticResource ProgressBarIsIndeterminateConverter}}" Visibility="{x:Bind Data.ShowProgress, Mode=OneWay}" />
+				<StackPanel Grid.Row="2" Visibility="{x:Bind Data.ShowButtons, Mode=OneWay}">
+					<Button Command="{x:Bind Data.InstallCommand}" HorizontalAlignment="Center" Margin="0,0,0,8" Content="Install" Style="{ThemeResource AccentButtonStyle}" Visibility="{x:Bind Data.InstallState, Mode=OneWay, Converter={StaticResource InstallStateToVisibilityConverter}, ConverterParameter=!Installed}" />
+					<Button Command="{x:Bind Data.InstallCommand}" HorizontalAlignment="Center" Margin="0,0,0,8" Content="Upgrade" Style="{ThemeResource AccentButtonStyle}" Visibility="{x:Bind Data.InstallState, Mode=OneWay, Converter={StaticResource InstallStateToVisibilityConverter}, ConverterParameter=UpgradeAvailable}" />
+					<Button Command="{x:Bind Data.UninstallCommand}" HorizontalAlignment="Center" Margin="0,0,0,8" Content="Remove Certificate" Visibility="{x:Bind Data.InstallState, Mode=OneWay, Converter={StaticResource InstallStateToVisibilityConverter}, ConverterParameter=CertPresent}" />
+					<Button Command="{x:Bind Data.UninstallCommand}" HorizontalAlignment="Center" Content="Uninstall" Visibility="{x:Bind Data.InstallState, Mode=OneWay, Converter={StaticResource InstallStateToVisibilityConverter}, ConverterParameter=Installed}" />
+				</StackPanel>
+			</Grid>
+		</Grid>
+		<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="42">
+			<StackPanel Orientation="Horizontal" Spacing="32">
+				<FontIcon FontSize="40" Glyph="&#xE736;" />
+				<StackPanel Width="286" VerticalAlignment="Center" Spacing="8">
+					<TextBlock FontSize="17" Text="Advanced reader" />
+					<TextBlock FontSize="14" Text="Keyboard or mouse, two pages, right to left, bookmarks and much more." TextWrapping="WrapWholeWords" />
+				</StackPanel>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Spacing="32">
+				<FontIcon FontSize="40" Glyph="&#xEC7A;" />
+				<StackPanel Width="286" VerticalAlignment="Center" Spacing="8">
+					<TextBlock FontSize="17" Text="Archive management" />
+					<TextBlock FontSize="14" Text="Manage your archives from one place with tags editor, categories editor, archive deduplicator and batch editing." TextWrapping="WrapWholeWords" />
+				</StackPanel>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Spacing="32">
+				<FontIcon FontSize="40" Glyph="&#xE895;" />
+				<StackPanel Width="286" VerticalAlignment="Center" Spacing="8">
+					<TextBlock FontSize="17" Text="Always up to date" />
+					<TextBlock FontSize="14" Text="Making use of the latest and greatest LANraragi features." TextWrapping="WrapWholeWords" />
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</Page>

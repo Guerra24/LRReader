@@ -13,6 +13,10 @@
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="LRReader.UWP.ModernInstaller/LRReader.UWP.ModernInstaller.csproj">
+    <Platform Solution="*|ARM64" Project="arm64" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="LRReader.UWP.Servicing.CertInstaller/LRReader.UWP.Servicing.CertInstaller.csproj" />
   <Project Path="LRReader.UWP.Servicing/LRReader.UWP.Servicing.csproj" />
   <Project Path="LRReader.UWP/LRReader.UWP.csproj">

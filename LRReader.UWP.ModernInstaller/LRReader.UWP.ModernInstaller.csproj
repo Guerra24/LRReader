@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <Nullable>enable</Nullable>
+    <UseUwp>true</UseUwp>
+    <UseUwpTools>true</UseUwpTools>
+    <Platforms>x64;arm64</Platforms>
+    <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PublishAot>true</PublishAot>
+    <OptimizationPreference>Size</OptimizationPreference>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishLzmaCompressed>true</PublishLzmaCompressed>
+    <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.20250829.1</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
+    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.6584</MicrosoftWindowsSDKBuildToolsPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.73-preview</WindowsSdkPackageVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DisableEmbeddedXbf>false</DisableEmbeddedXbf>
+    <CsWinRTAotWarningLevel>3</CsWinRTAotWarningLevel>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
+    <ProjectPriFileName>resources.pri</ProjectPriFileName>
+    <MileXamlManagedNoNativeBackend>true</MileXamlManagedNoNativeBackend>
+    <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
+</PropertyGroup>
+
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <Title>LRReader Installer</Title>
+    <Description>LRReader Sideload Installer</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.1.25451.107" />
+    <PackageReference Include="Mile.Xaml" Version="2.5.1250" GeneratePathProperty="true" />
+    <PackageReference Include="PublishAotCompressed" Version="1.0.5" />
+    <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.26100.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj" />
+  </ItemGroup>
+
+  <Target Name="RemoveMileXamlManaged" BeforeTargets="MarkupCompilePass1">
+    <ItemGroup>
+      <ReferencePath Remove="@(ReferencePath)" Condition="'%(Filename)' == 'Mile.Xaml.Managed'" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
+    <ItemGroup>
+      <MyXamlEmbededItems Include="$(PkgMile_Xaml)\Redist\Styles\Mile.Xaml.Styles.SunValley.xbf" />
+    </ItemGroup>
+    <Copy SourceFiles="@(MyXamlEmbededItems)" DestinationFiles="@(MyXamlEmbededItems->'$(IntermediateOutputPath)embed\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
+      <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <MyEmbeddedFileList Include="@(ItemsFromFile)" />
+      <MyEmbeddedFileList Include="@(MyXamlEmbededItems->'%(Filename)%(Extension)')" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
+  </Target>
+
+</Project>
