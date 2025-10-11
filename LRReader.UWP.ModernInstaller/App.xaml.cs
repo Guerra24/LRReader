@@ -1,7 +1,9 @@
 ﻿using LRReader.UWP.Installer.Interop;
 using LRReader.UWP.Installer.Views;
 using LRReader.UWP.Installer.Views.Controls;
+using MrmPatcher;
 using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using TerraFX.Interop.Windows;
@@ -44,7 +46,14 @@ public partial class App : Application, IDisposable
 		LoadLibraryA((sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "twinapi.appcore.dll\0"u8.GetPinnableReference())));
 		LoadLibraryA((sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "threadpoolwinrt.dll\0"u8.GetPinnableReference())));
 
-		_xamlManager = WindowsXamlManager.InitializeForCurrentThread();
+		// If this is NAOT we need to patch Mrm
+#if RELEASE
+		using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("resources.pri")!)
+		using (new MrmPatcherHelper(stream))
+#endif
+		{
+			_xamlManager = WindowsXamlManager.InitializeForCurrentThread();
+		}
 
 		_coreWindow = CoreWindow.GetForCurrentThread();
 
