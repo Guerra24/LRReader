@@ -148,7 +148,7 @@ jobs:
         APP_INSTALLER_URL: https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller
       run: |
         .\Util\Version.ps1
-        [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
+        [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.ModernInstaller/Program.cs"
         MSBuild LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj -nologo -r -v:minimal /t:Publish /p:_IsPublishing=true /p:PublishProfile="win-${{ matrix.arch }}" /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
