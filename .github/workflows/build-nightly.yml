@@ -75,15 +75,6 @@ jobs:
         dotnet-version: 10.0.x
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v2
-#    - name: Auth nuget registry
-#      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
-#    - name: Prepare nuget cache
-#      uses: actions/cache@v4
-#      with:
-#        path: ~/.nuget/packages
-#        key: nuget-uwp-${{ hashFiles('LRReader.Shared/packages.lock.json', 'LRReader.UWP/packages.lock.json') }}
-#        restore-keys: |
-#          nuget-uwp-
     - name: Build
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -132,6 +123,40 @@ jobs:
       with:
         name: LRReader.UWP
         path: LRReader.UWP/AppPackages
+  buildModernInstaller:
+    name: Modern Installer
+    runs-on: windows-2025
+    permissions:
+      packages: read
+    strategy:
+      matrix:
+        arch: [x64, arm64]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+    - name: Find MSBuild
+      uses: microsoft/setup-msbuild@v2
+    - name: Build
+      env:
+        APP_INSTALLER_URL: https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller
+      run: |
+        .\Util\Version.ps1
+        [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
+        $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
+        .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.ModernInstaller/Program.cs"
+        dotnet publish --nologo -p:PublishProfile="win-${{ matrix.arch }}" LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Installer-${{ matrix.arch }}
+        path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
   buildInstaller:
     name: Installer
     runs-on: windows-2025
@@ -149,20 +174,11 @@ jobs:
         dotnet-version: 10.0.x
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v2
-#    - name: Auth nuget registry
-#      run: dotnet nuget update source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text guerra24
-#    - name: Prepare nuget cache
-#      uses: actions/cache@v4
-#      with:
-#        path: ~/.nuget/packages
-#        key: nuget-installer-${{ hashFiles('LRReader.UWP.Installer/packages.lock.json') }}
-#        restore-keys: |
-#          nuget-installer-
     - name: Build
       env:
         APP_VERSION: Nightly
       run: |
-        Invoke-Expression "./Util/ConfigureInstaller.ps1"
+        .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.Installer/Variables.cs"
         MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LRReader.UWP.Installer.ViewModels;
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator", "MVVMTK0045:Using [ObservableProperty] on fields is not AOT compatible for WinRT", Justification = "<Pending>")]
 public partial class InstallerPageViewModel : ObservableObject
 {
 	private readonly InstallerService Installer;
@@ -51,8 +52,8 @@ public partial class InstallerPageViewModel : ObservableObject
 		{
 			Error = result.ErrorText;
 		}
-		InstallState = await Installer.CheckAppState();
 		ShowProgress = false;
+		InstallState = await Installer.CheckAppState();
 		ShowButtons = true;
 	}
 

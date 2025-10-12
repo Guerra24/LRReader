@@ -49,9 +49,9 @@ public class XamlCompositionSurface
 
 	public void ClickThrough()
 	{
-		nint dwExStyle = GetWindowLongPtrA(_xamlHwnd, GWL_EXSTYLE);
+		nint dwExStyle = GetWindowLongPtrW(_xamlHwnd, GWL_EXSTYLE);
 		dwExStyle |= WS_EX_TRANSPARENT | WS_EX_LAYERED;
-		SetWindowLongPtrA(_xamlHwnd, GWL_EXSTYLE, dwExStyle);
+		SetWindowLongPtrW(_xamlHwnd, GWL_EXSTYLE, dwExStyle);
 	}
 
 	public unsafe bool PreTranslateMessage(MSG* msg)

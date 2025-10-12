@@ -23,22 +23,21 @@ internal class Program
 	{
 		if (Environment.OSVersion.Version < new Version(10, 0, 19041, 0))
 		{
-			sbyte* title = (sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "Not supported\0"u8.GetPinnableReference()));
-			sbyte* content = (sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReader requires Windows 10 20H1 or newer\0"u8.GetPinnableReference()));
+			var title = (char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "Not supported".GetPinnableReference()));
+			var content = (char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReader requires Windows 10 20H1 or newer".GetPinnableReference()));
 
-			MessageBoxA(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
-
+			MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 			return 0;
 		}
 
 		if (!Version.TryParse("{APP_VERSION}", out var version))
 			version = new(0, 0, 0, 0);
 
-		//#if DEBUG
+#if DEBUG
 		var appInstallerUrl = "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller";
-		//#else
-		//	var appInstallerUrl = "{APP_INSTALLER_URL}";
-		//#endif
+#else
+			var appInstallerUrl = "{APP_INSTALLER_URL}";
+#endif
 
 		Service.BuildServices(new AppInfo(
 			"Guerra24.LRReader_3fr0p4qst6948",
@@ -67,26 +66,26 @@ internal class Program
 				return ok ? 0 : -1;
 			}
 
-			sbyte* lpszClassName = (sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReaderInstallerClass\0"u8.GetPinnableReference()));
-			sbyte* lpWindowName = (sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReader\0"u8.GetPinnableReference()));
+			var lpszClassName = (char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReaderInstallerClass".GetPinnableReference()));
+			var lpWindowName = (char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReader".GetPinnableReference()));
 
-			WNDCLASSA wc;
+			WNDCLASSW wc;
 			wc.lpfnWndProc = &WndProc;
-			wc.hInstance = GetModuleHandleA(null);
+			wc.hInstance = GetModuleHandleW(null);
 			wc.lpszClassName = lpszClassName;
-			ThrowLastErrorIfNull(RegisterClassA(&wc));
+			ThrowLastErrorIfNull(RegisterClassW(&wc));
 
-			var hwnd = CreateWindowExA(WS_EX_NOREDIRECTIONBITMAP, lpszClassName, lpWindowName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 976, 521, HWND.NULL, HMENU.NULL, wc.hInstance, null);
+			var hwnd = CreateWindowExW(WS_EX_NOREDIRECTIONBITMAP, lpszClassName, lpWindowName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 976, 521, HWND.NULL, HMENU.NULL, wc.hInstance, null);
 			ThrowLastErrorIfDefault(hwnd);
 
 			MSG msg;
-			while (GetMessageA(&msg, HWND.NULL, 0, 0))
+			while (GetMessageW(&msg, HWND.NULL, 0, 0))
 			{
 				bool xamlSourceProcessedMessage = _xamlApp is not null && _xamlApp.PreTranslateMessage(&msg);
 				if (!xamlSourceProcessedMessage)
 				{
 					TranslateMessage(&msg);
-					DispatchMessageA(&msg);
+					DispatchMessageW(&msg);
 				}
 			}
 		}
@@ -148,13 +147,13 @@ internal class Program
 				}
 				else
 				{
-					return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+					return DefWindowProcW(hWnd, uMsg, wParam, lParam);
 				}
 			case WM_NCHITTEST:
 				{
 					var x = LOWORD(lParam);
 					var y = HIWORD(lParam);
-					var ret = DefWindowProcA(hWnd, uMsg, wParam, lParam);
+					var ret = DefWindowProcW(hWnd, uMsg, wParam, lParam);
 
 					if (ret == HTCLIENT)
 					{
@@ -178,7 +177,7 @@ internal class Program
 				PostQuitMessage(0);
 				break;
 			default:
-				return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+				return DefWindowProcW(hWnd, uMsg, wParam, lParam);
 		}
 		return 0;
 	}

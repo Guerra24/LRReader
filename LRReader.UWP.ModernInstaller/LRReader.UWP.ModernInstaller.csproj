@@ -28,7 +28,8 @@
     <ProjectPriFileName>resources.pri</ProjectPriFileName>
     <MileXamlManagedNoNativeBackend>true</MileXamlManagedNoNativeBackend>
     <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
-</PropertyGroup>
+    <MrmPatcherEmbedPri>true</MrmPatcherEmbedPri>
+  </PropertyGroup>
 
   <PropertyGroup>
     <ApplicationIcon>logo.ico</ApplicationIcon>
@@ -46,7 +47,7 @@
     <PackageReference Include="Mile.Xaml" Version="2.5.1250" GeneratePathProperty="true" />
     <PackageReference Include="PublishAotCompressed" Version="1.0.5" />
     <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.26100.2" />
-    <PackageReference Include="MrmPatcher" Version="0.0.0-alpha.0.5" />
+    <PackageReference Include="MrmPatcher" Version="0.0.0-alpha.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,13 +73,6 @@
       <MyEmbeddedFileList Include="@(MyXamlEmbededItems->'%(Filename)%(Extension)')" />
     </ItemGroup>
     <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
-  </Target>
-
-  <Target Name="InjectPriIntoDll" BeforeTargets="BeforeResGen">
-    <Message Importance="High" Text="$(ProjectPriFullPath)" />
-    <ItemGroup>
-      <EmbeddedResource Include="$(ProjectPriFullPath)" Type="Non-Resx" WithCulture="false" Condition="Exists('$(ProjectPriFullPath)')" />
-    </ItemGroup>
   </Target>
 
 </Project>

@@ -3,7 +3,6 @@ using LRReader.UWP.Installer.Views;
 using LRReader.UWP.Installer.Views.Controls;
 using MrmPatcher;
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using TerraFX.Interop.Windows;
@@ -43,14 +42,11 @@ public partial class App : Application, IDisposable
 	{
 		RoInitialize(RO_INIT_TYPE.RO_INIT_SINGLETHREADED);
 		// Is this needed anymore? maybe for older builds?
-		LoadLibraryA((sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "twinapi.appcore.dll\0"u8.GetPinnableReference())));
-		LoadLibraryA((sbyte*)Unsafe.AsPointer(ref Unsafe.AsRef(in "threadpoolwinrt.dll\0"u8.GetPinnableReference())));
+		LoadLibraryW((char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "twinapi.appcore.dll".GetPinnableReference())));
+		LoadLibraryW((char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "threadpoolwinrt.dll".GetPinnableReference())));
 
 		// If this is NAOT we need to patch Mrm
-#if RELEASE
-		using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("resources.pri")!)
-		using (new MrmPatcherHelper(stream))
-#endif
+		using (new MrmPatcherHelper())
 		{
 			_xamlManager = WindowsXamlManager.InitializeForCurrentThread();
 		}
@@ -104,12 +100,12 @@ public partial class App : Application, IDisposable
 
 		_surface.Resize(x, y + border + caption + visualBorder * 2, width, height - border - caption - visualBorder * 2);
 
-		SendMessageA(_coreHwnd, WM_SIZE, (WPARAM)width, height);
+		SendMessageW(_coreHwnd, WM_SIZE, (WPARAM)width, height);
 	}
 
 	public void ProcessCoreWindowMessage(uint message, WPARAM wParam, LPARAM lParam)
 	{
-		SendMessageA(_coreHwnd, message, wParam, lParam);
+		SendMessageW(_coreHwnd, message, wParam, lParam);
 	}
 
 	public void OnSetFocus()
