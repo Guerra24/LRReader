@@ -81,7 +81,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        arch: [x64, ARM64]
+        arch: [x64, arm64]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -105,6 +105,7 @@ jobs:
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
 #    - name: Upload to Release
 #      uses: Guerra24/upload-to-release@v1
+#      if: ${{ matrix.arch }} == 'x64'
 #      with:
 #        name: LRReader.${{ matrix.arch }}.exe
 #        path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe

@@ -130,7 +130,7 @@ jobs:
       packages: read
     strategy:
       matrix:
-        arch: [x64, ARM64]
+        arch: [x64, arm64]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
