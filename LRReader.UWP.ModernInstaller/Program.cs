@@ -36,7 +36,7 @@ internal class Program
 #if DEBUG
 		var appInstallerUrl = "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller";
 #else
-			var appInstallerUrl = "{APP_INSTALLER_URL}";
+		var appInstallerUrl = "{APP_INSTALLER_URL}";
 #endif
 
 		Service.BuildServices(new AppInfo(
