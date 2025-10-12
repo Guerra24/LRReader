@@ -33,7 +33,9 @@ jobs:
         [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:_IsPublishing=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)" /p:GenerateAppxPackageOnBuild=true
+        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
+        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)" /p:GenerateAppxPackageOnBuild=true
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
@@ -95,7 +97,7 @@ jobs:
         $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
         .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.ModernInstaller/Program.cs"
-        MSBuild LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj -nologo -r -v:minimal /t:Publish /p:PublishProfile="win-${{ matrix.arch }}" /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
+        MSBuild LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj -nologo -r -v:minimal /t:Publish /p:_IsPublishing=true /p:PublishProfile="win-${{ matrix.arch }}" /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -163,7 +165,9 @@ jobs:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:_IsPublishing=true /p:Configuration=Release /p:UapAppxPackageBuildMode=StoreOnly /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
+        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
+        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=StoreOnly /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
     - name: Setup sentry-cli
       uses: matbour/setup-sentry-cli@v2
       with:
