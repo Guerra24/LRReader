@@ -101,13 +101,13 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Installer-${{ matrix.arch }}
+        name: ModernInstaller-${{ matrix.arch }}
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
 #    - name: Upload to Release
 #      uses: Guerra24/upload-to-release@v1
 #      if: ${{ matrix.arch }} == 'x64'
 #      with:
-#        name: LRReader.${{ matrix.arch }}.exe
+#        name: LRReader.exe
 #        path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
 #        repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildInstaller:

@@ -155,7 +155,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Installer-${{ matrix.arch }}
+        name: ModernInstaller-${{ matrix.arch }}
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
   buildInstaller:
     name: Installer
