@@ -89,9 +89,7 @@ jobs:
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
         Invoke-Expression "./Util/Version.ps1"
         Invoke-Expression "./Util/ConfigureAppCenter.ps1"
-        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
-        dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
-        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Nightly=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true
+        MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Nightly=true /p:_IsPublishing=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true
         Invoke-Expression "./Util/CleanInstaller.ps1"
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1

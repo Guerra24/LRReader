@@ -48,7 +48,7 @@ internal class Program
 
 		using (var certUtil = Service.Services.GetRequiredService<CertUtil>())
 		{
-			var appInfo = Service.Services.GetRequiredService<AppInfo>();
+			var appInfo = Service.AppInfo;
 			if (args != null && args.Length > 0)
 			{
 				bool ok = false;

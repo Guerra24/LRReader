@@ -10,10 +10,13 @@ public partial class InstallStateToVisibilityConverter : IValueConverter
 	public object Convert(object value, Type targetType, object parameter, string language)
 	{
 		var param = (string)parameter;
+		var state = (InstallState)value;
 		if (param.StartsWith("!"))
-			return (InstallState)value != Enum.Parse<InstallState>(param.TrimStart('!')) ? Visibility.Visible : Visibility.Collapsed;
+		{
+			return state != InstallState.UpgradeAvailable && state != Enum.Parse<InstallState>(param.TrimStart('!')) ? Visibility.Visible : Visibility.Collapsed;
+		}
 		else
-			return (InstallState)value == Enum.Parse<InstallState>(param) ? Visibility.Visible : Visibility.Collapsed;
+			return state == Enum.Parse<InstallState>(param) ? Visibility.Visible : Visibility.Collapsed;
 	}
 
 	public object ConvertBack(object value, Type targetType, object parameter, string language)

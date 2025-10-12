@@ -23,5 +23,6 @@ public static class Service
 	}
 
 	public static InstallerService Installer => Services.GetRequiredService<InstallerService>();
+	public static AppInfo AppInfo => Services.GetRequiredService<AppInfo>();
 
 }

@@ -9,6 +9,6 @@
     mc:Ignorable="d">
 
 	<StackPanel Orientation="Horizontal">
-		<TextBlock Text="LRReader 0.0.0" VerticalAlignment="Center" Margin="13,-2,0,0" FontSize="12"/>
+		<TextBlock x:Name="Title" Text="LRReader" VerticalAlignment="Center" Margin="13,-2,0,0" FontSize="12"/>
 	</StackPanel>
 </UserControl>
