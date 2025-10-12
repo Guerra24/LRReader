@@ -130,7 +130,7 @@ jobs:
       packages: read
     strategy:
       matrix:
-        arch: [x64, arm64]
+        arch: [x64, ARM64]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -151,7 +151,7 @@ jobs:
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
         $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
         .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.ModernInstaller/Program.cs"
-        dotnet publish --nologo -p:PublishProfile="win-${{ matrix.arch }}" LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj
+        MSBuild LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj -nologo -r -v:minimal /t:Publish /p:PublishProfile="win-${{ matrix.arch }}" /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:

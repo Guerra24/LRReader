@@ -54,12 +54,6 @@
     <ProjectReference Include="..\LRReader.UWP.Servicing\LRReader.UWP.Servicing.csproj" />
   </ItemGroup>
 
-  <Target Name="RemoveMileXamlManaged" BeforeTargets="MarkupCompilePass1">
-    <ItemGroup>
-      <ReferencePath Remove="@(ReferencePath)" Condition="'%(Filename)' == 'Mile.Xaml.Managed'" />
-    </ItemGroup>
-  </Target>
-
   <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
     <ItemGroup>
       <MyXamlEmbededItems Include="$(PkgMile_Xaml)\Redist\Styles\Mile.Xaml.Styles.SunValley.xbf" />
