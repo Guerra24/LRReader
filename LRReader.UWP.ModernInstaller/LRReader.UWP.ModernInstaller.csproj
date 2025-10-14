@@ -47,7 +47,7 @@
     <PackageReference Include="Mile.Xaml" Version="2.5.1250" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="PublishAotCompressed" Version="1.0.5" Condition="'$(Platform)' == 'x64'" />
     <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.26100.2" />
-    <PackageReference Include="MrmPatcher" Version="0.0.0-alpha.0.13" />
+    <PackageReference Include="MrmPatcher" Version="0.0.0-alpha.0.15" />
   </ItemGroup>
 
   <ItemGroup>

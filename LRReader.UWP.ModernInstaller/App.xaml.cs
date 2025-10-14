@@ -3,6 +3,7 @@ using LRReader.UWP.Installer.Views;
 using LRReader.UWP.Installer.Views.Controls;
 using MrmPatcher;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using TerraFX.Interop.Windows;
@@ -29,6 +30,8 @@ public partial class App : Application, IDisposable
 	private WindowsXamlManager _xamlManager = null!;
 	private CoreWindow _coreWindow = null!;
 
+	internal List<XamlCompositionSurface> surfaces = new();
+
 	private XamlCompositionSurface _surface = null!;
 	private XamlCompositionSurface _titlebar = null!;
 
@@ -54,8 +57,8 @@ public partial class App : Application, IDisposable
 		_coreWindow = CoreWindow.GetForCurrentThread();
 
 		using ComPtr<ICoreWindowInterop> interop = default;
-		ThrowIfFailed(((IUnknown*)((IWinRTObject)_coreWindow).NativeObject.ThisPtr)->QueryInterface(__uuidof<ICoreWindowInterop>(), (void**)interop.GetAddressOf()));
-		ThrowIfFailed(interop.Get()->get_WindowHandle((HWND*)Unsafe.AsPointer(ref _coreHwnd)));
+		((IUnknown*)((IWinRTObject)_coreWindow).NativeObject.ThisPtr)->QueryInterface(__uuidof<ICoreWindowInterop>(), (void**)interop.GetAddressOf());
+		interop.Get()->get_WindowHandle((HWND*)Unsafe.AsPointer(ref _coreHwnd));
 
 		SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
 		((IXamlSourceTransparency)(object)Window.Current).SetIsBackgroundTransparent(true);
@@ -121,7 +124,10 @@ public partial class App : Application, IDisposable
 
 	public unsafe bool PreTranslateMessage(MSG* msg)
 	{
-		return _surface.PreTranslateMessage(msg) || _titlebar.PreTranslateMessage(msg);
+		foreach(var surface in surfaces)
+			if (surface.PreTranslateMessage(msg))
+				return true;
+		return false;
 	}
 
 }

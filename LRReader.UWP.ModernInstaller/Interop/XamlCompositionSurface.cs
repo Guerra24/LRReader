@@ -12,7 +12,7 @@ using static TerraFX.Interop.Windows.WS;
 
 namespace LRReader.UWP.Installer.Interop;
 
-public class XamlCompositionSurface
+public partial class XamlCompositionSurface : IDisposable
 {
 	private HWND _xamlHwnd = default;
 
@@ -29,12 +29,14 @@ public class XamlCompositionSurface
 	{
 		_desktopWindowXamlSource = new();
 
-		ThrowIfFailed(((IUnknown*)((IWinRTObject)_desktopWindowXamlSource).NativeObject.ThisPtr)->QueryInterface(__uuidof<IDesktopWindowXamlSourceNative2>(), (void**)_nativeSource.GetAddressOf()));
+		((IUnknown*)((IWinRTObject)_desktopWindowXamlSource).NativeObject.ThisPtr)->QueryInterface(__uuidof<IDesktopWindowXamlSourceNative2>(), (void**)_nativeSource.GetAddressOf());
 
-		ThrowIfFailed(_nativeSource.Get()->AttachToWindow(parent));
-		ThrowIfFailed(_nativeSource.Get()->get_WindowHandle((HWND*)Unsafe.AsPointer(ref _xamlHwnd)));
+		_nativeSource.Get()->AttachToWindow(parent);
+		_nativeSource.Get()->get_WindowHandle((HWND*)Unsafe.AsPointer(ref _xamlHwnd));
 
 		_desktopWindowXamlSource.Content = content();
+
+		((App)Application.Current).surfaces.Add(this);
 	}
 
 	public void Resize(int x, int y, int width, int height)
@@ -42,7 +44,7 @@ public class XamlCompositionSurface
 		SetWindowPos(_xamlHwnd, HWND.NULL, x, y, width, height, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
-	public void OnSeSettFocus()
+	public void OnSetFocus()
 	{
 		SetFocus(_xamlHwnd);
 	}
@@ -54,13 +56,18 @@ public class XamlCompositionSurface
 		SetWindowLongPtrW(_xamlHwnd, GWL_EXSTYLE, dwExStyle);
 	}
 
-	public unsafe bool PreTranslateMessage(MSG* msg)
+	internal unsafe bool PreTranslateMessage(MSG* msg)
 	{
 		BOOL result = false;
 
 		_nativeSource.Get()->PreTranslateMessage(msg, &result);
 
 		return result;
+	}
+
+	public void Dispose()
+	{
+		((App)Application.Current).surfaces.Remove(this);
 	}
 
 }

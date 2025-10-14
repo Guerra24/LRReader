@@ -1,3 +1,4 @@
+using LRReader.UWP.Installer.Interop;
 using LRReader.UWP.Installer.Services;
 using LRReader.UWP.Installer.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace LRReader.UWP.Installer.Views;
 public sealed partial class InstallerPage : UserControl
 {
 	public InstallerPageViewModel Data;
+	private XamlWindow test;
 
 	public InstallerPage()
 	{
@@ -34,4 +36,9 @@ public sealed partial class InstallerPage : UserControl
 		}
 		await Data.Load();
 	}
+
+	private void Button_Click(object sender, RoutedEventArgs e)
+	{
+		test = new("Test");
+    }
 }

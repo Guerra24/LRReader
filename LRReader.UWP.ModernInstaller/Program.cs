@@ -5,7 +5,6 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using TerraFX.Interop.Windows;
-using static LRReader.UWP.Installer.Interop.ErrorHelpers;
 using static TerraFX.Interop.Windows.MB;
 using static TerraFX.Interop.Windows.SM;
 using static TerraFX.Interop.Windows.Windows;
@@ -73,10 +72,9 @@ internal class Program
 			wc.lpfnWndProc = &WndProc;
 			wc.hInstance = GetModuleHandleW(null);
 			wc.lpszClassName = lpszClassName;
-			ThrowLastErrorIfNull(RegisterClassW(&wc));
+			RegisterClassW(&wc);
 
 			var hwnd = CreateWindowExW(WS_EX_NOREDIRECTIONBITMAP, lpszClassName, lpWindowName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 976, 521, HWND.NULL, HMENU.NULL, wc.hInstance, null);
-			ThrowLastErrorIfDefault(hwnd);
 
 			MSG msg;
 			while (GetMessageW(&msg, HWND.NULL, 0, 0))
@@ -95,10 +93,6 @@ internal class Program
 	[UnmanagedCallersOnly]
 	private unsafe static LRESULT WndProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		LRESULT dwmResult;
-		if (DwmDefWindowProc(hWnd, uMsg, wParam, lParam, &dwmResult))
-			return dwmResult;
-
 		switch (uMsg)
 		{
 			case WM_CREATE:
@@ -151,6 +145,10 @@ internal class Program
 				}
 			case WM_NCHITTEST:
 				{
+					LRESULT dwmResult;
+					if (DwmDefWindowProc(hWnd, uMsg, wParam, lParam, &dwmResult))
+						return dwmResult;
+
 					var x = LOWORD(lParam);
 					var y = HIWORD(lParam);
 					var ret = DefWindowProcW(hWnd, uMsg, wParam, lParam);

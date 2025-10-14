@@ -42,6 +42,7 @@
 					<Button Command="{x:Bind Data.UninstallCommand}" HorizontalAlignment="Center" Content="Uninstall" Visibility="{x:Bind Data.InstallState, Mode=OneWay, Converter={StaticResource InstallStateToVisibilityConverter}, ConverterParameter=Installed}" />
 				</StackPanel>
 			</Grid>
+			<Button Grid.Row="2" Content="Settings" Click="Button_Click"/>
 		</Grid>
 		<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="42">
 			<StackPanel Orientation="Horizontal" Spacing="32">
