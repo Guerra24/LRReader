@@ -1,7 +1,7 @@
-using LRReader.UWP.Installer.Interop;
 using LRReader.UWP.Installer.Services;
 using LRReader.UWP.Installer.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Modern.UI.Xaml;
 using System;
 using System.IO;
 using System.Reflection;
@@ -39,6 +39,7 @@ public sealed partial class InstallerPage : UserControl
 
 	private void Button_Click(object sender, RoutedEventArgs e)
 	{
-		test = new("Test");
+		test = new("Settings");
+		test.Activate();
     }
 }

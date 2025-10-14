@@ -8,6 +8,19 @@
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
+	<UserControl.Resources>
+		<Style TargetType="Viewbox">
+			<Setter Property="MaxWidth" Value="16"/>
+			<Setter Property="MaxHeight" Value="16"/>
+		</Style>
+		<Style x:Key="MiniButton" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+			<Setter Property="Width" Value="34" />
+			<Setter Property="Height" Value="32" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+		</Style>
+	</UserControl.Resources>
+
 	<Grid x:Name="Root" Margin="0,-32,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
@@ -42,8 +55,12 @@
 					<Button Command="{x:Bind Data.UninstallCommand}" HorizontalAlignment="Center" Content="Uninstall" Visibility="{x:Bind Data.InstallState, Mode=OneWay, Converter={StaticResource InstallStateToVisibilityConverter}, ConverterParameter=Installed}" />
 				</StackPanel>
 			</Grid>
-			<Button Grid.Row="2" Content="Settings" Click="Button_Click"/>
 		</Grid>
+		<Button Click="Button_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="8" Style="{StaticResource MiniButton}">
+			<Viewbox>
+				<SymbolIcon Symbol="Setting" />
+			</Viewbox>
+		</Button>
 		<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="42">
 			<StackPanel Orientation="Horizontal" Spacing="32">
 				<FontIcon FontSize="40" Glyph="&#xE736;" />
