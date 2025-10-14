@@ -16,7 +16,9 @@ public partial class App : XamlApplication
 
 	protected override void OnLaunched()
 	{
-		mainWindow = new($"LRReader {Service.AppInfo.Version}");
+		mainWindow = new($"LRReader {Service.AppInfo.Version}", 976, 521);
+		mainWindow.MinWidth = 976;
+		mainWindow.MinHeight = 521;
 		mainWindow.Content = new InstallerPage();
 		mainWindow.Activate();
 	}
