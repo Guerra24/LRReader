@@ -15,7 +15,7 @@ public static class Service
 
 		collection.AddSingleton<InstallerService>();
 		collection.AddSingleton(appInfo);
-		collection.AddSingleton<CertUtil>();
+		collection.AddTransient<CertUtil>();
 
 		collection.AddTransient<InstallerPageViewModel>();
 

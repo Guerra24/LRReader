@@ -38,11 +38,12 @@ internal class Program
 			[CertInfo.CertThumb],
 			version));
 
-		using (var certUtil = Service.Services.GetRequiredService<CertUtil>())
+		var appInfo = Service.AppInfo;
+		if (args != null && args.Length > 0)
 		{
-			var appInfo = Service.AppInfo;
-			if (args != null && args.Length > 0)
+			using (var scope = Service.Services.CreateScope())
 			{
+				var certUtil = scope.ServiceProvider.GetRequiredService<CertUtil>();
 				bool ok = false;
 				switch (args[0])
 				{
@@ -57,10 +58,10 @@ internal class Program
 				}
 				return ok ? 0 : -1;
 			}
-
-			xamlApp = new();
-			xamlApp.Run();
 		}
+
+		xamlApp = new();
+		xamlApp.Run();
 		return 0;
 	}
 

@@ -11,7 +11,7 @@ public partial class App : XamlApplication
 
 	public App()
 	{
-		InitializeComponent();
+		this.InitializeComponent();
 	}
 
 	protected override void OnLaunched()

@@ -27,6 +27,7 @@
     <ProjectPriFileName>resources.pri</ProjectPriFileName>
     <MileXamlManagedNoNativeBackend>true</MileXamlManagedNoNativeBackend>
     <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
+    <MrmPatcherEnabled>true</MrmPatcherEnabled>
     <MrmPatcherEmbedPri>true</MrmPatcherEmbedPri>
   </PropertyGroup>
 
@@ -42,9 +43,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.1.25451.107" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.2.25502.107" />
     <PackageReference Include="Mile.Xaml" Version="2.5.1250" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="Modern.UI.Xaml" Version="0.0.0-alpha.0.4" />
+    <PackageReference Include="Modern.UI.Xaml" Version="0.0.0-alpha.0.5" />
     <PackageReference Include="PublishAotCompressed" Version="1.0.5" Condition="'$(Platform)' == 'x64'" />
   </ItemGroup>
 

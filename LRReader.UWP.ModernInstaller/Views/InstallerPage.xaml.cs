@@ -41,5 +41,5 @@ public sealed partial class InstallerPage : UserControl
 	{
 		test = new("Settings");
 		test.Activate();
-    }
+	}
 }

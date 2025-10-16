@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LRReader.UWP.Installer.Services;
 using System;
 using System.Threading.Tasks;
+using Windows.Management.Deployment;
 
 namespace LRReader.UWP.Installer.ViewModels;
 
@@ -43,7 +44,7 @@ public partial class InstallerPageViewModel : ObservableObject
 		InstallProgress = -1;
 		ShowButtons = false;
 		ShowProgress = true;
-		var result = await Installer.Install(new Progress<uint>(percentage => InstallProgress = percentage));
+		var result = await Installer.Install(new Progress<DeploymentProgress>(progress => InstallProgress = progress.percentage));
 		if (result.IsRegistered)
 		{
 			await Installer.Launch();
