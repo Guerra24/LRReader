@@ -32,20 +32,20 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <Title>LRReader Installer</Title>
     <Description>LRReader Sideload Installer</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="logo.ico" />
+    <EmbeddedResource Include="icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.2.25502.107" />
     <PackageReference Include="Mile.Xaml" Version="2.5.1250" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="Modern.UI.Xaml" Version="0.0.0-alpha.0.5" />
+    <PackageReference Include="Modern.UI.Xaml" Version="0.0.0-alpha.0.6" />
     <PackageReference Include="PublishAotCompressed" Version="1.0.5" Condition="'$(Platform)' == 'x64'" />
   </ItemGroup>
 

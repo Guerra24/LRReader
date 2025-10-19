@@ -28,7 +28,7 @@ public sealed partial class InstallerPage : UserControl
 
 	private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 	{
-		using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("LRReader.UWP.ModernInstaller.logo.ico"))
+		using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("LRReader.UWP.ModernInstaller.icon.ico"))
 		{
 			var bitmap = new BitmapImage();
 			await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
