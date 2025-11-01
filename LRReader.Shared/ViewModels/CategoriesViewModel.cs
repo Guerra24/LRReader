@@ -50,7 +50,7 @@ namespace LRReader.Shared.ViewModels
 			if (item.Item is AddNewCategory)
 			{
 				var dialog = Platform.CreateDialog<ICreateCategoryDialog>(Dialog.CreateCategory, false);
-				var result = await dialog.ShowAsync();
+				var result = await Platform.ShowDialog(dialog);
 				if (result == IDialogResult.Primary)
 				{
 					var resultCreate = await CategoriesProvider.CreateCategory(dialog.Name, dialog.Query, dialog.Pin);

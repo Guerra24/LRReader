@@ -24,15 +24,13 @@ namespace LRReader.UWP.Views.Content.Settings
 		private async void License_Click(object sender, RoutedEventArgs e)
 		{
 			var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///LICENSE.md"));
-			var dialog = Service.Platform.CreateDialog(Dialog.Markdown, lang.GetString("About/License"), await FileIO.ReadTextAsync(file));
-			await dialog.ShowAsync();
+			await Service.Platform.OpenDialog(Dialog.Markdown, lang.GetString("About/License"), await FileIO.ReadTextAsync(file));
 		}
 
 		private async void Privacy_Click(object sender, RoutedEventArgs e)
 		{
 			var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Privacy.md"));
-			var dialog = Service.Platform.CreateDialog(Dialog.Markdown, lang.GetString("About/Privacy"), await FileIO.ReadTextAsync(file));
-			await dialog.ShowAsync();
+			await Service.Platform.OpenDialog(Dialog.Markdown, lang.GetString("About/Privacy"), await FileIO.ReadTextAsync(file));
 		}
 
 	}

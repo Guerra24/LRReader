@@ -295,7 +295,7 @@ namespace LRReader.Shared.ViewModels
 		private async Task AddProfile()
 		{
 			var dialog = Platform.CreateDialog<ICreateProfileDialog>(Dialog.ServerProfile, false);
-			var result = await dialog.ShowAsync();
+			var result = await Platform.ShowDialog(dialog);
 			if (result == IDialogResult.Primary)
 			{
 				var address = dialog.Address;
@@ -313,7 +313,7 @@ namespace LRReader.Shared.ViewModels
 			dialog.Address = profile.ServerAddress;
 			dialog.ApiKey = profile.ServerApiKey;
 			dialog.Integration = profile.Integration;
-			var result = await dialog.ShowAsync();
+			var result = await Platform.ShowDialog(dialog);
 			if (result == IDialogResult.Primary)
 			{
 				var address = dialog.Address;

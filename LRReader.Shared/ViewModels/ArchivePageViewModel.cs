@@ -219,7 +219,7 @@ namespace LRReader.Shared.ViewModels
 			if (Api.ControlFlags.ProgressTracking && Bookmarked && BookmarkProgress + 1 != Archive.progress && Archive.progress > 0)
 			{
 				var dialog = Platform.CreateDialog<IProgressConflictDialog>(Dialog.ProgressConflict, BookmarkProgress + 1, Archive.progress, Pages);
-				await dialog.ShowAsync();
+				await Platform.ShowDialog(dialog);
 				switch (dialog.Mode)
 				{
 					case ConflictMode.Local:

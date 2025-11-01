@@ -119,7 +119,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			var dialog = Platform.CreateDialog<IThumbnailPickerDialog>(Dialog.ThumbnailPicker, Archive.arcid);
 			await dialog.LoadThumbnails();
-			if (await dialog.ShowAsync() == IDialogResult.Primary && await ArchivesProvider.ChangeThumbnail(Archive.arcid, dialog.Page))
+			if (await Platform.ShowDialog(dialog) == IDialogResult.Primary && await ArchivesProvider.ChangeThumbnail(Archive.arcid, dialog.Page))
 			{
 				await Hide.InvokeAsync(Platform.AnimationsEnabled);
 				Thumbnail = await ImageProcessing.ByteToBitmap(await Images.GetThumbnailCached(Archive.arcid, forced: true), decodeHeight: 275);

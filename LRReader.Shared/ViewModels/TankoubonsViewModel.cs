@@ -62,7 +62,7 @@ namespace LRReader.Shared.ViewModels
 			if (item.Item is AddNewTankoubon)
 			{
 				var dialog = Platform.CreateDialog<ICreateTankoubonDialog>(Dialog.CreateTankoubon);
-				var result = await dialog.ShowAsync();
+				var result = await Platform.ShowDialog(dialog);
 				if (result == IDialogResult.Primary)
 				{
 					var resultCreate = await TankoubonsProvider.CreateTankoubon(dialog.Name);

@@ -71,7 +71,7 @@ namespace LRReader.Shared.ViewModels.Base
 				dialog.Name = Category.name;
 				dialog.Query = Category.search;
 				dialog.Pin = Category.pinned;
-				var result = await dialog.ShowAsync();
+				var result = await Platform.ShowDialog(dialog);
 				if (result == IDialogResult.Primary)
 				{
 					var updateResult = await CategoriesProvider.UpdateCategory(Category.id, dialog.Name, dialog.Query, dialog.Pin);

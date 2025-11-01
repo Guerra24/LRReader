@@ -78,6 +78,19 @@ namespace LRReader.Shared.Services
 			}
 		}
 
+		public async Task<IDialogResult> ShowDialog(IDialog dialog)
+		{
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				return await dialog.ShowAsync();
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
+		}
+
 		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog].Type, args)!;
 
 		public IDialog CreateDialog(Dialog dialog, params object?[]? args) => CreateDialog<IDialog>(dialog, args);

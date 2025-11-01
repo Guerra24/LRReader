@@ -177,8 +177,7 @@ namespace LRReader.UWP.Views.Main
 			if (string.IsNullOrEmpty(log.Name) || string.IsNullOrEmpty(log.Content))
 				return;
 
-			var dialog = Platform.CreateDialog(Dialog.Markdown, lang.GetString("HostTab/ChangelogTitle"), log.Content);
-			await dialog.ShowAsync();
+			await Platform.OpenDialog(Dialog.Markdown, lang.GetString("HostTab/ChangelogTitle"), log.Content);
 		}
 	}
 }
