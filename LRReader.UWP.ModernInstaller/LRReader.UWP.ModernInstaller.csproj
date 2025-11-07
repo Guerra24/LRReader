@@ -18,7 +18,7 @@
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
     <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.20250829.1</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
-    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.6584</MicrosoftWindowsSDKBuildToolsPackageVersion>
+    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.6901</MicrosoftWindowsSDKBuildToolsPackageVersion>
     <WindowsSdkPackageVersion>10.0.26100.73-preview</WindowsSdkPackageVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DisableEmbeddedXbf>false</DisableEmbeddedXbf>

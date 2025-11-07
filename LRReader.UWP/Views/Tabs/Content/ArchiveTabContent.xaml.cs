@@ -19,6 +19,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,11 +42,9 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _wasNew;
 		private bool _opened;
 		private bool _focus = true;
-		private bool _changePage;
 		private bool _changingPage;
 		private float _lastZoom;
 		private double _fitAgainstFixedWidth;
-		private bool _handleDoubleTap;
 		private bool _overlayDelayOpen;
 
 		private bool _transition;
@@ -70,6 +69,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			ElementCompositionPreview.SetIsTranslationEnabled(ReaderThumbnailOverlay, true);
 			ElementCompositionPreview.GetElementVisual(ReaderThumbnailOverlay).Properties.InsertVector3("Translation", new Vector3(0, 317, 0));
 			*/
+			ScrollViewer.AddHandler(PointerReleasedEvent, new PointerEventHandler(ScrollViewer_PointerRelease), true);
 
 			Data = Service.Services.GetRequiredService<ArchivePageViewModel>();
 			Data.ZoomChangedEvent += FitImages;
@@ -242,7 +242,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			_wasNew = await Data.SaveReaderData(_wasNew);
 
 			_transition = false;
-			_changePage = false;
 			_open = false;
 			gcCounter = 0;
 			Data.PageCounter = 0;
@@ -460,64 +459,72 @@ namespace LRReader.UWP.Views.Tabs.Content
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
 			{
 				var delta = pointerPoint.Properties.MouseWheelDelta;
-				switch (e.KeyModifiers)
+				if (e.KeyModifiers == VirtualKeyModifiers.Control || pointerPoint.Properties.IsRightButtonPressed)
 				{
-					case VirtualKeyModifiers.None:
-						if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0 && Service.Settings.ScrollToChangePage)
-						{
-							e.Handled = true;
-							NextPage(true);
-						}
-						else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0 && Service.Settings.ScrollToChangePage)
-						{
-							e.Handled = true;
-							PrevPage(true);
-						}
-						break;
-					case VirtualKeyModifiers.Control:
+					e.Handled = true;
+					Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
+				}
+				else if (e.KeyModifiers == VirtualKeyModifiers.None)
+				{
+					if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0 && Service.Settings.ScrollToChangePage)
+					{
 						e.Handled = true;
-						Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
-						break;
+						NextPage(true);
+					}
+					else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0 && Service.Settings.ScrollToChangePage)
+					{
+						e.Handled = true;
+						PrevPage(true);
+					}
 				}
 			}
 		}
 
 		private void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
+			e.Handled = true;
+		}
+
+		private async void ScrollViewer_PointerRelease(object sender, PointerRoutedEventArgs e)
+		{
 			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
 			var point = pointerPoint.Position;
 			double distance = ScrollViewer.ActualWidth / 6.0;
 			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
 			{
-				_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
+				//_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
 			}
 			else
 			{
-				_changePage = pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed;
+				if (pointerPoint.Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonReleased || pointerPoint.Properties.PointerUpdateKind == PointerUpdateKind.RightButtonReleased)
+				{
+					e.Handled = HandleTapped(point);
+				}
 			}
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
 			{
-				if (pointerPoint.Properties.IsXButton1Pressed)
+				switch (pointerPoint.Properties.PointerUpdateKind)
 				{
-					e.Handled = true;
-					FocusReader();
-					PrevPage();
-					return;
-				}
-				else if (pointerPoint.Properties.IsXButton2Pressed)
-				{
-					e.Handled = true;
-					FocusReader();
-					NextPage();
-					return;
+					case PointerUpdateKind.XButton1Released:
+						e.Handled = true;
+						FocusReader();
+						PrevPage();
+						return;
+					case PointerUpdateKind.XButton2Released:
+						e.Handled = true;
+						FocusReader();
+						NextPage();
+						return;
+					case PointerUpdateKind.MiddleButtonReleased:
+						e.Handled = true;
+						await OpenOverlay();
+						break;
 				}
 			}
 		}
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
 		{
-			if (!_handleDoubleTap)
-				return;
 			var point = e.GetPosition(ScrollViewer);
 			double distance = ScrollViewer.ActualWidth / 6.0;
 			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
@@ -535,27 +542,24 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		private void ScrollViewer_RightTapped(object sender, RightTappedRoutedEventArgs e) => e.Handled = HandleTapped(e.GetPosition(ScrollViewer));
-
-		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e) => e.Handled = HandleTapped(e.GetPosition(ScrollViewer));
+		private async void ScrollViewer_Holding(object sender, HoldingRoutedEventArgs e)
+		{
+			await OpenOverlay();
+			e.Handled = true;
+		}
 
 		private bool HandleTapped(Point point)
 		{
-			if (_changePage)
+			double distance = ScrollViewer.ActualWidth / 6.0;
+			if (point.X < distance)
 			{
-				double distance = ScrollViewer.ActualWidth / 6.0;
-				if (point.X < distance)
-				{
-					PrevPage();
-					_changePage = false;
-					return true;
-				}
-				else if (point.X > ScrollViewer.ActualWidth - distance)
-				{
-					NextPage();
-					_changePage = false;
-					return true;
-				}
+				PrevPage();
+				return true;
+			}
+			else if (point.X > ScrollViewer.ActualWidth - distance)
+			{
+				NextPage();
+				return true;
 			}
 			return false;
 		}
@@ -856,21 +860,28 @@ namespace LRReader.UWP.Views.Tabs.Content
 			return targetAnim;
 		}
 
+		private async Task OpenOverlay()
+		{
+			if (ReaderThumbnailOverlay.IsOpen)
+				return;
+			ReaderThumbnailOverlay.IsOpen = true;
+			await Task.Delay(50);
+			OverlayThumbnails.SelectedIndex = Data.ReaderContent.Page;
+			await OverlayThumbnails.SmoothScrollIntoViewWithIndexAsync(Data.ReaderContent.Page, ScrollItemPlacement.Center);
+		}
+
 		private async void Trigger_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
 			if (!Data.ShowReader)
 				return;
 			if (!Service.Settings.ShowMap)
 				return;
+			if (e.Pointer.PointerDeviceType == PointerDeviceType.Touch)
+				return;
 			_overlayDelayOpen = true;
 			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
 			if (_overlayDelayOpen)
-			{
-				ReaderThumbnailOverlay.IsOpen = true;
-				await Task.Delay(50);
-				OverlayThumbnails.SelectedIndex = Data.ReaderContent.Page;
-				await OverlayThumbnails.SmoothScrollIntoViewWithIndexAsync(Data.ReaderContent.Page, ScrollItemPlacement.Center);
-			}
+				await OpenOverlay();
 		}
 
 		private void Trigger_PointerExited(object sender, PointerRoutedEventArgs e)
@@ -907,5 +918,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 				_changingPage = false;
 			}
 		}
+
 	}
 }

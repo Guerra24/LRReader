@@ -14,7 +14,8 @@
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-windows10.0.26100.0'">
+  <!--Condition="'$(TargetFramework)' == 'net10.0-windows10.0.26100.0'"-->
+  <PropertyGroup >
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 

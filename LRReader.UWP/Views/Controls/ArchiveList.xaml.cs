@@ -250,6 +250,8 @@ namespace LRReader.UWP.Views.Controls
 				ArchivesGrid.SelectionMode = value;
 				if (value == ListViewSelectionMode.Multiple || value == ListViewSelectionMode.Extended)
 					VisualStateManager.GoToState(this, "Selected", false);
+				if (value == ListViewSelectionMode.None)
+					ArchivesGrid.IsSwipeEnabled = false;
 			}
 		}
 

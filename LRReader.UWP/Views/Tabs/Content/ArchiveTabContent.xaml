@@ -212,12 +212,14 @@
 			x:Name="ReaderBackground" Grid.RowSpan="2"
 			Background="{ThemeResource ReaderBackground}"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}" />
+		<!-- ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" -->
 		<ScrollViewer
-			x:Name="ScrollViewer" Grid.RowSpan="2" ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+			x:Name="ScrollViewer" Grid.RowSpan="2"
 			HorizontalAnchorRatio="0.5" HorizontalScrollBarVisibility="Auto" KeyboardAcceleratorPlacementMode="Hidden"
-			PointerPressed="ScrollViewer_PointerPressed" RightTapped="ScrollViewer_RightTapped" SizeChanged="ScrollViewer_SizeChanged"
-			DoubleTapped="ScrollViewer_DoubleTapped"
-			Tapped="ScrollViewer_Tapped" VerticalAnchorRatio="0.01" VerticalScrollBarVisibility="Auto"
+			SizeChanged="ScrollViewer_SizeChanged"
+			PointerPressed="ScrollViewer_PointerPressed"
+			DoubleTapped="ScrollViewer_DoubleTapped" Holding="ScrollViewer_Holding"
+			VerticalAnchorRatio="0.01" VerticalScrollBarVisibility="Auto"
 			ViewChanged="ScrollViewer_ViewChanged"
 			Visibility="{x:Bind Data.ShowReader, Mode=OneWay}">
 			<ContentControl
