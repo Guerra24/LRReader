@@ -29,7 +29,7 @@ public partial class CustomCheckboxListViewItemPresenter : ListViewItemPresenter
 	{
 		base.OnApplyTemplate();
 
-		var checkbox = this.FindDescendant<Border>();
+		var checkbox = this.FindDescendant<Border>(border => border.Height == 20);
 		checkbox?.Margin = new Thickness(0, 26, 5, 0);
 	}
 }

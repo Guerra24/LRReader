@@ -485,6 +485,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			e.Handled = true;
 		}
 
+		// Test touch mode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		private async void ScrollViewer_PointerRelease(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
