@@ -28,7 +28,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public SearchResultsViewModel Data;
 
-		private bool loaded, ready;
+		private bool loaded, ready, selectMode;
 
 		private string query = "";
 
@@ -199,6 +199,10 @@ namespace LRReader.UWP.Views.Controls
 			{
 				if (item.Group == null)
 					item.Group = Data.ArchiveList.ToList();
+				if (selectMode)
+					VisualStateManager.GoToState(item, "SelectionMode", false);
+				else
+					VisualStateManager.GoToState(item, "Normal", false);
 				item.Phase0();
 				args.RegisterUpdateCallback(Phase1);
 			}
@@ -248,10 +252,18 @@ namespace LRReader.UWP.Views.Controls
 			set
 			{
 				ArchivesGrid.SelectionMode = value;
-				if (value == ListViewSelectionMode.Multiple || value == ListViewSelectionMode.Extended)
-					VisualStateManager.GoToState(this, "Selected", false);
-				if (value == ListViewSelectionMode.None)
-					ArchivesGrid.IsSwipeEnabled = false;
+				switch (value)
+				{
+					case ListViewSelectionMode.Multiple:
+					case ListViewSelectionMode.Extended:
+						VisualStateManager.GoToState(this, "Selected", false);
+						selectMode = true;
+						break;
+					case ListViewSelectionMode.None:
+						ArchivesGrid.IsSwipeEnabled = false;
+						selectMode = false;
+						break;
+				}
 			}
 		}
 

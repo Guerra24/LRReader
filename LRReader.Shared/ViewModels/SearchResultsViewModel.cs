@@ -62,22 +62,21 @@ namespace LRReader.Shared.ViewModels
 		private int _sortByIndex = -1;
 		public Order OrderBy = Order.Ascending;
 		public ObservableCollection<string> SuggestedTags = new();
+
+		[ObservableProperty]
 		private ArchiveStyle _archiveStyle;
-		public ArchiveStyle ArchiveStyle
+
+		partial void OnArchiveStyleChanged(ArchiveStyle value)
 		{
-			get => _archiveStyle;
-			set
+			if (value != ArchiveStyle._InvalidIgnore)
 			{
-				if (value != ArchiveStyle._InvalidIgnore && SetProperty(ref _archiveStyle, value))
+				var tmp = ArchiveList.ToList();
+				ArchiveList.Clear();
+				Dispatcher.Run(async () =>
 				{
-					var tmp = ArchiveList.ToList();
-					ArchiveList.Clear();
-					Dispatcher.Run(async () =>
-					{
-						foreach (var item in tmp)
-							await Dispatcher.RunAsync(() => ArchiveList.Add(item), 10);
-					});
-				}
+					foreach (var item in tmp)
+						await Dispatcher.RunAsync(() => ArchiveList.Add(item), 10);
+				});
 			}
 		}
 
@@ -98,7 +97,7 @@ namespace LRReader.Shared.ViewModels
 			//if (Settings.ShowSuggestedTags)
 			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
 				SuggestedTags.Add(tag.GetNamespacedTag());
-			_archiveStyle = Settings.ArchiveStyle;
+			ArchiveStyle = Settings.ArchiveStyle;
 			WeakReferenceMessenger.Default.Register(this);
 		}
 

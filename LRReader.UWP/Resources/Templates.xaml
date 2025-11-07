@@ -402,7 +402,7 @@
 								<RowDefinition Height="*" />
 								<RowDefinition Height="24" />
 							</Grid.RowDefinitions>
-							<TextBlock
+							<TextBlock x:Name="Title"
 								Grid.Row="0" MaxHeight="114"
 								Padding="5,0" FontSize="15"
 								Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
@@ -418,6 +418,17 @@
 									Text="Tags..." />
 							</Grid>
 						</Grid>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal" />
+								<VisualState x:Name="SelectionMode">
+									<VisualState.Setters>
+										<Setter Target="Title.Margin" Value="0,0,22,0" />
+										<Setter Target="Title.HorizontalAlignment" Value="Stretch" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
@@ -591,8 +602,8 @@
 							<RowDefinition Height="275" />
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
-						<TextBlock
-							Grid.Row="0" Padding="5,0" HorizontalAlignment="Center"
+						<TextBlock x:Name="Title"
+							Grid.Row="0" Padding="5,1" HorizontalAlignment="Center"
 							FontSize="16"
 							Text="{x:Bind ViewModel.Archive.title, Mode=OneWay}"
 							TextTrimming="CharacterEllipsis"
@@ -634,6 +645,17 @@
 							PointerExited="{x:Bind TagsGrid_PointerExited}">
 							<TextBlock Padding="2,0" Text="{x:Bind ViewModel.Archive.TagsClean, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
 						</Grid>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal" />
+								<VisualState x:Name="SelectionMode">
+									<VisualState.Setters>
+										<Setter Target="Title.Margin" Value="0,0,22,0" />
+										<Setter Target="Title.HorizontalAlignment" Value="Stretch" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>

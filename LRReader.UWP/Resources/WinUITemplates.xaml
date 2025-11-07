@@ -422,7 +422,7 @@
 						CheckMode="{ThemeResource GridViewItemCheckMode}"
 						SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
 						SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
-						CornerRadius="{ThemeResource GridViewItemCornerRadius}"
+						CornerRadius="{TemplateBinding CornerRadius}"
 						CheckBoxCornerRadius="{ThemeResource GridViewItemCheckBoxCornerRadius}"
 						CheckPressedBrush="{ThemeResource GridViewItemCheckPressedBrush}"
 						CheckDisabledBrush="{ThemeResource GridViewItemCheckDisabledBrush}"
@@ -503,7 +503,7 @@
 					CheckMode="{ThemeResource GridViewItemCheckMode}"
 					SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
 					SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
-					CornerRadius="{ThemeResource GridViewItemCornerRadius}" />
+					CornerRadius="{TemplateBinding CornerRadius}" />
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
