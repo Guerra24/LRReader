@@ -41,11 +41,7 @@ namespace LRReader.Shared.ViewModels.Base
 			{
 				if (SetProperty(ref _archive, value))
 				{
-					var bookmark = Settings.Profile.Bookmarks.FirstOrDefault(b => Archive.arcid.Equals(b.archiveID));
-					if (bookmark != null)
-					{
-						BookmarkedArchive = bookmark;
-					}
+					BookmarkedArchive = Settings.Profile.Bookmarks.FirstOrDefault(b => Archive.arcid.Equals(b.archiveID));
 					OnPropertyChanged("IsNew");
 					OnPropertyChanged("Pages");
 					OnPropertyChanged("Rating");

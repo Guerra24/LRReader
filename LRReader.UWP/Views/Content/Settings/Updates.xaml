@@ -42,7 +42,7 @@
 							</TransitionCollection>
 						</StackPanel.Transitions>
 						<Button
-							x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right"
+							x:Uid="/Settings/Updates/Download" HorizontalAlignment="Right" Style="{StaticResource AccentButtonStyle}"
 							Command="{x:Bind Data.InstallUpdateCommand}"
 							IsEnabled="{x:Bind Data.InstallUpdateCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
 					</StackPanel>

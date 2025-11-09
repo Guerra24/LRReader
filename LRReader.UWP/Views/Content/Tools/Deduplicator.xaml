@@ -228,7 +228,7 @@
 									<Run x:Uid="/Tools/Deduplicator/EstimatedTime" />
 									<Run Text="{x:Bind Data.EstimatedTime, Mode=OneWay}" />
 								</TextBlock>
-								<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" IsEnabled="{x:Bind Data.ExecuteCommand.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" Visibility="{x:Bind services:Service.Settings.UseIncrementalCaching, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+								<Button x:Uid="/Tools/Deduplicator/Execute" Command="{x:Bind Data.ExecuteCommand}" Style="{StaticResource AccentButtonStyle}" Visibility="{x:Bind services:Service.Settings.UseIncrementalCaching, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 							</StackPanel>
 						</Grid>
 					</controls:ModernGroup>
