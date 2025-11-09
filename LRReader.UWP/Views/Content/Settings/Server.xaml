@@ -24,22 +24,35 @@
 					</controls:ModernExpander.Icon>
 					<StackPanel>
 						<TextBlock x:Uid="/Settings/Server/ApiRequired" Margin="0,0,0,10" Visibility="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
-						<CheckBox
-							x:Uid="/Settings/Server/ResizedImages"
-							IsChecked="{x:Bind Data.ServerInfo.server_resizes_images, Mode=OneWay}"
-							IsHitTestVisible="False" IsTabStop="False" />
-						<CheckBox
-							x:Uid="/Settings/Server/UsePassword"
-							IsChecked="{x:Bind Data.ServerInfo.has_password, Mode=OneWay}"
-							IsHitTestVisible="False" IsTabStop="False" />
-						<CheckBox
-							x:Uid="/Settings/Server/NoFun"
-							IsChecked="{x:Bind Data.ServerInfo.nofun_mode, Mode=OneWay}"
-							IsHitTestVisible="False" IsTabStop="False" />
-						<CheckBox
-							x:Uid="/Settings/Server/Debug"
-							IsChecked="{x:Bind Data.ServerInfo.debug_mode, Mode=OneWay}"
-							IsHitTestVisible="False" IsTabStop="False" />
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<Grid.Resources>
+								<Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+								</Style>
+							</Grid.Resources>
+							<CheckBox
+								x:Uid="/Settings/Server/ResizedImages"
+								IsChecked="{x:Bind Data.ServerInfo.server_resizes_images, Mode=OneWay}"
+								IsHitTestVisible="False" IsTabStop="False" />
+							<CheckBox Grid.Column="1"
+								x:Uid="/Settings/Server/UsePassword"
+								IsChecked="{x:Bind Data.ServerInfo.has_password, Mode=OneWay}"
+								IsHitTestVisible="False" IsTabStop="False" />
+							<CheckBox Grid.Column="2"
+								x:Uid="/Settings/Server/NoFun"
+								IsChecked="{x:Bind Data.ServerInfo.nofun_mode, Mode=OneWay}"
+								IsHitTestVisible="False" IsTabStop="False" />
+							<CheckBox Grid.Column="3"
+								x:Uid="/Settings/Server/Debug"
+								IsChecked="{x:Bind Data.ServerInfo.debug_mode, Mode=OneWay}"
+								IsHitTestVisible="False" IsTabStop="False" />
+						</Grid>
 					</StackPanel>
 				</controls:ModernExpander>
 				<!--

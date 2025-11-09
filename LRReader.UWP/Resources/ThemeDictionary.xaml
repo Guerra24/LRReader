@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:internal="using:LRReader.Internal">
-	<internal:DefaultElementAnimator x:Key="ItemsRepeaterAnimator" />
+	xmlns:controls="using:LRReader.UWP.Views.Controls">
+	<controls:DefaultElementAnimator x:Key="ItemsRepeaterAnimator" />
 	<SolidColorBrush x:Key="CustomReaderBackground" Color="Black" />
 
 	<ResourceDictionary.ThemeDictionaries>

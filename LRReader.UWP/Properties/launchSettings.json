@@ -8,6 +8,18 @@
       "remoteDebugEnabled": true,
       "authenticationMode": "Universal",
       "remoteDebugMachine": "Phoebe"
+    },
+    "LTSC 2019": {
+      "commandName": "MsixPackage",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "Universal",
+      "remoteDebugMachine": "DESKTOP-3LVSNQI"
+    },
+    "LTSC 2021": {
+      "commandName": "MsixPackage",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "Universal",
+      "remoteDebugMachine": "DESKTOP-4B6IGPH"
     }
   }
 }

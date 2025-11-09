@@ -545,8 +545,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void ScrollViewer_Holding(object sender, HoldingRoutedEventArgs e)
 		{
-			await OpenOverlay();
-			e.Handled = true;
+			var point = e.GetPosition(ScrollViewer);
+			double distance = ScrollViewer.ActualWidth / 6.0;
+			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+			{
+				await OpenOverlay();
+				e.Handled = true;
+			}
 		}
 
 		private bool HandleTapped(Point point)

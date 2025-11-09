@@ -35,7 +35,7 @@
 			<RowDefinition Height="275" />
 		</Grid.RowDefinitions>
 		<TextBlock
-			x:Name="Title" Padding="5,0" HorizontalAlignment="Center"
+			x:Name="Title" Padding="5,1" HorizontalAlignment="Center"
 			FontSize="16"
 			Text="{x:Bind ViewModel.Category.name, Mode=OneWay}"
 			TextTrimming="CharacterEllipsis"
@@ -53,14 +53,10 @@
 				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="24" Glyph="&#xE721;" />
 			</Grid>
 			<Grid
-				x:Name="PinnedGrid" Margin="4,0,0,4" Padding="4"
-				HorizontalAlignment="Left" VerticalAlignment="Bottom"
-				x:Load="{x:Bind ViewModel.Category.pinned, Mode=OneWay}"
-				Background="{ThemeResource GridOverGridBackground}"
-				BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-				BorderThickness="1"
-				CornerRadius="{ThemeResource ControlCornerRadius}">
-				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="26" Glyph="&#xE735;" />
+				x:Name="PinnedGrid" x:Load="{x:Bind ViewModel.Category.pinned, Mode=OneWay}"
+				Margin="4,0,0,4" Padding="4" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+				Style="{StaticResource ItemOverlayGrid}">
+				<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" FontSize="26" Glyph="&#xE735;" />
 			</Grid>
 		</Grid>
 	</Grid>

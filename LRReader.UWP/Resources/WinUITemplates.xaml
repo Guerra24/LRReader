@@ -444,7 +444,7 @@
 						SelectedInnerBorderBrush="{ThemeResource GridViewItemSelectedInnerBorderBrush}"/>
 				</ControlTemplate>
 			</Setter.Value>
-			<!--contract13:PointerOverBorderBrush="{ThemeResource GridViewItemPointerOverBorderBrush}"-->
+			<!-- PointerOverBorderBrush="{ThemeResource GridViewItemPointerOverBorderBrush}" -->
 		</Setter>
 	</contract13:Style>
 
@@ -472,38 +472,38 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="GridViewItem">
 					<controls:CustomCheckboxListViewItemPresenter
-					x:Name="Root"
-					ContentTransitions="{TemplateBinding ContentTransitions}"
-					Control.IsTemplateFocusTarget="True"
-					FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
-					FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
-					FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
-					FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
-					FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
-					SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}"
-					CheckBrush="{ThemeResource GridViewItemCheckBrush}"
-					CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
-					DragBackground="{ThemeResource GridViewItemDragBackground}"
-					DragForeground="{ThemeResource GridViewItemDragForeground}"
-					FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
-					PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
-					PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
-					PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
-					SelectedBackground="{ThemeResource GridViewItemBackgroundSelected}"
-					SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
-					SelectedPointerOverBackground="{ThemeResource GridViewItemBackgroundSelectedPointerOver}"
-					PressedBackground="{ThemeResource GridViewItemBackgroundPressed}"
-					SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}"
-					DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-					DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-					ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
-					HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-					VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-					ContentMargin="{TemplateBinding Padding}"
-					CheckMode="{ThemeResource GridViewItemCheckMode}"
-					SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
-					SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
-					CornerRadius="{TemplateBinding CornerRadius}" />
+						x:Name="Root"
+						ContentTransitions="{TemplateBinding ContentTransitions}"
+						Control.IsTemplateFocusTarget="True"
+						FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+						FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+						FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+						FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+						FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+						SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}"
+						CheckBrush="{ThemeResource GridViewItemCheckBrush}"
+						CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
+						DragBackground="{ThemeResource GridViewItemDragBackground}"
+						DragForeground="{ThemeResource GridViewItemDragForeground}"
+						FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
+						PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
+						PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
+						PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
+						SelectedBackground="{ThemeResource AccentFillColorDefaultBrush}"
+						SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
+						SelectedPointerOverBackground="{ThemeResource AccentFillColorSecondaryBrush}"
+						PressedBackground="{ThemeResource GridViewItemBackgroundPressed}"
+						SelectedPressedBackground="{ThemeResource AccentFillColorTertiaryBrush}"
+						DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+						DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+						ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+						HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+						VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+						ContentMargin="{TemplateBinding Padding}"
+						CheckMode="{ThemeResource GridViewItemCheckMode}"
+						SelectedBorderThickness="{ThemeResource GridViewItemSelectedBorderThickness}"
+						SelectedPointerOverBorderBrush="{ThemeResource GridViewItemSelectedPointerOverBorderBrush}"
+						CornerRadius="{TemplateBinding CornerRadius}" />
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
@@ -1186,7 +1186,7 @@
 					<VisualState x:Name="Selected">
 						<VisualState.Setters>
 							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlFillColorDefaultBrush}" />
-							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource SystemListAccentMediumColor}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundSelected}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundSelected}" />
 							<Setter Target="CloseButton.Background" Value="{ThemeResource TabViewItemHeaderSelectedCloseButtonBackground}" />
@@ -1198,7 +1198,7 @@
 					<VisualState x:Name="PointerOverSelected">
 						<VisualState.Setters>
 							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
-							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource SystemListAccentMediumColor}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundPointerOver}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundPointerOver}" />
 							<Setter Target="CloseButton.Background" Value="{ThemeResource TabViewItemHeaderSelectedCloseButtonBackground}" />
@@ -1210,7 +1210,7 @@
 					<VisualState x:Name="PressedSelected">
 						<VisualState.Setters>
 							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlFillColorTertiaryBrush}" />
-							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
+							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource SystemListAccentMediumColor}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundPressed}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundPressed}" />
 							<Setter Target="CloseButton.Background" Value="{ThemeResource TabViewItemHeaderSelectedCloseButtonBackground}" />
@@ -1487,7 +1487,7 @@
 					<VisualState x:Name="Selected">
 						<VisualState.Setters>
 							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlFillColorDefaultBrush}" />
-							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource SystemListAccentMediumColor}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundSelected}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundSelected}" />
 							<Setter Target="CloseButton.Background" Value="{ThemeResource TabViewItemHeaderSelectedCloseButtonBackground}" />
@@ -1499,7 +1499,7 @@
 					<VisualState x:Name="PointerOverSelected">
 						<VisualState.Setters>
 							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
-							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource SystemListAccentMediumColor}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundPointerOver}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundPointerOver}" />
 							<Setter Target="CloseButton.Background" Value="{ThemeResource TabViewItemHeaderSelectedCloseButtonBackground}" />
@@ -1511,7 +1511,7 @@
 					<VisualState x:Name="PressedSelected">
 						<VisualState.Setters>
 							<Setter Target="TabContainer.Background" Value="{ThemeResource ControlFillColorTertiaryBrush}" />
-							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
+							<Setter Target="TabContainer.BorderBrush" Value="{ThemeResource SystemListAccentMediumColor}" />
 							<Setter Target="ContentPresenter.Foreground" Value="{ThemeResource TabViewItemHeaderForegroundPressed}" />
 							<Setter Target="IconControl.Foreground" Value="{ThemeResource TabViewItemIconForegroundPressed}" />
 							<Setter Target="CloseButton.Background" Value="{ThemeResource TabViewItemHeaderSelectedCloseButtonBackground}" />
