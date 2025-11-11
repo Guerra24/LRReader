@@ -83,13 +83,17 @@ public partial class BulkEditorViewModel : ObservableObject
 		Running = true;
 		var items = selected.ToList().Cast<Archive>().ToList();
 		if (items.Count == 0)
+		{
+			Running = false;
 			return;
+		}
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
 			Progress++;
 			await Archives.DeleteArchive(a.arcid);
 		}
+		items.Clear();
 		Running = false;
 	}
 
@@ -99,7 +103,10 @@ public partial class BulkEditorViewModel : ObservableObject
 		Running = true;
 		var items = selected.ToList().Cast<Archive>().ToList();
 		if (items.Count == 0)
+		{
+			Running = false;
 			return;
+		}
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
@@ -110,6 +117,7 @@ public partial class BulkEditorViewModel : ObservableObject
 						await CategoriesProvider.RemoveArchiveFromCategory(c.id, a.arcid);
 			await CategoriesProvider.AddArchiveToCategory(SelectedCategory?.id ?? "", a.arcid);
 		}
+		items.Clear();
 		MoveToCategory = false;
 		Running = false;
 	}
@@ -120,7 +128,10 @@ public partial class BulkEditorViewModel : ObservableObject
 		Running = true;
 		var items = selected.ToList().Cast<Archive>().ToList();
 		if (items.Count == 0)
+		{
+			Running = false;
 			return;
+		}
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
@@ -128,6 +139,7 @@ public partial class BulkEditorViewModel : ObservableObject
 			await ArchivesProvider.UpdateArchive(a.arcid, tags: a.tags = "");
 			a.UpdateTags();
 		}
+		items.Clear();
 		Running = false;
 	}
 
@@ -136,10 +148,11 @@ public partial class BulkEditorViewModel : ObservableObject
 	{
 		Running = true;
 		var items = selected.ToList().Cast<Archive>().ToList();
-		if (items.Count == 0)
+		if (items.Count == 0 || Plugin == null)
+		{
+			Running = false;
 			return;
-		if (Plugin == null)
-			return;
+		}
 		MaxItems = items.Count;
 		foreach (var a in items)
 		{
@@ -154,6 +167,7 @@ public partial class BulkEditorViewModel : ObservableObject
 				await ArchivesProvider.UpdateArchive(a.arcid, tags: a.tags);
 			}
 		}
+		items.Clear();
 		Running = false;
 	}
 }

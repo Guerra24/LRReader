@@ -13,12 +13,7 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<Style x:Key="TagStyle" TargetType="Grid">
-			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
-			<Setter Property="BorderThickness" Value="1" />
-			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
-		</Style>
-		<Style x:Key="NamespaceStyle" TargetType="Grid">
+		<Style x:Key="NamespaceStyle" TargetType="Border">
 			<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
 			<Setter Property="Padding" Value="4,2" />
 			<Setter Property="Background" Value="{ThemeResource ControlFillColorDefault}" />
@@ -26,148 +21,59 @@
 			<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
 			<Setter Property="Margin" Value="0,0,4,0" />
 		</Style>
-		<Style x:Key="AddRemoveButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-			<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
-			<Setter Property="FontSize" Value="12" />
-			<Setter Property="Padding" Value="5.5" />
-		</Style>
 	</UserControl.Resources>
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition Width="Auto" />
-		</Grid.ColumnDefinitions>
-		<muxc:ItemsRepeater ItemsSource="{x:Bind ItemsSource, Mode=OneWay}">
-			<muxc:ItemsRepeater.ItemTemplate>
-				<DataTemplate x:DataType="x1:ArchiveTagsGroup">
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition />
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid VerticalAlignment="Top" Style="{ThemeResource NamespaceStyle}">
-							<TextBlock Foreground="{ThemeResource TextFillColorPrimaryBrush}" Text="{x:Bind Namespace, Converter={StaticResource TagNamespaceConverter}}" />
-						</Grid>
-						<GridView
-							Grid.Column="1" Margin="0" Padding="0"
-							IsItemClickEnabled="True" ItemClick="Tags_ItemClick"
-							ItemsSource="{x:Bind Tags}"
-							Loaded="TagsList_Loaded" SelectionMode="None">
-							<GridView.ItemTemplate>
-								<DataTemplate x:DataType="x1:ArchiveTagsGroupTag">
-									<Grid>
-										<!--<Grid.ColumnDefinitions>
-											<ColumnDefinition />
-											<ColumnDefinition />
-										</Grid.ColumnDefinitions>-->
-										<Grid.ContextFlyout>
-											<MenuFlyout>
-												<MenuFlyoutItem
-													x:Uid="/Tabs/Archive/CopyTag" Click="Tags_CopyTag" Icon="Copy"
-													Tag="{x:Bind FullTag}" />
-											</MenuFlyout>
-										</Grid.ContextFlyout>
-										<Grid x:Name="TagGrid" Padding="4,2" Visibility="Visible">
-											<TextBlock Text="{x:Bind Tag}" />
-										</Grid>
-										<!--<TextBox
-											x:Name="Input" MinWidth="0" MinHeight="0"
-											Padding="4,2"
-											BorderBrush="{ThemeResource ControlElevationBorderBrush}"
-											CornerRadius="4,0,0,4"
-											Text="{x:Bind Tag}"
-											Visibility="Collapsed" />
-										<Button
-											x:Name="Remove" Grid.Column="1"
-											Background="{ThemeResource ControlStrongStrokeColorDisabled}"
-											BorderBrush="{ThemeResource ControlElevationBorderBrush}"
-											BorderThickness="0,1,1,1" Content="&#xE738;" CornerRadius="0,4,4,0"
-											Style="{ThemeResource AddRemoveButtonStyle}"
-											Visibility="Collapsed" />
-										<VisualStateManager.VisualStateGroups>
-											<VisualStateGroup>
-												<VisualState x:Name="Default">
-													<VisualState.Setters>
-														<Setter Target="Tag.Visibility" Value="Visible" />
-														<Setter Target="Input.Visibility" Value="Collapsed" />
-														<Setter Target="Remove.Visibility" Value="Collapsed" />
-													</VisualState.Setters>
-												</VisualState>
-												<VisualState x:Name="Editing">
-													<VisualState.Setters>
-														<Setter Target="Tag.Visibility" Value="Collapsed" />
-														<Setter Target="Input.Visibility" Value="Visible" />
-														<Setter Target="Remove.Visibility" Value="Visible" />
-													</VisualState.Setters>
-												</VisualState>
-											</VisualStateGroup>
-										</VisualStateManager.VisualStateGroups>-->
-									</Grid>
-								</DataTemplate>
-							</GridView.ItemTemplate>
-							<GridView.ItemsPanel>
-								<ItemsPanelTemplate>
-									<controls:WrapPanel HorizontalSpacing="2" VerticalSpacing="2" />
-								</ItemsPanelTemplate>
-							</GridView.ItemsPanel>
-							<GridView.ItemContainerStyle>
-								<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
-									<Setter Property="Padding" Value="0" />
-									<Setter Property="Margin" Value="0,0" />
-									<Setter Property="MinWidth" Value="0" />
-									<Setter Property="MinHeight" Value="0" />
-									<Setter Property="BorderThickness" Value="1" />
-									<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
-									<Setter Property="Background" Value="{ThemeResource ControlStrongStrokeColorDisabled}" />
-								</Style>
-							</GridView.ItemContainerStyle>
-							<GridView.ItemContainerTransitions>
-								<TransitionCollection />
-							</GridView.ItemContainerTransitions>
-						</GridView>
-						<!--<Button
-							x:Name="Add" Grid.Column="3" Margin="4,0,0,0"
-							Content="&#xE710;"
-							Style="{ThemeResource AddRemoveButtonStyle}"
-							Visibility="Collapsed" />-->
-						<!--<muxc:ItemsRepeater Grid.Column="1" ItemsSource="{x:Bind Tags}">
-											<muxc:ItemsRepeater.ItemTemplate>
-												<DataTemplate x:DataType="x1:ArchiveTagsGroupTag">
-													<Grid Style="{ThemeResource TagStyle}">
-														<TextBlock Text="{x:Bind Tag}"  />
-													</Grid>
-												</DataTemplate>
-											</muxc:ItemsRepeater.ItemTemplate>
-											<muxc:ItemsRepeater.Layout>
-												<muxc:UniformGridLayout Orientation="Horizontal" />
-											</muxc:ItemsRepeater.Layout>
-										</muxc:ItemsRepeater>-->
-						<!--<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup>
-								<VisualState x:Name="Default">
-									<VisualState.Setters>
-										<Setter Target="Add.Visibility" Value="Collapsed" />
-									</VisualState.Setters>
-								</VisualState>
-								<VisualState x:Name="Editing">
-									<VisualState.Setters>
-										<Setter Target="Add.Visibility" Value="Visible" />
-									</VisualState.Setters>
-								</VisualState>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>-->
-					</Grid>
-				</DataTemplate>
-			</muxc:ItemsRepeater.ItemTemplate>
-			<muxc:ItemsRepeater.Layout>
-				<muxc:StackLayout DisableVirtualization="True" Spacing="4" />
-			</muxc:ItemsRepeater.Layout>
-		</muxc:ItemsRepeater>
-		<!--<ToggleButton
-			Grid.Column="1" Padding="4.5" HorizontalAlignment="Right"
-			VerticalAlignment="Top" Content="&#xE70F;" FontFamily="{StaticResource SymbolThemeFontFamily}" />-->
-	</Grid>
+	<muxc:ItemsRepeater ItemsSource="{x:Bind ItemsSource, Mode=OneWay}">
+		<muxc:ItemsRepeater.ItemTemplate>
+			<DataTemplate x:DataType="x1:ArchiveTagsGroup">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="1*" />
+					</Grid.ColumnDefinitions>
+					<Border VerticalAlignment="Top" Style="{StaticResource NamespaceStyle}">
+						<TextBlock Foreground="{ThemeResource TextFillColorPrimaryBrush}" Text="{x:Bind Namespace, Converter={StaticResource TagNamespaceConverter}}" />
+					</Border>
+					<GridView Grid.Column="1" Margin="0" Padding="0" IsItemClickEnabled="True" ItemClick="Tags_ItemClick" ItemsSource="{x:Bind Tags}" Loaded="TagsList_Loaded" SelectionMode="None">
+						<GridView.ItemTemplate>
+							<DataTemplate x:DataType="x1:ArchiveTagsGroupTag">
+								<Border Padding="4,2">
+									<Border.ContextFlyout>
+										<MenuFlyout>
+											<MenuFlyoutItem
+												x:Uid="/Tabs/Archive/CopyTag" Click="Tags_CopyTag" Icon="Copy"
+												Tag="{x:Bind FullTag}" />
+										</MenuFlyout>
+									</Border.ContextFlyout>
+									<TextBlock Text="{x:Bind Tag}" />
+								</Border>
+							</DataTemplate>
+						</GridView.ItemTemplate>
+						<GridView.ItemsPanel>
+							<ItemsPanelTemplate>
+								<controls:WrapPanel HorizontalSpacing="2" VerticalSpacing="2" />
+							</ItemsPanelTemplate>
+						</GridView.ItemsPanel>
+						<GridView.ItemContainerStyle>
+							<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+								<Setter Property="Padding" Value="0" />
+								<Setter Property="Margin" Value="0,0" />
+								<Setter Property="MinWidth" Value="0" />
+								<Setter Property="MinHeight" Value="0" />
+								<Setter Property="BorderThickness" Value="1" />
+								<Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+								<Setter Property="Background" Value="{ThemeResource ControlStrongStrokeColorDisabled}" />
+							</Style>
+						</GridView.ItemContainerStyle>
+						<GridView.ItemContainerTransitions>
+							<TransitionCollection />
+						</GridView.ItemContainerTransitions>
+					</GridView>
+				</Grid>
+			</DataTemplate>
+		</muxc:ItemsRepeater.ItemTemplate>
+		<muxc:ItemsRepeater.Layout>
+			<muxc:StackLayout DisableVirtualization="True" Spacing="4" />
+		</muxc:ItemsRepeater.Layout>
+	</muxc:ItemsRepeater>
 </UserControl>

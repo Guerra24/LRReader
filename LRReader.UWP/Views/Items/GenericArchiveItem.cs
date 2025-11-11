@@ -31,7 +31,7 @@ namespace LRReader.UWP.Views.Items
 
 		// Default
 		private Grid Root = null!;
-		private Image Thumbnail = null!;
+		//private Image Thumbnail = null!;
 		private Grid TagsGrid = null!;
 		private Flyout TagsFlyout = null!;
 
@@ -49,7 +49,6 @@ namespace LRReader.UWP.Views.Items
 			ViewModel.Show += Show;
 			ViewModel.Hide += Hide;
 			DataContextChanged += Control_DataContextChanged;
-			PointerPressed += Control_PointerPressed;
 		}
 
 		[DynamicWindowsRuntimeCast(typeof(Grid))]
@@ -60,7 +59,7 @@ namespace LRReader.UWP.Views.Items
 		{
 			base.OnApplyTemplate();
 			Root = (Grid)GetTemplateChild("Root");
-			Thumbnail = (Image)GetTemplateChild("Thumbnail");
+			//Thumbnail = (Image)GetTemplateChild("Thumbnail");
 			TagsGrid = (Grid)GetTemplateChild("TagsGrid");
 			TagsFlyout = (Flyout)GetTemplateChild("TagsFlyout");
 
@@ -161,8 +160,9 @@ namespace LRReader.UWP.Views.Items
 			}
 		}
 
-		private async void Control_PointerPressed(object sender, PointerRoutedEventArgs e)
+		protected async override void OnPointerPressed(PointerRoutedEventArgs e)
 		{
+			base.OnPointerPressed(e);
 			var pointerPoint = e.GetCurrentPoint(this);
 			if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse && pointerPoint.Properties.IsMiddleButtonPressed)
 			{

@@ -253,10 +253,13 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (!Data.CanGoNext)
 				return;
+			if (_transition)
+				return;
 			_transition = true;
 			await HideReader();
 			await Data.NextArchive();
 			await ShowReader();
+			Data.PageCounter = 0;
 			_transition = false;
 		}
 
@@ -265,13 +268,15 @@ namespace LRReader.UWP.Views.Tabs.Content
 		[RelayCommand]
 		private async Task Random(bool newOnly)
 		{
+			if (_transition)
+				return;
+			_transition = true;
 			var list = Service.Archives.Archives.Where(kv => kv.Value.isnew || !newOnly);
 			if (list.Count() <= 1)
 				return;
 			var random = new Random();
 			var item = list.ElementAt(random.Next(list.Count() - 1));
 
-			_transition = true;
 			await HideReader();
 			await Data.OpenArchive(item.Value);
 			await ShowReader();
@@ -485,7 +490,6 @@ namespace LRReader.UWP.Views.Tabs.Content
 			e.Handled = true;
 		}
 
-		// Test touch mode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		private async void ScrollViewer_PointerRelease(object sender, PointerRoutedEventArgs e)
 		{
 			var pointerPoint = e.GetCurrentPoint(ScrollViewer);
@@ -580,6 +584,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void NextPage(bool ignore = false)
 		{
+			if (_transition)
+				return;
 			_changingPage = true;
 			if (Data.UseAutoplay)
 				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayBeforeChangeDelay));
@@ -595,6 +601,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void PrevPage(bool ignore = false)
 		{
+			if (_transition)
+				return;
 			_changingPage = true;
 			if (Data.UseAutoplay)
 				await Task.Delay(TimeSpan.FromMilliseconds(Service.Settings.AutoplayBeforeChangeDelay));
@@ -610,7 +618,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task GoRight()
 		{
-			if (Data.UseVerticalReader)
+			if (Data.UseVerticalReader || _transition)
 				return;
 			if (Service.Settings.OpenNextArchive && Data.ReaderContent.Page + 1 >= Data.Pages)
 			{
@@ -628,7 +636,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async Task GoLeft()
 		{
-			if (Data.UseVerticalReader)
+			if (Data.UseVerticalReader || _transition)
 				return;
 			if (Data.ReaderIndex > 0)
 			{
