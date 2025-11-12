@@ -153,8 +153,6 @@ namespace LRReader.UWP.Converters
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
-			if (!(bool)value)
-				return ArchiveStyle._InvalidIgnore;
 			return Enum.Parse<ArchiveStyle>((string)parameter);
 		}
 	}

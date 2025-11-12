@@ -23,6 +23,12 @@ namespace LRReader.Shared.Services
 		[ObservableProperty]
 		private ICustomTab? _currentTab;
 
+		partial void OnCurrentTabChanged(ICustomTab? value)
+		{
+			// Try to keep memory under control
+			GC.Collect(1, GCCollectionMode.Forced, false, false);
+		}
+
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("Windowed")]
 		private bool _fullscreen;

@@ -47,10 +47,11 @@ namespace LRReader.Shared.Models
 		public IdTabState(Tab tab, string id) : base(tab) => Id = id;
 	}
 
-	public class ArchiveTabState(string id, int? page, bool wasOpen) : IdTabState(Tab.Archive, id)
+	public class ArchiveTabState(string id, int? page, bool wasOpen, List<string>? next) : IdTabState(Tab.Archive, id)
 	{
 		public int? Page { get; set; } = page;
 		public bool WasOpen { get; set; } = wasOpen;
+		public List<string>? Next { get; set; } = next;
 	}
 
 	public class SearchTabState(SearchState search) : TabState(Tab.SearchResults)

@@ -11,6 +11,7 @@
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+	xmlns:helpers="using:LRReader.UWP.Helpers"
 	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
@@ -84,9 +85,9 @@
 									<Button ToolTipService.ToolTip="{ext:LangString Key=Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" Visibility="{x:Bind ArchiveStyleButtonVisibility, Mode=OneWay}">
 										<Button.Flyout>
 											<MenuFlyout>
-												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Default}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Default}" />
-												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=ThumbnailOnly}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/ThumbnailOnly}" />
-												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=TwoWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Compact}" GroupName="{x:Bind random}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Compact}" />
+												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Default}" GroupName="{x:Bind random}" Command="{x:Bind Data.ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=Default}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Default}" />
+												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=ThumbnailOnly}" GroupName="{x:Bind random}" Command="{x:Bind Data.ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=ThumbnailOnly}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/ThumbnailOnly}" />
+												<muxc:RadioMenuFlyoutItem IsChecked="{x:Bind Data.ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Compact}" GroupName="{x:Bind random}" Command="{x:Bind Data.ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=Compact}" Text="{ext:LangString Key=Settings/General/ArchiveStyle/Compact}" />
 											</MenuFlyout>
 										</Button.Flyout>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xECA5;" />

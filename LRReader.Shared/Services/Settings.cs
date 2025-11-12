@@ -642,7 +642,7 @@ namespace LRReader.Shared.Services
 	}
 	public enum ArchiveStyle
 	{
-		Default, ThumbnailOnly, Compact, _InvalidIgnore = -1
+		Default, ThumbnailOnly, Compact
 	}
 
 	public enum SessionMode
