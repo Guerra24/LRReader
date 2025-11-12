@@ -110,6 +110,7 @@ namespace LRReader.UWP.Views.Content.Settings
 				content: Service.Platform.GetLocalizedString("Settings/General/SwitchCacheModeDialog/Content"));
 			if (result == Shared.Models.IDialogResult.Primary)
 			{
+				await Service.Session.Suspend();
 				Service.Tabs.CloseAllTabs();
 				Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);
 			}
