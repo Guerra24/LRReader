@@ -20,6 +20,9 @@
 				<controls:ModernInput x:Uid="/Settings/Profiles/AutoLogin" Glyph="&#xE8d7;">
 					<ToggleSwitch IsOn="{x:Bind Data.SettingsManager.AutoLogin, Mode=TwoWay}" />
 				</controls:ModernInput>
+				<controls:ModernInput x:Uid="/Settings/Profiles/Session" Glyph="&#xF738;">
+					<ComboBox x:Name="SessionMode" MinWidth="170" SelectedIndex="{x:Bind Data.SettingsManager.SessionMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
 				<controls:ModernExpander Title="Profiles save location" Description="{x:Bind Data.SettingsManager.ProfilesPathLocation, Mode=OneWay}" Glyph="&#xE8DE;">
 					<controls:ModernExpander.Input>
 						<Button Content="Change" Command="{x:Bind Data.ChangeProfilesLocationCommand}" />

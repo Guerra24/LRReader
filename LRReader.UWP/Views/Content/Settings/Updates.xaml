@@ -24,7 +24,7 @@
 					Title="{x:Bind Data.Changelog.Name, Mode=OneWay}"
 					Glyph="&#xE896;" IsExpanded="True"
 					Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
-					<ct:MarkdownTextBlock Text="{x:Bind Data.Changelog.Content, Mode=OneWay}" UseSoftlineBreakAsHardlineBreak="True"/>
+					<ct:MarkdownTextBlock Text="{x:Bind Data.Changelog.Content, Mode=OneWay}" UseSoftlineBreakAsHardlineBreak="True" UseAutoLinks="True" />
 				</controls:ModernExpander>
 				<StackPanel Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay}">
 					<StackPanel Margin="8">

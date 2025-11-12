@@ -363,6 +363,11 @@ namespace LRReader.Shared.Services
 			get => (ArchiveStyle)SettingsStorage.GetObjectLocal((int)ArchiveStyle.Default);
 			set => SettingsStorage.StoreObjectLocal((int)value);
 		}
+		public SessionMode SessionMode
+		{
+			get => (SessionMode)SettingsStorage.GetObjectRoamed((int)SessionMode.Ask);
+			set => SettingsStorage.StoreObjectRoamed((int)value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
@@ -532,9 +537,12 @@ namespace LRReader.Shared.Services
 				{
 					if (item is ServerProfile profile)
 					{
-						var path = $"{Files.LocalCache}/Metadata/{profile.UID}/";
-						if (Directory.Exists(path))
-							Directory.Delete(path, true);
+						var path = Path.Combine(Files.LocalCache, "Metadata", profile.UID);
+						if (Directory.Exists(path)) Directory.Delete(path, true);
+
+						var sessionFile = Path.Combine(Files.Local, "Session", $"{profile.UID}.json");
+						if (File.Exists(sessionFile)) File.Delete(sessionFile);
+						if (File.Exists($"{sessionFile}.old")) File.Delete($"{sessionFile}.old");
 					}
 				}
 			}
@@ -635,5 +643,10 @@ namespace LRReader.Shared.Services
 	public enum ArchiveStyle
 	{
 		Default, ThumbnailOnly, Compact, _InvalidIgnore = -1
+	}
+
+	public enum SessionMode
+	{
+		Never, Ask, Always
 	}
 }

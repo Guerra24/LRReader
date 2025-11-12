@@ -10,11 +10,13 @@ namespace LRReader.Shared.ViewModels
 	{
 		private readonly SettingsService Settings;
 		private readonly ArchivesService Archives;
+		private readonly SessionService Session;
 
-		public ArchivesPageViewModel(SettingsService settings, ArchivesService archives)
+		public ArchivesPageViewModel(SettingsService settings, ArchivesService archives, SessionService session)
 		{
 			Settings = settings;
 			Archives = archives;
+			Session = session;
 		}
 
 		public async Task Refresh()
@@ -32,6 +34,20 @@ namespace LRReader.Shared.ViewModels
 			SuggestedTags.Clear();
 			foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
 				SuggestedTags.Add(tag.GetNamespacedTag());*/
+
+			switch (Settings.SessionMode)
+			{
+				case SessionMode.Never:
+					break;
+				case SessionMode.Ask:
+					if (await Session.HasValidTabs())
+						Session.ShowRestore = true;
+					break;
+				case SessionMode.Always:
+					await Session.Restore();
+					break;
+			}
+
 			if (Settings.OpenBookmarksStart)
 				foreach (var b in Settings.Profile.Bookmarks)
 				{
@@ -47,6 +63,7 @@ namespace LRReader.Shared.ViewModels
 				await Task.WhenAll(Settings.Profile.MarkedAsNonDuplicated.Select(hit => Task.WhenAll(Archives.GetOrAddArchive(hit.Left), Archives.GetOrAddArchive(hit.Right))));
 			}
 			Settings.Profile.MarkedAsNonDuplicated.RemoveAll(hit => !(Archives.HasArchive(hit.Left) && Archives.HasArchive(hit.Right)));
+
 		}
 
 	}

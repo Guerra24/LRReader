@@ -123,9 +123,10 @@ public static class ArchivesProvider
 				var value = Encoding.UTF8.GetString(Encoding.Latin1.GetBytes(r.GetContentHeaderValue("Content-Disposition")!));
 				var contentDisposition = ContentDispositionHeaderValue.Parse(value);
 
+				var ext = Path.GetExtension(contentDisposition.FileName!);
 				download.Data = r.RawBytes!;
-				download.Name = Path.GetFileNameWithoutExtension(contentDisposition.FileName!);
-				download.Type = Path.GetExtension(contentDisposition.FileName!);
+				download.Name = contentDisposition.FileName!.Substring(0, contentDisposition.FileName!.LastIndexOf(ext));
+				download.Type = ext;
 				return download;
 			default:
 				var error = await r.GetError();

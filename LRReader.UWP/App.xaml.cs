@@ -137,7 +137,7 @@ namespace LRReader.UWP
 		private async void OnSuspending(object sender, SuspendingEventArgs e)
 		{
 			var deferral = e.SuspendingOperation.GetDeferral();
-			await Service.Persistance.Suspend();
+			await Session.Suspend();
 			await SentrySdk.FlushAsync(TimeSpan.FromSeconds(2));
 			deferral.Complete();
 		}

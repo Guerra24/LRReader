@@ -44,6 +44,7 @@ namespace LRReader.UWP.Views.Content.Settings
 			var result = await Service.Platform.OpenGenericDialog(lang.GetString("General/SwitchProfile/Title"), lang.GetString("General/SwitchProfile/PrimaryButtonText"), closebutton: lang.GetString("General/SwitchProfile/CloseButtonText"), content: lang.GetString("General/SwitchProfile/Content").AsFormat("\n"));
 			if (result == IDialogResult.Primary)
 			{
+				await Service.Session.Suspend();
 				Data.SettingsManager.Profile = profile;
 				Service.Tabs.CloseAllTabs();
 				Service.Platform.GoToPage(Pages.Loading, PagesTransition.DrillIn);

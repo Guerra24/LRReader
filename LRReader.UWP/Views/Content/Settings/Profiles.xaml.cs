@@ -3,6 +3,7 @@ using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,6 +20,10 @@ namespace LRReader.UWP.Views.Content.Settings
 		{
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
+			var lang = ResourceLoader.GetForCurrentView("Settings");
+			SessionMode.Items.Add(lang.GetString("Profiles/SessionMode/Never"));
+			SessionMode.Items.Add(lang.GetString("Profiles/SessionMode/Ask"));
+			SessionMode.Items.Add(lang.GetString("Profiles/SessionMode/Always"));
 		}
 
 		private async void OpenFolder_Click(object sender, RoutedEventArgs e)

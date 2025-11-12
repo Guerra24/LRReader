@@ -2,13 +2,11 @@
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
-using LRReader.UWP.Services;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Core;
@@ -25,7 +23,6 @@ namespace LRReader.UWP.Views.Main
 	{
 
 		private readonly TabsService Data;
-		private readonly SettingsService Settings;
 
 		private CoreApplicationView CoreView;
 		private ApplicationView AppView;
@@ -36,7 +33,6 @@ namespace LRReader.UWP.Views.Main
 		{
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<TabsService>();
-			Settings = Service.Settings;
 
 			CoreView = CoreApplication.GetCurrentView();
 			AppView = ApplicationView.GetForCurrentView();
@@ -63,17 +59,11 @@ namespace LRReader.UWP.Views.Main
 
 			WeakReferenceMessenger.Default.Register(this);
 
-			await Service.Dispatcher.RunAsync(() =>
-			{
-				Data.OpenTab(Tab.Archives);
-				if (Settings.OpenBookmarksTab)
-					Data.OpenTab(Tab.Bookmarks, false);
-				if (Settings.OpenCategoriesTab)
-					Data.OpenTab(Tab.Categories, false);
-			});
-
-			if (((UWPlatformService)Service.Platform).ExecutionState == ApplicationExecutionState.Terminated)
-				await Service.Persistance.Restore();
+			Data.OpenTab(Tab.Archives);
+			if (Settings.OpenBookmarksTab)
+				Data.OpenTab(Tab.Bookmarks, false);
+			if (Settings.OpenCategoriesTab)
+				Data.OpenTab(Tab.Categories, false);
 
 			var info = await Updates.CheckForUpdates();
 
@@ -178,6 +168,12 @@ namespace LRReader.UWP.Views.Main
 				return;
 
 			await Platform.OpenDialog(Dialog.Markdown, lang.GetString("HostTab/ChangelogTitle"), log.Content);
+		}
+
+		private async void RestoreSession_ActionButtonClick(TeachingTip sender, object args)
+		{
+			sender.IsOpen = false;
+			await Session.Restore();
 		}
 	}
 }

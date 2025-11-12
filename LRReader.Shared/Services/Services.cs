@@ -36,7 +36,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<ApiService>();
 			collection.AddSingleton<TabsService>();
 			collection.AddSingleton<IKarenService, StubKarenService>();
-			collection.AddSingleton<Persistance>();
+			collection.AddSingleton<SessionService>();
 
 			// Tools
 			collection.AddSingleton<DeduplicationTool>();
@@ -97,7 +97,7 @@ namespace LRReader.Shared.Services
 		public static ApiService Api => Services.GetRequiredService<ApiService>();
 		public static TabsService Tabs => Services.GetRequiredService<TabsService>();
 		public static IKarenService Karen => Services.GetRequiredService<IKarenService>();
-		public static Persistance Persistance => Services.GetRequiredService<Persistance>();
+		public static SessionService Session => Services.GetRequiredService<SessionService>();
 
 		// Insanity
 		public static SettingsPageViewModel SettingsPageViewModel => Services.GetRequiredService<SettingsPageViewModel>();

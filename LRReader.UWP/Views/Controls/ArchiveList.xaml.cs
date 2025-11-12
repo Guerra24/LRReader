@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.WinUI;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
@@ -34,6 +35,8 @@ namespace LRReader.UWP.Views.Controls
 
 		private string random = $"ArchiveList_{new Random().Next().ToString()}";
 
+		private SearchState? searchState;
+
 		public ArchiveList()
 		{
 			this.InitializeComponent();
@@ -50,7 +53,16 @@ namespace LRReader.UWP.Views.Controls
 
 			if (OnLoad != null)
 				await OnLoad();
-			await HandleSearch();
+
+			if (!string.IsNullOrEmpty(searchState?.Category))
+			{
+				var category = await CategoriesProvider.GetCategory(searchState.Category);
+				if (category != null)
+					Data.Category = category;
+			}
+
+			await Data.LoadPage(searchState?.Page ?? 0);
+			searchState = null;
 			ready = true;
 		}
 
@@ -170,6 +182,16 @@ namespace LRReader.UWP.Views.Controls
 			Data.Category = category;
 		}
 
+		public void Search(SearchState state)
+		{
+			searchState = state;
+			SearchBox.Text = Data.Query = this.query = state.Query;
+			Data.NewOnly = state.New;
+			Data.UntaggedOnly = state.Untagged;
+			Data.SortByIndex = Data.SortBy.IndexOf(state.SortBy);
+			Data.OrderBy = state.OrderBy;
+		}
+
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
 			Data.SortByIndex = -1;
@@ -222,6 +244,14 @@ namespace LRReader.UWP.Views.Controls
 		{
 			if (!args.InRecycleQueue && args.ItemContainer.ContentTemplateRoot is GenericArchiveItem item)
 				item.Phase2();
+		}
+
+		public SearchTabState GetTabState()
+		{
+			var sortby = "";
+			if (Data.SortByIndex != -1)
+				sortby = Data.SortBy.ElementAt(Data.SortByIndex);
+			return new(searchState ?? new(Data.Query, Data.Page, Data.NewOnly, Data.UntaggedOnly, sortby, Data.OrderBy, Data.Category.id));
 		}
 
 		// Dependency

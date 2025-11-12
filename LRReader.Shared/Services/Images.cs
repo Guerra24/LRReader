@@ -32,7 +32,7 @@ public class ImagesService : IService
 		imagesCache = new LRUCache<string, byte[]>(500, 50);
 		imagesSizeCache = new LRUCache<string, Size>(10000, 100);
 		thumbnailsCache = new LRUCache<string, byte[]>(5000, 100);
-		thumbnailCacheDirectory = Directory.CreateDirectory(Files.LocalCache + "/Images/Thumbnails");
+		thumbnailCacheDirectory = Directory.CreateDirectory(Path.Combine(files.LocalCache, "Images", "Thumbnails"));
 		SixLabors.ImageSharp.Configuration.Default.Configure(new JpegXLConfigurationModule());
 	}
 

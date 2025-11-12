@@ -70,7 +70,7 @@
 						</Viewbox>
 					</Button>
 					-->
-					<Button x:Uid="/Pages/HostTabPage/Tools" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tools}" Visibility="{x:Bind Settings.Profile.HasApiKey, Mode=OneWay}">
+					<Button x:Uid="/Pages/HostTabPage/Tools" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tools}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey, Mode=OneWay}">
 						<Viewbox>
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
 						</Viewbox>
@@ -97,12 +97,13 @@
 				</StackPanel>
 			</controls:ModernTabView.ExtraFooter>
 		</controls:ModernTabView>
+		<muxc:TeachingTip IsOpen="{x:Bind services:Service.Session.ShowRestore, Mode=TwoWay}" x:Uid="/Pages/HostTabPage/RestoreSession" IsLightDismissEnabled="False" PreferredPlacement="TopRight" PlacementMargin="0,33,0,0" ActionButtonStyle="{StaticResource AccentButtonStyle}" ActionButtonClick="RestoreSession_ActionButtonClick" />
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="Default" />
 				<VisualState x:Name="Vertical">
 					<VisualState.StateTriggers>
-						<StateTrigger IsActive="{x:Bind Settings.UseVerticalTabs}" />
+						<StateTrigger IsActive="{x:Bind services:Service.Settings.UseVerticalTabs}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="TabViewControl.Template" Value="{StaticResource MicaTabViewVerticalTemplate}" />

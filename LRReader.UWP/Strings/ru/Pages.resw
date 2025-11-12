@@ -144,6 +144,15 @@
   <data name="HostTabPage.EnterFullScreen.ToolTipService.ToolTip" xml:space="preserve">
     <value>Полноэкранный режим</value>
   </data>
+  <data name="HostTabPage.RestoreSession.ActionButtonContent" xml:space="preserve">
+    <value>Yes, restore</value>
+  </data>
+  <data name="HostTabPage.RestoreSession.Subtitle" xml:space="preserve">
+    <value>Do you want to restore the last session?</value>
+  </data>
+  <data name="HostTabPage.RestoreSession.Title" xml:space="preserve">
+    <value>Restore last session</value>
+  </data>
   <data name="HostTabPage.Search.ToolTipService.ToolTip" xml:space="preserve">
     <value>Поиск</value>
   </data>

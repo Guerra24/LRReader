@@ -63,3 +63,19 @@ public static class MinionExtensions
 		}
 	}
 }
+
+public static class OrderExtensions
+{
+	public static string String(this Order order)
+	{
+		switch (order)
+		{
+			case Order.Ascending:
+				return "asc";
+			case Order.Descending:
+				return "desc";
+			default:
+				return "";
+		}
+	}
+}

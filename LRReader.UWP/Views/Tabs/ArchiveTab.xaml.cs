@@ -16,11 +16,11 @@ namespace LRReader.UWP.Views.Tabs
 			//AutoplayButton.Content = Service.Platform.GetLocalizedString("/Tabs/Archive/AutoplayState/Play");
 		}
 
-		public ArchiveTab(Archive archive, int progress, bool wasOpen)
+		public ArchiveTab(Archive archive, ArchiveTabState state)
 		{
 			this.InitializeComponent();
 			this.CustomTabId = "Archive_" + archive.arcid;
-			TabContent.LoadArchive(archive, forceProgress: progress, open: wasOpen);
+			TabContent.LoadArchive(archive, state: state);
 			//AutoplayButton.Content = Service.Platform.GetLocalizedString("/Tabs/Archive/AutoplayState/Play");
 		}
 
@@ -30,7 +30,7 @@ namespace LRReader.UWP.Views.Tabs
 			TabContent.RemoveEvent();
 		}
 
-		public override TabState GetTabState() => new ArchiveTabState(Tab, TabContent.Data.Archive.arcid, TabContent.Data.ReaderContent?.Page, TabContent.Data.ShowReader);
+		public override TabState GetTabState() => TabContent.GetTabState();
 
 		//private void AutoplayButton_Checked(object sender, RoutedEventArgs e) => AutoplayButton.Content = Service.Platform.GetLocalizedString("/Tabs/Archive/AutoplayState/Stop");
 

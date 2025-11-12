@@ -136,7 +136,6 @@ namespace LRReader.Shared.ViewModels
 					foreach (var tag in Archives.TagStats.OrderByDescending(t => t.weight).Take(Settings.MaxSuggestedTags).ToList())
 						SuggestedTags.Add(tag.GetNamespacedTag());*/
 			}
-			Page = page;
 			string sortby;
 			if (SortByIndex == -1)
 				sortby = "title";
@@ -146,6 +145,7 @@ namespace LRReader.Shared.ViewModels
 			if (resultPage != null)
 			{
 				TotalArchives = resultPage.recordsFiltered;
+				Page = page;
 				await Task.Run(async () =>
 				{
 					foreach (var a in resultPage.data)

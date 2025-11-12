@@ -1,4 +1,6 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models;
+using LRReader.Shared.Models.Main;
+using LRReader.UWP.Views.Controls;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
@@ -25,5 +27,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			ArchiveList.Search(category);
 		}
+
+		public void Search(SearchState state)
+		{
+			ArchiveList.Search(state);
+		}
+
+		public SearchTabState GetTabState() => ArchiveList.GetTabState();
 	}
 }

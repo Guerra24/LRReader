@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <!--Condition="'$(TargetFramework)' == 'net10.0-windows10.0.26100.0'"-->
-  <PropertyGroup >
+  <PropertyGroup>
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 
@@ -24,7 +24,7 @@
     <PackageReference Include="Caching" Version="3.1.3" />
     <PackageReference Include="JxlNet" Version="0.11.1.2" />
     <PackageReference Include="KeyedSemaphores" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.2.25502.107" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="Sentry" Version="6.0.0-preview.2-prerelease" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />

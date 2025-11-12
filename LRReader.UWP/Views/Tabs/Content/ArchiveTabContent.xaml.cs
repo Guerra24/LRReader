@@ -2,10 +2,12 @@
 using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Animations;
 using LRReader.Shared.Extensions;
+using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
+using LRReader.UWP.Views.Content;
 using LRReader.UWP.Views.Items;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -50,13 +52,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 		private bool _transition;
 
 		private bool _open;
-		private int? _forceProgress;
 
 		private int gcCounter;
 
 		private TimeSpan _previousTime = TimeSpan.Zero;
 
 		private SemaphoreSlim _loadSemaphore = new SemaphoreSlim(1);
+
+		private ArchiveTabState? archiveState;
 
 		private bool Animate => Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations;
 
@@ -94,21 +97,22 @@ namespace LRReader.UWP.Views.Tabs.Content
 					var page = 0;
 					if (Data.Bookmarked)
 						page = Data.BookmarkProgress;
-					OpenReader(_forceProgress ?? page);
+					OpenReader(archiveState?.Page ?? page);
+					archiveState = null;
 				}
 				_opened = true;
 			}
 		}
 
-		public async void LoadArchive(Archive archive, IList<Archive>? next = null, int? forceProgress = null, bool open = false)
+		public async void LoadArchive(Archive archive, IList<Archive>? next = null, ArchiveTabState? state = null)
 		{
 			Data.Archive = archive;
 			if (next != null)
 				Data.Group = next;
-			if (_open = open || Service.Settings.OpenReader)
+			if (_open = state?.WasOpen ?? false || Service.Settings.OpenReader)
 				RefreshContainer.Visibility = Visibility.Collapsed;
+			archiveState = state;
 			await Data.Reload();
-			_forceProgress = forceProgress;
 			_loadSemaphore.Release();
 		}
 
@@ -932,6 +936,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 				_changingPage = false;
 			}
 		}
+
+		public ArchiveTabState GetTabState() => archiveState ?? new ArchiveTabState(Data.Archive.arcid, Data.ReaderContent?.Page, Data.ShowReader);
 
 	}
 }

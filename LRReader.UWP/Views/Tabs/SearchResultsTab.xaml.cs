@@ -1,4 +1,5 @@
-﻿using LRReader.Shared.Models.Main;
+﻿using LRReader.Shared.Models;
+using LRReader.Shared.Models.Main;
 using LRReader.UWP.Views.Controls;
 using System;
 using Windows.UI.Xaml;
@@ -14,10 +15,8 @@ namespace LRReader.UWP.Views.Tabs
 			CustomTabId = "Search_" + new Random().Next();
 		}
 
-		public SearchResultsTab(string query = "")
+		public SearchResultsTab(string query = "") : this()
 		{
-			this.InitializeComponent();
-			CustomTabId = "Search_" + new Random().Next();
 			TabContent.Search(query);
 		}
 
@@ -29,9 +28,16 @@ namespace LRReader.UWP.Views.Tabs
 			TabContent.Search(category);
 		}
 
+		public SearchResultsTab(SearchState state) : this()
+		{
+			TabContent.Search(state);
+		}
+
 		private async void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
 			await TabContent.Refresh();
 		}
+
+		public override TabState GetTabState() => TabContent.GetTabState();
 	}
 }
