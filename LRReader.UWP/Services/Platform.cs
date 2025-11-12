@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Models;
 using LRReader.Shared.Services;
+using LRReader.UWP.Extensions;
 using LRReader.UWP.Views;
 using LRReader.UWP.Views.Dialogs;
 using LRReader.UWP.Views.Main;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation.Metadata;
@@ -42,8 +42,6 @@ namespace LRReader.UWP.Services
 		private Root Root = null!;
 
 		private Dictionary<string, string> LocalizationCache = new();
-
-		public ApplicationExecutionState ExecutionState { get; private set; }
 
 		public UWPlatformService(TabsService tabs, IFilesService files)
 		{
@@ -124,14 +122,7 @@ namespace LRReader.UWP.Services
 			Window.Current.Activated += Current_Activated;
 		}
 
-		public override Version Version
-		{
-			get
-			{
-				var version = Package.Current.Id.Version;
-				return new Version(version.Major, version.Minor, version.Build, version.Revision);
-			}
-		}
+		public override Version Version => Package.Current.Id.Version.ToVersion();
 
 		public override bool AnimationsEnabled => _animationsEnabled;
 
@@ -204,8 +195,6 @@ namespace LRReader.UWP.Services
 		public void SetRoot(Root root) => this.Root = root;
 
 		private void Current_Activated(object sender, WindowActivatedEventArgs e) => Active = e.WindowActivationState != CoreWindowActivationState.Deactivated;
-
-		public void SetAppExecState(ApplicationExecutionState state) => ExecutionState = state;
 
 	}
 }

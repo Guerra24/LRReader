@@ -10,6 +10,7 @@ using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -391,5 +392,10 @@ namespace LRReader.UWP.Extensions
 			return Value;
 		}
 	}*/
+
+	public static class PackageVersionExtension
+	{
+		public static Version ToVersion(this PackageVersion version) => new Version(version.Major, version.Minor, version.Build, version.Revision);
+	}
 
 }

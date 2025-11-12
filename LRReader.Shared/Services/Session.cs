@@ -103,15 +103,16 @@ public partial class SessionService : ObservableObject
 
 	private async Task<AppState?> DeserializeSession(string path)
 	{
-		try
-		{
-			var appState = JsonSerializer.Deserialize<AppState>(await Files.GetFile(path), JsonSettings.Options)!;
-			return appState;
-		}
-		catch (Exception e)
-		{
-			SentrySdk.CaptureException(e);
-		}
+		if (File.Exists(path))
+			try
+			{
+				var appState = JsonSerializer.Deserialize<AppState>(await Files.GetFile(path), JsonSettings.Options)!;
+				return appState;
+			}
+			catch (Exception e)
+			{
+				SentrySdk.CaptureException(e);
+			}
 		return null;
 	}
 }

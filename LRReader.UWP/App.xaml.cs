@@ -110,7 +110,6 @@ namespace LRReader.UWP
 
 				((SolidColorBrush)this.Resources["CustomReaderBackground"]).Color = ColorHelper.ToColor(Settings.ReaderBackground);
 
-				platform.SetAppExecState(e.PreviousExecutionState);
 				Window.Current.Content = root;
 			}
 
