@@ -98,17 +98,19 @@ namespace LRReader.UWP.Views.Tabs.Content
 					if (Data.Bookmarked)
 						page = Data.BookmarkProgress;
 					OpenReader(archiveState?.Page ?? page);
-					archiveState = null;
 				}
 				_opened = true;
 			}
+			archiveState = null;
 		}
 
-		public async void LoadArchive(Archive archive, IList<Archive>? next = null, ArchiveTabState? state = null)
+		public async void LoadArchive(Archive archive, List<Archive>? next = null, ArchiveTabState? state = null)
 		{
 			Data.Archive = archive;
 			if (next != null)
 				Data.Group = next;
+			if (state?.Next != null)
+				Data.Group = [.. (await Task.WhenAll(state.Next.Select(Service.Archives.GetOrAddArchive).ToList())).Where(a => a != null).Select(a => a!)];
 			if (_open = state?.WasOpen ?? false || Service.Settings.OpenReader)
 				RefreshContainer.Visibility = Visibility.Collapsed;
 			archiveState = state;
@@ -937,7 +939,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			}
 		}
 
-		public ArchiveTabState GetTabState() => archiveState ?? new ArchiveTabState(Data.Archive.arcid, Data.ReaderContent?.Page, Data.ShowReader);
+		public ArchiveTabState GetTabState() => archiveState ?? new ArchiveTabState(Data.Archive.arcid, Data.ReaderContent?.Page, Data.ShowReader, Data.Group.Select(a => a.arcid).ToList());
 
 	}
 }

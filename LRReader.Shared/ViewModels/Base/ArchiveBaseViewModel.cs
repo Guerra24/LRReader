@@ -254,7 +254,7 @@ namespace LRReader.Shared.ViewModels.Base
 			}
 		}
 
-		public async Task OpenTab(IList<Archive> group)
+		public async Task OpenTab(List<Archive> group)
 		{
 			if (Archive.IsTank)
 			{

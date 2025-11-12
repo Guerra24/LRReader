@@ -66,20 +66,6 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private ArchiveStyle _archiveStyle;
 
-		partial void OnArchiveStyleChanged(ArchiveStyle value)
-		{
-			if (value != ArchiveStyle._InvalidIgnore)
-			{
-				var tmp = ArchiveList.ToList();
-				ArchiveList.Clear();
-				Dispatcher.Run(async () =>
-				{
-					foreach (var item in tmp)
-						await Dispatcher.RunAsync(() => ArchiveList.Add(item), 10);
-				});
-			}
-		}
-
 		public event Func<Task>? OnRefresh;
 
 		public SearchResultsViewModel(SettingsService settings, ArchivesService archives, IDispatcherService dispatcher, ApiService api, TabsService tabs)
@@ -197,6 +183,21 @@ namespace LRReader.Shared.ViewModels
 		public void Receive(DeleteArchiveMessage message)
 		{
 			ArchiveList.Remove(message.Value);
+		}
+
+		[RelayCommand]
+		private async Task ChangeStyle(ArchiveStyle style)
+		{
+			if (ArchiveStyle == style)
+				return;
+			ArchiveStyle = style;
+			var tmp = ArchiveList.ToList();
+			ArchiveList.Clear();
+			await Task.Run(async () =>
+			{
+				foreach (var item in tmp)
+					await Dispatcher.RunAsync(() => ArchiveList.Add(item), 10);
+			});
 		}
 	}
 }

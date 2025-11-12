@@ -39,7 +39,7 @@ namespace LRReader.UWP.Views.Items
 		public ParallaxView? Parallax;
 
 		// Internal
-		public IList<Archive> Group = null!;
+		public List<Archive> Group = null!;
 
 		public GenericArchiveItem()
 		{

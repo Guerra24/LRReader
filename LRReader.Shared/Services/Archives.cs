@@ -195,7 +195,7 @@ namespace LRReader.Shared.Services
 
 		public bool HasArchive(string id) => Archives.ContainsKey(id);
 
-		public void OpenTab(Archive archive, bool switchToTab = true, IList<Archive>? next = null)
+		public void OpenTab(Archive archive, bool switchToTab = true, List<Archive>? next = null)
 		{
 			Tabs.OpenTab(Tab.Archive, switchToTab, archive, next);
 		}

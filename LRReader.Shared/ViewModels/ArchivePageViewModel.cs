@@ -25,7 +25,7 @@ namespace LRReader.Shared.ViewModels
 
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("CanGoNext")]
-		private IList<Archive> _group = new List<Archive>();
+		private List<Archive> _group = new List<Archive>();
 
 		public bool CanGoNext => Group.Count != 0 && Group.ElementAtOrDefault(Group.IndexOf(Archive) + 1) != null;
 

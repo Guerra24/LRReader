@@ -8,7 +8,7 @@ namespace LRReader.UWP.Views.Tabs
 	public sealed partial class ArchiveTab : ModernTab
 	{
 
-		public ArchiveTab(Archive archive, IList<Archive> next)
+		public ArchiveTab(Archive archive, List<Archive> next)
 		{
 			this.InitializeComponent();
 			this.CustomTabId = "Archive_" + archive.arcid;
