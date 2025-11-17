@@ -7,7 +7,6 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using LRReader.UWP.Extensions;
-using LRReader.UWP.Views.Content;
 using LRReader.UWP.Views.Items;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -527,6 +526,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 						NextPage();
 						return;
 					case PointerUpdateKind.MiddleButtonReleased:
+						if (!Service.Settings.ShowMap)
+							break;
 						e.Handled = true;
 						await OpenOverlay();
 						break;
@@ -555,6 +556,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private async void ScrollViewer_Holding(object sender, HoldingRoutedEventArgs e)
 		{
+			if (!Service.Settings.ShowMap)
+				return;
 			var point = e.GetPosition(ScrollViewer);
 			double distance = ScrollViewer.ActualWidth / 6.0;
 			if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)

@@ -1,12 +1,11 @@
 ﻿using Windows.UI.Xaml;
 
-namespace LRReader.UWP.Resources
+namespace LRReader.UWP.Resources;
+
+public sealed partial class Templates : ResourceDictionary
 {
-	public sealed partial class Templates : ResourceDictionary
+	public Templates()
 	{
-		public Templates()
-		{
-			this.InitializeComponent();
-		}
+		this.InitializeComponent();
 	}
 }

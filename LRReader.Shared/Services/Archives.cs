@@ -197,7 +197,7 @@ namespace LRReader.Shared.Services
 
 		public void OpenTab(Archive archive, bool switchToTab = true, List<Archive>? next = null)
 		{
-			Tabs.OpenTab(Tab.Archive, switchToTab, archive, next);
+			Tabs.OpenTab(Tab.Archive, switchToTab, archive, next ?? []);
 		}
 
 		public async Task<bool> DeleteArchive(string id)
