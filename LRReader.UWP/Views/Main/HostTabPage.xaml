@@ -82,6 +82,11 @@
 			</controls:ModernTabView.TabTools>
 			<controls:ModernTabView.ExtraFooter>
 				<StackPanel x:Name="TabViewEndHeader" VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">
+					<Button Click="AddFile_Click">
+						<Viewbox>
+							<SymbolIcon Symbol="OpenFile" />
+						</Viewbox>
+					</Button>
 					<Button
 						x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
 						Visibility="{x:Bind Data.Windowed, Mode=OneWay}">

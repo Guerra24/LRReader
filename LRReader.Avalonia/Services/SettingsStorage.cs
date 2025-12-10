@@ -1,11 +1,13 @@
-﻿using LRReader.Shared.Services;
-using Newtonsoft.Json;
+﻿using LRReader.Shared;
+using LRReader.Shared.Converters;
+using LRReader.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
@@ -34,15 +36,15 @@ namespace LRReader.Avalonia.Services
 		public async Task Init()
 		{
 			if (File.Exists(AppDataFile))
-				roamedSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(await File.ReadAllTextAsync(AppDataFile))!;
+				roamedSettings = JsonSerializer.Deserialize(await File.ReadAllTextAsync(AppDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
 			if (File.Exists(LocalDataFile))
-				localSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(await File.ReadAllTextAsync(LocalDataFile))!;
+				localSettings = JsonSerializer.Deserialize(await File.ReadAllTextAsync(LocalDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
 		}
 
 		public void Save()
 		{
-			File.WriteAllText(AppDataFile, JsonConvert.SerializeObject(roamedSettings));
-			File.WriteAllText(LocalDataFile, JsonConvert.SerializeObject(localSettings));
+			File.WriteAllText(AppDataFile, JsonSerializer.Serialize(roamedSettings));
+			File.WriteAllText(LocalDataFile, JsonSerializer.Serialize(localSettings));
 		}
 
 		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
@@ -53,7 +55,7 @@ namespace LRReader.Avalonia.Services
 			if (!localSettings.ContainsKey(key!))
 				return def;
 			var val = localSettings[key!];
-			return val != null ? (T)Convert.ChangeType(val, typeof(T), CultureInfo.InvariantCulture) : def;
+			return val != null ? (T)val : def;
 		}
 
 		public T? GetObjectRoamed<T>([CallerMemberName] string? key = null) => GetObjectRoamed<T>(default, key);
@@ -64,7 +66,7 @@ namespace LRReader.Avalonia.Services
 			if (!roamedSettings.ContainsKey(key!))
 				return def;
 			var val = roamedSettings[key!];
-			return val != null ? (T)Convert.ChangeType(val, typeof(T), CultureInfo.InvariantCulture) : def;
+			return val != null ? (T)val : def;
 		}
 
 		public void StoreObjectLocal(object obj, [CallerMemberName] string? key = null)
@@ -95,4 +97,15 @@ namespace LRReader.Avalonia.Services
 
 		public bool ExistRoamed(string key) => roamedSettings.ContainsKey(key);
 	}
+}
+
+
+[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true, WriteIndented = true, NumberHandling = JsonNumberHandling.AllowReadingFromString, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, Converters = new Type[] { typeof(ObjectToInferredTypesConverter) })]
+[JsonSerializable(typeof(Dictionary<string, object>))]
+[JsonSerializable(typeof(bool))]
+[JsonSerializable(typeof(string))]
+[JsonSerializable(typeof(int))]
+public partial class SettingsJsonSourceGenerationContext : JsonSerializerContext
+{
+
 }

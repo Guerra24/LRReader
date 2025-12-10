@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using LRReader.Avalonia.Resources;
 using LRReader.Shared.Models;
 
 namespace LRReader.Avalonia.Views.Dialogs
@@ -30,7 +31,7 @@ namespace LRReader.Avalonia.Views.Dialogs
 		public new string Name { get => ProfileName.Text!; set => ProfileName.Text = value; }
 		public string Address { get => ProfileServerAddress.Text!; set => ProfileServerAddress.Text = value; }
 		public string ApiKey { get => ProfileServerApiKey.Text!; set => ProfileServerApiKey.Text = value; }
-		public bool Integration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public bool Integration { get; set; } // TODO
 
 		private void ProfileName_TextChanging(object? sender, TextInputEventArgs e)
 		{

@@ -109,7 +109,9 @@ namespace LRReader.Shared.Services
 
 		public abstract Task<bool> CheckAppInstalled(string package);
 
+#if WINDOWS_UWP
 		public abstract bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion);
+#endif
 	}
 
 	public class StubPlatformService : PlatformService
@@ -141,6 +143,8 @@ namespace LRReader.Shared.Services
 
 		public override Task<bool> CheckAppInstalled(string package) => Task.FromResult(false);
 
+#if WINDOWS_UWP
 		public override bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion) => false;
+#endif
 	}
 }

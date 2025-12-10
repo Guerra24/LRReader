@@ -48,38 +48,32 @@ namespace LRReader.UWP.Services
 			Tabs = tabs;
 			_animationsEnabled = UISettings.AnimationsEnabled;
 
-#pragma warning disable CA1416 // Validate platform compatibility
-			if (WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 10))
-				UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
+			UISettings.AnimationsEnabledChanged += (sender, args) => _animationsEnabled = sender.AnimationsEnabled;
 
-			if (WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+			var device = new EasClientDeviceInformation();
+
+			if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Core" || (!string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo")))
 			{
-				var device = new EasClientDeviceInformation();
-
-				if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Core" || (!string.IsNullOrEmpty(device.SystemSku) && device.SystemSku.Contains("Surface_Duo")))
+				var winEnv = WindowingEnvironment.FindAll(WindowingEnvironmentKind.Overlapped).FirstOrDefault();
+				if (winEnv != null)
 				{
-					var winEnv = WindowingEnvironment.FindAll(WindowingEnvironmentKind.Overlapped).FirstOrDefault();
-					if (winEnv != null)
+					var regions = winEnv.GetDisplayRegions();
+					if (regions.Count == 2 && regions[0].WorkAreaSize.Width == regions[1].WorkAreaSize.Width)
 					{
-						var regions = winEnv.GetDisplayRegions();
-						if (regions.Count == 2 && regions[0].WorkAreaSize.Width == regions[1].WorkAreaSize.Width)
+						_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width; // WCOS reports this in virtual size
+						if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
 						{
-							_dualScreenWidth = regions[0].WorkAreaSize.Width + regions[1].WorkAreaSize.Width; // WCOS reports this in virtual size
-							if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
-							{
-								// Desktop returns regions as raw pixels so convert them to virtual size
-								var dpi = DisplayInformation.GetForCurrentView();
-								_dualScreenWidth /= dpi.RawPixelsPerViewPixel;
-								//Debug.WriteLine(_dualScreenWidth);
-								// dpi.ScreenWidthInRawPixels on WCOS returns the sum of width of both displays also in virtual size
-								//Debug.WriteLine(dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel);
-							}
-							_dualScreen = true;
+							// Desktop returns regions as raw pixels so convert them to virtual size
+							var dpi = DisplayInformation.GetForCurrentView();
+							_dualScreenWidth /= dpi.RawPixelsPerViewPixel;
+							//Debug.WriteLine(_dualScreenWidth);
+							// dpi.ScreenWidthInRawPixels on WCOS returns the sum of width of both displays also in virtual size
+							//Debug.WriteLine(dpi.ScreenWidthInRawPixels * 2 / dpi.RawPixelsPerViewPixel);
 						}
+						_dualScreen = true;
 					}
 				}
 			}
-#pragma warning restore CA1416 // Validate platform compatibility
 
 			Environment.SetEnvironmentVariable("WEBVIEW2_DEFAULT_BACKGROUND_COLOR", "00FFFFFF");
 

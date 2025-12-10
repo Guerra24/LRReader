@@ -33,8 +33,6 @@ namespace LRReader.UWP.Views.Controls
 
 		private string query = "";
 
-		private string random = $"ArchiveList_{new Random().Next().ToString()}";
-
 		private SearchState? searchState;
 
 		public ArchiveList()

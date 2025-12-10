@@ -1,17 +1,15 @@
 ﻿using Avalonia.Media.Imaging;
 using LRReader.Shared.Services;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {
 	public class AvaloniaImageProcessingService : ImageProcessingService
 	{
-		public override Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, bool transcode = false, object? image = default)
+
+		public override Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? image = default, CancellationToken cancellationToken = default)
 		{
 			return Task.Run(() =>
 			{
@@ -23,5 +21,6 @@ namespace LRReader.Avalonia.Services
 				}
 			});
 		}
+
 	}
 }

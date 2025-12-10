@@ -1,7 +1,8 @@
-using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Views.Tabs.Content
 {
@@ -10,37 +11,22 @@ namespace LRReader.Avalonia.Views.Tabs.Content
 
 		private ArchivesPageViewModel Data;
 
-		private bool loaded, reloading;
-
-		private string query = "";
-
 		public Archives()
 		{
 			InitializeComponent();
-			Data = DataContext as ArchivesPageViewModel;
+			Data = Service.Services.GetRequiredService<ArchivesPageViewModel>();
 		}
 
-		private async void Archives_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
+		//public async Task Refresh() => await ArchiveList.Refresh();
+
+		private async Task ArchiveList_OnRefresh()
 		{
-			if (Design.IsDesignMode)
-				return;
-			if (loaded)
-				return;
-			loaded = true;
-			reloading = true;
-			//AscFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Ascending;
-			//DesFlyoutItem.IsChecked = Service.Settings.OrderByDefault == Order.Descending;
-			Data.ControlsEnabled = false; // THIS ---------------
-			Data.LoadBookmarks();
-			await HandleSearch();
-			Data.ControlsEnabled = true;
-			reloading = false;
+			await Data.Refresh();
 		}
 
-		private async Task HandleSearch()
+		private async Task ArchiveList_OnLoad()
 		{
-			Data.Query = query;
-			await Data.ReloadSearch();
+			await Data.LoadBookmarks();
 		}
 
 	}

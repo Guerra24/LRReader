@@ -1,329 +1,278 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="using:FluentAvalonia.UI.Controls"
-        xmlns:media="using:FluentAvalonia.UI.Media"
-        xmlns:tabs="using:LRReader.Avalonia"
-        xmlns:aura="using:Aura.UI.Controls"
-        xmlns:sty="using:FluentAvalonia.Styling">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:ui="using:FluentAvalonia.UI.Controls"
+					xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+					xmlns:controls="using:LRReader.Avalonia.Views.Controls">
 
-  <Style Selector="Window">
-    <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBase}"/>
-  </Style>
+	<Design.PreviewWith>
+		<!--
+		<Border Padding="50">
+		<StackPanel Spacing="5">
+		<Button Content="Button" />
+		<TextBox Watermark="TextBox" />
+		</StackPanel>
+		</Border>
+		-->
+		<ui:TabView Theme="{StaticResource ModernTabView}" Width="400" Height="400" IsAddTabButtonVisible="False">
+			<controls:CustomTab Header="Hello" IsClosable="False"/>
+			<ui:TabView.TabStripFooter>
+				<Grid HorizontalAlignment="Left">
+					<Button Content="WEW" />
+				</Grid>
+			</ui:TabView.TabStripFooter>
+		</ui:TabView>
+	</Design.PreviewWith>
 
-  <Style Selector="Border.ItemOverlay">
-    <Setter Property="Background" Value="#1f1f1f" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SurfaceStrokeColorFlyoutBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-  </Style>
-  <Design.PreviewWith>
-    <!--
-    <Border Padding="50">
-      <StackPanel Spacing="5">
-        <Button Content="Button" />
-        <TextBox Watermark="TextBox" />
-      </StackPanel>
-    </Border>
-    -->
-    <aura:AuraTabView Width="400" Height="400" AdderButtonIsVisible="True">
-      <tabs:CustomTab Header="Hello"
-                   IsClosable="True"
-                   Icon="{DynamicResource FluentIconsFilled.tab_desktop_new_page_filled}"/>
-      <tabs:CustomTab Header="Hello"
-                   IsClosable="True"
-                   Icon="{DynamicResource FluentIconsFilled.tab_desktop_new_page_filled}"/>
-      <tabs:CustomTab Header="Hello"
-             IsClosable="True"
-             Icon="{DynamicResource FluentIconsFilled.tab_desktop_new_page_filled}"/>
-      <aura:AuraTabView.Footer>
-        <Grid HorizontalAlignment="Left">
-          <Button Content="WEW" />
-        </Grid>
-      </aura:AuraTabView.Footer>
-    </aura:AuraTabView>
-  </Design.PreviewWith>
+	<ControlTheme x:Key="ModernTabView" TargetType="ui:TabView">
+		<Setter Property="VerticalAlignment" Value="Top" />
+		<Setter Property="Padding" Value="0 8" />
+		<Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Grid RowDefinitions="Auto,*">
 
-  <!-- Match UWP templates -->
-  <Style Selector="tabs|CustomTab">
-    <Setter Property="HorizontalContentAlignment" Value="Left" />
-    <Setter Property="FontSize" Value="12" />
-    <Setter Property="Padding" Value="5 0" />
-    <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-    <Setter Property="ZIndex" Value="0"/>
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-    <Setter Property="Transitions">
-      <Transitions>
-        <BrushTransition Duration="00:00:00.083" Property="Background" />
-      </Transitions>
-    </Setter>
-  </Style>
+					<Grid Name="TabContainerGrid"
+						  Background="{TemplateBinding Background}">
 
-  <Style Selector="tabs|CustomTab[TabStripPlacement=Top]">
-    <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Decorator Padding="0,1">
-          <Border Name="PART_Container"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="1"
-                  CornerRadius="{TemplateBinding CornerRadius}">
-            <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
-              <Grid Grid.Column="0" ColumnDefinitions="Auto,*,Auto" Margin="{TemplateBinding Padding}">
-                <Viewbox Margin="2,0,10,0" MaxWidth="18" Height="18">
-                  <ui:SymbolIcon Symbol="{TemplateBinding CustomTabIcon}" />
-                </Viewbox>
-                <ContentPresenter Grid.Column="1"
-                                  Name="PART_ContentPresenter"
-                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                  Content="{TemplateBinding Header}"
-                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                  Margin="{TemplateBinding Margin}"
-                                  TextBlock.Foreground="{TemplateBinding Foreground}" />
-                <Button Grid.Column="2"
-                        Name="PART_CloseButton"
-                        Width="16"
-                        Height="16"
-                        Background="Transparent"
-                        Margin="4,0,0,0"
-                        Padding="0"
-                        BorderThickness="0"
-                        VerticalAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Foreground="{TemplateBinding Foreground}"
-                        IsVisible="{TemplateBinding CustomTabIsClosable}">
-                  <ui:SymbolIcon Symbol="Cancel" />
-                </Button>
-              </Grid>
-            </Border>
-          </Border>
-        </Decorator>
-      </ControlTemplate>
-    </Setter>
-  </Style>
-  <Style Selector="tabs|CustomTab:selected /template/ Border#PART_Container">
-    <Setter Property="BoxShadow" Value="{BoxShadow BlurRadius=0, ShadowColor=Transparent}" />
-  </Style>
+						<Grid.ColumnDefinitions>
+							<!-- x:Name="LeftContentColumn -->
+							<ColumnDefinition Width="Auto" />
+							<!-- x:Name="TabColumn" -->
+							<ColumnDefinition Width="Auto" />
+							<!-- x:Name="AddButtonColumn" -->
+							<ColumnDefinition Width="Auto" />
+							<!-- x:Name="RightContentColumn"-->
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
 
-  <Style Selector="tabs|CustomTab:pointerover">
-    <Setter Property="Background" Value="{DynamicResource ControlAltFillColorTertiary}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-  </Style>
-  <Style Selector="tabs|CustomTab:pressed">
-    <Setter Property="Background" Value="{DynamicResource ControlAltFillColorQuarternary}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-  </Style>
-  <Style Selector="tabs|CustomTab[IsSelected=True]">
-    <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-  </Style>
-  <Style Selector="tabs|CustomTab[IsSelected=True]:pointerover">
-    <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-  </Style>
-  <Style Selector="tabs|CustomTab[IsSelected=True]:pressed">
-    <Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource TextFillColorTertiaryBrush}" />
-  </Style>
+						<ContentPresenter Grid.Column="0"
+										  Name="LeftContentPresenter"
+										  Content="{TemplateBinding TabStripHeader}"
+										  ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
 
-  <Style Selector="AuraTabView[TabStripPlacement=Top]">
-    <Setter Property="ItemsPanel">
-      <ItemsPanelTemplate>
-        <StackPanel Orientation="Horizontal" />
-      </ItemsPanelTemplate>
-    </Setter>
-    <Setter Property="ItemsMargin" Value="0"/>
-    <Setter Property="Template">
-      <ControlTemplate TargetType="AuraTabView">
-        <Border
-              Background="{TemplateBinding Background}"
-              Margin="3,7,3,0"
-              HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-              VerticalAlignment="{TemplateBinding VerticalAlignment}">
-          <Grid ColumnDefinitions="*">
-            <Grid.RowDefinitions>
-              <RowDefinition Height="auto"></RowDefinition>
-              <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <!--Item Presenter-->
-            <Grid Grid.Row="0"
-                  Background="{TemplateBinding SecondaryBackground}"
-                  Name="PART_DockContainer"
-                  Width="{TemplateBinding Width}">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-              <!--Header-->
-              <ContentPresenter Grid.Column="0"
-                                Content="{TemplateBinding Header}"
-                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                VerticalContentAlignment="Center"></ContentPresenter>
-              <!--Items and Adder Button-->
-              <ItemsPresenter Grid.Column="1"
-                                Name="PART_ItemsPresenter"
-                                Items="{TemplateBinding Items}"
-                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                ItemTemplate="{TemplateBinding ItemTemplate}"
-                                HorizontalAlignment="Left"
-                                MaxWidth="{TemplateBinding MaxWidthOfItemsPresenter}">
-                <ItemsPresenter.Transitions>
-                  <Transitions>
-                    <DoubleTransition Property="Width" Duration="0:0:0.3"
-                                      Easing="CubicEaseIn"/>
-                  </Transitions>
-                </ItemsPresenter.Transitions>
-              </ItemsPresenter>
-              <Border
-                Grid.Column="2"
-                Width="1"
-                Margin="3,8,3,8"
-                Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
-              <!--Footer-->
-              <ContentPresenter Grid.Column="3"
-                                Content="{TemplateBinding Footer}"
-                                ContentTemplate="{TemplateBinding FooterTemplate}"
-                                VerticalContentAlignment="Center">
-              </ContentPresenter>
+						<uip:TabViewListView Grid.Column="1"
+											 Name="TabListView"
+											 Padding="{TemplateBinding Padding}"
+											 ItemsSource="{TemplateBinding TabItems}"
+											 ItemTemplate="{TemplateBinding TabItemTemplate}"
+											 CanReorderItems="{TemplateBinding CanReorderTabs}"
+											 CanDragItems="{TemplateBinding CanDragTabs}"
+											 DragDrop.AllowDrop="{TemplateBinding AllowDropTabs}"
+											 Theme="{StaticResource ModernTabViewList}"/>
 
-              <!-- We don't need this -->
-              <Button Grid.Column="0"
-                              Name="PART_AdderButton" Padding="9" Background="Transparent"
-                              IsVisible="False" Width="35" ZIndex="-1">
-                <Image Source="{DynamicResource FluentIconsFilled.add_filled}"/>
-              </Button>
-              <Grid Grid.Column="0" IsVisible="False"
-                    Name="PART_InternalGrid">
-                <Grid.Transitions>
-                  <Transitions>
-                    <DoubleTransition Property="Width" Duration="0:0:0.3"
-                                      Easing="CubicEaseIn"/>
-                  </Transitions>
-                </Grid.Transitions>
-                <Border Name="PART_InternalBorder">
-                  <Border.Transitions>
-                    <Transitions>
-                      <DoubleTransition Property="Width" Duration="0:0:0.3"
-                                    Easing="CubicEaseIn"/>
-                    </Transitions>
-                  </Border.Transitions>
-                </Border>
-              </Grid>
-            </Grid>
+						<Border Grid.Column="2" Width="1" Height="16" Margin="3,0,3,0" VerticalAlignment="Center" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
 
-            <!--Content Host-->
-            <Border Grid.Row="1"
-                    BorderBrush="Transparent" Margin="0">
-              <Grid
-                Name="PART_GridHost" Width="{TemplateBinding Width}">
-                <ContentPresenter Name="PART_FallBackContent"
-                                  Content="{TemplateBinding FallBackContent}"/>
-                <ContentPresenter Name="PART_SelectedContentHost"
-                          Padding="{TemplateBinding Padding}"
-                          Height="{Binding #PART_GridHost.Height}"
-                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                          Content="{TemplateBinding SelectedContent}"
-                          ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
-              </Grid>
-            </Border>
-          </Grid>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-  </Style>
+						<ContentPresenter Grid.Column="3"
+										  Name="RightContentPresenter"
+										  HorizontalAlignment="Stretch"
+										  Content="{TemplateBinding TabStripFooter}"
+										  ContentTemplate="{TemplateBinding TabStripFooterTemplate}"/>
+					</Grid>
 
-  <!-- We need to re template some controls due to border coloring issues -->
-  <Style Selector="Button, ui|Button">
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Panel>
-          <Border Name="BorderElement"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}"
-                  CornerRadius="{TemplateBinding CornerRadius}">
-            <ContentPresenter Name="PART_ContentPresenter"
-                              Background="{TemplateBinding Background}"
-                              Content="{TemplateBinding Content}"
-                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                              CornerRadius="{TemplateBinding CornerRadius}"
-                              Padding="{TemplateBinding Padding}"
-                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-          </Border>
-        </Panel>
-      </ControlTemplate>
-    </Setter>
-  </Style>
+					<ContentPresenter Name="TabContentPresenter" Grid.Row="1" />
 
-  <Style Selector="TextBox">
-    <Setter Property="Template">
-      <ControlTemplate>
-        <DataValidationErrors>
-          <Panel>
-            <!-- This is flipped (scaleY(-1)) for the elevation brush effect
-                        -->
-            <Border
-              Name="PART_BorderElement"
-              BorderBrush="{TemplateBinding BorderBrush}"
-              BorderThickness="{TemplateBinding BorderThickness}"
-              MinWidth="{TemplateBinding MinWidth}"
-              MinHeight="{TemplateBinding MinHeight}"
-              RenderTransform="scaleY(-1)"
-              CornerRadius="{TemplateBinding CornerRadius}" />
+				</Grid>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
 
-            <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}"
-              Margin="{TemplateBinding BorderThickness}">
-              <Grid ColumnDefinitions="Auto,*,Auto" >
-                <ContentPresenter Grid.Column="0" Grid.ColumnSpan="1" Content="{TemplateBinding InnerLeftContent}"/>
-                <DockPanel x:Name="PART_InnerDockPanel" Grid.Column="1" Grid.ColumnSpan="1" Margin="{TemplateBinding Padding}">
-                  <TextBlock Name="PART_FloatingWatermark"
-                             Foreground="{DynamicResource SystemAccentColor}"
-                             FontSize="{TemplateBinding FontSize}"
-                             Text="{TemplateBinding Watermark}"
-                             DockPanel.Dock="Top" />
-                  <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-                                VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
-                    <Panel>
-                      <TextBlock Name="PART_Watermark"
-                              Text="{TemplateBinding Watermark}"
-                              TextAlignment="{TemplateBinding TextAlignment}"
-                              TextWrapping="{TemplateBinding TextWrapping}"
-                              IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNullOrEmpty}}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              IsHitTestVisible="False"/>
-                      <TextPresenter Name="PART_TextPresenter"
-                                    Text="{TemplateBinding Text, Mode=TwoWay}"
-                                    CaretIndex="{TemplateBinding CaretIndex}"
-                                    SelectionStart="{TemplateBinding SelectionStart}"
-                                    SelectionEnd="{TemplateBinding SelectionEnd}"
-                                    TextAlignment="{TemplateBinding TextAlignment}"
-                                    TextWrapping="{TemplateBinding TextWrapping}"
-                                    PasswordChar="{TemplateBinding PasswordChar}"
-                                    RevealPassword="{TemplateBinding RevealPassword}"
-                                    SelectionBrush="{TemplateBinding SelectionBrush}"
-                                    SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
-                                    CaretBrush="{TemplateBinding CaretBrush}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Panel>
-                  </ScrollViewer>
-                </DockPanel>
-                <ContentPresenter Grid.Column="2" Grid.ColumnSpan="1" Content="{TemplateBinding InnerRightContent}"/>
-              </Grid>
-            </Border>
-          </Panel>
-        </DataValidationErrors>
-      </ControlTemplate>
-    </Setter>
-  </Style>
+	<ControlTheme x:Key="ModernTabViewList" TargetType="uip:TabViewListView">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+		<Setter Property="ItemsPanel">
+			<ItemsPanelTemplate>
+				<!--
+				NOTE: This panel enables the reordering/drag effects
+				changing this will disable all drag/drop/reordering
+				logic on the TabView
+				-->
+				<ui:TabViewStackPanel />
+			</ItemsPanelTemplate>
+		</Setter>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border>
+					<ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+								  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+								  Theme="{StaticResource ModernTabScrollViewerStyle}"
+								  Name="ScrollViewer">
+						<ItemsPresenter Name="TabItemsPresenter"
+										Margin="{TemplateBinding Padding}"
+										ItemsPanel="{TemplateBinding ItemsPanel}" />
 
-</Styles>
+					</ScrollViewer>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	<ControlTheme x:Key="ModernTabScrollViewerStyle" TargetType="ScrollViewer">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Name="Root"
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}">
+
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+
+						<Border Name="ScrollDecreaseButtonContainer"
+								IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
+								Padding="{DynamicResource TabViewItemLeftScrollButtonContainerPadding}"
+								VerticalAlignment="Bottom">
+							<RepeatButton Name="ScrollDecreaseButton"
+										  Delay="50"
+										  Interval="100"
+										  Content="&#xEDD9;"
+										  Theme="{StaticResource TabViewScrollButtonStyle}"/>
+						</Border>
+
+						<ScrollContentPresenter Name="ScrollContentPresenter"
+												Grid.Column="1"
+												KeyboardNavigation.TabNavigation="Once"
+												Content="{TemplateBinding Content}"
+												HorizontalSnapPointsType="{TemplateBinding HorizontalSnapPointsType}"
+												VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}"
+												HorizontalSnapPointsAlignment="{TemplateBinding HorizontalSnapPointsAlignment}"
+												VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}">
+							<ScrollContentPresenter.GestureRecognizers>
+								<ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=ScrollContentPresenter}"
+														 CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=ScrollContentPresenter}"
+														 IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
+							</ScrollContentPresenter.GestureRecognizers>
+						</ScrollContentPresenter>
+
+						<Border Name="ScrollIncreaseButtonContainer"
+								IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
+								Grid.Column="2"
+								Padding="{DynamicResource TabViewItemRightScrollButtonContainerPadding}"
+								VerticalAlignment="Bottom">
+							<RepeatButton Name="ScrollIncreaseButton"
+										  Delay="50"
+										  Interval="100"
+										  Content="&#xEDDA;"
+										  Theme="{StaticResource TabViewScrollButtonStyle}"/>
+						</Border>
+
+					</Grid>
+
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	<ControlTheme x:Key="{x:Type controls:CustomTab}" TargetType="controls:CustomTab">
+		<Setter Property="Padding" Value="{DynamicResource TabViewItemHeaderPadding}" />
+		<Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+		<Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Transitions">
+			<Transitions>
+				<BrushTransition Duration="00:00:0.083" Property="Background" />
+			</Transitions>
+		</Setter>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Name="LayoutRootBorder"
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						CornerRadius="{TemplateBinding CornerRadius}"
+						Padding="{TemplateBinding Padding}">
+					<Grid Name="LayoutRoot">
+						<Border Name="TabContainerBorder"
+								TemplatedControl.IsTemplateFocusTarget="True">
+							<Grid Name="TabContainer">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+
+								<Viewbox Name="IconBox"
+										 MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+										 MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+										 Margin="{DynamicResource TabViewItemHeaderIconMargin}"
+										 IsVisible="False">
+									<ContentControl Name="IconControl"
+													Content="{Binding TabViewTemplateSettings.IconElement, RelativeSource={RelativeSource TemplatedParent}}"
+													KeyboardNavigation.IsTabStop="False"
+													Foreground="{DynamicResource TabViewItemIconForeground}"/>
+								</Viewbox>
+
+								<!-- If we template bind the ContentPresenter's Content property to the TabViewItem.Header property
+								we unfortunately run into the following issue if the header is [null] or empty:
+								The TabViewItem.Content property will be implictly bound to the Content property of the ContentPresenter.
+								To prevent this, we explicitly set a default empty content here and update the content in code behind. -->
+
+								<ContentPresenter Name="ContentPresenter"
+												  Grid.Column="1"
+												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+												  Content=""
+												  ContentTemplate="{TemplateBinding HeaderTemplate}"
+												  FontWeight="{TemplateBinding FontWeight}"
+												  FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+												  Foreground="{DynamicResource TabViewItemHeaderForeground}"
+												  Padding="0 4"/>
+
+								<Button Name="CloseButton"
+										Grid.Column="2"
+										Margin="{DynamicResource TabViewItemHeaderCloseMargin}"
+										Content="&#xE711;"
+										Theme="{StaticResource TabViewCloseButtonStyle}"
+										KeyboardNavigation.IsTabStop="False"/>
+							</Grid>
+						</Border>
+					</Grid>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+
+		<Style Selector="^:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ControlAltFillColorTertiary}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+		</Style>
+
+		<Style Selector="^:pressed">
+			<Setter Property="Background" Value="{DynamicResource ControlAltFillColorQuarternary}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+		</Style>
+
+		<Style Selector="^:selected">
+			<Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+			<Style Selector="^:pointerover">
+				<Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+				<Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+			</Style>
+			<Style Selector="^:pressed">
+				<Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+				<Setter Property="Foreground" Value="{DynamicResource TextFillColorTertiaryBrush}" />
+			</Style>
+		</Style>
+
+		<Style Selector="^:icon /template/ Viewbox#IconBox">
+			<Setter Property="IsVisible" Value="True" />
+		</Style>
+
+		<!-- :closecollapsed -->
+		<Style Selector="^:closecollapsed /template/ Button#CloseButton">
+			<Setter Property="IsVisible" Value="False" />
+		</Style>
+	</ControlTheme>
+
+</ResourceDictionary>

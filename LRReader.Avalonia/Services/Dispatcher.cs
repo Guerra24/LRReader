@@ -18,8 +18,8 @@ namespace LRReader.Avalonia.Services
 			return true;
 		}
 
-		public Task RunAsync(Action action) => Dispatcher.InvokeAsync(action);
+		public Task RunAsync(Action action) => Dispatcher.InvokeAsync(action).GetTask();
 
-		public Task RunAsync(Action action, int priority = 0) => Dispatcher.InvokeAsync(action);
+		public Task RunAsync(Action action, int priority = 0) => Dispatcher.InvokeAsync(action).GetTask();
 	}
 }

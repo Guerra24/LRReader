@@ -1,0 +1,72 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:ext="using:LRReader.Avalonia.Extensions"
+					xmlns:fluent="using:FluentAvalonia.UI.Controls"
+					xmlns:items="using:LRReader.Avalonia.Views.Items">
+  
+	<ControlTheme x:Key="ItemOverlayGrid" TargetType="Border">
+		<Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+	</ControlTheme>
+
+    <ControlTheme x:Key="{x:Type items:GenericArchiveItem}" BasedOn="{StaticResource DefaultArchiveItem}" TargetType="items:GenericArchiveItem" />
+
+	<ControlTheme x:Key="DefaultArchiveItem" TargetType="items:GenericArchiveItem">
+		<Setter Property="Width" Value="200" />
+		<Setter Property="DecodePixelHeight" Value="275" />
+		<Setter Property="Template">
+			<ControlTemplate TargetType="items:GenericArchiveItem">
+				<Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
+						BoxShadow="0 2 8 2 #26000000">
+					<Grid x:Name="Root">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="275"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<TextBlock x:Name="Title"
+								   Grid.Row="0"
+								   Padding="5,1"
+								   HorizontalAlignment="Center"
+								   FontSize="16"
+								   Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}"
+								   TextTrimming="CharacterEllipsis"
+								   ToolTip.Tip="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}" />
+						<Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
+							<Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:GenericArchiveItem].ViewModel.Thumbnail}" />
+						</Border>
+						<Grid Grid.Row="1">
+							<Grid IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.MissingImage, Mode=OneWay}">
+								<fluent:FontIcon FontSize="34" Glyph="&#xE8CD;" />
+							</Grid>
+							<Grid HorizontalAlignment="Left"
+								  VerticalAlignment="Bottom"
+								  Margin="4,0,0,4"
+								  IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+								<Border Theme="{StaticResource ItemOverlayGrid}">
+									<TextBlock Padding="6,2" FontSize="16" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}">
+										<Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Pages, Mode=OneWay}"/>
+									</TextBlock>
+								</Border>
+							</Grid>
+							<Grid Margin="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+								  IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.IsNew}">
+								<Border Theme="{StaticResource ItemOverlayGrid}">
+									<TextBlock Text="{ext:LocalizedString Key=/Items/Archive/New/Text}" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}" Padding="6,2" FontSize="16"/>
+								</Border>
+							</Grid>
+						</Grid>
+						<Grid Grid.Row="2">
+							<TextBlock Padding="2,0"
+									   Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsClean, Mode=OneWay}"
+									   TextTrimming="CharacterEllipsis"/>
+						</Grid>
+					</Grid>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+</ResourceDictionary>

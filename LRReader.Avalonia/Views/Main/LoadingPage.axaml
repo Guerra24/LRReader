@@ -2,9 +2,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:aura="using:Aura.UI.Controls"
 			 xmlns:vm="using:LRReader.Shared.ViewModels"
-             xmlns:loc="using:LRReader.Avalonia"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
 			 mc:Ignorable="d"
 			 d:DesignWidth="1500"
 			 d:DesignHeight="1000"
@@ -26,11 +25,11 @@
            VerticalAlignment="Center"
            Source="/Assets/SplashScreen.scale-200.png"/>
     <Grid Grid.Row="2">
-      <aura:ProgressRing
+      <!--<aura:ProgressRing
           HorizontalAlignment="Center"
           VerticalAlignment="Top"
           IsIndeterminate="True"
-          IsVisible="{Binding Active, Mode=OneWay}"/>
+          IsVisible="{Binding Active, Mode=OneWay}"/>-->
       <ProgressBar Width="200"
                    Margin="0,18,0,0"
                    Value="{Binding Progress, Mode=OneWay}"
@@ -49,9 +48,9 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="150" />
           </Grid.ColumnDefinitions>
-          <Button Content="{loc:LocalizedString Key=/Pages/LoadingPage/ChangeProfile/Content}" HorizontalAlignment="Center" Command="{Binding ChangeCommand}" />
+          <Button Content="{ext:LocalizedString Key=/Pages/LoadingPage/ChangeProfile/Content}" HorizontalAlignment="Center" Command="{Binding ChangeCommand}" />
           <Button
-              Content="{loc:LocalizedString Key=/Pages/LoadingPage/Retry/Content}" Grid.Column="1" HorizontalAlignment="Center"
+              Content="{ext:LocalizedString Key=/Pages/LoadingPage/Retry/Content}" Grid.Column="1" HorizontalAlignment="Center"
               Command="{Binding ConnectCommand}" />
         </Grid>
       </StackPanel>

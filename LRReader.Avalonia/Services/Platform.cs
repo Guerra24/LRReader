@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using LRReader.Avalonia.Resources;
 using LRReader.Avalonia.Views;
 using LRReader.Avalonia.Views.Dialogs;
 using LRReader.Avalonia.Views.Main;
@@ -19,17 +20,17 @@ namespace LRReader.Avalonia.Services
 		{
 			Tabs = tabs;
 
-			MapPageToType(Pages.FirstRun, typeof(FirstRunPage));
-			MapPageToType(Pages.HostTab, typeof(HostTabPage));
-			MapPageToType(Pages.Loading, typeof(LoadingPage));
+			MapPageToType<FirstRunPage>(Pages.FirstRun);
+			MapPageToType<HostTabPage>(Pages.HostTab);
+			MapPageToType<LoadingPage>(Pages.Loading);
 		}
 
 		public override void Init()
 		{
-			Tabs.MapTabToType(Tab.Archives, typeof(ArchivesTab));
-			Tabs.MapTabToType(Tab.Settings, typeof(SettingsTab));
+			Tabs.MapTabToType<ArchivesTab>(Tab.Archives);
+			Tabs.MapTabToType<SettingsTab>(Tab.Settings);
 
-			MapDialogToType(Dialog.ServerProfile, typeof(ServerProfileDialog));
+			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
 		}
 
 		public override Version Version => new Version(1, 7, 6, 0);
@@ -49,9 +50,9 @@ namespace LRReader.Avalonia.Services
 
 		public override async void CopyToClipboard(string text)
 		{
-			var clipboard = Application.Current?.Clipboard;
+			/*var clipboard = Application.Current?.Clipboard;
 			if (clipboard != null)
-				await clipboard.SetTextAsync(text);
+				await clipboard.SetTextAsync(text);*/
 		}
 
 		public override string GetLocalizedString(string key)
@@ -65,11 +66,11 @@ namespace LRReader.Avalonia.Services
 			MainView main = null!;
 			if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
-				main = (MainView) desktop!.MainWindow!.Content!;
+				main = (MainView)desktop!.MainWindow!.Content!;
 			}
 			else if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime singleView)
 			{
-				main = (MainView) singleView.MainView!;
+				main = (MainView)singleView.MainView!;
 			}
 			main.Content = Activator.CreateInstance(GetPage(page));
 		}

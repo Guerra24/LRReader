@@ -439,9 +439,8 @@ namespace LRReader.Shared.Services
 			var content = await FileIO.ReadTextAsync(ProfilesFile);
 			Profiles = !string.IsNullOrEmpty(content) ? JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(content, JsonSettings.Options)! : [];
 #else
-			var content = await Files.GetFile(ProfilesPathLocation);
-			if (File.Exists(ProfilesPathLocation))
-				Profiles = !string.IsNullOrEmpty(content) ? JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(content, JsonSettings.Options)! : [];
+			var content = File.Exists(ProfilesPathLocation) ? await Files.GetFile(ProfilesPathLocation) : "";
+			Profiles = !string.IsNullOrEmpty(content) ? JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(content, JsonSettings.Options)! : [];
 #endif
 
 			UpgradeSettings();

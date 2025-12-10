@@ -31,7 +31,7 @@
         <ColumnDefinition Width="8" />
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
-      <Button x:Name="PrimaryButton" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="PrimaryButton_Click" />
+      <Button x:Name="PrimaryButton" Classes="accent" Theme="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="PrimaryButton_Click" />
       <Button x:Name="CloseButton" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="CloseButton_Click" />
     </Grid>
   </Grid>

@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:items="using:LRReader.Avalonia.Views.Items"
+			 xmlns:vm="using:LRReader.Shared.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="LRReader.Avalonia.Views.Controls.ArchiveList"
+			 x:DataType="vm:SearchResultsViewModel"
+			 Loaded="UserControl_Loaded"
+			 DataContext="{ReflectionBinding SearchResultsInstance, Source={StaticResource Locator}}">
+	<Grid>
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<ItemsRepeater ItemsSource="{Binding ArchiveList}" Margin="0,10,0,10">
+				<ItemsRepeater.ItemTemplate>
+					<DataTemplate>
+						<items:GenericArchiveItem />
+					</DataTemplate>
+				</ItemsRepeater.ItemTemplate>
+				<ItemsRepeater.Layout>
+					<UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
+				</ItemsRepeater.Layout>
+			</ItemsRepeater>
+		</ScrollViewer>
+		<!--<Button Content="{loc:LocalizedString Key=/Generic/RetryBtn/Content}"
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		IsVisible="{Binding RefreshOnErrorButton, Mode=OneWay}"/>-->
+	</Grid>
+</UserControl>

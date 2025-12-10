@@ -1,17 +1,18 @@
 <Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:vm="using:LRReader.Shared.ViewModels"
-             xmlns:sty="using:FluentAvalonia.Styling"
-             x:Class="LRReader.Avalonia.App">
-  <Application.Styles>
-    <sty:FluentAvaloniaTheme />
-    <StyleInclude Source="avares://Aura.UI.FluentTheme/AuraUI.xaml"/>
-    <StyleInclude Source="/Resources/ThemeDictionary.axaml"/>
-    <StyleInclude Source="/Resources/AvaloniaTemplates.axaml"/>
-  </Application.Styles>
-  <Application.Resources>
-    <ResourceDictionary>
-      <vm:ViewModelLocator x:Key="Locator" />
-    </ResourceDictionary>
-  </Application.Resources>
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="using:LRReader.Avalonia"
+			 xmlns:sty="using:FluentAvalonia.Styling"
+			 x:Class="LRReader.Avalonia.App">
+	<Application.Styles>
+		<sty:FluentAvaloniaTheme PreferUserAccentColor="True" />
+	</Application.Styles>
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="/Resources/Templates.axaml" />
+				<ResourceInclude Source="/Resources/AvaloniaTemplates.axaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<vm:ViewModelLocator x:Key="Locator" />
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

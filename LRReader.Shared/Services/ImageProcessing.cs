@@ -9,7 +9,7 @@ namespace LRReader.Shared.Services
 	public abstract class ImageProcessingService : IService
 	{
 
-		public abstract Task Init();
+		public virtual Task Init() => Task.CompletedTask;
 
 		public abstract Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? image = default, CancellationToken cancellationToken = default);
 

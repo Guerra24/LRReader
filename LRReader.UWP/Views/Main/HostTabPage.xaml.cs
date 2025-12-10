@@ -6,9 +6,12 @@ using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -174,6 +177,34 @@ namespace LRReader.UWP.Views.Main
 		{
 			sender.IsOpen = false;
 			await Session.Restore();
+		}
+
+		private async void AddFile_Click(object sender, RoutedEventArgs e)
+		{
+			var picker = new FileOpenPicker();
+			picker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+			picker.FileTypeFilter.Add(".zip");
+			picker.FileTypeFilter.Add(".rar");
+			picker.FileTypeFilter.Add(".7z");
+			picker.FileTypeFilter.Add(".tar");
+			picker.FileTypeFilter.Add(".gz");
+			picker.FileTypeFilter.Add(".lzma");
+			picker.FileTypeFilter.Add(".xz");
+			picker.FileTypeFilter.Add(".cbz");
+			picker.FileTypeFilter.Add(".cbr");
+			picker.FileTypeFilter.Add(".cb7");
+			picker.FileTypeFilter.Add(".cbt");
+			picker.FileTypeFilter.Add(".pdf");
+			picker.FileTypeFilter.Add(".epub");
+			picker.FileTypeFilter.Add(".zst");
+
+			var file = await picker.PickSingleFileAsync();
+
+			if (file != null)
+			{
+				var data = await FileIO.ReadBufferAsync(file);
+				await LRReader.Shared.Providers.ArchivesProvider.UploadArchive(file.Name, data.ToArray());
+			}
 		}
 	}
 }

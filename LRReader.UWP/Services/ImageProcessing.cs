@@ -26,11 +26,11 @@ namespace LRReader.UWP.Services
 			TaskFactory = new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(Math.Clamp(Environment.ProcessorCount / 4, 1, 4)));
 		}
 
-		public override async Task Init()
+		/*public override async Task Init()
 		{
 			//UseOsJpegXL = Platform.WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 19) && await Platform.CheckAppInstalled("Microsoft.JPEG-XLImageExtension_8wekyb3d8bbwe");
 			await Task.CompletedTask;
-		}
+		}*/
 
 		[DynamicWindowsRuntimeCast(typeof(BitmapImage))]
 		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default, CancellationToken cancellationToken = default)

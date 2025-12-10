@@ -7,7 +7,9 @@ using LRReader.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.System.UserProfile;
+#endif
 
 namespace LRReader.Shared.ViewModels
 {
@@ -112,7 +114,11 @@ namespace LRReader.Shared.ViewModels
 			Active = true;
 			int retires = 0;
 
+#if WINDOWS_UWP
 			if (!Api.RefreshSettings(Settings.Profile, GlobalizationPreferences.Languages[0]))
+#else
+			if (!Api.RefreshSettings(Settings.Profile, "en"))
+#endif
 			{
 				Status = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddress");
 				StatusSub = Platform.GetLocalizedString("Pages/LoadingPage/InvalidAddressSub");

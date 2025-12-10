@@ -5,6 +5,7 @@ using LRReader.Shared.Models.Main;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
@@ -120,7 +121,7 @@ public static class ArchivesProvider
 		{
 			case HttpStatusCode.OK:
 				var download = new DownloadPayload();
-				var value = Encoding.UTF8.GetString(Encoding.Latin1.GetBytes(r.GetContentHeaderValue("Content-Disposition")!));
+				var value = Encoding.Default.GetString(Encoding.Latin1.GetBytes(r.GetContentHeaderValue("Content-Disposition")!));
 				var contentDisposition = ContentDispositionHeaderValue.Parse(value);
 
 				var ext = Path.GetExtension(contentDisposition.FileName!);
@@ -241,5 +242,25 @@ public static class ArchivesProvider
 		var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
 		return await r.GetResult<ArchiveTankoubons>().ConfigureAwait(false);
+	}
+
+	public static async Task<bool> UploadArchive(string filename, byte[] data, string? title = null, string? tags = null, string? summary = null, string? category_id = null, string? file_checksum = null)
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/archives/upload");
+		if (!string.IsNullOrEmpty(title)) rq.AddQueryParameter("title", title);
+		if (!string.IsNullOrEmpty(tags)) rq.AddQueryParameter("tags", tags);
+		if (!string.IsNullOrEmpty(summary)) rq.AddQueryParameter("summary", summary);
+		if (!string.IsNullOrEmpty(category_id)) rq.AddQueryParameter("category_id", category_id);
+		if (!string.IsNullOrEmpty(file_checksum)) rq.AddQueryParameter("file_checksum", file_checksum);
+		var bytes = Encoding.Default.GetBytes(filename);
+		var latin = Encoding.Latin1.GetString(bytes);
+
+		rq.AddFile("file", data, latin, options: new FileParameterOptions { DisableFilenameEncoding = true, DisableFilenameStar = false });
+
+		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult().ConfigureAwait(false);
 	}
 }

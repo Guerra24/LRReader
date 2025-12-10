@@ -13,9 +13,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System.UserProfile;
+#endif
 
 namespace LRReader.Shared.ViewModels
 {
@@ -320,7 +322,12 @@ namespace LRReader.Shared.ViewModels
 				if (!(address.StartsWith("http://") || address.StartsWith("https://")))
 					address = "http://" + address;
 				SettingsManager.ModifyProfile(profile.UID, dialog.Name, address, dialog.ApiKey, dialog.Integration);
+#if WINDOWS_UWP
 				Api.RefreshSettings(profile, GlobalizationPreferences.Languages[0]);
+#else
+				Api.RefreshSettings(profile, "en");
+#endif
+
 			}
 		}
 

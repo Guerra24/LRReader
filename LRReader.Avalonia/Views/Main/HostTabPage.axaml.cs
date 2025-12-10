@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using FluentAvalonia.UI.Controls;
+using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Services;
 
 namespace LRReader.Avalonia.Views.Main
@@ -12,7 +14,7 @@ namespace LRReader.Avalonia.Views.Main
 		public HostTabPage()
 		{
 			InitializeComponent();
-			Data = DataContext as TabsService;
+			Data = (TabsService)DataContext!;
 		}
 
 		private async void HostTabPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
@@ -39,16 +41,11 @@ namespace LRReader.Avalonia.Views.Main
 			//WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
 
-		private void SettingsButton_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Settings);
-
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) { }
 
-		private void Bookmarks_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Bookmarks);
-
-		private void Categories_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Categories);
-
-		private void Search_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.SearchResults);
-
-		private void Tools_Click(object sender, RoutedEventArgs e) => Data.OpenTab(Tab.Tools);
+		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+		{
+			Data.CloseTab((CustomTab)args.Tab);
+		}
 	}
 }

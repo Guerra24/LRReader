@@ -7,17 +7,16 @@
              mc:Ignorable="d"
              d:DesignWidth="1500"
 			 d:DesignHeight="1000"
-			 x:CompileBindings="True"
              xmlns:vm="using:LRReader.Shared.ViewModels"
              xmlns:items="using:LRReader.Shared.Models.Main"
-             xmlns:loc="using:LRReader.Avalonia"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
              DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Main.FirstRunPage">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
-      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="32" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <Grid Grid.ColumnSpan="2">
@@ -32,14 +31,11 @@
         <RowDefinition />
       </Grid.RowDefinitions>
       <StackPanel Grid.Row="2" HorizontalAlignment="Right">
-        <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Welcome/Text}" HorizontalAlignment="Right" FontSize="28" />
-        <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Continue/Text}" FontSize="16" IsVisible="{Binding SettingsManager.ProfilesAvailable, Mode=OneWay}" />
-        <TextBlock Text="{loc:LocalizedString Key=/Pages/FirstRunPage/Create/Text}" FontSize="16" IsVisible="{Binding !SettingsManager.ProfilesAvailable, Mode=OneWay}" />
+        <TextBlock Text="{ext:LocalizedString Key=/Pages/FirstRunPage/Welcome/Text}" HorizontalAlignment="Right" FontSize="28" />
+        <TextBlock Text="{ext:LocalizedString Key=/Pages/FirstRunPage/Continue/Text}" FontSize="16" IsVisible="{Binding SettingsManager.ProfilesAvailable, Mode=OneWay}" />
+        <TextBlock Text="{ext:LocalizedString Key=/Pages/FirstRunPage/Create/Text}" FontSize="16" IsVisible="{Binding !SettingsManager.ProfilesAvailable, Mode=OneWay}" />
       </StackPanel>
     </Grid>
-    <Border
-        Grid.Column="1" Margin="16,0" BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
-        BorderThickness="1" />
     <ScrollViewer x:Name="ScrollViewer" Grid.Column="2" Margin="0,32,0,0" Padding="0,16,16,16">
       <StackPanel
           Grid.Column="2"
@@ -47,7 +43,7 @@
           MaxWidth="500" HorizontalAlignment="Left"
           VerticalAlignment="Center" Spacing="3">
         <Button
-            ToolTip.Tip="{loc:LocalizedString Key=/Settings/Profiles/AddProfile/ToolTipService/ToolTip}"
+            ToolTip.Tip="{ext:LocalizedString Key=/Settings/Profiles/AddProfile/ToolTipService/ToolTip}"
             Background="{DynamicResource ExpanderHeaderBackground}"
             BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
             BorderThickness="{DynamicResource ExpanderHeaderBorderThickness}"
@@ -57,7 +53,7 @@
             Command="{Binding AddProfileCommand}">
           <ui:FontIcon Margin="0,16" HorizontalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE710;" FontSize="22" />
         </Button>
-        <ItemsRepeater Items="{Binding SettingsManager.Profiles, Mode=OneWay}">
+        <ItemsRepeater ItemsSource="{Binding SettingsManager.Profiles, Mode=OneWay}">
           <ItemsRepeater.Layout>
             <StackLayout DisableVirtualization="True" Spacing="3" />
           </ItemsRepeater.Layout>
@@ -92,12 +88,12 @@
                       <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
                           <MenuItem
-                              Header="{loc:LocalizedString Key=/Settings/Profiles/Edit/Text}"
+                              Header="{ext:LocalizedString Key=/Settings/Profiles/Edit/Text}"
                               Command="{ReflectionBinding SettingsPageInstance.EditProfileCommand, Source={StaticResource Locator}}"
                               CommandParameter="{Binding}"
                               Icon="Edit" />
                           <MenuItem
-                              Header="{loc:LocalizedString Key=/Settings/Profiles/Delete/Text}"
+                              Header="{ext:LocalizedString Key=/Settings/Profiles/Delete/Text}"
                               Command="{ReflectionBinding SettingsPageInstance.RemoveProfileCommand, Source={StaticResource Locator}}"
                               CommandParameter="{Binding}"
                               Icon="Delete" />
