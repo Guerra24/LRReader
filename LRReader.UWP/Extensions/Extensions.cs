@@ -393,6 +393,24 @@ namespace LRReader.UWP.Extensions
 		}
 	}*/
 
+	[MarkupExtensionReturnType(ReturnType = typeof(bool))]
+	public partial class TrueExtension : MarkupExtension
+	{
+		protected override object ProvideValue()
+		{
+			return true;
+		}
+	}
+
+	[MarkupExtensionReturnType(ReturnType = typeof(bool))]
+	public partial class FalseExtension : MarkupExtension
+	{
+		protected override object ProvideValue()
+		{
+			return false;
+		}
+	}
+
 	public static class PackageVersionExtension
 	{
 		public static Version ToVersion(this PackageVersion version) => new Version(version.Major, version.Minor, version.Build, version.Revision);

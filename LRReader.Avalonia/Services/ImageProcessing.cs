@@ -13,10 +13,16 @@ namespace LRReader.Avalonia.Services
 		{
 			return Task.Run(() =>
 			{
+				if (image is Bitmap bitmap)
+					bitmap.Dispose();
 				if (bytes == null)
 					return null;
 				using (var stream = new MemoryStream(bytes))
 				{
+					if (decodeWidth != 0)
+						return Bitmap.DecodeToWidth(stream, decodeWidth);
+					if (decodeHeight != 0)
+						return Bitmap.DecodeToHeight(stream, decodeHeight);
 					return (object)new Bitmap(stream);
 				}
 			});

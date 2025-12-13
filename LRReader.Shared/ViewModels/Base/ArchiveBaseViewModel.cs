@@ -267,5 +267,11 @@ namespace LRReader.Shared.ViewModels.Base
 			}
 		}
 
+		[RelayCommand]
+		private void ChangeBookmark(bool state)
+		{
+			Bookmarked = state;
+		}
+
 	}
 }

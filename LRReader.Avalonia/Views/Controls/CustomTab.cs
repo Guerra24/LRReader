@@ -9,7 +9,7 @@ namespace LRReader.Avalonia.Views.Controls
 	{
 		protected override Type StyleKeyOverride => typeof(CustomTab);
 
-		public object CustomTabControl
+		public object? CustomTabControl
 		{
 			get => GetValue(CustomTabControlProperty);
 			set => SetValue(CustomTabControlProperty, value);
@@ -33,7 +33,7 @@ namespace LRReader.Avalonia.Views.Controls
 		{
 		}
 
-		public static readonly AvaloniaProperty<object> CustomTabControlProperty = AvaloniaProperty.Register<CustomTab, object>("CustomTabControl");
+		public static readonly AvaloniaProperty<object?> CustomTabControlProperty = AvaloniaProperty.Register<CustomTab, object?>("CustomTabControl");
 		public static readonly AvaloniaProperty<string> CustomTabIdProperty = AvaloniaProperty.Register<CustomTab, string>("CustomTabId");
 	}
 }

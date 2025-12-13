@@ -1,278 +1,278 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:ui="using:FluentAvalonia.UI.Controls"
-					xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
-					xmlns:controls="using:LRReader.Avalonia.Views.Controls">
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="using:FluentAvalonia.UI.Controls"
+                    xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+                    xmlns:controls="using:LRReader.Avalonia.Views.Controls">
 
-	<Design.PreviewWith>
-		<!--
-		<Border Padding="50">
-		<StackPanel Spacing="5">
-		<Button Content="Button" />
-		<TextBox Watermark="TextBox" />
-		</StackPanel>
-		</Border>
-		-->
-		<ui:TabView Theme="{StaticResource ModernTabView}" Width="400" Height="400" IsAddTabButtonVisible="False">
-			<controls:CustomTab Header="Hello" IsClosable="False"/>
-			<ui:TabView.TabStripFooter>
-				<Grid HorizontalAlignment="Left">
-					<Button Content="WEW" />
-				</Grid>
-			</ui:TabView.TabStripFooter>
-		</ui:TabView>
-	</Design.PreviewWith>
+    <Design.PreviewWith>
+        <!--
+        <Border Padding="50">
+        <StackPanel Spacing="5">
+        <Button Content="Button" />
+        <TextBox Watermark="TextBox" />
+        </StackPanel>
+        </Border>
+        -->
+        <ui:TabView Theme="{StaticResource ModernTabView}" Width="400" Height="400" IsAddTabButtonVisible="False">
+            <controls:CustomTab Header="Hello" IsClosable="False"/>
+            <ui:TabView.TabStripFooter>
+                <Grid HorizontalAlignment="Left">
+                    <Button Content="WEW" />
+                </Grid>
+            </ui:TabView.TabStripFooter>
+        </ui:TabView>
+    </Design.PreviewWith>
 
-	<ControlTheme x:Key="ModernTabView" TargetType="ui:TabView">
-		<Setter Property="VerticalAlignment" Value="Top" />
-		<Setter Property="Padding" Value="0 8" />
-		<Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
-		<Setter Property="Template">
-			<ControlTemplate>
-				<Grid RowDefinitions="Auto,*">
+    <ControlTheme x:Key="ModernTabView" TargetType="ui:TabView">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Padding" Value="0 8" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid RowDefinitions="Auto,*">
 
-					<Grid Name="TabContainerGrid"
-						  Background="{TemplateBinding Background}">
+                    <Grid Name="TabContainerGrid"
+                                    Background="{TemplateBinding Background}">
 
-						<Grid.ColumnDefinitions>
-							<!-- x:Name="LeftContentColumn -->
-							<ColumnDefinition Width="Auto" />
-							<!-- x:Name="TabColumn" -->
-							<ColumnDefinition Width="Auto" />
-							<!-- x:Name="AddButtonColumn" -->
-							<ColumnDefinition Width="Auto" />
-							<!-- x:Name="RightContentColumn"-->
-							<ColumnDefinition Width="*" />
-						</Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <!-- x:Name="LeftContentColumn -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- x:Name="TabColumn" -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- x:Name="AddButtonColumn" -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- x:Name="RightContentColumn"-->
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-						<ContentPresenter Grid.Column="0"
-										  Name="LeftContentPresenter"
-										  Content="{TemplateBinding TabStripHeader}"
-										  ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
+                        <ContentPresenter Grid.Column="0"
+                                                      Name="LeftContentPresenter"
+                                                      Content="{TemplateBinding TabStripHeader}"
+                                                      ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
 
-						<uip:TabViewListView Grid.Column="1"
-											 Name="TabListView"
-											 Padding="{TemplateBinding Padding}"
-											 ItemsSource="{TemplateBinding TabItems}"
-											 ItemTemplate="{TemplateBinding TabItemTemplate}"
-											 CanReorderItems="{TemplateBinding CanReorderTabs}"
-											 CanDragItems="{TemplateBinding CanDragTabs}"
-											 DragDrop.AllowDrop="{TemplateBinding AllowDropTabs}"
-											 Theme="{StaticResource ModernTabViewList}"/>
+                        <uip:TabViewListView Grid.Column="1"
+                                                         Name="TabListView"
+                                                         Padding="{TemplateBinding Padding}"
+                                                         ItemsSource="{TemplateBinding TabItems}"
+                                                         ItemTemplate="{TemplateBinding TabItemTemplate}"
+                                                         CanReorderItems="{TemplateBinding CanReorderTabs}"
+                                                         CanDragItems="{TemplateBinding CanDragTabs}"
+                                                         DragDrop.AllowDrop="{TemplateBinding AllowDropTabs}"
+                                                         Theme="{StaticResource ModernTabViewList}"/>
 
-						<Border Grid.Column="2" Width="1" Height="16" Margin="3,0,3,0" VerticalAlignment="Center" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                        <Border Grid.Column="2" Width="1" Height="16" Margin="3,0,3,0" VerticalAlignment="Center" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
 
-						<ContentPresenter Grid.Column="3"
-										  Name="RightContentPresenter"
-										  HorizontalAlignment="Stretch"
-										  Content="{TemplateBinding TabStripFooter}"
-										  ContentTemplate="{TemplateBinding TabStripFooterTemplate}"/>
-					</Grid>
+                        <ContentPresenter Grid.Column="3"
+                                                      Name="RightContentPresenter"
+                                                      HorizontalAlignment="Stretch"
+                                                      Content="{TemplateBinding TabStripFooter}"
+                                                      ContentTemplate="{TemplateBinding TabStripFooterTemplate}"/>
+                    </Grid>
 
-					<ContentPresenter Name="TabContentPresenter" Grid.Row="1" />
+                    <ContentPresenter Name="TabContentPresenter" Grid.Row="1" />
 
-				</Grid>
-			</ControlTemplate>
-		</Setter>
-	</ControlTheme>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-	<ControlTheme x:Key="ModernTabViewList" TargetType="uip:TabViewListView">
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="IsTabStop" Value="False" />
-		<Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
-		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
-		<Setter Property="ItemsPanel">
-			<ItemsPanelTemplate>
-				<!--
-				NOTE: This panel enables the reordering/drag effects
-				changing this will disable all drag/drop/reordering
-				logic on the TabView
-				-->
-				<ui:TabViewStackPanel />
-			</ItemsPanelTemplate>
-		</Setter>
-		<Setter Property="Template">
-			<ControlTemplate>
-				<Border>
-					<ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-								  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-								  Theme="{StaticResource ModernTabScrollViewerStyle}"
-								  Name="ScrollViewer">
-						<ItemsPresenter Name="TabItemsPresenter"
-										Margin="{TemplateBinding Padding}"
-										ItemsPanel="{TemplateBinding ItemsPanel}" />
+    <ControlTheme x:Key="ModernTabViewList" TargetType="uip:TabViewListView">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <!--
+                NOTE: This panel enables the reordering/drag effects
+                changing this will disable all drag/drop/reordering
+                logic on the TabView
+                -->
+                <ui:TabViewStackPanel />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border>
+                    <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                            Theme="{StaticResource ModernTabScrollViewerStyle}"
+                                            Name="ScrollViewer">
+                        <ItemsPresenter Name="TabItemsPresenter"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
 
-					</ScrollViewer>
-				</Border>
-			</ControlTemplate>
-		</Setter>
-	</ControlTheme>
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-	<ControlTheme x:Key="ModernTabScrollViewerStyle" TargetType="ScrollViewer">
-		<Setter Property="Template">
-			<ControlTemplate>
-				<Border Name="Root"
-						Background="{TemplateBinding Background}"
-						BorderBrush="{TemplateBinding BorderBrush}"
-						BorderThickness="{TemplateBinding BorderThickness}">
+    <ControlTheme x:Key="ModernTabScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
 
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-						<Border Name="ScrollDecreaseButtonContainer"
-								IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
-								Padding="{DynamicResource TabViewItemLeftScrollButtonContainerPadding}"
-								VerticalAlignment="Bottom">
-							<RepeatButton Name="ScrollDecreaseButton"
-										  Delay="50"
-										  Interval="100"
-										  Content="&#xEDD9;"
-										  Theme="{StaticResource TabViewScrollButtonStyle}"/>
-						</Border>
+                        <Border Name="ScrollDecreaseButtonContainer"
+                                            IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
+                                            Padding="{DynamicResource TabViewItemLeftScrollButtonContainerPadding}"
+                                            VerticalAlignment="Bottom">
+                            <RepeatButton Name="ScrollDecreaseButton"
+                                                        Delay="50"
+                                                        Interval="100"
+                                                        Content="&#xEDD9;"
+                                                        Theme="{StaticResource TabViewScrollButtonStyle}"/>
+                        </Border>
 
-						<ScrollContentPresenter Name="ScrollContentPresenter"
-												Grid.Column="1"
-												KeyboardNavigation.TabNavigation="Once"
-												Content="{TemplateBinding Content}"
-												HorizontalSnapPointsType="{TemplateBinding HorizontalSnapPointsType}"
-												VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}"
-												HorizontalSnapPointsAlignment="{TemplateBinding HorizontalSnapPointsAlignment}"
-												VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}">
-							<ScrollContentPresenter.GestureRecognizers>
-								<ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=ScrollContentPresenter}"
-														 CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=ScrollContentPresenter}"
-														 IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
-							</ScrollContentPresenter.GestureRecognizers>
-						</ScrollContentPresenter>
+                        <ScrollContentPresenter Name="ScrollContentPresenter"
+                                                            Grid.Column="1"
+                                                            KeyboardNavigation.TabNavigation="Once"
+                                                            Content="{TemplateBinding Content}"
+                                                            HorizontalSnapPointsType="{TemplateBinding HorizontalSnapPointsType}"
+                                                            VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}"
+                                                            HorizontalSnapPointsAlignment="{TemplateBinding HorizontalSnapPointsAlignment}"
+                                                            VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}">
+                            <ScrollContentPresenter.GestureRecognizers>
+                                <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=ScrollContentPresenter}"
+                                                                         CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=ScrollContentPresenter}"
+                                                                         IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </ScrollContentPresenter.GestureRecognizers>
+                        </ScrollContentPresenter>
 
-						<Border Name="ScrollIncreaseButtonContainer"
-								IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
-								Grid.Column="2"
-								Padding="{DynamicResource TabViewItemRightScrollButtonContainerPadding}"
-								VerticalAlignment="Bottom">
-							<RepeatButton Name="ScrollIncreaseButton"
-										  Delay="50"
-										  Interval="100"
-										  Content="&#xEDDA;"
-										  Theme="{StaticResource TabViewScrollButtonStyle}"/>
-						</Border>
+                        <Border Name="ScrollIncreaseButtonContainer"
+                                            IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
+                                            Grid.Column="2"
+                                            Padding="{DynamicResource TabViewItemRightScrollButtonContainerPadding}"
+                                            VerticalAlignment="Bottom">
+                            <RepeatButton Name="ScrollIncreaseButton"
+                                                        Delay="50"
+                                                        Interval="100"
+                                                        Content="&#xEDDA;"
+                                                        Theme="{StaticResource TabViewScrollButtonStyle}"/>
+                        </Border>
 
-					</Grid>
+                    </Grid>
 
-				</Border>
-			</ControlTemplate>
-		</Setter>
-	</ControlTheme>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 
-	<ControlTheme x:Key="{x:Type controls:CustomTab}" TargetType="controls:CustomTab">
-		<Setter Property="Padding" Value="{DynamicResource TabViewItemHeaderPadding}" />
-		<Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-		<Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
-		<Setter Property="BorderThickness" Value="1" />
-		<Setter Property="Transitions">
-			<Transitions>
-				<BrushTransition Duration="00:00:0.083" Property="Background" />
-			</Transitions>
-		</Setter>
-		<Setter Property="Template">
-			<ControlTemplate>
-				<Border Name="LayoutRootBorder"
-						Background="{TemplateBinding Background}"
-						BorderBrush="{TemplateBinding BorderBrush}"
-						BorderThickness="{TemplateBinding BorderThickness}"
-						CornerRadius="{TemplateBinding CornerRadius}"
-						Padding="{TemplateBinding Padding}">
-					<Grid Name="LayoutRoot">
-						<Border Name="TabContainerBorder"
-								TemplatedControl.IsTemplateFocusTarget="True">
-							<Grid Name="TabContainer">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="Auto" />
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="Auto" />
-								</Grid.ColumnDefinitions>
+    <ControlTheme x:Key="{x:Type controls:CustomTab}" TargetType="controls:CustomTab">
+        <Setter Property="Padding" Value="{DynamicResource TabViewItemHeaderPadding}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Duration="00:00:0.083" Property="Background" />
+            </Transitions>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="LayoutRootBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Padding="{TemplateBinding Padding}">
+                    <Grid Name="LayoutRoot">
+                        <Border Name="TabContainerBorder"
+                                            TemplatedControl.IsTemplateFocusTarget="True">
+                            <Grid Name="TabContainer">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-								<Viewbox Name="IconBox"
-										 MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
-										 MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
-										 Margin="{DynamicResource TabViewItemHeaderIconMargin}"
-										 IsVisible="False">
-									<ContentControl Name="IconControl"
-													Content="{Binding TabViewTemplateSettings.IconElement, RelativeSource={RelativeSource TemplatedParent}}"
-													KeyboardNavigation.IsTabStop="False"
-													Foreground="{DynamicResource TabViewItemIconForeground}"/>
-								</Viewbox>
+                                <Viewbox Name="IconBox"
+                                                         MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                                                         MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                                                         Margin="{DynamicResource TabViewItemHeaderIconMargin}"
+                                                         IsVisible="False">
+                                    <ContentControl Name="IconControl"
+                                                                      Content="{Binding TabViewTemplateSettings.IconElement, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                      KeyboardNavigation.IsTabStop="False"
+                                                                      Foreground="{DynamicResource TabViewItemIconForeground}"/>
+                                </Viewbox>
 
-								<!-- If we template bind the ContentPresenter's Content property to the TabViewItem.Header property
-								we unfortunately run into the following issue if the header is [null] or empty:
-								The TabViewItem.Content property will be implictly bound to the Content property of the ContentPresenter.
-								To prevent this, we explicitly set a default empty content here and update the content in code behind. -->
+                                <!-- If we template bind the ContentPresenter's Content property to the TabViewItem.Header property
+                                we unfortunately run into the following issue if the header is [null] or empty:
+                                The TabViewItem.Content property will be implictly bound to the Content property of the ContentPresenter.
+                                To prevent this, we explicitly set a default empty content here and update the content in code behind. -->
 
-								<ContentPresenter Name="ContentPresenter"
-												  Grid.Column="1"
-												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-												  Content=""
-												  ContentTemplate="{TemplateBinding HeaderTemplate}"
-												  FontWeight="{TemplateBinding FontWeight}"
-												  FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-												  Foreground="{DynamicResource TabViewItemHeaderForeground}"
-												  Padding="0 4"/>
+                                <ContentPresenter Name="ContentPresenter"
+                                                                  Grid.Column="1"
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  Content=""
+                                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                                  FontWeight="{TemplateBinding FontWeight}"
+                                                                  FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                                                  Foreground="{DynamicResource TabViewItemHeaderForeground}"
+                                                                  Padding="0 4"/>
 
-								<Button Name="CloseButton"
-										Grid.Column="2"
-										Margin="{DynamicResource TabViewItemHeaderCloseMargin}"
-										Content="&#xE711;"
-										Theme="{StaticResource TabViewCloseButtonStyle}"
-										KeyboardNavigation.IsTabStop="False"/>
-							</Grid>
-						</Border>
-					</Grid>
-				</Border>
-			</ControlTemplate>
-		</Setter>
+                                <Button Name="CloseButton"
+                                                        Grid.Column="2"
+                                                        Margin="{DynamicResource TabViewItemHeaderCloseMargin}"
+                                                        Content="&#xE711;"
+                                                        Theme="{StaticResource TabViewCloseButtonStyle}"
+                                                        KeyboardNavigation.IsTabStop="False"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
 
-		<Style Selector="^:pointerover">
-			<Setter Property="Background" Value="{DynamicResource ControlAltFillColorTertiary}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-			<Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-		</Style>
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ControlAltFillColorTertiary}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        </Style>
 
-		<Style Selector="^:pressed">
-			<Setter Property="Background" Value="{DynamicResource ControlAltFillColorQuarternary}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-		</Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource ControlAltFillColorQuarternary}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+        </Style>
 
-		<Style Selector="^:selected">
-			<Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
-			<Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-			<Style Selector="^:pointerover">
-				<Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
-				<Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
-				<Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-			</Style>
-			<Style Selector="^:pressed">
-				<Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
-				<Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
-				<Setter Property="Foreground" Value="{DynamicResource TextFillColorTertiaryBrush}" />
-			</Style>
-		</Style>
+        <Style Selector="^:selected">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Style Selector="^:pointerover">
+                <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+            </Style>
+            <Style Selector="^:pressed">
+                <Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextFillColorTertiaryBrush}" />
+            </Style>
+        </Style>
 
-		<Style Selector="^:icon /template/ Viewbox#IconBox">
-			<Setter Property="IsVisible" Value="True" />
-		</Style>
+        <Style Selector="^:icon /template/ Viewbox#IconBox">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
 
-		<!-- :closecollapsed -->
-		<Style Selector="^:closecollapsed /template/ Button#CloseButton">
-			<Setter Property="IsVisible" Value="False" />
-		</Style>
-	</ControlTheme>
+        <!-- :closecollapsed -->
+        <Style Selector="^:closecollapsed /template/ Button#CloseButton">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
 
 </ResourceDictionary>

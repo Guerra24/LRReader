@@ -132,10 +132,6 @@ namespace LRReader.UWP.Views.Items
 				await FileIO.WriteBytesAsync(file, download.Data);
 		}
 
-		public void Add_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = true;
-
-		public void Remove_Click(object sender, RoutedEventArgs e) => ViewModel.Bookmarked = false;
-
 		public async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
 			_open = true;

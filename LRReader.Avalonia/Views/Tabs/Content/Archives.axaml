@@ -1,14 +1,14 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:aura="using:Aura.UI.Controls"
-			 xmlns:models="using:LRReader.Shared.Models.Main"
-			 xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
-			 xmlns:items="using:LRReader.Avalonia.Views.Items"
-			 xmlns:controls="using:LRReader.Avalonia.Views.Controls"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="LRReader.Avalonia.Views.Tabs.Content.Archives">
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:aura="using:Aura.UI.Controls"
+             xmlns:models="using:LRReader.Shared.Models.Main"
+             xmlns:vm="clr-namespace:LRReader.Shared.ViewModels;assembly=LRReader.Shared"
+             xmlns:items="using:LRReader.Avalonia.Views.Items"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LRReader.Avalonia.Views.Tabs.Content.Archives">
 
-	<controls:ArchiveList x:Name="ArchiveList" OnRefresh="ArchiveList_OnRefresh" OnLoad="ArchiveList_OnLoad" />
+    <controls:ArchiveList x:Name="ArchiveList" OnRefresh="ArchiveList_OnRefresh" OnLoad="ArchiveList_OnLoad" />
 </UserControl>

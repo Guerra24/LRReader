@@ -7,7 +7,8 @@
 	xmlns:media="using:CommunityToolkit.WinUI.Media"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
-	xmlns:ct="using:CommunityToolkit.WinUI">
+	xmlns:ct="using:CommunityToolkit.WinUI"
+	xmlns:ext="using:LRReader.UWP.Extensions">
 
 	<Style BasedOn="{StaticResource DefaultArchiveImage}" TargetType="items:ArchiveImage" />
 
@@ -113,13 +114,15 @@
 								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Bookmark"
-									Click="{x:Bind Add_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:True}"
 									Icon="Favorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Unbookmark"
 									Background="{ThemeResource UnbookmarkItem}"
-									Click="{x:Bind Remove_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:False}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
@@ -208,13 +211,15 @@
 								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Bookmark"
-									Click="{x:Bind Add_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:True}"
 									Icon="Favorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Unbookmark"
 									Background="{ThemeResource UnbookmarkItem}"
-									Click="{x:Bind Remove_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:False}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
@@ -325,13 +330,15 @@
 								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Bookmark"
-									Click="{x:Bind Add_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:True}"
 									Icon="Favorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Unbookmark"
 									Background="{ThemeResource UnbookmarkItem}"
-									Click="{x:Bind Remove_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:False}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
@@ -452,13 +459,15 @@
 								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Bookmark"
-									Click="{x:Bind Add_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:True}"
 									Icon="Favorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Unbookmark"
 									Background="{ThemeResource UnbookmarkItem}"
-									Click="{x:Bind Remove_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:False}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
 								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
@@ -553,16 +562,20 @@
 								<MenuFlyoutItem x:Uid="/Items/Archive/OpenTab" Click="{x:Bind MenuFlyoutItem_Click}" Icon="Add" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Bookmark"
-									Click="{x:Bind Add_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:True}"
 									Icon="Favorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
 								<MenuFlyoutItem
 									x:Uid="/Items/Archive/Unbookmark"
 									Background="{ThemeResource UnbookmarkItem}"
-									Click="{x:Bind Remove_Click}"
+									Command="{x:Bind ViewModel.ChangeBookmarkCommand}"
+									CommandParameter="{ext:False}"
 									Icon="Unfavorite"
 									Visibility="{x:Bind ViewModel.Bookmarked, Mode=OneWay}" />
-								<MenuFlyoutSubItem x:Uid="/Items/Archive/Rating" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+								<MenuFlyoutSubItem
+									x:Uid="/Items/Archive/Rating"
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutSubItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
 									</MenuFlyoutSubItem.Icon>
@@ -580,7 +593,10 @@
 									Command="{x:Bind ViewModel.EditCommand}"
 									Icon="Edit"
 									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}" />
-								<MenuFlyoutItem x:Uid="/Items/Archive/Categories" Command="{x:Bind ViewModel.EditCategoriesCommand}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
+								<MenuFlyoutItem
+									x:Uid="/Items/Archive/Categories"
+									Command="{x:Bind ViewModel.EditCategoriesCommand}"
+									Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey}">
 									<MenuFlyoutItem.Icon>
 										<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
 									</MenuFlyoutItem.Icon>

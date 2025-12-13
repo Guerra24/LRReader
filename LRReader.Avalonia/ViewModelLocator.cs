@@ -23,4 +23,5 @@ public class ViewModelLocator
 	public TankoubonsViewModel TankoubonsViewModelInstance => Service.Services.GetRequiredService<TankoubonsViewModel>();
 	public TankoubonViewModel TankoubonViewModelInstance => Service.Services.GetRequiredService<TankoubonViewModel>();
 	public TankoubonEditViewModel TankoubonEditViewModelInstance => Service.Services.GetRequiredService<TankoubonEditViewModel>();
+	public SettingsService Settings => Service.Settings;
 }
