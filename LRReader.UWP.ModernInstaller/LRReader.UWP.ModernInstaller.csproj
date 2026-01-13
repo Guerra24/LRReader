@@ -18,7 +18,7 @@
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
     <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.20250829.1</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
-    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.7175</MicrosoftWindowsSDKBuildToolsPackageVersion>
+    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.7463</MicrosoftWindowsSDKBuildToolsPackageVersion>
     <WindowsSdkPackageVersion>10.0.26100.73-preview</WindowsSdkPackageVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DisableEmbeddedXbf>false</DisableEmbeddedXbf>
@@ -43,7 +43,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
     <PackageReference Include="Mile.Xaml" Version="2.5.1250" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Modern.UI.Xaml" Version="0.0.0-alpha.0.8" />
     <PackageReference Include="PublishAotCompressed" Version="1.0.5" Condition="'$(Platform)' == 'x64'" />

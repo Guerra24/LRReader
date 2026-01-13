@@ -232,7 +232,6 @@ namespace LRReader.Shared.Models.Main
 	public class ArchiveSearch
 	{
 		public List<ArchiveIdOnly> data { get; set; } = null!;
-		public int draw { get; set; }
 		public int recordsFiltered { get; set; }
 		public int recordsTotal { get; set; }
 	}

@@ -134,6 +134,8 @@ namespace LRReader.UWP.Views.Items
 
 		public async void TagsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
+			if (e.Pointer.PointerDeviceType != PointerDeviceType.Mouse)
+				return;
 			_open = true;
 			await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
 			if (_open && !TagsFlyout.IsOpen)
