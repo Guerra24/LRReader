@@ -139,8 +139,8 @@ namespace LRReader.UWP.Services
 								}
 								finally
 								{
-									JxlThreads.JxlResizableParallelRunnerDestroy(runner);
 									Jxl.JxlDecoderDestroy(decoder);
+									JxlThreads.JxlResizableParallelRunnerDestroy(runner);
 								}
 							}
 							return true;

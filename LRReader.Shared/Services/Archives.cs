@@ -146,6 +146,17 @@ namespace LRReader.Shared.Services
 				if (archives != null)
 				{
 					var temp = new ConcurrentDictionary<string, Archive>(archives.ToDictionary(c => c.arcid, c => c));
+
+					var tanks = await TankoubonsProvider.GetTankoubons(-1);
+
+					if (tanks != null)
+						foreach (var tank in tanks.result)
+						{
+							var metadata = await ArchivesProvider.GetArchive(tank.id);
+							if (metadata != null)
+								temp[tank.id] = metadata;
+						}
+
 					await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
 					Archives = temp;
 				}

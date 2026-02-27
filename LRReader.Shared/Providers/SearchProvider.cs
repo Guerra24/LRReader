@@ -18,9 +18,11 @@ namespace LRReader.Shared.Providers
 			rq.AddParameter("newonly", isnew.ToString().ToLower());
 			rq.AddParameter("untaggedonly", untagged.ToString().ToLower());
 			rq.AddParameter("filter", query);
-			rq.AddParameter("category", category);
+			if (!string.IsNullOrEmpty(category))
+				rq.AddParameter("category", category);
 			rq.AddParameter("sortby", sortby);
 			rq.AddParameter("order", order.String());
+			//rq.AddParameter("groupby_tanks", "true");
 
 			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 

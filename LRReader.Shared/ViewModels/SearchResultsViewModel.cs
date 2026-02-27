@@ -141,10 +141,6 @@ namespace LRReader.Shared.ViewModels
 						var archive = await Archives.GetOrAddArchive(a.arcid);
 						if (archive != null)
 							await Dispatcher.RunAsync(() => ArchiveList.Add(archive), 10);
-						//else
-						//{
-						//await Dispatcher.RunAsync(() => ArchiveList.Add(a), 10);
-						//}
 					}
 				});
 			}

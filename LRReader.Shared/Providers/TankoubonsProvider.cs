@@ -21,13 +21,13 @@ public static class TankoubonsProvider
 		return await r.GetResult<TankoubonsList>().ConfigureAwait(false);
 	}
 
-	public static async Task<TankoubonsItem?> GetTankoubon(string id, int page = 0)
+	public static async Task<TankoubonsItem?> GetTankoubon(string id, int page = -1)
 	{
 		var client = Api.Client;
 
 		var rq = new RestRequest("api/tankoubons/{id}");
 		rq.AddUrlSegment("id", id);
-		rq.AddQueryParameter("include_full_data", "0");
+		rq.AddQueryParameter("include_full_data", 0);
 		rq.AddQueryParameter("page", page.ToString());
 
 		var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);

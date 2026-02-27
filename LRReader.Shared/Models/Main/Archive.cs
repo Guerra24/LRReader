@@ -30,6 +30,8 @@ namespace LRReader.Shared.Models.Main
 
 		public string summary { get; set; } = null!;
 
+		public List<TocEntry> toc { get; set; } = [];
+
 		[JsonIgnore]
 		public string TagsClean { get; set; } = null!;
 		[JsonIgnore]
@@ -316,5 +318,11 @@ namespace LRReader.Shared.Models.Main
 				return true;
 			return arcid.Equals(other.arcid);
 		}
+	}
+
+	public class TocEntry
+	{
+		public string name { get; set; } = null!;
+		public int page { get; set; }
 	}
 }

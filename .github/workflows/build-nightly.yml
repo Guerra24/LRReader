@@ -6,7 +6,7 @@ on:
 jobs:
   # buildAvaloniaLinuxX64:
   #   name: Build Avalonia Linux X64
-  #   runs-on: windows-2025
+  #   runs-on: windows-2025-vs2026
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v6
@@ -24,7 +24,7 @@ jobs:
   #       path: LRReader.Avalonia.Desktop/publish/linux-x64
   # buildAvaloniaMacOSX64:
   #   name: Build Avalonia macOS X64
-  #   runs-on: windows-2025
+  #   runs-on: windows-2025-vs2026
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v6
@@ -42,7 +42,7 @@ jobs:
   #       path: LRReader.Avalonia.Desktop/publish/macos-x64
   # buildAvaloniaWinX64:
   #   name: Build Avalonia Windows X64
-  #   runs-on: windows-2025
+  #   runs-on: windows-2025-vs2026
   #   steps:
   #   - name: Checkout
   #     uses: actions/checkout@v6
@@ -60,7 +60,7 @@ jobs:
   #       path: LRReader.Avalonia.Desktop/publish/win-x64
   buildUWP:
     name: Sideload
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
     steps:
@@ -125,7 +125,7 @@ jobs:
         path: LRReader.UWP/AppPackages
   buildModernInstaller:
     name: Modern Installer
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
     strategy:
@@ -159,7 +159,7 @@ jobs:
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
   buildInstaller:
     name: Installer
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
     strategy:

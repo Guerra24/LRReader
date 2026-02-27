@@ -104,8 +104,8 @@ namespace LRReader.Shared.Formats.JpegXL
 				}
 				finally
 				{
-					JxlThreads.JxlResizableParallelRunnerDestroy(runner);
 					Jxl.JxlDecoderDestroy(decoder);
+					JxlThreads.JxlResizableParallelRunnerDestroy(runner);
 				}
 			}
 		}

@@ -5,7 +5,6 @@ using LRReader.Shared.Models.Main;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
@@ -260,6 +259,45 @@ public static class ArchivesProvider
 		rq.AddFile("file", data, latin, options: new FileParameterOptions { DisableFilenameEncoding = true, DisableFilenameStar = false });
 
 		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult().ConfigureAwait(false);
+	}
+
+	public static async Task<bool> RestoreNewArchive(string id)
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/archives/{id}/isnew");
+		rq.AddUrlSegment("id", id);
+
+		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult().ConfigureAwait(false);
+	}
+
+	public static async Task<bool> AddTocEntry(string id, string title, int page)
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/archives/{id}/toc");
+		rq.AddUrlSegment("id", id);
+		rq.AddQueryParameter("title", title);
+		rq.AddQueryParameter("page", page);
+
+		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
+
+		return await r.GetResult().ConfigureAwait(false);
+	}
+
+	public static async Task<bool> RemoveTocEntry(string id, int page)
+	{
+		var client = Api.Client;
+
+		var rq = new RestRequest("api/archives/{id}/toc");
+		rq.AddUrlSegment("id", id);
+		rq.AddQueryParameter("page", page);
+
+		var r = await client.ExecuteDeleteAsync(rq).ConfigureAwait(false);
 
 		return await r.GetResult().ConfigureAwait(false);
 	}

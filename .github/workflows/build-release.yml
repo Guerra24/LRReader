@@ -5,7 +5,7 @@ on:
 jobs:
   buildAppxBundle:
     name: Sideload
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
       contents: write
@@ -75,7 +75,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildModernInstaller:
     name: Modern Installer
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
       contents: write
@@ -112,7 +112,7 @@ jobs:
 #        repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildInstaller:
     name: Installer
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
       contents: write
@@ -148,7 +148,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildStoreBundle:
     name: Store
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       packages: read
     steps:

@@ -29,7 +29,7 @@ public class ImagesService : IService
 	{
 		Files = files;
 		ImageProcessing = imageProcessing;
-		imagesCache = new LRUCache<string, byte[]>(500, 50);
+		imagesCache = new LRUCache<string, byte[]>(250, 25);
 		imagesSizeCache = new LRUCache<string, Size>(10000, 100);
 		thumbnailsCache = new LRUCache<string, byte[]>(5000, 100);
 		thumbnailCacheDirectory = Directory.CreateDirectory(Path.Combine(files.LocalCache, "Images", "Thumbnails"));
