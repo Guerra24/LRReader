@@ -17,7 +17,7 @@ namespace LRReader.Avalonia.Views.Controls
 
 		public string CustomTabId
 		{
-			get => GetValue(CustomTabIdProperty) as string;
+			get => (string)GetValue(CustomTabIdProperty)!;
 			set => SetValue(CustomTabIdProperty, value);
 		}
 

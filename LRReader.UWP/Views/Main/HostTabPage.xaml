@@ -63,11 +63,13 @@
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 						</Viewbox>
 					</Button>
+					<!--
 					<Button Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tankoubons}">
 						<Viewbox>
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF572;" />
 						</Viewbox>
 					</Button>
+					-->
 					<Button x:Uid="/Pages/HostTabPage/Tools" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Tools}" Visibility="{x:Bind services:Service.Settings.Profile.HasApiKey, Mode=OneWay}">
 						<Viewbox>
 							<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
@@ -80,11 +82,13 @@
 			</controls:ModernTabView.TabTools>
 			<controls:ModernTabView.ExtraFooter>
 				<StackPanel x:Name="TabViewEndHeader" VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">
+					<!--
 					<Button Click="AddFile_Click">
 						<Viewbox>
 							<SymbolIcon Symbol="OpenFile" />
 						</Viewbox>
 					</Button>
+					-->
 					<Button
 						x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
 						Visibility="{x:Bind Data.Windowed, Mode=OneWay}">

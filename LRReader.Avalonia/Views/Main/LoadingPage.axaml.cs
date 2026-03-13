@@ -11,7 +11,7 @@ namespace LRReader.Avalonia.Views.Main
 		public LoadingPage()
 		{
 			InitializeComponent();
-			ViewModel = DataContext as LoadingPageViewModel;
+			ViewModel = (LoadingPageViewModel)DataContext!;
 		}
 
 		private async void LoadingPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

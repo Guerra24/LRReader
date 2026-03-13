@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU</Platforms>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.12" />
@@ -22,5 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\LRReader.UWP\Strings\**" LinkBase="Strings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Avalonia" />
+    <Using Include="Avalonia.Controls" />
   </ItemGroup>
 </Project>
