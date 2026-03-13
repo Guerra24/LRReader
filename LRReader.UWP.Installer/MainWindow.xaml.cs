@@ -56,9 +56,9 @@ namespace LRReader.UWP.Installer
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (Environment.OSVersion.Version < new Version(10, 0, 17763, 0))
+			if (Environment.OSVersion.Version < new Version(10, 0, 19041, 0))
 			{
-				Error.Text = "LRReader requires Windows 10 1809 or newer";
+				Error.Text = "LRReader requires Windows 10 20H1 or newer";
 			}
 			else
 			{
