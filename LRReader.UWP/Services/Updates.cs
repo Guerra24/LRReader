@@ -52,7 +52,8 @@ namespace LRReader.UWP.Services
 				var pack = packageUpdates.FirstOrDefault(p => p.Package.Id.FamilyName.Equals(Current.Id.FamilyName));
 				if (pack != null)
 				{
-					var rq = new RestRequest("lrr/upgrade/check");
+					var rq = new RestRequest("v1/lrreader/upgrade/check");
+					rq.AddParameter("platform", 1);
 					var r = await client.ExecuteGetAsync(rq);
 					var updatesResult = await r.GetResultInternal<CheckForUpdatesResult>();
 					if (updatesResult.OK && updatesResult.Data != null)
@@ -105,8 +106,9 @@ namespace LRReader.UWP.Services
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
-			var rq = new RestRequest("lrr/upgrade/check");
+			var rq = new RestRequest("v1/lrreader/upgrade/check");
 			rq.AddParameter("version", Platform.Version.ToString());
+			rq.AddParameter("platform", 1);
 			var r = await client.ExecuteGetAsync(rq);
 			var updatesResult = await r.GetResultInternal<CheckForUpdatesResult>();
 			if (!string.IsNullOrEmpty(r.ErrorMessage))

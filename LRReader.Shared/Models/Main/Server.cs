@@ -1,5 +1,6 @@
 ﻿using LRReader.Shared.Converters;
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace LRReader.Shared.Models.Main
@@ -27,6 +28,7 @@ namespace LRReader.Shared.Models.Main
 		public int total_pages_read { get; set; }
 		[JsonConverter(typeof(BoolConverter))]
 		public bool server_tracks_progress { get; set; }
+		//public List<string> excluded_namespaces { get; set; } = [];
 
 		[JsonIgnore]
 		public bool _unauthorized;

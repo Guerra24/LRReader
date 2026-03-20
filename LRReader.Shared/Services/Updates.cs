@@ -23,7 +23,7 @@ namespace LRReader.Shared.Services
 			SettingsStorage = settingsStorage;
 			Settings = settings;
 #if DEBUG
-			var uri = new Uri("http://localhost:5000/");
+			var uri = new Uri("http://localhost:5168/");
 #else
 			var uri = new Uri("https://api.guerra24.net/");
 #endif
@@ -39,7 +39,7 @@ namespace LRReader.Shared.Services
 
 		public async Task<UpdateChangelog> GetChangelog(Version version)
 		{
-			var rq = new RestRequest("lrr/upgrade/changelog");
+			var rq = new RestRequest("v1/lrreader/upgrade/changelog");
 			rq.AddParameter("version", version.ToString());
 			rq.AddParameter("lang", CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
@@ -56,7 +56,7 @@ namespace LRReader.Shared.Services
 
 		public async Task UpdateSupportedRange()
 		{
-			var rq = new RestRequest("lrr/compat");
+			var rq = new RestRequest("v1/lrreader/compat");
 			rq.AddParameter("version", Platform.Version.ToString());
 
 			var r = await client.ExecuteGetAsync(rq);
