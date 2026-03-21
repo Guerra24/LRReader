@@ -59,7 +59,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 					foreach (var t in Service.Archives.TagStats.Where(t =>
 					{
 						var names = t.@namespace.ToLower();
-						return t.GetNamespacedTag().ToLower().Contains(text) && !names.Equals("date_added") && !names.Equals("source");
+						return t.GetNamespacedTag().ToLower().Contains(text) && !Service.Api.ServerInfo.excluded_namespaces.Contains(names);
 					}))
 					{
 						items.Add(t.GetNamespacedTag());

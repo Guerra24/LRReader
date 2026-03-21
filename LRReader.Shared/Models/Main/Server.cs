@@ -28,7 +28,7 @@ namespace LRReader.Shared.Models.Main
 		public int total_pages_read { get; set; }
 		[JsonConverter(typeof(BoolConverter))]
 		public bool server_tracks_progress { get; set; }
-		//public List<string> excluded_namespaces { get; set; } = [];
+		public List<string> excluded_namespaces { get; set; } = ["source", "date_added"];
 
 		[JsonIgnore]
 		public bool _unauthorized;
