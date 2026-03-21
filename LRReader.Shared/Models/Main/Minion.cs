@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LRReader.Shared.Models.Main
+﻿namespace LRReader.Shared.Models.Main
 {
 	public class MinionStatus
 	{

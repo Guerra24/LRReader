@@ -8,8 +8,6 @@ using LRReader.Shared.ViewModels.Base;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Items
 {

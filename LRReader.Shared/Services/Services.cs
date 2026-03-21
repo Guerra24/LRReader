@@ -4,8 +4,6 @@ using LRReader.Shared.ViewModels.Base;
 using LRReader.Shared.ViewModels.Items;
 using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {

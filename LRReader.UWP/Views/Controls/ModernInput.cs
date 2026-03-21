@@ -1,13 +1,4 @@
-﻿using CommunityToolkit.WinUI;
-using System.Windows.Input;
-using Windows.System;
-using Windows.UI.Input;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Markup;
-
-namespace LRReader.UWP.Views.Controls
+﻿namespace LRReader.UWP.Views.Controls
 {
 	[ContentProperty(Name = "Control")]
 	public sealed partial class ModernInput : ContentControl

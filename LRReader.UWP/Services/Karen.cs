@@ -1,12 +1,8 @@
 ﻿using LRReader.Shared.Models;
 using LRReader.Shared.Services;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
-using WinRT;
 
 namespace LRReader.UWP.Services
 {

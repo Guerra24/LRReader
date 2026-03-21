@@ -1,9 +1,5 @@
 ﻿using LRReader.Shared.Services;
-using Sentry;
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.Tools
 {

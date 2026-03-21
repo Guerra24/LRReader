@@ -2,11 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
-using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
 {

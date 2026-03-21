@@ -2,8 +2,6 @@
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Items
 {

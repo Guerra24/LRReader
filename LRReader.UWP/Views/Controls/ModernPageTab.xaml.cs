@@ -1,11 +1,5 @@
-﻿using CommunityToolkit.WinUI;
-using LRReader.UWP.Views.Content;
-using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using LRReader.UWP.Views.Content;
 using System.Collections.ObjectModel;
-using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
 using TwoPaneViewMode = Microsoft.UI.Xaml.Controls.TwoPaneViewMode;
 

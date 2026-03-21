@@ -5,13 +5,8 @@ using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using WinRT;
 
 namespace LRReader.UWP.Views.Content.Tools
 {

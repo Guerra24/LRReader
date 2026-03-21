@@ -1,7 +1,5 @@
 ﻿using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using VersionConverter = LRReader.Shared.Converters.VersionConverter;

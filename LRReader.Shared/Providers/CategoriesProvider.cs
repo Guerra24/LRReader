@@ -2,9 +2,7 @@
 using LRReader.Shared.Messages;
 using LRReader.Shared.Models.Main;
 using RestSharp;
-using System.Collections.Generic;
 using System.Net;
-using System.Threading.Tasks;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers;

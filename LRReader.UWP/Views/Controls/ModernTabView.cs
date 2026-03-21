@@ -1,10 +1,5 @@
-﻿using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.Behaviors;
+﻿using CommunityToolkit.WinUI.Behaviors;
 using LRReader.Shared.Services;
-using Microsoft.UI.Xaml.Controls;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {

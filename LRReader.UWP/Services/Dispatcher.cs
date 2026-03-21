@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.WinUI;
-using LRReader.Shared.Services;
-using System;
-using System.Threading.Tasks;
-using Windows.System;
+﻿using LRReader.Shared.Services;
 
 namespace LRReader.UWP.Services
 {

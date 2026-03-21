@@ -1,7 +1,4 @@
-﻿using System;
-using Windows.UI.Xaml.Controls;
-
-namespace LRReader.UWP.Views.Content.Settings
+﻿namespace LRReader.UWP.Views.Content.Settings
 {
 
 	public sealed partial class Feedback : Page

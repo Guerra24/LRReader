@@ -5,11 +5,8 @@ using LRReader.Shared.Services;
 using LRReader.Shared.Tools;
 using LRReader.Shared.ViewModels.Items;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Tools
 {

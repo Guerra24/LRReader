@@ -1,11 +1,6 @@
-﻿using CommunityToolkit.WinUI;
-using LRReader.Shared.Models;
+﻿using LRReader.Shared.Models;
 using LRReader.Shared.Services;
-using Microsoft.UI.Xaml.Controls;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {

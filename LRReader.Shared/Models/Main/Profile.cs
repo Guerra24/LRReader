@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Services;
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace LRReader.Shared.Models.Main

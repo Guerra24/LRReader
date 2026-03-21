@@ -1,9 +1,6 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
-using Windows.UI;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views
 {

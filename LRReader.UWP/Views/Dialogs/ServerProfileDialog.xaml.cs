@@ -3,12 +3,8 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
 using LRReader.UWP.Services;
-using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
 {

@@ -1,14 +1,6 @@
-﻿using CommunityToolkit.WinUI;
-using LRReader.UWP.Extensions;
-using Microsoft.UI.Xaml.Controls;
+﻿using LRReader.UWP.Extensions;
 using Microsoft.Web.WebView2.Core;
-using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace LRReader.UWP.Views.Controls
 {

@@ -1,14 +1,9 @@
 ﻿using JxlNet;
 using LRReader.Shared.Internal;
 using LRReader.Shared.Services;
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
-using WinRT;
 using Size = System.Drawing.Size;
 
 namespace LRReader.UWP.Services

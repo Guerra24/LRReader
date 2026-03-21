@@ -1,9 +1,4 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using WinRT;
-
-namespace LRReader.UWP.Views.Controls
+﻿namespace LRReader.UWP.Views.Controls
 {
 	public partial class ModernBasePage : Page
 	{

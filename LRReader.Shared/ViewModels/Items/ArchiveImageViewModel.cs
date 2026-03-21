@@ -2,9 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels.Items
 {

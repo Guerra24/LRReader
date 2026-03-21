@@ -1,8 +1,4 @@
-﻿using Windows.Foundation;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-
-namespace LRReader.UWP.Util
+﻿namespace LRReader.UWP.Util
 {
 	public class IgnoreFocusKeyboardAccelerator : KeyboardAccelerator
 	{

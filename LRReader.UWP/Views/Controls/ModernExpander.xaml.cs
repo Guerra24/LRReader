@@ -1,11 +1,4 @@
-﻿using CommunityToolkit.WinUI;
-using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
-
-namespace LRReader.UWP.Views.Controls
+﻿namespace LRReader.UWP.Views.Controls
 {
 	[ContentProperty(Name = "Items")]
 	public sealed partial class ModernExpander : Expander

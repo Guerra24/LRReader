@@ -1,10 +1,7 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
 namespace LRReader.UWP.Views.Main
 {

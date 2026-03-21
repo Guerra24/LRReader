@@ -4,11 +4,7 @@ using LRReader.UWP.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using WinRT;
 
 namespace LRReader.UWP.Views.Main
 {

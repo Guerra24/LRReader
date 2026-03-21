@@ -3,10 +3,7 @@
 using Microsoft.AppCenter.Crashes;
 #endif
 using RestSharp;
-using System;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {

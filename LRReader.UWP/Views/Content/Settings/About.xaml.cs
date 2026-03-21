@@ -1,11 +1,7 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Windows.ApplicationModel.Resources;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Content.Settings
 {

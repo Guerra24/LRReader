@@ -1,7 +1,6 @@
 ﻿using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.UWP.Views.Controls;
-using System.Collections.Generic;
 
 namespace LRReader.UWP.Views.Tabs
 {

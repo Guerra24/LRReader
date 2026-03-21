@@ -1,7 +1,4 @@
-﻿using System;
-using Windows.UI.Xaml.Markup;
-
-namespace LRReader.UWP.Helpers
+﻿namespace LRReader.UWP.Helpers
 {
 	[MarkupExtensionReturnType(ReturnType = typeof(object))]
 	public partial class EnumValueExtension : MarkupExtension

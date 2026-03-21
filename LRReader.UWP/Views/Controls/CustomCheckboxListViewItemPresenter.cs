@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.WinUI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
+﻿using Windows.UI.Xaml.Controls.Primitives;
 
 namespace LRReader.UWP.Views.Controls;
 

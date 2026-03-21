@@ -3,13 +3,9 @@ using LRReader.Shared.Messages;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Shared.Providers;

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace LRReader.Shared.Models
+﻿namespace LRReader.Shared.Models
 {
 	public enum IDialogResult
 	{

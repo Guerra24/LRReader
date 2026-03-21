@@ -1,8 +1,6 @@
 ﻿using LRReader.Shared.Models;
 using RestSharp;
-using System;
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.Services
 {

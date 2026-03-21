@@ -1,29 +1,14 @@
-﻿using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.Animations;
+﻿using CommunityToolkit.WinUI.Animations;
 using CommunityToolkit.WinUI.Media;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Services;
 using LRReader.UWP.Services;
 using Markdig;
-using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Numerics;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.System;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using WinRT;
 using TwoPaneView = Microsoft.UI.Xaml.Controls.TwoPaneView;
 
 namespace LRReader.UWP.Extensions

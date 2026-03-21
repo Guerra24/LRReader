@@ -7,6 +7,7 @@
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <UseUwp>true</UseUwp>
     <Platforms>x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
@@ -69,6 +70,25 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3856.49" />
     <!--<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.0-prerelease.251115.2" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="CommunityToolkit.WinUI" />
+    <Using Include="Microsoft.UI.Xaml.Controls" />
+    <Using Include="System.Windows.Input" />
+    <Using Include="Windows.ApplicationModel" />
+    <Using Include="Windows.Foundation" />
+    <Using Include="Windows.Storage" />
+    <Using Include="Windows.System" />
+    <Using Include="Windows.UI" />
+    <Using Include="Windows.UI.Input" />
+    <Using Include="Windows.UI.Xaml" />
+    <Using Include="Windows.UI.Xaml.Controls" />
+    <Using Include="Windows.UI.Xaml.Input" />
+    <Using Include="Windows.UI.Xaml.Markup" />
+    <Using Include="Windows.UI.Xaml.Media" />
+    <Using Include="Windows.UI.Xaml.Navigation" />
+    <Using Include="WinRT" />
   </ItemGroup>
 
 <!-- This requires a bit of work

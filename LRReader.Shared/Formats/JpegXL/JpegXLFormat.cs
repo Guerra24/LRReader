@@ -1,5 +1,4 @@
 ﻿using SixLabors.ImageSharp.Formats;
-using System.Collections.Generic;
 
 namespace LRReader.Shared.Formats.JpegXL
 {

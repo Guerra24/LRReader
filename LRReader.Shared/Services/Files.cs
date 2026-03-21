@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace LRReader.Shared.Services
+﻿namespace LRReader.Shared.Services
 {
 	public interface IFilesService
 	{

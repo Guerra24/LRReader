@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Converters;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace LRReader.Shared.Models.Main

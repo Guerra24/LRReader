@@ -4,11 +4,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.UWP.Extensions;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Dialogs
 {

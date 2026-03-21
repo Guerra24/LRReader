@@ -1,8 +1,6 @@
 ﻿using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Views.Tabs.Content
 {

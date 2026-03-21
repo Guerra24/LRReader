@@ -1,11 +1,5 @@
-﻿using CommunityToolkit.WinUI;
-using LRReader.Shared.Models.Main;
-using System.Collections.Generic;
-using System.Windows.Input;
+﻿using LRReader.Shared.Models.Main;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using WinRT;
 
 namespace LRReader.UWP.Views.Controls
 {

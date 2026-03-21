@@ -6,9 +6,7 @@ using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Base;
-using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace LRReader.Shared.ViewModels
 {

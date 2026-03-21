@@ -2,10 +2,6 @@
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using WinRT;
 using ColorChangedEventArgs = Microsoft.UI.Xaml.Controls.ColorChangedEventArgs;
 using ColorPicker = Microsoft.UI.Xaml.Controls.ColorPicker;
 

@@ -3,12 +3,6 @@ using LRReader.Shared;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
 using RestSharp;
-using Sentry;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.Foundation;
 using Windows.Management.Deployment;
 using Windows.Services.Store;
 
