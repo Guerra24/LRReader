@@ -3,6 +3,7 @@
                     xmlns:ext="using:LRReader.Avalonia.Extensions"
                     xmlns:ui="using:FluentAvalonia.UI.Controls"
                     xmlns:items="using:LRReader.Avalonia.Views.Items"
+                    xmlns:controls="using:LRReader.Avalonia.Views.Controls"
                     xmlns:services="using:LRReader.Shared.Services">
 
     <ControlTheme x:Key="ItemOverlayGrid" TargetType="Border">
@@ -127,6 +128,243 @@
                     </Grid>
                 </Border>
             </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:ModernInput}" BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput" />
+
+    <ControlTheme x:Key="GroupedModernInputStyle" BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Transitions" Value="{x:Null}" />
+        <Setter Property="TextMargin" Value="0,5,0,5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ModernInput">
+                    <Border Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BackgroundSizing="InnerBorderEdge"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background" Duration="0:0:0.083" />
+                            </Transitions>
+                        </Border.Transitions>
+                        <Grid x:Name="Root">
+                            <Grid.Resources>
+                                <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
+                            </Grid.Resources>
+                            <Grid.Styles>
+                                <Style Selector="ToggleSwitch">
+                                    <Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
+                                </Style>
+                            </Grid.Styles>
+                            <!--<ControlTheme x:Key="{x:Type local:ModernInput}" BasedOn="{StaticResource GroupedModernInputStyle}" TargetType="local:ModernInput" />-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition MaxWidth="400" />
+                            </Grid.ColumnDefinitions>
+
+                            <ui:FontIcon
+                                x:Name="LeftFontIcon" Margin="0,0,16,0"
+                                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                FontSize="20"
+                                Glyph="{TemplateBinding Glyph}"
+                                IsVisible="{Binding Glyph, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            <ContentPresenter
+                                x:Name="LeftIcon" Margin="0,0,16,0"
+                                Content="{TemplateBinding Icon}"
+                                IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+                            <StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
+                                <TextBlock x:Name="TitleBlock" Text="{TemplateBinding Title}" />
+                                <TextBlock
+                                    x:Name="DescriptionBlock" FontSize="12"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="{TemplateBinding Description}"
+                                    TextWrapping="WrapWithOverflow"
+                                    IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            </StackPanel>
+                            <ContentPresenter
+                                Grid.Column="2" Margin="0,0,16,0"
+                                HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}" />
+                            <ui:FontIcon
+                                x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                FontSize="14"
+                                Glyph="{TemplateBinding RightGlyph}"
+                                IsVisible="{TemplateBinding IsButton}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style Selector="^:isbutton:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
+        </Style>
+        <Style Selector="^:isbutton:focus /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#Root">
+            <Style Selector="^ ui|FontIcon#LeftFontIcon">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ ContentPresenter#LeftIcon">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ TextBlock#TitleBlock">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ TextBlock#DescriptionBlock">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ ui|FontIcon#RightFontIcon">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="DefaultModernInputStyle" TargetType="controls:ModernInput">
+        <Setter Property="RightColumnWidth" Value="Auto" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="{StaticResource ExpanderHeaderPadding}" />
+        <Setter Property="Background" Value="{DynamicResource ExpanderHeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ExpanderHeaderBorderThickness}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="TextMargin" Value="0,16,0,16" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ModernInput">
+                    <Border x:Name="Root"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BackgroundSizing="InnerBorderEdge"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background" Duration="0:0:0.083" />
+                            </Transitions>
+                        </Border.Transitions>
+                        <Grid>
+                            <Grid.Resources>
+                                <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
+                            </Grid.Resources>
+                            <Grid.Styles>
+                                <Style Selector="ToggleSwitch">
+                                    <Setter Property="Template" Value="{StaticResource LeftContentToggleSwitch}" />
+                                </Style>
+                            </Grid.Styles>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition MaxWidth="400" Width="{TemplateBinding RightColumnWidth}" />
+                            </Grid.ColumnDefinitions>
+
+                            <ui:FontIcon
+                                x:Name="LeftFontIcon" Margin="0,0,16,0"
+                                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                FontSize="20"
+                                Glyph="{TemplateBinding Glyph}"
+                                IsVisible="{Binding Glyph, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            <ContentPresenter
+                                x:Name="LeftIcon" Margin="0,0,16,0"
+                                Content="{TemplateBinding Icon}"
+                                IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+                            <StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
+                                <TextBlock x:Name="TitleBlock" Text="{TemplateBinding Title}" />
+                                <TextBlock
+                                    x:Name="DescriptionBlock" FontSize="12"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="{TemplateBinding Description}"
+                                    TextWrapping="WrapWithOverflow"
+                                    IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            </StackPanel>
+                            <ContentPresenter
+                                Grid.Column="2" Margin="0,0,16,0"
+                                HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}" />
+                            <ui:FontIcon
+                                x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                FontSize="14"
+                                Glyph="{TemplateBinding RightGlyph}"
+                                IsVisible="{TemplateBinding IsButton}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style Selector="^:isbutton:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
+        </Style>
+        <Style Selector="^:isbutton:focus /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#Root">
+            <Style Selector="^ ui|FontIcon#LeftFontIcon">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ ContentPresenter#LeftIcon">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ TextBlock#TitleBlock">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ TextBlock#DescriptionBlock">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+            <Style Selector="^ ui|FontIcon#RightFontIcon">
+                <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:ModernGroup}" TargetType="controls:ModernGroup">
+        <Setter Property="Margin" Value="0,0,0,32" />
+        <Setter Property="IsTabStop" Value="False" />
+        <!--<Setter Property="Transitions">
+            <Setter.Value>
+                <TransitionCollection>
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </Setter.Value>
+        </Setter>-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ModernGroup">
+                    <StackPanel>
+                        <TextBlock
+                            Margin="1,0,0,8" FontWeight="Bold"
+                            Text="{TemplateBinding Title}"
+                            IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                        <ui:ItemsRepeater ItemsSource="{TemplateBinding Items}">
+                            <ui:ItemsRepeater.Layout>
+                                <ui:StackLayout DisableVirtualization="True" Spacing="3" />
+                            </ui:ItemsRepeater.Layout>
+                        </ui:ItemsRepeater>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
         </Setter>
     </ControlTheme>
 

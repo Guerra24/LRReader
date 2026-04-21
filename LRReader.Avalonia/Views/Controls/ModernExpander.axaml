@@ -1,0 +1,87 @@
+<Expander xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:local="using:LRReader.Avalonia.Views.Controls"
+    xmlns:converters="using:LRReader.Avalonia.Converters"
+    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+    Background="Transparent"
+    Margin="0"
+    Padding="0"
+    HorizontalAlignment="Stretch"
+    HorizontalContentAlignment="Stretch"
+    x:Class="LRReader.Avalonia.Views.Controls.ModernExpander">
+
+    <Expander.Resources>
+        <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
+        <converters:BoolToObjectConverter x:Key="DescriptionDisabled" TrueValue="{DynamicResource TextFillColorSecondaryBrush}" FalseValue="{DynamicResource ExpanderHeaderDisabledForeground}" />
+        <ControlTheme x:Key="{x:Type local:ModernInput}" BasedOn="{StaticResource GroupedModernInputStyle}" TargetType="local:ModernInput" />
+    </Expander.Resources>
+
+    <Expander.Header>
+        <Grid ToolTip.Tip="{Binding $parent[local:ModernExpander].ToolTip, Mode=OneWay}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<ui:FontIcon
+				Margin="0,0,16,0"
+				FontFamily="{StaticResource SymbolThemeFontFamily}"
+                FontSize="20"
+				Glyph="{Binding $parent[local:ModernExpander].Glyph, Mode=OneWay}"
+				IsVisible="{Binding $parent[local:ModernExpander].Glyph, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />
+			<ContentPresenter Margin="0,0,16,0" Content="{Binding $parent[local:ModernExpander].Icon, Mode=OneWay}" IsVisible="{Binding $parent[local:ModernExpander].Icon, Mode=OneWay, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+			<StackPanel Grid.Column="1" Margin="0,16,0,16" VerticalAlignment="Center">
+				<TextBlock Text="{Binding $parent[local:ModernExpander].Title, Mode=OneWay}" />
+				<TextBlock
+					x:Name="DescriptionBlock" FontSize="12"
+					Foreground="{Binding $parent[local:ModernExpander].IsEnabled, Mode=OneWay, Converter={StaticResource DescriptionDisabled}}"
+					Text="{Binding $parent[local:ModernExpander].Description, Mode=OneWay}"
+					TextWrapping="WrapWithOverflow"
+					IsVisible="{Binding $parent[local:ModernExpander].Description, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />
+			</StackPanel>
+			<ContentPresenter
+				Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"
+				Content="{Binding $parent[local:ModernExpander].Input, Mode=OneWay}" />
+		</Grid>
+    </Expander.Header>
+
+    <Expander.Styles>
+        <Style Selector="#ItemsRepeater > Border">
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Style Selector="^:nth-last-child(1)">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="CornerRadius" Value="0,0,2,2" />
+            </Style>
+        </Style>
+    </Expander.Styles>
+
+    <ItemsRepeater Name="ItemsRepeater" ItemsSource="{Binding $parent[local:ModernExpander].Items, Mode=OneWay}">
+		<ItemsRepeater.Layout>
+            <StackLayout DisableVirtualization="True" />
+        </ItemsRepeater.Layout>
+        <ItemsRepeater.ItemTemplate>
+            <DataTemplate x:DataType="Control">
+                <Border Background="{DynamicResource ExpanderContentBackground}"
+			        BackgroundSizing="InnerBorderEdge"
+			        BorderBrush="{DynamicResource ExpanderContentBorderBrush}"
+			        IsVisible="{Binding IsVisible, Mode=OneWay}">
+		            <Grid>
+			            <Grid.ColumnDefinitions>
+				            <ColumnDefinition Width="Auto" />
+				            <ColumnDefinition />
+			            </Grid.ColumnDefinitions>
+			            <Grid Width="36" />
+			            <ContentControl Grid.Column="1" Padding="16,9,16,9" Content="{Binding}" />
+		            </Grid>
+                </Border>
+            </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+		<!--<ListView.ItemContainerTransitions>
+			<TransitionCollection />
+		</ListView.ItemContainerTransitions>-->
+	</ItemsRepeater>
+
+</Expander>

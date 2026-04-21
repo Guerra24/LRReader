@@ -1,8 +1,6 @@
-using Avalonia.Controls;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Views.Tabs.Content
 {

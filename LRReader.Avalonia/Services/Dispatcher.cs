@@ -1,7 +1,5 @@
 ﻿using Avalonia.Threading;
 using LRReader.Shared.Services;
-using System;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {
@@ -14,11 +12,9 @@ namespace LRReader.Avalonia.Services
 
 		public bool Run(Action action, int priority = 0)
 		{
-			action.Invoke();
+			Dispatcher.Post(action, priority);
 			return true;
 		}
-
-		public Task RunAsync(Action action) => Dispatcher.InvokeAsync(action).GetTask();
 
 		public Task RunAsync(Action action, int priority = 0) => Dispatcher.InvokeAsync(action).GetTask();
 	}

@@ -1,8 +1,5 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using LRReader.Shared.ViewModels;
-using System;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Views.Controls;
 

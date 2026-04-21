@@ -780,8 +780,10 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			}
 
-			var savePicker = new FileSavePicker();
-			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+			var savePicker = new FileSavePicker
+			{
+				SuggestedStartLocation = PickerLocationId.Downloads
+			};
 			savePicker.FileTypeChoices.Add(download.Type + " File", new List<string>() { download.Type });
 			savePicker.SuggestedFileName = download.Name;
 

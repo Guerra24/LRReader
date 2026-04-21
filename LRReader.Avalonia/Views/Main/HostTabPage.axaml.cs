@@ -1,13 +1,14 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
+using CommunityToolkit.Mvvm.Messaging;
 using FluentAvalonia.UI.Controls;
+using FluentAvalonia.UI.Navigation;
 using LRReader.Avalonia.Views.Controls;
+using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
 
 namespace LRReader.Avalonia.Views.Main
 {
-	public partial class HostTabPage : UserControl
+	public partial class HostTabPage : UserControl, IRecipient<ShowNotification>
 	{
 		private TabsService Data;
 
@@ -15,13 +16,13 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			InitializeComponent();
 			Data = (TabsService)DataContext!;
+			AddHandler(Frame.NavigatedToEvent, OnNavigatedTo);
+			AddHandler(Frame.NavigatingFromEvent, OnNavigatingFrom);
 		}
 
-		private async void HostTabPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
+		protected async void OnNavigatedTo(object? sender, NavigationEventArgs e)
 		{
-			if (Design.IsDesignMode)
-				return;
-			//WeakReferenceMessenger.Default.Register(this);
+			WeakReferenceMessenger.Default.Register(this);
 
 			await Service.Dispatcher.RunAsync(() =>
 			{
@@ -34,18 +35,23 @@ namespace LRReader.Avalonia.Views.Main
 			});
 		}
 
-		private void HostTabPage_DetachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
+		private void OnNavigatingFrom(object? sender, NavigatingCancelEventArgs e)
 		{
-			if (Design.IsDesignMode)
-				return;
-			//WeakReferenceMessenger.Default.UnregisterAll(this);
+			WeakReferenceMessenger.Default.UnregisterAll(this);
+		}
+
+		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);
+
+		private void ShowNotification(string title, string? content, int duration, NotificationSeverity severity = NotificationSeverity.Informational)
+		{
+			//Service.Dispatcher.Run(() => TabViewControl.Notifications.Show(new CommunityToolkit.WinUI.Behaviors.Notification { Title = title, Message = content, Duration = duration <= 0 ? null : TimeSpan.FromMilliseconds(duration), Severity = (InfoBarSeverity)(int)severity }), 0);
 		}
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) { }
 
 		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
 		{
-			Data.CloseTab((CustomTab)args.Tab);
+			Data.CloseTab((ModernTab)args.Tab);
 		}
 	}
 }

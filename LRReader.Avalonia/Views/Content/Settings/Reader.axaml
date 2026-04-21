@@ -1,0 +1,230 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+             xmlns:items="using:LRReader.Shared.Models.Main"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:converters="using:LRReader.Avalonia.Converters"
+             xmlns:conv="using:Avalonia.Controls.Converters"
+             xmlns:services="using:LRReader.Shared.Services"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
+             x:Class="LRReader.Avalonia.Views.Content.Settings.Reader">
+
+    <controls:ModernBasePage.Resources>
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+		<converters:ClearNewEnabledConverter x:Key="ClearNewEnabledConverter" />
+		<converters:StringToColorConverter x:Key="StringToColorConverter" />
+        <conv:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+	</controls:ModernBasePage.Resources>
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/AutoOpen/Title}" Glyph="&#xE78B;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.OpenReader, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernExpander Title="{ext:LocalizedString /Settings/Reader/ClearNewModeSelector/Title}" Glyph="&#xf7bb;" IsExpanded="{Binding SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}">
+					<controls:ModernExpander.Input>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Button Content="{ext:LocalizedString /Settings/Reader/ClearNewHelp/Content}" ext:ButtonExtension.TeachingTip="{Binding #ClearNewTeachingTip}" />
+							<ComboBox x:Name="ClearNew" MinWidth="170" SelectedIndex="{Binding SettingsManager.ClearNew, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+                            <ui:TeachingTip x:Name="ClearNewTeachingTip" Title="{ext:LocalizedString /Settings/Reader/ClearNewTeachingTip/Title}" IsLightDismissEnabled="True" PreferredPlacement="Left">
+								<TextBlock Text="{ext:LocalizedString /Settings/Reader/ClearNewTeachingTipText}" />
+							</ui:TeachingTip>
+						</StackPanel>
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/ClearNewMode/OnLastPage/Title}">
+						    <ToggleSwitch IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.ClearOnLastPage, Mode=TwoWay}" IsEnabled="{Binding $parent[local:Reader].Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}" />
+					    </controls:ModernInput>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/ClearNewMode/MoreThan25Percent/Title}">
+						    <ToggleSwitch IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.ClearMoreThan25, Mode=TwoWay}" IsEnabled="{Binding $parent[local:Reader].Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}" />
+					    </controls:ModernInput>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/ClearNewMode/AtLeast10Pages/Title}">
+						    <ToggleSwitch IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.ClearAtLeast10, Mode=TwoWay}" IsEnabled="{Binding $parent[local:Reader].Data.SettingsManager.ClearNew, Mode=OneWay, Converter={StaticResource ClearNewEnabledConverter}, ConverterParameter=Custom}" />
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/Keyboard/Title}" Description="{ext:LocalizedString /Settings/Reader/Keyboard/Description}" Glyph="&#xF210;">
+					<ui:NumberBox
+						MinWidth="120" Minimum="1" SmallChange="20"
+						SpinButtonPlacementMode="Inline"
+						Value="{Binding SettingsManager.KeyboardScroll, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/NextArchive/Title}" Description="{ext:LocalizedString /Settings/Reader/NextArchive/Description}" Glyph="&#xE761;" IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.OpenNextArchive, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/ScrollToChange/Title}" Description="{ext:LocalizedString /Settings/Reader/ScrollToChange/Description}" Glyph="&#xECE7;" IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/Map/Title}" Description="{ext:LocalizedString /Settings/Reader/Map/Description}">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.ShowMap, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<!--
+				<controls:ModernExpander
+					Title="Autoplay" Description="Automatically scroll and change pages" Glyph="&#xE768;"
+					IsExpanded="{x:Bind Data.SettingsManager.Autoplay, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsChecked="{x:Bind Data.SettingsManager.Autoplay, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput Title="Scroll speed" InputHorizontalAlignment="Stretch">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Slider
+							IsThumbToolTipEnabled="False" Maximum="200"
+							Minimum="1"
+							TickFrequency="30" TickPlacement="None"
+							Value="{x:Bind Data.SettingsManager.AutoplaySpeed, Mode=TwoWay}" />
+							<TextBlock
+							Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+							VerticalAlignment="Center">
+								<Run Text="{x:Bind Data.SettingsManager.AutoplaySpeed, Mode=OneWay}" />%
+							</TextBlock>
+						</Grid>
+					</controls:ModernInput>
+					<controls:ModernInput Title="Start delay">
+						<muxc:NumberBox
+							MinWidth="134" Minimum="1"
+							SmallChange="100" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.SettingsManager.AutoplayStartDelay, Mode=TwoWay}" />
+					</controls:ModernInput>
+					<controls:ModernInput Title="Before page change">
+						<muxc:NumberBox
+							MinWidth="134" Minimum="1"
+							SmallChange="100" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.SettingsManager.AutoplayBeforeChangeDelay, Mode=TwoWay}" />
+					</controls:ModernInput>
+					<controls:ModernInput Title="After page change">
+						<muxc:NumberBox
+							MinWidth="134" Minimum="1"
+							SmallChange="100" SpinButtonPlacementMode="Inline"
+							Value="{x:Bind Data.SettingsManager.AutoplayAfterChangeDelay, Mode=TwoWay}" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
+				-->
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/Reader/LookAndFeelGroup/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/Zoom/Title}" Glyph="&#xE71E;" InputHorizontalAlignment="Stretch" RightColumnWidth="1*">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Slider
+							Maximum="400"
+							Minimum="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource MinZoomConverter}}"
+							TickFrequency="30" TickPlacement="None"
+							Value="{Binding SettingsManager.DefaultZoom, Mode=TwoWay}" />
+						<TextBlock
+							Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+							VerticalAlignment="Center">
+							<Run Text="{Binding SettingsManager.DefaultZoom, Mode=OneWay}" />%
+						</TextBlock>
+					</Grid>
+				</controls:ModernInput>
+				<controls:ModernExpander Title="{ext:LocalizedString /Settings/Reader/ReaderAnimations/Title}" Glyph="&#xe945;" IsExpanded="{Binding SettingsManager.ReaderAnimations, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsChecked="{Binding SettingsManager.ReaderAnimations, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/PageChange/Title}">
+						    <ToggleSwitch IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.PageChangeAnimation, Mode=TwoWay}" />
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/VerticalReader/Title}" Description="{ext:LocalizedString /Settings/Reader/VerticalReader/Description}" Glyph="&#xE8C4;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.UseVerticalReader, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/RTL/Title}" Description="{ext:LocalizedString /Settings/Reader/RTL/Description}" Glyph="&#xEA5B;" IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+					<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.ReadRTL, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernExpander
+					Title="{ext:LocalizedString /Settings/Reader/FitWidth/Title}" Description="{ext:LocalizedString /Settings/Reader/FitWidth/Description}" Glyph="&#xE9A6;"
+					IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+					IsExpanded="{Binding SettingsManager.FitToWidth, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.FitToWidth, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/FitLimit/Title}" Description="{ext:LocalizedString /Settings/Reader/FitLimit/Description}" InputHorizontalAlignment="Stretch">
+						    <Grid>
+							    <Grid.ColumnDefinitions>
+								    <ColumnDefinition Width="*" />
+								    <ColumnDefinition Width="Auto" />
+							    </Grid.ColumnDefinitions>
+							    <Slider
+								    IsEnabled="{Binding $parent[local:Reader].Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+								    Maximum="400" Minimum="100"
+								    TickFrequency="25.0" TickPlacement="None"
+								    Value="{Binding $parent[local:Reader].Data.SettingsManager.FitScaleLimit, Mode=TwoWay}" />
+							    <TextBlock Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center">
+								    <Run Text="{Binding $parent[local:Reader].Data.SettingsManager.FitScaleLimit, Mode=OneWay}" />%
+							    </TextBlock>
+						    </Grid>
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernExpander
+					Title="{ext:LocalizedString /Settings/Reader/TwoPages/Title}" Description="{ext:LocalizedString /Settings/Reader/TwoPages/Description}" Glyph="&#xE89A;"
+					IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+					IsExpanded="{Binding SettingsManager.TwoPages, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.TwoPages, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <CheckBox Content="{ext:LocalizedString /Settings/Reader/SetBuilder/Content}" ToolTip.Tip="{ext:LocalizedString /Settings/Reader/SetBuilder/ToolTipService/ToolTip}" IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.ReaderImageSetBuilder, Mode=TwoWay}" IsEnabled="{Binding $parent[local:Reader].Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernExpander Title="{ext:LocalizedString /Settings/Reader/CustomBackground/Title}" Glyph="&#xE790;">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsChecked="{Binding SettingsManager.UseReaderBackground, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <ColorPicker
+						    HorizontalAlignment="Center" ColorChanged="ColorPicker_ColorChanged"
+						    Color="{Binding $parent[local:Reader].Data.SettingsManager.ReaderBackground, Mode=TwoWay, Converter={StaticResource StringToColorConverter}}" />
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/Reader/BookmarksGroup/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/BookmarkCategory/Title}" Description="{ext:LocalizedString /Settings/Reader/BookmarkCategory/Description}" Glyph="&#xE8B7;" IsEnabled="{ReflectionBinding Api.ControlFlags.V0940Edit, Source={StaticResource Locator}}">
+					<StackPanel Orientation="Horizontal">
+						<ComboBox
+							PlaceholderText="{ext:LocalizedString /Settings/Reader/BookmarkCategoryCombo/PlaceholderText}" MinWidth="250"
+							ItemsSource="{Binding Categories, Mode=OneWay}" SelectedItem="{Binding BookmarkLink, Mode=TwoWay}" />
+						<Button ToolTip.Tip="{ext:LocalizedString /Tabs/Archives/Clear/ToolTipService/ToolTip}" Margin="10,0,0,0" Padding="8" VerticalAlignment="Bottom" Command="{Binding ClearBookmarkLinkCommand}">
+							<ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+						</Button>
+					</StackPanel>
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/BookmarkSync/Title}" Description="{ext:LocalizedString /Settings/Reader/BookmarkSync/Description}" Glyph="&#xE8f7;" IsEnabled="{ReflectionBinding Api.ControlFlags.V0940Edit, Source={StaticResource Locator}}">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.Profile.SynchronizeBookmarks, Mode=OneWay}" IsCheckedChanged="SyncBookmarks_Toggled" />
+				</controls:ModernInput>
+				<controls:ModernExpander Title="{ext:LocalizedString /Settings/Reader/Reminder/Title}" Description="{ext:LocalizedString /Settings/Reader/Reminder/Description}" Glyph="&#xEB50;" IsExpanded="{Binding SettingsManager.BookmarkReminder, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsChecked="{Binding SettingsManager.BookmarkReminder, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <!--<RadioButtons x:Name="ReminderModeRadio" SelectedIndex="{Binding $parent[local:Reader].Data.SettingsManager.BookmarkReminderMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />-->
+                        <StackPanel>
+                            <RadioButton GroupName="ReminderModeRadio" Content="{ext:LocalizedString /Settings/Reader/ReminderMode/All}" IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.BookmarkReminderMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:BookmarkReminderMode.All}}" />
+                            <RadioButton GroupName="ReminderModeRadio" Content="{ext:LocalizedString /Settings/Reader/ReminderMode/New}" IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.BookmarkReminderMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:BookmarkReminderMode.New}}" />
+                        </StackPanel>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/RemoveBookmarkReminder/Title}" Description="{ext:LocalizedString /Settings/Reader/RemoveBookmarkReminder/Description}" Glyph="&#xEB4F;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.RemoveBookmark, Mode=TwoWay}" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
+</controls:ModernBasePage>

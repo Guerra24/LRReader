@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using LRReader.Shared.Models;
@@ -39,7 +36,7 @@ namespace LRReader.Avalonia.Views.Dialogs
 
 		public async Task<IDialogResult> ShowAsync()
 		{
-			return await ShowDialog<IDialogResult>((Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow);
+			return await ShowDialog<IDialogResult>(((IClassicDesktopStyleApplicationLifetime)Application.Current!.ApplicationLifetime!).MainWindow!);
 		}
 
 		public string DialogTitle

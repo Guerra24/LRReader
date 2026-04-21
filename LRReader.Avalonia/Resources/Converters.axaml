@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="using:LRReader.Avalonia.Converters">
+
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converters:BoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter" TrueValue="False" FalseValue="True" />
+    <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+    <converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+    <converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
+    <converters:EmptyStringToObjectConverter x:Key="EmptyStringToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
+    <converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
+    <converters:FileSizeToFriendlyStringConverter x:Key="FileSizeToFriendlyStringConverter" />
+
+	<converters:DisabledTextConverter x:Key="DisabledTextConverter" />
+	<converters:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
+	<converters:EnumConverter x:Key="EnumConverter" />
+	<converters:EnumToInt x:Key="EnumToInt" />
+	<converters:TagNamespaceConverter x:Key="TagNamespaceConverter" />
+	<converters:RatingConverter x:Key="RatingConverter" />
+	<converters:ArchiveStyleConverter x:Key="ArchiveStyleConverter" />
+
+</ResourceDictionary>

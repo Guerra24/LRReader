@@ -1,6 +1,3 @@
-using Avalonia;
-using Avalonia.Controls;
-
 namespace LRReader.Avalonia.Views
 {
 	public partial class MainWindow : Window

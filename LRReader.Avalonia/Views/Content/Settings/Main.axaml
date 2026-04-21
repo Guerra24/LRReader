@@ -1,0 +1,78 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             Loaded="ModernBasePage_Loaded"
+             Unloaded="ModernBasePage_Unloaded"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
+             x:Class="LRReader.UWP.Views.Content.Settings.Main">
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/ExpanderProfile/Title}" Glyph="&#xE748;">
+					<ComboBox
+						x:Name="ProfileSelection" MinWidth="170"
+						IsEnabled="{Binding SettingsManager.ProfilesAvailable, Mode=OneWay}"
+						ItemsSource="{Binding SettingsManager.Profiles, Mode=OneWay}"
+						SelectedItem="{Binding SettingsManager.Profile, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/GeneralPage/Title}" Description="{ext:LocalizedString /Settings/GeneralPage/Description}" Click="PageButton_Click" Glyph="&#xF8A6;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/GeneralPage/Title}" Page="local:General" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/ProfilesPage/Title}" Description="{ext:LocalizedString /Settings/ProfilesPage/Description}" Click="PageButton_Click" Glyph="&#xE716;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/ProfilesPage/Title}" Page="local:Profiles" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/ReaderPage/Title}" Description="{ext:LocalizedString /Settings/ReaderPage/Description}" Click="PageButton_Click" Glyph="&#xE736;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/ReaderPage/Title}" Page="local:Reader" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/ServerPage/Title}" Description="{ext:LocalizedString /Settings/ServerPage/Description}" Click="PageButton_Click" Glyph="&#xE83B;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/ServerPage/Title}" Page="local:Server" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<!--<controls:ModernInput
+					x:Uid="/Settings/FeedbackPage" Click="PageButton_Click" Glyph="&#xED15;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Settings/FeedbackPage" Page="local:Feedback" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>-->
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/UpdatesPage/Title}" Description="{ext:LocalizedString /Settings/UpdatesPage/Description}" Click="PageButton_Click"
+					Glyph="&#xE895;" IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/UpdatesPage/Title}" Page="local:Updates" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/AboutPage/Title}" Description="{ext:LocalizedString /Settings/AboutPage/Description}" Click="PageButton_Click" Glyph="&#xE946;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/AboutPage/Title}" Page="local:About" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
+</controls:ModernBasePage>

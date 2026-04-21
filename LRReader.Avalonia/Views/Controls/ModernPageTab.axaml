@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:local="using:LRReader.Avalonia.Views.Controls"
+             xmlns:converters="using:LRReader.Avalonia.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LRReader.Avalonia.Views.Controls.ModernPageTab"
+             AttachedToVisualTree="UserControl_AttachedToVisualTree">
+    <UserControl.Resources>
+        <converters:DoubleToObjectConverter x:Key="DoubleToObjectConverter" FalseValue="False" GreaterThan="1" TrueValue="True" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid MaxWidth="1000" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Click="GoBackMain" IsEnabled="{Binding $parent[local:ModernPageTab].MainBreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Theme="{StaticResource NavigationBackButtonNormalStyle}" />
+            <ui:BreadcrumbBar x:Name="MainBreadcrumb" Grid.Column="1" Margin="0,-3,0,0"
+                              VerticalAlignment="Center" ItemClicked="MainBreadcrumb_ItemClicked"
+                              ItemsSource="{Binding $parent[local:ModernPageTab].MainBreadcrumbItems}">
+                <ui:BreadcrumbBar.ItemTemplate>
+                    <DataTemplate x:DataType="local:ModernPageTabItem">
+                        <ui:BreadcrumbBarItem Content="{Binding}">
+                            <ui:BreadcrumbBarItem.ContentTemplate>
+                                <DataTemplate x:DataType="local:ModernPageTabItem">
+                                    <TextBlock Margin="10,0" Text="{Binding Title}" />
+                                </DataTemplate>
+                            </ui:BreadcrumbBarItem.ContentTemplate>
+                        </ui:BreadcrumbBarItem>
+                    </DataTemplate>
+                </ui:BreadcrumbBar.ItemTemplate>
+            </ui:BreadcrumbBar>
+        </Grid>
+        <ui:Frame x:Name="ContentMain" Grid.Row="1" IsNavigationStackEnabled="False">
+            <ui:Frame.Tag>
+                <x:Int32>0</x:Int32>
+            </ui:Frame.Tag>
+        </ui:Frame>
+    </Grid>
+</UserControl>

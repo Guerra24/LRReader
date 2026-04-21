@@ -1,4 +1,4 @@
-﻿<controls:CustomTab xmlns="https://github.com/avaloniaui"
+﻿<controls:ModernTab xmlns="https://github.com/avaloniaui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,8 +13,8 @@
                 Header="{ext:LocalizedString Key=/Tabs/Archives/Tab/Header}"
                 CustomTabId="Archives"
                 IsClosable="False">
-    <controls:CustomTab.IconSource>
+    <controls:ModernTab.IconSource>
         <ui:SymbolIconSource Symbol="Library" />
-    </controls:CustomTab.IconSource>
+    </controls:ModernTab.IconSource>
     <content:Archives />
-</controls:CustomTab>
+</controls:ModernTab>

@@ -1,8 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
 using LRReader.Shared.Services;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {

@@ -133,7 +133,7 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private bool _karenStatus;
 
-		public ObservableCollection<string> SortBy = new ObservableCollection<string>();
+		public ObservableCollection<string> SortBy { get; } = new ObservableCollection<string>();
 		private int _sortByIndex = -1;
 		public int SortByIndex
 		{
@@ -155,7 +155,7 @@ namespace LRReader.Shared.ViewModels
 		public long _thumbnailCacheSize;
 		[ObservableProperty]
 		private bool _progressCache;
-		public ObservableCollection<Category> Categories = new();
+		public ObservableCollection<Category> Categories { get; } = new();
 		[ObservableProperty]
 		private Category? _bookmarkLink;
 
@@ -184,10 +184,12 @@ namespace LRReader.Shared.ViewModels
 
 		public async Task CheckForPackages()
 		{
+#if WINDOWS_UWP
 			SetProperty(ref AvifMissing, !await Platform.CheckAppInstalled("Microsoft.AV1VideoExtension_8wekyb3d8bbwe"), nameof(AvifMissing));
 			SetProperty(ref HeifMissing, !await Platform.CheckAppInstalled("Microsoft.HEIFImageExtension_8wekyb3d8bbwe"), nameof(HeifMissing));
 			SetProperty(ref WebPMissing, !await Platform.CheckAppInstalled("Microsoft.WebpImageExtension_8wekyb3d8bbwe"), nameof(WebPMissing));
 			//SetProperty(ref JpegXLMissing, Platform.WinRT_IsApiContractPresent("Windows.Foundation.UniversalApiContract", 19) && !await Platform.CheckAppInstalled("Microsoft.JPEG-XLImageExtension_8wekyb3d8bbwe"), nameof(JpegXLMissing));
+#endif
 		}
 
 		public async Task UpdateShinobuStatus()
@@ -395,6 +397,7 @@ namespace LRReader.Shared.ViewModels
 
 		[RelayCommand]
 		private Task OpenLink(string url) => Platform.OpenInBrowser(new Uri(url));
+
 		[RelayCommand]
 		private async Task Repair()
 		{
@@ -461,6 +464,7 @@ namespace LRReader.Shared.ViewModels
 			if (download == null)
 				return;
 
+			// This should be implement in the platform instead
 #if WINDOWS_UWP
 			var savePicker = new FileSavePicker();
 			savePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;

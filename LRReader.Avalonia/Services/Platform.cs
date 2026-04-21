@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using FluentAvalonia.UI.Media.Animation;
+using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Resources;
 using LRReader.Avalonia.Views;
 using LRReader.Avalonia.Views.Dialogs;
@@ -16,6 +14,8 @@ namespace LRReader.Avalonia.Services
 	{
 		private readonly TabsService Tabs;
 
+		private Root Root = null!;
+
 		public AvaloniaPlatformService(TabsService tabs)
 		{
 			Tabs = tabs;
@@ -23,6 +23,9 @@ namespace LRReader.Avalonia.Services
 			MapPageToType<FirstRunPage>(Pages.FirstRun);
 			MapPageToType<HostTabPage>(Pages.HostTab);
 			MapPageToType<LoadingPage>(Pages.Loading);
+
+			MapTransitionToType<SuppressNavigationTransitionInfo>(PagesTransition.None);
+			MapTransitionToType<DrillInNavigationTransitionInfo>(PagesTransition.DrillIn);
 		}
 
 		public override void Init()
@@ -33,7 +36,7 @@ namespace LRReader.Avalonia.Services
 			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
 		}
 
-		public override Version Version => new Version(1, 7, 6, 0);
+		public override Version Version => new Version(1, 9, 6, 0);
 
 		public override bool AnimationsEnabled => true;
 
@@ -45,34 +48,23 @@ namespace LRReader.Avalonia.Services
 
 		public override void ChangeTheme(AppTheme theme)
 		{
-			throw new NotImplementedException();
+			Application.Current!.RequestedThemeVariant = (Theme = theme).ToXamlTheme();
 		}
 
 		public override async void CopyToClipboard(string text)
 		{
-			/*var clipboard = Application.Current?.Clipboard;
-			if (clipboard != null)
-				await clipboard.SetTextAsync(text);*/
+			await TopLevel.GetTopLevel(Root)!.Clipboard!.SetTextAsync(text);
 		}
 
 		public override string GetLocalizedString(string key)
 		{
-			var split = key.Split(new[] { '/' }, 2);
+			var split = key.Split(['/'], 2);
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null)
 		{
-			MainView main = null!;
-			if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
-				main = (MainView)desktop!.MainWindow!.Content!;
-			}
-			else if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime singleView)
-			{
-				main = (MainView)singleView.MainView!;
-			}
-			main.Content = Activator.CreateInstance(GetPage(page));
+			Root.FrameContent.Navigate(GetPage(page), parameter, CreateTransition<NavigationTransitionInfo>(transition));
 		}
 
 		public override async Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null)
@@ -84,12 +76,14 @@ namespace LRReader.Avalonia.Services
 
 		public override Task<bool> OpenInBrowser(Uri uri)
 		{
-			throw new NotImplementedException();
+			return TopLevel.GetTopLevel(Root)!.Launcher.LaunchUriAsync(uri);
 		}
 
 		public override Task<bool> CheckAppInstalled(string package)
 		{
 			throw new NotImplementedException();
 		}
+
+		public void SetRoot(Root root) => this.Root = root;
 	}
 }

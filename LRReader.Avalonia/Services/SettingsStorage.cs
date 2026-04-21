@@ -1,14 +1,9 @@
-﻿using LRReader.Shared;
-using LRReader.Shared.Converters;
+﻿using LRReader.Shared.Converters;
 using LRReader.Shared.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {
@@ -31,15 +26,13 @@ namespace LRReader.Avalonia.Services
 			Files = files;
 			AppDataFile = Path.Combine(Files.Local, FileRoamed);
 			LocalDataFile = Path.Combine(Files.LocalCache, FileLocal);
+			if (File.Exists(AppDataFile))
+				roamedSettings = JsonSerializer.Deserialize(File.ReadAllText(AppDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
+			if (File.Exists(LocalDataFile))
+				localSettings = JsonSerializer.Deserialize(File.ReadAllText(LocalDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
 		}
 
-		public async Task Init()
-		{
-			if (File.Exists(AppDataFile))
-				roamedSettings = JsonSerializer.Deserialize(await File.ReadAllTextAsync(AppDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
-			if (File.Exists(LocalDataFile))
-				localSettings = JsonSerializer.Deserialize(await File.ReadAllTextAsync(LocalDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
-		}
+		public Task Init() => Task.CompletedTask;
 
 		public void Save()
 		{

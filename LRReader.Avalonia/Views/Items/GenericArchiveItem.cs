@@ -1,14 +1,10 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
+﻿using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels.Items;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 
 namespace LRReader.Avalonia.Views.Items;
 
@@ -72,10 +68,12 @@ public class GenericArchiveItem : TemplatedControl
 
 		var storage = TopLevel.GetTopLevel(this)!.StorageProvider;
 
-		var savePicker = new FilePickerSaveOptions();
-		savePicker.SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads);
-		savePicker.DefaultExtension = download.Type;
-		savePicker.SuggestedFileName = download.Name;
+		var savePicker = new FilePickerSaveOptions
+		{
+			SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
+			DefaultExtension = download.Type,
+			SuggestedFileName = download.Name
+		};
 
 		var file = await storage.SaveFilePickerAsync(savePicker);
 		ViewModel.Downloading = false;

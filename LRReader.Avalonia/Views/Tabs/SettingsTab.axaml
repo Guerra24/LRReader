@@ -1,4 +1,4 @@
-﻿<controls:CustomTab xmlns="https://github.com/avaloniaui"
+﻿<controls:ModernTab xmlns="https://github.com/avaloniaui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,11 +6,15 @@
                 xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
                 xmlns:ui="using:FluentAvalonia.UI.Controls"
                 xmlns:ext="using:LRReader.Avalonia.Extensions"
+                xmlns:settings="using:LRReader.UWP.Views.Content.Settings"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:Class="LRReader.Avalonia.Views.Tabs.SettingsTab"
                 CustomTabId="Settings"
-                Header="{ext:LocalizedString Key=/Tabs/Settings/Tab/Header}">
-    <controls:CustomTab.IconSource>
+                Header="{ext:LocalizedString Key=/Tabs/Settings/Tab/Header}"
+                Loaded="UserControl_Loaded">
+    <controls:ModernTab.IconSource>
         <ui:SymbolIconSource Symbol="Settings" />
-    </controls:CustomTab.IconSource>
-</controls:CustomTab>
+    </controls:ModernTab.IconSource>
+
+    <controls:ModernPageTab x:Name="ContentPage" Title="{ext:LocalizedString Key=/Settings/MainPage/Title}" Initial="settings:Main" />
+</controls:ModernTab>

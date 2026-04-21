@@ -9,10 +9,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Resources/Converters.axaml" />
                 <ResourceInclude Source="/Resources/Templates.axaml" />
                 <ResourceInclude Source="/Resources/AvaloniaTemplates.axaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" />
+            <SolidColorBrush x:Key="CustomReaderBackground" Color="Black" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

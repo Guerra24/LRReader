@@ -1,7 +1,4 @@
 ﻿using LRReader.Shared.Services;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace LRReader.Avalonia.Services
 {

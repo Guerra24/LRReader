@@ -1,13 +1,11 @@
-﻿using Avalonia;
-using FluentAvalonia.UI.Controls;
+﻿using FluentAvalonia.UI.Controls;
 using LRReader.Shared.Models;
-using System;
 
 namespace LRReader.Avalonia.Views.Controls
 {
-	public class CustomTab : TabViewItem, ICustomTab
+	public class ModernTab : TabViewItem, ICustomTab
 	{
-		protected override Type StyleKeyOverride => typeof(CustomTab);
+		protected override Type StyleKeyOverride => typeof(ModernTab);
 
 		public object? CustomTabControl
 		{
@@ -17,7 +15,7 @@ namespace LRReader.Avalonia.Views.Controls
 
 		public string CustomTabId
 		{
-			get => (string)GetValue(CustomTabIdProperty)!;
+			get => GetValue(CustomTabIdProperty);
 			set => SetValue(CustomTabIdProperty, value);
 		}
 
@@ -33,7 +31,7 @@ namespace LRReader.Avalonia.Views.Controls
 		{
 		}
 
-		public static readonly AvaloniaProperty<object?> CustomTabControlProperty = AvaloniaProperty.Register<CustomTab, object?>("CustomTabControl");
-		public static readonly AvaloniaProperty<string> CustomTabIdProperty = AvaloniaProperty.Register<CustomTab, string>("CustomTabId");
+		public static readonly StyledProperty<object?> CustomTabControlProperty = AvaloniaProperty.Register<ModernTab, object?>("CustomTabControl");
+		public static readonly StyledProperty<string> CustomTabIdProperty = AvaloniaProperty.Register<ModernTab, string>("CustomTabId");
 	}
 }

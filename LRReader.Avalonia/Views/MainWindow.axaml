@@ -7,5 +7,5 @@
         x:Class="LRReader.Avalonia.Views.MainWindow"
         Title="LRReader"
         Icon="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png">
-    <views:MainView />
+    <views:Root x:Name="Root" x:FieldModifier="public" />
 </Window>

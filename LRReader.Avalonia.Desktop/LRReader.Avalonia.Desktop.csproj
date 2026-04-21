@@ -7,12 +7,13 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <TrimMode>copyused</TrimMode>
     <Platforms>AnyCPU</Platforms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.14" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Avalonia\LRReader.Avalonia.csproj" />

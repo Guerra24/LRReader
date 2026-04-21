@@ -1,9 +1,10 @@
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using LRReader.Avalonia.Services;
 using LRReader.Avalonia.Views;
-using System.Linq;
+using LRReader.Shared.Services;
+using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Avalonia
 {
@@ -17,15 +18,22 @@ namespace LRReader.Avalonia
 
 		public override void OnFrameworkInitializationCompleted()
 		{
+			var platform = (AvaloniaPlatformService)Platform;
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
 				DisableAvaloniaDataAnnotationValidation();
-				desktop.MainWindow = new MainWindow();
+				var window = new MainWindow();
+				desktop.MainWindow = window;
+				platform.SetRoot(window.Root);
 			}
 			else if (ApplicationLifetime is ISingleViewApplicationLifetime singleView)
 			{
-				singleView.MainView = new MainView();
+				var root = new Root();
+				singleView.MainView = root;
+				platform.SetRoot(root);
 			}
+
+			Platform.GoToPage(Pages.Loading, PagesTransition.None);
 
 			base.OnFrameworkInitializationCompleted();
 		}

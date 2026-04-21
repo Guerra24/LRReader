@@ -1,0 +1,214 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+             xmlns:items="using:LRReader.Shared.Models.Main"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:content="using:LRReader.Avalonia.Views.Content"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
+             x:Class="LRReader.Avalonia.Views.Content.Settings.Server">
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernExpander
+					ToolTip="{Binding ServerInfo.version_desc, Mode=OneWay}">
+                    <controls:ModernExpander.Title>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="ServerInfo.name" />
+                            <Binding Path="ServerInfo.motd" />
+                        </MultiBinding>
+                    </controls:ModernExpander.Title>
+                    <controls:ModernExpander.Description>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="ServerInfo.version" />
+                            <Binding Path="ServerInfo.version_name" />
+                        </MultiBinding>
+                    </controls:ModernExpander.Description>
+					<controls:ModernExpander.Icon>
+						<ui:ImageIcon Height="20" Width="20" Source="/Assets/Other/LANraragi-dark.png" />
+					</controls:ModernExpander.Icon>
+                    <controls:ModernExpander.Items>
+					    <StackPanel>
+						    <TextBlock Text="{ext:LocalizedString /Settings/Server/ApiRequired/Text}" Margin="0,0,0,10" IsVisible="{Binding $parent[local:Server].Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+						    <Grid>
+							    <Grid.ColumnDefinitions>
+								    <ColumnDefinition />
+								    <ColumnDefinition />
+								    <ColumnDefinition />
+								    <ColumnDefinition />
+							    </Grid.ColumnDefinitions>
+							    <Grid.Styles>
+								    <Style Selector="CheckBox">
+									    <Setter Property="HorizontalAlignment" Value="Center" />
+								    </Style>
+							    </Grid.Styles>
+							    <CheckBox
+								    Content="{ext:LocalizedString /Settings/Server/ResizedImages/Content}"
+								    IsChecked="{Binding $parent[local:Server].Data.ServerInfo.server_resizes_images, Mode=OneWay}"
+								    IsHitTestVisible="False" IsTabStop="False" />
+							    <CheckBox Grid.Column="1"
+								    Content="{ext:LocalizedString /Settings/Server/UsePassword/Content}"
+								    IsChecked="{Binding $parent[local:Server].Data.ServerInfo.has_password, Mode=OneWay}"
+								    IsHitTestVisible="False" IsTabStop="False" />
+							    <CheckBox Grid.Column="2"
+								    Content="{ext:LocalizedString /Settings/Server/NoFun/Content}"
+								    IsChecked="{Binding $parent[local:Server].Data.ServerInfo.nofun_mode, Mode=OneWay}"
+								    IsHitTestVisible="False" IsTabStop="False" />
+							    <CheckBox Grid.Column="3"
+								    Content="{ext:LocalizedString /Settings/Server/Debug/Content}"
+								    IsChecked="{Binding $parent[local:Server].Data.ServerInfo.debug_mode, Mode=OneWay}"
+								    IsHitTestVisible="False" IsTabStop="False" />
+						    </Grid>
+					    </StackPanel>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<!--
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Upload"
+					Command="{x:Bind Data.OpenWebTabCommand}"
+					CommandParameter="/upload" Glyph="&#xE898;" IsButton="True"
+					RightGlyph="&#xE8A7;" />
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Batch"
+					Command="{x:Bind Data.OpenWebTabCommand}"
+					CommandParameter="/batch" Glyph="&#xE9f5;" IsButton="True"
+					RightGlyph="&#xE8A7;" />
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Settings"
+					Command="{x:Bind Data.OpenWebTabCommand}"
+					CommandParameter="/config" Glyph="&#xE713;" IsButton="True"
+					RightGlyph="&#xE8A7;" />
+				<controls:ModernInput
+					x:Uid="/Settings/Server/PluginSettings"
+					Command="{x:Bind Data.OpenWebTabCommand}"
+					CommandParameter="/config/plugins" Glyph="&#xEA86;" IsButton="True"
+					RightGlyph="&#xE8A7;" />
+				<controls:ModernInput
+					x:Uid="/Settings/Server/Logs"
+					Command="{x:Bind Data.OpenWebTabCommand}"
+					CommandParameter="/logs" Glyph="&#xeE94;" IsButton="True"
+					RightGlyph="&#xE8A7;" />
+				-->
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/Server/Upload/Title}" Click="PageButton_Click" Glyph="&#xE898;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/Server/Upload/Title}" Page="content:WebContent" Parameter="/upload" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/Server/Batch/Title}" Click="PageButton_Click" Glyph="&#xE9f5;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/Server/Batch/Title}" Page="content:WebContent" Parameter="/batch" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/Server/Settings/Title}" Click="PageButton_Click" Glyph="&#xE713;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/Server/Settings/Title}" Page="content:WebContent" Parameter="/config" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/Server/PluginSettings/Title}" Click="PageButton_Click" Glyph="&#xEA86;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/Server/PluginSettings/Title}" Page="content:WebContent" Parameter="/config/plugins" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Title="{ext:LocalizedString /Settings/Server/Logs/Title}" Click="PageButton_Click" Glyph="&#xeE94;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="{ext:LocalizedString /Settings/Server/Logs/Title}" Page="content:WebContent" Parameter="/logs" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				<!--
+				<controls:ModernInput
+					x:Uid="/Tools/MainPage" Click="PageButton_Click" Glyph="&#xEC7A;"
+					IsButton="True"
+					IsEnabled="{x:Bind Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}"
+					RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem x:Uid="/Tools/MainPage" Page="tools:Main" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
+				-->
+				<controls:ModernExpander
+					Title="{ext:LocalizedString /Settings/Server/RegenThumbnails/Title}" Glyph="&#xE8B9;"
+					IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<Button Content="{ext:LocalizedString /Settings/Server/RegenThumb/Content}" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+							<Button.Flyout>
+								<Flyout>
+									<StackPanel>
+										<TextBlock Text="{ext:LocalizedString /Settings/Server/RegenThumbNotice/Text}" Margin="0,0,0,12" FontWeight="Bold" />
+										<Button
+											Content="{ext:LocalizedString /Settings/Server/RegenThumbYes/Content}" HorizontalAlignment="Center"
+											Command="{Binding RegenThumbnailsCommand}"
+											CommandParameter="{Binding #RegenThumbForced.IsChecked}"
+											ext:ButtonExtension.HideFlyout="{Binding $parent[Flyout]}"/>
+									</StackPanel>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+					</controls:ModernExpander.Input>
+					<controls:ModernExpander.Items>
+                        <CheckBox x:Name="RegenThumbForced" Content="{ext:LocalizedString /Settings/Server/RegenThumbForced/Content}" ToolTip.Tip="{ext:LocalizedString /Settings/Server/RegenThumbForced/ToolTipService/ToolTip}" IsEnabled="{Binding $parent[local:Server].Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/Server/Worker/Title}">
+				<controls:ModernExpander
+					Title="{Binding ShinobuStatusText, Mode=OneWay}"
+					Description="{Binding ShinobuPid, Mode=OneWay}"
+					Glyph="&#xE74C;"
+					IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+                    <controls:ModernExpander.Items>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Server/WorkerRestart/Title}">
+						    <Button Content="{ext:LocalizedString /Settings/Server/WorkerRestartButton/Content}" Command="{Binding $parent[local:Server].Data.RestartWorkerCommand}" IsEnabled="{Binding $parent[local:Server].Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+					    </controls:ModernInput>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/Server/WorkerStop/Title}">
+						    <Button Content="{ext:LocalizedString /Settings/Server/WorkerStopButton/Content}" Command="{Binding $parent[local:Server].Data.StopWorkerCommand}" IsEnabled="{Binding $parent[local:Server].Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/Server/Database/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Server/ResetCache/Title}" Description="{ext:LocalizedString /Settings/Server/ResetCache/Description}" Glyph="&#xE7C5;" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+					<Button Content="{ext:LocalizedString /Settings/Server/ResetCacheButton/Content}" Command="{Binding ResetSearchCommand}" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Server/RescanContent/Title}" Description="{ext:LocalizedString /Settings/Server/RescanContent/Description}" Glyph="&#xE8B7;" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+					<Button Content="{ext:LocalizedString /Settings/Server/RescanContentButton/Content}" Command="{Binding RescanContentCommand}" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Server/BackupDB/Title}" Description="{ext:LocalizedString /Settings/Server/BackupDB/Description}" Glyph="&#xE74E;" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+					<Button Content="{ext:LocalizedString /Settings/Server/BackupDBButton/Content}" Command="{Binding DownloadDatabaseCommand}" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Server/ClearNew/Title}" Description="{ext:LocalizedString /Settings/Server/ClearNew/Description}" Glyph="&#xE75C;" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+					<Button Content="{ext:LocalizedString /Settings/Server/ClearNewButton/Content}" IsEnabled="{Binding SettingsManager.Profile.HasApiKey, Mode=OneWay}">
+						<Button.Flyout>
+							<Flyout>
+								<StackPanel>
+									<TextBlock Text="{ext:LocalizedString /Settings/Server/ClearNewNotice/Text}" Margin="0,0,0,12" FontWeight="Bold" />
+									<Button
+                                        Content="{ext:LocalizedString /Settings/Server/ClearNewYes/Content}"
+										HorizontalAlignment="Center"
+										Command="{Binding ClearAllNewCommand}"
+										ext:ButtonExtension.HideFlyout="{Binding $parent[Flyout]}"/>
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
+</controls:ModernBasePage>

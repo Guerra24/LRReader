@@ -1,0 +1,74 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
+             x:Class="LRReader.Avalonia.Views.Content.Settings.About">
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernExpander Title="LRReader" IsExpanded="True">
+					<controls:ModernExpander.Icon>
+						<ui:ImageIcon Height="20" Width="20" Source="/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+					</controls:ModernExpander.Icon>
+                    <controls:ModernExpander.Items>
+				        <Grid>
+					        <Grid.ColumnDefinitions>
+						        <ColumnDefinition MaxWidth="100" />
+						        <ColumnDefinition />
+					        </Grid.ColumnDefinitions>
+                            <Grid.Styles>
+                                <Style Selector="TextBlock">
+                                    <Setter Property="Margin" Value="0,3" />
+                                </Style>
+                            </Grid.Styles>
+					        <StackPanel Orientation="Vertical">
+						        <TextBlock Text="{ext:LocalizedString /Settings/About/Version/Text}" />
+						        <TextBlock Text="{ext:LocalizedString /Settings/About/Supported/Text}" />
+					        </StackPanel>
+					        <StackPanel Grid.Column="1" Orientation="Vertical">
+						        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+							        <Run Text="{Binding $parent[local:About].Data.Version}" />
+						        </TextBlock>
+						        <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+							        <Run Text="{Binding $parent[local:About].Data.MinVersion}" />
+							        <Run Text="-" />
+							        <Run Text="{Binding $parent[local:About].Data.MaxVersion}" />
+						        </TextBlock>
+					        </StackPanel>
+				        </Grid>
+				        <StackPanel Orientation="Horizontal">
+					        <TextBlock Text="{ext:LocalizedString /Settings/About/Links/Text}" Padding="0,5,11,6" FontWeight="SemiBold" />
+					        <Button Content="{ext:LocalizedString /Settings/About/License/Content}" Click="License_Click" Theme="{DynamicResource TextBlockButtonStyle}" />
+					        <Button Content="{ext:LocalizedString /Settings/About/Privacy/Content}" Click="Privacy_Click" Theme="{DynamicResource TextBlockButtonStyle}" />
+				        </StackPanel>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<controls:ModernInput
+					Description="{ext:LocalizedString /Settings/About/Github/Description}" Title="Github"
+					Command="{Binding OpenLinkCommand}"
+					CommandParameter="https://github.com/Guerra24/LRReader" IsButton="True" RightGlyph="&#xE8A7;">
+					<controls:ModernInput.Icon>
+						<ui:ImageIcon Height="20" Width="20" Source="/Assets/Other/GitHub-dark.png" />
+					</controls:ModernInput.Icon>
+				</controls:ModernInput>
+				<controls:ModernInput
+					Description="{ext:LocalizedString /Settings/About/GhSponsor/Description}" Title="Github Sponsors"
+					Command="{Binding OpenLinkCommand}"
+					CommandParameter="https://github.com/sponsors/Guerra24" IsButton="True" RightGlyph="&#xE8A7;">
+					<controls:ModernInput.Icon>
+						<ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB51;" FontSize="20" Foreground="#C72335" FontWeight="ExtraBold" />
+					</controls:ModernInput.Icon>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
+</controls:ModernBasePage>

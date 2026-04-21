@@ -11,7 +11,7 @@ namespace LRReader.Shared.Services
 	{
 
 		public ServerInfo ServerInfo = null!;
-		public ControlFlags ControlFlags = new ControlFlags();
+		public ControlFlags ControlFlags { get; } = new ControlFlags();
 
 		public RestClient Client { get; private set; } = null!;
 
@@ -91,11 +91,11 @@ namespace LRReader.Shared.Services
 
 	public class ControlFlags
 	{
-		public bool ProgressTracking = false;
+		public bool ProgressTracking { get; private set; } = false;
 
-		public bool V0940;
+		public bool V0940 { get; private set; }
 
-		public bool BrokenCache;
+		public bool BrokenCache { get; private set; }
 
 		public bool V0940Edit => V0940 & Service.Settings.Profile.HasApiKey;
 

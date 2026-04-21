@@ -11,8 +11,6 @@
              d:DesignHeight="1000"
              x:DataType="services:TabsService"
              x:Class="LRReader.Avalonia.Views.Main.HostTabPage"
-             AttachedToVisualTree="HostTabPage_AttachedToVisualTree"
-             DetachedFromVisualTree="HostTabPage_DetachedToVisualTree"
              DataContext="{ReflectionBinding HostTabPageInstance, Source={StaticResource Locator}}">
 
     <Grid>

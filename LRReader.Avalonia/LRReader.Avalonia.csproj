@@ -7,13 +7,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.12" />
+    <PackageReference Include="Avalonia" Version="11.3.14" />
     <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.12">
+    <PackageReference Include="Avalonia.Controls.WebView" Version="11.4.0" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.14">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="FluentAvaloniaUI" Version="2.5.0" />
+    <PackageReference Include="CommunityToolkit.Common" Version="8.4.2" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.5.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
@@ -27,5 +29,10 @@
   <ItemGroup>
     <Using Include="Avalonia" />
     <Using Include="Avalonia.Controls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\Content\WebContent.axaml.cs">
+      <DependentUpon>WebContent.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

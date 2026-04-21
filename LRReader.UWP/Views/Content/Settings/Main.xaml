@@ -56,7 +56,7 @@
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>-->
 				<controls:ModernInput
-					x:Name="Updates" x:Uid="/Settings/UpdatesPage" Click="PageButton_Click"
+					x:Uid="/Settings/UpdatesPage" Click="PageButton_Click"
 					Glyph="&#xE895;" IsButton="True" RightGlyph="&#xE76C;">
 					<controls:ModernInput.Tag>
 						<controls:ModernPageTabItem x:Uid="/Settings/UpdatesPage" Page="local:Updates" />

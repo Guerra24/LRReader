@@ -1,0 +1,116 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+    xmlns:ext="using:LRReader.Avalonia.Extensions"
+    xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:LRReader.Shared.ViewModels"
+    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+    DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+    Loaded="ModernBasePage_Loaded"
+    Unloaded="ModernBasePage_Unloaded"
+    x:DataType="vm:SettingsPageViewModel"
+    x:Class="LRReader.Avalonia.Views.Content.Settings.General">
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/General/App/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/Theme/Title}" Glyph="&#xE790;">
+					<ComboBox x:Name="ThemeComboBox" MinWidth="170" SelectedIndex="{Binding SettingsManager.Theme, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/CrashReport/Title}" Glyph="&#xEBE8;">
+					<ToggleSwitch x:Name="CrashReport" IsChecked="{Binding SettingsManager.CrashReporting, Mode=TwoWay}" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/General/Tabs/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/VerticalTabs/Title}" Glyph="&#xE71D;">
+					<ToggleSwitch x:Name="VerticalTabs" IsChecked="{Binding SettingsManager.UseVerticalTabs, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/Categories/Title}" Glyph="&#xE8B7;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.OpenCategoriesTab, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/Bookmarks/Title}" Glyph="&#xE728;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.OpenBookmarksTab, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/Bookmarked/Title}" Glyph="&#xE734;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.OpenBookmarksStart, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/CompactMarks/Title}" Glyph="&#xF0E2;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.CompactBookmarks, Mode=TwoWay}" />
+				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/General/Archives/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/ArchivesStyle/Title}" Glyph="&#xECA5;">
+					<ComboBox x:Name="ArchiveStyle" MinWidth="170" SelectedIndex="{Binding SettingsManager.ArchiveStyle, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/TagsPopup/Title}" Glyph="&#xEC42;">
+					<ComboBox x:Name="TagsPopupComboBox" MinWidth="170" SelectedIndex="{Binding SettingsManager.TagsPopup, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/VisualTags/Title}" Description="{ext:LocalizedString /Settings/General/VisualTags/Description}" Glyph="&#xE8EC;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.UseVisualTags, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/IncrementalCache/Title}" Glyph="&#xF5EF;">
+					<ToggleSwitch x:Name="IncrementalCaching" IsChecked="{Binding SettingsManager.UseIncrementalCaching, Mode=OneWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/ThumbCache/Title}" Glyph="&#xE8B9;">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="0,0,10,0" VerticalAlignment="Center">
+							<Run Text="{ext:LocalizedString /Settings/General/Size/Text}" />
+							<Run Text="{Binding ThumbnailCacheSize, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
+						</TextBlock>
+						<ui:ProgressRing
+							Width="30" Height="30" Margin="0,0,10,0"
+							VerticalAlignment="Center" IsActive="True"
+							IsVisible="{Binding ProgressCache, Mode=OneWay}" />
+						<Button Content="{ext:LocalizedString /Settings/General/ClearThumbCache/Content}" Command="{Binding ClearThumbnailCacheCommand}" IsEnabled="{Binding ProgressCache, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+					</StackPanel>
+				</controls:ModernInput>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/General/Search/Title}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/InputSortBy/Title}" Glyph="&#xF168;">
+					<StackPanel Orientation="Horizontal">
+						<ComboBox
+							PlaceholderText="{ext:LocalizedString /Settings/General/SortBy/PlaceholderText}" MinWidth="128"
+							ItemsSource="{Binding SortBy, Mode=OneWay}"
+							SelectedIndex="{Binding SortByIndex, Mode=TwoWay}" />
+						<Button
+							ToolTip.Tip="{ext:LocalizedString /Tabs/Archives/Clear/ToolTipService/ToolTip}" Margin="10,0,0,0" Padding="8"
+							VerticalAlignment="Bottom" Click="ClearButton_Click">
+							<ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+						</Button>
+					</StackPanel>
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/OrderBy/Title}" Glyph="&#xE8CB;">
+					<ComboBox x:Name="OrderByComboBox" MinWidth="170" SelectedIndex="{Binding SettingsManager.OrderByDefault, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernExpander Title="{ext:LocalizedString /Settings/General/SuggestedTags/Title}" Description="{ext:LocalizedString /Settings/General/SuggestedTags/Description}" Glyph="&#xE773;" IsExpanded="{Binding SettingsManager.ShowSuggestedTags, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsChecked="{Binding SettingsManager.ShowSuggestedTags, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <controls:ModernInput Title="{ext:LocalizedString /Settings/General/SuggestedTagsLimit/Title}" InputHorizontalAlignment="Stretch">
+						    <Grid>
+							    <Grid.ColumnDefinitions>
+								    <ColumnDefinition Width="*" />
+								    <ColumnDefinition Width="30" />
+							    </Grid.ColumnDefinitions>
+							    <Slider
+								    Maximum="100"
+								    Minimum="1"
+								    TickFrequency="1" TickPlacement="None"
+								    Value="{Binding $parent[local:General].Data.SettingsManager.MaxSuggestedTags, Mode=TwoWay}" />
+							    <TextBlock
+								    Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Right"
+								    VerticalAlignment="Center">
+								    <Run Text="{Binding $parent[local:General].Data.SettingsManager.MaxSuggestedTags, Mode=OneWay}" />
+							    </TextBlock>
+						    </Grid>
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
+</controls:ModernBasePage>

@@ -13,9 +13,7 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<converters:DoubleToObjectConverter
-			x:Key="DoubleToObjectConverter" FalseValue="False" GreaterThan="1"
-			TrueValue="True" />
+		<converters:DoubleToObjectConverter x:Key="DoubleToObjectConverter" FalseValue="False" GreaterThan="1" TrueValue="True" />
 	</UserControl.Resources>
 
 	<muxc:TwoPaneView

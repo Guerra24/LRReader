@@ -1,0 +1,114 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+             xmlns:items="using:LRReader.Shared.Models.Main"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
+             x:Class="LRReader.Avalonia.Views.Content.Settings.Profiles">
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Profiles/AutoLogin/Title}" Glyph="&#xE8d7;">
+					<ToggleSwitch IsChecked="{Binding SettingsManager.AutoLogin, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Profiles/Session/Title}" Glyph="&#xF738;">
+					<ComboBox x:Name="SessionMode" MinWidth="170" SelectedIndex="{Binding SettingsManager.SessionMode, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
+				</controls:ModernInput>
+				<controls:ModernExpander Title="Profiles save location" Description="{Binding SettingsManager.ProfilesPathLocation, Mode=OneWay}" Glyph="&#xE8DE;">
+					<controls:ModernExpander.Input>
+						<Button Content="Change" Command="{Binding ChangeProfilesLocationCommand}" />
+					</controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+					    <controls:ModernInput Title="Reset location">
+						    <Button Content="Reset" Command="{Binding $parent[local:Profiles].Data.ResetProfilesLocationCommand}" />
+					    </controls:ModernInput>
+					    <controls:ModernInput Title="Open folder">
+						    <Button Content="Open" Click="OpenFolder_Click" />
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+			</controls:ModernGroup>
+			<controls:ModernGroup Title="{ext:LocalizedString /Settings/Profiles/ProfileGroup/Title}">
+				<Button
+                    ToolTip.Tip="{ext:LocalizedString /Settings/Profiles/AddProfile/ToolTipService/ToolTip}"
+					Padding="{StaticResource ExpanderHeaderPadding}"
+					HorizontalAlignment="Stretch"
+					Background="{DynamicResource ExpanderHeaderBackground}"
+					BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+					BorderThickness="{DynamicResource ExpanderHeaderBorderThickness}"
+					Command="{Binding AddProfileCommand}"
+					CornerRadius="{DynamicResource ControlCornerRadius}">
+					<ui:FontIcon
+						Margin="0,16" HorizontalAlignment="Center"
+						FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="20"
+						Glyph="&#xE710;" />
+				</Button>
+				<ItemsRepeater ItemsSource="{Binding SettingsManager.Profiles, Mode=OneWay}">
+					<ItemsRepeater.Layout>
+						<StackLayout DisableVirtualization="True" Spacing="3" />
+					</ItemsRepeater.Layout>
+					<ItemsRepeater.ItemTemplate>
+						<DataTemplate x:DataType="items:ServerProfile">
+                            <Border Padding="{StaticResource ExpanderHeaderPadding}"
+								Background="{DynamicResource ExpanderHeaderBackground}"
+								BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+								BorderThickness="{DynamicResource ExpanderHeaderBorderThickness}"
+								CornerRadius="{DynamicResource ControlCornerRadius}">
+							    <Grid>
+								    <Grid.ColumnDefinitions>
+									    <ColumnDefinition Width="Auto" />
+									    <ColumnDefinition />
+									    <ColumnDefinition MaxWidth="400" />
+								    </Grid.ColumnDefinitions>
+								    <ui:FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="20" Glyph="&#xE77b;" />
+								    <StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
+									    <TextBlock Text="{Binding Name, Mode=OneWay}" />
+									    <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding ServerAddress, Mode=OneWay}" />
+								    </StackPanel>
+								    <Button
+									    Grid.Column="2" Margin="0,0,16,0" Padding="6,8"
+									    HorizontalAlignment="Right">
+									    <Button.Flyout>
+										    <MenuFlyout Placement="Bottom">
+											    <MenuItem
+												    Header="{ext:LocalizedString Key=/Settings/Profiles/Edit/Text}"
+												    Command="{Binding $parent[local:Profiles].Data.EditProfileCommand}"
+												    CommandParameter="{Binding}">
+                                                    <MenuItem.Icon>
+                                                        <ui:SymbolIcon Symbol="Edit" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+											    <MenuItem
+												    Header="{ext:LocalizedString Key=/Settings/Profiles/Delete/Text}"
+												    Command="{Binding $parent[local:Profiles].Data.RemoveProfileCommand}"
+												    CommandParameter="{Binding}">
+                                                    <MenuItem.Icon>
+                                                        <ui:SymbolIcon Symbol="Delete" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+										    </MenuFlyout>
+									    </Button.Flyout>
+									    <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
+										    <ui:FontIcon.RenderTransform>
+											    <RotateTransform Angle="90" CenterX="0" CenterY="0" />
+										    </ui:FontIcon.RenderTransform>
+									    </ui:FontIcon>
+								    </Button>
+							    </Grid>
+                            </Border>
+						</DataTemplate>
+					</ItemsRepeater.ItemTemplate>
+				</ItemsRepeater>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
+</controls:ModernBasePage>
