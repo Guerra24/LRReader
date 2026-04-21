@@ -4,60 +4,32 @@ on:
     branches:
     - develop
 jobs:
-  # buildAvaloniaLinuxX64:
-  #   name: Build Avalonia Linux X64
-  #   runs-on: windows-2025-vs2026
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v6
-  #   - name: Prepare Env
-  #     uses: microsoft/setup-msbuild@v3
-  #   - name: Build
-  #     env:
-  #       DOTNET_NOLOGO: true
-  #     run: |
-  #       dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=linux-x64
-  #   - name: Upload Artifacts
-  #     uses: actions/upload-artifact@v7
-  #     with:
-  #       name: LRReader.Avalonia.Desktop.Linux-X64
-  #       path: LRReader.Avalonia.Desktop/publish/linux-x64
-  # buildAvaloniaMacOSX64:
-  #   name: Build Avalonia macOS X64
-  #   runs-on: windows-2025-vs2026
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v6
-  #   - name: Prepare Env
-  #     uses: microsoft/setup-msbuild@v3
-  #   - name: Build
-  #     env:
-  #       DOTNET_NOLOGO: true
-  #     run: |
-  #       dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=macos-x64
-  #   - name: Upload Artifacts
-  #     uses: actions/upload-artifact@v7
-  #     with:
-  #       name: LRReader.Avalonia.Desktop.macOS-X64
-  #       path: LRReader.Avalonia.Desktop/publish/macos-x64
-  # buildAvaloniaWinX64:
-  #   name: Build Avalonia Windows X64
-  #   runs-on: windows-2025-vs2026
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v6
-  #   - name: Prepare Env
-  #     uses: microsoft/setup-msbuild@v3
-  #   - name: Build
-  #     env:
-  #       DOTNET_NOLOGO: true
-  #     run: |
-  #       dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal /p:Configuration=Release /p:PublishProfile=win-x64
-  #   - name: Upload Artifacts
-  #     uses: actions/upload-artifact@v7
-  #     with:
-  #       name: LRReader.Avalonia.Desktop.Win-X64
-  #       path: LRReader.Avalonia.Desktop/publish/win-x64
+  buildAvalonia:
+    name: Build Avalonia
+    runs-on: windows-2025-vs2026
+    strategy:
+      matrix:
+        platform:
+          - linux-x64
+          - macos-x64
+          - win-x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+    - name: Find MSBuild
+      uses: microsoft/setup-msbuild@v3
+    - name: Build
+      run: |
+        dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal -p:PublishProfile=${{ matrix.platform }}
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: LRReader.Avalonia.${{ matrix.platform }}
+        path: LRReader.Avalonia.Desktop/bin/publish/${{ matrix.platform }}
   buildUWP:
     name: Sideload
     runs-on: windows-2025-vs2026
@@ -109,7 +81,7 @@ jobs:
         foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --include-sources --wait $file }
         Remove-Item $(Get-ChildItem *.zip -File)
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
