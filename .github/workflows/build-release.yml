@@ -17,7 +17,7 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Find MSBuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
     - name: Build
       env:
         CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
@@ -53,7 +53,7 @@ jobs:
         foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --include-sources --wait $file  }
         Remove-Item $(Get-ChildItem *.zip -File)
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: LRReader
         path: LRReader.UWP/AppPackages
@@ -90,7 +90,7 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Find MSBuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
     - name: Build
       run: |
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
@@ -99,7 +99,7 @@ jobs:
         .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.ModernInstaller/Program.cs"
         MSBuild LRReader.UWP.ModernInstaller\LRReader.UWP.ModernInstaller.csproj -nologo -r -v:minimal /t:Publish /p:_IsPublishing=true /p:PublishProfile="win-${{ matrix.arch }}" /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ModernInstaller-${{ matrix.arch }}
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
@@ -127,7 +127,7 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Find MSBuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
     - name: Build
       run: |
         [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
@@ -136,7 +136,7 @@ jobs:
         .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.Installer/Variables.cs"
         MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Installer-${{ matrix.arch }}
         path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
@@ -159,7 +159,7 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Find MSBuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
     - name: Build
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -182,7 +182,7 @@ jobs:
         foreach ($file in $(Get-ChildItem *.zip -File)) { sentry-cli debug-files upload --include-sources --wait $file  }
         Remove-Item $(Get-ChildItem *.zip -File)
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: LRReader_Store
         path: LRReader.UWP/AppPackages/*.msixupload
