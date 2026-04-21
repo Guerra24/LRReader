@@ -4,7 +4,7 @@ on:
     types: [published]
 jobs:
   buildAppxBundle:
-    name: Sideload
+    name: UWP Sideload
     runs-on: windows-2025-vs2026
     permissions:
       packages: read
@@ -147,7 +147,7 @@ jobs:
         path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
         repo-token: ${{ secrets.GITHUB_TOKEN }}
   buildStoreBundle:
-    name: Store
+    name: UWP Store
     runs-on: windows-2025-vs2026
     permissions:
       packages: read

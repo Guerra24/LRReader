@@ -5,13 +5,15 @@ on:
     - develop
 jobs:
   buildAvalonia:
-    name: Build Avalonia
+    name: Avalonia
     runs-on: windows-2025-vs2026
     strategy:
       matrix:
         platform:
           - linux-x64
+          - linux-arm64
           - macos-x64
+          - macos-arm64
           - win-x64
     steps:
     - name: Checkout
@@ -31,7 +33,7 @@ jobs:
         name: LRReader.Avalonia.${{ matrix.platform }}
         path: LRReader.Avalonia.Desktop/bin/publish/${{ matrix.platform }}
   buildUWP:
-    name: Sideload
+    name: UWP Nightly
     runs-on: windows-2025-vs2026
     permissions:
       packages: read

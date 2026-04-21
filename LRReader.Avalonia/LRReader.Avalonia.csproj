@@ -8,6 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.14" />
+    <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.14" />
     <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
     <PackageReference Include="Avalonia.Controls.WebView" Version="11.4.0" />
     <PackageReference Include="Avalonia.Diagnostics" Version="11.3.14">
