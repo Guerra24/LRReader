@@ -13,7 +13,7 @@
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.14" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Avalonia\LRReader.Avalonia.csproj" />

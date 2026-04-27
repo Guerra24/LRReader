@@ -4,26 +4,7 @@
                     xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
                     xmlns:controls="using:LRReader.Avalonia.Views.Controls">
 
-    <Design.PreviewWith>
-        <!--
-        <Border Padding="50">
-        <StackPanel Spacing="5">
-        <Button Content="Button" />
-        <TextBox Watermark="TextBox" />
-        </StackPanel>
-        </Border>
-        -->
-        <ui:TabView Theme="{StaticResource ModernTabView}" Width="400" Height="400" IsAddTabButtonVisible="False">
-            <controls:ModernTab Header="Hello" IsClosable="False"/>
-            <ui:TabView.TabStripFooter>
-                <Grid HorizontalAlignment="Left">
-                    <Button Content="WEW" />
-                </Grid>
-            </ui:TabView.TabStripFooter>
-        </ui:TabView>
-    </Design.PreviewWith>
-
-    <ControlTheme x:Key="ModernTabView" TargetType="ui:TabView">
+    <ControlTheme x:Key="ModernTabView" TargetType="ui:FATabView">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Padding" Value="0 8" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
@@ -50,10 +31,10 @@
                                                       Content="{TemplateBinding TabStripHeader}"
                                                       ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
 
-                        <uip:TabViewListView Grid.Column="1"
+                        <uip:FATabViewListView Grid.Column="1"
                                                          Name="TabListView"
                                                          Padding="{TemplateBinding Padding}"
-                                                         ItemsSource="{TemplateBinding TabItems}"
+                                                         ItemsSource="{TemplateBinding TabItemsSource}"
                                                          ItemTemplate="{TemplateBinding TabItemTemplate}"
                                                          CanReorderItems="{TemplateBinding CanReorderTabs}"
                                                          CanDragItems="{TemplateBinding CanDragTabs}"
@@ -67,6 +48,17 @@
                                                       HorizontalAlignment="Stretch"
                                                       Content="{TemplateBinding TabStripFooter}"
                                                       ContentTemplate="{TemplateBinding TabStripFooterTemplate}"/>
+
+                        <Border IsVisible="False"
+                                Cursor="SizeWestEast"
+                                MinWidth="3"
+                                HorizontalAlignment="Right"
+                                Name="BorderResizeHandleHost">
+                            <Rectangle Name="BorderResizeHandle"
+                                       Fill="{DynamicResource TabViewBorderBrush}"
+                                       Width="1"
+                                       HorizontalAlignment="Right" />
+                        </Border>
                     </Grid>
 
                     <ContentPresenter Name="TabContentPresenter" Grid.Row="1" />
@@ -76,20 +68,17 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme x:Key="ModernTabViewList" TargetType="uip:TabViewListView">
+    <ControlTheme x:Key="ModernTabViewList" TargetType="uip:FATabViewListView">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <!--
-                NOTE: This panel enables the reordering/drag effects
-                changing this will disable all drag/drop/reordering
-                logic on the TabView
-                -->
-                <ui:TabViewStackPanel />
+                <VirtualizingStackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Template">
@@ -129,10 +118,11 @@
                                             Padding="{DynamicResource TabViewItemLeftScrollButtonContainerPadding}"
                                             VerticalAlignment="Bottom">
                             <RepeatButton Name="ScrollDecreaseButton"
-                                                        Delay="50"
-                                                        Interval="100"
-                                                        Content="&#xEDD9;"
-                                                        Theme="{StaticResource TabViewScrollButtonStyle}"/>
+                                          Delay="50"
+                                          Interval="100"
+                                          Content="&#xEDD9;"
+                                          AutomationProperties.AccessibilityView="Raw"
+                                          Theme="{StaticResource TabViewScrollButtonTheme}"/>
                         </Border>
 
                         <ScrollContentPresenter Name="ScrollContentPresenter"
@@ -156,10 +146,11 @@
                                             Padding="{DynamicResource TabViewItemRightScrollButtonContainerPadding}"
                                             VerticalAlignment="Bottom">
                             <RepeatButton Name="ScrollIncreaseButton"
-                                                        Delay="50"
-                                                        Interval="100"
-                                                        Content="&#xEDDA;"
-                                                        Theme="{StaticResource TabViewScrollButtonStyle}"/>
+                                          Delay="50"
+                                          Interval="100"
+                                          Content="&#xEDDA;"
+                                          AutomationProperties.AccessibilityView="Raw"
+                                          Theme="{StaticResource TabViewScrollButtonTheme}"/>
                         </Border>
 
                     </Grid>
@@ -229,7 +220,7 @@
                                                         Grid.Column="2"
                                                         Margin="{DynamicResource TabViewItemHeaderCloseMargin}"
                                                         Content="&#xE711;"
-                                                        Theme="{StaticResource TabViewCloseButtonStyle}"
+                                                        Theme="{StaticResource TabViewCloseButtonTheme}"
                                                         KeyboardNavigation.IsTabStop="False"/>
                             </Grid>
                         </Border>
@@ -269,9 +260,11 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
-        <!-- :closecollapsed -->
-        <Style Selector="^:closecollapsed /template/ Button#CloseButton">
-            <Setter Property="IsVisible" Value="False" />
+        <!-- WinUI: CloseButtonCollapsed-->
+        <Style Selector="^:closeCollapsed">
+            <Style Selector="^ /template/ Button#CloseButton">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
         </Style>
     </ControlTheme>
 

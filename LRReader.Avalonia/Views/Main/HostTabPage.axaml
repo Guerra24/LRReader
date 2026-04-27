@@ -14,13 +14,13 @@
              DataContext="{ReflectionBinding HostTabPageInstance, Source={StaticResource Locator}}">
 
     <Grid>
-        <ui:TabView Theme="{StaticResource ModernTabView}"
+        <ui:FATabView Theme="{StaticResource ModernTabView}"
                     IsAddTabButtonVisible="False"
                     SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
-                    TabItems="{Binding TabItems}"
+                    TabItemsSource="{Binding TabItems}"
                     TabWidthMode="SizeToContent"
                     TabCloseRequested="TabView_TabCloseRequested">
-            <ui:TabView.TabStripFooter>
+            <ui:FATabView.TabStripFooter>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -43,22 +43,22 @@
                     <StackPanel Orientation="Horizontal" Spacing="2">
                         <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Bookmarks}">
                             <Viewbox>
-                                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
                             </Viewbox>
                         </Button>
                         <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Categories/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Categories}">
                             <Viewbox>
-                                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
                             </Viewbox>
                         </Button>
                         <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Search/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=SearchResults}">
                             <Viewbox>
-                                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
                             </Viewbox>
                         </Button>
                         <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Tools/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Tools}">
                             <Viewbox>
-                                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
                             </Viewbox>
                         </Button>
                     </StackPanel>
@@ -69,17 +69,17 @@
                                 Orientation="Horizontal">
                         <Button x:Name="EnterFullScreen" ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
                             <Viewbox>
-                                <ui:SymbolIcon Symbol="FullScreen" />
+                                <ui:FASymbolIcon Symbol="FullScreen" />
                             </Viewbox>
                         </Button>
                         <Button x:Name="SettingsButton" ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Settings/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Settings}">
                             <Viewbox>
-                                <ui:SymbolIcon Symbol="Setting" />
+                                <ui:FASymbolIcon Symbol="Setting" />
                             </Viewbox>
                         </Button>
                     </StackPanel>
                 </Grid>
-            </ui:TabView.TabStripFooter>
-        </ui:TabView>
+            </ui:FATabView.TabStripFooter>
+        </ui:FATabView>
     </Grid>
 </UserControl>

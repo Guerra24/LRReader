@@ -1,5 +1,4 @@
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using LRReader.Avalonia.Services;
 using LRReader.Avalonia.Views;
@@ -21,33 +20,31 @@ namespace LRReader.Avalonia
 			var platform = (AvaloniaPlatformService)Platform;
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
-				DisableAvaloniaDataAnnotationValidation();
 				var window = new MainWindow();
 				desktop.MainWindow = window;
 				platform.SetRoot(window.Root);
+				Platform.GoToPage(Pages.Loading, PagesTransition.None);
+			}
+			else if (ApplicationLifetime is IActivityApplicationLifetime singleViewFactoryApplicationLifetime)
+			{
+				singleViewFactoryApplicationLifetime.MainViewFactory = () =>
+				{
+					var root = new Root();
+					platform.SetRoot(root);
+					Platform.GoToPage(Pages.Loading, PagesTransition.None);
+					return root;
+				};
 			}
 			else if (ApplicationLifetime is ISingleViewApplicationLifetime singleView)
 			{
 				var root = new Root();
 				singleView.MainView = root;
 				platform.SetRoot(root);
+				Platform.GoToPage(Pages.Loading, PagesTransition.None);
 			}
-
-			Platform.GoToPage(Pages.Loading, PagesTransition.None);
 
 			base.OnFrameworkInitializationCompleted();
 		}
 
-		private void DisableAvaloniaDataAnnotationValidation()
-		{
-			// Get an array of plugins to remove
-			var dataValidationPluginsToRemove = BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
-
-			// remove each entry found
-			foreach (var plugin in dataValidationPluginsToRemove)
-			{
-				BindingPlugins.DataValidators.Remove(plugin);
-			}
-		}
 	}
 }

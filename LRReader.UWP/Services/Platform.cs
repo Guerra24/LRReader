@@ -129,6 +129,35 @@ namespace LRReader.UWP.Services
 			return LocalizationCache[key] = ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
+		public override async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[]? args)
+		{
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				var newDialog = CreateDialog<D>(dialog, args);
+				if (newDialog == null)
+					return IDialogResult.None;
+				return await newDialog.ShowAsync();
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
+		}
+
+		public async Task<IDialogResult> ShowDialog(IDialog dialog)
+		{
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				return await dialog.ShowAsync();
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
+		}
+
 		public override async Task<IDialogResult> OpenGenericDialog(string title, string primarybutton, string secondarybutton, string closebutton, object? content)
 		{
 			await DialogSemaphore.WaitAsync();
@@ -147,8 +176,10 @@ namespace LRReader.UWP.Services
 
 		public override void CopyToClipboard(string text)
 		{
-			var dataPackage = new DataPackage();
-			dataPackage.RequestedOperation = DataPackageOperation.Copy;
+			var dataPackage = new DataPackage
+			{
+				RequestedOperation = DataPackageOperation.Copy
+			};
 			dataPackage.SetText(text);
 			Clipboard.SetContent(dataPackage);
 		}

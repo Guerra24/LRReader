@@ -59,9 +59,9 @@ public static class AppExtensions
 
 public class ButtonExtension : AvaloniaObject
 {
-	public static readonly StyledProperty<TeachingTip> TeachingTipProperty = AvaloniaProperty.RegisterAttached<ButtonExtension, Button, TeachingTip>("TeachingTip");
+	public static readonly StyledProperty<FATeachingTip> TeachingTipProperty = AvaloniaProperty.RegisterAttached<ButtonExtension, Button, FATeachingTip>("TeachingTip");
 
-	public static void SetTeachingTip(Button button, TeachingTip teachingTip)
+	public static void SetTeachingTip(Button button, FATeachingTip teachingTip)
 	{
 		button.Click -= Button_Click;
 		button.Click += Button_Click;
@@ -69,7 +69,7 @@ public class ButtonExtension : AvaloniaObject
 		button.SetValue(TeachingTipProperty, teachingTip);
 	}
 
-	public static TeachingTip GetTeachingTip(Button button) => button.GetValue(TeachingTipProperty);
+	public static FATeachingTip GetTeachingTip(Button button) => button.GetValue(TeachingTipProperty);
 
 	private static void Button_Click(object? sender, RoutedEventArgs e)
 	{

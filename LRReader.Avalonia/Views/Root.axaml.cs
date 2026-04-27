@@ -9,7 +9,7 @@ namespace LRReader.Avalonia.Views
 			InitializeComponent();
 		}
 
-		private void FrameContent_NavigationFailed(object sender, FluentAvalonia.UI.Navigation.NavigationFailedEventArgs e)
+		private void FrameContent_NavigationFailed(object sender, FluentAvalonia.UI.Navigation.FANavigationFailedEventArgs e)
 		{
 			Debugger.Break();
 		}

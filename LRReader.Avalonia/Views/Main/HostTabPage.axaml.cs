@@ -16,11 +16,11 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			InitializeComponent();
 			Data = (TabsService)DataContext!;
-			AddHandler(Frame.NavigatedToEvent, OnNavigatedTo);
-			AddHandler(Frame.NavigatingFromEvent, OnNavigatingFrom);
+			AddHandler(FAFrame.NavigatedToEvent, OnNavigatedTo);
+			AddHandler(FAFrame.NavigatingFromEvent, OnNavigatingFrom);
 		}
 
-		protected async void OnNavigatedTo(object? sender, NavigationEventArgs e)
+		protected async void OnNavigatedTo(object? sender, FANavigationEventArgs e)
 		{
 			WeakReferenceMessenger.Default.Register(this);
 
@@ -35,7 +35,7 @@ namespace LRReader.Avalonia.Views.Main
 			});
 		}
 
-		private void OnNavigatingFrom(object? sender, NavigatingCancelEventArgs e)
+		private void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 		{
 			WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
@@ -49,7 +49,7 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) { }
 
-		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+		private void TabView_TabCloseRequested(FATabView sender, FATabViewTabCloseRequestedEventArgs args)
 		{
 			Data.CloseTab((ModernTab)args.Tab);
 		}

@@ -1,21 +1,21 @@
-﻿<dialogs:GenericDialog xmlns="https://github.com/avaloniaui"
+﻿<ui:FAContentDialog xmlns="https://github.com/avaloniaui"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:ext="using:LRReader.Avalonia.Extensions"
+                       xmlns:ui="using:FluentAvalonia.UI.Controls"
                        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                        xmlns:dialogs="using:LRReader.Avalonia.Views.Dialogs"
                        x:Class="LRReader.Avalonia.Views.Dialogs.ServerProfileDialog"
                        PrimaryButtonText="{ext:LocalizedString Key=/Dialogs/ServerProfile/Dialog/PrimaryButtonText}"
                        CloseButtonText="{ext:LocalizedString Key=/Dialogs/ServerProfile/Dialog/CloseButtonText}"
-                       DialogTitle="{ext:LocalizedString Key=/Dialogs/ServerProfile/Dialog/Title}">
-    <!--IsPrimaryButtonEnabled="False"-->
-    <dialogs:GenericDialog.DialogContent>
-        <StackPanel Spacing="10">
-            <TextBox x:Name="ProfileName" Watermark="{ext:LocalizedString Key=/Dialogs/ServerProfile/ProfileName/PlaceholderText}" />
-            <TextBox x:Name="ProfileServerAddress" Watermark="{ext:LocalizedString Key=/Dialogs/ServerProfile/ProfileAddress/PlaceholderText}" Text="http://" />
-            <TextBox x:Name="ProfileServerApiKey" PasswordChar="*" Watermark="{ext:LocalizedString Key=/Dialogs/ServerProfile/ProfileApiKey/PlaceholderText}" />
-            <TextBlock x:Name="ProfileError" Foreground="#FF4141" />
-        </StackPanel>
-    </dialogs:GenericDialog.DialogContent>
-</dialogs:GenericDialog>
+                       Title="{ext:LocalizedString Key=/Dialogs/ServerProfile/Dialog/Title}"
+                       IsPrimaryButtonEnabled="False"
+                       DefaultButton="Primary">
+    <StackPanel Spacing="10">
+        <TextBox x:Name="ProfileName" PlaceholderText="{ext:LocalizedString Key=/Dialogs/ServerProfile/ProfileName/PlaceholderText}" TextChanging="ProfileName_TextChanging" />
+        <TextBox x:Name="ProfileServerAddress" PlaceholderText="{ext:LocalizedString Key=/Dialogs/ServerProfile/ProfileAddress/PlaceholderText}" Text="http://" TextChanging="ProfileServerAddress_TextChanging" />
+        <TextBox x:Name="ProfileServerApiKey" PasswordChar="*" PlaceholderText="{ext:LocalizedString Key=/Dialogs/ServerProfile/ProfileApiKey/PlaceholderText}" />
+        <TextBlock x:Name="ProfileError" Foreground="#FF4141" />
+    </StackPanel>
+</ui:FAContentDialog>

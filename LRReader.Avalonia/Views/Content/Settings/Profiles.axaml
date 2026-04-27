@@ -46,7 +46,7 @@
 					BorderThickness="{DynamicResource ExpanderHeaderBorderThickness}"
 					Command="{Binding AddProfileCommand}"
 					CornerRadius="{DynamicResource ControlCornerRadius}">
-					<ui:FontIcon
+					<ui:FAFontIcon
 						Margin="0,16" HorizontalAlignment="Center"
 						FontFamily="{StaticResource SymbolThemeFontFamily}"
                         FontSize="20"
@@ -69,7 +69,7 @@
 									    <ColumnDefinition />
 									    <ColumnDefinition MaxWidth="400" />
 								    </Grid.ColumnDefinitions>
-								    <ui:FontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="20" Glyph="&#xE77b;" />
+								    <ui:FAFontIcon Margin="0,0,16,0" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="20" Glyph="&#xE77b;" />
 								    <StackPanel Grid.Column="1" Margin="0,16" VerticalAlignment="Center">
 									    <TextBlock Text="{Binding Name, Mode=OneWay}" />
 									    <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding ServerAddress, Mode=OneWay}" />
@@ -84,7 +84,7 @@
 												    Command="{Binding $parent[local:Profiles].Data.EditProfileCommand}"
 												    CommandParameter="{Binding}">
                                                     <MenuItem.Icon>
-                                                        <ui:SymbolIcon Symbol="Edit" />
+                                                        <ui:FASymbolIcon Symbol="Edit" />
                                                     </MenuItem.Icon>
                                                 </MenuItem>
 											    <MenuItem
@@ -92,16 +92,16 @@
 												    Command="{Binding $parent[local:Profiles].Data.RemoveProfileCommand}"
 												    CommandParameter="{Binding}">
                                                     <MenuItem.Icon>
-                                                        <ui:SymbolIcon Symbol="Delete" />
+                                                        <ui:FASymbolIcon Symbol="Delete" />
                                                     </MenuItem.Icon>
                                                 </MenuItem>
 										    </MenuFlyout>
 									    </Button.Flyout>
-									    <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
-										    <ui:FontIcon.RenderTransform>
+									    <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE712;">
+										    <ui:FAFontIcon.RenderTransform>
 											    <RotateTransform Angle="90" CenterX="0" CenterY="0" />
-										    </ui:FontIcon.RenderTransform>
-									    </ui:FontIcon>
+										    </ui:FAFontIcon.RenderTransform>
+									    </ui:FAFontIcon>
 								    </Button>
 							    </Grid>
                             </Border>

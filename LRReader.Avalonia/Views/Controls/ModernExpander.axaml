@@ -26,7 +26,7 @@
 				<ColumnDefinition />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<ui:FontIcon
+			<ui:FAFontIcon
 				Margin="0,0,16,0"
 				FontFamily="{StaticResource SymbolThemeFontFamily}"
                 FontSize="20"

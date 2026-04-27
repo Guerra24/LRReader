@@ -13,6 +13,7 @@
              xmlns:services="using:LRReader.Shared.Services"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             Loaded="Page_Loaded"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Content.Settings.Reader">
 
@@ -34,9 +35,9 @@
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<Button Content="{ext:LocalizedString /Settings/Reader/ClearNewHelp/Content}" ext:ButtonExtension.TeachingTip="{Binding #ClearNewTeachingTip}" />
 							<ComboBox x:Name="ClearNew" MinWidth="170" SelectedIndex="{Binding SettingsManager.ClearNew, Mode=TwoWay, Converter={StaticResource EnumToInt}}" />
-                            <ui:TeachingTip x:Name="ClearNewTeachingTip" Title="{ext:LocalizedString /Settings/Reader/ClearNewTeachingTip/Title}" IsLightDismissEnabled="True" PreferredPlacement="Left">
+                            <ui:FATeachingTip x:Name="ClearNewTeachingTip" Title="{ext:LocalizedString /Settings/Reader/ClearNewTeachingTip/Title}" IsLightDismissEnabled="True" PreferredPlacement="Left">
 								<TextBlock Text="{ext:LocalizedString /Settings/Reader/ClearNewTeachingTipText}" />
-							</ui:TeachingTip>
+							</ui:FATeachingTip>
 						</StackPanel>
 					</controls:ModernExpander.Input>
                     <controls:ModernExpander.Items>
@@ -52,7 +53,7 @@
                     </controls:ModernExpander.Items>
 				</controls:ModernExpander>
 				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/Keyboard/Title}" Description="{ext:LocalizedString /Settings/Reader/Keyboard/Description}" Glyph="&#xF210;">
-					<ui:NumberBox
+					<ui:FANumberBox
 						MinWidth="120" Minimum="1" SmallChange="20"
 						SpinButtonPlacementMode="Inline"
 						Value="{Binding SettingsManager.KeyboardScroll, Mode=TwoWay}" />
@@ -202,7 +203,7 @@
 							PlaceholderText="{ext:LocalizedString /Settings/Reader/BookmarkCategoryCombo/PlaceholderText}" MinWidth="250"
 							ItemsSource="{Binding Categories, Mode=OneWay}" SelectedItem="{Binding BookmarkLink, Mode=TwoWay}" />
 						<Button ToolTip.Tip="{ext:LocalizedString /Tabs/Archives/Clear/ToolTipService/ToolTip}" Margin="10,0,0,0" Padding="8" VerticalAlignment="Bottom" Command="{Binding ClearBookmarkLinkCommand}">
-							<ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+							<ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 						</Button>
 					</StackPanel>
 				</controls:ModernInput>

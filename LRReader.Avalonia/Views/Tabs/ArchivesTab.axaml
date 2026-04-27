@@ -14,7 +14,7 @@
                 CustomTabId="Archives"
                 IsClosable="False">
     <controls:ModernTab.IconSource>
-        <ui:SymbolIconSource Symbol="Library" />
+        <ui:FASymbolIconSource Symbol="Library" />
     </controls:ModernTab.IconSource>
     <content:Archives />
 </controls:ModernTab>

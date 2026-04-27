@@ -29,7 +29,7 @@
                                 <MenuItem Name="OpenTabMenuItem"
                                           Header="{ext:LocalizedString Key=/Items/Archive/OpenTab/Text}">
                                     <MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Add" />
+                                        <ui:FASymbolIcon Symbol="Add" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Name="Add"
@@ -38,7 +38,7 @@
                                           CommandParameter="{x:True}"
                                           IsVisible="{Binding !$parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
                                     <MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Favorite" />
+                                        <ui:FASymbolIcon Symbol="Favorite" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Name="Remove"
@@ -47,38 +47,38 @@
                                           CommandParameter="{x:False}"
                                           IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
                                     <MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="UnFavorite" />
+                                        <ui:FASymbolIcon Symbol="UnFavorite" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Rating/Text}"
                                           IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                     <MenuItem.Icon>
-                                        <ui:FontIcon Glyph="&#xE728;" />
+                                        <ui:FAFontIcon Glyph="&#xE728;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Edit/Text}"
                                           Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCommand}"
                                           IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                     <MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Edit" />
+                                        <ui:FASymbolIcon Symbol="Edit" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Categories/Text}"
                                           IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                     <MenuItem.Icon>
-                                        <ui:FontIcon Glyph="&#xE8B7;" />
+                                        <ui:FAFontIcon Glyph="&#xE8B7;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Name="DownloadMenuItem" Header="{ext:LocalizedString Key=/Items/Archive/Download/Text}">
                                     <MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Download" />
+                                        <ui:FASymbolIcon Symbol="Download" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Delete/Text}"
                                           Command="{Binding $parent[items:GenericArchiveItem].ViewModel.DeleteCommand}"
                                           IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                     <MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Delete" />
+                                        <ui:FASymbolIcon Symbol="Delete" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuFlyout>
@@ -101,7 +101,7 @@
                         </Border>
                         <Grid Grid.Row="1">
                             <Grid IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.MissingImage, Mode=OneWay}">
-                                <ui:FontIcon FontSize="34" Glyph="&#xE8CD;" />
+                                <ui:FAFontIcon FontSize="34" Glyph="&#xE8CD;" />
                             </Grid>
                             <Grid HorizontalAlignment="Left"
                                   VerticalAlignment="Bottom"
@@ -172,7 +172,7 @@
                                 <ColumnDefinition MaxWidth="400" />
                             </Grid.ColumnDefinitions>
 
-                            <ui:FontIcon
+                            <ui:FAFontIcon
                                 x:Name="LeftFontIcon" Margin="0,0,16,0"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
                                 FontSize="20"
@@ -196,7 +196,7 @@
                                 HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding Content}" />
-                            <ui:FontIcon
+                            <ui:FAFontIcon
                                 x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
                                 HorizontalAlignment="Right" VerticalAlignment="Center"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -217,7 +217,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
         </Style>
         <Style Selector="^:disabled /template/ Border#Root">
-            <Style Selector="^ ui|FontIcon#LeftFontIcon">
+            <Style Selector="^ ui|FAFontIcon#LeftFontIcon">
                 <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
             </Style>
             <Style Selector="^ ContentPresenter#LeftIcon">
@@ -229,7 +229,7 @@
             <Style Selector="^ TextBlock#DescriptionBlock">
                 <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
             </Style>
-            <Style Selector="^ ui|FontIcon#RightFontIcon">
+            <Style Selector="^ ui|FAFontIcon#RightFontIcon">
                 <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
             </Style>
         </Style>
@@ -276,7 +276,7 @@
                                 <ColumnDefinition MaxWidth="400" Width="{TemplateBinding RightColumnWidth}" />
                             </Grid.ColumnDefinitions>
 
-                            <ui:FontIcon
+                            <ui:FAFontIcon
                                 x:Name="LeftFontIcon" Margin="0,0,16,0"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
                                 FontSize="20"
@@ -300,7 +300,7 @@
                                 HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding Content}" />
-                            <ui:FontIcon
+                            <ui:FAFontIcon
                                 x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
                                 HorizontalAlignment="Right" VerticalAlignment="Center"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -321,7 +321,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
         </Style>
         <Style Selector="^:disabled /template/ Border#Root">
-            <Style Selector="^ ui|FontIcon#LeftFontIcon">
+            <Style Selector="^ ui|FAFontIcon#LeftFontIcon">
                 <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
             </Style>
             <Style Selector="^ ContentPresenter#LeftIcon">
@@ -333,7 +333,7 @@
             <Style Selector="^ TextBlock#DescriptionBlock">
                 <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
             </Style>
-            <Style Selector="^ ui|FontIcon#RightFontIcon">
+            <Style Selector="^ ui|FAFontIcon#RightFontIcon">
                 <Setter Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
             </Style>
         </Style>
@@ -357,11 +357,11 @@
                             Margin="1,0,0,8" FontWeight="Bold"
                             Text="{TemplateBinding Title}"
                             IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-                        <ui:ItemsRepeater ItemsSource="{TemplateBinding Items}">
-                            <ui:ItemsRepeater.Layout>
-                                <ui:StackLayout DisableVirtualization="True" Spacing="3" />
-                            </ui:ItemsRepeater.Layout>
-                        </ui:ItemsRepeater>
+                        <ui:FAItemsRepeater ItemsSource="{TemplateBinding Items}">
+                            <ui:FAItemsRepeater.Layout>
+                                <ui:FAStackLayout DisableVirtualization="True" Spacing="3" />
+                            </ui:FAItemsRepeater.Layout>
+                        </ui:FAItemsRepeater>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>

@@ -60,7 +60,7 @@
 							<Run Text="{ext:LocalizedString /Settings/General/Size/Text}" />
 							<Run Text="{Binding ThumbnailCacheSize, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
 						</TextBlock>
-						<ui:ProgressRing
+						<ui:FAProgressRing
 							Width="30" Height="30" Margin="0,0,10,0"
 							VerticalAlignment="Center" IsActive="True"
 							IsVisible="{Binding ProgressCache, Mode=OneWay}" />
@@ -78,7 +78,7 @@
 						<Button
 							ToolTip.Tip="{ext:LocalizedString /Tabs/Archives/Clear/ToolTipService/ToolTip}" Margin="10,0,0,0" Padding="8"
 							VerticalAlignment="Bottom" Click="ClearButton_Click">
-							<ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+							<ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
 						</Button>
 					</StackPanel>
 				</controls:ModernInput>

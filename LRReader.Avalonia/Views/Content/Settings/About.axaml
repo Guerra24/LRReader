@@ -17,7 +17,7 @@
 			<controls:ModernGroup>
 				<controls:ModernExpander Title="LRReader" IsExpanded="True">
 					<controls:ModernExpander.Icon>
-						<ui:ImageIcon Height="20" Width="20" Source="/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+						<ui:FAImageIcon Height="20" Width="20" Source="/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png" />
 					</controls:ModernExpander.Icon>
                     <controls:ModernExpander.Items>
 				        <Grid>
@@ -57,7 +57,7 @@
 					Command="{Binding OpenLinkCommand}"
 					CommandParameter="https://github.com/Guerra24/LRReader" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
-						<ui:ImageIcon Height="20" Width="20" Source="/Assets/Other/GitHub-dark.png" />
+						<ui:FAImageIcon Height="20" Width="20" Source="/Assets/Other/GitHub-dark.png" />
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 				<controls:ModernInput
@@ -65,7 +65,7 @@
 					Command="{Binding OpenLinkCommand}"
 					CommandParameter="https://github.com/sponsors/Guerra24" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
-						<ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB51;" FontSize="20" Foreground="#C72335" FontWeight="ExtraBold" />
+						<ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB51;" FontSize="20" Foreground="#C72335" FontWeight="ExtraBold" />
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 			</controls:ModernGroup>

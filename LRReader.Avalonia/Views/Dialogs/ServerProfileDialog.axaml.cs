@@ -1,11 +1,13 @@
-using Avalonia.Input;
+using FluentAvalonia.UI.Controls;
 using LRReader.Avalonia.Resources;
 using LRReader.Shared.Models;
 
 namespace LRReader.Avalonia.Views.Dialogs
 {
-	public partial class ServerProfileDialog : GenericDialog, ICreateProfileDialog
+	public partial class ServerProfileDialog : FAContentDialog, ICreateProfileDialog
 	{
+
+		protected override Type StyleKeyOverride => typeof(FAContentDialog);
 
 		private ResourceLoader lang;
 
@@ -28,7 +30,9 @@ namespace LRReader.Avalonia.Views.Dialogs
 		public string ApiKey { get => ProfileServerApiKey.Text!; set => ProfileServerApiKey.Text = value; }
 		public bool Integration { get; set; } // TODO
 
-		private void ProfileName_TextChanging(object? sender, TextInputEventArgs e)
+		public async Task<IDialogResult> ShowAsync(object root) => (IDialogResult)(int)await base.ShowAsync((TopLevel)root);
+
+		private void ProfileName_TextChanging(object? sender, TextChangingEventArgs e)
 		{
 			bool allow = true;
 
@@ -41,7 +45,7 @@ namespace LRReader.Avalonia.Views.Dialogs
 			IsPrimaryButtonEnabled = allow && ValidateServerAddress();
 		}
 
-		private void ProfileServerAddress_TextChanging(object? sender, TextInputEventArgs e)
+		private void ProfileServerAddress_TextChanging(object? sender, TextChangingEventArgs e)
 		{
 			bool allow = true;
 

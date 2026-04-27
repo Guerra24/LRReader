@@ -12,13 +12,13 @@ public partial class WebContent : ModernBasePage
 		InitializeComponent();
 	}
 
-	protected override void OnNavigatedTo(object? sender, NavigationEventArgs e)
+	protected override void OnNavigatedTo(object? sender, FANavigationEventArgs e)
 	{
 		base.OnNavigatedTo(sender, e);
 		WebView.Navigate(Service.Settings.Profile.ServerAddressBrowser + (string)Wrapper.Parameter!);
 	}
 
-	protected override void OnNavigatingFrom(object? sender, NavigatingCancelEventArgs e)
+	protected override void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 	{
 		base.OnNavigatingFrom(sender, e);
 	}

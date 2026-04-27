@@ -10,17 +10,17 @@ public class ModernBasePage : UserControl
 
 	public ModernBasePage()
 	{
-		AddHandler(Frame.NavigatedToEvent, OnNavigatedTo);
-		AddHandler(Frame.NavigatingFromEvent, OnNavigatingFrom);
+		AddHandler(FAFrame.NavigatedToEvent, OnNavigatedTo);
+		AddHandler(FAFrame.NavigatingFromEvent, OnNavigatingFrom);
 	}
 
-	protected virtual void OnNavigatedTo(object? sender, NavigationEventArgs e)
+	protected virtual void OnNavigatedTo(object? sender, FANavigationEventArgs e)
 	{
 		if (e.Parameter is ModernPageTabWrapper wrapper)
 			Wrapper = wrapper;
 	}
 
-	protected virtual void OnNavigatingFrom(object? sender, NavigatingCancelEventArgs e)
+	protected virtual void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 	{
 	}
 
@@ -31,6 +31,6 @@ public class ModernBasePage : UserControl
 		_navigating = true;*/
 		if (Parent == null)
 			return;
-		Wrapper.ModernPageTab.Navigate((ModernPageTabItem)((ModernInput)sender).Tag!, (int)((Frame)Parent).Tag!);
+		Wrapper.ModernPageTab.Navigate((ModernPageTabItem)((ModernInput)sender).Tag!, (int)((FAFrame)Parent).Tag!);
 	}
 }

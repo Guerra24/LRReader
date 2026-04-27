@@ -32,7 +32,7 @@
                         </MultiBinding>
                     </controls:ModernExpander.Description>
 					<controls:ModernExpander.Icon>
-						<ui:ImageIcon Height="20" Width="20" Source="/Assets/Other/LANraragi-dark.png" />
+						<ui:FAImageIcon Height="20" Width="20" Source="/Assets/Other/LANraragi-dark.png" />
 					</controls:ModernExpander.Icon>
                     <controls:ModernExpander.Items>
 					    <StackPanel>

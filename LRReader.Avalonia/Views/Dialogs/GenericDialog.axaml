@@ -1,38 +1,9 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
+﻿<ui:FAContentDialog xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
         mc:Ignorable="d"
-        x:Class="LRReader.Avalonia.Views.Dialogs.GenericDialog"
-        WindowStartupLocation="CenterOwner"
-        SizeToContent="WidthAndHeight"
-        CanResize="False"
-        MinWidth="320"
-        MaxWidth="548"
-        MaxHeight="756"
-        ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="NoChrome"
-        ExtendClientAreaTitleBarHeightHint="-1"
-        Icon="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="1" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel Background="{DynamicResource LayerFillColorAltBrush}">
-            <TextBlock x:Name="DialogTitleTextBlock" Margin="24,24,24,12" FontSize="20" FontWeight="SemiBold"/>
-            <ContentPresenter x:Name="ContentPresenter" Margin="24,0,24,24" x:FieldModifier="protected" />
-        </StackPanel>
-        <Border Grid.Row="1" Background="{DynamicResource CardStrokeColorDefaultBrush}"/>
-        <Grid Grid.Row="2" Margin="24">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="8" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="PrimaryButton" Classes="accent" Theme="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="PrimaryButton_Click" />
-            <Button x:Name="CloseButton" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="CloseButton_Click" />
-        </Grid>
-    </Grid>
-</Window>
+        DefaultButton="Primary"
+        x:Class="LRReader.Avalonia.Views.Dialogs.GenericDialog">
+</ui:FAContentDialog>

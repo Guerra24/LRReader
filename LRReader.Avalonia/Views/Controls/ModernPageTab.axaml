@@ -23,26 +23,26 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Click="GoBackMain" IsEnabled="{Binding $parent[local:ModernPageTab].MainBreadcrumbItems.Count, Mode=OneWay, Converter={StaticResource DoubleToObjectConverter}}" Theme="{StaticResource NavigationBackButtonNormalStyle}" />
-            <ui:BreadcrumbBar x:Name="MainBreadcrumb" Grid.Column="1" Margin="0,-3,0,0"
+            <ui:FABreadcrumbBar x:Name="MainBreadcrumb" Grid.Column="1" Margin="0,-3,0,0"
                               VerticalAlignment="Center" ItemClicked="MainBreadcrumb_ItemClicked"
                               ItemsSource="{Binding $parent[local:ModernPageTab].MainBreadcrumbItems}">
-                <ui:BreadcrumbBar.ItemTemplate>
+                <ui:FABreadcrumbBar.ItemTemplate>
                     <DataTemplate x:DataType="local:ModernPageTabItem">
-                        <ui:BreadcrumbBarItem Content="{Binding}">
-                            <ui:BreadcrumbBarItem.ContentTemplate>
+                        <ui:FABreadcrumbBarItem Content="{Binding}">
+                            <ui:FABreadcrumbBarItem.ContentTemplate>
                                 <DataTemplate x:DataType="local:ModernPageTabItem">
                                     <TextBlock Margin="10,0" Text="{Binding Title}" />
                                 </DataTemplate>
-                            </ui:BreadcrumbBarItem.ContentTemplate>
-                        </ui:BreadcrumbBarItem>
+                            </ui:FABreadcrumbBarItem.ContentTemplate>
+                        </ui:FABreadcrumbBarItem>
                     </DataTemplate>
-                </ui:BreadcrumbBar.ItemTemplate>
-            </ui:BreadcrumbBar>
+                </ui:FABreadcrumbBar.ItemTemplate>
+            </ui:FABreadcrumbBar>
         </Grid>
-        <ui:Frame x:Name="ContentMain" Grid.Row="1" IsNavigationStackEnabled="False">
-            <ui:Frame.Tag>
+        <ui:FAFrame x:Name="ContentMain" Grid.Row="1" IsNavigationStackEnabled="False">
+            <ui:FAFrame.Tag>
                 <x:Int32>0</x:Int32>
-            </ui:Frame.Tag>
-        </ui:Frame>
+            </ui:FAFrame.Tag>
+        </ui:FAFrame>
     </Grid>
 </UserControl>

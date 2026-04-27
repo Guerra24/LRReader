@@ -13,7 +13,7 @@
                 Header="{ext:LocalizedString Key=/Tabs/Settings/Tab/Header}"
                 Loaded="UserControl_Loaded">
     <controls:ModernTab.IconSource>
-        <ui:SymbolIconSource Symbol="Settings" />
+        <ui:FASymbolIconSource Symbol="Settings" />
     </controls:ModernTab.IconSource>
 
     <controls:ModernPageTab x:Name="ContentPage" Title="{ext:LocalizedString Key=/Settings/MainPage/Title}" Initial="settings:Main" />

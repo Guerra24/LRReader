@@ -62,7 +62,7 @@ public partial class ModernPageTab : UserControl, IDisposable
 		{
 			MainBreadcrumbItems.Remove(MainBreadcrumbItems.Last());
 			CurrentMainPage = MainBreadcrumbItems.Last();
-			ContentMain.Navigate(MainBreadcrumbItems.Last().Page, new ModernPageTabWrapper(this, CurrentMainPage.Parameter), new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromLeft, FromHorizontalOffset = 150 });
+			ContentMain.Navigate(MainBreadcrumbItems.Last().Page, new ModernPageTabWrapper(this, CurrentMainPage.Parameter), new FASlideNavigationTransitionInfo { Effect = FASlideNavigationTransitionEffect.FromLeft, FromHorizontalOffset = 150 });
 			return true;
 		}
 		return false;
@@ -89,7 +89,7 @@ public partial class ModernPageTab : UserControl, IDisposable
 		{
 			CurrentMainPage = item;
 			MainBreadcrumbItems.Add(item);
-			ContentMain.Navigate(item.Page, new ModernPageTabWrapper(this, item.Parameter), new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight, FromHorizontalOffset = 150 });
+			ContentMain.Navigate(item.Page, new ModernPageTabWrapper(this, item.Parameter), new FASlideNavigationTransitionInfo { Effect = FASlideNavigationTransitionEffect.FromRight, FromHorizontalOffset = 150 });
 		}
 		/*else if (TwoPane.Mode == TwoPaneViewMode.Wide && !item.Equals(CurrentExtraPage))
 		{
@@ -141,7 +141,7 @@ public partial class ModernPageTab : UserControl, IDisposable
 		}
 	}*/
 
-	private void MainBreadcrumb_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+	private void MainBreadcrumb_ItemClicked(FABreadcrumbBar sender, FABreadcrumbBarItemClickedEventArgs args)
 	{
 		if (args.Index < MainBreadcrumbItems.Count - 1)
 		{

@@ -1,4 +1,5 @@
-﻿using FluentAvalonia.UI.Media.Animation;
+﻿using Avalonia.Input.Platform;
+using FluentAvalonia.UI.Media.Animation;
 using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Resources;
 using LRReader.Avalonia.Views;
@@ -24,8 +25,8 @@ namespace LRReader.Avalonia.Services
 			MapPageToType<HostTabPage>(Pages.HostTab);
 			MapPageToType<LoadingPage>(Pages.Loading);
 
-			MapTransitionToType<SuppressNavigationTransitionInfo>(PagesTransition.None);
-			MapTransitionToType<DrillInNavigationTransitionInfo>(PagesTransition.DrillIn);
+			MapTransitionToType<FASuppressNavigationTransitionInfo>(PagesTransition.None);
+			MapTransitionToType<FADrillInNavigationTransitionInfo>(PagesTransition.DrillIn);
 		}
 
 		public override void Init()
@@ -64,14 +65,50 @@ namespace LRReader.Avalonia.Services
 
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null)
 		{
-			Root.FrameContent.Navigate(GetPage(page), parameter, CreateTransition<NavigationTransitionInfo>(transition));
+			Root.FrameContent.Navigate(GetPage(page), parameter, CreateTransition<FANavigationTransitionInfo>(transition));
+		}
+
+		public override async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[]? args)
+		{
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				var newDialog = CreateDialog<D>(dialog, args);
+				if (newDialog == null)
+					return IDialogResult.None;
+				return await newDialog.ShowAsync(TopLevel.GetTopLevel(Root)!);
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
+		}
+
+		public override async Task<IDialogResult> ShowDialog(IDialog dialog)
+		{
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				return await dialog.ShowAsync(TopLevel.GetTopLevel(Root)!);
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
 		}
 
 		public override async Task<IDialogResult> OpenGenericDialog(string title = "", string primarybutton = "", string secondarybutton = "", string closebutton = "", object? content = null)
 		{
-			var dialog = new GenericDialog();
-			dialog.SetData(title, primarybutton, secondarybutton, closebutton, content);
-			return await dialog.ShowAsync();
+			await DialogSemaphore.WaitAsync();
+			try
+			{
+				var dialog = new GenericDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
+				return (IDialogResult)(int)await dialog.ShowAsync(TopLevel.GetTopLevel(Root)!);
+			}
+			finally
+			{
+				DialogSemaphore.Release();
+			}
 		}
 
 		public override Task<bool> OpenInBrowser(Uri uri)

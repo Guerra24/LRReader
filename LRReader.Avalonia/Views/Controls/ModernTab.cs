@@ -3,7 +3,7 @@ using LRReader.Shared.Models;
 
 namespace LRReader.Avalonia.Views.Controls
 {
-	public class ModernTab : TabViewItem, ICustomTab
+	public class ModernTab : FATabViewItem, ICustomTab
 	{
 		protected override Type StyleKeyOverride => typeof(ModernTab);
 

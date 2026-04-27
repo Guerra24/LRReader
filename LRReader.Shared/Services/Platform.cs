@@ -58,34 +58,9 @@ namespace LRReader.Shared.Services
 
 		public Task<IDialogResult> OpenDialog(Dialog dialog, params object?[] args) => OpenDialog<IDialog>(dialog, args);
 
-		public async Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog
-		{
-			await DialogSemaphore.WaitAsync();
-			try
-			{
-				var newDialog = CreateDialog<D>(dialog, args);
-				if (newDialog == null)
-					return IDialogResult.None;
-				return await newDialog.ShowAsync();
-			}
-			finally
-			{
-				DialogSemaphore.Release();
-			}
-		}
+		public abstract Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog;
 
-		public async Task<IDialogResult> ShowDialog(IDialog dialog)
-		{
-			await DialogSemaphore.WaitAsync();
-			try
-			{
-				return await dialog.ShowAsync();
-			}
-			finally
-			{
-				DialogSemaphore.Release();
-			}
-		}
+		public abstract Task<IDialogResult> ShowDialog(IDialog dialog);
 
 		public D CreateDialog<D>(Dialog dialog, params object?[]? args) where D : IDialog => (D)Activator.CreateInstance(Dialogs[dialog].Type, args)!;
 
@@ -138,6 +113,10 @@ namespace LRReader.Shared.Services
 		public override void GoToPage(Pages page, PagesTransition transition, object? parameter = null) { }
 
 		public override Task<bool> CheckAppInstalled(string package) => Task.FromResult(false);
+
+		public override Task<IDialogResult> OpenDialog<D>(Dialog dialog, params object?[]? args) => Task.FromResult(IDialogResult.None);
+
+		public override Task<IDialogResult> ShowDialog(IDialog dialog) => Task.FromResult(IDialogResult.None);
 
 #if WINDOWS_UWP
 		public override bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion) => false;

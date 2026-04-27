@@ -9,7 +9,11 @@
 
 	public interface IDialog
 	{
+#if WINDOWS_UWP
 		Task<IDialogResult> ShowAsync();
+#else
+		Task<IDialogResult> ShowAsync(object root);
+#endif
 	}
 
 	public interface ICreateCategoryDialog : IDialog

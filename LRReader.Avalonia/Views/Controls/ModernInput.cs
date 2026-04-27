@@ -164,7 +164,7 @@ namespace LRReader.Avalonia.Views.Controls
 			}
 		}
 
-		protected override void OnLostFocus(RoutedEventArgs e)
+		protected override void OnLostFocus(FocusChangedEventArgs e)
 		{
 			base.OnLostFocus(e);
 			//if (IsButton && IsEnabled)
