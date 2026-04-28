@@ -56,7 +56,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.260416-build.2580" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.260416-build.2580" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.260415-build.2574" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250828-build.2223" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.251219" />
