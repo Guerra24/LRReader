@@ -16,8 +16,10 @@ namespace LRReader.UWP.Views.Dialogs
 			this.InitializeComponent();
 			RequestedTheme = Service.Platform.Theme.ToXamlTheme();
 			Title = title;
-			Data = new CategoryArchiveViewModel(archiveID);
-			Data.SelectedCategories = CategoriesList.SelectedItems;
+			Data = new CategoryArchiveViewModel(archiveID)
+			{
+				SelectedCategories = CategoriesList.SelectedItems
+			};
 		}
 
 		private async void ContentDialog_Loaded(object sender, RoutedEventArgs e)

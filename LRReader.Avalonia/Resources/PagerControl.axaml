@@ -1,0 +1,139 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="using:FluentAvalonia.UI.Controls"
+                    xmlns:controls="using:LRReader.Avalonia.Views.Controls">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <StaticResource x:Key="PagerControlSelectionIndicatorForeground" ResourceKey="AccentFillColorDefaultBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonBackgroundDisabled" ResourceKey="SubtleFillColorDisabledBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonForegroundPressed" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Dark">
+            <StaticResource x:Key="PagerControlSelectionIndicatorForeground" ResourceKey="AccentFillColorDefaultBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonBackgroundDisabled" ResourceKey="SubtleFillColorDisabledBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonForegroundPressed" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="PagerControlPageNavigationButtonForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <x:Double x:Key="PagerControlNumberPanelButtonWidth">32</x:Double>
+
+    <ControlTheme x:Key="PagerControlPageNavigationButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Root" Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+
+                        <ui:FAFontIcon x:Name="Content"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       Glyph="{TemplateBinding Content}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       AutomationProperties.AccessibilityView="Raw" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource PagerControlPageNavigationButtonBackgroundPointerOver}" />
+            <Style Selector="^ ui|FAFontIcon#Content">
+                <Setter Property="Foreground" Value="{DynamicResource PagerControlPageNavigationButtonForegroundPointerOver}" />
+            </Style>
+        </Style>
+        <Style Selector="^:focus /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource PagerControlPageNavigationButtonBackgroundPressed}" />
+            <Style Selector="^ ui|FAFontIcon#Content">
+                <Setter Property="Foreground" Value="{DynamicResource PagerControlPageNavigationButtonForegroundPressed}" />
+            </Style>
+        </Style>
+        <Style Selector="^:disabled /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource PagerControlPageNavigationButtonBackgroundDisabled}" />
+            <Style Selector="^ ui|FAFontIcon#Content">
+                <Setter Property="Foreground" Value="{DynamicResource PagerControlPageNavigationButtonForegroundDisabled}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:PagerControl}" TargetType="controls:PagerControl">
+        <Setter Property="AutomationProperties.LandmarkType" Value="Navigation"/>
+        <Setter Property="FirstButtonStyle" Value="{StaticResource PagerControlPageNavigationButtonStyle}"/>
+        <Setter Property="PreviousButtonStyle" Value="{StaticResource PagerControlPageNavigationButtonStyle}"/>
+        <Setter Property="NextButtonStyle" Value="{StaticResource PagerControlPageNavigationButtonStyle}"/>
+        <Setter Property="LastButtonStyle" Value="{StaticResource PagerControlPageNavigationButtonStyle}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:PagerControl" >
+                    <Border x:Name="RootGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="FirstPageButton"
+                                        ToolTip.Tip="{Binding ElementName=FirstPageButton, Path=(AutomationProperties.Name)}"
+                                        Theme="{TemplateBinding FirstButtonStyle}"
+                                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                        Content="&#xE892;"/>
+                                <Button x:Name="PreviousPageButton"
+                                        ToolTip.Tip="{Binding ElementName=PreviousPageButton, Path=(AutomationProperties.Name)}"
+                                        Theme="{TemplateBinding PreviousButtonStyle}"
+                                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                        Content="&#xE76B;"/>
+                            </StackPanel>
+
+                            <StackPanel x:Name="BoxPanels" Orientation="Horizontal" Grid.Column="1">
+                                <TextBlock Text="{TemplateBinding PrefixText}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <!--ComboBox Display-->
+                                <ComboBox x:Name="ComboBoxDisplay" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Pages}"/>
+                                <TextBlock x:Name="SuffixTextLabel" Text="{TemplateBinding SuffixText}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <TextBlock x:Name="TotalNumberOfPagesLabel" VerticalAlignment="Center" Margin="5,0,5,0"
+                                           Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NumberOfPages, Mode=OneWay}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Left">
+                                <Button x:Name="NextPageButton"
+                                        ToolTip.Tip="{Binding ElementName=NextPageButton, Path=(AutomationProperties.Name)}"
+                                        Theme="{TemplateBinding NextButtonStyle}"
+                                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                        Content="&#xE76C;" />
+                                <Button x:Name="LastPageButton"
+                                        ToolTip.Tip="{Binding ElementName=LastPageButton, Path=(AutomationProperties.Name)}"
+                                        Theme="{TemplateBinding LastButtonStyle}"
+                                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                        Content="&#xE893;"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

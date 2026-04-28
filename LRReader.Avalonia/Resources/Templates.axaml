@@ -6,12 +6,87 @@
                     xmlns:controls="using:LRReader.Avalonia.Views.Controls"
                     xmlns:services="using:LRReader.Shared.Services">
 
+    <ControlTheme x:Key="{x:Type items:ArchiveImage}" BasedOn="{StaticResource DefaultArchiveImage}" TargetType="items:ArchiveImage" />
+
+	<ControlTheme x:Key="DefaultArchiveImage" TargetType="items:ArchiveImage">
+		<Setter Property="Width" Value="200" />
+		<Setter Property="Height" Value="275" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="items:ArchiveImage">
+                    <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
+                        BoxShadow="0 2 8 2 #26000000">
+					    <Grid x:Name="Root" Background="Transparent">
+						    <Grid.ContextFlyout>
+							    <MenuFlyout>
+								    <MenuItem Header="{ext:LocalizedString Key=/Items/ArchiveImage/Reload/Text}" Command="{Binding $parent[items:ArchiveImage].Data.ReloadCommand}" CommandParameter="{x:True}" Icon="Refresh" />
+							    </MenuFlyout>
+						    </Grid.ContextFlyout>
+						    <Border HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
+							    <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:ArchiveImage].Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
+						    </Border>
+						    <Grid IsVisible="{Binding $parent[items:ArchiveImage].Data.MissingImage, Mode=OneWay}">
+							    <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+						    </Grid>
+						    <Grid
+							    x:Name="Overlay" Margin="4" HorizontalAlignment="Stretch"
+							    VerticalAlignment="Bottom">
+                                <Grid.Transitions>
+                                    <Transitions>
+                                        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15">
+                                            <TransformOperationsTransition.Easing>
+                                                <QuadraticEaseOut />
+                                            </TransformOperationsTransition.Easing>
+                                        </TransformOperationsTransition>
+                                    </Transitions>
+                                </Grid.Transitions>
+                                <Border HorizontalAlignment="Left" Theme="{StaticResource ItemOverlayStackPanel}" Padding="6,2" IsVisible="{Binding $parent[items:ArchiveImage].Data.ShowExtraDetails, Mode=OneWay}">
+							        <StackPanel Orientation="Horizontal" Spacing="4">
+								        <TextBlock
+									        Grid.Column="1" FontSize="16"
+									        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+									        Text="{Binding $parent[items:ArchiveImage].Data.Resolution, Mode=OneWay}" />
+								        <TextBlock FontSize="16" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding $parent[items:ArchiveImage].Data.Format, Mode=OneWay}" />
+							        </StackPanel>
+                                </Border>
+                                <Border HorizontalAlignment="Right" Theme="{StaticResource ItemOverlayStackPanel}" IsVisible="{Binding !$parent[items:ArchiveImage].Data.HideOverlay, Mode=OneWay}">
+							        <StackPanel Orientation="Horizontal">
+								        <TextBlock
+									        Padding="6,2" FontSize="16"
+									        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+									        Text="{Binding $parent[items:ArchiveImage].Data.Page, Mode=OneWay}" />
+							        </StackPanel>
+                                </Border>
+						    </Grid>
+					    </Grid>
+                    </Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+        <!-- TODO -->
+        <Style Selector="^:hidden /template/ Grid#Overlay">
+            <!--<Setter Property="IsVisible" Value="False" />-->
+            <Setter Property="RenderTransform" Value="translate(0px, 32px)" />
+        </Style>
+        <Style Selector="^:pointerover /template/ Grid#Overlay">
+            <!--<Setter Property="IsVisible" Value="True" />-->
+            <Setter Property="RenderTransform" Value="translate(0px, 0px)" />
+        </Style>
+	</ControlTheme>
+
     <ControlTheme x:Key="ItemOverlayGrid" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     </ControlTheme>
+
+    <ControlTheme x:Key="ItemOverlayStackPanel" TargetType="Border">
+		<Setter Property="Background" Value="{DynamicResource GridOverGridBackground}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource SurfaceStrokeColorFlyoutBrush}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+	</ControlTheme>
 
     <ControlTheme x:Key="{x:Type items:GenericArchiveItem}" BasedOn="{StaticResource DefaultArchiveItem}" TargetType="items:GenericArchiveItem" />
 
@@ -23,7 +98,7 @@
             <ControlTemplate TargetType="items:GenericArchiveItem">
                 <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
                         BoxShadow="0 2 8 2 #26000000">
-                    <Grid x:Name="Root">
+                    <Grid x:Name="Root" Background="Transparent">
                         <Grid.ContextFlyout>
                             <MenuFlyout>
                                 <MenuItem Name="OpenTabMenuItem"
@@ -131,6 +206,16 @@
         </Setter>
     </ControlTheme>
 
+    <!--<DataTemplate x:Key="CompactArchive">
+    <items:GenericArchiveItem Theme="{StaticResource CompactArchiveItem}" />
+    </DataTemplate>-->
+    <DataTemplate x:Key="FullArchive">
+        <items:GenericArchiveItem />
+    </DataTemplate>
+    <!--<DataTemplate x:Key="ThumbnailOnlyArchive">
+    <items:GenericArchiveItem Theme="{StaticResource ThumbnailOnlyArchiveItem}" />
+    </DataTemplate>-->
+
     <ControlTheme x:Key="{x:Type controls:ModernInput}" BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput" />
 
     <ControlTheme x:Key="GroupedModernInputStyle" BasedOn="{StaticResource DefaultModernInputStyle}" TargetType="controls:ModernInput">
@@ -146,11 +231,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ModernInput">
                     <Border Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BackgroundSizing="InnerBorderEdge"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+                            Background="{TemplateBinding Background}"
+                            BackgroundSizing="InnerBorderEdge"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="Background" Duration="0:0:0.083" />
@@ -172,37 +257,33 @@
                                 <ColumnDefinition MaxWidth="400" />
                             </Grid.ColumnDefinitions>
 
-                            <ui:FAFontIcon
-                                x:Name="LeftFontIcon" Margin="0,0,16,0"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                FontSize="20"
-                                Glyph="{TemplateBinding Glyph}"
-                                IsVisible="{Binding Glyph, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-                            <ContentPresenter
-                                x:Name="LeftIcon" Margin="0,0,16,0"
-                                Content="{TemplateBinding Icon}"
-                                IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+                            <ui:FAFontIcon x:Name="LeftFontIcon" Margin="0,0,16,0"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                           FontSize="20"
+                                           Glyph="{TemplateBinding Glyph}"
+                                           IsVisible="{Binding Glyph, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            <ContentPresenter x:Name="LeftIcon" Margin="0,0,16,0"
+                                              Content="{TemplateBinding Icon}"
+                                              IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
                             <StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
                                 <TextBlock x:Name="TitleBlock" Text="{TemplateBinding Title}" />
                                 <TextBlock
-                                    x:Name="DescriptionBlock" FontSize="12"
-                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                    Text="{TemplateBinding Description}"
-                                    TextWrapping="WrapWithOverflow"
-                                    IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                                x:Name="DescriptionBlock" FontSize="12"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{TemplateBinding Description}"
+                                TextWrapping="WrapWithOverflow"
+                                IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
                             </StackPanel>
-                            <ContentPresenter
-                                Grid.Column="2" Margin="0,0,16,0"
-                                HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Content}" />
-                            <ui:FAFontIcon
-                                x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
-                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                FontSize="14"
-                                Glyph="{TemplateBinding RightGlyph}"
-                                IsVisible="{TemplateBinding IsButton}" />
+                            <ContentPresenter Grid.Column="2" Margin="0,0,16,0"
+                                              HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}" />
+                            <ui:FAFontIcon x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                           FontSize="14"
+                                           Glyph="{TemplateBinding RightGlyph}"
+                                           IsVisible="{TemplateBinding IsButton}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -250,12 +331,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ModernInput">
                     <Border x:Name="Root"
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BackgroundSizing="InnerBorderEdge"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BackgroundSizing="InnerBorderEdge"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="Background" Duration="0:0:0.083" />
@@ -276,37 +357,32 @@
                                 <ColumnDefinition MaxWidth="400" Width="{TemplateBinding RightColumnWidth}" />
                             </Grid.ColumnDefinitions>
 
-                            <ui:FAFontIcon
-                                x:Name="LeftFontIcon" Margin="0,0,16,0"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                FontSize="20"
-                                Glyph="{TemplateBinding Glyph}"
-                                IsVisible="{Binding Glyph, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
-                            <ContentPresenter
-                                x:Name="LeftIcon" Margin="0,0,16,0"
-                                Content="{TemplateBinding Icon}"
-                                IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
+                            <ui:FAFontIcon x:Name="LeftFontIcon" Margin="0,0,16,0"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                           FontSize="20"
+                                           Glyph="{TemplateBinding Glyph}"
+                                           IsVisible="{Binding Glyph, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            <ContentPresenter x:Name="LeftIcon" Margin="0,0,16,0"
+                                              Content="{TemplateBinding Icon}"
+                                              IsVisible="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyObjectToObjectConverter}}" />
                             <StackPanel Grid.Column="1" Margin="{TemplateBinding TextMargin}" VerticalAlignment="Center">
                                 <TextBlock x:Name="TitleBlock" Text="{TemplateBinding Title}" />
-                                <TextBlock
-                                    x:Name="DescriptionBlock" FontSize="12"
-                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                    Text="{TemplateBinding Description}"
-                                    TextWrapping="WrapWithOverflow"
-                                    IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                                <TextBlock x:Name="DescriptionBlock" FontSize="12"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           Text="{TemplateBinding Description}"
+                                           TextWrapping="WrapWithOverflow"
+                                           IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
                             </StackPanel>
-                            <ContentPresenter
-                                Grid.Column="2" Margin="0,0,16,0"
-                                HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Content}" />
-                            <ui:FAFontIcon
-                                x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
-                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                FontSize="14"
-                                Glyph="{TemplateBinding RightGlyph}"
-                                IsVisible="{TemplateBinding IsButton}" />
+                            <ContentPresenter Grid.Column="2" Margin="0,0,16,0"
+                                              HorizontalAlignment="{TemplateBinding InputHorizontalAlignment}"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}" />
+                            <ui:FAFontIcon x:Name="RightFontIcon" Grid.Column="2" Margin="0,0,16,0"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                           FontSize="14"
+                                           Glyph="{TemplateBinding RightGlyph}"
+                                           IsVisible="{TemplateBinding IsButton}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -343,20 +419,20 @@
         <Setter Property="Margin" Value="0,0,0,32" />
         <Setter Property="IsTabStop" Value="False" />
         <!--<Setter Property="Transitions">
-            <Setter.Value>
-                <TransitionCollection>
-                    <RepositionThemeTransition IsStaggeringEnabled="False" />
-                </TransitionCollection>
-            </Setter.Value>
+        <Setter.Value>
+        <TransitionCollection>
+        <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </TransitionCollection>
+        </Setter.Value>
         </Setter>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ModernGroup">
                     <StackPanel>
                         <TextBlock
-                            Margin="1,0,0,8" FontWeight="Bold"
-                            Text="{TemplateBinding Title}"
-                            IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                        Margin="1,0,0,8" FontWeight="Bold"
+                        Text="{TemplateBinding Title}"
+                        IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
                         <ui:FAItemsRepeater ItemsSource="{TemplateBinding Items}">
                             <ui:FAItemsRepeater.Layout>
                                 <ui:FAStackLayout DisableVirtualization="True" Spacing="3" />

@@ -17,7 +17,6 @@ namespace LRReader.Shared.ViewModels
 	{
 		private readonly IDispatcherService Dispatcher;
 		private readonly ImagesService Images;
-		private readonly EventsService Events;
 
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("CanGoNext")]
@@ -29,8 +28,8 @@ namespace LRReader.Shared.ViewModels
 		private bool _loadingImages = false;
 		[ObservableProperty]
 		private bool _loadingIndeterminate = false;
-		public ObservableCollection<ImagePageSet> ArchiveImages = new ObservableCollection<ImagePageSet>();
-		public ObservableCollection<ReaderImageSet> ArchiveImagesReader = new ObservableCollection<ReaderImageSet>();
+		public ObservableCollection<ImagePageSet> ArchiveImages { get; } = new ObservableCollection<ImagePageSet>();
+		public ObservableCollection<ReaderImageSet> ArchiveImagesReader { get; } = new ObservableCollection<ReaderImageSet>();
 		private bool _showReader = false;
 		public bool ShowReader
 		{
@@ -190,12 +189,10 @@ namespace LRReader.Shared.ViewModels
 			ApiService api,
 			PlatformService platform,
 			TabsService tabs,
-			ImagesService images,
-			EventsService events) : base(settings, archives, api, platform, tabs)
+			ImagesService images) : base(settings, archives, api, platform, tabs)
 		{
 			Dispatcher = dispatcher;
 			Images = images;
-			Events = events;
 			_zoomValue = Settings.DefaultZoom;
 			_readRTL = Settings.ReadRTL;
 			_twoPages = Settings.TwoPages;

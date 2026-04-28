@@ -1,0 +1,13 @@
+<ui:FAContentDialog xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
+             xmlns:local="using:LRReader.Avalonia.Views.Dialogs"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             PrimaryButtonText="Ok"
+             DefaultButton="Primary"
+             x:Class="LRReader.Avalonia.Views.Dialogs.MarkdownDialog">
+  <md:MarkdownScrollViewer Markdown="{Binding $parent[local:MarkdownDialog].Text}" />
+</ui:FAContentDialog>

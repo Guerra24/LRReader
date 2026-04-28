@@ -1,5 +1,6 @@
 ﻿using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Rendering.Composition;
 using Avalonia.Styling;
 using FluentAvalonia.UI.Controls;
 using LRReader.Avalonia.Resources;
@@ -7,6 +8,41 @@ using LRReader.Shared.Services;
 using System.Text.RegularExpressions;
 
 namespace LRReader.Avalonia.Extensions;
+
+public static class Animations
+{
+
+	//private static AnimationBuilder FadeIn250 = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(250), easingMode: EasingMode.EaseIn);
+	//private static AnimationBuilder FadeOut250 = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(250), easingMode: EasingMode.EaseOut);
+
+	/*public static void FadeIn(this UIElement element) => FadeIn250.Start(element);
+	public static void FadeOut(this UIElement element) => FadeOut250.Start(element);
+	public static Task FadeInAsync(this UIElement element) => FadeIn250.StartAsync(element);
+	public static Task FadeOutAsync(this UIElement element) => FadeOut250.StartAsync(element);*/
+
+	public static void SetVisualOpacity(this Visual element, float opacity) => ElementComposition.GetElementVisual(element)!.Opacity = opacity;
+
+	//public static void SetVisualTranslation(this UIElement element, Vector3 transform) => ElementCompositionPreview.GetElementVisual(element).TransformMatrix = Matrix4x4.CreateTranslation(transform);
+
+	/*public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
+	public static Task StartAsync(this UIElement element, AnimationBuilder animation) => animation.StartAsync(element);*/
+
+}
+
+public static class AppExtensions
+{
+	public static ThemeVariant ToXamlTheme(this AppTheme theme)
+	{
+		return theme switch
+		{
+			AppTheme.System => ThemeVariant.Default,
+			AppTheme.Dark => ThemeVariant.Dark,
+			AppTheme.Light => ThemeVariant.Light,
+			_ => throw new NotImplementedException()
+		};
+	}
+
+}
 
 public sealed partial class LocalizedString : MarkupExtension
 {
@@ -40,21 +76,6 @@ public sealed class EnumValue : MarkupExtension
 	{
 		return Enum.Parse(Type, Member);
 	}
-}
-
-public static class AppExtensions
-{
-	public static ThemeVariant ToXamlTheme(this AppTheme theme)
-	{
-		return theme switch
-		{
-			AppTheme.System => ThemeVariant.Default,
-			AppTheme.Dark => ThemeVariant.Dark,
-			AppTheme.Light => ThemeVariant.Light,
-			_ => throw new NotImplementedException()
-		};
-	}
-
 }
 
 public class ButtonExtension : AvaloniaObject

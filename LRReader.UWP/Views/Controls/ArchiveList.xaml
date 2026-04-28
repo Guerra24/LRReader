@@ -76,7 +76,7 @@
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 									<Button
 										x:Uid="/Tabs/Archives/Random" Width="150" Margin="10,0,0,0"
-										Click="{x:Bind Data.OpenRandom}" Visibility="{x:Bind RandomVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+										Command="{x:Bind Data.OpenRandomCommand}" Visibility="{x:Bind RandomVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 								</StackPanel>
 								<StackPanel
@@ -125,7 +125,6 @@
 									Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Center"
 									DisplayMode="ComboBox"
 									IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
-									IsTabStop="False"
 									NumberOfPages="{x:Bind Data.TotalPages, Mode=OneWay}"
 									SelectedIndexChanged="PagerControl_SelectedIndexChanged"
 									SelectedPageIndex="{x:Bind Data.Page, Mode=OneWay}" />

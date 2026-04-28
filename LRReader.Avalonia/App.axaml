@@ -12,6 +12,8 @@
                 <ResourceInclude Source="/Resources/Converters.axaml" />
                 <ResourceInclude Source="/Resources/Templates.axaml" />
                 <ResourceInclude Source="/Resources/AvaloniaTemplates.axaml" />
+                <ResourceInclude Source="/Resources/PagerControl.axaml" />
+                <ResourceInclude Source="/Resources/ThemeDictionary.axaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" />
             <SolidColorBrush x:Key="CustomReaderBackground" Color="Black" />

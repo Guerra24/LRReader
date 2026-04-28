@@ -4,18 +4,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.Avalonia.Views.Tabs.Content
 {
-	public partial class Archives : UserControl
+	public partial class ArchivesTabContent : UserControl
 	{
 
 		private ArchivesPageViewModel Data;
 
-		public Archives()
+		public ArchivesTabContent()
 		{
 			InitializeComponent();
 			Data = Service.Services.GetRequiredService<ArchivesPageViewModel>();
 		}
 
-		//public async Task Refresh() => await ArchiveList.Refresh();
+		public async Task Refresh() => await ArchiveList.Refresh();
 
 		private async Task ArchiveList_OnRefresh()
 		{

@@ -53,12 +53,12 @@ namespace LRReader.Shared.ViewModels
 			set => SetProperty(ref _controlsEnabled, value);
 		}
 		protected bool _internalLoadingArchives;
-		public ObservableCollection<string> Suggestions = new();
-		public ObservableCollection<string> SortBy = new();
+		public ObservableCollection<string> Suggestions { get; } = new();
+		public ObservableCollection<string> SortBy { get; } = new();
 		[ObservableProperty]
 		private int _sortByIndex = -1;
 		public Order OrderBy = Order.Ascending;
-		public ObservableCollection<string> SuggestedTags = new();
+		public ObservableCollection<string> SuggestedTags { get; } = new();
 
 		[ObservableProperty]
 		private ArchiveStyle _archiveStyle;
@@ -148,7 +148,8 @@ namespace LRReader.Shared.ViewModels
 			_internalLoadingArchives = false;
 		}
 
-		public void OpenRandom()
+		[RelayCommand]
+		private void OpenRandom()
 		{
 			var list = Archives.Archives;
 			if (list.Count <= 1)

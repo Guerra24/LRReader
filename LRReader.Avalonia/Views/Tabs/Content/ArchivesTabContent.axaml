@@ -8,7 +8,7 @@
              xmlns:items="using:LRReader.Avalonia.Views.Items"
              xmlns:controls="using:LRReader.Avalonia.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="LRReader.Avalonia.Views.Tabs.Content.Archives">
+             x:Class="LRReader.Avalonia.Views.Tabs.Content.ArchivesTabContent">
 
-    <controls:ArchiveList x:Name="ArchiveList" OnRefresh="ArchiveList_OnRefresh" OnLoad="ArchiveList_OnLoad" />
+    <controls:ArchiveList x:Name="ArchiveList" ItemDataTemplate="{StaticResource FullArchive}" OnRefresh="ArchiveList_OnRefresh" OnLoad="ArchiveList_OnLoad" />
 </UserControl>

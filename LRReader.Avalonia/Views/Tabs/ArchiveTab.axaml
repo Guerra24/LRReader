@@ -1,0 +1,27 @@
+<controls:ModernTab xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             IconSource="{Binding #TabContent.Data.((ui:FAIconSource)Icon), Mode=OneWay}"
+	         ToolTip.Tip="{Binding #TabContent.Data.Archive.title, Mode=OneWay}"
+             x:Class="LRReader.Avalonia.Views.Tabs.ArchiveTab">
+    <ui:FATabViewItem.Header>
+        <Grid MaxWidth="200">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{Binding #TabContent.Data.Archive.title, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+			<TextBlock IsVisible="{Binding #TabContent.Data.ShowReader, Mode=OneWay}" Grid.Column="1">
+				<Run Text=" " />(<Run Text="{Binding #TabContent.Data.ReaderProgress, Mode=OneWay}" />/<Run Text="{Binding #TabContent.Data.Pages, Mode=OneWay}" />)
+			</TextBlock>
+		</Grid>
+    </ui:FATabViewItem.Header>
+
+    <content:ArchiveTabContent x:Name="TabContent" />
+</controls:ModernTab>

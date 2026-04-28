@@ -4,27 +4,131 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:items="using:LRReader.Avalonia.Views.Items"
              xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:local="using:LRReader.Avalonia.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LRReader.Avalonia.Views.Controls.ArchiveList"
              x:DataType="vm:SearchResultsViewModel"
              Loaded="UserControl_Loaded"
              DataContext="{ReflectionBinding SearchResultsInstance, Source={StaticResource Locator}}">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsRepeater ItemsSource="{Binding ArchiveList}" Margin="0,10,0,10">
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate>
-                        <items:GenericArchiveItem />
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-                <ItemsRepeater.Layout>
-                    <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
-                </ItemsRepeater.Layout>
-            </ItemsRepeater>
-        </ScrollViewer>
-        <!--<Button Content="{loc:LocalizedString Key=/Generic/RetryBtn/Content}"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        IsVisible="{Binding RefreshOnErrorButton, Mode=OneWay}"/>-->
+        <Grid.KeyBindings>
+            <KeyBinding Gesture="F5" Command="{Binding $parent[local:ArchiveList].RefreshCommand}" />
+        </Grid.KeyBindings>
+        <RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,10,0,10">
+                    <!-- Header -->
+                    <Grid Margin="0,10,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <AutoCompleteBox x:Name="SearchBox" PlaceholderText="{ext:LocalizedString /Tabs/Archives/Search/PlaceholderText}" MinWidth="300"
+                                         HorizontalAlignment="Center"
+                                         IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+                                         AsyncPopulator="SearchBox_AsyncPopulator"
+                                         TextChanged="SearchTextChanged"
+                                         MaxDropDownHeight="400">
+                            <AutoCompleteBox.InnerRightContent>
+                                <StackPanel Orientation="Horizontal" Spacing="2">
+                                    <Button Click="ClearSearch_Click" Padding="4">
+                                        <ui:FASymbolIcon Symbol="Clear" />
+                                    </Button>
+                                    <Button Click="SearchChanged_Click" Padding="4">
+                                        <ui:FASymbolIcon Symbol="Find" />
+                                    </Button>
+                                </StackPanel>
+                            </AutoCompleteBox.InnerRightContent>
+                        </AutoCompleteBox>
+                        <!--QuerySubmitted="SearchQuerySubmitted"-->
+                        <!--<labs:TokenView
+                        x:Name="SuggestedTags" Grid.Row="1" Margin="10,10,10,0"
+                        IsWrapped="True" SelectionMode="Multiple" SelectionChanged="SuggestedTags_SelectionChanged"
+                        ItemsSource="{Binding SuggestedTags, Mode=OneWay}" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+                        x:Load="{x:Bind services:Service.Settings.ShowSuggestedTags, Mode=OneWay}">
+                        <labs:TokenView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                        <TextBlock Text="{x:Bind}" Style="{StaticResource CaptionTextBlockStyle}" />
+                        </DataTemplate>
+                        </labs:TokenView.ItemTemplate>
+                        </labs:TokenView>-->
+                        <StackPanel Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
+                            <ToggleButton Content="{ext:LocalizedString /Tabs/Archives/Untagged/Content}" Width="150"
+                                          Click="FilterToggle_Click"
+                                          IsChecked="{Binding UntaggedOnly, Mode=TwoWay}"
+                                          IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+                            <ToggleButton Content="{ext:LocalizedString /Tabs/Archives/New/Content}" Width="150" Margin="10,0,0,0"
+                                          Click="FilterToggle_Click"
+                                          IsChecked="{Binding NewOnly, Mode=TwoWay}"
+                                          IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+                            <Button Content="{ext:LocalizedString /Tabs/Archives/Random/Content}"  Width="150" Margin="10,0,0,0"
+                                    Command="{Binding OpenRandomCommand}" IsVisible="{Binding $parent[local:ArchiveList].RandomVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
+                                    Orientation="Horizontal" Spacing="10">
+                            <Button ToolTip.Tip="{ext:LocalizedString /Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" IsVisible="{Binding $parent[local:ArchiveList].ArchiveStyleButtonVisibility, Mode=OneWay}">
+                                <!--<Button.Flyout>
+                                <MenuFlyout>
+                                <muxc:RadioMenuFlyoutItem IsChecked="{Binding ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Default}" GroupName="{x:Bind random}" Command="{Binding ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=Default}" Text="{ext:LocalizedString /Settings/General/ArchiveStyle/Default}" />
+                                <muxc:RadioMenuFlyoutItem IsChecked="{Binding ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=ThumbnailOnly}" GroupName="{x:Bind random}" Command="{Binding ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=ThumbnailOnly}" Text="{ext:LocalizedString /Settings/General/ArchiveStyle/ThumbnailOnly}" />
+                                <muxc:RadioMenuFlyoutItem IsChecked="{Binding ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Compact}" GroupName="{x:Bind random}" Command="{Binding ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=Compact}" Text="{ext:LocalizedString /Settings/General/ArchiveStyle/Compact}" />
+                                </MenuFlyout>
+                                </Button.Flyout>-->
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xECA5;" />
+                            </Button>
+                            <Button ToolTip.Tip="{ext:LocalizedString /Tabs/Archives/Order/ToolTipService/ToolTip}" Padding="8"
+                                    IsEnabled="{Binding ControlsEnabled, Mode=OneWay}">
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuItem x:Name="AscFlyoutItem" Header="{ext:LocalizedString /Tabs/Archives/OrderAsc/Text}" Click="OrderBy_Click"
+                                                  Tag="Ascending" />
+                                        <MenuItem x:Name="DesFlyoutItem" Header="{ext:LocalizedString /Tabs/Archives/OrderDesc/Text}" Click="OrderBy_Click"
+                                                  Tag="Descending" />
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE8CB;" />
+                            </Button>
+                            <ComboBox PlaceholderText="{ext:LocalizedString /Tabs/Archives/SortBy/PlaceholderText}" MinWidth="150"
+                                      IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+                                      ItemsSource="{Binding SortBy, Mode=OneWay}"
+                                      SelectedIndex="{Binding SortByIndex, Mode=TwoWay}"
+                                      SelectionChanged="SortBy_SelectionChanged" />
+                            <Button ToolTip.Tip="{ext:LocalizedString /Tabs/Archives/Clear/ToolTipService/ToolTip}" Padding="8"
+                                    Click="ClearButton_Click"
+                                    IsEnabled="{Binding ControlsEnabled, Mode=OneWay}">
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
+                            </Button>
+                            <Border Width="32" IsVisible="{Binding $parent[local:ArchiveList].ArchiveStyleButtonVisibility, Mode=OneWay}" />
+                        </StackPanel>
+                        <controls:PagerControl Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Center"
+                                               IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+                                               NumberOfPages="{Binding TotalPages, Mode=OneWay}"
+                                               SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+                                               SelectedPageIndex="{Binding Page, Mode=OneWay}" />
+                    </Grid>
+                    <!-- Content -->
+                    <ItemsRepeater x:Name="ArchivesGrid" ItemsSource="{Binding ArchiveList}">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
+                        </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                    <!-- Footer -->
+                    <controls:PagerControl Margin="0,10,0,0" HorizontalAlignment="Center"
+                                           IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+                                           NumberOfPages="{Binding TotalPages, Mode=OneWay}"
+                                           SelectedIndexChanged="PagerControl_SelectedIndexChanged"
+                                           SelectedPageIndex="{Binding Page, Mode=OneWay}" />
+                </StackPanel>
+            </ScrollViewer>
+        </RefreshContainer>
+        <Button Content="{ext:LocalizedString Key=/Generic/RetryBtn/Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" IsVisible="{Binding RefreshOnErrorButton, Mode=OneWay}"/>
     </Grid>
 </UserControl>

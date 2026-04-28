@@ -145,7 +145,7 @@ namespace LRReader.UWP.Services
 			}
 		}
 
-		public async Task<IDialogResult> ShowDialog(IDialog dialog)
+		public override async Task<IDialogResult> ShowDialog(IDialog dialog)
 		{
 			await DialogSemaphore.WaitAsync();
 			try

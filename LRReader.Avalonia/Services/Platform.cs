@@ -1,4 +1,5 @@
 ﻿using Avalonia.Input.Platform;
+using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media.Animation;
 using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Resources;
@@ -15,7 +16,7 @@ namespace LRReader.Avalonia.Services
 	{
 		private readonly TabsService Tabs;
 
-		private Root Root = null!;
+		public Root Root { get; private set; } = null!;
 
 		public AvaloniaPlatformService(TabsService tabs)
 		{
@@ -33,8 +34,13 @@ namespace LRReader.Avalonia.Services
 		{
 			Tabs.MapTabToType<ArchivesTab>(Tab.Archives);
 			Tabs.MapTabToType<SettingsTab>(Tab.Settings);
+			Tabs.MapTabToType<ArchiveTab>(Tab.Archive);
 
 			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
+			MapDialogToType<MarkdownDialog>(Dialog.Markdown);
+
+			MapSymbolToSymbol(Symbol.Favorite, new FASymbolIconSource { Symbol = FASymbol.Favorite });
+			MapSymbolToSymbol(Symbol.Pictures, new FASymbolIconSource { Symbol = FASymbol.Pictures });
 		}
 
 		public override Version Version => new Version(1, 9, 6, 0);

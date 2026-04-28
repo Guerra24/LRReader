@@ -341,12 +341,8 @@
 		</Grid>
 		<Button
 			x:Uid="/Generic/RetryBtn" Grid.Row="1" HorizontalAlignment="Center"
-			Command="{x:Bind Data.ReloadCommand}"
-			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}">
-			<Button.CommandParameter>
-				<x:Boolean>True</x:Boolean>
-			</Button.CommandParameter>
-		</Button>
+			Command="{x:Bind Data.ReloadCommand}" CommandParameter="{ext:True}"
+			Visibility="{x:Bind Data.RefreshOnErrorButton, Mode=OneWay}" />
 		<muxc:TwoPaneView
 			ext:TwoPaneViewExt.EnableDualScreen="{x:Bind services:Service.Platform.DualScreen}" Pane1Length="1*" IsHitTestVisible="False"
 			PanePriority="Pane1" TallModeConfiguration="SinglePane" WideModeConfiguration="LeftRight">

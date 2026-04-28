@@ -27,4 +27,9 @@
     <ProjectReference Include="..\LRReader.Avalonia\LRReader.Avalonia.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\drawable-night-v31\" />
+    <Folder Include="Resources\drawable-v31\" />
+  </ItemGroup>
+
 </Project>

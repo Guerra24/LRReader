@@ -17,12 +17,19 @@
     <PackageReference Include="Avalonia.Controls.WebView" Version="12.0.0" />
     <PackageReference Include="CommunityToolkit.Common" Version="8.4.2" />
     <PackageReference Include="FluentAvaloniaUI" Version="3.0.0-preview2" />
+    <PackageReference Include="Markdown.Avalonia.Tight" Version="12.0.0-a3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="..\Privacy.md">
+      <Link>Privacy.md</Link>
+    </AvaloniaResource>
+    <AvaloniaResource Include="..\LICENSE.md">
+      <Link>LICENSE.md</Link>
+    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\LRReader.UWP\Strings\**" LinkBase="Strings" />
@@ -30,5 +37,10 @@
   <ItemGroup>
     <Using Include="Avalonia" />
     <Using Include="Avalonia.Controls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\Tabs\ArchiveTab.axaml.cs">
+      <DependentUpon>ArchiveTab.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -32,11 +32,11 @@
                         </MultiBinding>
                     </controls:ModernExpander.Description>
 					<controls:ModernExpander.Icon>
-						<ui:FAImageIcon Height="20" Width="20" Source="/Assets/Other/LANraragi-dark.png" />
+						<ui:FAImageIcon Height="20" Width="20" Source="{DynamicResource LRRLogo}" />
 					</controls:ModernExpander.Icon>
                     <controls:ModernExpander.Items>
 					    <StackPanel>
-						    <TextBlock Text="{ext:LocalizedString /Settings/Server/ApiRequired/Text}" Margin="0,0,0,10" IsVisible="{Binding $parent[local:Server].Data.SettingsManager.Profile.HasApiKey, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}" />
+						    <TextBlock Text="{ext:LocalizedString /Settings/Server/ApiRequired/Text}" Margin="0,0,0,10" IsVisible="{Binding !$parent[local:Server].Data.SettingsManager.Profile.HasApiKey, Mode=OneWay}" />
 						    <Grid>
 							    <Grid.ColumnDefinitions>
 								    <ColumnDefinition />

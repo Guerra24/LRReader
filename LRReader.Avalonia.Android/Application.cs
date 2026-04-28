@@ -5,7 +5,7 @@ using Avalonia.Android;
 
 namespace LRReader.Avalonia.Android
 {
-    [Application]
+    [Application(UsesCleartextTraffic = true)]
     public class Application : AvaloniaAndroidApplication<App>
     {
         protected Application(nint javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)

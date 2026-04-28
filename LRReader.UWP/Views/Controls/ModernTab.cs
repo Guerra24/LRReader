@@ -5,8 +5,6 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace LRReader.UWP.Views.Controls
 {
 
-	public delegate bool GoBackTabEvent();
-
 	public partial class ModernTab : TabViewItem, ICustomTab
 	{
 		//private bool _open;
@@ -76,7 +74,7 @@ namespace LRReader.UWP.Views.Controls
 
 		public virtual TabState GetTabState() => new TabState(Tab);
 
-		public event GoBackTabEvent? GoBack;
+		public event Func<bool>? GoBack;
 
 		public virtual void Dispose()
 		{

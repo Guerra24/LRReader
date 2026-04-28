@@ -24,6 +24,8 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			WeakReferenceMessenger.Default.Register(this);
 
+			TopLevel.GetTopLevel(this)!.BackRequested += HostTabPage_BackRequested;
+
 			await Service.Dispatcher.RunAsync(() =>
 			{
 				Data.OpenTab(Tab.Archives);
@@ -37,7 +39,13 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 		{
+			TopLevel.GetTopLevel(this)!.BackRequested -= HostTabPage_BackRequested;
+
 			WeakReferenceMessenger.Default.UnregisterAll(this);
+		}
+		private void HostTabPage_BackRequested(object? sender, RoutedEventArgs e)
+		{
+			e.Handled = Data.CurrentTab!.BackRequested();
 		}
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);

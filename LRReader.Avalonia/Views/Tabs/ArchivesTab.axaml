@@ -16,5 +16,13 @@
     <controls:ModernTab.IconSource>
         <ui:FASymbolIconSource Symbol="Library" />
     </controls:ModernTab.IconSource>
-    <content:Archives />
+    <controls:ModernTab.CustomTabControl>
+		<Button ToolTip.Tip="{ext:LocalizedString /Generic/RefreshTT/ToolTipService/ToolTip}" Click="RefreshButton_Click">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<ui:FASymbolIcon Symbol="Refresh" />
+			</Viewbox>
+		</Button>
+	</controls:ModernTab.CustomTabControl>
+
+    <content:ArchivesTabContent x:Name="TabContent" />
 </controls:ModernTab>

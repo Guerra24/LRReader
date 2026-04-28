@@ -6,7 +6,7 @@ namespace LRReader.Avalonia.Resources;
 public class ResourceLoader
 {
 
-	private Dictionary<string, string> Lang = new Dictionary<string, string>();
+	private Dictionary<string, string> Lang = [];
 
 	public ResourceLoader(string file)
 	{
@@ -41,7 +41,7 @@ public class ResourceLoader
 		return value;
 	}
 
-	private static Dictionary<string, ResourceLoader> Resources = new Dictionary<string, ResourceLoader>();
+	private static Dictionary<string, ResourceLoader> Resources = [];
 
 	public static ResourceLoader GetForCurrentView(string file)
 	{

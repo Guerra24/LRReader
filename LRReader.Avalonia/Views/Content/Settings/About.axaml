@@ -57,7 +57,7 @@
 					Command="{Binding OpenLinkCommand}"
 					CommandParameter="https://github.com/Guerra24/LRReader" IsButton="True" RightGlyph="&#xE8A7;">
 					<controls:ModernInput.Icon>
-						<ui:FAImageIcon Height="20" Width="20" Source="/Assets/Other/GitHub-dark.png" />
+						<ui:FAImageIcon Height="20" Width="20" Source="{DynamicResource GithubLogo}" />
 					</controls:ModernInput.Icon>
 				</controls:ModernInput>
 				<controls:ModernInput

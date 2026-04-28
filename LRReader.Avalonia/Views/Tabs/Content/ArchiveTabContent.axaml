@@ -1,0 +1,281 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:items="using:LRReader.Avalonia.Views.Items"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             Loaded="UserControl_Loaded"
+             x:Class="LRReader.Avalonia.Views.Tabs.Content.ArchiveTabContent"
+             x:DataType="vm:ArchivePageViewModel"
+             DataContext="{ReflectionBinding ArchivePageInstance, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+		<ControlTheme x:Key="CustomTag" TargetType="Border">
+			<Setter Property="Padding" Value="4,2"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}"/>
+			<Setter Property="BackgroundSizing" Value="InnerBorderEdge"/>
+			<Setter Property="Background" Value="{DynamicResource ControlFillColorDefault}"/>
+			<Setter Property="CornerRadius" Value="4,0,0,4" />
+		</ControlTheme>
+		<ControlTheme x:Key="CustomTagValue" TargetType="Border" BasedOn="{StaticResource CustomTag}">
+			<Setter Property="Background" Value="{DynamicResource ControlStrongStrokeColorDisabled}"/>
+			<Setter Property="Padding" Value="5,3"/>
+			<Setter Property="CornerRadius" Value="0,4,4,0"/>
+			<Setter Property="BorderThickness" Value="0" />
+		</ControlTheme>
+	</UserControl.Resources>
+
+    <Grid>
+		<RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,0,0,64">
+                    <!-- Header -->
+                    <StackPanel Margin="50,5,50,5" Spacing="8">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<Button
+								Content="{ext:LocalizedString /Tabs/Archive/New/Content}" Margin="0,2,8,0" Padding="4,2"
+								IsHitTestVisible="False" IsTabStop="False"
+                                Classes="accent"
+								IsVisible="{Binding IsNew, Mode=OneWay}" />
+							<SelectableTextBlock
+								Grid.Column="1" HorizontalAlignment="Left" FontSize="24"
+								Text="{Binding Archive.title, Mode=OneWay}"
+								TextWrapping="WrapWithOverflow" />
+						</Grid>
+						<!--<muxc:RatingControl Value="{Binding Rating, Mode=TwoWay}" Margin="4,0,0,-4" HorizontalAlignment="Left" IsReadOnly="{ReflectionBinding !Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />-->
+						<WrapPanel LineSpacing="4" ItemSpacing="4">
+							<StackPanel Orientation="Horizontal">
+								<Border Theme="{StaticResource CustomTag}">
+									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Pages/Text}"/>
+								</Border>
+								<Border Theme="{StaticResource CustomTagValue}" >
+									<TextBlock Text="{Binding Pages, Mode=OneWay}"/>
+								</Border>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Border Theme="{StaticResource CustomTag}">
+									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/LastRead/Text}" />
+								</Border>
+								<Border Theme="{StaticResource CustomTagValue}" >
+									<TextBlock Text="{Binding Archive.LastReadTimeString, Mode=OneWay}"/>
+								</Border>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Border Theme="{StaticResource CustomTag}">
+									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/FileName/Text}" />
+								</Border>
+								<Border Theme="{StaticResource CustomTagValue}" >
+									<TextBlock Text="{Binding Archive.filename, Mode=OneWay}"/>
+								</Border>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Border Theme="{StaticResource CustomTag}">
+									<TextBlock  Text="{ext:LocalizedString /Tabs/Archive/FileType/Text}" />
+								</Border>
+								<Border Theme="{StaticResource CustomTagValue}" >
+									<TextBlock Text="{Binding Archive.extension, Mode=OneWay}"/>
+								</Border>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<Border Theme="{StaticResource CustomTag}">
+									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Size/Text}" />
+								</Border>
+								<Border Theme="{StaticResource CustomTagValue}" >
+									<TextBlock Text="{Binding Archive.size, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}"/>
+								</Border>
+							</StackPanel>
+						</WrapPanel>
+						<!--<controls:ArchiveTags ItemClickCommand="{Binding TagClickCommand}" ItemsSource="{Binding Archive.TagsGroups, Mode=OneWay}" />-->
+						<SelectableTextBlock x:Name="SummaryBlock" Text="{Binding Archive.summary, Mode=OneWay}" TextWrapping="WrapWithOverflow" IsVisible="{Binding Archive.summary, Converter={StaticResource EmptyStringToObjectConverter}, Mode=OneWay}" />
+						<WrapPanel LineSpacing="2" ItemSpacing="2">
+							<ToggleButton Content="{ext:LocalizedString Key=/Tabs/Archive/Bookmark/Content}" IsChecked="{Binding Bookmarked, Mode=TwoWay}" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+							<Button
+								Click="Continue_Click"
+								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+								IsVisible="{Binding Bookmarked, Mode=OneWay}">
+								<TextBlock>
+									<Run Text="{ext:LocalizedString Key=/Tabs/Archive/Continue/Text}" /> (<Run Text="{Binding BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding Pages, Mode=OneWay}" />)
+								</TextBlock>
+							</Button>
+							<Button
+                                Content="{ext:LocalizedString Key=/Tabs/Archive/Edit/Content}"
+								Command="{Binding EditCommand}"
+								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+								IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+							<Button
+                                Content="{ext:LocalizedString Key=/Tabs/Archive/Categories/Content}"
+								Command="{Binding EditCategoriesCommand}"
+								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+								IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+							<Button
+								Content="{ext:LocalizedString Key=/Tabs/Archive/Download/Content}" Click="DownloadButton_Click"
+								IsEnabled="{Binding Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+							<Button
+                                Content="{ext:LocalizedString Key=/Tabs/Archive/Delete/Content}"
+								Command="{Binding DeleteCommand}"
+								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+								IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+							<Border
+								Grid.Column="2" Width="1" Margin="6,4,6,4"
+								Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+							<Button
+                                Content="{ext:LocalizedString Key=/Tabs/Archive/Next/Content}"
+								Click="NextArchive"
+								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+								IsVisible="{Binding CanGoNext, Mode=OneWay}" />
+							<Button
+                                Content="{ext:LocalizedString Key=/Tabs/Archive/Random/Content}"
+								Click="Random_Clicked"
+								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+						</WrapPanel>
+					</StackPanel>
+                    <!-- Content -->
+                    <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}">
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+						        <items:ArchiveImage />
+					        </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
+                        </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                </StackPanel>
+		    </ScrollViewer>
+        </RefreshContainer>
+		<Border
+			x:Name="ReaderBackground" Grid.RowSpan="2"
+			Background="{DynamicResource ReaderBackground}"
+			IsVisible="{Binding ShowReader, Mode=OneWay}" />
+		<!-- ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" -->
+		<ScrollViewer
+			x:Name="ScrollViewer" Grid.RowSpan="2"
+			HorizontalScrollBarVisibility="Auto"
+			SizeChanged="ScrollViewer_SizeChanged"
+			PointerPressed="ScrollViewer_PointerPressed"
+			DoubleTapped="ScrollViewer_DoubleTapped" Holding="ScrollViewer_Holding"
+			VerticalScrollBarVisibility="Auto"
+			ScrollChanged="ScrollViewer_ViewChanged"
+			IsVisible="{Binding ShowReader, Mode=OneWay}">
+            <!-- HorizontalAnchorRatio="0.5" VerticalAnchorRatio="0.01" -->
+			<ContentControl
+				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
+				IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
+				PointerWheelChanged="ReaderControl_PointerWheelChanged"
+				SizeChanged="ReaderControl_SizeChanged">
+                <!-- ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" -->
+				<Grid>
+					<!--<items:ReaderImage x:Name="ReaderImage" x:Load="{Binding UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+					<muxc:ItemsRepeater x:Name="ReaderVertical" x:Load="{Binding UseVerticalReader, Mode=OneWay}" ItemsSource="{Binding ArchiveImagesReader}">
+						<muxc:ItemsRepeater.ItemTemplate>
+							<DataTemplate x:DataType="main:ReaderImageSet">
+								<items:ReaderImage Height="{x:Bind Height}" HorizontalAlignment="Center" DataContext="{x:Bind}" />
+							</DataTemplate>
+						</muxc:ItemsRepeater.ItemTemplate>
+						<muxc:ItemsRepeater.Layout>
+							<muxc:StackLayout />
+						</muxc:ItemsRepeater.Layout>
+					</muxc:ItemsRepeater>-->
+				</Grid>
+			</ContentControl>
+		</ScrollViewer>
+		<Grid x:Name="ReaderThumbnailOverlayHitArea"
+			Height="48" VerticalAlignment="Bottom" Background="Transparent"
+			PointerEntered="Trigger_PointerEntered" PointerExited="Trigger_PointerExited"
+			IsVisible="{Binding ShowReader, Mode=OneWay}" />
+		<Popup
+			x:Name="ReaderThumbnailOverlay" Height="342" HorizontalAlignment="Center"
+			VerticalAlignment="Bottom" IsLightDismissEnabled="True">
+			<!--<Popup.ChildTransitions>
+				<TransitionCollection>
+					<PaneThemeTransition Edge="Bottom" />
+				</TransitionCollection>
+			</Popup.ChildTransitions>-->
+			<Grid Width="{Binding #ReaderThumbnailOverlay.Width, Mode=OneWay}" Height="{Binding #ReaderThumbnailOverlay.Height, Mode=OneWay}">
+				<!--<GridView
+					x:Name="OverlayThumbnails" Margin="16,0,16,16" Padding="16"
+					VerticalAlignment="Top"
+					ext:Element.ModernShadow="{StaticResource ElementShadow}"
+					Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}"
+					BorderBrush="{ThemeResource FlyoutBorderThemeBrush}"
+					BorderThickness="{ThemeResource FlyoutBorderThemeThickness}"
+					CornerRadius="{ThemeResource OverlayCornerRadius}"
+					IsItemClickEnabled="True" ItemClick="OverlayThumbnails_ItemClick"
+					ItemsSource="{x:Bind Data.ArchiveImages}"
+					ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True"
+					ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.IsVerticalRailEnabled="False" SelectionMode="Single" Translation="0,0,32">
+					<GridView.Shadow>
+						<ThemeShadow />
+					</GridView.Shadow>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<items:ArchiveImage KeepOverlayOpen="True" />
+						</DataTemplate>
+					</GridView.ItemTemplate>
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsStackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemContainerStyle>
+						<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+							<Setter Property="Padding" Value="4" />
+							<Setter Property="Margin" Value="5" />
+						</Style>
+					</GridView.ItemContainerStyle>
+				</GridView>-->
+			</Grid>
+		</Popup>
+		<!--<Border x:Name="LeftHitTargetOverlay" Background="#40FF0000" BorderThickness="2" BorderBrush="#90FF0000" HorizontalAlignment="Left" IsHitTestVisible="False" />
+		<Border x:Name="RightHitTargetOverlay" Background="#40FF0000" BorderThickness="2" BorderBrush="#90FF0000" HorizontalAlignment="Right" IsHitTestVisible="False" />-->
+		<Button
+			Grid.RowSpan="2" Width="38" Height="38"
+			HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent"
+			BorderThickness="0" Click="CloseButton_Click"
+			IsVisible="{Binding ShowReader, Mode=OneWay}">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<ui:FASymbolIcon Symbol="Cancel" />
+			</Viewbox>
+		</Button>
+		<Grid
+			Margin="5" HorizontalAlignment="Left" VerticalAlignment="Top"
+			IsVisible="{Binding ShowReader, Mode=OneWay}">
+			<TextBlock>
+				<Run Text="{Binding ReaderProgress, Mode=OneWay}" />/<Run Text="{Binding Pages, Mode=OneWay}" />
+			</TextBlock>
+		</Grid>
+		<Button
+			Content="{ext:LocalizedString Key=/Generic/RetryBtn/Content}" Grid.Row="1" HorizontalAlignment="Center"
+			Command="{Binding ReloadCommand}" CommandParameter="{x:True}"
+			IsVisible="{Binding RefreshOnErrorButton, Mode=OneWay}" />
+		<ui:FAProgressRing
+			Grid.Row="1" Width="80" Height="80"
+			Background="#4B000000" IsActive="True"
+			IsIndeterminate="{Binding LoadingIndeterminate, Mode=OneWay}"
+			Maximum="{Binding BuildMax, Mode=OneWay}"
+			IsVisible="{Binding LoadingImages, Mode=OneWay}"
+			Value="{Binding BuildProgress, Mode=OneWay}" />
+		<!--<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="ThemeBackground" />
+				<VisualState x:Name="UserBackground">
+					<VisualState.StateTriggers>
+						<StateTrigger IsActive="{x:Bind services:Service.Settings.UseReaderBackground, Mode=OneWay}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="ScrollViewer.Background" Value="{StaticResource CustomReaderBackground}" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>-->
+	</Grid>
+</UserControl>

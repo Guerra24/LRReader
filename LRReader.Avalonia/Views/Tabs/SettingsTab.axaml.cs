@@ -15,6 +15,7 @@ namespace LRReader.Avalonia.Views.Tabs
 		public SettingsTab()
 		{
 			InitializeComponent();
+			GoBack += ContentPage.GoBack;
 
 			Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 			DispatcherTimer = new DispatcherTimer();

@@ -11,12 +11,10 @@ namespace LRReader.Avalonia.Views.Dialogs
 
 		private ResourceLoader lang;
 
-		public ServerProfileDialog() : base()
+		public ServerProfileDialog()
 		{
 			InitializeComponent();
 			lang = ResourceLoader.GetForCurrentView("Dialogs");
-			//ProfileName.AddHandler(TextInputEvent, ProfileName_TextChanging, RoutingStrategies.Tunnel);
-			//ProfileServerAddress.AddHandler(TextInputEvent, ProfileServerAddress_TextChanging, RoutingStrategies.Tunnel);
 		}
 
 		public ServerProfileDialog(bool edit) : this()

@@ -13,6 +13,10 @@
              x:Class="LRReader.Avalonia.Views.Main.HostTabPage"
              DataContext="{ReflectionBinding HostTabPageInstance, Source={StaticResource Locator}}">
 
+    <UserControl.Resources>
+		<Thickness x:Key="ScrollViewerScrollBarMargin">0</Thickness>
+	</UserControl.Resources>
+
     <Grid>
         <ui:FATabView Theme="{StaticResource ModernTabView}"
                     IsAddTabButtonVisible="False"
