@@ -24,7 +24,7 @@
         <conv:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
 	</controls:ModernBasePage.Resources>
 
-    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0" BringIntoViewOnFocusChange="False">
 		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
 				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/AutoOpen/Title}" Glyph="&#xE78B;">

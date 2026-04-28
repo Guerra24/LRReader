@@ -191,7 +191,7 @@
 					</Button>
 				</controls:ModernInput>
 			</controls:ModernGroup>
-			<controls:ModernGroup Title="Windows Settings" Visibility="{x:Bind Data.SettingsManager.Profile.Integration, Converter={StaticResource BoolToVisibilityConverter}}">
+			<!--<controls:ModernGroup Title="Windows Settings" Visibility="{x:Bind Data.SettingsManager.Profile.Integration, Converter={StaticResource BoolToVisibilityConverter}}">
 				<controls:ModernInput
 					Title="Content folder location"
 					Description="{x:Bind Data.ContentFolder, Mode=OneWay}"
@@ -256,7 +256,7 @@
 						</TransitionCollection>
 					</muxc:InfoBar.Transitions>
 				</muxc:InfoBar>
-			</controls:ModernGroup>
+			</controls:ModernGroup>-->
 		</StackPanel>
 	</ScrollViewer>
 </controls:ModernBasePage>

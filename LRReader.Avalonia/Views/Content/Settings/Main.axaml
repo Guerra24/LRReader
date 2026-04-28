@@ -13,7 +13,7 @@
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.UWP.Views.Content.Settings.Main">
 
-    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0" BringIntoViewOnFocusChange="False">
 		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
 				<controls:ModernInput Title="{ext:LocalizedString /Settings/General/ExpanderProfile/Title}" Glyph="&#xE748;">

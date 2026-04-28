@@ -18,7 +18,7 @@
             <KeyBinding Gesture="F5" Command="{Binding $parent[local:ArchiveList].RefreshCommand}" />
         </Grid.KeyBindings>
         <RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" BringIntoViewOnFocusChange="False">
                 <StackPanel Margin="0,10,0,10">
                     <!-- Header -->
                     <Grid Margin="0,10,0,10">
@@ -115,7 +115,7 @@
                                                SelectedPageIndex="{Binding Page, Mode=OneWay}" />
                     </Grid>
                     <!-- Content -->
-                    <ItemsRepeater x:Name="ArchivesGrid" ItemsSource="{Binding ArchiveList}">
+                    <ItemsRepeater x:Name="ArchivesGrid" ItemsSource="{Binding ArchiveList}" Margin="5,0">
                         <ItemsRepeater.Layout>
                             <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
                         </ItemsRepeater.Layout>

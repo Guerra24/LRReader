@@ -23,7 +23,8 @@
                     SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
                     TabItemsSource="{Binding TabItems}"
                     TabWidthMode="SizeToContent"
-                    TabCloseRequested="TabView_TabCloseRequested">
+                    TabCloseRequested="TabView_TabCloseRequested"
+                    CanDragTabs="False">
             <ui:FATabView.TabStripFooter>
                 <Grid>
                     <Grid.ColumnDefinitions>

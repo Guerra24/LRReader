@@ -19,7 +19,11 @@
 					    <Grid x:Name="Root" Background="Transparent">
 						    <Grid.ContextFlyout>
 							    <MenuFlyout>
-								    <MenuItem Header="{ext:LocalizedString Key=/Items/ArchiveImage/Reload/Text}" Command="{Binding $parent[items:ArchiveImage].Data.ReloadCommand}" CommandParameter="{x:True}" Icon="Refresh" />
+								    <MenuItem Header="{ext:LocalizedString Key=/Items/ArchiveImage/Reload/Text}" Command="{Binding $parent[items:ArchiveImage].Data.ReloadCommand}" CommandParameter="{x:True}">
+                                        <MenuItem.Icon>
+                                            <ui:FASymbolIcon Symbol="Refresh" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
 							    </MenuFlyout>
 						    </Grid.ContextFlyout>
 						    <Border HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">

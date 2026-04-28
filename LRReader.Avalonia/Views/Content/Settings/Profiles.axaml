@@ -13,7 +13,7 @@
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Content.Settings.Profiles">
 
-    <ScrollViewer x:Name="ScrollViewer" Padding="10,0">
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0" BringIntoViewOnFocusChange="False">
 		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
 				<controls:ModernInput Title="{ext:LocalizedString /Settings/Profiles/AutoLogin/Title}" Glyph="&#xE8d7;">
