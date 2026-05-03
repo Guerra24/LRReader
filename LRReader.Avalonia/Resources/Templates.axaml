@@ -198,7 +198,7 @@
                             </Border>
                         </Grid>
                     </Grid>
-                    <Grid x:Name="TagsGrid" Grid.Row="2">
+                    <Grid x:Name="TagsGrid" Grid.Row="2" Background="Transparent">
                         <TextBlock Padding="2,0"
                                    Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsClean, Mode=OneWay}"
                                    TextTrimming="CharacterEllipsis"/>

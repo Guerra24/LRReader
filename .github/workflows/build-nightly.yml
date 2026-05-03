@@ -26,7 +26,8 @@ jobs:
       uses: microsoft/setup-msbuild@v3
     - name: Build
       run: |
-        dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal -p:PublishProfile=${{ matrix.platform }}
+        Invoke-Expression "./Util/Version-Avalonia.ps1"
+        dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal -p:PublishProfile=${{ matrix.platform }} -p:Version=$env:LRR_VERSION
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:

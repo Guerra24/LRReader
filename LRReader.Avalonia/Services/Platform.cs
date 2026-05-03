@@ -9,6 +9,7 @@ using LRReader.Avalonia.Views.Main;
 using LRReader.Avalonia.Views.Tabs;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
+using System.Reflection;
 
 namespace LRReader.Avalonia.Services
 {
@@ -44,7 +45,7 @@ namespace LRReader.Avalonia.Services
 			MapSymbolToSymbol(Symbol.Pictures, new FASymbolIconSource { Symbol = FASymbol.Pictures });
 		}
 
-		public override Version Version => new Version(1, 9, 6, 0);
+		public override Version Version => Assembly.GetEntryAssembly()!.GetName().Version!;
 
 		public override bool AnimationsEnabled => true;
 
