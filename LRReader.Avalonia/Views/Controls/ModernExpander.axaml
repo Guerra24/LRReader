@@ -15,6 +15,7 @@
 
     <Expander.Resources>
         <Thickness x:Key="RadioButtonsTopHeaderMargin">0</Thickness>
+        <!-- this doesn't work -->
         <converters:BoolToObjectConverter x:Key="DescriptionDisabled" TrueValue="{DynamicResource TextFillColorSecondaryBrush}" FalseValue="{DynamicResource ExpanderHeaderDisabledForeground}" />
         <ControlTheme x:Key="{x:Type local:ModernInput}" BasedOn="{StaticResource GroupedModernInputStyle}" TargetType="local:ModernInput" />
     </Expander.Resources>
@@ -35,9 +36,8 @@
 			<ContentPresenter Margin="0,0,16,0" Content="{Binding $parent[local:ModernExpander].Icon, Mode=OneWay}" IsVisible="{Binding $parent[local:ModernExpander].Icon, Mode=OneWay, Converter={StaticResource EmptyObjectToObjectConverter}}" />
 			<StackPanel Grid.Column="1" Margin="0,16,0,16" VerticalAlignment="Center">
 				<TextBlock Text="{Binding $parent[local:ModernExpander].Title, Mode=OneWay}" />
-				<TextBlock
-					x:Name="DescriptionBlock" FontSize="12"
-					Foreground="{Binding $parent[local:ModernExpander].IsEnabled, Mode=OneWay, Converter={StaticResource DescriptionDisabled}}"
+				<TextBlock FontSize="12"
+					Foreground="{DynamicResource TextFillColorSecondaryBrush}"
 					Text="{Binding $parent[local:ModernExpander].Description, Mode=OneWay}"
 					TextWrapping="WrapWithOverflow"
 					IsVisible="{Binding $parent[local:ModernExpander].Description, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />

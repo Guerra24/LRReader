@@ -42,19 +42,6 @@ namespace LRReader.Avalonia.Converters
 		}
 	}
 
-	public partial class DisabledTextConverter : IValueConverter
-	{
-		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-		{
-			return (bool)value! ? Application.Current!.Resources["TextControlHeaderForegroundDisabled"] : Application.Current!.Resources["TextControlHeaderForeground"];
-		}
-
-		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
 	public partial class ObjectToBitmapImage : IValueConverter
 	{
 		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

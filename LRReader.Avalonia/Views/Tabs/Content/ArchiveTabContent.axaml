@@ -94,7 +94,7 @@
 								</Border>
 							</StackPanel>
 						</WrapPanel>
-						<!--<controls:ArchiveTags ItemClickCommand="{Binding TagClickCommand}" ItemsSource="{Binding Archive.TagsGroups, Mode=OneWay}" />-->
+						<controls:ArchiveTags ItemClickCommand="{Binding TagClickCommand}" ItemsSource="{Binding Archive.TagsGroups, Mode=OneWay}" />
 						<SelectableTextBlock x:Name="SummaryBlock" Text="{Binding Archive.summary, Mode=OneWay}" TextWrapping="WrapWithOverflow" IsVisible="{Binding Archive.summary, Converter={StaticResource EmptyStringToObjectConverter}, Mode=OneWay}" />
 						<WrapPanel LineSpacing="2" ItemSpacing="2">
 							<ToggleButton Content="{ext:LocalizedString Key=/Tabs/Archive/Bookmark/Content}" IsChecked="{Binding Bookmarked, Mode=TwoWay}" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
@@ -139,7 +139,7 @@
 						</WrapPanel>
 					</StackPanel>
                     <!-- Content -->
-                    <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5,0">
+                    <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5">
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate>
 						        <items:ArchiveImage />

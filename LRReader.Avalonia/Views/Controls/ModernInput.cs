@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace LRReader.Avalonia.Views.Controls
 {
-	[PseudoClasses(":isbutton")]
+	[PseudoClasses(":isbutton", ":pressed")]
 	public sealed partial class ModernInput : ContentControl
 	{
 		public ModernInput()
@@ -31,6 +31,7 @@ namespace LRReader.Avalonia.Views.Controls
 			base.OnApplyTemplate(e);
 
 			PseudoClasses.Set(":isbutton", IsButton);
+			PseudoClasses.Set(":pressed", false);
 		}
 
 		public string Title
@@ -128,7 +129,8 @@ namespace LRReader.Avalonia.Views.Controls
 			if (!point.Properties.IsLeftButtonPressed)
 				return;
 			base.OnPointerPressed(e);
-			//if (IsButton && IsEnabled)
+			if (IsButton && IsEnabled)
+				PseudoClasses.Set(":pressed", true);
 			//VisualStateManager.GoToState(this, "Pressed", true);
 		}
 
@@ -143,6 +145,7 @@ namespace LRReader.Avalonia.Views.Controls
 				if (Command != null && Command.CanExecute(CommandParameter))
 					Command.Execute(CommandParameter);
 				RaiseEvent(new RoutedEventArgs(ClickEvent));
+				PseudoClasses.Set(":pressed", false);
 				//VisualStateManager.GoToState(this, "PointerOver", true);
 			}
 		}
@@ -150,7 +153,8 @@ namespace LRReader.Avalonia.Views.Controls
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			base.OnKeyDown(e);
-			//if (IsButton && IsEnabled && (e.Key == Key.Space || e.Key == Key.Enter))
+			if (IsButton && IsEnabled && (e.Key == Key.Space || e.Key == Key.Enter))
+				PseudoClasses.Set(":pressed", true);
 			//VisualStateManager.GoToState(this, "Pressed", true);
 		}
 
@@ -160,6 +164,7 @@ namespace LRReader.Avalonia.Views.Controls
 			if (IsButton && IsEnabled && (e.Key == Key.Space || e.Key == Key.Enter))
 			{
 				RaiseEvent(new RoutedEventArgs(ClickEvent));
+				PseudoClasses.Set(":pressed", false);
 				//VisualStateManager.GoToState(this, "Normal", true);
 			}
 		}
@@ -167,7 +172,8 @@ namespace LRReader.Avalonia.Views.Controls
 		protected override void OnLostFocus(FocusChangedEventArgs e)
 		{
 			base.OnLostFocus(e);
-			//if (IsButton && IsEnabled)
+			if (IsButton && IsEnabled)
+				PseudoClasses.Set(":pressed", false);
 			//VisualStateManager.GoToState(this, "Normal", true);
 		}
 

@@ -247,9 +247,9 @@ namespace LRReader.Shared.Models.Main
 
 	public class ArchiveTagsGroupTag
 	{
-		public string FullTag = null!;
-		public string Tag = null!;
-		public string Namespace = null!;
+		public string FullTag { get; set; } = null!;
+		public string Tag { get; set; } = null!;
+		public string Namespace { get; set; } = null!;
 	}
 
 	public class ArchiveCategories : GenericApiResult

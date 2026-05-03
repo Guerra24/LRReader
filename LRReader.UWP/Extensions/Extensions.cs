@@ -83,8 +83,9 @@ namespace LRReader.UWP.Extensions
 			gridView.SetValue(ItemClickCommandProperty, command);
 			gridView.ItemClick += (sender, e) =>
 			{
-				if (command.CanExecute(new GridViewExtParameter(false, e.ClickedItem)))
-					command.Execute(new GridViewExtParameter((CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, e.ClickedItem));
+				var param = new GridViewExtParameter((CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, e.ClickedItem);
+				if (command.CanExecute(param))
+					command.Execute(param);
 			};
 		}
 

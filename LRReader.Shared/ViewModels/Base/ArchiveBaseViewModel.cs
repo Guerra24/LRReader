@@ -220,8 +220,9 @@ namespace LRReader.Shared.ViewModels.Base
 		}
 
 		[RelayCommand]
-		private async Task TagClick(ArchiveTagsGroupTag tag)
+		private async Task TagClick(GridViewExtParameter parameter)
 		{
+			var tag = (ArchiveTagsGroupTag)parameter.Item;
 			if (tag.Namespace.Equals("source", StringComparison.OrdinalIgnoreCase))
 			{
 				if (Uri.TryCreate(tag.Tag.StartsWith("https://") || tag.Tag.StartsWith("http://") ? tag.Tag : $"https://{tag.Tag}", UriKind.Absolute, out var result))
@@ -246,7 +247,7 @@ namespace LRReader.Shared.ViewModels.Base
 			}
 			else
 			{
-				Tabs.OpenTab(Tab.SearchResults, $"\"{tag.FullTag}\"$");
+				Tabs.OpenTab(Tab.SearchResults, parameter.Ctrl, $"\"{tag.FullTag}\"$");
 			}
 		}
 

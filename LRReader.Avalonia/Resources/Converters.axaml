@@ -11,7 +11,7 @@
     <converters:EmptyCollectionToObjectConverter x:Key="EmptyCollectionToObjectConverter" EmptyValue="False" NotEmptyValue="True" />
     <converters:FileSizeToFriendlyStringConverter x:Key="FileSizeToFriendlyStringConverter" />
 
-	<converters:DisabledTextConverter x:Key="DisabledTextConverter" />
+	<!--<converters:DisabledTextConverter x:Key="DisabledTextConverter" />-->
 	<converters:ObjectToBitmapImage x:Key="ObjectToBitmapImage" />
 	<converters:EnumConverter x:Key="EnumConverter" />
 	<converters:EnumToInt x:Key="EnumToInt" />

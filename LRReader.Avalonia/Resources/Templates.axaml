@@ -34,7 +34,7 @@
 						    </Grid>
 						    <Grid
 							    x:Name="Overlay" Margin="4" HorizontalAlignment="Stretch"
-							    VerticalAlignment="Bottom">
+							    VerticalAlignment="Bottom" RenderTransform="translate(0px, 32px)">
                                 <Grid.Transitions>
                                     <Transitions>
                                         <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15">
@@ -97,115 +97,111 @@
     <ControlTheme x:Key="DefaultArchiveItem" TargetType="items:GenericArchiveItem">
         <Setter Property="Width" Value="200" />
         <Setter Property="DecodePixelHeight" Value="275" />
-        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="items:GenericArchiveItem">
-                <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
-                        BoxShadow="0 2 8 2 #26000000">
-                    <Grid x:Name="Root" Background="Transparent">
-                        <Grid.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuItem Name="OpenTabMenuItem"
-                                          Header="{ext:LocalizedString Key=/Items/Archive/OpenTab/Text}">
-                                    <MenuItem.Icon>
-                                        <ui:FASymbolIcon Symbol="Add" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Name="Add"
-                                          Header="{ext:LocalizedString Key=/Items/Archive/Bookmark/Text}"
-                                          Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
-                                          CommandParameter="{x:True}"
-                                          IsVisible="{Binding !$parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
-                                    <MenuItem.Icon>
-                                        <ui:FASymbolIcon Symbol="Favorite" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Name="Remove"
-                                          Header="{ext:LocalizedString Key=/Items/Archive/Unbookmark/Text}"
-                                          Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
-                                          CommandParameter="{x:False}"
-                                          IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
-                                    <MenuItem.Icon>
-                                        <ui:FASymbolIcon Symbol="UnFavorite" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Rating/Text}"
-                                          IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
-                                    <MenuItem.Icon>
-                                        <ui:FAFontIcon Glyph="&#xE728;" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Edit/Text}"
-                                          Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCommand}"
-                                          IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
-                                    <MenuItem.Icon>
-                                        <ui:FASymbolIcon Symbol="Edit" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Categories/Text}"
-                                          IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
-                                    <MenuItem.Icon>
-                                        <ui:FAFontIcon Glyph="&#xE8B7;" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Name="DownloadMenuItem" Header="{ext:LocalizedString Key=/Items/Archive/Download/Text}">
-                                    <MenuItem.Icon>
-                                        <ui:FASymbolIcon Symbol="Download" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Delete/Text}"
-                                          Command="{Binding $parent[items:GenericArchiveItem].ViewModel.DeleteCommand}"
-                                          IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
-                                    <MenuItem.Icon>
-                                        <ui:FASymbolIcon Symbol="Delete" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </MenuFlyout>
-                        </Grid.ContextFlyout>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="275"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock x:Name="Title"
-                                   Grid.Row="0"
-                                   Padding="5,1"
-                                   HorizontalAlignment="Center"
-                                   FontSize="16"
-                                   Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}"
-                                   TextTrimming="CharacterEllipsis"
-                                   ToolTip.Tip="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}" />
-                        <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
-                            <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:GenericArchiveItem].ViewModel.Thumbnail}" />
-                        </Border>
-                        <Grid Grid.Row="1">
-                            <Grid IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.MissingImage, Mode=OneWay}">
-                                <ui:FAFontIcon FontSize="34" Glyph="&#xE8CD;" />
-                            </Grid>
-                            <Grid HorizontalAlignment="Left"
-                                  VerticalAlignment="Bottom"
-                                  Margin="4,0,0,4"
-                                  IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
-                                <Border Theme="{StaticResource ItemOverlayGrid}">
-                                    <TextBlock Padding="6,2" FontSize="16" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}">
-                                        <Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Pages, Mode=OneWay}"/>
-                                    </TextBlock>
-                                </Border>
-                            </Grid>
-                            <Grid Margin="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                  IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.IsNew}">
-                                <Border Theme="{StaticResource ItemOverlayGrid}">
-                                    <TextBlock Text="{ext:LocalizedString Key=/Items/Archive/New/Text}" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}" Padding="6,2" FontSize="16"/>
-                                </Border>
-                            </Grid>
+                <Grid x:Name="Root" Background="Transparent">
+                    <Grid.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuItem Name="OpenTabMenuItem"
+                                        Header="{ext:LocalizedString Key=/Items/Archive/OpenTab/Text}">
+                                <MenuItem.Icon>
+                                    <ui:FASymbolIcon Symbol="Add" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Name="Add"
+                                        Header="{ext:LocalizedString Key=/Items/Archive/Bookmark/Text}"
+                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
+                                        CommandParameter="{x:True}"
+                                        IsVisible="{Binding !$parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+                                <MenuItem.Icon>
+                                    <ui:FASymbolIcon Symbol="Favorite" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Name="Remove"
+                                        Header="{ext:LocalizedString Key=/Items/Archive/Unbookmark/Text}"
+                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
+                                        CommandParameter="{x:False}"
+                                        IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+                                <MenuItem.Icon>
+                                    <ui:FASymbolIcon Symbol="UnFavorite" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Rating/Text}"
+                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                <MenuItem.Icon>
+                                    <ui:FAFontIcon Glyph="&#xE728;" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Edit/Text}"
+                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCommand}"
+                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                <MenuItem.Icon>
+                                    <ui:FASymbolIcon Symbol="Edit" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Categories/Text}"
+                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                <MenuItem.Icon>
+                                    <ui:FAFontIcon Glyph="&#xE8B7;" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Name="DownloadMenuItem" Header="{ext:LocalizedString Key=/Items/Archive/Download/Text}">
+                                <MenuItem.Icon>
+                                    <ui:FASymbolIcon Symbol="Download" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Delete/Text}"
+                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.DeleteCommand}"
+                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                <MenuItem.Icon>
+                                    <ui:FASymbolIcon Symbol="Delete" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuFlyout>
+                    </Grid.ContextFlyout>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="275"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="Title"
+                                Grid.Row="0"
+                                Padding="5,1"
+                                HorizontalAlignment="Center"
+                                FontSize="16"
+                                Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip.Tip="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}" />
+                    <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
+                        <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:GenericArchiveItem].ViewModel.Thumbnail}" />
+                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.MissingImage, Mode=OneWay}">
+                            <ui:FAFontIcon FontSize="34" Glyph="&#xE8CD;" />
                         </Grid>
-                        <Grid Grid.Row="2">
-                            <TextBlock Padding="2,0"
-                                       Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsClean, Mode=OneWay}"
-                                       TextTrimming="CharacterEllipsis"/>
+                        <Grid HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Margin="4,0,0,4"
+                                IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+                            <Border Theme="{StaticResource ItemOverlayGrid}">
+                                <TextBlock Padding="6,2" FontSize="16" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}">
+                                    <Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Pages, Mode=OneWay}"/>
+                                </TextBlock>
+                            </Border>
+                        </Grid>
+                        <Grid Margin="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.IsNew}">
+                            <Border Theme="{StaticResource ItemOverlayGrid}">
+                                <TextBlock Text="{ext:LocalizedString Key=/Items/Archive/New/Text}" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}" Padding="6,2" FontSize="16"/>
+                            </Border>
                         </Grid>
                     </Grid>
-                </Border>
+                    <Grid Grid.Row="2">
+                        <TextBlock Padding="2,0"
+                                    Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsClean, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+                </Grid>
             </ControlTemplate>
         </Setter>
     </ControlTheme>
@@ -214,7 +210,9 @@
     <items:GenericArchiveItem Theme="{StaticResource CompactArchiveItem}" />
     </DataTemplate>-->
     <DataTemplate x:Key="FullArchive">
-        <items:GenericArchiveItem />
+        <controls:RepeaterItem Command="{Binding $parent[controls:ArchiveList].Data.ItemClickCommand}" CommandParameter="{Binding}" BoxShadow="0 2 8 2 #26000000">
+            <items:GenericArchiveItem />
+        </controls:RepeaterItem>
     </DataTemplate>
     <!--<DataTemplate x:Key="ThumbnailOnlyArchive">
     <items:GenericArchiveItem Theme="{StaticResource ThumbnailOnlyArchiveItem}" />
@@ -297,7 +295,7 @@
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
         </Style>
-        <Style Selector="^:isbutton:focus /template/ Border#Root">
+        <Style Selector="^:isbutton:pressed /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
         </Style>
@@ -396,7 +394,7 @@
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
         </Style>
-        <Style Selector="^:isbutton:focus /template/ Border#Root">
+        <Style Selector="^:isbutton:pressed /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
         </Style>
@@ -446,6 +444,37 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:RepeaterItem}" TargetType="controls:RepeaterItem">
+        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:RepeaterItem">
+                    <Border x:Name="Root"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BackgroundSizing="InnerBorderEdge"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            BoxShadow="{TemplateBinding BoxShadow}">
+                        <ContentPresenter Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>

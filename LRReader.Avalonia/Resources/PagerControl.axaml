@@ -59,7 +59,7 @@
                 <Setter Property="Foreground" Value="{DynamicResource PagerControlPageNavigationButtonForegroundPointerOver}" />
             </Style>
         </Style>
-        <Style Selector="^:focus /template/ Border#Root">
+        <Style Selector="^:pressed /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource PagerControlPageNavigationButtonBackgroundPressed}" />
             <Style Selector="^ ui|FAFontIcon#Content">
                 <Setter Property="Foreground" Value="{DynamicResource PagerControlPageNavigationButtonForegroundPressed}" />

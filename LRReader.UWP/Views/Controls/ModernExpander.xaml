@@ -73,8 +73,7 @@
 			<ContentPresenter Margin="0,0,16,0" Content="{x:Bind Icon, Mode=OneWay}" Visibility="{x:Bind Icon, Mode=OneWay, Converter={StaticResource EmptyObjectToObjectConverter}}" />
 			<StackPanel Grid.Column="1" Margin="0,16,0,16" VerticalAlignment="Center">
 				<TextBlock Text="{x:Bind Title, Mode=OneWay}" />
-				<TextBlock
-					x:Name="DescriptionBlock" FontSize="12"
+				<TextBlock FontSize="12"
 					Foreground="{x:Bind IsEnabled, Mode=OneWay, Converter={StaticResource DescriptionDisabled}}"
 					Text="{x:Bind Description, Mode=OneWay}"
 					TextWrapping="WrapWholeWords"

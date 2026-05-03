@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:items="using:LRReader.Avalonia.Views.Items"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:local="using:LRReader.Avalonia.Views.Controls"
+             xmlns:x1="using:LRReader.Shared.Models.Main"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LRReader.Avalonia.Views.Controls.ArchiveTags">
+
+    <UserControl.Resources>
+        <ControlTheme x:Key="NamespaceStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+            <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+            <Setter Property="Padding" Value="4,2" />
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorDefault}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+            <Setter Property="Margin" Value="0,0,4,0" />
+        </ControlTheme>
+        <ControlTheme x:Key="TagStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+            <Setter Property="Background" Value="{DynamicResource ControlStrongStrokeColorDisabled}" />
+            <Setter Property="Padding" Value="5,3" />
+            <Style Selector="^:pointerover">
+                <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+            </Style>
+            <Style Selector="^:pressed">
+                <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+            </Style>
+        </ControlTheme>
+    </UserControl.Resources>
+
+    <ItemsRepeater ItemsSource="{Binding $parent[local:ArchiveTags].ItemsSource, Mode=OneWay}">
+        <ItemsRepeater.ItemTemplate>
+            <DataTemplate x:DataType="x1:ArchiveTagsGroup">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Border VerticalAlignment="Top" Theme="{StaticResource NamespaceStyle}">
+                        <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding Namespace, Converter={StaticResource TagNamespaceConverter}}" />
+                    </Border>
+                    <ItemsRepeater Grid.Column="1" ItemsSource="{Binding Tags}">
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="x1:ArchiveTagsGroupTag">
+                                <controls:RepeaterItem Background="{DynamicResource ControlStrongStrokeColorDisabled}" Padding="5,3" Command="{Binding $parent[local:ArchiveTags].ItemClickCommand, Mode=OneWay}" CommandParameter="{Binding}">
+                                    <controls:RepeaterItem.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuItem Header="{ext:LocalizedString /Tabs/Archive/CopyTag/Text}" Click="Tags_CopyTag" Tag="{Binding FullTag}">
+                                                <MenuItem.Icon>
+                                                    <ui:FASymbolIcon Symbol="Copy"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </MenuFlyout>
+                                    </controls:RepeaterItem.ContextFlyout>
+                                    <TextBlock Text="{Binding Tag}" />
+                                </controls:RepeaterItem>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                        <ItemsRepeater.Layout>
+                            <WrapLayout HorizontalSpacing="2" VerticalSpacing="2" />
+                        </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                </Grid>
+            </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+        <ItemsRepeater.Layout>
+            <StackLayout DisableVirtualization="True" Spacing="4" />
+        </ItemsRepeater.Layout>
+    </ItemsRepeater>
+</UserControl>

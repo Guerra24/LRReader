@@ -1,5 +1,7 @@
-﻿using LRReader.Shared.Models.Main;
-using Windows.ApplicationModel.DataTransfer;
+﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
+using Windows.UI.Core;
 
 namespace LRReader.UWP.Views.Controls
 {
@@ -13,25 +15,23 @@ namespace LRReader.UWP.Views.Controls
 		[DynamicWindowsRuntimeCast(typeof(MenuFlyoutItem))]
 		private void Tags_CopyTag(object sender, RoutedEventArgs e)
 		{
-			var dataPackage = new DataPackage();
-			dataPackage.RequestedOperation = DataPackageOperation.Copy;
-			dataPackage.SetText(((MenuFlyoutItem)sender).Tag as string);
-			Clipboard.SetContent(dataPackage);
+			Service.Platform.CopyToClipboard((string)((MenuFlyoutItem)sender).Tag);
 		}
 
 		private void Tags_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			if (ItemClickCommand?.CanExecute(e.ClickedItem) ?? false)
-				ItemClickCommand.Execute(e.ClickedItem);
+			var param = new GridViewExtParameter((CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down, e.ClickedItem);
+			if (ItemClickCommand?.CanExecute(param) ?? false)
+				ItemClickCommand.Execute(param);
 		}
 
 		[GeneratedDependencyProperty]
 		public partial ICommand? ItemClickCommand { get; set; }
 
 		[GeneratedDependencyProperty(DefaultValueCallback = "GetDefaultItemSource")]
-		public partial ICollection<ArchiveTagsGroup> ItemsSource { get; set; }
+		public partial IList<ArchiveTagsGroup> ItemsSource { get; set; }
 
-		private static ICollection<ArchiveTagsGroup> GetDefaultItemSource() => new List<ArchiveTagsGroup>();
+		private static IList<ArchiveTagsGroup> GetDefaultItemSource() => new List<ArchiveTagsGroup>();
 
 		[GeneratedDependencyProperty(DefaultValue = double.MaxValue)]
 		public partial double MaxTagsWidth { get; set; }

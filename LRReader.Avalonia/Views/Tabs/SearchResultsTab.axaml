@@ -1,0 +1,30 @@
+<controls:ModernTab xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             CustomTabId="Search"
+             Header="{ext:LocalizedString Key=/Tabs/SearchResults/Tab/Header}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LRReader.Avalonia.Views.Tabs.SearchResultsTab">
+    <ui:FATabViewItem.HeaderTemplate>
+		<DataTemplate x:DataType="x:String">
+			<TextBlock MaxWidth="200" Text="{Binding}" TextTrimming="CharacterEllipsis" />
+		</DataTemplate>
+	</ui:FATabViewItem.HeaderTemplate>
+    <ui:FATabViewItem.IconSource>
+        <ui:FASymbolIconSource Symbol="Find" />
+    </ui:FATabViewItem.IconSource>
+    <controls:ModernTab.CustomTabControl>
+		<Button ToolTip.Tip="{ext:LocalizedString /Generic/RefreshTT/ToolTipService/ToolTip}" Click="RefreshButton_Click">
+			<Viewbox MaxWidth="16" MaxHeight="16">
+				<ui:FASymbolIcon Symbol="Refresh" />
+			</Viewbox>
+		</Button>
+	</controls:ModernTab.CustomTabControl>
+
+    <content:SearchResults x:Name="TabContent" />
+</controls:ModernTab>
