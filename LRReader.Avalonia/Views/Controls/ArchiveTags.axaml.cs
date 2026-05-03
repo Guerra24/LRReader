@@ -38,12 +38,12 @@ public partial class ArchiveTags : UserControl
 
 	private void TagsList_Loaded(object? sender, RoutedEventArgs e)
 	{
-		/*var grid = sender as GridView;
+		var grid = sender as ItemsRepeater;
 		if (grid?.Tag == null)
 		{
 			grid!.MaxWidth = MaxTagsWidth;
 			grid.Tag = "The absolute state of UWP Bindings";
-		}*/
+		}
 	}
 
 	public static readonly StyledProperty<ICommand?> ItemClickCommandProperty = AvaloniaProperty.Register<ArchiveTags, ICommand?>("ItemClickCommand", enableDataValidation: true);

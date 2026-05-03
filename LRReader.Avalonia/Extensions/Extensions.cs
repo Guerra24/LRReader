@@ -42,6 +42,14 @@ public static class AppExtensions
 		};
 	}
 
+	public static PlacementMode ToFlyoutPlacement(this TagsPopupLocation location) => location switch
+	{
+		TagsPopupLocation.Top => PlacementMode.RightEdgeAlignedBottom,
+		TagsPopupLocation.Middle => PlacementMode.Right,
+		TagsPopupLocation.Bottom => PlacementMode.RightEdgeAlignedTop,
+		_ => PlacementMode.Pointer,
+	};
+
 }
 
 public sealed partial class LocalizedString : MarkupExtension

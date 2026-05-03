@@ -1,5 +1,6 @@
 ﻿using Avalonia.Animation.Easings;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Rendering.Composition;
@@ -15,7 +16,17 @@ public class GenericArchiveItem : TemplatedControl
 {
 	public ArchiveItemViewModel ViewModel { get; }
 
+	private bool _open;
+	private Point _position;
+
+	// Default
 	private Grid? Root;
+	//private Image Thumbnail = null!;
+	private Grid? TagsGrid;
+	private Flyout? TagsFlyout;
+
+	// Bookmark
+	//public ParallaxView? Parallax;
 
 	// Internal
 	public List<Archive> Group = null!;
@@ -36,10 +47,23 @@ public class GenericArchiveItem : TemplatedControl
 	{
 		// This is running AFTER context changed
 		base.OnApplyTemplate(e);
-		openTab?.Click -= MenuFlyoutItem_Click;
-		download?.Click += DownloadMenuItem_Click;
+
+		TagsGrid?.PointerEntered -= TagsGrid_PointerEntered;
+		TagsGrid?.PointerExited -= TagsGrid_PointerExited;
+		TagsGrid?.PointerMoved -= TagsGrid_PointerMoved;
 
 		Root = e.NameScope.Get<Grid>("Root");
+		TagsGrid = e.NameScope.Get<Grid>("TagsGrid");
+
+		TagsFlyout = (Flyout)Root.Resources["TagsFlyout"]!;
+
+		TagsGrid.PointerEntered += TagsGrid_PointerEntered;
+		TagsGrid.PointerExited += TagsGrid_PointerExited;
+		TagsGrid.PointerMoved += TagsGrid_PointerMoved;
+
+		// Avalonia
+		openTab?.Click -= MenuFlyoutItem_Click;
+		download?.Click -= DownloadMenuItem_Click;
 
 		openTab = e.NameScope.Get<MenuItem>("OpenTabMenuItem");
 		download = e.NameScope.Get<MenuItem>("DownloadMenuItem");
@@ -138,6 +162,36 @@ public class GenericArchiveItem : TemplatedControl
 			await stream.WriteAsync(download.Data);
 		}
 
+	}
+
+	public async void TagsGrid_PointerEntered(object? sender, PointerEventArgs e)
+	{
+		if (e.Pointer.Type != PointerType.Mouse)
+			return;
+		_open = true;
+		await Task.Delay(TimeSpan.FromMilliseconds(Service.Platform.HoverTime));
+		if (_open && !TagsFlyout!.IsOpen)
+		{
+			_open = false;
+			TagsFlyout.HorizontalOffset = _position.X - TagsGrid!.Bounds.Width;
+			TagsFlyout.VerticalOffset = _position.Y;
+			TagsFlyout.Placement = Service.Settings.TagsPopup.ToFlyoutPlacement();
+			TagsFlyout.ShowMode = FlyoutShowMode.TransientWithDismissOnPointerMoveAway;
+			TagsFlyout.ShowAt(TagsGrid!);
+		}
+	}
+
+	private void TagsGrid_PointerMoved(object? sender, PointerEventArgs e)
+	{
+		_position = e.GetCurrentPoint(TagsGrid!).Position;
+	}
+
+	public void TagsGrid_PointerExited(object? sender, PointerEventArgs e)
+	{
+		if (_open)
+		{
+			_open = false;
+		}
 	}
 
 	public static readonly StyledProperty<int> DecodePixelWidthProperty = AvaloniaProperty.Register<GenericArchiveItem, int>("DecodePixelWidth");

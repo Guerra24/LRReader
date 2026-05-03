@@ -8,33 +8,32 @@
 
     <ControlTheme x:Key="{x:Type items:ArchiveImage}" BasedOn="{StaticResource DefaultArchiveImage}" TargetType="items:ArchiveImage" />
 
-	<ControlTheme x:Key="DefaultArchiveImage" TargetType="items:ArchiveImage">
-		<Setter Property="Width" Value="200" />
-		<Setter Property="Height" Value="275" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="items:ArchiveImage">
+    <ControlTheme x:Key="DefaultArchiveImage" TargetType="items:ArchiveImage">
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Height" Value="275" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="items:ArchiveImage">
                     <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
-                        BoxShadow="0 2 8 2 #26000000">
-					    <Grid x:Name="Root" Background="Transparent">
-						    <Grid.ContextFlyout>
-							    <MenuFlyout>
-								    <MenuItem Header="{ext:LocalizedString Key=/Items/ArchiveImage/Reload/Text}" Command="{Binding $parent[items:ArchiveImage].Data.ReloadCommand}" CommandParameter="{x:True}">
+                            BoxShadow="0 2 8 2 #26000000">
+                        <Grid x:Name="Root" Background="Transparent">
+                            <Grid.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuItem Header="{ext:LocalizedString Key=/Items/ArchiveImage/Reload/Text}" Command="{Binding $parent[items:ArchiveImage].Data.ReloadCommand}" CommandParameter="{x:True}">
                                         <MenuItem.Icon>
                                             <ui:FASymbolIcon Symbol="Refresh" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-							    </MenuFlyout>
-						    </Grid.ContextFlyout>
-						    <Border HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
-							    <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:ArchiveImage].Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
-						    </Border>
-						    <Grid IsVisible="{Binding $parent[items:ArchiveImage].Data.MissingImage, Mode=OneWay}">
-							    <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
-						    </Grid>
-						    <Grid
-							    x:Name="Overlay" Margin="4" HorizontalAlignment="Stretch"
-							    VerticalAlignment="Bottom" RenderTransform="translate(0px, 32px)">
+                                </MenuFlyout>
+                            </Grid.ContextFlyout>
+                            <Border HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:ArchiveImage].Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
+                            </Border>
+                            <Grid IsVisible="{Binding $parent[items:ArchiveImage].Data.MissingImage, Mode=OneWay}">
+                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
+                            </Grid>
+                            <Grid x:Name="Overlay" Margin="4" HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Bottom" RenderTransform="translate(0px, 32px)">
                                 <Grid.Transitions>
                                     <Transitions>
                                         <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15">
@@ -45,28 +44,26 @@
                                     </Transitions>
                                 </Grid.Transitions>
                                 <Border HorizontalAlignment="Left" Theme="{StaticResource ItemOverlayStackPanel}" Padding="6,2" IsVisible="{Binding $parent[items:ArchiveImage].Data.ShowExtraDetails, Mode=OneWay}">
-							        <StackPanel Orientation="Horizontal" Spacing="4">
-								        <TextBlock
-									        Grid.Column="1" FontSize="16"
-									        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-									        Text="{Binding $parent[items:ArchiveImage].Data.Resolution, Mode=OneWay}" />
-								        <TextBlock FontSize="16" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding $parent[items:ArchiveImage].Data.Format, Mode=OneWay}" />
-							        </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <TextBlock Grid.Column="1" FontSize="16"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Text="{Binding $parent[items:ArchiveImage].Data.Resolution, Mode=OneWay}" />
+                                        <TextBlock FontSize="16" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding $parent[items:ArchiveImage].Data.Format, Mode=OneWay}" />
+                                    </StackPanel>
                                 </Border>
                                 <Border HorizontalAlignment="Right" Theme="{StaticResource ItemOverlayStackPanel}" IsVisible="{Binding !$parent[items:ArchiveImage].Data.HideOverlay, Mode=OneWay}">
-							        <StackPanel Orientation="Horizontal">
-								        <TextBlock
-									        Padding="6,2" FontSize="16"
-									        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-									        Text="{Binding $parent[items:ArchiveImage].Data.Page, Mode=OneWay}" />
-							        </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Padding="6,2" FontSize="16"
+                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                   Text="{Binding $parent[items:ArchiveImage].Data.Page, Mode=OneWay}" />
+                                    </StackPanel>
                                 </Border>
-						    </Grid>
-					    </Grid>
+                            </Grid>
+                        </Grid>
                     </Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <!-- TODO -->
         <Style Selector="^:hidden /template/ Grid#Overlay">
             <!--<Setter Property="IsVisible" Value="False" />-->
@@ -76,7 +73,7 @@
             <!--<Setter Property="IsVisible" Value="True" />-->
             <Setter Property="RenderTransform" Value="translate(0px, 0px)" />
         </Style>
-	</ControlTheme>
+    </ControlTheme>
 
     <ControlTheme x:Key="ItemOverlayGrid" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
@@ -86,11 +83,11 @@
     </ControlTheme>
 
     <ControlTheme x:Key="ItemOverlayStackPanel" TargetType="Border">
-		<Setter Property="Background" Value="{DynamicResource GridOverGridBackground}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource SurfaceStrokeColorFlyoutBrush}" />
-		<Setter Property="BorderThickness" Value="1" />
-		<Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-	</ControlTheme>
+        <Setter Property="Background" Value="{DynamicResource GridOverGridBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SurfaceStrokeColorFlyoutBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+    </ControlTheme>
 
     <ControlTheme x:Key="{x:Type items:GenericArchiveItem}" BasedOn="{StaticResource DefaultArchiveItem}" TargetType="items:GenericArchiveItem" />
 
@@ -100,47 +97,52 @@
         <Setter Property="Template">
             <ControlTemplate TargetType="items:GenericArchiveItem">
                 <Grid x:Name="Root" Background="Transparent">
+                    <Grid.Resources>
+                        <Flyout x:Key="TagsFlyout" FlyoutPresenterTheme="{StaticResource TagsFlyoutStylePresenter}">
+                            <controls:ArchiveTags ItemClickCommand="{Binding $parent[items:GenericArchiveItem].ViewModel.TagClickCommand}" ItemsSource="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsGroups, Mode=OneWay}" Width="300" />
+                        </Flyout>
+                    </Grid.Resources>
                     <Grid.ContextFlyout>
                         <MenuFlyout>
                             <MenuItem Name="OpenTabMenuItem"
-                                        Header="{ext:LocalizedString Key=/Items/Archive/OpenTab/Text}">
+                                      Header="{ext:LocalizedString Key=/Items/Archive/OpenTab/Text}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="Add" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Name="Add"
-                                        Header="{ext:LocalizedString Key=/Items/Archive/Bookmark/Text}"
-                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
-                                        CommandParameter="{x:True}"
-                                        IsVisible="{Binding !$parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+                                      Header="{ext:LocalizedString Key=/Items/Archive/Bookmark/Text}"
+                                      Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
+                                      CommandParameter="{x:True}"
+                                      IsVisible="{Binding !$parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="Favorite" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Name="Remove"
-                                        Header="{ext:LocalizedString Key=/Items/Archive/Unbookmark/Text}"
-                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
-                                        CommandParameter="{x:False}"
-                                        IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+                                      Header="{ext:LocalizedString Key=/Items/Archive/Unbookmark/Text}"
+                                      Command="{Binding $parent[items:GenericArchiveItem].ViewModel.ChangeBookmarkCommand}"
+                                      CommandParameter="{x:False}"
+                                      IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="UnFavorite" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Rating/Text}"
-                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                 <MenuItem.Icon>
                                     <ui:FAFontIcon Glyph="&#xE728;" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Edit/Text}"
-                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCommand}"
-                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCommand}"
+                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="Edit" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Categories/Text}"
-                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                 <MenuItem.Icon>
                                     <ui:FAFontIcon Glyph="&#xE8B7;" />
                                 </MenuItem.Icon>
@@ -151,8 +153,8 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Delete/Text}"
-                                        Command="{Binding $parent[items:GenericArchiveItem].ViewModel.DeleteCommand}"
-                                        IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      Command="{Binding $parent[items:GenericArchiveItem].ViewModel.DeleteCommand}"
+                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="Delete" />
                                 </MenuItem.Icon>
@@ -165,13 +167,13 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="Title"
-                                Grid.Row="0"
-                                Padding="5,1"
-                                HorizontalAlignment="Center"
-                                FontSize="16"
-                                Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis"
-                                ToolTip.Tip="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}" />
+                               Grid.Row="0"
+                               Padding="5,1"
+                               HorizontalAlignment="Center"
+                               FontSize="16"
+                               Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis"
+                               ToolTip.Tip="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}" />
                     <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
                         <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:GenericArchiveItem].ViewModel.Thumbnail}" />
                     </Border>
@@ -180,9 +182,9 @@
                             <ui:FAFontIcon FontSize="34" Glyph="&#xE8CD;" />
                         </Grid>
                         <Grid HorizontalAlignment="Left"
-                                VerticalAlignment="Bottom"
-                                Margin="4,0,0,4"
-                                IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
+                              VerticalAlignment="Bottom"
+                              Margin="4,0,0,4"
+                              IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.Bookmarked, Mode=OneWay}">
                             <Border Theme="{StaticResource ItemOverlayGrid}">
                                 <TextBlock Padding="6,2" FontSize="16" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}">
                                     <Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Pages, Mode=OneWay}"/>
@@ -190,16 +192,16 @@
                             </Border>
                         </Grid>
                         <Grid Margin="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.IsNew}">
+                              IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.IsNew}">
                             <Border Theme="{StaticResource ItemOverlayGrid}">
                                 <TextBlock Text="{ext:LocalizedString Key=/Items/Archive/New/Text}" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}" Padding="6,2" FontSize="16"/>
                             </Border>
                         </Grid>
                     </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid x:Name="TagsGrid" Grid.Row="2">
                         <TextBlock Padding="2,0"
-                                    Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsClean, Mode=OneWay}"
-                                    TextTrimming="CharacterEllipsis"/>
+                                   Text="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.TagsClean, Mode=OneWay}"
+                                   TextTrimming="CharacterEllipsis"/>
                     </Grid>
                 </Grid>
             </ControlTemplate>
@@ -443,6 +445,45 @@
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="TagsFlyoutStylePresenter" TargetType="FlyoutPresenter">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="{DynamicResource FlyoutPresenterBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource FlyoutBorderThemeBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource FlyoutBorderThemeThickness}" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="MinWidth" Value="{DynamicResource FlyoutThemeMinWidth}" />
+        <Setter Property="MaxWidth" Value="{DynamicResource FlyoutThemeMaxWidth}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MaxHeight" Value="{DynamicResource FlyoutThemeMaxHeight}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+        <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{DynamicResource FlyoutBorderThemePadding}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}">
+                    <ScrollViewer Name="ScrollViewer"
+                                  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
         </Setter>
     </ControlTheme>
 
