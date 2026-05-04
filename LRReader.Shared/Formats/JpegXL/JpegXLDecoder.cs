@@ -43,11 +43,13 @@ namespace LRReader.Shared.Formats.JpegXL
 						byte[] buffer = new byte[info.xsize * info.ysize * info.num_color_channels];
 						fixed (byte* output = buffer)
 						{
-							var pixelFormat = new JxlPixelFormat();
-							pixelFormat.data_type = JxlDataType.JXL_TYPE_UINT8;
-							pixelFormat.endianness = JxlEndianness.JXL_NATIVE_ENDIAN;
-							pixelFormat.num_channels = info.num_color_channels;
-							pixelFormat.align = 0;
+							var pixelFormat = new JxlPixelFormat
+							{
+								data_type = JxlDataType.JXL_TYPE_UINT8,
+								endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
+								num_channels = info.num_color_channels,
+								align = 0
+							};
 
 							nuint size = new();
 							Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);

@@ -20,7 +20,12 @@ public static class Animations
 	public static Task FadeInAsync(this UIElement element) => FadeIn250.StartAsync(element);
 	public static Task FadeOutAsync(this UIElement element) => FadeOut250.StartAsync(element);*/
 
-	public static void SetVisualOpacity(this Visual element, float opacity) => ElementComposition.GetElementVisual(element)!.Opacity = opacity;
+	public static void SetVisualOpacity(this Visual element, float opacity)
+	{
+		var visual = ElementComposition.GetElementVisual(element);
+		if (visual != null)
+			visual.Opacity = opacity;
+	}
 
 	//public static void SetVisualTranslation(this UIElement element, Vector3 transform) => ElementCompositionPreview.GetElementVisual(element).TransformMatrix = Matrix4x4.CreateTranslation(transform);
 

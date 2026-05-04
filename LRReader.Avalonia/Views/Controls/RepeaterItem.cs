@@ -37,7 +37,7 @@ namespace LRReader.Avalonia.Views.Controls
 			set => SetValue(BoxShadowProperty, value);
 		}
 
-		public event EventHandler<RoutedEventArgs>? Click
+		public event EventHandler<ItemClickEventArgs>? Click
 		{
 			add => AddHandler(ClickEvent, value);
 			remove => RemoveHandler(ClickEvent, value);
@@ -79,7 +79,7 @@ namespace LRReader.Avalonia.Views.Controls
 				var param = new GridViewExtParameter(!e.KeyModifiers.HasFlag(KeyModifiers.Control), CommandParameter!);
 				if (Command != null && Command.CanExecute(param))
 					Command.Execute(param);
-				RaiseEvent(new RoutedEventArgs(ClickEvent));
+				RaiseEvent(new ItemClickEventArgs(ClickEvent, this, DataContext!));
 				PseudoClasses.Set(":pressed", false);
 				//VisualStateManager.GoToState(this, "PointerOver", true);
 			}
@@ -98,7 +98,7 @@ namespace LRReader.Avalonia.Views.Controls
 			base.OnKeyUp(e);
 			if (IsEnabled && (e.Key == Key.Space || e.Key == Key.Enter))
 			{
-				RaiseEvent(new RoutedEventArgs(ClickEvent));
+				RaiseEvent(new ItemClickEventArgs(ClickEvent, this, DataContext!));
 				PseudoClasses.Set(":pressed", false);
 				//VisualStateManager.GoToState(this, "Normal", true);
 			}
@@ -115,6 +115,16 @@ namespace LRReader.Avalonia.Views.Controls
 		public static readonly StyledProperty<ICommand?> CommandProperty = AvaloniaProperty.Register<RepeaterItem, ICommand?>("Command", enableDataValidation: true);
 		public static readonly StyledProperty<object?> CommandParameterProperty = AvaloniaProperty.Register<RepeaterItem, object?>("CommandParameter");
 		public static readonly StyledProperty<BoxShadows> BoxShadowProperty = AvaloniaProperty.Register<RepeaterItem, BoxShadows>("BoxShadow");
-		public static readonly RoutedEvent<RoutedEventArgs> ClickEvent = RoutedEvent.Register<RepeaterItem, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
+		public static readonly RoutedEvent<ItemClickEventArgs> ClickEvent = RoutedEvent.Register<RepeaterItem, ItemClickEventArgs>(nameof(Click), RoutingStrategies.Bubble);
+	}
+
+	public class ItemClickEventArgs : RoutedEventArgs
+	{
+		public object ClickedItem { get; set; }
+
+		public ItemClickEventArgs(RoutedEvent? routedEvent, object? source, object clickedItem) : base(routedEvent, source)
+		{
+			ClickedItem = clickedItem;
+		}
 	}
 }

@@ -7,7 +7,8 @@
     <File Path=".editorconfig" />
   </Folder>
   <Project Path="LRReader.Avalonia.Android/LRReader.Avalonia.Android.csproj" Id="3824b01e-ca50-4f04-95f2-20b85aa7cd83">
-    <Deploy Solution="Debug|*" />
+    <Deploy Solution="*|x64" />
+    <Deploy Solution="Debug|ARM64" />
   </Project>
   <Project Path="LRReader.Avalonia.Desktop/LRReader.Avalonia.Desktop.csproj" />
   <Project Path="LRReader.Avalonia/LRReader.Avalonia.csproj" />

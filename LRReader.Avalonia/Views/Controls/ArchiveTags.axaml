@@ -35,7 +35,7 @@
         </ControlTheme>
     </UserControl.Resources>
 
-    <ItemsRepeater ItemsSource="{Binding $parent[local:ArchiveTags].ItemsSource, Mode=OneWay}">
+    <ItemsRepeater ItemsSource="{Binding $parent[local:ArchiveTags].ItemsSource, Mode=OneWay}" KeyboardNavigation.TabNavigation="Continue">
         <ItemsRepeater.ItemTemplate>
             <DataTemplate x:DataType="x1:ArchiveTagsGroup">
                 <Grid>
@@ -46,7 +46,7 @@
                     <Border VerticalAlignment="Top" Theme="{StaticResource NamespaceStyle}">
                         <TextBlock Foreground="{DynamicResource TextFillColorPrimaryBrush}" Text="{Binding Namespace, Converter={StaticResource TagNamespaceConverter}}" />
                     </Border>
-                    <ItemsRepeater Grid.Column="1" ItemsSource="{Binding Tags}">
+                    <ItemsRepeater Grid.Column="1" ItemsSource="{Binding Tags}" KeyboardNavigation.TabNavigation="Continue">
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="x1:ArchiveTagsGroupTag">
                                 <controls:RepeaterItem Background="{DynamicResource ControlStrongStrokeColorDisabled}" Padding="5,3" Command="{Binding $parent[local:ArchiveTags].ItemClickCommand, Mode=OneWay}" CommandParameter="{Binding}">

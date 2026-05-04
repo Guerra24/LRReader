@@ -88,9 +88,9 @@ public class GenericArchiveItem : TemplatedControl
 
 	private Task Show(bool animate)
 	{
-		if (animate)
+		var visual = ElementComposition.GetElementVisual(Root!);
+		if (animate && visual != null)
 		{
-			var visual = ElementComposition.GetElementVisual(Root!)!;
 			var compositor = visual.Compositor;
 			var animation = compositor.CreateScalarKeyFrameAnimation();
 			animation.InsertKeyFrame(0.0f, 0.0f);

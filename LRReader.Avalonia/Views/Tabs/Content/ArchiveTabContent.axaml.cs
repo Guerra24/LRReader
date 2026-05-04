@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using LRReader.Avalonia.Extensions;
+using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
@@ -37,6 +38,8 @@ public partial class ArchiveTabContent : UserControl
 
 	private bool Animate => Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations;
 
+	private Action<int> _resizer;
+
 	public ArchiveTabContent()
 	{
 		InitializeComponent();
@@ -53,6 +56,16 @@ public partial class ArchiveTabContent : UserControl
 		_loadSemaphore.Wait();
 
 		Service.Events.RebuildReaderImagesSetEvent += RebuildReader;
+
+		Action<int> resizer = (param) =>
+		{
+			Service.Dispatcher.Run(async () =>
+			{
+				await ReaderImage.ResizeHeight(param);
+			});
+		};
+
+		_resizer = resizer.Debounce(500);
 	}
 
 	private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -243,7 +256,7 @@ public partial class ArchiveTabContent : UserControl
 		_transition = false;
 	}
 
-	private async void Random_Clicked(object? sender, RoutedEventArgs e) => await Random(false/*(CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down*/);
+	private async void Random_Clicked(object? sender, RoutedEventArgs e) => await Random(false/*(CoreWindow.GetForCurrentThread().GetKeyState(Key.Shift) & CoreKeyStates.Down) == CoreKeyStates.Down*/);
 
 	[RelayCommand]
 	private async Task Random(bool newOnly)
@@ -341,12 +354,12 @@ public partial class ArchiveTabContent : UserControl
 		await NextArchiveAsync();
 	}*/
 
-	/*private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
+	private void ImagesGrid_ItemClick(object? sender, ItemClickEventArgs e)
 	{
 		if (!Data.ControlsEnabled)
 			return;
 		OpenReader(Data.ArchiveImages.IndexOf((ImagePageSet)e.ClickedItem), e.ClickedItem);
-	}*/
+	}
 
 	private void Continue_Click(object? sender, RoutedEventArgs e)
 	{
@@ -372,60 +385,60 @@ public partial class ArchiveTabContent : UserControl
 
 	private void ReaderControl_KeyUp(object? sender, KeyEventArgs e)
 	{
-		/*if (!Data.ShowReader)
+		if (!Data.ShowReader)
 			return;
-		if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space ||
-			 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
-			e.Handled = true;*/
+		if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down || e.Key == Key.Space ||
+			 e.Key == Key.Escape || e.Key == Key.D || e.Key == Key.A || e.Key == Key.W || e.Key == Key.S)
+			e.Handled = true;
 	}
 
 	private void ReaderControl_KeyDown(object? sender, KeyEventArgs e)
 	{
-		/*if (!Data.ShowReader || _changingPage)
+		if (!Data.ShowReader || _changingPage)
 			return;
 
-		var ctrl = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
-		var alt = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Menu);
+		var ctrl = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+		var alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
 
-		if ((ctrl & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down || (alt & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
+		if (ctrl || alt)
 			return;
 
-		if (e.Key == VirtualKey.Left || e.Key == VirtualKey.Right || e.Key == VirtualKey.Up || e.Key == VirtualKey.Down || e.Key == VirtualKey.Space ||
-			 e.Key == VirtualKey.Escape || e.Key == VirtualKey.D || e.Key == VirtualKey.A || e.Key == VirtualKey.W || e.Key == VirtualKey.S)
+		if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down || e.Key == Key.Space ||
+			 e.Key == Key.Escape || e.Key == Key.D || e.Key == Key.A || e.Key == Key.W || e.Key == Key.S)
 		{
 			e.Handled = true;
 			FocusReader();
 		}
-		double offset = ScrollViewer.VerticalOffset;
+		double offset = ScrollViewer.Offset.Y;
 		switch (e.Key)
 		{
-			case VirtualKey.Up:
-			case VirtualKey.W:
+			case Key.Up:
+			case Key.W:
 				if (Math.Floor(offset) <= 0 && Service.Settings.ScrollToChangePage)
 					PrevPage(true);
 				else
-					ScrollViewer.ChangeView(null, offset - Service.Settings.KeyboardScroll, null, false);
+					ScrollViewer.Offset = new Vector(ScrollViewer.Offset.X, offset - Service.Settings.KeyboardScroll);
 				break;
-			case VirtualKey.Down:
-			case VirtualKey.Space:
-			case VirtualKey.S:
-				if ((ScrollViewer.ScrollableHeight - offset) < 5 && Service.Settings.ScrollToChangePage)
+			case Key.Down:
+			case Key.Space:
+			case Key.S:
+				if ((ScrollViewer.Extent.Height - ScrollViewer.Viewport.Height - offset) < 5 && Service.Settings.ScrollToChangePage)
 					NextPage(true);
 				else
-					ScrollViewer.ChangeView(null, offset + Service.Settings.KeyboardScroll, null, false);
+					ScrollViewer.Offset = new Vector(ScrollViewer.Offset.X, offset + Service.Settings.KeyboardScroll);
 				break;
-			case VirtualKey.Right:
-			case VirtualKey.D:
+			case Key.Right:
+			case Key.D:
 				NextPage();
 				break;
-			case VirtualKey.Left:
-			case VirtualKey.A:
+			case Key.Left:
+			case Key.A:
 				PrevPage();
 				break;
-			case VirtualKey.Escape:
+			case Key.Escape:
 				CloseReader();
 				break;
-		}*/
+		}
 	}
 
 	private void FocusReader()
@@ -438,31 +451,31 @@ public partial class ArchiveTabContent : UserControl
 
 	private void ReaderControl_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
 	{
-		/*if (_changingPage)
+		if (_changingPage)
 			return;
 		var pointerPoint = e.GetCurrentPoint(ScrollViewer);
-		if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+		if (e.Pointer.Type == PointerType.Mouse)
 		{
-			var delta = pointerPoint.Properties.MouseWheelDelta;
-			if (e.KeyModifiers == VirtualKeyModifiers.Control || pointerPoint.Properties.IsRightButtonPressed)
+			var delta = e.Delta.Y * 120; // UWP's delta is 120, Avalonia is 1
+			if (e.KeyModifiers == KeyModifiers.Control || pointerPoint.Properties.IsRightButtonPressed)
 			{
 				e.Handled = true;
 				Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
 			}
-			else if (e.KeyModifiers == VirtualKeyModifiers.None)
+			else if (e.KeyModifiers == KeyModifiers.None)
 			{
-				if (Math.Ceiling(ScrollViewer.VerticalOffset) >= ScrollViewer.ScrollableHeight && delta < 0 && Service.Settings.ScrollToChangePage)
+				if (Math.Ceiling(ScrollViewer.Offset.Y) >= ScrollViewer.Extent.Height - ScrollViewer.Viewport.Height && delta < 0 && Service.Settings.ScrollToChangePage)
 				{
 					e.Handled = true;
 					NextPage(true);
 				}
-				else if (Math.Floor(ScrollViewer.VerticalOffset) <= 0 && delta > 0 && Service.Settings.ScrollToChangePage)
+				else if (Math.Floor(ScrollViewer.Offset.Y) <= 0 && delta > 0 && Service.Settings.ScrollToChangePage)
 				{
 					e.Handled = true;
 					PrevPage(true);
 				}
 			}
-		}*/
+		}
 	}
 
 	private void ScrollViewer_PointerPressed(object? sender, PointerPressedEventArgs e)
@@ -472,10 +485,10 @@ public partial class ArchiveTabContent : UserControl
 
 	private async void ScrollViewer_PointerRelease(object? sender, PointerReleasedEventArgs e)
 	{
-		/*var pointerPoint = e.GetCurrentPoint(ScrollViewer);
+		var pointerPoint = e.GetCurrentPoint(ScrollViewer);
 		var point = pointerPoint.Position;
-		double distance = ScrollViewer.ActualWidth / 6.0;
-		if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+		double distance = ScrollViewer.Bounds.Width / 6.0;
+		if (point.X > distance && point.X < ScrollViewer.Bounds.Width - distance)
 		{
 			//_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
 		}
@@ -486,7 +499,7 @@ public partial class ArchiveTabContent : UserControl
 				e.Handled = HandleTapped(point);
 			}
 		}
-		if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+		if (e.Pointer.Type == PointerType.Mouse)
 		{
 			switch (pointerPoint.Properties.PointerUpdateKind)
 			{
@@ -507,16 +520,16 @@ public partial class ArchiveTabContent : UserControl
 					await OpenOverlay();
 					break;
 			}
-		}*/
+		}
 	}
 
 	private void ScrollViewer_DoubleTapped(object? sender, TappedEventArgs e)
 	{
-		/*var point = e.GetPosition(ScrollViewer);
-		double distance = ScrollViewer.ActualWidth / 6.0;
-		if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+		var point = e.GetPosition(ScrollViewer);
+		double distance = ScrollViewer.Bounds.Width / 6.0;
+		if (point.X > distance && point.X < ScrollViewer.Bounds.Width - distance)
 		{
-			var AppView = ApplicationView.GetForCurrentView();
+			/*var AppView = ApplicationView.GetForCurrentView();
 			if (AppView.IsFullScreenMode)
 			{
 				AppView.ExitFullScreenMode();
@@ -524,9 +537,9 @@ public partial class ArchiveTabContent : UserControl
 			else
 			{
 				AppView.TryEnterFullScreenMode();
-			}
+			}*/
 			e.Handled = true;
-		}*/
+		}
 	}
 
 	private async void ScrollViewer_Holding(object? sender, HoldingRoutedEventArgs e)
@@ -544,17 +557,17 @@ public partial class ArchiveTabContent : UserControl
 
 	private bool HandleTapped(Point point)
 	{
-		/*double distance = ScrollViewer.ActualWidth / 6.0;
+		double distance = ScrollViewer.Bounds.Width / 6.0;
 		if (point.X < distance)
 		{
 			PrevPage();
 			return true;
 		}
-		else if (point.X > ScrollViewer.ActualWidth - distance)
+		else if (point.X > ScrollViewer.Bounds.Width - distance)
 		{
 			NextPage();
 			return true;
-		}*/
+		}
 		return false;
 	}
 
@@ -612,8 +625,8 @@ public partial class ArchiveTabContent : UserControl
 		if (Data.ReaderIndex < Data.ArchiveImagesReader.Count() - 1)
 		{
 			++Data.ReaderIndex;
-			//await ReaderImage.FadeOutPage();
-			//ScrollViewer.ChangeView(null, 0, null, true);
+			await ReaderImage.FadeOutPage();
+			ScrollViewer.Offset = new Vector(ScrollViewer.Offset.X, 0);
 			await ChangePage();
 		}
 	}
@@ -625,8 +638,8 @@ public partial class ArchiveTabContent : UserControl
 		if (Data.ReaderIndex > 0)
 		{
 			--Data.ReaderIndex;
-			//await ReaderImage.FadeOutPage();
-			//ScrollViewer.ChangeView(null, 0, null, true);
+			await ReaderImage.FadeOutPage();
+			ScrollViewer.Offset = new Vector(ScrollViewer.Offset.X, 0);
 			await ChangePage();
 		}
 	}
@@ -635,8 +648,8 @@ public partial class ArchiveTabContent : UserControl
 	{
 		if (Data.UseVerticalReader)
 			return;
-		//await ReaderImage.ChangePage(Data.ReaderContent);
-		//ReaderImage.FadeInPage();
+		await ReaderImage.ChangePage(Data.ReaderContent);
+		ReaderImage.FadeInPage();
 		gcCounter++;
 		if (gcCounter > 20)
 		{
@@ -675,40 +688,41 @@ public partial class ArchiveTabContent : UserControl
 
 	private void FitImages(bool disableAnim = false)
 	{
-		/*if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
+		if (ReaderControl.Bounds.Width == 0 || ReaderControl.Bounds.Height == 0)
 			return;
 		float zoomFactor;
 		if (Data.UseVerticalReader)
 		{
 			if (_fitAgainstFixedWidth == 0)
-				_fitAgainstFixedWidth = ReaderControl.ActualWidth;
-			zoomFactor = (float)(ScrollViewer.ViewportWidth / _fitAgainstFixedWidth) * 0.5f;
+				_fitAgainstFixedWidth = ReaderControl.Bounds.Width;
+			zoomFactor = (float)(ScrollViewer.Viewport.Width / _fitAgainstFixedWidth) * 0.5f;
 		}
 		else if (Data.FitToWidth)
 		{
-			zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Data.FitScaleLimit * 0.01);
+			zoomFactor = (float)Math.Min(ScrollViewer.Viewport.Width / ReaderControl.Bounds.Width, Data.FitScaleLimit * 0.01);
 		}
 		else
 		{
-			zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
+			zoomFactor = (float)Math.Min(ScrollViewer.Viewport.Width / ReaderControl.Bounds.Width, ScrollViewer.Viewport.Height / ReaderControl.Bounds.Height);
 		}
 		var zoom = zoomFactor * (Data.ZoomValue * 0.01f);
 		if (zoom != _lastZoom)
 		{
 			_lastZoom = zoom;
-			var yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
-			ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Animate)
-		}*/
+			var yOffset = ScrollViewer.Offset.Y / Data.ZoomFactor * zoom;
+			Data.ZoomFactor = zoom;
+			ScrollViewer.Offset = new Point(ScrollViewer.Offset.X, yOffset);
+		}
 	}
 
 	private async void ScrollViewer_ViewChanged(object? sender, ScrollChangedEventArgs e)
 	{
-		/*if (e.IsIntermediate)
-			return;
+		//if (e.IsIntermediate)
+		//return;
 		// Use width instead of height in vertical mode
 		if (Data.UseVerticalReader)
 		{
-			if (ScrollViewer.CurrentAnchor is ReaderImage image)
+			/*if (ScrollViewer.CurrentAnchor is ReaderImage image)
 			{
 				var index = ReaderVertical.GetElementIndex(ScrollViewer.CurrentAnchor);
 				Data.ReaderIndex = index;
@@ -717,10 +731,10 @@ public partial class ArchiveTabContent : UserControl
 				await image.ResizeWidth(width);
 				(ReaderVertical.TryGetElement(index + 1) as ReaderImage)?.ResizeWidth(width);
 				(ReaderVertical.TryGetElement(index + 2) as ReaderImage)?.ResizeWidth(width);
-			}
+			}*/
 		}
 		else
-			await ReaderImage.ResizeHeight((int)Math.Round(ScrollViewer.ExtentHeight));*/
+			_resizer.Invoke((int)Math.Round(ScrollViewer.Extent.Height));
 	}
 
 	private void CompositionTarget_Rendering(object? sender, object e)

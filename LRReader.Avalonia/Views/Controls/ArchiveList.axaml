@@ -115,7 +115,7 @@
                                                SelectedPageIndex="{Binding Page, Mode=OneWay}" />
                     </Grid>
                     <!-- Content -->
-                    <ItemsRepeater x:Name="ArchivesGrid" ItemsSource="{Binding ArchiveList}" Margin="5">
+                    <ItemsRepeater x:Name="ArchivesGrid" ItemsSource="{Binding ArchiveList}" Margin="5" KeyboardNavigation.TabNavigation="Continue">
                         <ItemsRepeater.Layout>
                             <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
                         </ItemsRepeater.Layout>

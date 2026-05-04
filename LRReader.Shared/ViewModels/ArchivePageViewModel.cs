@@ -178,6 +178,11 @@ namespace LRReader.Shared.ViewModels
 		[ObservableProperty]
 		private int _buildMax;
 
+#if !WINDOWS_UWP
+		[ObservableProperty]
+		private double _zoomFactor = 1;
+#endif
+
 		private bool _loading, _abort;
 
 		public int PageCounter;

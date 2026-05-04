@@ -139,10 +139,12 @@
 						</WrapPanel>
 					</StackPanel>
                     <!-- Content -->
-                    <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5">
+                    <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5" KeyboardNavigation.TabNavigation="Continue">
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate>
-						        <items:ArchiveImage />
+                                <controls:RepeaterItem Click="ImagesGrid_ItemClick" BoxShadow="0 2 8 2 #26000000">
+						            <items:ArchiveImage />
+                                </controls:RepeaterItem>
 					        </DataTemplate>
                         </ItemsRepeater.ItemTemplate>
                         <ItemsRepeater.Layout>
@@ -165,29 +167,35 @@
 			DoubleTapped="ScrollViewer_DoubleTapped" Holding="ScrollViewer_Holding"
 			VerticalScrollBarVisibility="Auto"
 			ScrollChanged="ScrollViewer_ViewChanged"
-			IsVisible="{Binding ShowReader, Mode=OneWay}">
-            <!-- BringIntoViewOnFocusChange="False" -->
+			IsVisible="{Binding ShowReader, Mode=OneWay}"
+            BringIntoViewOnFocusChange="False">
             <!-- HorizontalAnchorRatio="0.5" VerticalAnchorRatio="0.01" -->
-			<ContentControl
-				x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
-				IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
-				PointerWheelChanged="ReaderControl_PointerWheelChanged"
-				SizeChanged="ReaderControl_SizeChanged">
-                <!-- ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" -->
-				<Grid>
-					<!--<items:ReaderImage x:Name="ReaderImage" x:Load="{Binding UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-					<muxc:ItemsRepeater x:Name="ReaderVertical" x:Load="{Binding UseVerticalReader, Mode=OneWay}" ItemsSource="{Binding ArchiveImagesReader}">
-						<muxc:ItemsRepeater.ItemTemplate>
-							<DataTemplate x:DataType="main:ReaderImageSet">
-								<items:ReaderImage Height="{x:Bind Height}" HorizontalAlignment="Center" DataContext="{x:Bind}" />
-							</DataTemplate>
-						</muxc:ItemsRepeater.ItemTemplate>
-						<muxc:ItemsRepeater.Layout>
-							<muxc:StackLayout />
-						</muxc:ItemsRepeater.Layout>
-					</muxc:ItemsRepeater>-->
-				</Grid>
-			</ContentControl>
+            <LayoutTransformControl HorizontalAlignment="Center">
+                <LayoutTransformControl.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding ZoomFactor, Mode=OneWay}" ScaleY="{Binding ZoomFactor, Mode=OneWay}" />
+                </LayoutTransformControl.LayoutTransform>
+			    <ContentControl
+				    x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
+				    IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
+				    PointerWheelChanged="ReaderControl_PointerWheelChanged"
+				    SizeChanged="ReaderControl_SizeChanged"
+                    Focusable="True">
+                    <!-- ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" -->
+                    <Grid>
+					    <items:ReaderImage x:Name="ReaderImage" IsVisible="{Binding !UseVerticalReader, Mode=OneWay}" />
+					    <!--<muxc:ItemsRepeater x:Name="ReaderVertical" x:Load="{Binding UseVerticalReader, Mode=OneWay}" ItemsSource="{Binding ArchiveImagesReader}">
+						    <muxc:ItemsRepeater.ItemTemplate>
+							    <DataTemplate x:DataType="main:ReaderImageSet">
+								    <items:ReaderImage Height="{x:Bind Height}" HorizontalAlignment="Center" DataContext="{x:Bind}" />
+							    </DataTemplate>
+						    </muxc:ItemsRepeater.ItemTemplate>
+						    <muxc:ItemsRepeater.Layout>
+							    <muxc:StackLayout />
+						    </muxc:ItemsRepeater.Layout>
+					    </muxc:ItemsRepeater>-->
+				    </Grid>
+			    </ContentControl>
+            </LayoutTransformControl>
 		</ScrollViewer>
 		<Grid x:Name="ReaderThumbnailOverlayHitArea"
 			Height="48" VerticalAlignment="Bottom" Background="Transparent"

@@ -37,9 +37,9 @@ namespace LRReader.Avalonia.Views.Items
 
 		private Task Show(bool animate)
 		{
-			if (animate)
+			var visual = ElementComposition.GetElementVisual(Root);
+			if (animate && visual != null)
 			{
-				var visual = ElementComposition.GetElementVisual(Root!)!;
 				var compositor = visual.Compositor;
 				var animation = compositor.CreateScalarKeyFrameAnimation();
 				animation.InsertKeyFrame(0.0f, 0.0f);
@@ -49,15 +49,15 @@ namespace LRReader.Avalonia.Views.Items
 				visual.StartAnimation("Opacity", animation);
 			}
 			else
-				Root?.SetVisualOpacity(1);
+				Root.SetVisualOpacity(1);
 			return Task.CompletedTask;
 		}
 
 		private Task Hide(bool animate)
 		{
-			if (animate)
+			var visual = ElementComposition.GetElementVisual(Root);
+			if (animate && visual != null)
 			{
-				var visual = ElementComposition.GetElementVisual(Root!)!;
 				var compositor = visual.Compositor;
 				var animation = compositor.CreateScalarKeyFrameAnimation();
 				animation.InsertKeyFrame(0.0f, 1.0f);
