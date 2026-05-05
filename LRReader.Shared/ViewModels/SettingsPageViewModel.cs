@@ -22,7 +22,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly ImagesService Images;
 		private readonly ArchivesService Archives;
 		private readonly PlatformService Platform;
-		private readonly UpdatesService Updates;
+		public UpdatesService Updates { get; }
 		private readonly ApiService Api;
 		private readonly TabsService Tabs;
 		private readonly IKarenService Karen;

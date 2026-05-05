@@ -14,8 +14,8 @@
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
 			<controls:ModernGroup>
-				<controls:ModernInput x:Uid="/Settings/Updates/AutoUpdates" Glyph="&#xE9f3;" IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}">
-					<ToggleSwitch IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate()}" IsOn="{x:Bind services:Service.Settings.AutoUpdate, Mode=TwoWay}" />
+				<controls:ModernInput x:Uid="/Settings/Updates/AutoUpdates" Glyph="&#xE9f3;" IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate}">
+					<ToggleSwitch IsEnabled="{x:Bind services:Service.Updates.CanAutoUpdate}" IsOn="{x:Bind services:Service.Settings.AutoUpdate, Mode=TwoWay}" />
 				</controls:ModernInput>
 				<controls:ModernInput x:Uid="/Settings/Updates/NotFound" Glyph="&#xE895;" Visibility="{x:Bind Data.ShowChangelog, Mode=OneWay, Converter={StaticResource NegateBoolToVisibilityConverter}}">
 					<Button x:Uid="/Settings/Updates/Check" Command="{x:Bind Data.CheckForUpdatesCommand}" />

@@ -1,8 +1,10 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using LRReader.Avalonia.Services;
 using LRReader.Avalonia.Views;
 using LRReader.Shared.Services;
+using Sentry.Protocol;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Avalonia
@@ -43,8 +45,23 @@ namespace LRReader.Avalonia
 				Platform.GoToPage(Pages.Loading, PagesTransition.None);
 			}
 
+			Dispatcher.UIThread.UnhandledException += App_UnhandledException;
+
 			base.OnFrameworkInitializationCompleted();
 		}
 
+		private void App_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+		{
+			var exception = e.Exception;
+			e.Handled = true;
+			exception.Data[Mechanism.HandledKey] = false;
+			exception.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
+
+			SentrySdk.CaptureException(exception);
+
+			SentrySdk.Flush(TimeSpan.FromSeconds(2));
+
+			Service.Dispatcher.Run(async () => await Platform.OpenGenericDialog("Internal Error", "Continue", content: exception.Message));
+		}
 	}
 }

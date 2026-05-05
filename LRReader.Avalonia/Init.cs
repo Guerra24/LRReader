@@ -15,6 +15,11 @@ namespace LRReader.Avalonia
 				collection.Replace(ServiceDescriptor.Singleton<IFilesService, FilesService>());
 				collection.Replace(ServiceDescriptor.Singleton<IDispatcherService, DispatcherService>());
 				collection.Replace(ServiceDescriptor.Singleton<PlatformService, AvaloniaPlatformService>());
+#if !DEBUG
+#if NIGHTLY_APPIMAGE
+				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, NightlyAppImageUpdatesService>());
+#endif
+#endif
 
 				collection.AddSingleton<ImageProcessingService, AvaloniaImageProcessingService>();
 			});

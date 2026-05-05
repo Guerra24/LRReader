@@ -3,7 +3,69 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Content.Settings"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:content="using:LRReader.Avalonia.Views.Content"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
+             x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Content.Settings.Updates">
+
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0" BringIntoViewOnFocusChange="False">
+		<StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+			<controls:ModernGroup>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Updates/AutoUpdates/Title}" Glyph="&#xE9f3;" IsEnabled="{Binding Updates.CanAutoUpdate}">
+					<ToggleSwitch IsEnabled="{Binding Updates.CanAutoUpdate}" IsChecked="{Binding SettingsManager.AutoUpdate, Mode=TwoWay}" />
+				</controls:ModernInput>
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Updates/NotFound/Title}" Glyph="&#xE895;" IsVisible="{Binding !ShowChangelog, Mode=OneWay}">
+					<Button Content="{ext:LocalizedString /Settings/Updates/Check/Content}" Command="{Binding CheckForUpdatesCommand}" />
+				</controls:ModernInput>
+				<controls:ModernExpander
+					Title="{Binding Changelog.Name, Mode=OneWay}"
+					Glyph="&#xE896;" IsExpanded="True"
+					IsVisible="{Binding ShowChangelog, Mode=OneWay}">
+                    <controls:ModernExpander.Items>
+                        <md:MarkdownScrollViewer Markdown="{Binding $parent[local:Updates].Data.Changelog.Content, Mode=OneWay}" />
+                    </controls:ModernExpander.Items>
+				</controls:ModernExpander>
+				<StackPanel IsVisible="{Binding ShowChangelog, Mode=OneWay}">
+					<StackPanel Margin="8">
+						<!--<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>-->
+						<ProgressBar Margin="0,2" Maximum="1.0" Value="{Binding UpdateProgress, Mode=OneWay}" />
+					</StackPanel>
+					<StackPanel Margin="8,2,8,8">
+						<!--<StackPanel.Transitions>
+							<TransitionCollection>
+								<RepositionThemeTransition IsStaggeringEnabled="False" />
+							</TransitionCollection>
+						</StackPanel.Transitions>-->
+						<Button
+							Content="{ext:LocalizedString /Settings/Updates/Download/Content}" HorizontalAlignment="Right" Classes="accent"
+							Command="{Binding InstallUpdateCommand}"
+							IsEnabled="{Binding !InstallUpdateCommand.IsRunning, Mode=OneWay}" />
+					</StackPanel>
+				</StackPanel>
+				<ui:FAInfoBar
+					Title="{Binding UpdateMessage, Mode=OneWay}"
+					IsClosable="False"
+					IsOpen="{Binding UpdateMessage, Mode=OneWay, Converter={StaticResource EmptyStringToObjectConverter}}"
+					Message="{Binding UpdateError, Mode=OneWay}"
+					Severity="Error">
+					<!--<ui:FAInfoBar.Transitions>
+						<TransitionCollection>
+							<RepositionThemeTransition IsStaggeringEnabled="False" />
+						</TransitionCollection>
+					</ui:FAInfoBar.Transitions>-->
+				</ui:FAInfoBar>
+			</controls:ModernGroup>
+		</StackPanel>
+	</ScrollViewer>
 
 </controls:ModernBasePage>

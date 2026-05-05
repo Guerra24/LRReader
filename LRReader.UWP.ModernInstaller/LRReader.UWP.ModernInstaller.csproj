@@ -29,6 +29,7 @@
     <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
     <MrmPatcherEnabled>true</MrmPatcherEnabled>
     <MrmPatcherEmbedPri>true</MrmPatcherEmbedPri>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
   <PropertyGroup>

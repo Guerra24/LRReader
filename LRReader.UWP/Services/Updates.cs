@@ -21,17 +21,20 @@ namespace LRReader.UWP.Services
 			Current = Package.Current;
 		}
 
-		public override bool CanAutoUpdate()
+		public override bool CanAutoUpdate
 		{
-			try
-			{
-				return Context.CanSilentlyDownloadStorePackageUpdates;
+			get
+			{	
+				try
+				{
+					return Context.CanSilentlyDownloadStorePackageUpdates;
+				}
+				catch (Exception e)
+				{
+					SentrySdk.CaptureException(e);
+				}
+				return false;
 			}
-			catch (Exception e)
-			{
-				SentrySdk.CaptureException(e);
-			}
-			return false;
 		}
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
@@ -73,7 +76,7 @@ namespace LRReader.UWP.Services
 					return new UpdateResult { Result = false, ErrorCode = -1, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/NotFound") };
 
 				IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> downloadTask;
-				if (CanAutoUpdate())
+				if (CanAutoUpdate)
 					downloadTask = Context.TrySilentDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
 				else
 					downloadTask = Context.RequestDownloadAndInstallStorePackageUpdatesAsync(packageUpdates);
@@ -96,7 +99,7 @@ namespace LRReader.UWP.Services
 		{
 		}
 
-		public override bool CanAutoUpdate() => true;
+		public override bool CanAutoUpdate => true;
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{
@@ -151,7 +154,7 @@ namespace LRReader.UWP.Services
 			Current = Package.Current;
 		}
 
-		public override bool CanAutoUpdate() => true;
+		public override bool CanAutoUpdate => true;
 
 		public override async Task<CheckForUpdatesResult> CheckForUpdates()
 		{

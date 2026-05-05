@@ -33,7 +33,7 @@ namespace LRReader.Shared.Services
 
 		public abstract Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null);
 
-		public abstract bool CanAutoUpdate();
+		public abstract bool CanAutoUpdate { get; }
 
 		public async Task<UpdateChangelog> GetChangelog(Version version)
 		{
@@ -92,7 +92,7 @@ namespace LRReader.Shared.Services
 	{
 		public StubUpdatesService(PlatformService platform, ISettingsStorageService settingsStorage, SettingsService settings) : base(platform, settingsStorage, settings) { }
 
-		public override bool CanAutoUpdate() => false;
+		public override bool CanAutoUpdate => false;
 
 		public override Task<CheckForUpdatesResult> CheckForUpdates() => Task.Run(() => new CheckForUpdatesResult { Result = false });
 

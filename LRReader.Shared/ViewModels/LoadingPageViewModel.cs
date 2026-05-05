@@ -60,7 +60,7 @@ namespace LRReader.Shared.ViewModels
 		{
 			Animate = false;
 			await Service.InitServices();
-			if (Updates.CanAutoUpdate() && Settings.AutoUpdate)
+			if (Updates.CanAutoUpdate && Settings.AutoUpdate)
 			{
 				var update = await Updates.CheckForUpdates();
 				if (update.Result)

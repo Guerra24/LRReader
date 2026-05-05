@@ -86,5 +86,7 @@
                 </Grid>
             </ui:FATabView.TabStripFooter>
         </ui:FATabView>
+        <!-- Temporary -->
+        <ui:FAInfoBar x:Name="Notifications" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32" Background="{DynamicResource SolidBackgroundFillColorBase}" />
     </Grid>
 </UserControl>

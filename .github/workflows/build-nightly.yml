@@ -4,14 +4,12 @@ on:
     branches:
     - develop
 jobs:
-  buildAvalonia:
-    name: Avalonia
+  buildAvaloniaUnpackaged:
+    name: Avalonia (Unpackaged)
     runs-on: windows-2025-vs2026
     strategy:
       matrix:
         platform:
-          - linux-x64
-          - linux-arm64
           - macos-x64
           - macos-arm64
           - win-x64
@@ -29,13 +27,60 @@ jobs:
       uses: microsoft/setup-msbuild@v3
     - name: Build
       run: |
-        Invoke-Expression "./Util/Version-Avalonia.ps1"
+        ./Util/Version-Avalonia.ps1 "C:\Program Files\Git\mingw64\bin\git.exe"
         dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal -p:PublishProfile=${{ matrix.platform }} -p:Version=$env:LRR_VERSION
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
         name: LRReader.Avalonia.${{ matrix.platform }}
         path: LRReader.Avalonia.Desktop/bin/publish/${{ matrix.platform }}
+  buildAvaloniaAppImage:
+    name: Avalonia (AppImage)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - linux-x64
+          - linux-arm64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+    - name: Setup Tools
+      run: |
+        dotnet tool install -g KuiperZone.PupNet
+        wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x ./appimagetool-x86_64.AppImage
+    - name: Build
+      shell: pwsh
+      run: |
+        ./Util/Version-Avalonia.ps1 "git"
+        pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
+        echo "LRR_VERSION=$env:LRR_VERSION" >> $Env:GITHUB_ENV
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v6
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Upload to S3
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      run: |
+        echo $LRR_VERSION > version
+        aws s3 cp ./version s3://${AWS_S3_BUCKET}/projects/lrr/linux/nightly/version --no-progress --acl public-read
+        aws s3 cp ./LRReader.Avalonia.Desktop/AppPackages/ s3://${AWS_S3_BUCKET}/projects/lrr/linux/nightly/ --recursive --exclude "*" --include "*.AppImage" --include "*.txt" --no-progress --acl public-read
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: LRReader.Avalonia.${{ matrix.platform }}
+        path: LRReader.Avalonia.Desktop/AppPackages
   buildUWP:
     name: UWP Nightly
     runs-on: windows-2025-vs2026
@@ -163,9 +208,11 @@ jobs:
       with:
         name: Installer-${{ matrix.arch }}
         path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
-  purgeUWPCache:
-    name: Purge UWP Nightly cache
-    needs: buildUWP
+  purgeCache:
+    name: Purge Nightly cache
+    needs:
+     - buildUWP
+     - buildAvaloniaAppImage
     runs-on: ubuntu-latest
     steps:
       - name: Purge cache
@@ -173,4 +220,4 @@ jobs:
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-          PURGE_URLS: '["https://s3.guerra24.net/projects/lrr/nightly/index.html", "https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller"]'
+          PURGE_URLS: '["https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage.sha256.txt", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage.sha256.txt", "https://s3.guerra24.net/projects/lrr/linux/nightly/version"]'
