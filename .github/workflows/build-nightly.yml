@@ -84,6 +84,8 @@ jobs:
      - buildAvaloniaAppImage
     runs-on: ubuntu-slim
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
       - name: Update Version
         shell: pwsh
         run: |
@@ -222,7 +224,7 @@ jobs:
     needs:
      - buildUWP
      - buildAvaloniaAppImage
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
