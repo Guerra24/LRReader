@@ -34,6 +34,7 @@ namespace LRReader.Avalonia.Services
 			}
 		}
 
+		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Interoperability", "CA1416")]
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
 			try
@@ -74,9 +75,15 @@ namespace LRReader.Avalonia.Services
 				if (string.IsNullOrEmpty(path))
 					return new UpdateResult { Result = false, ErrorCode = 3, ErrorMessage = "Unable to update AppImage" };
 
+				var mode = File.GetUnixFileMode(path);
+
+				File.Delete(path);
+
 				await File.WriteAllBytesAsync(path, appImage);
 
 				progress?.Report(1.0);
+
+				File.SetUnixFileMode(path, mode);
 
 				Process.Start(path);
 
