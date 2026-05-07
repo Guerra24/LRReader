@@ -2,7 +2,6 @@ using Avalonia.Media;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LRReader.Avalonia.Views.Main
 {

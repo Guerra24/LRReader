@@ -32,7 +32,7 @@
 		<StackPanel Orientation="Horizontal" Spacing="2">
 			<Button ToolTip.Tip="{ext:LocalizedString /Tabs/Archive/Settings/Button/ToolTipService/ToolTip}">
 				<Button.Flyout>
-					<Flyout IsOpen="True">
+					<Flyout>
 						<StackPanel Spacing="0">
 							<Grid>
 								<Grid.ColumnDefinitions>

@@ -150,7 +150,7 @@ public partial class ModernPageTab : UserControl, IDisposable
 				MainBreadcrumbItems.RemoveAt(i);
 			}
 			var item = (ModernPageTabItem)args.Item;
-			ContentMain.Navigate(item.Page, new ModernPageTabWrapper(this, item.Parameter));
+			ContentMain.Navigate(item.Page, new ModernPageTabWrapper(this, item.Parameter), new FASlideNavigationTransitionInfo { Effect = FASlideNavigationTransitionEffect.FromLeft, FromHorizontalOffset = 150 });
 		}
 	}
 
