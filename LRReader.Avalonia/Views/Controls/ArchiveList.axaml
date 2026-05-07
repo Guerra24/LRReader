@@ -11,8 +11,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LRReader.Avalonia.Views.Controls.ArchiveList"
              x:DataType="vm:SearchResultsViewModel"
-             Loaded="UserControl_Loaded"
-             DataContext="{ReflectionBinding SearchResultsInstance, Source={StaticResource Locator}}">
+             Loaded="UserControl_Loaded">
     <Grid>
         <Grid.KeyBindings>
             <KeyBinding Gesture="F5" Command="{Binding $parent[local:ArchiveList].RefreshCommand}" />

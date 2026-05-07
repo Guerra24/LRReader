@@ -12,7 +12,6 @@
              xmlns:conv="using:Avalonia.Controls.Converters"
              xmlns:services="using:LRReader.Shared.Services"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
              Loaded="Page_Loaded"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Content.Settings.Reader">

@@ -2,7 +2,9 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using LRReader.Avalonia.Resources;
 using LRReader.Avalonia.Views.Controls;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.Avalonia.Views.Content.Settings;
 
@@ -13,7 +15,7 @@ public partial class Profiles : ModernBasePage
 	public Profiles()
 	{
 		InitializeComponent();
-		Data = (SettingsPageViewModel)DataContext!;
+		DataContext = Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 		var lang = ResourceLoader.GetForCurrentView("Settings");
 		SessionMode.Items.Add(lang.GetString("Profiles/SessionMode/Never"));
 		SessionMode.Items.Add(lang.GetString("Profiles/SessionMode/Ask"));

@@ -29,7 +29,7 @@ public partial class ReaderImage : UserControl
 		await decodePixel.WaitAsync();
 		Set = set;
 		var images = await Task.WhenAll(Service.Images.GetImageCached(set.LeftImage), Service.Images.GetImageCached(set.RightImage));
-		var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height), imageProcessing.ByteToBitmap(images[1], _width, _height));
+		var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
 		LeftImage.Source = imageBitmaps[0] as Bitmap;
 		RightImage.Source = imageBitmaps[1] as Bitmap;
 		var sizes = await Task.WhenAll(Service.Images.GetImageSizeCached(set.LeftImage), Service.Images.GetImageSizeCached(set.RightImage));

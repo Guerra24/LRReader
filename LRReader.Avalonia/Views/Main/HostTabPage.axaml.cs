@@ -1,3 +1,4 @@
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Messaging;
 using FluentAvalonia.UI.Controls;
@@ -7,6 +8,7 @@ using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Messages;
 using LRReader.Shared.Services;
+using Microsoft.Extensions.DependencyInjection;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Avalonia.Views.Main
@@ -17,10 +19,12 @@ namespace LRReader.Avalonia.Views.Main
 
 		private ResourceLoader lang;
 
+		private WindowState WindowState;
+
 		public HostTabPage()
 		{
 			InitializeComponent();
-			Data = (TabsService)DataContext!;
+			DataContext = Data = Service.Services.GetRequiredService<TabsService>();
 
 			lang = ResourceLoader.GetForCurrentView("Pages");
 			AddHandler(FAFrame.NavigatedToEvent, OnNavigatedTo);
@@ -83,7 +87,23 @@ namespace LRReader.Avalonia.Views.Main
 			});
 		}
 
-		private void EnterFullScreen_Click(object sender, RoutedEventArgs e) { }
+		private void EnterFullScreen_Click(object? sender, RoutedEventArgs e)
+		{
+			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
+				var window = desktop.MainWindow!;
+				WindowState = window.WindowState;
+				window.WindowState = WindowState.FullScreen;
+			}
+			Data.Fullscreen = true;
+		}
+
+		private void RestoreFullScreen_Click(object? sender, RoutedEventArgs e)
+		{
+			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+				desktop.MainWindow!.WindowState = WindowState;
+			Data.Fullscreen = false;
+		}
 
 		private void TabView_TabCloseRequested(FATabView sender, FATabViewTabCloseRequestedEventArgs args)
 		{

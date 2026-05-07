@@ -3,6 +3,7 @@ using LRReader.Avalonia.Resources;
 using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.Avalonia.Views.Content.Settings;
 
@@ -16,7 +17,7 @@ public partial class General : ModernBasePage
 	{
 		InitializeComponent();
 
-		Data = (SettingsPageViewModel)DataContext!;
+		DataContext = Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 		lang = ResourceLoader.GetForCurrentView("Settings");
 		ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/System"));
 		ThemeComboBox.Items.Add(lang.GetString("General/AppTheme/Dark"));

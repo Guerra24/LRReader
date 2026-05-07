@@ -9,6 +9,7 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.Avalonia.Views.Tabs.Content;
 
@@ -49,7 +50,7 @@ public partial class ArchiveTabContent : UserControl
 		*/
 		ScrollViewer.AddHandler(PointerReleasedEvent, ScrollViewer_PointerRelease);
 
-		Data = (ArchivePageViewModel)DataContext!;
+		DataContext = Data = Service.Services.GetRequiredService<ArchivePageViewModel>();
 		Data.ZoomChangedEvent += FitImages;
 		Data.RebuildReader += RebuildReader;
 

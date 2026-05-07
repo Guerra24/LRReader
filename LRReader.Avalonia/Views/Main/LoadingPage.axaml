@@ -10,8 +10,7 @@
              d:DesignHeight="1000"
              x:DataType="vm:LoadingPageViewModel"
              x:Class="LRReader.Avalonia.Views.Main.LoadingPage"
-             AttachedToVisualTree="LoadingPage_AttachedToVisualTree"
-             DataContext="{ReflectionBinding LoadingPageInstance, Source={StaticResource Locator}}">
+             AttachedToVisualTree="LoadingPage_AttachedToVisualTree">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />

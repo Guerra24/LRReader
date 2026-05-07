@@ -6,10 +6,16 @@
              xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:converters="using:LRReader.Avalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              IconSource="{Binding #TabContent.Data.((ui:FAIconSource)Icon), Mode=OneWay}"
 	         ToolTip.Tip="{Binding #TabContent.Data.Archive.title, Mode=OneWay}"
              x:Class="LRReader.Avalonia.Views.Tabs.ArchiveTab">
+
+    <controls:ModernTab.Resources>
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+	</controls:ModernTab.Resources>
+
     <ui:FATabViewItem.Header>
         <Grid MaxWidth="200">
 			<Grid.ColumnDefinitions>
@@ -22,6 +28,112 @@
 			</TextBlock>
 		</Grid>
     </ui:FATabViewItem.Header>
+    <controls:ModernTab.CustomTabControl>
+		<StackPanel Orientation="Horizontal" Spacing="2">
+			<Button ToolTip.Tip="{ext:LocalizedString /Tabs/Archive/Settings/Button/ToolTipService/ToolTip}">
+				<Button.Flyout>
+					<Flyout IsOpen="True">
+						<StackPanel Spacing="0">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="220" />
+									<ColumnDefinition Width="40" />
+								</Grid.ColumnDefinitions>
+								<Slider
+									Maximum="400"
+									Minimum="{Binding #TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource MinZoomConverter}}"
+									TickFrequency="30" TickPlacement="None"
+									Value="{Binding #TabContent.Data.ZoomValue, Mode=TwoWay}" />
+								<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+									<Run Text="{Binding #TabContent.Data.ZoomValue, Mode=OneWay}" />%
+								</TextBlock>
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Settings/RTL/Text}" VerticalAlignment="Center" />
+								<ToggleSwitch
+									Grid.Column="1"
+									IsEnabled="{Binding #TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									IsChecked="{Binding #TabContent.Data.ReadRTL, Mode=TwoWay}"
+									Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Settings/TwoPages/Text}" VerticalAlignment="Center" />
+								<ToggleSwitch
+									Grid.Column="1"
+									IsEnabled="{Binding #TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									IsChecked="{Binding #TabContent.Data.TwoPages, Mode=TwoWay}"
+									Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<CheckBox Content="{ext:LocalizedString /Settings/Reader/SetBuilder/Content}" IsChecked="{Binding #TabContent.Data.SetBuilder, Mode=TwoWay}" IsEnabled="{Binding #TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Settings/FitWidth/Text}" VerticalAlignment="Center" />
+								<ToggleSwitch
+									Grid.Column="1"
+									IsEnabled="{Binding #TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									IsChecked="{Binding #TabContent.Data.FitToWidth, Mode=TwoWay}"
+									Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="220" />
+									<ColumnDefinition Width="40" />
+								</Grid.ColumnDefinitions>
+								<Slider
+									IsEnabled="{Binding #TabContent.Data.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+									Maximum="400" Minimum="100"
+									TickFrequency="25.0" TickPlacement="None"
+									Value="{Binding #TabContent.Data.FitScaleLimit, Mode=TwoWay}" />
+								<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+									<Run Text="{Binding #TabContent.Data.FitScaleLimit, Mode=OneWay}" />%
+								</TextBlock>
+							</Grid>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Settings/VerticalReader/Text}" VerticalAlignment="Center" />
+								<ToggleSwitch Grid.Column="1" IsChecked="{Binding #TabContent.Data.UseVerticalReader, Mode=TwoWay}" Template="{StaticResource LeftContentToggleSwitch}" />
+							</Grid>
+							<!--
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<TextBlock x:Uid="/Tabs/Archive/Settings/Autoplay" VerticalAlignment="Center" />
+								<ToggleButton
+									x:Name="AutoplayButton" Grid.Column="1" Checked="AutoplayButton_Checked" Unchecked="AutoplayButton_Unchecked"
+									Command="{Binding #TabContent.PlayStopCommand}" IsChecked="{Binding #TabContent.Data.UseAutoplay, Mode=TwoWay}"
+									CommandParameter="{Binding #AutoplayButton.IsChecked, Mode=OneWay}" />
+							</Grid>
+							-->
+						</StackPanel>
+					</Flyout>
+				</Button.Flyout>
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<ui:FASymbolIcon Symbol="Zoom" />
+				</Viewbox>
+			</Button>
+			<Button ToolTip.Tip="{ext:LocalizedString /Generic/RefreshTT/ToolTipService/ToolTip}" Command="{Binding #TabContent.Data.ReloadCommand}" CommandParameter="{x:True}">
+				<Viewbox MaxWidth="16" MaxHeight="16">
+					<ui:FASymbolIcon Symbol="Refresh" />
+				</Viewbox>
+			</Button>
+		</StackPanel>
+	</controls:ModernTab.CustomTabControl>
 
     <content:ArchiveTabContent x:Name="TabContent" />
 </controls:ModernTab>

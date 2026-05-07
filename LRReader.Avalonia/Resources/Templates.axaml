@@ -422,21 +422,14 @@
     <ControlTheme x:Key="{x:Type controls:ModernGroup}" TargetType="controls:ModernGroup">
         <Setter Property="Margin" Value="0,0,0,32" />
         <Setter Property="IsTabStop" Value="False" />
-        <!--<Setter Property="Transitions">
-        <Setter.Value>
-        <TransitionCollection>
-        <RepositionThemeTransition IsStaggeringEnabled="False" />
-        </TransitionCollection>
-        </Setter.Value>
-        </Setter>-->
+        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ModernGroup">
                     <StackPanel>
-                        <TextBlock
-                        Margin="1,0,0,8" FontWeight="Bold"
-                        Text="{TemplateBinding Title}"
-                        IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                        <TextBlock Margin="1,0,0,8" FontWeight="Bold"
+                                   Text="{TemplateBinding Title}"
+                                   IsVisible="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
                         <ui:FAItemsRepeater ItemsSource="{TemplateBinding Items}">
                             <ui:FAItemsRepeater.Layout>
                                 <ui:FAStackLayout DisableVirtualization="True" Spacing="3" />

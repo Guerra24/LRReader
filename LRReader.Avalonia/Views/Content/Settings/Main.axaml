@@ -9,7 +9,6 @@
              Loaded="ModernBasePage_Loaded"
              Unloaded="ModernBasePage_Unloaded"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.UWP.Views.Content.Settings.Main">
 

@@ -144,6 +144,9 @@
   <data name="HostTabPage.EnterFullScreen.ToolTipService.ToolTip" xml:space="preserve">
     <value>Полноэкранный режим</value>
   </data>
+  <data name="HostTabPage.RestoreFullScreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Restore window mode</value>
+  </data>
   <data name="HostTabPage.RestoreSession.ActionButtonContent" xml:space="preserve">
     <value>Yes, restore</value>
   </data>

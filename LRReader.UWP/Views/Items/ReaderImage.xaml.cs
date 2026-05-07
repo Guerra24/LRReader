@@ -29,7 +29,7 @@ namespace LRReader.UWP.Views.Items
 		{
 			await decodePixel.WaitAsync();
 			var images = await Task.WhenAll(Service.Images.GetImageCached(set.LeftImage), Service.Images.GetImageCached(set.RightImage));
-			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height), imageProcessing.ByteToBitmap(images[1], _width, _height));
+			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
 			LeftImage.Source = imageBitmaps[0] as BitmapImage;
 			RightImage.Source = imageBitmaps[1] as BitmapImage;
 			var sizes = await Task.WhenAll(Service.Images.GetImageSizeCached(set.LeftImage), Service.Images.GetImageSizeCached(set.RightImage));

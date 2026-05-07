@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Metadata;
+using LRReader.Avalonia.Extensions;
 
 namespace LRReader.Avalonia.Views.Controls
 {
@@ -8,6 +10,13 @@ namespace LRReader.Avalonia.Views.Controls
 		public ModernGroup()
 		{
 			Items = [];
+		}
+
+		protected override void OnLoaded(RoutedEventArgs e)
+		{
+			base.OnLoaded(e);
+
+			this.SetRepositionAnimation();
 		}
 
 		[Content]

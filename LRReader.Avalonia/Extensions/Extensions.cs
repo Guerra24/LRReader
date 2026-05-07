@@ -1,4 +1,5 @@
-﻿using Avalonia.Interactivity;
+﻿using Avalonia.Animation.Easings;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Rendering.Composition;
 using Avalonia.Styling;
@@ -31,6 +32,21 @@ public static class Animations
 
 	/*public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
 	public static Task StartAsync(this UIElement element, AnimationBuilder animation) => animation.StartAsync(element);*/
+
+	public static void SetRepositionAnimation(this Visual element)
+	{
+		var visual = ElementComposition.GetElementVisual(element);
+		var compositor = visual!.Compositor;
+
+		var offsetAnimation = compositor.CreateVector3KeyFrameAnimation();
+		offsetAnimation.Duration = TimeSpan.FromMilliseconds(300);
+		offsetAnimation.Target = "Offset";
+		offsetAnimation.InsertExpressionKeyFrame(1f, "this.FinalValue", new ExponentialEaseOut());
+
+		var implicitAnimations = compositor.CreateImplicitAnimationCollection();
+		implicitAnimations["Offset"] = offsetAnimation;
+		visual.ImplicitAnimations = implicitAnimations;
+	}
 
 }
 

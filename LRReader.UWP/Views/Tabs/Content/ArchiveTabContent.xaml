@@ -366,7 +366,7 @@
 						<StateTrigger IsActive="{x:Bind services:Service.Settings.UseReaderBackground, Mode=OneWay}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="ScrollViewer.Background" Value="{StaticResource CustomReaderBackground}" />
+						<Setter Target="ReaderBackground.Background" Value="{StaticResource CustomReaderBackground}" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

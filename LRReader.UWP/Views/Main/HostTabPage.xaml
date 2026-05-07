@@ -89,9 +89,7 @@
 						</Viewbox>
 					</Button>
 					-->
-					<Button
-						x:Name="EnterFullScreen" x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click"
-						Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
+					<Button x:Uid="/Pages/HostTabPage/EnterFullScreen" Click="EnterFullScreen_Click" Visibility="{x:Bind Data.Windowed, Mode=OneWay}">
 						<Viewbox>
 							<SymbolIcon Symbol="FullScreen" />
 						</Viewbox>

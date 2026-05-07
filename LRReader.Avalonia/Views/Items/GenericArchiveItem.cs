@@ -91,8 +91,7 @@ public class GenericArchiveItem : TemplatedControl
 		var visual = ElementComposition.GetElementVisual(Root!);
 		if (animate && visual != null)
 		{
-			var compositor = visual.Compositor;
-			var animation = compositor.CreateScalarKeyFrameAnimation();
+			var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
 			animation.InsertKeyFrame(0.0f, 0.0f);
 			animation.InsertKeyFrame(1.0f, 1.0f, new QuadraticEaseIn());
 			animation.Duration = TimeSpan.FromMilliseconds(150);

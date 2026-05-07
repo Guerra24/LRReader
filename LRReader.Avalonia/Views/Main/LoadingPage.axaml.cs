@@ -1,6 +1,8 @@
 using Avalonia.Media;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LRReader.Avalonia.Views.Main
 {
@@ -11,7 +13,7 @@ namespace LRReader.Avalonia.Views.Main
 		public LoadingPage()
 		{
 			InitializeComponent();
-			ViewModel = (LoadingPageViewModel)DataContext!;
+			DataContext = ViewModel = Service.Services.GetRequiredService<LoadingPageViewModel>();
 		}
 
 		private async void LoadingPage_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

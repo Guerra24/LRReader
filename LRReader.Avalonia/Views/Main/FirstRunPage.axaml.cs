@@ -1,4 +1,6 @@
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.Avalonia.Views.Main
 {
@@ -9,7 +11,7 @@ namespace LRReader.Avalonia.Views.Main
 		public FirstRunPage()
 		{
 			InitializeComponent();
-			Data = (SettingsPageViewModel)DataContext!;
+			DataContext = Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 		}
 
 	}

@@ -1,5 +1,7 @@
 using LRReader.Avalonia.Views.Controls;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.Avalonia.Views.Content.Settings;
 
@@ -10,6 +12,6 @@ public partial class Updates : ModernBasePage
 	public Updates()
 	{
 		InitializeComponent();
-		Data = (SettingsPageViewModel)DataContext!;
+		DataContext = Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 	}
 }

@@ -5,7 +5,9 @@ using CommunityToolkit.Mvvm.Input;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using static LRReader.Shared.Services.Service;
 
 namespace LRReader.Avalonia.Views.Controls;
@@ -25,7 +27,7 @@ public partial class ArchiveList : UserControl
 	public ArchiveList()
 	{
 		InitializeComponent();
-		Data = (SearchResultsViewModel)DataContext!;
+		DataContext = Data = Service.Services.GetRequiredService<SearchResultsViewModel>();
 		SearchBox.AddHandler(KeyDownEvent, async (sender, e) =>
 		{
 			switch (e.Key)

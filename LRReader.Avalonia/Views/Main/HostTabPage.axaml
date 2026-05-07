@@ -6,86 +6,72 @@
              xmlns:ext="using:LRReader.Avalonia.Extensions"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
              mc:Ignorable="d"
              d:DesignWidth="1500"
              d:DesignHeight="1000"
              x:DataType="services:TabsService"
-             x:Class="LRReader.Avalonia.Views.Main.HostTabPage"
-             DataContext="{ReflectionBinding HostTabPageInstance, Source={StaticResource Locator}}">
+             x:Class="LRReader.Avalonia.Views.Main.HostTabPage">
 
     <UserControl.Resources>
-		<Thickness x:Key="ScrollViewerScrollBarMargin">0</Thickness>
-	</UserControl.Resources>
+        <Thickness x:Key="ScrollViewerScrollBarMargin">0</Thickness>
+    </UserControl.Resources>
 
     <Grid>
-        <ui:FATabView Theme="{StaticResource ModernTabView}"
-                    IsAddTabButtonVisible="False"
-                    SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
-                    TabItemsSource="{Binding TabItems}"
-                    TabWidthMode="SizeToContent"
-                    TabCloseRequested="TabView_TabCloseRequested"
-                    CanDragTabs="False">
+        <controls:ModernTabView Theme="{StaticResource ModernTabView}"
+                                IsAddTabButtonVisible="False"
+                                SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
+                                TabItemsSource="{Binding TabItems}"
+                                TabWidthMode="SizeToContent"
+                                TabCloseRequested="TabView_TabCloseRequested"
+                                CanDragTabs="False">
             <ui:FATabView.TabStripFooter>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Styles>
-                        <Style Selector="Button">
-                            <Setter Property="Width" Value="34"/>
-                            <Setter Property="Height" Value="32" />
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
-                        </Style>
-                        <Style Selector="Viewbox">
-                            <Setter Property="MaxWidth" Value="16" />
-                            <Setter Property="MaxHeight" Value="16" />
-                        </Style>
-                    </Grid.Styles>
-                    <StackPanel Orientation="Horizontal" Spacing="2">
-                        <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Bookmarks}">
-                            <Viewbox>
-                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
-                            </Viewbox>
-                        </Button>
-                        <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Categories/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Categories}">
-                            <Viewbox>
-                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
-                            </Viewbox>
-                        </Button>
-                        <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Search/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=SearchResults}">
-                            <Viewbox>
-                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
-                            </Viewbox>
-                        </Button>
-                        <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Tools/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Tools}">
-                            <Viewbox>
-                                <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
-                            </Viewbox>
-                        </Button>
-                    </StackPanel>
-                    <Grid Grid.Column="1"
-                          Background="Transparent"/>
-                    <Border Grid.Column="2" Width="1" Height="16" Margin="3,0,3,0" VerticalAlignment="Center" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
-                    <StackPanel Grid.Column="3" Spacing="2"
-                                Orientation="Horizontal">
-                        <Button x:Name="EnterFullScreen" ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
-                            <Viewbox>
-                                <ui:FASymbolIcon Symbol="FullScreen" />
-                            </Viewbox>
-                        </Button>
-                        <Button x:Name="SettingsButton" ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Settings/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Settings}">
-                            <Viewbox>
-                                <ui:FASymbolIcon Symbol="Setting" />
-                            </Viewbox>
-                        </Button>
-                    </StackPanel>
-                </Grid>
+                <StackPanel Orientation="Horizontal" Spacing="2">
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Bookmarks}">
+                        <Viewbox>
+                            <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+                        </Viewbox>
+                    </Button>
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Categories/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Categories}">
+                        <Viewbox>
+                            <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B7;" />
+                        </Viewbox>
+                    </Button>
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Search/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=SearchResults}">
+                        <Viewbox>
+                            <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
+                        </Viewbox>
+                    </Button>
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Tools/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Tools}">
+                        <Viewbox>
+                            <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC7A;" />
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
             </ui:FATabView.TabStripFooter>
-        </ui:FATabView>
+            <controls:ModernTabView.TabTools>
+				<ContentControl Content="{Binding CurrentTab.CustomTabControl, Mode=OneWay}" />
+			</controls:ModernTabView.TabTools>
+            <controls:ModernTabView.ExtraFooter>
+                <StackPanel Spacing="2" Orientation="Horizontal">
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
+                        <Viewbox>
+                            <ui:FASymbolIcon Symbol="FullScreen" />
+                        </Viewbox>
+                    </Button>
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/RestoreFullScreen/ToolTipService/ToolTip}" Click="RestoreFullScreen_Click" IsVisible="{Binding Fullscreen, Mode=OneWay}">
+                        <Viewbox>
+                            <ui:FASymbolIcon Symbol="BackToWindow" />
+                        </Viewbox>
+                    </Button>
+                    <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Settings/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Settings}">
+                        <Viewbox>
+                            <ui:FASymbolIcon Symbol="Setting" />
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+            </controls:ModernTabView.ExtraFooter>
+        </controls:ModernTabView>
         <!-- Temporary -->
         <ui:FAInfoBar x:Name="Notifications" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32" Background="{DynamicResource SolidBackgroundFillColorBase}" />
     </Grid>

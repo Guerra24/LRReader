@@ -3,6 +3,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using LRReader.Avalonia.Extensions;
 using System.Windows.Input;
 
 namespace LRReader.Avalonia.Views.Controls
@@ -25,6 +26,13 @@ namespace LRReader.Avalonia.Views.Controls
 
 		//[GeneratedDependencyProperty]
 		//public partial object? Control { get; set; }
+
+		protected override void OnLoaded(RoutedEventArgs e)
+		{
+			base.OnLoaded(e);
+
+			this.SetRepositionAnimation();
+		}
 
 		protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 		{

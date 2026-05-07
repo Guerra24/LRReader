@@ -27,17 +27,17 @@ namespace LRReader.Avalonia.Services
 			AppDataFile = Path.Combine(Files.Local, FileRoamed);
 			LocalDataFile = Path.Combine(Files.LocalCache, FileLocal);
 			if (File.Exists(AppDataFile))
-				roamedSettings = JsonSerializer.Deserialize(File.ReadAllText(AppDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
+				roamedSettings = JsonSerializer.Deserialize(File.ReadAllText(AppDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject) ?? [];
 			if (File.Exists(LocalDataFile))
-				localSettings = JsonSerializer.Deserialize(File.ReadAllText(LocalDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject);
+				localSettings = JsonSerializer.Deserialize(File.ReadAllText(LocalDataFile), SettingsJsonSourceGenerationContext.Default.DictionaryStringObject) ?? [];
 		}
 
 		public Task Init() => Task.CompletedTask;
 
 		public void Save()
 		{
-			File.WriteAllText(AppDataFile, JsonSerializer.Serialize(roamedSettings));
-			File.WriteAllText(LocalDataFile, JsonSerializer.Serialize(localSettings));
+			File.WriteAllText(AppDataFile, JsonSerializer.Serialize(roamedSettings, SettingsJsonSourceGenerationContext.Default.DictionaryStringObject));
+			File.WriteAllText(LocalDataFile, JsonSerializer.Serialize(localSettings, SettingsJsonSourceGenerationContext.Default.DictionaryStringObject));
 		}
 
 		public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);

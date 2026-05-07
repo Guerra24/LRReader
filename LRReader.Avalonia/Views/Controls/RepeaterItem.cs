@@ -3,7 +3,9 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Rendering.Composition;
 using LRReader.Shared.Extensions;
+using System.Numerics;
 using System.Windows.Input;
 
 namespace LRReader.Avalonia.Views.Controls
@@ -12,6 +14,7 @@ namespace LRReader.Avalonia.Views.Controls
 	[PseudoClasses(":pressed")]
 	public partial class RepeaterItem : ContentControl
 	{
+
 		protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 		{
 			base.OnApplyTemplate(e);

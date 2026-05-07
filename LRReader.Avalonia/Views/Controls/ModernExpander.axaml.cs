@@ -1,3 +1,6 @@
+using Avalonia.Interactivity;
+using LRReader.Avalonia.Extensions;
+
 namespace LRReader.Avalonia.Views.Controls;
 
 public partial class ModernExpander : Expander
@@ -8,6 +11,13 @@ public partial class ModernExpander : Expander
 	{
 		Items = [];
 		InitializeComponent();
+	}
+
+	protected override void OnLoaded(RoutedEventArgs e)
+	{
+		base.OnLoaded(e);
+
+		this.SetRepositionAnimation();
 	}
 
 	public object? Input

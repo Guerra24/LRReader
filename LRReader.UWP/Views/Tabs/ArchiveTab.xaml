@@ -9,6 +9,7 @@
 	xmlns:local="using:LRReader.UWP.Views.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	IconSource="{x:Bind (muxc:IconSource)TabContent.Data.Icon, Mode=OneWay}"
@@ -17,7 +18,6 @@
 
 	<controls:ModernTab.Resources>
 		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
-		<converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 	</controls:ModernTab.Resources>
 
 	<muxc:TabViewItem.Header>
@@ -131,10 +131,7 @@
 					<SymbolIcon Symbol="Zoom" />
 				</Viewbox>
 			</Button>
-			<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}">
-				<Button.CommandParameter>
-					<x:Boolean>True</x:Boolean>
-				</Button.CommandParameter>
+			<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}" CommandParameter="{ext:True}">
 				<Viewbox MaxWidth="16" MaxHeight="16">
 					<SymbolIcon Symbol="Refresh" />
 				</Viewbox>

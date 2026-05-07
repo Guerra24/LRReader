@@ -27,7 +27,7 @@ namespace LRReader.Shared.Services
 		}
 
 		[ObservableProperty]
-		[NotifyPropertyChangedFor("Windowed")]
+		[NotifyPropertyChangedFor(nameof(Windowed))]
 		private bool _fullscreen;
 		public bool Windowed => !Fullscreen;
 

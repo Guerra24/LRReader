@@ -6,6 +6,7 @@ using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LRReader.UWP.Views.Content.Settings;
 
@@ -18,7 +19,7 @@ public partial class Main : ModernBasePage
 	public Main()
 	{
 		InitializeComponent();
-		Data = (SettingsPageViewModel)DataContext!;
+		DataContext = Data = Service.Services.GetRequiredService<SettingsPageViewModel>();
 		lang = ResourceLoader.GetForCurrentView("Settings");
 	}
 

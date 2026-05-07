@@ -11,7 +11,6 @@
              xmlns:vm="using:LRReader.Shared.ViewModels"
              xmlns:items="using:LRReader.Shared.Models.Main"
              xmlns:ext="using:LRReader.Avalonia.Extensions"
-             DataContext="{ReflectionBinding SettingsPageInstance, Source={StaticResource Locator}}"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="LRReader.Avalonia.Views.Main.FirstRunPage">
     <Grid>
