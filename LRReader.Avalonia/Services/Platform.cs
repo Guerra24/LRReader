@@ -40,6 +40,7 @@ namespace LRReader.Avalonia.Services
 
 			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
 			MapDialogToType<MarkdownDialog>(Dialog.Markdown);
+			MapDialogToType<CategoryArchive>(Dialog.CategoryArchive);
 
 			MapSymbolToSymbol(Symbol.Favorite, new FASymbolIconSource { Symbol = FASymbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new FASymbolIconSource { Symbol = FASymbol.Pictures });

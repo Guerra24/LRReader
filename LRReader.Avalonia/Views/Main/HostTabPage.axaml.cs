@@ -37,6 +37,11 @@ namespace LRReader.Avalonia.Views.Main
 
 			TopLevel.GetTopLevel(this)!.BackRequested += HostTabPage_BackRequested;
 
+			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
+				desktop.MainWindow!.PropertyChanged += MainWindow_PropertyChanged;
+			}
+
 			Data.OpenTab(Tab.Archives);
 			/*if (Settings.OpenBookmarksTab)
 				Data.AddTab(new BookmarksTab(), false);
@@ -52,6 +57,11 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 		{
+			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
+				desktop.MainWindow!.PropertyChanged -= MainWindow_PropertyChanged;
+			}
+
 			TopLevel.GetTopLevel(this)!.BackRequested -= HostTabPage_BackRequested;
 
 			WeakReferenceMessenger.Default.UnregisterAll(this);
@@ -95,19 +105,26 @@ namespace LRReader.Avalonia.Views.Main
 				WindowState = window.WindowState;
 				window.WindowState = WindowState.FullScreen;
 			}
-			Data.Fullscreen = true;
 		}
 
 		private void RestoreFullScreen_Click(object? sender, RoutedEventArgs e)
 		{
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 				desktop.MainWindow!.WindowState = WindowState;
-			Data.Fullscreen = false;
 		}
 
 		private void TabView_TabCloseRequested(FATabView sender, FATabViewTabCloseRequestedEventArgs args)
 		{
 			Data.CloseTab((ModernTab)args.Tab);
 		}
+
+		private void MainWindow_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+		{
+			if (e.Property == Window.WindowStateProperty)
+			{
+				Data.Fullscreen = ((WindowState)e.NewValue!) == WindowState.FullScreen;
+			}
+		}
+
 	}
 }

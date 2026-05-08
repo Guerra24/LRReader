@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+using System.Collections;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Shared.ViewModels
 {
@@ -10,10 +10,13 @@ namespace LRReader.Shared.ViewModels
 	{
 		public string archiveID;
 
-		public ObservableCollection<Category> Categories = new ObservableCollection<Category>();
+		public ObservableCollection<Category> Categories { get; } = new ObservableCollection<Category>();
 		private List<Category> Source = new List<Category>();
-		[AllowNull]
-		public IList<object> SelectedCategories;
+#if WINDOWS_UWP
+		public IList<object> SelectedCategories = null!;
+#else
+		public IList SelectedCategories = null!;
+#endif
 
 		public CategoryArchiveViewModel(string archiveID)
 		{

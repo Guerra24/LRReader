@@ -1,0 +1,27 @@
+<ui:FAContentDialog xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:local="using:LRReader.Avalonia.Views.Dialogs"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:main="using:LRReader.Shared.Models.Main"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             PrimaryButtonText="{ext:LocalizedString Key=/Dialogs/CategoryArchive/Dialog/PrimaryButtonText}"
+             PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+             Loaded="ContentDialog_Loaded"
+             x:Class="LRReader.Avalonia.Views.Dialogs.CategoryArchive">
+
+    <StackPanel Spacing="5">
+		<TextBox PlaceholderText="{ext:LocalizedString Key=/Dialogs/CategoryArchive/Search/PlaceholderText}" TextChanged="AutoSuggestBox_TextChanged" />
+		<ListBox x:Name="CategoriesList" MaxHeight="400"
+			ItemsSource="{Binding $parent[local:CategoryArchive].Data.Categories}"
+			SelectionChanged="CategoriesList_SelectionChanged" SelectionMode="Multiple, Toggle">
+			<ListBox.ItemTemplate>
+				<DataTemplate x:DataType="main:Category">
+					<TextBlock Text="{Binding name}" />
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</StackPanel>
+</ui:FAContentDialog>

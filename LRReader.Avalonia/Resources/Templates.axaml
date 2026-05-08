@@ -142,6 +142,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Categories/Text}"
+                                      Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCategoriesCommand}"
                                       IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
                                 <MenuItem.Icon>
                                     <ui:FAFontIcon Glyph="&#xE8B7;" />
