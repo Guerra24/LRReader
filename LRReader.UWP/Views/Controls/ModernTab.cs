@@ -75,16 +75,20 @@ namespace LRReader.UWP.Views.Controls
 		public virtual TabState GetTabState() => new TabState(Tab);
 
 		public event Func<bool>? GoBack;
-
-		public virtual void Dispose()
-		{
-		}
-
 		public virtual bool BackRequested()
 		{
 			if (GoBack == null)
 				return false;
 			return GoBack.Invoke();
 		}
+
+		public virtual void RequestRedraw()
+		{
+		}
+
+		public virtual void Dispose()
+		{
+		}
+
 	}
 }

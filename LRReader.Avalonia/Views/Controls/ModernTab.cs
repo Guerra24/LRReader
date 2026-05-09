@@ -31,6 +31,10 @@ namespace LRReader.Avalonia.Views.Controls
 			return GoBack.Invoke();
 		}
 
+		public virtual void RequestRedraw()
+		{
+		}
+
 		public virtual void Dispose()
 		{
 		}

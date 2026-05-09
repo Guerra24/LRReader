@@ -19,6 +19,8 @@ namespace LRReader.Shared.Models
 		bool IsClosable { get; set; }
 
 		bool BackRequested();
+
+		void RequestRedraw();
 	}
 
 	public class AppState

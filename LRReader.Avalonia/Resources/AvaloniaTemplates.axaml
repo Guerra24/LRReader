@@ -5,12 +5,14 @@
                     xmlns:controls="using:LRReader.Avalonia.Views.Controls">
 
     <ControlTheme x:Key="ModernTabView" TargetType="controls:ModernTabView">
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Padding" Value="0 8" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid RowDefinitions="Auto,*">
+                <Grid>
+                    <Grid.RowDefinitions>
+			            <RowDefinition Height="Auto" />
+			            <RowDefinition Height="*" />
+		            </Grid.RowDefinitions>
 
                     <Grid Name="TabContainerGrid"
                           Background="{TemplateBinding Background}">
@@ -27,7 +29,7 @@
                         </Grid.ColumnDefinitions>
 
                         <ContentPresenter Grid.Column="0"
-                                          Name="LeftContentPresenter"
+                                          Name="LeftContentPresenter" Margin="0,0,3,0"
                                           Content="{TemplateBinding TabStripHeader}"
                                           ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
 

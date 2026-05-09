@@ -21,9 +21,10 @@
         <controls:ModernTabView Theme="{StaticResource ModernTabView}"
                                 IsAddTabButtonVisible="False"
                                 SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
+                                TabCloseRequested="TabView_TabCloseRequested"
                                 TabItemsSource="{Binding TabItems}"
                                 TabWidthMode="SizeToContent"
-                                TabCloseRequested="TabView_TabCloseRequested"
+                                Padding="0 8"
                                 CanDragTabs="False">
             <ui:FATabView.TabStripFooter>
                 <StackPanel Orientation="Horizontal" Spacing="2">

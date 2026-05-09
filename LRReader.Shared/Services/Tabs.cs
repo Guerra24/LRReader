@@ -22,6 +22,7 @@ namespace LRReader.Shared.Services
 
 		partial void OnCurrentTabChanged(ICustomTab? value)
 		{
+			value?.RequestRedraw();
 			// Try to keep memory under control
 			GC.Collect(1, GCCollectionMode.Forced, false, false);
 		}

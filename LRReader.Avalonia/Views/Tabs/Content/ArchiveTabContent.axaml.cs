@@ -937,5 +937,14 @@ public partial class ArchiveTabContent : UserControl
 		}
 	}*/
 
+	public void RedrawReader()
+	{
+		Service.Dispatcher.Run(() =>
+		{
+			ReaderBackground.InvalidateVisual();
+			ScrollViewer.InvalidateVisual();
+		});
+	}
+
 	public ArchiveTabState GetTabState() => archiveState ?? new ArchiveTabState(Data.Archive.arcid, Data.ReaderContent?.Page, Data.ShowReader, Data.Group.Select(a => a.arcid).ToList());
 }

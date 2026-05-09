@@ -1,6 +1,7 @@
 using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
+using LRReader.Shared.Services;
 
 namespace LRReader.Avalonia.Views.Tabs;
 
@@ -23,6 +24,12 @@ public partial class ArchiveTab : ModernTab
 		this.CustomTabId = "Archive_" + archive.arcid;
 		TabContent.LoadArchive(archive, state: state);
 		//AutoplayButton.Content = Service.Platform.GetLocalizedString("/Tabs/Archive/AutoplayState/Play");
+	}
+
+	public override void RequestRedraw()
+	{
+		base.RequestRedraw();
+		TabContent.RedrawReader();
 	}
 
 	public override void Dispose()
