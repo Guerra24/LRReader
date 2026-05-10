@@ -91,7 +91,7 @@ public partial class ReaderImage : UserControl
 		if (Set != null)
 		{
 			var images = await Task.WhenAll(Service.Images.GetImageCached(Set.LeftImage), Service.Images.GetImageCached(Set.RightImage));
-			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height), imageProcessing.ByteToBitmap(images[1], _width, _height));
+			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
 			LeftImage.Source = imageBitmaps[0] as Bitmap;
 			RightImage.Source = imageBitmaps[1] as Bitmap;
 		}
@@ -111,7 +111,7 @@ public partial class ReaderImage : UserControl
 		if (Set != null)
 		{
 			var images = await Task.WhenAll(Service.Images.GetImageCached(Set.LeftImage), Service.Images.GetImageCached(Set.RightImage));
-			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height), imageProcessing.ByteToBitmap(images[1], _width, _height));
+			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
 			LeftImage.Source = imageBitmaps[0] as Bitmap;
 			RightImage.Source = imageBitmaps[1] as Bitmap;
 		}
