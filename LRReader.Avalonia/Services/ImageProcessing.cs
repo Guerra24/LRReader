@@ -1,5 +1,8 @@
 ﻿using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using LRReader.Shared.Services;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace LRReader.Avalonia.Services
 {
@@ -22,12 +25,22 @@ namespace LRReader.Avalonia.Services
 			{
 				if (bytes == null)
 					return null;
-				using var stream = new MemoryStream(bytes, 0, bytes.Length, false, true);
-				if (decodeWidth != 0)
-					return Bitmap.DecodeToWidth(stream, (int)Math.Ceiling(decodeWidth * scaling));
-				if (decodeHeight != 0)
-					return Bitmap.DecodeToHeight(stream, (int)Math.Ceiling(decodeHeight * scaling));
-				return new Bitmap(stream);
+
+				using var img = SixLabors.ImageSharp.Image.Load<Rgba32>(bytes);
+				if (decodeWidth != 0 || decodeHeight != 0)
+					img.Mutate(p => p.Resize((int)Math.Ceiling(decodeWidth * scaling), (int)Math.Ceiling(decodeHeight * scaling)));
+
+				var raw = new byte[img.Width * img.Height * 4];
+
+				img.CopyPixelDataTo(raw);
+
+				unsafe
+				{
+					fixed (byte* data = raw)
+					{
+						return new Bitmap(PixelFormat.Rgba8888, AlphaFormat.Opaque, (nint)data, new PixelSize(img.Width, img.Height), new Vector(96, 96), img.Width * 4);
+					}
+				};
 			}
 			finally
 			{

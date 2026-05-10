@@ -71,24 +71,55 @@ namespace LRReader.Shared.Formats.JpegXL
 								throw new Exception();
 
 							var image = new Image<TPixel>(options.Configuration, (int)info.xsize, (int)info.ysize);
-							image.Frames.RootFrame.DangerousTryGetSinglePixelMemory(out var pixels);
 
-							switch (info.num_color_channels)
+							if (image.Frames.RootFrame.DangerousTryGetSinglePixelMemory(out var pixels))
 							{
-								case 1:
-									var r8 = MemoryMarshal.Cast<byte, L8>(buffer);
-									PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8, pixels.Span);
-									break;
-								case 3:
-									var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(buffer);
-									PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
-									break;
-								case 4:
-									var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(buffer);
-									PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
-									break;
-								default:
-									throw new Exception();
+								switch (info.num_color_channels)
+								{
+									case 1:
+										var r8 = MemoryMarshal.Cast<byte, L8>(buffer);
+										PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8, pixels.Span);
+										break;
+									case 3:
+										var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(buffer);
+										PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
+										break;
+									case 4:
+										var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(buffer);
+										PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
+										break;
+									default:
+										throw new Exception();
+								}
+							}
+							else
+							{
+								switch (info.num_color_channels)
+								{
+									case 1:
+										for (int y = 0; y < image.Height; y++)
+										{
+											var r8 = MemoryMarshal.Cast<byte, L8>(buffer);
+											PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+										}
+										break;
+									case 3:
+										for (int y = 0; y < image.Height; y++)
+										{
+											var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(buffer);
+											PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+										}
+										break;
+									case 4:
+										for (int y = 0; y < image.Height; y++)
+										{
+											var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(buffer);
+											PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+										}
+										break;
+									default:
+										throw new Exception();
+								}
 							}
 
 							status = Jxl.JxlDecoderProcessInput(decoder);

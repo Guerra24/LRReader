@@ -14,7 +14,7 @@ namespace LRReader.Shared.Services
 		{
 			if (bytes == null)
 				return Size.Empty;
-			using var ms = new MemoryStream(bytes, false);
+			using var ms = new MemoryStream(bytes, 0, bytes.Length, false, true);
 			try
 			{
 				var info = await Image.IdentifyAsync(ms).ConfigureAwait(false);

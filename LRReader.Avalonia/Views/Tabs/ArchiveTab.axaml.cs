@@ -1,7 +1,6 @@
 using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
-using LRReader.Shared.Services;
 
 namespace LRReader.Avalonia.Views.Tabs;
 

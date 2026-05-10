@@ -18,13 +18,13 @@
     </UserControl.Resources>
 
     <Grid>
-        <controls:ModernTabView Theme="{StaticResource ModernTabView}"
-                                IsAddTabButtonVisible="False"
+        <controls:ModernTabView x:Name="TabViewControl" VerticalAlignment="Stretch"
                                 SelectedItem="{Binding CurrentTab, Mode=TwoWay}"
                                 TabCloseRequested="TabView_TabCloseRequested"
                                 TabItemsSource="{Binding TabItems}"
                                 TabWidthMode="SizeToContent"
                                 Padding="0 8"
+                                Theme="{StaticResource ModernTabView}"
                                 CanDragTabs="False">
             <ui:FATabView.TabStripFooter>
                 <StackPanel Orientation="Horizontal" Spacing="2">
