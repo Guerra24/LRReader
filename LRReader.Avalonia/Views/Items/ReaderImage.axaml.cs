@@ -35,14 +35,18 @@ public partial class ReaderImage : UserControl
 		var sizes = await Task.WhenAll(Service.Images.GetImageSizeCached(set.LeftImage), Service.Images.GetImageSizeCached(set.RightImage));
 		var size = new Size(Math.Max(sizes[0].Width, sizes[1].Width), Math.Max(sizes[0].Height, sizes[1].Height));
 		LeftImage.Height = RightImage.Height = 0;
+		LeftImage.Width = RightImage.Width = 0;
+
 		if (LeftImage.Source != null)
 		{
-			//LeftImage.Width = size.Width;
-			LeftImage.Height = set.Height == 0 ? size.Height : set.Height;
+			var aspect0 = (float)sizes[0].Width / (float)sizes[0].Height;
+			LeftImage.Width = size.Height * aspect0;
+			LeftImage.Height = size.Height;
 		}
 		if (RightImage.Source != null)
 		{
-			//RightImage.Width = size.Width;
+			var aspect1 = (float)sizes[1].Width / (float)sizes[1].Height;
+			RightImage.Width = size.Height * aspect1;
 			RightImage.Height = size.Height;
 		}
 		decodePixel.Release();
@@ -79,6 +83,7 @@ public partial class ReaderImage : UserControl
 
 	public async Task ResizeHeight(int height)
 	{
+		height = (int)Math.Round(height * 2.0);
 		if (_height == height)
 			return;
 		await decodePixel.WaitAsync();
@@ -100,6 +105,7 @@ public partial class ReaderImage : UserControl
 
 	public async Task ResizeWidth(int width)
 	{
+		width = (int)Math.Round(width * 2.0);
 		if (_width == width)
 			return;
 		await decodePixel.WaitAsync();

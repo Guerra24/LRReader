@@ -234,7 +234,7 @@ jobs:
     name: Purge Nightly cache
     needs:
      - buildUWP
-     - buildAvaloniaAppImage
+     - updateAvaloniaAppImageVersion
     runs-on: ubuntu-latest
     steps:
       - name: Purge cache

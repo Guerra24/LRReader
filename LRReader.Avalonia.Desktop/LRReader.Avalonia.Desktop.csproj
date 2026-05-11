@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="12.0.2" />
+    <PackageReference Include="AvifNet.Natives" Version="1.4.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Avalonia\LRReader.Avalonia.csproj" />
