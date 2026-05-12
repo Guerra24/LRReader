@@ -29,9 +29,7 @@ public class ImagesService : IService
 		thumbnailsCache = new LRUCache<string, byte[]>(5000, 100);
 		thumbnailCacheDirectory = Directory.CreateDirectory(Path.Combine(files.LocalCache, "Images", "Thumbnails"));
 		SixLabors.ImageSharp.Configuration.Default.Configure(new JpegXLConfigurationModule());
-#if !WINDOWS_UWP
 		SixLabors.ImageSharp.Configuration.Default.Configure(new AvifConfigurationModule());
-#endif
 	}
 
 	public async Task Init()

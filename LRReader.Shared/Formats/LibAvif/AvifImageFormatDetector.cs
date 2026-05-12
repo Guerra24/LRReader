@@ -10,11 +10,6 @@ public sealed class AvifImageFormatDetector : IImageFormatDetector
 
 	public bool TryDetectFormat(ReadOnlySpan<byte> header, [NotNullWhen(true)] out IImageFormat? format)
 	{
-		if (!Avif.IsAvailable)
-		{
-			format = null;
-			return false;
-		}
 		unsafe
 		{
 			fixed (byte* data = header)
