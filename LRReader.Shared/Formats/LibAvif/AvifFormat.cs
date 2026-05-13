@@ -16,5 +16,5 @@ public sealed class AvifFormat : IImageFormat<AvifMetadata>
 
 	public IEnumerable<string> FileExtensions => AvifConstants.FileExtensions;
 
-	public AvifMetadata CreateDefaultFormatMetadata() => new AvifMetadata();
+	public AvifMetadata CreateDefaultFormatMetadata() => new();
 }

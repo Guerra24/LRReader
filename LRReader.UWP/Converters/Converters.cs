@@ -1,4 +1,5 @@
 ﻿using LRReader.Shared.Extensions;
+using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
@@ -31,12 +32,15 @@ namespace LRReader.UWP.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			return (int)value;
+			return value != null ? (int)value : -1;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
-			return Enum.ToObject(targetType, value);
+			var nullableType = Nullable.GetUnderlyingType(targetType);
+			if (nullableType != null)
+				targetType = nullableType;
+			return value != null ? Enum.ToObject(targetType, value) : null!;
 		}
 	}
 
@@ -149,6 +153,19 @@ namespace LRReader.UWP.Converters
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
 			return Enum.Parse<ArchiveStyle>((string)parameter);
+		}
+	}
+
+	public partial class RegistryTypeConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			return (RegistryType)value == Enum.Parse<RegistryType>((string)parameter);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

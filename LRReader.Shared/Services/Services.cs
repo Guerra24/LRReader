@@ -64,6 +64,7 @@ namespace LRReader.Shared.Services
 			collection.AddSingleton<DeduplicatorToolViewModel>();
 			collection.AddSingleton<DeduplicatorHiddenViewModel>();
 			collection.AddSingleton<BulkEditorViewModel>();
+			collection.AddSingleton<RegistryManagerViewModel>();
 
 			services?.Invoke(collection);
 			Services = collection.BuildServiceProvider();

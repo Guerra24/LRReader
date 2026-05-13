@@ -32,4 +32,69 @@ namespace LRReader.Shared.Models.Main
 		public bool _unauthorized;
 	}
 
+	public class BaseRegistry
+	{
+		public string name { get; set; } = null!;
+
+		public RegistryType type { get; set; }
+		public RegistryProvider? provider { get; set; }
+		public string? url { get; set; }
+		[JsonPropertyName("ref")]
+		public string? gitRef { get; set; }
+		public string? path { get; set; }
+	}
+
+	[JsonConverter(typeof(JsonStringEnumConverter<RegistryType>))]
+	public enum RegistryType
+	{
+		[JsonStringEnumMemberName("git")]
+		Git,
+		[JsonStringEnumMemberName("local")]
+		Local
+	}
+
+	[JsonConverter(typeof(JsonStringEnumConverter<RegistryProvider>))]
+	public enum RegistryProvider
+	{
+		[JsonStringEnumMemberName("github")]
+		Github,
+		[JsonStringEnumMemberName("gitlab")]
+		Gitlab,
+		[JsonStringEnumMemberName("gitea")]
+		Gitea
+	}
+
+	public class RegistryResult : GenericApiResult
+	{
+		public string id { get; set; } = null!;
+	}
+
+	public class RegistryDefaultResult : GenericApiResult
+	{
+		public string registry_id { get; set; } = null!;
+	}
+
+	public class RegistryMetadataResult : RegistryResult
+	{
+		public Registry registry { get; set; } = null!;
+	}
+
+	public class Registry : BaseRegistry
+	{
+		public string id { get; set; } = null!;
+		public int created { get; set; }
+		public int updated { get; set; }
+	}
+
+	public class RegistryUpdatedResult : RegistryResult
+	{
+		[JsonConverter(typeof(BoolConverter))]
+		public bool index_cleared { get; set; }
+	}
+
+	public class RegistriesResult : GenericApiResult
+	{
+		public List<Registry> registries { get; set; } = [];
+	}
+
 }

@@ -25,6 +25,13 @@
 						<controls:ModernPageTabItem x:Uid="/Tools/BulkEditorPage" Page="local:BulkEditor" />
 					</controls:ModernInput.Tag>
 				</controls:ModernInput>
+				<controls:ModernInput
+					Title="Registry Manager (DEBUG)" Click="PageButton_Click" Glyph="&#xEA86;"
+					IsButton="True" RightGlyph="&#xE76C;">
+					<controls:ModernInput.Tag>
+						<controls:ModernPageTabItem Title="Registry Manager (DEBUG)" Page="local:RegistryManager" />
+					</controls:ModernInput.Tag>
+				</controls:ModernInput>
 			</controls:ModernGroup>
 		</StackPanel>
 	</ScrollViewer>

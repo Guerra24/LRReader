@@ -24,9 +24,19 @@ public class ImagesService : IService
 	{
 		Files = files;
 		ImageProcessing = imageProcessing;
-		imagesCache = new LRUCache<string, byte[]>(250, 25);
+		imagesCache = new LRUCache<string, byte[]>(500, 25)
+		{
+			SlidingExpiration = true,
+			MaxMemoryBytes = 268435456 // 256MiB
+		};
+		imagesCache.SizeEstimator += SizeEstimator;
 		imagesSizeCache = new LRUCache<string, Size>(10000, 100);
-		thumbnailsCache = new LRUCache<string, byte[]>(5000, 100);
+		thumbnailsCache = new LRUCache<string, byte[]>(5000, 100)
+		{
+			SlidingExpiration = true,
+			MaxMemoryBytes = 134217728 // 128MiB
+		};
+		thumbnailsCache.SizeEstimator += SizeEstimator;
 		thumbnailCacheDirectory = Directory.CreateDirectory(Path.Combine(files.LocalCache, "Images", "Thumbnails"));
 		SixLabors.ImageSharp.Configuration.Default.Configure(new JpegXLConfigurationModule());
 		SixLabors.ImageSharp.Configuration.Default.Configure(new AvifConfigurationModule());
@@ -73,7 +83,7 @@ public class ImagesService : IService
 				if (image == null)
 					return Size.Empty;
 				size = await ImageProcessing.GetImageSize(image);
-				imagesSizeCache.AddReplace(path!, size);
+				imagesSizeCache.AddReplace(path, size);
 				return size;
 			}
 		}
@@ -90,12 +100,12 @@ public class ImagesService : IService
 		}
 		else
 		{
-			using (var key = await KeyedSemaphore.LockAsync(path!))
+			using (var key = await KeyedSemaphore.LockAsync(path))
 			{
-				image = await ArchivesProvider.GetImage(path!);
+				image = await ArchivesProvider.GetImage(path);
 				if (image == null)
 					return null;
-				imagesCache.AddReplace(path!, image);
+				imagesCache.AddReplace(path, image, DateTime.UtcNow.AddMinutes(15));
 				return image;
 			}
 		}
@@ -139,7 +149,7 @@ public class ImagesService : IService
 					Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 					await Files.StoreFile(path, data);
 				}
-				thumbnailsCache.AddReplace(thumbKey, data);
+				thumbnailsCache.AddReplace(thumbKey, data, DateTime.UtcNow.AddMinutes(15));
 				return data;
 			}
 		}
@@ -180,4 +190,6 @@ public class ImagesService : IService
 		var files = thumbnailCacheDirectory.GetFiles("*.*", SearchOption.AllDirectories);
 		return files.Sum(f => f.Length);
 	}
+
+	private long SizeEstimator(byte[] data) => data.Length;
 }

@@ -1,5 +1,31 @@
 <Project>
-  <PropertyGroup>
-    <RestoreAdditionalProjectFallbackFolders></RestoreAdditionalProjectFallbackFolders>
-  </PropertyGroup>
+  <UsingTask TaskName="LicPrep" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <A ParameterType="System.String" Required="true" />
+      <B ParameterType="System.String" Required="true" />
+      <C ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System"/>
+      <Using Namespace="System.IO"/>
+      <Using Namespace="System.Security.Cryptography" />
+      <Code Type="Fragment" Language="cs">
+<![CDATA[
+using var aes = Aes.Create();
+var data = File.ReadAllBytes(A);
+aes.IV = [.. data.Take(16)];
+aes.Key = Enumerable.Range(0, B.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(B.Substring(x, 2), 16)).ToArray();
+using var dec = aes.CreateDecryptor();
+var lic = dec.TransformFinalBlock([.. data.Skip(16)], 0, data.Length - 16);
+C = Encoding.UTF8.GetString(lic);
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="PrepLicFile" BeforeTargets="PrepareForBuild">
+    <LicPrep A="$(MSBuildProjectDirectory)\lic.enc" B="617ae930f548bce3b58c6e510301f84f90f4e02860228a85e9d1609a3e2a93d4">
+      <Output TaskParameter="C" PropertyName="SixLaborsLicenseKey" />
+    </LicPrep>
+  </Target>
 </Project>

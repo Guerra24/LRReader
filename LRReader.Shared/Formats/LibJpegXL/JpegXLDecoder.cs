@@ -1,6 +1,7 @@
 ﻿using JxlNet;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Metadata;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Runtime.InteropServices;
 
@@ -164,7 +165,12 @@ public sealed class JpegXLDecoder : IImageDecoder
 						throw new Exception();
 					var info = new JxlBasicInfo();
 					Jxl.JxlDecoderGetBasicInfo(decoder, &info);
-					return new ImageInfo(new PixelTypeInfo((int)info.bits_per_sample), new Size((int)info.xsize, (int)info.ysize), null);
+
+					var metadata = new ImageMetadata();
+					var jpegxlMetadata = metadata.GetFormatMetadata(JpegXLFormat.Instance);
+					jpegxlMetadata.BitsPerSample = (int)info.bits_per_sample;
+
+					return new ImageInfo(new Size((int)info.xsize, (int)info.ysize), metadata);
 				}
 			}
 			finally

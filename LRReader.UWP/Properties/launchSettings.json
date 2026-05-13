@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Local Machine": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
     },
     "Surface Duo": {
       "commandName": "MsixPackage",

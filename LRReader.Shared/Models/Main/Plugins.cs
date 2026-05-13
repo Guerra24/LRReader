@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using LRReader.Shared.Converters;
+using System.Text.Json.Serialization;
 
 namespace LRReader.Shared.Models.Main
 {
@@ -35,6 +36,13 @@ namespace LRReader.Shared.Models.Main
 		public PluginType type { get; set; }
 		public string version { get; set; } = null!;
 		public string? login_from { get; set; }
+		[JsonConverter(typeof(BoolConverter))]
+		public bool hidden { get; set; }
+		public int priority { get; set; }
+		public string? installed_registry { get; set; }
+		public string? installed_version { get; set; }
+		public string? installed_sha256 { get; set; }
+
 
 		public bool HasArg { get; set; }
 
@@ -60,6 +68,23 @@ namespace LRReader.Shared.Models.Main
 	{
 		public PluginResultData data { get; set; } = null!;
 		public string type { get; set; } = null!;
+	}
+
+	public class PluginInstall
+	{
+		public string @namespace { get; set; } = null!;
+		public string registry { get; set; } = null!;
+		public string? version { get; set; }
+		public bool forced { get; set; }
+	}
+
+	public class PluginInstallResult : GenericApiResult
+	{
+		public string name { get; set; } = null!;
+		public string @namespace { get; set; } = null!;
+		public string version { get; set; } = null!;
+		public string installed_registry { get; set; } = null!;
+		public string installed_sha256 { get; set; } = null!;
 	}
 
 }

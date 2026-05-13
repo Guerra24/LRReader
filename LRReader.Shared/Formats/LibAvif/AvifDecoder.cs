@@ -1,6 +1,8 @@
 ﻿using AvifNet;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Metadata;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Runtime.InteropServices;
 
@@ -308,7 +310,11 @@ public sealed class AvifDecoder : IImageDecoder
 					if (res != avifResult.AVIF_RESULT_OK)
 						throw new Exception();
 
-					return new ImageInfo(new PixelTypeInfo((int)decoder->image->depth), new Size((int)decoder->image->width, (int)decoder->image->height), null);
+					var metadata = new ImageMetadata();
+					var avifMetadata = metadata.GetFormatMetadata(AvifFormat.Instance);
+					avifMetadata.Depth = (int)decoder->image->depth;
+
+					return new ImageInfo(new Size((int)decoder->image->width, (int)decoder->image->height), metadata);
 				}
 			}
 			finally

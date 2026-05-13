@@ -10,6 +10,13 @@ namespace LRReader.Shared;
 public static class ApiExtensions
 {
 
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
+	public static void AddRequestObject<T>(this RestRequest request, T obj)
+	{
+		request.AddStringBody(JsonSerializer.Serialize(obj, JsonSettings.Options), DataFormat.Json);
+	}
+
 	public async static Task<bool> GetResult(this RestResponse request)
 	{
 		var result = await request.GetResultInternal<GenericApiResult>().ConfigureAwait(false);
