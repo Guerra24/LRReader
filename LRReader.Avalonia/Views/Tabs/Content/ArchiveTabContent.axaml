@@ -138,7 +138,7 @@
 					</WrapPanel>
 				</StackPanel>
                 <!-- Content -->
-                <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5" KeyboardNavigation.TabNavigation="Continue" ClipToBounds="False">
+                <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5" KeyboardNavigation.TabNavigation="Continue" ClipToBounds="False" VerticalCacheLength="2">
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate>
                             <controls:RepeaterItem Click="ImagesGrid_ItemClick" BoxShadow="0 2 8 2 #26000000">

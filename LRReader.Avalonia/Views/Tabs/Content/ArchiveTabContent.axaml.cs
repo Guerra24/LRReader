@@ -230,10 +230,9 @@ public partial class ArchiveTabContent : UserControl
 			if (Data.ReaderContent.RightImage != null && rightThumb != null && Data.ArchiveImages.Count > rightTarget)
 				animRight?.TryStart(rightThumb);
 			await Task.WhenAll(ReaderBackground.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()), ScrollViewer.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()));
-			await Task.Delay(200); // Give it a sec
-
 			ReaderBackground.SetOpacity(0);
 			ScrollViewer.SetOpacity(0);
+			await Task.Delay(200); // Give it a sec
 		}
 		else
 		{

@@ -181,7 +181,7 @@
                     </Border>
                     <Grid Grid.Row="1">
                         <Grid IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.MissingImage, Mode=OneWay}">
-                            <ui:FAFontIcon FontSize="34" Glyph="&#xE8CD;" />
+                            <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
                         </Grid>
                         <Grid HorizontalAlignment="Left"
                               VerticalAlignment="Bottom"

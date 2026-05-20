@@ -37,37 +37,22 @@ namespace LRReader.Avalonia.Views.Items
 
 		private Task Show(bool animate)
 		{
-			var visual = ElementComposition.GetElementVisual(Root);
-			if (animate && visual != null)
-			{
-				var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
-				animation.InsertKeyFrame(0.0f, 0.0f);
-				animation.InsertKeyFrame(1.0f, 1.0f, new QuadraticEaseIn());
-				animation.Duration = TimeSpan.FromMilliseconds(150);
-
-				visual.StartAnimation("Opacity", animation);
-			}
+			if (animate)
+				Root?.FadeInAsync(TimeSpan.FromMilliseconds(150), new QuadraticEaseIn()).ContinueWith(t => Dispatcher.Post(() => Root?.SetOpacity(1)));
 			else
-				Root.SetVisualOpacity(1);
+				Root?.SetOpacity(1);
 			return Task.CompletedTask;
 		}
 
-		private Task Hide(bool animate)
+		private async Task Hide(bool animate)
 		{
-			var visual = ElementComposition.GetElementVisual(Root);
-			if (animate && visual != null)
+			if (animate)
 			{
-				var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
-				animation.InsertKeyFrame(0.0f, 1.0f);
-				animation.InsertKeyFrame(1.0f, 0.0f, new QuadraticEaseIn());
-				animation.Duration = TimeSpan.FromMilliseconds(150);
-
-				visual.StartAnimation("Opacity", animation);
-				//await Root.StartAsync(FadeOut);
+				await Root.FadeOutAsync(TimeSpan.FromMilliseconds(150), new QuadraticEaseOut());
+				Root.SetOpacity(0);
 			}
 			else
-				Root.SetVisualOpacity(0);
-			return Task.CompletedTask;
+				Root.SetOpacity(0);
 		}
 
 		protected override void OnApplyTemplate(TemplateAppliedEventArgs e)

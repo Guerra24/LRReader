@@ -116,10 +116,15 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Border>
-                    <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                    <ScrollViewer AutomationProperties.AccessibilityView="Raw"
+                                  BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                  IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                  IsScrollChainingEnabled="{TemplateBinding ScrollViewer.IsScrollChainingEnabled}"
+                                  KeyboardNavigation.TabNavigation="{TemplateBinding KeyboardNavigation.TabNavigation}"
                                   VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                  Theme="{StaticResource ModernTabScrollViewerStyle}"
-                                  Name="ScrollViewer">
+                                  Name="ScrollViewer"
+                                  Theme="{StaticResource ModernTabScrollViewerStyle}">
                         <ItemsPresenter Name="TabItemsPresenter"
                                         Margin="{TemplateBinding Padding}"
                                         ItemsPanel="{TemplateBinding ItemsPanel}" />

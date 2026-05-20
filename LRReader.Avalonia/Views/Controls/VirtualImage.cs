@@ -13,6 +13,7 @@ namespace LRReader.Avalonia.Views.Controls;
 public partial class VirtualImage : Control
 {
 	private CompositionCustomVisual? Visual;
+	private WriteableBitmap? Bitmap;
 	private double RenderScaling = 1;
 
 	static VirtualImage()
@@ -67,7 +68,8 @@ public partial class VirtualImage : Control
 
 		Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
 
-		ReloadDisplaySource();
+		if (Bitmap != null)
+			Visual.SendHandlerMessage(Bitmap);
 
 		InvalidateVisual();
 	}
@@ -78,7 +80,8 @@ public partial class VirtualImage : Control
 
 		LayoutUpdated -= OnLayoutUpdated;
 
-		Cleanup();
+		Visual?.SendHandlerMessage(null!);
+		Visual = null;
 	}
 
 	protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
@@ -86,6 +89,8 @@ public partial class VirtualImage : Control
 		base.OnDetachedFromLogicalTree(e);
 		Source = null;
 		ScaledSource = null;
+		Bitmap?.Dispose();
+		Bitmap = null;
 	}
 
 	protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -97,20 +102,12 @@ public partial class VirtualImage : Control
 		if (prop == SourceProperty)
 		{
 			if (change.OldValue is Image<Rgba32> old)
-			{
 				old.Dispose();
-			}
-			if (change.NewValue is Image<Rgba32> img)
-			{
-				ReloadDisplaySource();
-			}
 		}
 		else if (prop == ScaledSourceProperty)
 		{
 			if (change.OldValue is Image<Rgba32> old)
-			{
 				old.Dispose();
-			}
 		}
 		else if (prop == DecodePixelWidthProperty)
 		{
@@ -147,7 +144,33 @@ public partial class VirtualImage : Control
 
 	public async Task SetSourceAsync(byte[] bytes)
 	{
-		Source = await Task.Run(() => SixLabors.ImageSharp.Image.Load<Rgba32>(bytes));
+		var decodePixelWidth = DecodePixelWidth;
+		var decodePixelHeight = DecodePixelHeight;
+
+		var results = await Task.Run(() =>
+		{
+			var source = SixLabors.ImageSharp.Image.Load<Rgba32>(bytes);
+			var scaledSource = source.Clone();
+
+			if (decodePixelWidth != 0 || decodePixelHeight != 0)
+				scaledSource.Mutate(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling)));
+
+			var bitmap = new WriteableBitmap(new PixelSize(scaledSource.Width, scaledSource.Height), new global::Avalonia.Vector(96, 96), PixelFormat.Rgba8888, AlphaFormat.Opaque);
+			using (var lockedBitmap = bitmap.Lock())
+			{
+				unsafe
+				{
+					var span = new Span<byte>((void*)lockedBitmap.Address, lockedBitmap.RowBytes * lockedBitmap.Size.Height);
+					scaledSource.CopyPixelDataTo(span);
+				}
+			}
+			return (source, scaledSource, bitmap);
+		});
+
+		Source = results.source;
+		ScaledSource = results.scaledSource;
+		Bitmap = results.bitmap;
+		Visual?.SendHandlerMessage(results.bitmap);
 	}
 
 	private void ReloadDisplaySource()
@@ -169,13 +192,8 @@ public partial class VirtualImage : Control
 				ScaledSource.CopyPixelDataTo(span);
 			}
 		}
+		Bitmap = bitmap;
 		Visual.SendHandlerMessage(bitmap);
-	}
-
-	private void Cleanup()
-	{
-		Visual?.SendHandlerMessage(null!);
-		Visual = null;
 	}
 
 	public static readonly StyledProperty<Image<Rgba32>?> SourceProperty = AvaloniaProperty.Register<VirtualImage, Image<Rgba32>?>("Source");
@@ -214,7 +232,6 @@ public class VirtualImageCustomVisualHandler : CompositionCustomVisualHandler
 		}
 		else
 		{
-			bitmap?.Dispose();
 			bitmap = null;
 		}
 

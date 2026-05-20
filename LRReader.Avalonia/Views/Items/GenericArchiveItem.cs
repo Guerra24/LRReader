@@ -89,15 +89,15 @@ public class GenericArchiveItem : TemplatedControl
 	private Task Show(bool animate)
 	{
 		if (animate)
-			Root?.FadeIn(TimeSpan.FromMilliseconds(150), new QuadraticEaseIn());
+			Root?.FadeInAsync(TimeSpan.FromMilliseconds(150), new QuadraticEaseIn()).ContinueWith(t => Dispatcher.Post(() => Root?.SetOpacity(1)));
 		else
-			Root?.SetVisualOpacity(1);
+			Root?.SetOpacity(1);
 		return Task.CompletedTask;
 	}
 
 	private Task Hide(bool animate)
 	{
-		Root?.SetVisualOpacity(0);
+		Root?.SetOpacity(0);
 		return Task.CompletedTask;
 	}
 
