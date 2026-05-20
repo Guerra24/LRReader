@@ -147,6 +147,8 @@ public partial class ArchiveTabContent : UserControl
 		if (Animate)
 		{
 			await Task.WhenAll(ReaderBackground.FadeInAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()), ScrollViewer.FadeInAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()));
+			ReaderBackground.SetOpacity(1);
+			ScrollViewer.SetOpacity(1);
 		}
 		else
 		{
@@ -229,6 +231,9 @@ public partial class ArchiveTabContent : UserControl
 				animRight?.TryStart(rightThumb);
 			await Task.WhenAll(ReaderBackground.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()), ScrollViewer.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()));
 			await Task.Delay(200); // Give it a sec
+
+			ReaderBackground.SetOpacity(0);
+			ScrollViewer.SetOpacity(0);
 		}
 		else
 		{
