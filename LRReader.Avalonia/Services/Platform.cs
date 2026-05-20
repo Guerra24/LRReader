@@ -46,7 +46,7 @@ namespace LRReader.Avalonia.Services
 			MapSymbolToSymbol(Symbol.Pictures, new FASymbolIconSource { Symbol = FASymbol.Pictures });
 		}
 
-		public override Version Version => Assembly.GetEntryAssembly()!.GetName().Version!;
+		public override Version Version => Assembly.GetEntryAssembly()?.GetName().Version ?? new Version();
 
 		public override bool AnimationsEnabled => true;
 

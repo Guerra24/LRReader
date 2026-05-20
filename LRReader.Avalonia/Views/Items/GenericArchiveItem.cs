@@ -88,16 +88,8 @@ public class GenericArchiveItem : TemplatedControl
 
 	private Task Show(bool animate)
 	{
-		var visual = ElementComposition.GetElementVisual(Root!);
-		if (animate && visual != null)
-		{
-			var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
-			animation.InsertKeyFrame(0.0f, 0.0f);
-			animation.InsertKeyFrame(1.0f, 1.0f, new QuadraticEaseIn());
-			animation.Duration = TimeSpan.FromMilliseconds(150);
-
-			visual.StartAnimation("Opacity", animation);
-		}
+		if (animate)
+			Root?.FadeIn(TimeSpan.FromMilliseconds(150), new QuadraticEaseIn());
 		else
 			Root?.SetVisualOpacity(1);
 		return Task.CompletedTask;

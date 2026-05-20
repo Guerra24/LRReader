@@ -26,11 +26,13 @@ namespace LRReader.Shared.Services
 				{
 					// Restsharp uses HttpClientHandler by default but we do not want that so kill it
 					handler.Dispose();
-					var socket = new SocketsHttpHandler();
-					socket.MaxConnectionsPerServer = 20; // Limit this so that mojo does not think we are dos'ing it
-					socket.PooledConnectionIdleTimeout = TimeSpan.FromSeconds(30); // Mojo default idle timeout
-					socket.UseCookies = false;
-					socket.AutomaticDecompression = System.Net.DecompressionMethods.All;
+					var socket = new SocketsHttpHandler
+					{
+						MaxConnectionsPerServer = 20, // Limit this so that mojo does not think we are dos'ing it
+						PooledConnectionIdleTimeout = TimeSpan.FromSeconds(30), // Mojo default idle timeout
+						UseCookies = false,
+						AutomaticDecompression = System.Net.DecompressionMethods.All,
+					};
 					return socket;
 				}
 			};

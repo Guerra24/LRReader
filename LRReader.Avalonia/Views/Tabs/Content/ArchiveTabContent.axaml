@@ -30,129 +30,129 @@
 	</UserControl.Resources>
 
     <Grid>
-		<RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" BringIntoViewOnFocusChange="False">
-                <StackPanel Margin="0,0,0,64">
-                    <!-- Header -->
-                    <StackPanel Margin="50,5,50,5" Spacing="8">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-							<Button
-								Content="{ext:LocalizedString /Tabs/Archive/New/Content}" Margin="0,2,8,0" Padding="4,2"
-								IsHitTestVisible="False" IsTabStop="False"
-                                Classes="accent"
-								IsVisible="{Binding IsNew, Mode=OneWay}" />
-							<SelectableTextBlock
-								Grid.Column="1" HorizontalAlignment="Left" FontSize="24"
-								Text="{Binding Archive.title, Mode=OneWay}"
-								TextWrapping="WrapWithOverflow" />
-						</Grid>
-						<!--<muxc:RatingControl Value="{Binding Rating, Mode=TwoWay}" Margin="4,0,0,-4" HorizontalAlignment="Left" IsReadOnly="{ReflectionBinding !Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />-->
-						<WrapPanel LineSpacing="4" ItemSpacing="4">
-							<StackPanel Orientation="Horizontal">
-								<Border Theme="{StaticResource CustomTag}">
-									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Pages/Text}"/>
-								</Border>
-								<Border Theme="{StaticResource CustomTagValue}" >
-									<TextBlock Text="{Binding Pages, Mode=OneWay}"/>
-								</Border>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Border Theme="{StaticResource CustomTag}">
-									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/LastRead/Text}" />
-								</Border>
-								<Border Theme="{StaticResource CustomTagValue}" >
-									<TextBlock Text="{Binding Archive.LastReadTimeString, Mode=OneWay}"/>
-								</Border>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Border Theme="{StaticResource CustomTag}">
-									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/FileName/Text}" />
-								</Border>
-								<Border Theme="{StaticResource CustomTagValue}" >
-									<TextBlock Text="{Binding Archive.filename, Mode=OneWay}"/>
-								</Border>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Border Theme="{StaticResource CustomTag}">
-									<TextBlock  Text="{ext:LocalizedString /Tabs/Archive/FileType/Text}" />
-								</Border>
-								<Border Theme="{StaticResource CustomTagValue}" >
-									<TextBlock Text="{Binding Archive.extension, Mode=OneWay}"/>
-								</Border>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Border Theme="{StaticResource CustomTag}">
-									<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Size/Text}" />
-								</Border>
-								<Border Theme="{StaticResource CustomTagValue}" >
-									<TextBlock Text="{Binding Archive.size, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}"/>
-								</Border>
-							</StackPanel>
-						</WrapPanel>
-						<controls:ArchiveTags ItemClickCommand="{Binding TagClickCommand}" ItemsSource="{Binding Archive.TagsGroups, Mode=OneWay}" />
-						<SelectableTextBlock x:Name="SummaryBlock" Text="{Binding Archive.summary, Mode=OneWay}" TextWrapping="WrapWithOverflow" IsVisible="{Binding Archive.summary, Converter={StaticResource EmptyStringToObjectConverter}, Mode=OneWay}" />
-						<WrapPanel LineSpacing="2" ItemSpacing="2">
-							<ToggleButton Content="{ext:LocalizedString Key=/Tabs/Archive/Bookmark/Content}" IsChecked="{Binding Bookmarked, Mode=TwoWay}" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
-							<Button
-								Click="Continue_Click"
-								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-								IsVisible="{Binding Bookmarked, Mode=OneWay}">
-								<TextBlock>
-									<Run Text="{ext:LocalizedString Key=/Tabs/Archive/Continue/Text}" /> (<Run Text="{Binding BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding Pages, Mode=OneWay}" />)
-								</TextBlock>
-							</Button>
-							<Button
-                                Content="{ext:LocalizedString Key=/Tabs/Archive/Edit/Content}"
-								Command="{Binding EditCommand}"
-								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-								IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
-							<Button
-                                Content="{ext:LocalizedString Key=/Tabs/Archive/Categories/Content}"
-								Command="{Binding EditCategoriesCommand}"
-								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-								IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
-							<Button
-								Content="{ext:LocalizedString Key=/Tabs/Archive/Download/Content}" Click="DownloadButton_Click"
-								IsEnabled="{Binding Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-							<Button
-                                Content="{ext:LocalizedString Key=/Tabs/Archive/Delete/Content}"
-								Command="{Binding DeleteCommand}"
-								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-								IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
-							<Border
-								Grid.Column="2" Width="1" Margin="6,4,6,4"
-								Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
-							<Button
-                                Content="{ext:LocalizedString Key=/Tabs/Archive/Next/Content}"
-								Click="NextArchive"
-								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-								IsVisible="{Binding CanGoNext, Mode=OneWay}" />
-							<Button
-                                Content="{ext:LocalizedString Key=/Tabs/Archive/Random/Content}"
-								Click="Random_Clicked"
-								IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
-						</WrapPanel>
-					</StackPanel>
-                    <!-- Content -->
-                    <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5" KeyboardNavigation.TabNavigation="Continue">
-                        <ItemsRepeater.ItemTemplate>
-                            <DataTemplate>
-                                <controls:RepeaterItem Click="ImagesGrid_ItemClick" BoxShadow="0 2 8 2 #26000000">
-						            <items:ArchiveImage />
-                                </controls:RepeaterItem>
-					        </DataTemplate>
-                        </ItemsRepeater.ItemTemplate>
-                        <ItemsRepeater.Layout>
-                            <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
-                        </ItemsRepeater.Layout>
-                    </ItemsRepeater>
-                </StackPanel>
-		    </ScrollViewer>
-        </RefreshContainer>
+		<!--<RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">-->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" BringIntoViewOnFocusChange="False">
+            <StackPanel x:Name="StackRoot" Margin="0,0,0,64">
+                <!-- Header -->
+                <StackPanel Margin="50,5,50,5" Spacing="8">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Button
+							Content="{ext:LocalizedString /Tabs/Archive/New/Content}" Margin="0,2,8,0" Padding="4,2"
+							IsHitTestVisible="False" IsTabStop="False"
+                            Classes="accent"
+							IsVisible="{Binding IsNew, Mode=OneWay}" />
+						<SelectableTextBlock
+							Grid.Column="1" HorizontalAlignment="Left" FontSize="24"
+							Text="{Binding Archive.title, Mode=OneWay}"
+							TextWrapping="WrapWithOverflow" />
+					</Grid>
+					<!--<muxc:RatingControl Value="{Binding Rating, Mode=TwoWay}" Margin="4,0,0,-4" HorizontalAlignment="Left" IsReadOnly="{ReflectionBinding !Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />-->
+					<WrapPanel LineSpacing="4" ItemSpacing="4">
+						<StackPanel Orientation="Horizontal">
+							<Border Theme="{StaticResource CustomTag}">
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Pages/Text}"/>
+							</Border>
+							<Border Theme="{StaticResource CustomTagValue}" >
+								<TextBlock Text="{Binding Pages, Mode=OneWay}"/>
+							</Border>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<Border Theme="{StaticResource CustomTag}">
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/LastRead/Text}" />
+							</Border>
+							<Border Theme="{StaticResource CustomTagValue}" >
+								<TextBlock Text="{Binding Archive.LastReadTimeString, Mode=OneWay}"/>
+							</Border>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<Border Theme="{StaticResource CustomTag}">
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/FileName/Text}" />
+							</Border>
+							<Border Theme="{StaticResource CustomTagValue}" >
+								<TextBlock Text="{Binding Archive.filename, Mode=OneWay}"/>
+							</Border>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<Border Theme="{StaticResource CustomTag}">
+								<TextBlock  Text="{ext:LocalizedString /Tabs/Archive/FileType/Text}" />
+							</Border>
+							<Border Theme="{StaticResource CustomTagValue}" >
+								<TextBlock Text="{Binding Archive.extension, Mode=OneWay}"/>
+							</Border>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<Border Theme="{StaticResource CustomTag}">
+								<TextBlock Text="{ext:LocalizedString /Tabs/Archive/Size/Text}" />
+							</Border>
+							<Border Theme="{StaticResource CustomTagValue}" >
+								<TextBlock Text="{Binding Archive.size, Mode=OneWay, Converter={StaticResource FileSizeToFriendlyStringConverter}}"/>
+							</Border>
+						</StackPanel>
+					</WrapPanel>
+					<controls:ArchiveTags ItemClickCommand="{Binding TagClickCommand}" ItemsSource="{Binding Archive.TagsGroups, Mode=OneWay}" />
+					<SelectableTextBlock x:Name="SummaryBlock" Text="{Binding Archive.summary, Mode=OneWay}" TextWrapping="WrapWithOverflow" IsVisible="{Binding Archive.summary, Converter={StaticResource EmptyStringToObjectConverter}, Mode=OneWay}" />
+					<WrapPanel LineSpacing="2" ItemSpacing="2">
+						<ToggleButton Content="{ext:LocalizedString Key=/Tabs/Archive/Bookmark/Content}" IsChecked="{Binding Bookmarked, Mode=TwoWay}" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+						<Button
+							Click="Continue_Click"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+							IsVisible="{Binding Bookmarked, Mode=OneWay}">
+							<TextBlock>
+								<Run Text="{ext:LocalizedString Key=/Tabs/Archive/Continue/Text}" /> (<Run Text="{Binding BookmarkedArchive.BookmarkProgressDisplay, Mode=OneWay}" />/<Run Text="{Binding Pages, Mode=OneWay}" />)
+							</TextBlock>
+						</Button>
+						<Button
+                            Content="{ext:LocalizedString Key=/Tabs/Archive/Edit/Content}"
+							Command="{Binding EditCommand}"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+							IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+						<Button
+                            Content="{ext:LocalizedString Key=/Tabs/Archive/Categories/Content}"
+							Command="{Binding EditCategoriesCommand}"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+							IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+						<Button
+							Content="{ext:LocalizedString Key=/Tabs/Archive/Download/Content}" Click="DownloadButton_Click"
+							IsEnabled="{Binding Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+						<Button
+                            Content="{ext:LocalizedString Key=/Tabs/Archive/Delete/Content}"
+							Command="{Binding DeleteCommand}"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+							IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+						<Border
+							Grid.Column="2" Width="1" Margin="6,4,6,4"
+							Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+						<Button
+                            Content="{ext:LocalizedString Key=/Tabs/Archive/Next/Content}"
+							Click="NextArchive"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+							IsVisible="{Binding CanGoNext, Mode=OneWay}" />
+						<Button
+                            Content="{ext:LocalizedString Key=/Tabs/Archive/Random/Content}"
+							Click="Random_Clicked"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
+					</WrapPanel>
+				</StackPanel>
+                <!-- Content -->
+                <ItemsRepeater x:Name="ImagesGrid" ItemsSource="{Binding ArchiveImages}" Margin="5" KeyboardNavigation.TabNavigation="Continue" ClipToBounds="False">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <controls:RepeaterItem Click="ImagesGrid_ItemClick" BoxShadow="0 2 8 2 #26000000">
+						        <items:ArchiveImage />
+                            </controls:RepeaterItem>
+					    </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                    <ItemsRepeater.Layout>
+                        <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center"/>
+                    </ItemsRepeater.Layout>
+                </ItemsRepeater>
+            </StackPanel>
+		</ScrollViewer>
+        <!--</RefreshContainer>-->
 		<Border
 			x:Name="ReaderBackground" Grid.RowSpan="2"
 			Background="{DynamicResource ReaderBackground}"
@@ -169,7 +169,7 @@
 			IsVisible="{Binding ShowReader, Mode=OneWay}"
             BringIntoViewOnFocusChange="False">
             <!-- HorizontalAnchorRatio="0.5" VerticalAnchorRatio="0.01" -->
-            <LayoutTransformControl HorizontalAlignment="Center">
+            <LayoutTransformControl HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="False">
                 <LayoutTransformControl.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding ZoomFactor, Mode=OneWay}" ScaleY="{Binding ZoomFactor, Mode=OneWay}" />
                 </LayoutTransformControl.LayoutTransform>
@@ -178,7 +178,8 @@
 				    IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
 				    PointerWheelChanged="ReaderControl_PointerWheelChanged"
 				    SizeChanged="ReaderControl_SizeChanged"
-                    Focusable="True">
+                    Focusable="True"
+                    ClipToBounds="False">
                     <!-- ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" -->
                     <Grid>
 					    <items:ReaderImage x:Name="ReaderImage" IsVisible="{Binding !UseVerticalReader, Mode=OneWay}" />

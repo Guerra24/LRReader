@@ -16,12 +16,24 @@ namespace LRReader.Avalonia.Desktop
 		}
 
 		// Avalonia configuration, don't remove; also used by visual designer.
-		public static AppBuilder BuildAvaloniaApp()
-			=> AppBuilder.Configure<App>()
-				.UsePlatformDetect()
+		public static AppBuilder BuildAvaloniaApp() =>
+			AppBuilder.Configure<App>()
+			.UsePlatformDetect()
+			.With(new SkiaOptions
+			{
+				MaxGpuResourceSizeBytes = 268435456 // 256mib
+			})
+			/*.With(new Win32PlatformOptions
+			{
+				RenderingMode = [Win32RenderingMode.Vulkan, Win32RenderingMode.AngleEgl, Win32RenderingMode.Software]
+			})
+			.With(new X11PlatformOptions
+			{
+				RenderingMode = [X11RenderingMode.Vulkan, X11RenderingMode.Glx, X11RenderingMode.Software]
+			})*/
 #if DEBUG
-				.WithDeveloperTools()
+			.WithDeveloperTools()
 #endif
-				.LogToTrace();
+			.LogToTrace();
 	}
 }

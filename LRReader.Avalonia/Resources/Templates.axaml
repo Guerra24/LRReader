@@ -11,11 +11,12 @@
     <ControlTheme x:Key="DefaultArchiveImage" TargetType="items:ArchiveImage">
         <Setter Property="Width" Value="200" />
         <Setter Property="Height" Value="275" />
+        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="items:ArchiveImage">
-                    <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"
-                            BoxShadow="0 2 8 2 #26000000">
+                    <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                        <!-- BoxShadow="0 2 8 2 #26000000" -->
                         <Grid x:Name="Root" Background="Transparent">
                             <Grid.ContextFlyout>
                                 <MenuFlyout>
@@ -26,8 +27,8 @@
                                     </MenuItem>
                                 </MenuFlyout>
                             </Grid.ContextFlyout>
-                            <Border HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:ArchiveImage].Data.Thumbnail, Mode=OneWay, Converter={StaticResource ObjectToBitmapImage}}" />
+                            <Border HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
+                                <ContentPresenter x:Name="Thumbnail" Content="{Binding $parent[items:ArchiveImage].Data.Thumbnail}" MaxHeight="275" />
                             </Border>
                             <Grid IsVisible="{Binding $parent[items:ArchiveImage].Data.MissingImage, Mode=OneWay}">
                                 <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="34" Glyph="&#xE8CD;" />
@@ -176,7 +177,7 @@
                                TextTrimming="CharacterEllipsis"
                                ToolTip.Tip="{Binding $parent[items:GenericArchiveItem].ViewModel.Archive.title, Mode=OneWay}" />
                     <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="True" CornerRadius="{DynamicResource ControlCornerRadius}">
-                        <Image x:Name="Thumbnail" MaxHeight="275" Source="{Binding $parent[items:GenericArchiveItem].ViewModel.Thumbnail}" />
+                        <ContentPresenter x:Name="Thumbnail" Content="{Binding $parent[items:GenericArchiveItem].ViewModel.Thumbnail}" MaxHeight="275" />
                     </Border>
                     <Grid Grid.Row="1">
                         <Grid IsVisible="{Binding $parent[items:GenericArchiveItem].ViewModel.MissingImage, Mode=OneWay}">
@@ -486,17 +487,18 @@
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Focusable" Value="True" />
+        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RepeaterItem">
                     <Border x:Name="Root"
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
-                            BackgroundSizing="InnerBorderEdge"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}"
                             BoxShadow="{TemplateBinding BoxShadow}">
+                        <!--BackgroundSizing="InnerBorderEdge"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"-->
                         <ContentPresenter Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
                     </Border>
                 </ControlTemplate>

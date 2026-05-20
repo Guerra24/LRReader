@@ -2,12 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              DataContextChanged="UserControl_DataContextChanged"
+             ClipToBounds="False"
              x:Class="LRReader.Avalonia.Views.Items.ReaderImage">
 
     <StackPanel x:Name="ImagesRoot" Orientation="Horizontal">
-        <Image Name="LeftImage" />
-        <Image Name="RightImage" />
+        <controls:VirtualImage Name="LeftImage" x:FieldModifier="public" />
+        <controls:VirtualImage Name="RightImage" x:FieldModifier="public" />
     </StackPanel>
 </UserControl>

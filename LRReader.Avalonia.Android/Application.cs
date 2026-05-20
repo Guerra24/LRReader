@@ -5,17 +5,25 @@ using Avalonia.Android;
 
 namespace LRReader.Avalonia.Android
 {
-    [Application(UsesCleartextTraffic = true)]
-    public class Application : AvaloniaAndroidApplication<App>
-    {
-        protected Application(nint javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
-        {
+	[Application(UsesCleartextTraffic = true)]
+	public class Application : AvaloniaAndroidApplication<App>
+	{
+		protected Application(nint javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
+		{
 			Init.EarlyInit();
 		}
 
-        protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
-        {
-			return base.CustomizeAppBuilder(builder);
-        }
-    }
+		protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
+		{
+			return base.CustomizeAppBuilder(builder)
+			.With(new SkiaOptions
+			{
+				MaxGpuResourceSizeBytes = 268435456 // 256mib
+			})
+			/*.With(new AndroidPlatformOptions
+			{
+				RenderingMode = [AndroidRenderingMode.Vulkan, AndroidRenderingMode.Egl, AndroidRenderingMode.Software]
+			})*/;
+		}
+	}
 }

@@ -1,4 +1,5 @@
-using Avalonia.Media.Imaging;
+using Avalonia.Animation.Easings;
+using FluentAvalonia.UI.Controls.Experimental;
 using LRReader.Avalonia.Extensions;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
@@ -17,8 +18,6 @@ public partial class ReaderImage : UserControl
 
 	private SemaphoreSlim decodePixel = new SemaphoreSlim(1);
 
-	private ReaderImageSet? Set;
-
 	public ReaderImage()
 	{
 		InitializeComponent();
@@ -27,11 +26,10 @@ public partial class ReaderImage : UserControl
 	public async Task ChangePage(ReaderImageSet set)
 	{
 		await decodePixel.WaitAsync();
-		Set = set;
 		var images = await Task.WhenAll(Service.Images.GetImageCached(set.LeftImage), Service.Images.GetImageCached(set.RightImage));
-		var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
-		LeftImage.Source = imageBitmaps[0] as Bitmap;
-		RightImage.Source = imageBitmaps[1] as Bitmap;
+		/*var imageBitmaps = */await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage));
+		//LeftImage.Source = imageBitmaps[0] as Bitmap;
+		//RightImage.Source = imageBitmaps[1] as Bitmap;
 		var sizes = await Task.WhenAll(Service.Images.GetImageSizeCached(set.LeftImage), Service.Images.GetImageSizeCached(set.RightImage));
 		var size = new Size(Math.Max(sizes[0].Width, sizes[1].Width), Math.Max(sizes[0].Height, sizes[1].Height));
 		LeftImage.Height = RightImage.Height = 0;
@@ -56,29 +54,29 @@ public partial class ReaderImage : UserControl
 	{
 		if (!(Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations && Service.Settings.PageChangeAnimation))
 			return;
-		//if (disableAnimation)
+		if (disableAnimation)
 		{
 			ImagesRoot.SetVisualOpacity(0);
 			disableAnimation = false;
 		}
-		/*else
+		else
 		{
-			await FadeOut.StartAsync(ImagesRoot);
-		}*/
+			await ImagesRoot.FadeOutAsync(TimeSpan.FromMilliseconds(80), new QuadraticEaseOut());
+		}
 	}
 
 	public void FadeInPage()
 	{
 		if (!(Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations))
 			return;
-		/*var openLeft = ConnectedAnimationService.GetForCurrentView().GetAnimation("openL");
-		var openRight = ConnectedAnimationService.GetForCurrentView().GetAnimation("openR");
-		if (openLeft != null || openRight != null || !Service.Settings.PageChangeAnimation)*/
-		ImagesRoot.SetVisualOpacity(1);
-		/*else
-			FadeIn.Start(ImagesRoot);*/
-		//openLeft?.TryStart(LeftImage);
-		//openRight?.TryStart(RightImage);
+		var openLeft = FAConnectedAnimationService.GetForView(TopLevel.GetTopLevel(this)).GetAnimation("openL");
+		var openRight = FAConnectedAnimationService.GetForView(TopLevel.GetTopLevel(this)).GetAnimation("openR");
+		if (openLeft != null || openRight != null || !Service.Settings.PageChangeAnimation)
+			ImagesRoot.SetVisualOpacity(1);
+		else
+			ImagesRoot.FadeIn(TimeSpan.FromMilliseconds(80), new QuadraticEaseIn());
+		openLeft?.TryStart(LeftImage);
+		openRight?.TryStart(RightImage);
 	}
 
 	public async Task ResizeHeight(int height)
@@ -88,18 +86,10 @@ public partial class ReaderImage : UserControl
 			return;
 		await decodePixel.WaitAsync();
 		_height = height;
-		/*if (LeftImage.Source != null)
-			((Bitmap)LeftImage.Source).DecodePixelHeight = height;
+		if (LeftImage.Source != null)
+			LeftImage.DecodePixelHeight = height;
 		if (RightImage.Source != null)
-			((Bitmap)RightImage.Source).DecodePixelHeight = height;*/
-		// Manually decode again in the target size
-		if (Set != null)
-		{
-			var images = await Task.WhenAll(Service.Images.GetImageCached(Set.LeftImage), Service.Images.GetImageCached(Set.RightImage));
-			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
-			LeftImage.Source = imageBitmaps[0] as Bitmap;
-			RightImage.Source = imageBitmaps[1] as Bitmap;
-		}
+			RightImage.DecodePixelHeight = height;
 		decodePixel.Release();
 	}
 
@@ -110,17 +100,10 @@ public partial class ReaderImage : UserControl
 			return;
 		await decodePixel.WaitAsync();
 		_width = width;
-		/*if (LeftImage.Source != null)
-			((Bitmap)LeftImage.Source).DecodePixelWidth = width;
+		if (LeftImage.Source != null)
+			LeftImage.DecodePixelWidth = width;
 		if (RightImage.Source != null)
-			((Bitmap)RightImage.Source).DecodePixelWidth = width;*/
-		if (Set != null)
-		{
-			var images = await Task.WhenAll(Service.Images.GetImageCached(Set.LeftImage), Service.Images.GetImageCached(Set.RightImage));
-			var imageBitmaps = await Task.WhenAll(imageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage.Source), imageProcessing.ByteToBitmap(images[1], _width, _height, RightImage.Source));
-			LeftImage.Source = imageBitmaps[0] as Bitmap;
-			RightImage.Source = imageBitmaps[1] as Bitmap;
-		}
+			RightImage.DecodePixelWidth = width;
 		decodePixel.Release();
 	}
 

@@ -132,7 +132,6 @@ namespace LRReader.Avalonia.Views.Items
 			//VisualStateManager.GoToState(this, "Hidden", true);
 		}
 
-
 		public bool KeepOverlayOpen
 		{
 			get => GetValue(KeepOverlayOpenProperty);

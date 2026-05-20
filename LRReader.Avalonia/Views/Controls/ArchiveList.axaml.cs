@@ -2,6 +2,8 @@ using Avalonia.Controls.Templates;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
+using FluentAvalonia.UI.Controls;
+using LRReader.Avalonia.Views.Items;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
@@ -262,6 +264,37 @@ public partial class ArchiveList : UserControl
 	private async void SuggestedTags_SelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
 		await HandleSearch();
+	}
+
+	private void ArchivesGrid_ContainerContentChanging(FAItemsRepeater sender, FAContainerContentChangingEventArgs args)
+	{
+		if (/*!args.InRecycleQueue &&*/ ((RepeaterItem)args.ItemContainer).Content is GenericArchiveItem item)
+		{
+			if (item.Group == null)
+				item.Group = Data.ArchiveList.ToList();
+			/*if (selectMode)
+				VisualStateManager.GoToState(item, "SelectionMode", false);
+			else
+				VisualStateManager.GoToState(item, "Normal", false);*/
+			item.Phase0();
+			args.RegisterUpdateCallback(Phase1);
+		}
+		//args.Handled = true;
+	}
+
+	private void Phase1(FAItemsRepeater sender, FAContainerContentChangingEventArgs args)
+	{
+		if (/*!args.InRecycleQueue &&*/ ((RepeaterItem)args.ItemContainer).Content is GenericArchiveItem item)
+		{
+			item.Phase1((Archive)args.Item);
+			args.RegisterUpdateCallback(Phase2);
+		}
+	}
+
+	private void Phase2(FAItemsRepeater sender, FAContainerContentChangingEventArgs args)
+	{
+		if (/*!args.InRecycleQueue &&*/ ((RepeaterItem)args.ItemContainer).Content is GenericArchiveItem item)
+			item.Phase2();
 	}
 
 	public SearchTabState GetTabState()

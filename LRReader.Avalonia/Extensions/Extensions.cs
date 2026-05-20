@@ -28,6 +28,64 @@ public static class Animations
 			visual.Opacity = opacity;
 	}
 
+	// Composition opacity does not behave correctly in some cases so fallback to regular opacity
+	public static void SetOpacity(this Visual element, float opacity)
+	{
+		element.Opacity = opacity;
+	}
+
+	public static void FadeIn(this Visual element, TimeSpan duration, IEasing easing)
+	{
+		var visual = ElementComposition.GetElementVisual(element);
+		if (visual == null)
+			return;
+		var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
+		animation.InsertKeyFrame(0.0f, 0.0f);
+		animation.InsertKeyFrame(1.0f, 1.0f, easing);
+		animation.Duration = duration;
+
+		visual.StartAnimation("Opacity", animation);
+
+		// Last frame doesn't invalidate so force it
+		Task.Delay(duration).ContinueWith(t =>
+		{
+			element.Dispatcher.Post(element.InvalidateVisual);
+		});
+	}
+
+	// Hack
+	public static Task FadeInAsync(this Visual element, TimeSpan duration, IEasing easing)
+	{
+		element.FadeIn(duration, easing);
+		return Task.Delay(duration);
+	}
+
+	public static void FadeOut(this Visual element, TimeSpan duration, IEasing easing)
+	{
+		var visual = ElementComposition.GetElementVisual(element);
+		if (visual == null)
+			return;
+		var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
+		animation.InsertKeyFrame(0.0f, 1.0f);
+		animation.InsertKeyFrame(1.0f, 0.0f, easing);
+		animation.Duration = duration;
+
+		visual.StartAnimation("Opacity", animation);
+
+		// Last frame doesn't invalidate so force it
+		Task.Delay(duration).ContinueWith(t =>
+		{
+			element.Dispatcher.Post(element.InvalidateVisual);
+		});
+	}
+
+	// Hack
+	public static Task FadeOutAsync(this Visual element, TimeSpan duration, IEasing easing)
+	{
+		element.FadeOut(duration, easing);
+		return Task.Delay(duration);
+	}
+
 	//public static void SetVisualTranslation(this UIElement element, Vector3 transform) => ElementCompositionPreview.GetElementVisual(element).TransformMatrix = Matrix4x4.CreateTranslation(transform);
 
 	/*public static void Start(this UIElement element, AnimationBuilder animation) => animation.Start(element);
@@ -45,7 +103,11 @@ public static class Animations
 
 		var implicitAnimations = compositor.CreateImplicitAnimationCollection();
 		implicitAnimations["Offset"] = offsetAnimation;
-		visual.ImplicitAnimations = implicitAnimations;
+		element.Dispatcher.Post(async () =>
+		{
+			await Task.Yield();
+			visual.ImplicitAnimations = implicitAnimations;
+		});
 	}
 
 }

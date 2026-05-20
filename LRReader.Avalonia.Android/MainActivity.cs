@@ -9,7 +9,7 @@ namespace LRReader.Avalonia.Android
 		Theme = "@style/MyTheme.NoActionBar",
 		Icon = "@drawable/icon",
 		MainLauncher = true,
-		ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.UiMode)]
+		ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.FontScale)]
 	public class MainActivity : AvaloniaMainActivity
 	{
 	}

@@ -1,7 +1,11 @@
+using Avalonia.Animation.Easings;
+using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Input;
+using FluentAvalonia.UI.Controls.Experimental;
 using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Extensions;
@@ -44,6 +48,8 @@ public partial class ArchiveTabContent : UserControl
 	public ArchiveTabContent()
 	{
 		InitializeComponent();
+		ReaderBackground.SetOpacity(0);
+		ScrollViewer.SetOpacity(0);
 		/*
 		ElementCompositionPreview.SetIsTranslationEnabled(ReaderThumbnailOverlay, true);
 		ElementCompositionPreview.GetElementVisual(ReaderThumbnailOverlay).Properties.InsertVector3("Translation", new Vector3(0, 317, 0));
@@ -71,8 +77,6 @@ public partial class ArchiveTabContent : UserControl
 
 	private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 	{
-		ReaderBackground.SetVisualOpacity(0);
-		ScrollViewer.SetVisualOpacity(0);
 		Data.ReloadBookmarkedObject();
 		FocusReader();
 		if (!_opened)
@@ -99,8 +103,8 @@ public partial class ArchiveTabContent : UserControl
 			Data.Group = next;
 		if (state?.Next != null)
 			Data.Group = [.. (await Task.WhenAll(state.Next.Select(Service.Archives.GetOrAddArchive).ToList())).Where(a => a != null).Select(a => a!)];
-		if (_open = state?.WasOpen ?? false || Service.Settings.OpenReader)
-			RefreshContainer.IsVisible = false;
+		//if (_open = state?.WasOpen ?? false || Service.Settings.OpenReader)
+		//			RefreshContainer.IsVisible = false;
 		archiveState = state;
 		await Data.Reload();
 		_loadSemaphore.Release();
@@ -116,15 +120,15 @@ public partial class ArchiveTabContent : UserControl
 		_transition = true;
 		var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 
-		/*if (Animate && item != null && !Data.UseVerticalReader)
+		if (Animate && item != null && !Data.UseVerticalReader)
 		{
-			var image = ImagesGrid.ContainerFromItem(item).FindDescendant("Thumbnail");
-			if (image != null && !(image.ActualWidth == 0 || image.ActualHeight == 0))
+			/*var image = ImagesGrid.GetOrCreateElement(page).FindDescendantOfType<VirtualImage>();
+			if (image != null && !(image.Bounds.Width == 0 || image.Bounds.Height == 0))
 			{
-				var anim = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate(GetOpenTarget(readerSet, page), image);
-				anim.Configuration = new BasicConnectedAnimationConfiguration();
-			}
-		}*/
+				var anim = FAConnectedAnimationService.GetForView(TopLevel.GetTopLevel(this)).PrepareToAnimate(GetOpenTarget(readerSet, page), image);
+				anim.Configuration = new FADirectConnectedAnimationConfiguration();
+			}*/
+		}
 
 		Data.ShowReader = true;
 		Data.ReaderIndex = index;
@@ -140,14 +144,14 @@ public partial class ArchiveTabContent : UserControl
 
 		if (Data.Archive.isnew)
 			_wasNew = true;
-		/*if (Animate)
+		if (Animate)
 		{
-			await Task.WhenAll(FadeIn.StartAsync(ReaderBackground), FadeIn.StartAsync(ScrollViewer));
+			await Task.WhenAll(ReaderBackground.FadeInAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()), ScrollViewer.FadeInAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()));
 		}
-		else*/
+		else
 		{
-			ReaderBackground.SetVisualOpacity(1);
-			ScrollViewer.SetVisualOpacity(1);
+			ReaderBackground.SetOpacity(1);
+			ScrollViewer.SetOpacity(1);
 		}
 
 		_focus = true;
@@ -162,33 +166,33 @@ public partial class ArchiveTabContent : UserControl
 		if (_transition)
 			return;
 		_transition = true;
-		if (!RefreshContainer.IsVisible)
+		/*if (!RefreshContainer.IsVisible)
 		{
 			RefreshContainer.IsVisible = true;
 			RefreshContainer.UpdateLayout();
 			await Task.Delay(100); // Otherwise scrollings into view breaks
-		}
+		}*/
 
 		await PlayStop(false);
-		//ConnectedAnimation? animLeft = null, animRight = null;
+		FAConnectedAnimation? animLeft = null, animRight = null;
 
 		if (!Data.UseVerticalReader)
 		{
-			//ReaderImage.disableAnimation = true;
+			ReaderImage.disableAnimation = true;
 
 			if (Animate)
 			{
-				/*var left = ReaderImage.FindDescendant("LeftImage");
-				var right = ReaderImage.FindDescendant("RightImage");
-				if (Data.ReaderContent.LeftImage != null && left != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
+				/*var left = ReaderImage.LeftImage;
+				var right = ReaderImage.RightImage;
+				if (Data.ReaderContent.LeftImage != null && !(left.Bounds.Width == 0 || left.Bounds.Height == 0))
 				{
-					animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
-					animLeft.Configuration = new BasicConnectedAnimationConfiguration();
+					animLeft = FAConnectedAnimationService.GetForView(TopLevel.GetTopLevel(this)).PrepareToAnimate("closeL", left);
+					animLeft.Configuration = new FADirectConnectedAnimationConfiguration();
 				}
-				if (Data.ReaderContent.RightImage != null && right != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
+				if (Data.ReaderContent.RightImage != null && !(right.Bounds.Width == 0 || right.Bounds.Height == 0))
 				{
-					animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
-					animRight.Configuration = new BasicConnectedAnimationConfiguration();
+					animRight = FAConnectedAnimationService.GetForView(TopLevel.GetTopLevel(this)).PrepareToAnimate("closeR", right);
+					animRight.Configuration = new FADirectConnectedAnimationConfiguration();
 				}*/
 			}
 		}
@@ -212,24 +216,24 @@ public partial class ArchiveTabContent : UserControl
 		}
 		leftTarget = leftTarget.Clamp(0, count - 1);
 		rightTarget = rightTarget.Clamp(0, count - 1);
-		//var delay = ImagesGrid.ContainerFromIndex(leftTarget) == null ? 200 : 50; // Man
+		//ImagesGrid.GetOrCreateElement(leftTarget).BringIntoView();
 		//await ImagesGrid.SmoothScrollIntoViewWithIndexAsync(leftTarget, disableAnimation: true);
-		//await Task.Delay(delay);
-		/*if (Animate)
+		await Task.Delay(50);
+		if (Animate)
 		{
-			var leftThumb = ImagesGrid.ContainerFromIndex(leftTarget)?.FindDescendant("Thumbnail");
-			var rightThumb = ImagesGrid.ContainerFromIndex(rightTarget)?.FindDescendant("Thumbnail");
+			var leftThumb = ImagesGrid.TryGetElement(leftTarget).FindDescendantOfType<VirtualImage>();
+			var rightThumb = ImagesGrid.TryGetElement(rightTarget).FindDescendantOfType<VirtualImage>();
 			if (Data.ReaderContent.LeftImage != null && leftThumb != null && Data.ArchiveImages.Count > leftTarget)
 				animLeft?.TryStart(leftThumb);
 			if (Data.ReaderContent.RightImage != null && rightThumb != null && Data.ArchiveImages.Count > rightTarget)
 				animRight?.TryStart(rightThumb);
-			await Task.WhenAll(FadeOut.StartAsync(ReaderBackground), FadeOut.StartAsync(ScrollViewer));
+			await Task.WhenAll(ReaderBackground.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()), ScrollViewer.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn()));
 			await Task.Delay(200); // Give it a sec
 		}
-		else*/
+		else
 		{
-			ReaderBackground.SetVisualOpacity(0);
-			ScrollViewer.SetVisualOpacity(0);
+			ReaderBackground.SetOpacity(0);
+			ScrollViewer.SetOpacity(0);
 		}
 		Data.ShowReader = false;
 
@@ -300,17 +304,17 @@ public partial class ArchiveTabContent : UserControl
 		if (Data.ShowReader)
 		{
 			_wasNew = await Data.SaveReaderData(_wasNew);
-			/*if (Animate)
-				await FadeOut.StartAsync(ScrollViewer);
-			else*/
-			ScrollViewer.SetVisualOpacity(0);
+			if (Animate)
+				await ScrollViewer.FadeOutAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn());
+			else
+				ScrollViewer.SetOpacity(0);
 		}
 		else
 		{
-			/*if (Animate)
-				await ImagesGrid.FadeOutAsync();
-			else*/
-			ImagesGrid.SetVisualOpacity(0);
+			if (Animate)
+				await StackRoot.FadeOutAsync(TimeSpan.FromMilliseconds(250), new QuadraticEaseOut());
+			else
+				StackRoot.SetOpacity(0);
 		}
 	}
 
@@ -334,18 +338,18 @@ public partial class ArchiveTabContent : UserControl
 			else
 				await ChangePage();
 
-			/*if (Animate)
-				await FadeIn.StartAsync(ScrollViewer);
-			else*/
-			ScrollViewer.SetVisualOpacity(1);
+			if (Animate)
+				await ScrollViewer.FadeInAsync(TimeSpan.FromMilliseconds(200), new QuadraticEaseIn());
+			else
+				ScrollViewer.SetOpacity(1);
 			FocusReader();
 		}
 		else
 		{
-			/*if (Animate)
-				await ImagesGrid.FadeInAsync();
-			else*/
-			ImagesGrid.SetVisualOpacity(1);
+			if (Animate)
+				await StackRoot.FadeInAsync(TimeSpan.FromMilliseconds(250), new QuadraticEaseIn());
+			else
+				StackRoot.SetOpacity(1);
 		}
 	}
 
@@ -939,8 +943,9 @@ public partial class ArchiveTabContent : UserControl
 
 	public void RedrawReader()
 	{
-		Service.Dispatcher.Run(() =>
+		Dispatcher.Post(async () =>
 		{
+			await Task.Yield();
 			ReaderBackground.InvalidateVisual();
 			ScrollViewer.InvalidateVisual();
 		});

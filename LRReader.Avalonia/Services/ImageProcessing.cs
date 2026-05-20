@@ -1,52 +1,30 @@
-﻿using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+﻿using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Services;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace LRReader.Avalonia.Services
 {
 	public class AvaloniaImageProcessingService : ImageProcessingService
 	{
-		private readonly IDispatcherService Dispatcher;
 
-		private double scaling;
-
-		public AvaloniaImageProcessingService(PlatformService platform, IDispatcherService dispatcher)
+		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? img = default, CancellationToken cancellationToken = default)
 		{
-			Dispatcher = dispatcher;
-			scaling = TopLevel.GetTopLevel(((AvaloniaPlatformService)platform).Root)!.RenderScaling;
-		}
+			var image = img as VirtualImage ?? new VirtualImage();
 
-		public override async Task<object?> ByteToBitmap(byte[]? bytes, int decodeWidth = 0, int decodeHeight = 0, object? image = default, CancellationToken cancellationToken = default)
-		{
-			await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
-			try
-			{
-				if (bytes == null)
-					return null;
+			image.Source = null;
 
-				using var img = SixLabors.ImageSharp.Image.Load<Rgba32>(bytes);
-				if (decodeWidth != 0 || decodeHeight != 0)
-					img.Mutate(p => p.Resize((int)Math.Round(decodeWidth * scaling), (int)Math.Round(decodeHeight * scaling)));
+			if (bytes == null)
+				return null;
+			if (bytes.Length == 0)
+				return null;
 
-				var raw = new byte[img.Width * img.Height * 4];
+			if (decodeWidth > 0)
+				image.DecodePixelWidth = decodeWidth;
+			if (decodeHeight > 0)
+				image.DecodePixelHeight = decodeHeight;
 
-				img.CopyPixelDataTo(raw);
+			await image.SetSourceAsync(bytes);
 
-				unsafe
-				{
-					fixed (byte* data = raw)
-					{
-						return new Bitmap(PixelFormat.Rgba8888, AlphaFormat.Opaque, (nint)data, new PixelSize(img.Width, img.Height), new Vector(96, 96), img.Width * 4);
-					}
-				}
-			}
-			finally
-			{
-				if (image is Bitmap bitmap)
-					Dispatcher.Run(bitmap.Dispose);
-			}
+			return image;
 		}
 
 	}

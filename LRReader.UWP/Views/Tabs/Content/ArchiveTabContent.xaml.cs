@@ -174,14 +174,14 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 				if (Animate)
 				{
-					var left = ReaderImage.FindDescendant("LeftImage");
-					var right = ReaderImage.FindDescendant("RightImage");
-					if (Data.ReaderContent.LeftImage != null && left != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
+					var left = ReaderImage.LeftImage;
+					var right = ReaderImage.RightImage;
+					if (Data.ReaderContent.LeftImage != null && !(left.ActualWidth == 0 || left.ActualHeight == 0))
 					{
 						animLeft = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeL", left);
 						animLeft.Configuration = new BasicConnectedAnimationConfiguration();
 					}
-					if (Data.ReaderContent.RightImage != null && right != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
+					if (Data.ReaderContent.RightImage != null && !(right.ActualWidth == 0 || right.ActualHeight == 0))
 					{
 						animRight = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("closeR", right);
 						animRight.Configuration = new BasicConnectedAnimationConfiguration();
