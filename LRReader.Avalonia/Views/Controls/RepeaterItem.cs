@@ -3,9 +3,8 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.Rendering.Composition;
+using Avalonia.VisualTree;
 using LRReader.Shared.Extensions;
-using System.Numerics;
 using System.Windows.Input;
 
 namespace LRReader.Avalonia.Views.Controls
@@ -15,11 +14,21 @@ namespace LRReader.Avalonia.Views.Controls
 	public partial class RepeaterItem : ContentControl
 	{
 
+		private DateTime current = DateTime.Now;
+		private TimeSpan holdDuration = TimeSpan.Zero;
+
 		protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 		{
 			base.OnApplyTemplate(e);
 
 			PseudoClasses.Set(":pressed", false);
+		}
+
+		protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+		{
+			base.OnAttachedToVisualTree(e);
+
+			holdDuration = this.GetPlatformSettings()!.HoldWaitDuration;
 		}
 
 		public ICommand? Command
@@ -67,7 +76,10 @@ namespace LRReader.Avalonia.Views.Controls
 				return;
 			base.OnPointerPressed(e);
 			if (IsEnabled)
+			{
 				PseudoClasses.Set(":pressed", true);
+				current = DateTime.Now;
+			}
 			//VisualStateManager.GoToState(this, "Pressed", true);
 		}
 
@@ -77,7 +89,7 @@ namespace LRReader.Avalonia.Views.Controls
 			if (point.Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonReleased)
 				return;
 			base.OnPointerReleased(e);
-			if (IsEnabled)
+			if (IsEnabled && DateTime.Now - current < holdDuration)
 			{
 				var param = new GridViewExtParameter(!e.KeyModifiers.HasFlag(KeyModifiers.Control), CommandParameter!);
 				if (Command != null && Command.CanExecute(param))

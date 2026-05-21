@@ -8,7 +8,7 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid>
+                <Grid Margin="{TemplateBinding Padding}">
                     <Grid.RowDefinitions>
 			            <RowDefinition Height="Auto" />
 			            <RowDefinition Height="*" />
@@ -29,13 +29,13 @@
                         </Grid.ColumnDefinitions>
 
                         <ContentPresenter Grid.Column="0"
-                                          Name="LeftContentPresenter" Margin="0,0,3,0"
+                                          Name="LeftContentPresenter"
                                           Content="{TemplateBinding TabStripHeader}"
                                           ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
 
                         <uip:FATabViewListView Grid.Column="1"
                                                Name="TabListView"
-                                               Padding="{TemplateBinding Padding}"
+                                               Padding="0 8"
                                                ItemsSource="{TemplateBinding TabItemsSource}"
                                                ItemTemplate="{TemplateBinding TabItemTemplate}"
                                                CanReorderItems="{TemplateBinding CanReorderTabs}"

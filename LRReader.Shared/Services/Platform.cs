@@ -35,7 +35,8 @@ namespace LRReader.Shared.Services
 		public abstract double DualScreenWidth { get; }
 		public bool Active { get; protected set; }
 		public AppTheme Theme { get; protected set; }
-
+		public bool IsMobile { get; protected set; }
+		public bool IsDesktop { get; protected set; }
 		public abstract void Init();
 		public abstract void ChangeTheme(AppTheme theme);
 		public abstract string GetLocalizedString(string key);

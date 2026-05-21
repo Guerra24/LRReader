@@ -5,6 +5,7 @@
              xmlns:main="using:LRReader.Avalonia.Views.Main"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             TopLevel.AutoSafeAreaPadding="False"
              x:Class="LRReader.Avalonia.Views.Root">
     <ui:FAFrame x:Name="FrameContent" x:FieldModifier="public" IsNavigationStackEnabled="False" NavigationFailed="FrameContent_NavigationFailed" />
 </UserControl>

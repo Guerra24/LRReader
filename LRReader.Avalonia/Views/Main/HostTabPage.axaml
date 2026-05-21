@@ -23,9 +23,11 @@
                                 TabCloseRequested="TabView_TabCloseRequested"
                                 TabItemsSource="{Binding TabItems}"
                                 TabWidthMode="SizeToContent"
-                                Padding="0 8"
                                 Theme="{StaticResource ModernTabView}"
                                 CanDragTabs="False">
+            <ui:FATabView.TabStripHeader>
+				<Grid x:Name="TabViewStartHeader" />
+			</ui:FATabView.TabStripHeader>
             <ui:FATabView.TabStripFooter>
                 <StackPanel Orientation="Horizontal" Spacing="2">
                     <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Bookmarks}">
@@ -54,7 +56,7 @@
 				<ContentControl Content="{Binding CurrentTab.CustomTabControl, Mode=OneWay}" />
 			</controls:ModernTabView.TabTools>
             <controls:ModernTabView.ExtraFooter>
-                <StackPanel Spacing="2" Orientation="Horizontal">
+                <StackPanel x:Name="TabViewEndHeader" Spacing="2" Orientation="Horizontal">
                     <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
                         <Viewbox>
                             <ui:FASymbolIcon Symbol="FullScreen" />

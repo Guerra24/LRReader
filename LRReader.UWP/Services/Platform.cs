@@ -76,6 +76,8 @@ namespace LRReader.UWP.Services
 
 			MapTransitionToType<SuppressNavigationTransitionInfo>(PagesTransition.None);
 			MapTransitionToType<DrillInNavigationTransitionInfo>(PagesTransition.DrillIn);
+
+			IsDesktop = true;
 		}
 
 		public override void Init()

@@ -1,5 +1,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Platform;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Navigation;
@@ -21,6 +23,8 @@ namespace LRReader.Avalonia.Views.Main
 
 		private WindowState WindowState;
 
+		private TopLevel TopLevel = null!;
+
 		public HostTabPage()
 		{
 			InitializeComponent();
@@ -35,7 +39,16 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			WeakReferenceMessenger.Default.Register(this);
 
-			TopLevel.GetTopLevel(this)!.BackRequested += HostTabPage_BackRequested;
+			TopLevel = TopLevel.GetTopLevel(this)!;
+
+			TopLevel.BackRequested += HostTabPage_BackRequested;
+
+			var insets = TopLevel.InsetsManager;
+			if (insets != null)
+			{
+				insets.SafeAreaChanged += TitleBar_LayoutMetricsChanged;
+				TabViewControl.Padding = insets.SafeAreaPadding;
+			}
 
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
@@ -62,13 +75,21 @@ namespace LRReader.Avalonia.Views.Main
 				desktop.MainWindow!.PropertyChanged -= MainWindow_PropertyChanged;
 			}
 
-			TopLevel.GetTopLevel(this)!.BackRequested -= HostTabPage_BackRequested;
+			var insets = TopLevel.InsetsManager;
+			insets?.SafeAreaChanged -= TitleBar_LayoutMetricsChanged;
+
+			TopLevel.BackRequested -= HostTabPage_BackRequested;
 
 			WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
 		private void HostTabPage_BackRequested(object? sender, RoutedEventArgs e)
 		{
 			e.Handled = Data.CurrentTab!.BackRequested();
+		}
+
+		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e)
+		{
+			TabViewControl.Padding = e.SafeAreaPadding;
 		}
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);

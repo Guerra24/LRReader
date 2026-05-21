@@ -1,19 +1,20 @@
 ﻿using Avalonia.LogicalTree;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using Avalonia.Rendering.Composition;
+using Avalonia.Skia;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using SkiaSharp;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace LRReader.Avalonia.Views.Controls;
 
 public partial class VirtualImage : Control
 {
 	private CompositionCustomVisual? Visual;
-	private WriteableBitmap? Bitmap;
+	private SKImage? Image;
 	private double RenderScaling = 1;
 
 	static VirtualImage()
@@ -52,7 +53,7 @@ public partial class VirtualImage : Control
 	{
 		base.OnAttachedToVisualTree(e);
 
-		RenderScaling = TopLevel.GetTopLevel(this)!.RenderScaling;
+		RenderScaling = e.PresentationSource.RenderScaling;
 
 		var elementVisual = ElementComposition.GetElementVisual(this);
 		var compositor = elementVisual?.Compositor;
@@ -68,8 +69,8 @@ public partial class VirtualImage : Control
 
 		Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
 
-		if (Bitmap != null)
-			Visual.SendHandlerMessage(Bitmap);
+		if (Image != null)
+			Visual.SendHandlerMessage(Image);
 
 		InvalidateVisual();
 	}
@@ -89,8 +90,8 @@ public partial class VirtualImage : Control
 		base.OnDetachedFromLogicalTree(e);
 		Source = null;
 		ScaledSource = null;
-		Bitmap?.Dispose();
-		Bitmap = null;
+		Image?.Dispose();
+		Image = null;
 	}
 
 	protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -153,47 +154,76 @@ public partial class VirtualImage : Control
 			var scaledSource = source.Clone();
 
 			if (decodePixelWidth != 0 || decodePixelHeight != 0)
-				scaledSource.Mutate(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling)));
+				scaledSource.Mutate(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
 
-			var bitmap = new WriteableBitmap(new PixelSize(scaledSource.Width, scaledSource.Height), new global::Avalonia.Vector(96, 96), PixelFormat.Rgba8888, AlphaFormat.Opaque);
-			using (var lockedBitmap = bitmap.Lock())
+			var info = new SKImageInfo(scaledSource.Width, scaledSource.Height, SKColorType.Rgba8888, SKAlphaType.Opaque);
+			SKImage img;
+			unsafe
 			{
-				unsafe
+				if (scaledSource.DangerousTryGetSinglePixelMemory(out var memory))
 				{
-					var span = new Span<byte>((void*)lockedBitmap.Address, lockedBitmap.RowBytes * lockedBitmap.Size.Height);
+					using var handle = memory.Pin();
+					img = SKImage.FromPixelCopy(info, (nint)handle.Pointer);
+				}
+				else
+				{
+					var length = info.Width * info.Height * info.BytesPerPixel;
+					var temp = NativeMemory.Alloc((nuint)length);
+					var span = new Span<byte>(temp, length);
 					scaledSource.CopyPixelDataTo(span);
+					img = SKImage.FromPixelCopy(info, (nint)temp);
+					NativeMemory.Free(temp);
 				}
 			}
-			return (source, scaledSource, bitmap);
+
+			return (source, scaledSource, image: img);
 		});
 
 		Source = results.source;
 		ScaledSource = results.scaledSource;
-		Bitmap = results.bitmap;
-		Visual?.SendHandlerMessage(results.bitmap);
+		Image = results.image;
+		Visual?.SendHandlerMessage(results.image);
 	}
 
-	private void ReloadDisplaySource()
+	private async void ReloadDisplaySource()
 	{
 		if (Source == null || Visual == null)
 			return;
 
-		ScaledSource = Source.Clone();
+		var decodePixelWidth = DecodePixelWidth;
+		var decodePixelHeight = DecodePixelHeight;
+		var scaledSource = await Task.Run(Source.Clone);
 
-		if (DecodePixelWidth != 0 || DecodePixelHeight != 0)
-			ScaledSource.Mutate(p => p.Resize((int)Math.Round(DecodePixelWidth * RenderScaling), (int)Math.Round(DecodePixelHeight * RenderScaling)));
+		if (decodePixelWidth != 0 || decodePixelHeight != 0)
+			await Task.Run(() => scaledSource.Mutate(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2)));
 
-		var bitmap = new WriteableBitmap(new PixelSize(ScaledSource.Width, ScaledSource.Height), new global::Avalonia.Vector(96, 96), PixelFormat.Rgba8888, AlphaFormat.Opaque);
-		using (var lockedBitmap = bitmap.Lock())
+		var image = await Task.Run(() =>
 		{
+			var info = new SKImageInfo(scaledSource.Width, scaledSource.Height, SKColorType.Rgba8888, SKAlphaType.Opaque);
 			unsafe
 			{
-				var span = new Span<byte>((void*)lockedBitmap.Address, lockedBitmap.RowBytes * lockedBitmap.Size.Height);
-				ScaledSource.CopyPixelDataTo(span);
+				if (scaledSource.DangerousTryGetSinglePixelMemory(out var memory))
+				{
+					using var handle = memory.Pin();
+					return SKImage.FromPixelCopy(info, (nint)handle.Pointer);
+				}
+				else
+				{
+					var length = info.Width * info.Height * info.BytesPerPixel;
+					var temp = NativeMemory.Alloc((nuint)length);
+					var span = new Span<byte>(temp, length);
+					scaledSource.CopyPixelDataTo(span);
+					var img = SKImage.FromPixelCopy(info, (nint)temp);
+					NativeMemory.Free(temp);
+					return img;
+				}
 			}
-		}
-		Bitmap = bitmap;
-		Visual.SendHandlerMessage(bitmap);
+
+		});
+
+		ScaledSource = scaledSource;
+		Image = image;
+		Visual.SendHandlerMessage(image);
 	}
 
 	public static readonly StyledProperty<Image<Rgba32>?> SourceProperty = AvaloniaProperty.Register<VirtualImage, Image<Rgba32>?>("Source");
@@ -204,35 +234,43 @@ public partial class VirtualImage : Control
 
 public class VirtualImageCustomVisualHandler : CompositionCustomVisualHandler
 {
-	private Bitmap? bitmap;
+	private static readonly SKSamplingOptions SamplingOptions = new(SKFilterMode.Nearest);
+
+	private SKImage? image;
 
 	public override void OnRender(ImmediateDrawingContext drawingContext)
 	{
-		if (bitmap == null)
+		if (image == null)
 			return;
+		var skia = drawingContext.TryGetFeature<ISkiaSharpApiLeaseFeature>();
+		if (skia == null)
+			return;
+
 		var bounds = GetRenderBounds().Size;
 		var viewPort = new Rect(bounds);
 
-		var scale = Stretch.Uniform.CalculateScaling(bounds, bitmap.Size);
-		var scaledSize = bitmap.Size * scale;
-		var destRect = viewPort
-			.CenterRect(new Rect(scaledSize))
-			.Intersect(viewPort);
+		var size = new global::Avalonia.Size(image.Width, image.Height);
+		var scale = Stretch.Uniform.CalculateScaling(bounds, size);
+		var scaledSize = size * scale;
+		var destRect = viewPort.CenterRect(new Rect(scaledSize)).Intersect(viewPort);
 
-		drawingContext.DrawBitmap(bitmap, new Rect(bitmap.Size), destRect);
+		using var lease = skia.Lease();
+		using var paint = new SKPaint();
+		paint.ColorF = new SKColorF(0, 0, 0, (float)lease.CurrentOpacity);
+		lease.SkCanvas.DrawImage(image, destRect.ToSKRect(), SamplingOptions, paint);
 	}
 
 	public override void OnMessage(object message)
 	{
-		if (message is Bitmap img)
+		if (message is SKImage img)
 		{
-			bitmap?.Dispose();
-			bitmap = img;
+			image?.Dispose();
+			image = img;
 			Invalidate();
 		}
 		else
 		{
-			bitmap = null;
+			image = null;
 		}
 
 	}

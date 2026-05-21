@@ -23,6 +23,9 @@ namespace LRReader.Avalonia.Views.Main
 			await Task.Yield(); // Wait 1 frame to allow the theme to apply correctly
 			Service.Platform.ChangeTheme(Service.Settings.Theme);
 			((SolidColorBrush)Application.Current!.Resources["CustomReaderBackground"]!).Color = Color.Parse(Service.Settings.ReaderBackground);
+			var insets = TopLevel.GetTopLevel(this)!.InsetsManager;
+			insets?.DisplayEdgeToEdgePreference = true;
+			insets?.SystemBarColor = Colors.Transparent;
 			await ViewModel.Startup();
 		}
 	}
