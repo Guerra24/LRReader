@@ -14,27 +14,34 @@
 
 ## Requirements
 
-- Windows 10 20H1 (x64 or ARM64)
-- LANraragi v0.9.1
+- Windows 10 20H1 (x64 or ARM64) or a modern Linux distro (x86_64 or aarch64).
+- LANraragi v0.9.10
 
 ## Installing
 
-### Store
+### Windows
+#### Store
 
 <a href="https://apps.microsoft.com/detail/LRReader/9mz6bwwvswjh?launch=true&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/></a>
 
 If you have troubles accessing the store page. Open this link in your browser:<br>
 `ms-windows-store://pdp/?productid=9MZ6BWWVSWJH`
 
-### Sideload
+#### Sideload
 
 If you don't want to deal with the store this option is and will be supported.
 
-For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases)
+For stable check the [Releases page](https://github.com/Guerra24/LRReader/releases).
 
-For nightly download the installer from the [latest build](https://nightly.link/Guerra24/LRReader/workflows/build-nightly/develop)
+The Nightly installer is [available here](https://nightly.link/Guerra24/LRReader/workflows/build-nightly/develop).
 
 Download the `LRReader.exe` file, run it and follow instructions.
+
+### Linux
+
+This version is in an in-development/experimental state and does not contain all the features of the Windows version.
+
+Nightly AppImage builds are available for [x86_64](https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage) and [aarch64](https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage). Self-updater included.
 
 ## Usage
 
