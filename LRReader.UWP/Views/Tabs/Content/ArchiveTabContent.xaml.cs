@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Windows.Devices.Input;
 using Windows.Storage.Pickers;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media.Animation;
 using RefreshContainer = Microsoft.UI.Xaml.Controls.RefreshContainer;
 using RefreshRequestedEventArgs = Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs;

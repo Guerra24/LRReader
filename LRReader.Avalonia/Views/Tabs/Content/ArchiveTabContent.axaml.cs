@@ -1,5 +1,4 @@
 using Avalonia.Animation.Easings;
-using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
@@ -103,8 +102,8 @@ public partial class ArchiveTabContent : UserControl
 			Data.Group = next;
 		if (state?.Next != null)
 			Data.Group = [.. (await Task.WhenAll(state.Next.Select(Service.Archives.GetOrAddArchive).ToList())).Where(a => a != null).Select(a => a!)];
-		//if (_open = state?.WasOpen ?? false || Service.Settings.OpenReader)
-		//			RefreshContainer.IsVisible = false;
+		if (_open = state?.WasOpen ?? false || Service.Settings.OpenReader)
+			StackRoot.IsVisible = false;
 		archiveState = state;
 		await Data.Reload();
 		_loadSemaphore.Release();
@@ -168,12 +167,12 @@ public partial class ArchiveTabContent : UserControl
 		if (_transition)
 			return;
 		_transition = true;
-		/*if (!RefreshContainer.IsVisible)
+		if (!StackRoot.IsVisible)
 		{
-			RefreshContainer.IsVisible = true;
-			RefreshContainer.UpdateLayout();
+			StackRoot.IsVisible = true;
+			StackRoot.UpdateLayout();
 			await Task.Delay(100); // Otherwise scrollings into view breaks
-		}*/
+		}
 
 		await PlayStop(false);
 		FAConnectedAnimation? animLeft = null, animRight = null;
