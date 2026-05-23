@@ -2,15 +2,16 @@
 using Android.Runtime;
 using Avalonia;
 using Avalonia.Android;
+using LRReader.Shared.Services;
 
 namespace LRReader.Avalonia.Android
 {
 	[Application(UsesCleartextTraffic = true)]
-	public class Application : AvaloniaAndroidApplication<App>
+	public class Application : AvaloniaAndroidApplication<App>, IEntryPoint
 	{
 		protected Application(nint javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
 		{
-			Init.EarlyInit();
+			Init.EarlyInit(this);
 		}
 
 		protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)

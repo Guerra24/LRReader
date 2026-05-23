@@ -49,6 +49,7 @@ namespace LRReader.UWP.Views.Main
 			TabViewEndHeader.Margin = new Thickness(0, 0, CoreView.TitleBar.SystemOverlayRightInset, 0);
 
 			Data.Fullscreen = AppView.IsFullScreenMode;
+			Platform.ToggleFullScreenModeRequested += Platform_ToggleFullScreenModeRequested;
 
 			Window.Current.SetTitleBar(TitleBar);
 
@@ -71,17 +72,18 @@ namespace LRReader.UWP.Views.Main
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 			base.OnNavigatingFrom(e);
+			WeakReferenceMessenger.Default.UnregisterAll(this);
 
-			CoreView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
-			CoreView.TitleBar.IsVisibleChanged -= TitleBar_IsVisibleChanged;
-			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
+			Window.Current.SetTitleBar(null);
+
+			Platform.ToggleFullScreenModeRequested -= Platform_ToggleFullScreenModeRequested;
 
 			SystemNavigationManager.GetForCurrentView().BackRequested -= HostTabPage_BackRequested;
 			Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
 
-			Window.Current.SetTitleBar(null);
-
-			WeakReferenceMessenger.Default.UnregisterAll(this);
+			CoreView.TitleBar.LayoutMetricsChanged -= TitleBar_LayoutMetricsChanged;
+			CoreView.TitleBar.IsVisibleChanged -= TitleBar_IsVisibleChanged;
+			AppView.VisibleBoundsChanged -= AppView_VisibleBoundsChanged;
 		}
 
 		private void HostTabPage_BackRequested(object? sender, BackRequestedEventArgs e)
@@ -196,6 +198,18 @@ namespace LRReader.UWP.Views.Main
 			{
 				var data = await FileIO.ReadBufferAsync(file);
 				await LRReader.Shared.Providers.ArchivesProvider.UploadArchive(file.Name, data.ToArray());
+			}
+		}
+
+		private void Platform_ToggleFullScreenModeRequested()
+		{
+			if (AppView.IsFullScreenMode)
+			{
+				AppView.ExitFullScreenMode();
+			}
+			else
+			{
+				AppView.TryEnterFullScreenMode();
 			}
 		}
 	}

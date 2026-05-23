@@ -7,7 +7,7 @@ namespace LRReader.Avalonia
 {
 	public static class Init
 	{
-		public static void EarlyInit()
+		public static void EarlyInit(IEntryPoint entryPoint)
 		{
 			Service.BuildServices((ServiceCollection collection) =>
 			{
@@ -22,6 +22,8 @@ namespace LRReader.Avalonia
 #endif
 
 				collection.AddSingleton<ImageProcessingService, AvaloniaImageProcessingService>();
+
+				collection.AddSingleton(entryPoint);
 			});
 		}
 	}

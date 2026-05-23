@@ -109,4 +109,8 @@ namespace LRReader.Shared.Services
 	{
 		Task Init();
 	}
+
+	public interface IEntryPoint
+	{
+	}
 }

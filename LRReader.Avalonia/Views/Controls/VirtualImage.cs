@@ -2,12 +2,14 @@
 using Avalonia.Media;
 using Avalonia.Rendering.Composition;
 using Avalonia.Skia;
+using LRReader.Avalonia.Extensions;
+using LRReader.Avalonia.Services;
+using LRReader.Shared.Services;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SkiaSharp;
 using System.Numerics;
-using System.Runtime.InteropServices;
 
 namespace LRReader.Avalonia.Views.Controls;
 
@@ -15,24 +17,18 @@ public partial class VirtualImage : Control
 {
 	private CompositionCustomVisual? Visual;
 	private SKImage? Image;
-	private double RenderScaling = 1;
+	private double RenderScaling = ((AvaloniaPlatformService)Service.Platform).RenderScaling;
 
 	static VirtualImage()
 	{
-		AffectsRender<VirtualImage>(SourceProperty, ScaledSourceProperty, DecodePixelWidthProperty, DecodePixelHeightProperty);
-		AffectsMeasure<VirtualImage>(SourceProperty, ScaledSourceProperty, DecodePixelWidthProperty, DecodePixelHeightProperty);
+		AffectsRender<VirtualImage>(SourceProperty, DecodePixelWidthProperty, DecodePixelHeightProperty);
+		AffectsMeasure<VirtualImage>(SourceProperty, DecodePixelWidthProperty, DecodePixelHeightProperty);
 	}
 
 	public Image<Rgba32>? Source
 	{
 		get => GetValue(SourceProperty);
 		set => SetValue(SourceProperty, value);
-	}
-
-	public Image<Rgba32>? ScaledSource
-	{
-		get => GetValue(ScaledSourceProperty);
-		set => SetValue(ScaledSourceProperty, value);
 	}
 
 	public int DecodePixelWidth
@@ -89,7 +85,6 @@ public partial class VirtualImage : Control
 	{
 		base.OnDetachedFromLogicalTree(e);
 		Source = null;
-		ScaledSource = null;
 		Image?.Dispose();
 		Image = null;
 	}
@@ -101,11 +96,6 @@ public partial class VirtualImage : Control
 		var prop = change.Property;
 
 		if (prop == SourceProperty)
-		{
-			if (change.OldValue is Image<Rgba32> old)
-				old.Dispose();
-		}
-		else if (prop == ScaledSourceProperty)
 		{
 			if (change.OldValue is Image<Rgba32> old)
 				old.Dispose();
@@ -122,18 +112,16 @@ public partial class VirtualImage : Control
 
 	protected override global::Avalonia.Size MeasureOverride(global::Avalonia.Size availableSize)
 	{
-		var image = ScaledSource ?? Source;
-		if (image == null)
+		if (Image == null)
 			return new global::Avalonia.Size();
-		return Stretch.Uniform.CalculateSize(availableSize, new global::Avalonia.Size(image.Size.Width, image.Size.Height));
+		return Stretch.Uniform.CalculateSize(availableSize, new global::Avalonia.Size(Image.Width, Image.Height));
 	}
 
 	protected override global::Avalonia.Size ArrangeOverride(global::Avalonia.Size finalSize)
 	{
-		var image = ScaledSource ?? Source;
-		if (image == null)
+		if (Image == null)
 			return new global::Avalonia.Size();
-		return Stretch.Uniform.CalculateSize(finalSize, new global::Avalonia.Size(image.Size.Width, image.Size.Height));
+		return Stretch.Uniform.CalculateSize(finalSize, new global::Avalonia.Size(Image.Width, Image.Height));
 	}
 
 	private void OnLayoutUpdated(object? sender, EventArgs e)
@@ -151,36 +139,20 @@ public partial class VirtualImage : Control
 		var results = await Task.Run(() =>
 		{
 			var source = SixLabors.ImageSharp.Image.Load<Rgba32>(bytes);
-			var scaledSource = source.Clone();
+			var scaledSource = source;
 
 			if (decodePixelWidth != 0 || decodePixelHeight != 0)
-				scaledSource.Mutate(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
+				scaledSource = source.Clone(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
 
-			var info = new SKImageInfo(scaledSource.Width, scaledSource.Height, SKColorType.Rgba8888, SKAlphaType.Opaque);
-			SKImage img;
-			unsafe
-			{
-				if (scaledSource.DangerousTryGetSinglePixelMemory(out var memory))
-				{
-					using var handle = memory.Pin();
-					img = SKImage.FromPixelCopy(info, (nint)handle.Pointer);
-				}
-				else
-				{
-					var length = info.Width * info.Height * info.BytesPerPixel;
-					var temp = NativeMemory.Alloc((nuint)length);
-					var span = new Span<byte>(temp, length);
-					scaledSource.CopyPixelDataTo(span);
-					img = SKImage.FromPixelCopy(info, (nint)temp);
-					NativeMemory.Free(temp);
-				}
-			}
+			var img = scaledSource.ToSKImage();
 
-			return (source, scaledSource, image: img);
+			if (scaledSource != source)
+				scaledSource.Dispose();
+
+			return (source, image: img);
 		});
 
 		Source = results.source;
-		ScaledSource = results.scaledSource;
 		Image = results.image;
 		Visual?.SendHandlerMessage(results.image);
 	}
@@ -192,42 +164,24 @@ public partial class VirtualImage : Control
 
 		var decodePixelWidth = DecodePixelWidth;
 		var decodePixelHeight = DecodePixelHeight;
-		var scaledSource = await Task.Run(Source.Clone);
-
-		if (decodePixelWidth != 0 || decodePixelHeight != 0)
-			await Task.Run(() => scaledSource.Mutate(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2)));
+		var scaledSource = Source;
 
 		var image = await Task.Run(() =>
 		{
-			var info = new SKImageInfo(scaledSource.Width, scaledSource.Height, SKColorType.Rgba8888, SKAlphaType.Opaque);
-			unsafe
-			{
-				if (scaledSource.DangerousTryGetSinglePixelMemory(out var memory))
-				{
-					using var handle = memory.Pin();
-					return SKImage.FromPixelCopy(info, (nint)handle.Pointer);
-				}
-				else
-				{
-					var length = info.Width * info.Height * info.BytesPerPixel;
-					var temp = NativeMemory.Alloc((nuint)length);
-					var span = new Span<byte>(temp, length);
-					scaledSource.CopyPixelDataTo(span);
-					var img = SKImage.FromPixelCopy(info, (nint)temp);
-					NativeMemory.Free(temp);
-					return img;
-				}
-			}
+			if (decodePixelWidth != 0 || decodePixelHeight != 0)
+				scaledSource = scaledSource.Clone(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
 
+			return scaledSource.ToSKImage();
 		});
 
-		ScaledSource = scaledSource;
+		if (scaledSource != Source)
+			scaledSource.Dispose();
+
 		Image = image;
 		Visual.SendHandlerMessage(image);
 	}
 
 	public static readonly StyledProperty<Image<Rgba32>?> SourceProperty = AvaloniaProperty.Register<VirtualImage, Image<Rgba32>?>("Source");
-	public static readonly StyledProperty<Image<Rgba32>?> ScaledSourceProperty = AvaloniaProperty.Register<VirtualImage, Image<Rgba32>?>("ScaledSource");
 	public static readonly StyledProperty<int> DecodePixelWidthProperty = AvaloniaProperty.Register<VirtualImage, int>("DecodePixelWidth");
 	public static readonly StyledProperty<int> DecodePixelHeightProperty = AvaloniaProperty.Register<VirtualImage, int>("DecodePixelHeight");
 }

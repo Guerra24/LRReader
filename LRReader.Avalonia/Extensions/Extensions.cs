@@ -6,6 +6,10 @@ using Avalonia.Styling;
 using FluentAvalonia.UI.Controls;
 using LRReader.Avalonia.Resources;
 using LRReader.Shared.Services;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SkiaSharp;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace LRReader.Avalonia.Extensions;
@@ -198,4 +202,30 @@ public class ButtonExtension : AvaloniaObject
 	}
 
 	public static Flyout GetHideFlyout(Button button) => button.GetValue(HideFlyoutProperty);
+}
+
+public static class ImageExtensions
+{
+	public static SKImage ToSKImage(this Image<Rgba32> image)
+	{
+		var info = new SKImageInfo(image.Width, image.Height, SKColorType.Rgba8888, SKAlphaType.Opaque);
+		unsafe
+		{
+			if (image.DangerousTryGetSinglePixelMemory(out var memory))
+			{
+				using var handle = memory.Pin();
+				return SKImage.FromPixelCopy(info, (nint)handle.Pointer);
+			}
+			else
+			{
+				var length = info.Width * info.Height * info.BytesPerPixel;
+				var temp = NativeMemory.Alloc((nuint)length);
+				var span = new Span<byte>(temp, length);
+				image.CopyPixelDataTo(span);
+				var img = SKImage.FromPixelCopy(info, (nint)temp);
+				NativeMemory.Free(temp);
+				return img;
+			}
+		}
+	}
 }

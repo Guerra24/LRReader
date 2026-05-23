@@ -37,6 +37,7 @@ namespace LRReader.Shared.Services
 		public AppTheme Theme { get; protected set; }
 		public bool IsMobile { get; protected set; }
 		public bool IsDesktop { get; protected set; }
+		public event Action? ToggleFullScreenModeRequested;
 		public abstract void Init();
 		public abstract void ChangeTheme(AppTheme theme);
 		public abstract string GetLocalizedString(string key);
@@ -80,6 +81,8 @@ namespace LRReader.Shared.Services
 		public T CreateTransition<T>(PagesTransition transition) => (T)Activator.CreateInstance(Transitions[transition].Type)!;
 
 		public abstract Task<bool> CheckAppInstalled(string package);
+
+		public void ToggleFullScreenMode() => ToggleFullScreenModeRequested?.Invoke();
 
 #if WINDOWS_UWP
 		public abstract bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion);

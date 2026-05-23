@@ -9,23 +9,29 @@ using LRReader.Avalonia.Views.Main;
 using LRReader.Avalonia.Views.Tabs;
 using LRReader.Shared.Models;
 using LRReader.Shared.Services;
-using System.Reflection;
 
 namespace LRReader.Avalonia.Services
 {
 	public class AvaloniaPlatformService : PlatformService
 	{
 		private readonly TabsService Tabs;
+		private readonly IEntryPoint EntryPoint;
+
+		private TopLevel TopLevel = null!;
 
 		public Root Root { get; private set; } = null!;
 
-		public AvaloniaPlatformService(TabsService tabs)
+		public double RenderScaling { get; private set; }
+
+		public AvaloniaPlatformService(TabsService tabs, IEntryPoint entryPoint)
 		{
 			Tabs = tabs;
+			EntryPoint = entryPoint;
 
 			IsMobile = OperatingSystem.IsAndroid() || OperatingSystem.IsIOS();
 			IsDesktop = !IsMobile;
 
+			// THIS MUST GO IN .DESKTOP
 			if (IsDesktop)
 				Environment.SetEnvironmentVariable("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
 
@@ -50,9 +56,13 @@ namespace LRReader.Avalonia.Services
 
 			MapSymbolToSymbol(Symbol.Favorite, new FASymbolIconSource { Symbol = FASymbol.Favorite });
 			MapSymbolToSymbol(Symbol.Pictures, new FASymbolIconSource { Symbol = FASymbol.Pictures });
+
+			TopLevel = TopLevel.GetTopLevel(Root)!;
+
+			RenderScaling = TopLevel.RenderScaling;
 		}
 
-		public override Version Version => Assembly.GetEntryAssembly()?.GetName().Version ?? new Version();
+		public override Version Version => EntryPoint.GetType().Assembly.GetName().Version ?? new Version();
 
 		public override bool AnimationsEnabled => true;
 
@@ -69,7 +79,7 @@ namespace LRReader.Avalonia.Services
 
 		public override async void CopyToClipboard(string text)
 		{
-			await TopLevel.GetTopLevel(Root)!.Clipboard!.SetTextAsync(text);
+			await TopLevel.Clipboard!.SetTextAsync(text);
 		}
 
 		public override string GetLocalizedString(string key)
@@ -91,7 +101,7 @@ namespace LRReader.Avalonia.Services
 				var newDialog = CreateDialog<D>(dialog, args);
 				if (newDialog == null)
 					return IDialogResult.None;
-				return await newDialog.ShowAsync(TopLevel.GetTopLevel(Root)!);
+				return await newDialog.ShowAsync(TopLevel);
 			}
 			finally
 			{
@@ -104,7 +114,7 @@ namespace LRReader.Avalonia.Services
 			await DialogSemaphore.WaitAsync();
 			try
 			{
-				return await dialog.ShowAsync(TopLevel.GetTopLevel(Root)!);
+				return await dialog.ShowAsync(TopLevel);
 			}
 			finally
 			{
@@ -118,7 +128,7 @@ namespace LRReader.Avalonia.Services
 			try
 			{
 				var dialog = new GenericDialog { Title = title, PrimaryButtonText = primarybutton, SecondaryButtonText = secondarybutton, CloseButtonText = closebutton, Content = content };
-				return (IDialogResult)(int)await dialog.ShowAsync(TopLevel.GetTopLevel(Root)!);
+				return (IDialogResult)(int)await dialog.ShowAsync(TopLevel);
 			}
 			finally
 			{
@@ -128,7 +138,7 @@ namespace LRReader.Avalonia.Services
 
 		public override Task<bool> OpenInBrowser(Uri uri)
 		{
-			return TopLevel.GetTopLevel(Root)!.Launcher.LaunchUriAsync(uri);
+			return TopLevel.Launcher.LaunchUriAsync(uri);
 		}
 
 		public override Task<bool> CheckAppInstalled(string package)
@@ -136,6 +146,7 @@ namespace LRReader.Avalonia.Services
 			throw new NotImplementedException();
 		}
 
-		public void SetRoot(Root root) => this.Root = root;
+		public void SetRoot(Root root) => Root = root;
+
 	}
 }

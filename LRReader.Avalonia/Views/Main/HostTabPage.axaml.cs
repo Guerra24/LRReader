@@ -1,7 +1,6 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Platform;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Navigation;
@@ -51,9 +50,9 @@ namespace LRReader.Avalonia.Views.Main
 			}
 
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
 				desktop.MainWindow!.PropertyChanged += MainWindow_PropertyChanged;
-			}
+
+			Platform.ToggleFullScreenModeRequested += Platform_ToggleFullScreenModeRequested;
 
 			Data.OpenTab(Tab.Archives);
 			/*if (Settings.OpenBookmarksTab)
@@ -70,10 +69,10 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 		{
+			Platform.ToggleFullScreenModeRequested -= Platform_ToggleFullScreenModeRequested;
+
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
 				desktop.MainWindow!.PropertyChanged -= MainWindow_PropertyChanged;
-			}
 
 			var insets = TopLevel.InsetsManager;
 			insets?.SafeAreaChanged -= TitleBar_LayoutMetricsChanged;
@@ -82,15 +81,10 @@ namespace LRReader.Avalonia.Views.Main
 
 			WeakReferenceMessenger.Default.UnregisterAll(this);
 		}
-		private void HostTabPage_BackRequested(object? sender, RoutedEventArgs e)
-		{
-			e.Handled = Data.CurrentTab!.BackRequested();
-		}
 
-		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e)
-		{
-			TabViewControl.Padding = e.SafeAreaPadding;
-		}
+		private void HostTabPage_BackRequested(object? sender, RoutedEventArgs e) => e.Handled = Data.CurrentTab!.BackRequested();
+
+		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e) => TabViewControl.Padding = e.SafeAreaPadding;
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);
 
@@ -118,32 +112,45 @@ namespace LRReader.Avalonia.Views.Main
 			});
 		}
 
-		private void EnterFullScreen_Click(object? sender, RoutedEventArgs e)
-		{
-			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
-				var window = desktop.MainWindow!;
-				WindowState = window.WindowState;
-				window.WindowState = WindowState.FullScreen;
-			}
-		}
+		private void EnterFullScreen_Click(object? sender, RoutedEventArgs e) => Platform.ToggleFullScreenMode();
 
-		private void RestoreFullScreen_Click(object? sender, RoutedEventArgs e)
-		{
-			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-				desktop.MainWindow!.WindowState = WindowState;
-		}
+		private void RestoreFullScreen_Click(object? sender, RoutedEventArgs e) => Platform.ToggleFullScreenMode();
 
-		private void TabView_TabCloseRequested(FATabView sender, FATabViewTabCloseRequestedEventArgs args)
-		{
-			Data.CloseTab((ModernTab)args.Tab);
-		}
+		private void TabView_TabCloseRequested(FATabView sender, FATabViewTabCloseRequestedEventArgs args) => Data.CloseTab((ModernTab)args.Tab);
 
 		private void MainWindow_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
 		{
 			if (e.Property == Window.WindowStateProperty)
 			{
 				Data.Fullscreen = ((WindowState)e.NewValue!) == WindowState.FullScreen;
+			}
+		}
+
+		private void Platform_ToggleFullScreenModeRequested()
+		{
+			if (!Data.Fullscreen)
+			{
+				if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+				{
+					var window = desktop.MainWindow!;
+					WindowState = window.WindowState;
+					window.WindowState = WindowState.FullScreen;
+				}
+				else
+				{
+					TopLevel.InsetsManager?.IsSystemBarVisible = false;
+				}
+				Data.Fullscreen = true;
+			}
+			else
+			{
+				if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+					desktop.MainWindow!.WindowState = WindowState;
+				else
+				{
+					TopLevel.InsetsManager?.IsSystemBarVisible = true;
+				}
+				Data.Fullscreen = false;
 			}
 		}
 

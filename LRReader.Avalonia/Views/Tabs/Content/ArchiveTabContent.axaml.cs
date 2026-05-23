@@ -538,15 +538,7 @@ public partial class ArchiveTabContent : UserControl
 		double distance = ScrollViewer.Bounds.Width / 6.0;
 		if (point.X > distance && point.X < ScrollViewer.Bounds.Width - distance)
 		{
-			/*var AppView = ApplicationView.GetForCurrentView();
-			if (AppView.IsFullScreenMode)
-			{
-				AppView.ExitFullScreenMode();
-			}
-			else
-			{
-				AppView.TryEnterFullScreenMode();
-			}*/
+			Service.Platform.ToggleFullScreenMode();
 			e.Handled = true;
 		}
 	}
