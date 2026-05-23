@@ -3,7 +3,7 @@
 [<img src="https://github.com/Guerra24/LRReader/workflows/Nightly/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:Nightly)
 [<img src="https://github.com/Guerra24/LRReader/workflows/Release/badge.svg">](https://github.com/Guerra24/LRReader/actions?query=workflow:Release)
 
-## Features
+# Features
 - Archives list.
 - Search.
 - Archive overview and reader.
@@ -12,22 +12,22 @@
 - Multiple servers/profiles.
 - Manage your server from within the app.
 
-## Requirements
+# Requirements
 
 - Windows 10 20H1 (x64 or ARM64) or a modern Linux distro (x86_64 or aarch64).
 - LANraragi v0.9.10
 
-## Installing
+# Installing
 
-### Windows
-#### Store
+## Windows
+### Store
 
 <a href="https://apps.microsoft.com/detail/LRReader/9mz6bwwvswjh?launch=true&mode=mini"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/></a>
 
 If you have troubles accessing the store page. Open this link in your browser:<br>
 `ms-windows-store://pdp/?productid=9MZ6BWWVSWJH`
 
-#### Sideload
+### Sideload
 
 If you don't want to deal with the store this option is and will be supported.
 
@@ -37,21 +37,21 @@ The Nightly installer is [available here](https://nightly.link/Guerra24/LRReader
 
 Download the `LRReader.exe` file, run it and follow instructions.
 
-### Linux
+## Linux
 
 This version is in an in-development/experimental state and does not contain all the features of the Windows version.
 
 Nightly AppImage builds are available for [x86_64](https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage) and [aarch64](https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage). Self-updater included.
 
-## Usage
+# Usage
 
-### Profile
+## Profile
 
 Make sure the URL includes `http://` or `https://`.
 
 To enable editing LANraragi needs to be configured without password or with an API Key.
 
-### Tabs
+## Tabs
 
 `Ctrl` + `W` or `Ctrl` + `F4` close Tab<br>
 `Ctrl` + `Tab` change to next tab.<br>
@@ -59,13 +59,13 @@ To enable editing LANraragi needs to be configured without password or with an A
 
 `F11` or `F` enter fullscreen.
 
-### List
+## List
 
 Back/Forward mouse buttons to change page.<br>
 Middle Click to open in new tab.<br>
 
 
-### Reader
+## Reader
 
 Scrolling at top/bottom changes page accordingly, prev/next.<br>
 
@@ -83,7 +83,7 @@ Click on the left/right of the window to change pages.<br>
 Back/Forward buttons to change page.<br>
 Scroll by clicking and dragging the page or with wheel.<br>
 
-## Screenshots
+# Screenshots
 
 ![Main View](https://s3.guerra24.net/projects/lrr/screenshots/01.png)<br>
 ![Search](https://s3.guerra24.net/projects/lrr/screenshots/02.png)<br>
@@ -95,4 +95,4 @@ Scroll by clicking and dragging the page or with wheel.<br>
 ![Reader vertical mode](https://s3.guerra24.net/projects/lrr/screenshots/04_2.png)<br>
 ![Settings](https://s3.guerra24.net/projects/lrr/screenshots/05.png)<br>
 
-## [Privacy Policy](Privacy.md)
+# [Privacy Policy](Privacy.md)
