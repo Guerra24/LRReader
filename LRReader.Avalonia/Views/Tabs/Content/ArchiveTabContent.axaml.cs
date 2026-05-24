@@ -792,7 +792,7 @@ public partial class ArchiveTabContent : UserControl
 			SuggestedFileName = download.Name
 		};
 
-		var file = await storage.SaveFilePickerAsync(savePicker);
+		using var file = await storage.SaveFilePickerAsync(savePicker);
 		Data.Downloading = false;
 		if (file != null)
 		{

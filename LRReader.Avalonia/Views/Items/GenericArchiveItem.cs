@@ -145,7 +145,7 @@ public class GenericArchiveItem : TemplatedControl
 			SuggestedFileName = download.Name
 		};
 
-		var file = await storage.SaveFilePickerAsync(savePicker);
+		using var file = await storage.SaveFilePickerAsync(savePicker);
 		ViewModel.Downloading = false;
 		if (file != null)
 		{

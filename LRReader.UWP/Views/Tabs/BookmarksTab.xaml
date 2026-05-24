@@ -9,6 +9,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:services="using:LRReader.Shared.Services"
+	xmlns:ext="using:LRReader.UWP.Extensions"
 	x:Uid="/Tabs/Bookmarks/Tab"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
@@ -19,10 +20,7 @@
 	</muxc:TabViewItem.IconSource>
 	<controls:ModernTab.CustomTabControl>
 		<StackPanel Orientation="Horizontal" Spacing="2">
-			<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}">
-				<Button.CommandParameter>
-					<x:Boolean>True</x:Boolean>
-				</Button.CommandParameter>
+			<Button x:Uid="/Generic/RefreshTT" Command="{x:Bind TabContent.Data.ReloadCommand}" CommandParameter="{ext:True}">
 				<Viewbox MaxWidth="16" MaxHeight="16">
 					<SymbolIcon Symbol="Refresh" />
 				</Viewbox>

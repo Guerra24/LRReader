@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:items="using:LRReader.Avalonia.Views.Items"
+             xmlns:vm="using:LRReader.Shared.ViewModels"
+             xmlns:ext="using:LRReader.Avalonia.Extensions"
+             xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LRReader.Avalonia.Views.Tabs.Content.Bookmarks"
+             Loaded="UserControl_Loaded"
+             x:DataType="vm:BookmarksTabViewModel">
+    <Grid>
+        <Grid.KeyBindings>
+            <KeyBinding Gesture="F5" Command="{Binding ReloadCommand}" CommandParameter="{x:True}" />
+        </Grid.KeyBindings>
+        <!--<muxc:RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">-->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" BringIntoViewOnFocusChange="False">
+            <ItemsRepeater x:Name="ArchivesGrid" ItemsSource="{Binding ArchiveList}" ItemTemplate="{StaticResource FullArchive}" Margin="5" KeyboardNavigation.TabNavigation="Continue" ClipToBounds="False" VerticalCacheLength="2">
+                <ItemsRepeater.Layout>
+                    <UniformGridLayout Orientation="Horizontal" MinColumnSpacing="10" MinRowSpacing="10" ItemsJustification="Center" />
+                </ItemsRepeater.Layout>
+            </ItemsRepeater>
+        </ScrollViewer>
+        <!--</muxc:RefreshContainer>-->
+        <TextBlock Text="{ext:LocalizedString /Tabs/Bookmarks/Empty/Text}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="22"
+                   IsVisible="{Binding Empty, Mode=OneWay}" />
+    </Grid>
+</UserControl>

@@ -7,14 +7,13 @@
              xmlns:ext="using:LRReader.Avalonia.Extensions"
              xmlns:controls="using:LRReader.Avalonia.Views.Controls"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
-             xmlns:local="using:LRReader.Avalonia.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LRReader.Avalonia.Views.Controls.ArchiveList"
              x:DataType="vm:SearchResultsViewModel"
              Loaded="UserControl_Loaded">
     <Grid>
         <Grid.KeyBindings>
-            <KeyBinding Gesture="F5" Command="{Binding $parent[local:ArchiveList].RefreshCommand}" />
+            <KeyBinding Gesture="F5" Command="{Binding $parent[controls:ArchiveList].RefreshCommand}" />
         </Grid.KeyBindings>
         <!--<RefreshContainer RefreshRequested="RefreshContainer_RefreshRequested">-->
         <ScrollViewer VerticalScrollBarVisibility="Auto" BringIntoViewOnFocusChange="False">
@@ -68,12 +67,12 @@
                                         IsChecked="{Binding NewOnly, Mode=TwoWay}"
                                         IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
                         <Button Content="{ext:LocalizedString /Tabs/Archives/Random/Content}"  Width="150" Margin="10,0,0,0"
-                                Command="{Binding OpenRandomCommand}" IsVisible="{Binding $parent[local:ArchiveList].RandomVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Command="{Binding OpenRandomCommand}" IsVisible="{Binding $parent[controls:ArchiveList].RandomVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                                 IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center"
                                 Orientation="Horizontal" Spacing="10">
-                        <Button ToolTip.Tip="{ext:LocalizedString /Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" IsVisible="{Binding $parent[local:ArchiveList].ArchiveStyleButtonVisibility, Mode=OneWay}">
+                        <Button ToolTip.Tip="{ext:LocalizedString /Settings/General/ArchivesStyle/Title}" Padding="8" IsEnabled="{Binding ControlsEnabled, Mode=OneWay}" IsVisible="{Binding $parent[controls:ArchiveList].ArchiveStyleButtonVisibility, Mode=OneWay}">
                             <!--<Button.Flyout>
                             <MenuFlyout>
                             <muxc:RadioMenuFlyoutItem IsChecked="{Binding ArchiveStyle, Mode=OneWay, Converter={StaticResource ArchiveStyleConverter}, ConverterParameter=Default}" GroupName="{x:Bind random}" Command="{Binding ChangeStyleCommand}" CommandParameter="{helpers:EnumValue Type=services:ArchiveStyle, Member=Default}" Text="{ext:LocalizedString /Settings/General/ArchiveStyle/Default}" />
@@ -105,7 +104,7 @@
                                 IsEnabled="{Binding ControlsEnabled, Mode=OneWay}">
                             <ui:FAFontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" Glyph="&#xE894;" />
                         </Button>
-                        <Border Width="32" IsVisible="{Binding $parent[local:ArchiveList].ArchiveStyleButtonVisibility, Mode=OneWay}" />
+                        <Border Width="32" IsVisible="{Binding $parent[controls:ArchiveList].ArchiveStyleButtonVisibility, Mode=OneWay}" />
                     </StackPanel>
                     <controls:PagerControl Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Center"
                                             IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"

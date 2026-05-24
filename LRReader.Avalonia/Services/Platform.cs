@@ -31,8 +31,7 @@ namespace LRReader.Avalonia.Services
 			IsMobile = OperatingSystem.IsAndroid() || OperatingSystem.IsIOS();
 			IsDesktop = !IsMobile;
 
-			// THIS MUST GO IN .DESKTOP
-			if (IsDesktop)
+			if (IsDesktop && OperatingSystem.IsLinux())
 				Environment.SetEnvironmentVariable("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
 
 			MapPageToType<FirstRunPage>(Pages.FirstRun);
@@ -49,6 +48,7 @@ namespace LRReader.Avalonia.Services
 			Tabs.MapTabToType<SettingsTab>(Tab.Settings);
 			Tabs.MapTabToType<ArchiveTab>(Tab.Archive);
 			Tabs.MapTabToType<SearchResultsTab>(Tab.SearchResults);
+			Tabs.MapTabToType<BookmarksTab>(Tab.Bookmarks);
 
 			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
 			MapDialogToType<MarkdownDialog>(Dialog.Markdown);

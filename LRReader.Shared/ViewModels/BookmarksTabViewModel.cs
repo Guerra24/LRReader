@@ -18,7 +18,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly IDispatcherService Dispatcher;
 		private readonly PlatformService Platform;
 
-		public ObservableCollection<Archive> ArchiveList = new ObservableCollection<Archive>();
+		public ObservableCollection<Archive> ArchiveList { get; } = new();
 
 		private bool _internalLoadingArchives;
 

@@ -1,0 +1,51 @@
+<controls:ModernTab xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+                    xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
+                    xmlns:ui="using:FluentAvalonia.UI.Controls"
+                    xmlns:ext="using:LRReader.Avalonia.Extensions"
+                    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                    Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Tab/Header}"
+                    CustomTabId="Bookmarks"
+                    x:Class="LRReader.Avalonia.Views.Tabs.BookmarksTab">
+    <ui:FATabViewItem.IconSource>
+        <ui:FAFontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE728;" />
+    </ui:FATabViewItem.IconSource>
+    <controls:ModernTab.CustomTabControl>
+        <StackPanel Orientation="Horizontal" Spacing="2">
+            <Button ToolTip.Tip="{ext:LocalizedString /Generic/RefreshTT/ToolTipService/ToolTip}" Command="{Binding #TabContent.Data.ReloadCommand}" CommandParameter="{x:True}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <ui:FASymbolIcon Symbol="Refresh" />
+                </Viewbox>
+            </Button>
+            <Button>
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <ui:FASymbolIcon Symbol="More" />
+                </Viewbox>
+                <Button.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuItem Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Migrate/Text}" Command="{Binding #TabContent.Data.MigrateCommand}" IsEnabled="{ReflectionBinding !Settings.Profile.SynchronizeBookmarks, Mode=OneWay, Source={StaticResource Locator}}" IsVisible="{ReflectionBinding Api.ControlFlags.V0940Edit, Source={StaticResource Locator}}">
+                            <MenuItem.Icon>
+                                <ui:FASymbolIcon Symbol="SyncFolder" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Export/Text}" Click="ExportButton_Click">
+                            <MenuItem.Icon>
+                                <ui:FASymbolIcon Symbol="Download" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Import/Text}" Click="ImportButton_Click">
+                            <MenuItem.Icon>
+                                <ui:FASymbolIcon Symbol="ImportAll" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </StackPanel>
+    </controls:ModernTab.CustomTabControl>
+
+    <content:Bookmarks x:Name="TabContent" />
+</controls:ModernTab>
