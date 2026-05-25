@@ -28,10 +28,11 @@ static class Program
 		{
 			RenderingMode = [Win32RenderingMode.Vulkan, Win32RenderingMode.AngleEgl, Win32RenderingMode.Software]
 		})
-		.With(new X11PlatformOptions
+		*/.With(new X11PlatformOptions
 		{
-			RenderingMode = [X11RenderingMode.Vulkan, X11RenderingMode.Glx, X11RenderingMode.Software]
-		})*/
+			RenderingMode = [X11RenderingMode.Vulkan, X11RenderingMode.Glx, X11RenderingMode.Software],
+			OverlayPopups = true // Otherwise teaching tip breaks
+		})
 #if DEBUG
 		.WithDeveloperTools()
 #endif

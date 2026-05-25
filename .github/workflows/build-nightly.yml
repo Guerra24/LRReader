@@ -59,9 +59,22 @@ jobs:
         chmod +x ./appimagetool-x86_64.AppImage
     - name: Build
       shell: pwsh
+      env:
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
         ./Util/Version-Avalonia.ps1 "git"
+        ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.Avalonia/Secrets.cs"
         pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
+    - name: Setup sentry-cli
+      uses: matbour/setup-sentry-cli@v2
+      with:
+        version: 2.39.1
+        token: ${{ secrets.SENTRY_TOKEN }}
+        organization: ${{ secrets.SENTRY_ORG }}
+        project: ${{ secrets.SENTRY_PROJECT }}
+    - name: Upload Symbols
+      run: |
+        sentry-cli debug-files upload --include-sources --wait "symbols.zip"
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v6
       with:
@@ -133,7 +146,7 @@ jobs:
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
         Invoke-Expression "./Util/Version.ps1"
-        Invoke-Expression "./Util/ConfigureAppCenter.ps1"
+        ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.UWP/Secrets.cs"
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Nightly=true /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/nightly" /p:GenerateAppxPackageOnBuild=true

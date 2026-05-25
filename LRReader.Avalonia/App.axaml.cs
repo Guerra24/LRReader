@@ -16,6 +16,32 @@ namespace LRReader.Avalonia
 
 		public override void Initialize()
 		{
+			// Manually read setting to prevent services from initializing too early
+			var crashReporting = SettingsStorage.GetObjectLocal(true, "CrashReporting");
+			if (crashReporting && Uri.IsWellFormedUriString(Secrets.SentryDsn, UriKind.Absolute))
+			{
+#if !DEBUG
+				SentrySdk.Init(options =>
+				{
+					options.Dsn = Secrets.SentryDsn;
+					options.IsGlobalModeEnabled = true;
+#if NIGHTLY_APPIMAGE
+					options.Distribution = "appimage";
+					options.Environment = "nightly";
+#endif
+					options.AutoSessionTracking = true;
+					options.Release = Platform.Version.ToString();
+					options.CacheDirectoryPath = Files.Local;
+				});
+				SentrySdk.ConfigureScope(scope =>
+				{
+					scope.Contexts.OperatingSystem.Name = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+					scope.Contexts.Device.Architecture = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString();
+					scope.Contexts.Device.ProcessorCount = Environment.ProcessorCount;
+				});
+#endif
+			}
+
 			AvaloniaXamlLoader.Load(this);
 		}
 
@@ -63,6 +89,7 @@ namespace LRReader.Avalonia
 			e.Cancel = true;
 			await Session.Suspend();
 			SentrySdk.Flush(TimeSpan.FromSeconds(2));
+			SentrySdk.EndSession(SessionEndStatus.Exited);
 
 			closing = true;
 			((Window)sender!).Close();

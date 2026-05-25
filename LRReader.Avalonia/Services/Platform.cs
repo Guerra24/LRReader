@@ -31,9 +31,6 @@ namespace LRReader.Avalonia.Services
 			IsMobile = OperatingSystem.IsAndroid() || OperatingSystem.IsIOS();
 			IsDesktop = !IsMobile;
 
-			if (IsDesktop && OperatingSystem.IsLinux())
-				Environment.SetEnvironmentVariable("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
-
 			MapPageToType<FirstRunPage>(Pages.FirstRun);
 			MapPageToType<HostTabPage>(Pages.HostTab);
 			MapPageToType<LoadingPage>(Pages.Loading);

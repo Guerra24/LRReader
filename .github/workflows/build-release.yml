@@ -32,7 +32,7 @@ jobs:
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
         [xml]$xmlDoc = Get-Content "./LRReader.UWP/Package.appxmanifest"
         Set-Content -NoNewline -Path "./version.txt" -Value $xmlDoc.Package.Identity.Version
-        Invoke-Expression "./Util/ConfigureAppCenter.ps1"
+        ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.UWP/Secrets.cs"
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Sideload=true /p:Configuration=Release /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="$Thumbprint" /p:GenerateAppInstallerFile=True /p:AppInstallerUri="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)" /p:GenerateAppxPackageOnBuild=true
@@ -164,7 +164,7 @@ jobs:
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
-        Invoke-Expression "./Util/ConfigureAppCenter.ps1"
+        ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.UWP/Secrets.cs"
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a arm64
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=StoreOnly /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
