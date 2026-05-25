@@ -28,14 +28,14 @@ public static class Animations
 	public static void SetVisualOpacity(this Visual element, float opacity)
 	{
 		var visual = ElementComposition.GetElementVisual(element);
-		if (visual != null)
-			visual.Opacity = opacity;
+		visual?.Opacity = opacity;
 	}
 
 	// Composition opacity does not behave correctly in some cases so fallback to regular opacity
 	public static void SetOpacity(this Visual element, float opacity)
 	{
 		element.Opacity = opacity;
+		element.SetVisualOpacity(opacity);
 	}
 
 	public static void FadeIn(this Visual element, TimeSpan duration, IEasing easing)
