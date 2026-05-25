@@ -4,8 +4,39 @@ on:
     branches:
     - develop
 jobs:
+  buildAvaloniaAndroid:
+    name: Avalonia (Android)
+    runs-on: windows-2025-vs2026
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+    - name: Find MSBuild
+      uses: microsoft/setup-msbuild@v3
+    - name: Build
+      env:
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        CERT_GPG: ${{ secrets.CERT_GPG }}
+      run: |
+        [IO.File]::WriteAllBytes("./guerra24.keystore.gpg", [Convert]::FromBase64String("${env:KEYSTORE_BASE64}"))
+        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output guerra24.keystore guerra24.keystore.gpg
+        ./Util/Version-Android.ps1 "C:\Program Files\Git\mingw64\bin\git.exe"
+        dotnet publish LRReader.Avalonia.Android\LRReader.Avalonia.Android.csproj -nologo -v:minimal -c Release --self-contained true -p:Version=$env:LRR_VERSION -p:ApplicationVersion=$env:LRR_BUILD -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../guerra24.keystore -p:AndroidSigningKeyAlias=guerra24 -p:AndroidSigningKeyPass=env:KEYSTORE_PASSWORD -p:AndroidSigningStorePass=env:KEYSTORE_PASSWORD
+        Remove-Item -Path "./guerra24.keystore"
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: LRReader.Avalonia.Android
+        path: LRReader.Avalonia.Android/bin/Release/net10.0-android/publish/*Signed.apk
   buildAvaloniaUnpackaged:
-    name: Avalonia (Unpackaged)
+    name: Avalonia (Desktop Testing)
     runs-on: windows-2025-vs2026
     strategy:
       matrix:
