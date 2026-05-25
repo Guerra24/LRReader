@@ -6,6 +6,7 @@
                     xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
                     xmlns:ui="using:FluentAvalonia.UI.Controls"
                     xmlns:ext="using:LRReader.Avalonia.Extensions"
+                    xmlns:services="using:LRReader.Shared.Services"
                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                     Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Tab/Header}"
                     CustomTabId="Bookmarks"
@@ -26,7 +27,7 @@
                 </Viewbox>
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuItem Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Migrate/Text}" Command="{Binding #TabContent.Data.MigrateCommand}" IsEnabled="{ReflectionBinding !Settings.Profile.SynchronizeBookmarks, Mode=OneWay, Source={StaticResource Locator}}" IsVisible="{ReflectionBinding Api.ControlFlags.V0940Edit, Source={StaticResource Locator}}">
+                        <MenuItem Header="{ext:LocalizedString Key=/Tabs/Bookmarks/Migrate/Text}" Command="{Binding #TabContent.Data.MigrateCommand}" IsEnabled="{Binding !Profile.SynchronizeBookmarks, Mode=OneWay, Source={x:Static services:Service.Settings}}" IsVisible="{Binding ControlFlags.V0940Edit, Source={x:Static services:Service.Api}}">
                             <MenuItem.Icon>
                                 <ui:FASymbolIcon Symbol="SyncFolder" />
                             </MenuItem.Icon>

@@ -5,10 +5,11 @@
     <TargetFramework>net10.0-android</TargetFramework>
     <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
-    <Platforms>x64;ARM64</Platforms>
-    <TrimMode>partial</TrimMode>
-    <RuntimeIdentifiers>android-x64;android-arm64</RuntimeIdentifiers>
-    <ApplicationId>net.Guerra24.LRReader</ApplicationId>
+    <Platforms>x64;ARM64;ARM32</Platforms>
+    <!--<PublishAot>true</PublishAot>-->
+    <PublishTrimmed>true</PublishTrimmed>
+    <RuntimeIdentifiers>android-x64;android-arm64;android-arm</RuntimeIdentifiers>
+    <ApplicationId>net.guerra24.lrreader</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <Version>1.9.6.0</Version>
     <ApplicationDisplayVersion>$(Version)</ApplicationDisplayVersion>

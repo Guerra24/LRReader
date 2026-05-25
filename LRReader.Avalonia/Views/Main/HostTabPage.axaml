@@ -26,8 +26,8 @@
                                 Theme="{StaticResource ModernTabView}"
                                 CanDragTabs="False">
             <ui:FATabView.TabStripHeader>
-				<Grid x:Name="TabViewStartHeader" />
-			</ui:FATabView.TabStripHeader>
+                <Grid x:Name="TabViewStartHeader" />
+            </ui:FATabView.TabStripHeader>
             <ui:FATabView.TabStripFooter>
                 <StackPanel Orientation="Horizontal" Spacing="2">
                     <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Bookmarks}">
@@ -53,8 +53,8 @@
                 </StackPanel>
             </ui:FATabView.TabStripFooter>
             <controls:ModernTabView.TabTools>
-				<ContentControl Content="{Binding CurrentTab.CustomTabControl, Mode=OneWay}" />
-			</controls:ModernTabView.TabTools>
+                <ContentControl Content="{Binding CurrentTab.CustomTabControl, Mode=OneWay}" />
+            </controls:ModernTabView.TabTools>
             <controls:ModernTabView.ExtraFooter>
                 <StackPanel x:Name="TabViewEndHeader" Spacing="2" Orientation="Horizontal">
                     <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/EnterFullScreen/ToolTipService/ToolTip}" Click="EnterFullScreen_Click" IsVisible="{Binding Windowed, Mode=OneWay}">
@@ -75,6 +75,7 @@
                 </StackPanel>
             </controls:ModernTabView.ExtraFooter>
         </controls:ModernTabView>
+        <ui:FATeachingTip IsOpen="{Binding ShowRestore, Mode=TwoWay, Source={x:Static services:Service.Session}}" Title="{ext:LocalizedString /Pages/HostTabPage/RestoreSession/Title}" Subtitle="{ext:LocalizedString /Pages/HostTabPage/RestoreSession/Subtitle}" ActionButtonContent="{ext:LocalizedString /Pages/HostTabPage/RestoreSession/ActionButtonContent}" IsLightDismissEnabled="False" PreferredPlacement="TopRight" PlacementMargin="0,33,0,0" ActionButtonStyle="{StaticResource AccentButtonStyle}" ActionButtonClick="RestoreSession_ActionButtonClick" />
         <!-- Temporary -->
         <ui:FAInfoBar x:Name="Notifications" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32" Background="{DynamicResource SolidBackgroundFillColorBase}" />
     </Grid>

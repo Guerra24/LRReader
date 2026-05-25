@@ -1,5 +1,6 @@
 <Solution>
   <Configurations>
+    <Platform Name="ARM32" />
     <Platform Name="ARM64" />
     <Platform Name="x64" />
   </Configurations>
@@ -7,9 +8,12 @@
     <File Path=".editorconfig" />
   </Folder>
   <Project Path="LRReader.Avalonia.Android/LRReader.Avalonia.Android.csproj" Id="3824b01e-ca50-4f04-95f2-20b85aa7cd83">
+    <Platform Solution="*|ARM32" Project="ARM32" />
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
-    <Deploy />
+    <Deploy Solution="*|ARM64" />
+    <Deploy Solution="*|x64" />
+    <Deploy Solution="Debug|ARM32" />
   </Project>
   <Project Path="LRReader.Avalonia.Desktop/LRReader.Avalonia.Desktop.csproj" />
   <Project Path="LRReader.Avalonia/LRReader.Avalonia.csproj" />
@@ -19,7 +23,7 @@
     <Platform Solution="*|x64" Project="x64" />
   </Project>
   <Project Path="LRReader.UWP.ModernInstaller/LRReader.UWP.ModernInstaller.csproj">
-    <Platform Solution="*|ARM64" Project="arm64" />
+    <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
   <Project Path="LRReader.UWP.Servicing.CertInstaller/LRReader.UWP.Servicing.CertInstaller.csproj" />

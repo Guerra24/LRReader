@@ -130,21 +130,21 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Rating/Text}"
-                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}">
                                 <MenuItem.Icon>
                                     <ui:FAFontIcon Glyph="&#xE728;" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Edit/Text}"
                                       Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCommand}"
-                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="Edit" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Categories/Text}"
                                       Command="{Binding $parent[items:GenericArchiveItem].ViewModel.EditCategoriesCommand}"
-                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}">
                                 <MenuItem.Icon>
                                     <ui:FAFontIcon Glyph="&#xE8B7;" />
                                 </MenuItem.Icon>
@@ -156,7 +156,7 @@
                             </MenuItem>
                             <MenuItem Header="{ext:LocalizedString Key=/Items/Archive/Delete/Text}"
                                       Command="{Binding $parent[items:GenericArchiveItem].ViewModel.DeleteCommand}"
-                                      IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}">
+                                      IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}">
                                 <MenuItem.Icon>
                                     <ui:FASymbolIcon Symbol="Delete" />
                                 </MenuItem.Icon>

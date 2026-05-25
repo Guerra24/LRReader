@@ -65,6 +65,8 @@ namespace LRReader.Avalonia.Views.Main
 
 			if (info.Result)
 				ShowNotification(lang.GetString("HostTab/Update1").AsFormat(info.Target?.ToString() ?? "Nightly"), lang.GetString("HostTab/Update2"), 0, NotificationSeverity.Informational);
+
+			await ShowWhatsNew();
 		}
 
 		private void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
@@ -117,6 +119,31 @@ namespace LRReader.Avalonia.Views.Main
 		private void RestoreFullScreen_Click(object? sender, RoutedEventArgs e) => Platform.ToggleFullScreenMode();
 
 		private void TabView_TabCloseRequested(FATabView sender, FATabViewTabCloseRequestedEventArgs args) => Data.CloseTab((ModernTab)args.Tab);
+
+		// Move this to the VM layer
+		private async Task ShowWhatsNew()
+		{
+			var ver = Version.Parse(SettingsStorage.GetObjectLocal(new Version(0, 0, 0, 0).ToString(), "_version"));
+			if (!SettingsStorage.GetObjectLocal(false, "WasUpdated") && ver == new Version(0, 0, 0, 0))
+				return;
+			SettingsStorage.DeleteObjectLocal("WasUpdated");
+			SettingsStorage.DeleteObjectLocal("_version");
+
+			if (Platform.Version.Revision != 0)
+				return;
+
+			var log = await Updates.GetChangelog(Platform.Version);
+			if (string.IsNullOrEmpty(log.Name) || string.IsNullOrEmpty(log.Content))
+				return;
+
+			await Platform.OpenDialog(Dialog.Markdown, lang.GetString("HostTab/ChangelogTitle"), log.Content);
+		}
+
+		private async void RestoreSession_ActionButtonClick(FATeachingTip sender, EventArgs args)
+		{
+			sender.IsOpen = false;
+			await Session.Restore();
+		}
 
 		private void MainWindow_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
 		{

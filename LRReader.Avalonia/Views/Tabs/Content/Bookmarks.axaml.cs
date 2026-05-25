@@ -46,6 +46,8 @@ public partial class Bookmarks : UserControl
 				item.Parallax.Source = ArchivesGrid;
 	}*/
 
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 	public async void ExportBookmarks()
 	{
 		var storage = TopLevel.GetTopLevel(this)!.StorageProvider;
@@ -70,6 +72,8 @@ public partial class Bookmarks : UserControl
 		}
 	}
 
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 	public async void ImportBookmarks()
 	{
 		var storage = TopLevel.GetTopLevel(this)!.StorageProvider;

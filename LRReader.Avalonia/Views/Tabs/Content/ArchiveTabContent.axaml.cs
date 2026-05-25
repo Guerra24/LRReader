@@ -1,6 +1,7 @@
 using Avalonia.Animation.Easings;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Input;
@@ -76,6 +77,11 @@ public partial class ArchiveTabContent : UserControl
 
 	private async void UserControl_Loaded(object sender, RoutedEventArgs e)
 	{
+		if (Service.Settings.UseReaderBackground)
+			ReaderBackground[!BackgroundProperty] = new DynamicResourceExtension("CustomReaderBackground");
+		else
+			ReaderBackground[!BackgroundProperty] = new DynamicResourceExtension("ReaderBackground");
+
 		Data.ReloadBookmarkedObject();
 		FocusReader();
 		if (!_opened)
@@ -788,7 +794,7 @@ public partial class ArchiveTabContent : UserControl
 		var savePicker = new FilePickerSaveOptions
 		{
 			SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
-			DefaultExtension = download.Type,
+			DefaultExtension = download.Type.Replace(".", ""),
 			SuggestedFileName = download.Name
 		};
 

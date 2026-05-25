@@ -1,6 +1,5 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:LRReader.Avalonia"
              xmlns:sty="using:FluentAvalonia.Styling"
              Name="LRReader"
              x:Class="LRReader.Avalonia.App">
@@ -16,7 +15,6 @@
                 <ResourceInclude Source="/Resources/PagerControl.axaml" />
                 <ResourceInclude Source="/Resources/ThemeDictionary.axaml" />
             </ResourceDictionary.MergedDictionaries>
-            <vm:ViewModelLocator x:Key="Locator" />
             <SolidColorBrush x:Key="CustomReaderBackground" Color="Black" />
         </ResourceDictionary>
     </Application.Resources>

@@ -2,6 +2,7 @@ using Avalonia.Interactivity;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media.Animation;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LRReader.Avalonia.Views.Controls;
 
@@ -25,6 +26,7 @@ public partial class ModernPageTab : UserControl, IDisposable
 		set => SetValue(TitleProperty, value);
 	}
 
+	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
 	public Type? Initial
 	{
 		get => GetValue(InitialProperty);
@@ -187,6 +189,8 @@ public class ModernPageTabItem
 {
 	public string Title { get; set; } = null!;
 	public string Description { get; set; } = null!;
+
+	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
 	public Type Page { get; set; } = null!;
 
 	public object? Parameter { get; set; }

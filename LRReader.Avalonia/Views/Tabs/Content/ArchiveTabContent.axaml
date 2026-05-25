@@ -7,6 +7,7 @@
              xmlns:ext="using:LRReader.Avalonia.Extensions"
              xmlns:controls="using:LRReader.Avalonia.Views.Controls"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:services="using:LRReader.Shared.Services"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              Loaded="UserControl_Loaded"
              x:Class="LRReader.Avalonia.Views.Tabs.Content.ArchiveTabContent"
@@ -109,12 +110,12 @@
                             Content="{ext:LocalizedString Key=/Tabs/Archive/Edit/Content}"
 							Command="{Binding EditCommand}"
 							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-							IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+							IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}" />
 						<Button
                             Content="{ext:LocalizedString Key=/Tabs/Archive/Categories/Content}"
 							Command="{Binding EditCategoriesCommand}"
 							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-							IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+							IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}" />
 						<Button
 							Content="{ext:LocalizedString Key=/Tabs/Archive/Download/Content}" Click="DownloadButton_Click"
 							IsEnabled="{Binding Downloading, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
@@ -122,7 +123,7 @@
                             Content="{ext:LocalizedString Key=/Tabs/Archive/Delete/Content}"
 							Command="{Binding DeleteCommand}"
 							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-							IsVisible="{ReflectionBinding Settings.Profile.HasApiKey, Source={StaticResource Locator}}" />
+							IsVisible="{Binding Profile.HasApiKey, Source={x:Static services:Service.Settings}}" />
 						<Border
 							Grid.Column="2" Width="1" Margin="6,4,6,4"
 							Background="{DynamicResource DividerStrokeColorDefaultBrush}" />

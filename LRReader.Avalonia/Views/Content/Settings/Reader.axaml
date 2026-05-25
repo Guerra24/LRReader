@@ -196,7 +196,7 @@
 				</controls:ModernExpander>
 			</controls:ModernGroup>
 			<controls:ModernGroup Title="{ext:LocalizedString /Settings/Reader/BookmarksGroup/Title}">
-				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/BookmarkCategory/Title}" Description="{ext:LocalizedString /Settings/Reader/BookmarkCategory/Description}" Glyph="&#xE8B7;" IsEnabled="{ReflectionBinding Api.ControlFlags.V0940Edit, Source={StaticResource Locator}}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/BookmarkCategory/Title}" Description="{ext:LocalizedString /Settings/Reader/BookmarkCategory/Description}" Glyph="&#xE8B7;" IsEnabled="{Binding ControlFlags.V0940Edit, Source={x:Static services:Service.Api}}">
 					<StackPanel Orientation="Horizontal">
 						<ComboBox
 							PlaceholderText="{ext:LocalizedString /Settings/Reader/BookmarkCategoryCombo/PlaceholderText}" MinWidth="250"
@@ -206,7 +206,7 @@
 						</Button>
 					</StackPanel>
 				</controls:ModernInput>
-				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/BookmarkSync/Title}" Description="{ext:LocalizedString /Settings/Reader/BookmarkSync/Description}" Glyph="&#xE8f7;" IsEnabled="{ReflectionBinding Api.ControlFlags.V0940Edit, Source={StaticResource Locator}}">
+				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/BookmarkSync/Title}" Description="{ext:LocalizedString /Settings/Reader/BookmarkSync/Description}" Glyph="&#xE8f7;" IsEnabled="{Binding ControlFlags.V0940Edit, Source={x:Static services:Service.Api}}">
 					<ToggleSwitch IsChecked="{Binding SettingsManager.Profile.SynchronizeBookmarks, Mode=OneWay}" IsCheckedChanged="SyncBookmarks_Toggled" />
 				</controls:ModernInput>
 				<controls:ModernExpander Title="{ext:LocalizedString /Settings/Reader/Reminder/Title}" Description="{ext:LocalizedString /Settings/Reader/Reminder/Description}" Glyph="&#xEB50;" IsExpanded="{Binding SettingsManager.BookmarkReminder, Mode=OneWay}">

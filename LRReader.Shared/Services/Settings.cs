@@ -387,14 +387,14 @@ namespace LRReader.Shared.Services
 			SettingsStorage = settingsStorage;
 			Files = files;
 			Platform = platform;
-			save = NotRx.CreateThrottledEvent(() =>
+			save = NotRx.CreateThrottledEvent(async () =>
 			{
 				try
 				{
 #if WINDOWS_UWP
-					FileIO.WriteTextAsync(ProfilesFile, JsonSerializer.Serialize(Profiles, JsonSettings.Options)).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+					await FileIO.WriteTextAsync(ProfilesFile, JsonSerializer.Serialize(Profiles, JsonSettings.Options)).AsTask().ConfigureAwait(false);
 #else
-					Files.StoreFileSafe(ProfilesPathLocation, JsonSerializer.Serialize(Profiles, JsonSettings.Options)).ConfigureAwait(false).GetAwaiter().GetResult();
+					await Files.StoreFileSafe(ProfilesPathLocation, JsonSerializer.Serialize(Profiles, JsonSettings.Options)).ConfigureAwait(false);
 #endif
 				}
 				catch (Exception e)

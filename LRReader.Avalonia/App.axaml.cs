@@ -12,6 +12,8 @@ namespace LRReader.Avalonia
 	public class App : Application
 	{
 
+		private bool closing;
+
 		public override void Initialize()
 		{
 			AvaloniaXamlLoader.Load(this);
@@ -24,6 +26,7 @@ namespace LRReader.Avalonia
 			{
 				var window = new MainWindow();
 				desktop.MainWindow = window;
+				window.Closing += Window_Closing;
 				platform.SetRoot(window.Root);
 				Platform.GoToPage(Pages.Loading, PagesTransition.None);
 			}
@@ -47,7 +50,31 @@ namespace LRReader.Avalonia
 
 			Dispatcher.UIThread.UnhandledException += App_UnhandledException;
 
+			if (this.TryGetFeature<IActivatableLifetime>() is { } activatableLifetime)
+				activatableLifetime.Deactivated += ActivatableLifetime_Deactivated;
+
 			base.OnFrameworkInitializationCompleted();
+		}
+
+		private async void Window_Closing(object? sender, WindowClosingEventArgs e)
+		{
+			if (closing) return;
+
+			e.Cancel = true;
+			await Session.Suspend();
+			SentrySdk.Flush(TimeSpan.FromSeconds(2));
+
+			closing = true;
+			((Window)sender!).Close();
+		}
+
+		private async void ActivatableLifetime_Deactivated(object? sender, ActivatedEventArgs e)
+		{
+			if (e.Kind == ActivationKind.Background)
+			{
+				await Session.Suspend();
+				SentrySdk.Flush(TimeSpan.FromSeconds(2));
+			}
 		}
 
 		private void App_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

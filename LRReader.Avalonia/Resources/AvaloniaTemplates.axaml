@@ -10,9 +10,9 @@
             <ControlTemplate>
                 <Grid Margin="{TemplateBinding Padding}">
                     <Grid.RowDefinitions>
-			            <RowDefinition Height="Auto" />
-			            <RowDefinition Height="*" />
-		            </Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
                     <Grid Name="TabContainerGrid"
                           Background="{TemplateBinding Background}">
@@ -46,14 +46,14 @@
                         <Border Grid.Column="2" Width="1" Height="16" Margin="3,0,3,0" VerticalAlignment="Center" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
 
                         <Grid Grid.Column="3" HorizontalAlignment="Stretch">
-					        <Grid.ColumnDefinitions>
-						        <ColumnDefinition Width="Auto" />
-						        <ColumnDefinition Width="*" />
-						        <ColumnDefinition Width="Auto" />
-						        <ColumnDefinition Width="Auto" />
-						        <ColumnDefinition Width="Auto" />
-					        </Grid.ColumnDefinitions>
-					        <Grid.Styles>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.Styles>
                                 <Style Selector="Button">
                                     <Setter Property="Width" Value="34"/>
                                     <Setter Property="Height" Value="32" />
@@ -65,21 +65,19 @@
                                     <Setter Property="MaxHeight" Value="16" />
                                 </Style>
                             </Grid.Styles>
-					        <ContentPresenter
-						        Name="RightContentPresenter"
-						        Content="{TemplateBinding TabStripFooter}"
-						        ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
-					        <ContentPresenter Grid.Column="2"
-						        Content="{TemplateBinding TabTools}"
-						        ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
-					        <Border
-						        Grid.Column="3" Width="1" Height="16"
-						        Margin="3,0,3,0" VerticalAlignment="Center"
-						        Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
-					        <ContentPresenter Grid.Column="4"
-						        Content="{TemplateBinding ExtraFooter}"
-						        ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
-				        </Grid>
+                            <ContentPresenter Name="RightContentPresenter"
+                                              Content="{TemplateBinding TabStripFooter}"
+                                              ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding TabTools}"
+                                              ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                            <Border Grid.Column="3" Width="1" Height="16"
+                                    Margin="3,0,3,0" VerticalAlignment="Center"
+                                    Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                            <ContentPresenter Grid.Column="4"
+                                              Content="{TemplateBinding ExtraFooter}"
+                                              ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                        </Grid>
 
                         <Border IsVisible="False"
                                 Cursor="SizeWestEast"
@@ -471,5 +469,63 @@
             </Grid>
         </Grid>
     </ControlTemplate>
+
+    <!-- This should not be here but we -->
+    <ControlTheme x:Key="AccentButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThemeThickness}" />
+        <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Name="PART_ContentPresenter"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}"
+                                  BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Padding="{TemplateBinding Padding}"
+                                  RecognizesAccessKey="True"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Duration="00:00:00.083" Property="Background" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForegroundPointerOver}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForegroundPressed}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushDisabled}" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForegroundDisabled}" />
+        </Style>
+
+    </ControlTheme>
 
 </ResourceDictionary>

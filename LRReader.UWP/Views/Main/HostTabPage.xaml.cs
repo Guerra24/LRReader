@@ -124,10 +124,7 @@ namespace LRReader.UWP.Views.Main
 
 		private void AppView_VisibleBoundsChanged(ApplicationView sender, object args) => Data.Fullscreen = AppView.IsFullScreenMode;
 
-		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-		{
-			Data.CloseTab((ModernTab)args.Tab);
-		}
+		private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args) => Data.CloseTab((ModernTab)args.Tab);
 
 		private void CloseTab_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{

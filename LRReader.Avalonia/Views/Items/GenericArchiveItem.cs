@@ -141,7 +141,7 @@ public class GenericArchiveItem : TemplatedControl
 		var savePicker = new FilePickerSaveOptions
 		{
 			SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
-			DefaultExtension = download.Type,
+			DefaultExtension = download.Type.Replace(".", ""),
 			SuggestedFileName = download.Name
 		};
 

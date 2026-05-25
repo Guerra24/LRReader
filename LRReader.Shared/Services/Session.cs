@@ -70,7 +70,6 @@ public partial class SessionService : ObservableObject
 						if (archive != null)
 							Tabs.OpenTab(Tab.Archive, false, archive, arcTab);
 					}
-
 					break;
 				case Tab.ArchiveEdit:
 					if (tab is IdTabState idTab)
