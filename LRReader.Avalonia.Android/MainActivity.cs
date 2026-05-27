@@ -1,5 +1,4 @@
-﻿using Android.App;
-using Android.Content.PM;
+﻿using Android.Content.PM;
 using Avalonia.Android;
 
 namespace LRReader.Avalonia.Android

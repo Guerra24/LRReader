@@ -43,7 +43,7 @@ jobs:
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       run: |
-        aws s3 cp . s3://${AWS_S3_BUCKET}/projects/lrr/android/nightly/ --recursive --exclude "*" --include "*Signed.apk" --include "*.txt" --include "version" --no-progress --acl public-read
+        aws s3 cp ./LRReader.Avalonia.Android/bin/Release/net10.0-android/publish/ s3://${AWS_S3_BUCKET}/projects/lrr/android/nightly/ --recursive --exclude "*" --include "*Signed.apk" --include "*.txt" --include "version" --no-progress --acl public-read
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
@@ -300,4 +300,4 @@ jobs:
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-          PURGE_URLS: '["https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage.sha256.txt", "https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage.sha256.txt", "https://s3.guerra24.net/projects/lrr/linux/nightly/version"]'
+          PURGE_URLS: '["https://s3.guerra24.net/projects/lrr/nightly/LRReader.UWP.appinstaller","https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage","https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage","https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage.sha256.txt","https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage.sha256.txt","https://s3.guerra24.net/projects/lrr/linux/nightly/version","https://s3.guerra24.net/projects/lrr/android/nightly/version","https://s3.guerra24.net/projects/lrr/android/nightly/sha256.txt","https://s3.guerra24.net/projects/lrr/android/nightly/net.guerra24.lrreader.nightly-Signed.apk"]'
