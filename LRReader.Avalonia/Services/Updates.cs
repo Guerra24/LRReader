@@ -55,7 +55,7 @@ namespace LRReader.Avalonia.Services
 						return new UpdateResult { Result = false, ErrorCode = 2, ErrorMessage = "Unsupported architecture... How did you get here?" };
 				}
 
-				var hash256 = (await client.GetStringAsync($"https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.{arch}.AppImage.sha256.txt")).ToLower();
+				var hash256 = (await client.GetStringAsync($"https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.{arch}.AppImage.sha256.txt")).Trim().ToLower();
 
 				progress?.Report(0.1);
 
@@ -94,7 +94,7 @@ namespace LRReader.Avalonia.Services
 			catch (Exception e)
 			{
 				SentrySdk.CaptureException(e);
-				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("/Shared/Updater/UpdateError") };
+				return new UpdateResult { Result = false, ErrorCode = e.HResult, ErrorMessage = Platform.GetLocalizedString("Shared/Updater/UpdateError") };
 			}
 		}
 	}

@@ -1,8 +1,10 @@
-﻿using Android.App;
-using Android.Runtime;
+﻿using Android.Runtime;
 using Avalonia;
 using Avalonia.Android;
+using LRReader.Avalonia.Android.Services;
 using LRReader.Shared.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace LRReader.Avalonia.Android
 {
@@ -11,7 +13,12 @@ namespace LRReader.Avalonia.Android
 	{
 		protected Application(nint javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
 		{
-			Init.EarlyInit(this);
+			Init.EarlyInit(this, (collection) =>
+			{
+#if NIGHTLY_ANDROID
+				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, NightlyAndroidUpdatesService>());
+#endif
+			});
 		}
 
 		protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)

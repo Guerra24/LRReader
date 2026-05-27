@@ -9,33 +9,18 @@
 
 	}
 
-	public record Throttle<T>
+	public record Throttle
 	{
-		public Action<T> Action { get; set; } = null!;
-		public ReaderWriterLockSlim Lock { get; internal set; } = null!;
+		public Action Action { get; set; } = null!;
+		public ReaderWriterLockSlim Lock { get; internal set; } = new();
 	}
 
 	public static class NotRx
 	{
-		public static Throttle<T> CreateThrottledEvent<T>(Action<T> action)
+		public static Throttle CreateThrottledEvent(Action action)
 		{
-			var throttle = new Throttle<T>();
-			throttle.Lock = new ReaderWriterLockSlim();
-			throttle.Action = (t) =>
-			{
-				if (!throttle.Lock.TryEnterWriteLock(0))
-					return;
-				action(t);
-				throttle.Lock.ExitWriteLock();
-			};
-			return throttle;
-		}
-
-		public static Throttle<object> CreateThrottledEvent(Action action)
-		{
-			var throttle = new Throttle<object>();
-			throttle.Lock = new ReaderWriterLockSlim();
-			throttle.Action = (t) =>
+			var throttle = new Throttle();
+			throttle.Action = () =>
 			{
 				if (!throttle.Lock.TryEnterWriteLock(0))
 					return;

@@ -376,7 +376,7 @@ namespace LRReader.Shared.Services
 			set => SettingsStorage.StoreObjectRoamed(value);
 		}
 
-		private Throttle<object> save;
+		private Throttle save;
 
 		public bool FirstStartup = true;
 
@@ -563,7 +563,7 @@ namespace LRReader.Shared.Services
 
 		public void SaveProfiles()
 		{
-			save.Action(null!);
+			save.Action();
 		}
 
 		public void Dispose()

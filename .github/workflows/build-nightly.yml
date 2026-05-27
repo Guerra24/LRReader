@@ -28,8 +28,22 @@ jobs:
         [IO.File]::WriteAllBytes("./guerra24.keystore.gpg", [Convert]::FromBase64String("${env:KEYSTORE_BASE64}"))
         & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output guerra24.keystore guerra24.keystore.gpg
         ./Util/Version-Android.ps1 "C:\Program Files\Git\mingw64\bin\git.exe"
-        dotnet publish LRReader.Avalonia.Android\LRReader.Avalonia.Android.csproj -nologo -v:minimal -c Release --self-contained true -p:Version=$env:LRR_VERSION -p:ApplicationVersion=$env:LRR_BUILD -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../guerra24.keystore -p:AndroidSigningKeyAlias=guerra24 -p:AndroidSigningKeyPass=env:KEYSTORE_PASSWORD -p:AndroidSigningStorePass=env:KEYSTORE_PASSWORD
-        Remove-Item -Path "./guerra24.keystore"
+        dotnet publish LRReader.Avalonia.Android\LRReader.Avalonia.Android.csproj -nologo -v:minimal -c Release --self-contained true -p:Version=$env:LRR_VERSION -p:NightlyAndroid=true -p:ApplicationVersion=$env:LRR_BUILD -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../guerra24.keystore -p:AndroidSigningKeyAlias=guerra24 -p:AndroidSigningKeyPass=env:KEYSTORE_PASSWORD -p:AndroidSigningStorePass=env:KEYSTORE_PASSWORD
+        Remove-Item -Path "./guerra24.keystore.gpg","./guerra24.keystore"
+        Set-Location "./LRReader.Avalonia.Android/bin/Release/net10.0-android/publish"
+        echo $env:LRR_BUILD >> version
+        Get-ChildItem "*Signed.apk" | foreach { echo (Get-FileHash  $_).Hash.ToLower() >> sha256.txt }
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v6
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Upload to S3
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      run: |
+        aws s3 cp . s3://${AWS_S3_BUCKET}/projects/lrr/android/nightly/ --recursive --exclude "*" --include "*Signed.apk" --include "*.txt" --include "version" --no-progress --acl public-read
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:

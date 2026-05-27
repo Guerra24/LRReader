@@ -12,7 +12,6 @@
 	mc:Ignorable="d">
 
 	<UserControl.Resources>
-		<converters2:RegistryTypeConverter x:Key="RegistryTypeConverter" />
 		<ext:Shadow x:Name="ElementShadow" />
 	</UserControl.Resources>
 
@@ -32,15 +31,7 @@
 					</Grid.RowDefinitions>
 					<StackPanel Spacing="8">
 						<TextBox Text="{x:Bind Data.RegistryName, Mode=TwoWay}" PlaceholderText="Name" />
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="1*" />
-								<ColumnDefinition Width="8" />
-								<ColumnDefinition Width="1*" />
-							</Grid.ColumnDefinitions>
-							<ComboBox x:Name="RegistryType" SelectedIndex="{x:Bind Data.RegistryType, Mode=TwoWay, Converter={StaticResource EnumToInt}}" HorizontalAlignment="Stretch" />
-							<ComboBox Grid.Column="2" x:Name="RegistryProvider" SelectedIndex="{x:Bind Data.RegistryProvider, Mode=TwoWay, Converter={StaticResource EnumToInt}}" IsEnabled="{x:Bind Data.RegistryType, Mode=OneWay, Converter={StaticResource RegistryTypeConverter}, ConverterParameter=Git}" PlaceholderText="Provider" HorizontalAlignment="Stretch" />
-						</Grid>
+						<ComboBox x:Name="RegistryProvider" SelectedIndex="{x:Bind Data.RegistryProvider, Mode=TwoWay, Converter={StaticResource EnumToInt}}" PlaceholderText="Provider" HorizontalAlignment="Stretch" />
 						<TextBox Text="{x:Bind Data.RegistryUrl, Mode=TwoWay}" PlaceholderText="Url" />
 						<TextBox Text="{x:Bind Data.RegistryRef, Mode=TwoWay}" PlaceholderText="Ref" />
 						<TextBox Text="{x:Bind Data.RegistryPath, Mode=TwoWay}" PlaceholderText="Path" />
@@ -62,12 +53,12 @@
 						</Grid.RowDefinitions>
 						<StackPanel Orientation="Horizontal">
 							<TextBlock>
-						<Run Text="{x:Bind name}" /> <Run Text="{x:Bind type}" /> <Run Text="{x:Bind provider}" />
+								<Run Text="{x:Bind name}" /> <Run Text="{x:Bind provider}" />
 							</TextBlock>
 						</StackPanel>
 						<StackPanel Grid.Row="1" Orientation="Horizontal">
 							<TextBlock>
-						<Run Text="{x:Bind url}" /> <Run Text="{x:Bind gitRef}" /> <Run Text="{x:Bind path}" />
+								<Run Text="{x:Bind url}" /> <Run Text="{x:Bind gitRef}" /> <Run Text="{x:Bind path}" />
 							</TextBlock>
 						</StackPanel>
 					</Grid>
@@ -93,20 +84,40 @@
 				</TransitionCollection>
 			</GridView.ItemContainerTransitions>
 		</GridView>
-		<Grid Grid.Row="1" MaxWidth="1000" MinWidth="300" HorizontalAlignment="Center" Padding="10">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="8"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-			<StackPanel Spacing="8">
-				<TextBox Text="{x:Bind Data.PluginNamespace, Mode=TwoWay}" PlaceholderText="Namespace" />
-				<TextBox Text="{x:Bind Data.PluginVersion, Mode=TwoWay}" PlaceholderText="Version" />
-				<CheckBox Content="Force" IsChecked="{x:Bind Data.PluginForced, Mode=TwoWay}" />
-			</StackPanel>
-			<StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
-				<Button Content="Install plugin" Command="{x:Bind Data.InstallPluginCommand}" CommandParameter="{x:Bind Registries.SelectedItem, Mode=OneWay}" />
-			</StackPanel>
-		</Grid>
+		<GridView Grid.Row="1" x:Name="Plugins" ItemsSource="{x:Bind Data.Plugins}" IsItemClickEnabled="False" SelectionMode="None" ext:Element.ModernShadow="{StaticResource ElementShadow}">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="main:RegistryIndexPlugin">
+					<Grid Padding="10">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<TextBlock Text="{x:Bind _namespace}" VerticalAlignment="Center" Width="150" TextWrapping="NoWrap" />
+							<Button Content="Install plugin" Tag="{x:Bind}" Click="Install_Click" />
+							<Button Content="Uninstall plugin" Tag="{x:Bind}" Click="Uninstall_Click" />
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</GridView.ItemTemplate>
+			<GridView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<ItemsWrapGrid HorizontalAlignment="Center" Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</GridView.ItemsPanel>
+			<GridView.ItemContainerStyle>
+				<Style BasedOn="{StaticResource WinUIGridViewItemStyle}" TargetType="GridViewItem">
+					<Setter Property="Padding" Value="0" />
+					<Setter Property="Margin" Value="5" />
+				</Style>
+			</GridView.ItemContainerStyle>
+			<GridView.ItemContainerTransitions>
+				<TransitionCollection>
+					<PopupThemeTransition FromVerticalOffset="200" />
+					<ReorderThemeTransition />
+					<RepositionThemeTransition />
+					<AddDeleteThemeTransition />
+				</TransitionCollection>
+			</GridView.ItemContainerTransitions>
+		</GridView>
 	</Grid>
 </controls:ModernBasePage>

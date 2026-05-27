@@ -6,7 +6,7 @@
                 xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
                 xmlns:ui="using:FluentAvalonia.UI.Controls"
                 xmlns:ext="using:LRReader.Avalonia.Extensions"
-                xmlns:settings="using:LRReader.UWP.Views.Content.Settings"
+                xmlns:settings="using:LRReader.Avalonia.Views.Content.Settings"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:Class="LRReader.Avalonia.Views.Tabs.SettingsTab"
                 CustomTabId="Settings"

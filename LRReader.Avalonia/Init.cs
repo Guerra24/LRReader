@@ -7,7 +7,7 @@ namespace LRReader.Avalonia
 {
 	public static class Init
 	{
-		public static void EarlyInit(IEntryPoint entryPoint)
+		public static void EarlyInit(IEntryPoint entryPoint, Action<ServiceCollection>? action = null)
 		{
 			Service.BuildServices((ServiceCollection collection) =>
 			{
@@ -20,6 +20,7 @@ namespace LRReader.Avalonia
 				collection.Replace(ServiceDescriptor.Singleton<UpdatesService, NightlyAppImageUpdatesService>());
 #endif
 #endif
+				action?.Invoke(collection);
 
 				collection.AddSingleton<ImageProcessingService, AvaloniaImageProcessingService>();
 

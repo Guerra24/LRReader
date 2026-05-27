@@ -1,6 +1,6 @@
 ﻿using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
-using LRReader.Shared.ViewModels;
+using LRReader.Shared.ViewModels.Tools;
 using LRReader.UWP.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,11 +14,6 @@ namespace LRReader.UWP.Views.Content.Tools
 		{
 			this.InitializeComponent();
 			Data = Service.Services.GetRequiredService<RegistryManagerViewModel>();
-			var types = Enum.GetNames(typeof(RegistryType));
-			foreach (var type in types)
-			{
-				RegistryType.Items.Add(type);
-			}
 			var providers = Enum.GetNames(typeof(RegistryProvider));
 			foreach (var type in providers)
 			{
@@ -43,5 +38,17 @@ namespace LRReader.UWP.Views.Content.Tools
 		{
 			await Data.LoadRegistries();
 		}
-	}
+
+		[DynamicWindowsRuntimeCast(typeof(Button))]
+		private async void Install_Click(object sender, RoutedEventArgs e)
+		{
+			await Data.InstallPlugin((Registry)Registries.SelectedItem, (RegistryIndexPlugin)((Button)sender).Tag);
+        }
+
+		[DynamicWindowsRuntimeCast(typeof(Button))]
+		private async void Uninstall_Click(object sender, RoutedEventArgs e)
+		{
+			await Data.UninstallPlugin((RegistryIndexPlugin)((Button)sender).Tag);
+        }
+    }
 }

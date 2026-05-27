@@ -8,6 +8,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="12.0.3" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1">
@@ -20,12 +21,15 @@
     <PackageReference Include="FluentAvaloniaUI" Version="3.0.0-preview4" />
     <PackageReference Include="Markdown.Avalonia.Tight" Version="12.0.0-a3" />
   </ItemGroup>
+
   <PropertyGroup Condition="'$(NightlyAppImage)' == 'true'">
     <DefineConstants>$(DefineConstants);NIGHTLY_APPIMAGE</DefineConstants>
   </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\LRReader.Shared\LRReader.Shared.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaResource Include="..\Privacy.md">

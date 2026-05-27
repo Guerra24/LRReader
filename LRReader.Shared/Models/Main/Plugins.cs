@@ -19,7 +19,7 @@ namespace LRReader.Shared.Models.Main
 
 	public enum PluginType
 	{
-		Login, Metadata, Script, All
+		Login, Metadata, Script, Download, All
 	}
 
 	public class Plugin : IJsonOnDeserialized
@@ -39,9 +39,8 @@ namespace LRReader.Shared.Models.Main
 		[JsonConverter(typeof(BoolConverter))]
 		public bool hidden { get; set; }
 		public int priority { get; set; }
-		public string? installed_registry { get; set; }
-		public string? installed_version { get; set; }
-		public string? installed_sha256 { get; set; }
+		public string? registry { get; set; }
+		public string? sha256 { get; set; }
 
 
 		public bool HasArg { get; set; }
@@ -83,8 +82,8 @@ namespace LRReader.Shared.Models.Main
 		public string name { get; set; } = null!;
 		public string @namespace { get; set; } = null!;
 		public string version { get; set; } = null!;
-		public string installed_registry { get; set; } = null!;
-		public string installed_sha256 { get; set; } = null!;
+		public string registry { get; set; } = null!;
+		public string sha256 { get; set; } = null!;
 	}
 
 }

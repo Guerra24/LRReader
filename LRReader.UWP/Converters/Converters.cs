@@ -156,16 +156,4 @@ namespace LRReader.UWP.Converters
 		}
 	}
 
-	public partial class RegistryTypeConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, string language)
-		{
-			return (RegistryType)value == Enum.Parse<RegistryType>((string)parameter);
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, string language)
-		{
-			throw new NotImplementedException();
-		}
-	}
 }

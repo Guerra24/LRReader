@@ -8,7 +8,7 @@ using LRReader.Shared.Services;
 using LRReader.Shared.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LRReader.UWP.Views.Content.Settings;
+namespace LRReader.Avalonia.Views.Content.Settings;
 
 public partial class Main : ModernBasePage
 {

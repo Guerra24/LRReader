@@ -87,6 +87,14 @@ public static class ServerProvider
 	{
 		var client = Api.Client;
 
+		// Hack
+		if (string.IsNullOrEmpty(registry.path))
+			registry.path = null;
+		if (string.IsNullOrEmpty(registry.gitRef))
+			registry.gitRef = null;
+		if (string.IsNullOrEmpty(registry.url))
+			registry.url = null;
+
 		var rq = new RestRequest("api/registries");
 		rq.AddRequestObject(registry);
 
@@ -111,6 +119,14 @@ public static class ServerProvider
 	{
 		var client = Api.Client;
 
+		// Hack
+		if (string.IsNullOrEmpty(registry.path))
+			registry.path = null;
+		if (string.IsNullOrEmpty(registry.gitRef))
+			registry.gitRef = null;
+		if (string.IsNullOrEmpty(registry.url))
+			registry.url = null;
+
 		var rq = new RestRequest("api/registries/{id}");
 		rq.AddUrlSegment("id", id);
 		rq.AddRequestObject(registry);
@@ -132,7 +148,7 @@ public static class ServerProvider
 		return await r.GetResult().ConfigureAwait(false);
 	}
 
-	public static async Task<bool> RefreshRegistry(string id)
+	public static async Task<RegistryRefreshResult?> RefreshRegistry(string id)
 	{
 		var client = Api.Client;
 
@@ -141,7 +157,7 @@ public static class ServerProvider
 
 		var r = await client.ExecutePostAsync(rq).ConfigureAwait(false);
 
-		return await r.GetResult().ConfigureAwait(false);
+		return await r.GetResult<RegistryRefreshResult>().ConfigureAwait(false);
 	}
 
 	public static async Task<PluginInstallResult?> InstallPlugin(PluginInstall plugin)
@@ -169,7 +185,7 @@ public static class ServerProvider
 		return await r.GetResult().ConfigureAwait(false);
 	}
 
-	public static async Task<RegistryDefaultResult?> GetDefaultRegistry()
+	public static async Task<RegistryResult?> GetDefaultRegistry()
 	{
 		var client = Api.Client;
 
@@ -177,10 +193,10 @@ public static class ServerProvider
 
 		var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 
-		return await r.GetResult<RegistryDefaultResult>().ConfigureAwait(false);
+		return await r.GetResult<RegistryResult>().ConfigureAwait(false);
 	}
 
-	public static async Task<RegistryDefaultResult?> RemoveDefaultRegistry()
+	public static async Task<RegistryResult?> RemoveDefaultRegistry()
 	{
 		var client = Api.Client;
 
@@ -188,10 +204,10 @@ public static class ServerProvider
 
 		var r = await client.ExecuteDeleteAsync(rq).ConfigureAwait(false);
 
-		return await r.GetResult<RegistryDefaultResult>().ConfigureAwait(false);
+		return await r.GetResult<RegistryResult>().ConfigureAwait(false);
 	}
 
-	public static async Task<RegistryDefaultResult?> GetArchiveCategories(string id)
+	public static async Task<RegistryResult?> SetDefaultRegistry(string id)
 	{
 		var client = Api.Client;
 
@@ -200,7 +216,7 @@ public static class ServerProvider
 
 		var r = await client.ExecutePutAsync(rq).ConfigureAwait(false);
 
-		return await r.GetResult<RegistryDefaultResult>().ConfigureAwait(false);
+		return await r.GetResult<RegistryResult>().ConfigureAwait(false);
 	}
 
 }

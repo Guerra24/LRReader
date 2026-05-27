@@ -5,7 +5,7 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using System.Collections.ObjectModel;
 
-namespace LRReader.Shared.ViewModels;
+namespace LRReader.Shared.ViewModels.Tools;
 
 public partial class RegistryManagerViewModel : ObservableObject
 {
@@ -13,20 +13,13 @@ public partial class RegistryManagerViewModel : ObservableObject
 	private readonly IDispatcherService Dispatcher;
 
 	public ObservableCollection<Registry> Registries = new();
+	public ObservableCollection<RegistryIndexPlugin> Plugins = new();
 
 	[ObservableProperty]
 	private string _registryName = "";
 	[ObservableProperty]
-	private RegistryType _registryType;
+	private RegistryProvider _registryProvider;
 
-	partial void OnRegistryTypeChanged(RegistryType value)
-	{
-		if (value == RegistryType.Local)
-			RegistryProvider = null;
-	}
-
-	[ObservableProperty]
-	private RegistryProvider? _registryProvider;
 	[ObservableProperty]
 	private string? _registryUrl;
 	[ObservableProperty]
@@ -34,38 +27,30 @@ public partial class RegistryManagerViewModel : ObservableObject
 	[ObservableProperty]
 	private string? _registryPath;
 
-	[ObservableProperty]
-	private string _pluginNamespace = "";
-	[ObservableProperty]
-	private string? _pluginVersion;
-	[ObservableProperty]
-	private bool _pluginForced;
-
-
 	public RegistryManagerViewModel(IDispatcherService dispatcher)
 	{
 		Dispatcher = dispatcher;
 	}
 
-	public void SelectRegistry(Registry? registry)
+	public async void SelectRegistry(Registry? registry)
 	{
 		if (registry != null)
 		{
 			RegistryName = registry.name;
-			RegistryType = registry.type;
 			RegistryProvider = registry.provider;
 			RegistryUrl = registry.url;
 			RegistryRef = registry.gitRef;
 			RegistryPath = registry.path;
+			await RefreshRegistry(registry);
 		}
 		else
 		{
 			RegistryName = "";
-			RegistryType = RegistryType.Git;
-			RegistryProvider = null;
+			RegistryProvider = RegistryProvider.Github;
 			RegistryUrl = null;
 			RegistryRef = null;
 			RegistryPath = null;
+			Plugins.Clear();
 		}
 	}
 
@@ -89,7 +74,7 @@ public partial class RegistryManagerViewModel : ObservableObject
 	{
 		if (!Uri.IsWellFormedUriString(RegistryUrl, UriKind.Absolute))
 			return;
-		var res = await ServerProvider.AddRegistry(new BaseRegistry() { name = RegistryName, type = RegistryType, provider = RegistryProvider, url = RegistryUrl, gitRef = RegistryRef, path = RegistryPath });
+		var res = await ServerProvider.AddRegistry(new BaseRegistry() { name = RegistryName, provider = RegistryProvider, url = RegistryUrl, gitRef = RegistryRef, path = RegistryPath });
 		if (res != null)
 		{
 			var registry = await ServerProvider.GetRegistry(res.id);
@@ -107,7 +92,6 @@ public partial class RegistryManagerViewModel : ObservableObject
 			return;
 
 		registry.name = RegistryName;
-		registry.type = RegistryType;
 		registry.provider = RegistryProvider;
 		registry.url = RegistryUrl;
 		registry.gitRef = RegistryRef;
@@ -115,6 +99,18 @@ public partial class RegistryManagerViewModel : ObservableObject
 
 		var res = await ServerProvider.UpdateRegistry(registry.id, registry);
 
+	}
+
+	[RelayCommand]
+	private async Task RefreshRegistry(Registry registry)
+	{
+		if (registry == null)
+			return;
+		var res = await ServerProvider.RefreshRegistry(registry.id);
+		Plugins.Clear();
+		if (res != null)
+			foreach (var plugin in res.index.plugins)
+				Plugins.Add(plugin.Value);
 	}
 
 	[RelayCommand]
@@ -127,20 +123,14 @@ public partial class RegistryManagerViewModel : ObservableObject
 			Registries.Remove(registry);
 	}
 
-	[RelayCommand]
-	private async Task RefreshRegistry(Registry registry)
+	public async Task InstallPlugin(Registry registry, RegistryIndexPlugin plugin)
 	{
-		if (registry == null)
-			return;
-		var res = await ServerProvider.RefreshRegistry(registry.id);
+		var res = await ServerProvider.InstallPlugin(new PluginInstall { @namespace = plugin._namespace, registry = registry.id, version = plugin.versions.First().Key.ToString(), forced = false });
 	}
 
-	[RelayCommand]
-	private async Task InstallPlugin(Registry registry)
+	public async Task UninstallPlugin(RegistryIndexPlugin plugin)
 	{
-		if (registry == null)
-			return;
-		var res = await ServerProvider.InstallPlugin(new PluginInstall { @namespace = PluginNamespace, registry = registry.id, version = PluginVersion, forced = PluginForced });
+		var res = await ServerProvider.UninstallPlugin(plugin._namespace);
 	}
 
 }

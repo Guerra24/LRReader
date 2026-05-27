@@ -36,21 +36,14 @@ namespace LRReader.Shared.Models.Main
 	{
 		public string name { get; set; } = null!;
 
-		public RegistryType type { get; set; }
-		public RegistryProvider? provider { get; set; }
+		public RegistryProvider provider { get; set; }
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		public string? url { get; set; }
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[JsonPropertyName("ref")]
 		public string? gitRef { get; set; }
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		public string? path { get; set; }
-	}
-
-	[JsonConverter(typeof(JsonStringEnumConverter<RegistryType>))]
-	public enum RegistryType
-	{
-		[JsonStringEnumMemberName("git")]
-		Git,
-		[JsonStringEnumMemberName("local")]
-		Local
 	}
 
 	[JsonConverter(typeof(JsonStringEnumConverter<RegistryProvider>))]
@@ -61,17 +54,16 @@ namespace LRReader.Shared.Models.Main
 		[JsonStringEnumMemberName("gitlab")]
 		Gitlab,
 		[JsonStringEnumMemberName("gitea")]
-		Gitea
+		Gitea,
+		[JsonStringEnumMemberName("cdn")]
+		CDN,
+		[JsonStringEnumMemberName("local")]
+		Local
 	}
 
 	public class RegistryResult : GenericApiResult
 	{
 		public string id { get; set; } = null!;
-	}
-
-	public class RegistryDefaultResult : GenericApiResult
-	{
-		public string registry_id { get; set; } = null!;
 	}
 
 	public class RegistryMetadataResult : RegistryResult
@@ -95,6 +87,38 @@ namespace LRReader.Shared.Models.Main
 	public class RegistriesResult : GenericApiResult
 	{
 		public List<Registry> registries { get; set; } = [];
+	}
+
+	public class RegistryRefreshResult : GenericApiResult
+	{
+		public RegistryIndex index { get; set; } = null!;
+	}
+
+	public class RegistryIndex
+	{
+		public DateTime generated_at { get; set; }
+		public int version { get; set; }
+		public Dictionary<string, RegistryIndexPlugin> plugins { get; set; } = [];
+	}
+
+	public class RegistryIndexPlugin
+	{
+		[JsonPropertyName("namespace")]
+		public string _namespace { get; set; } = null!;
+		[JsonConverter(typeof(JsonStringEnumConverter<PluginType>))]
+		public PluginType type { get; set; }
+		public Dictionary<Version, RegistryIndexPluginArtifact> versions { get; set; } = [];
+	}
+
+	public class RegistryIndexPluginArtifact
+	{
+		public string artifact { get; set; } = null!;
+		public string author { get; set; } = null!;
+		public string description { get; set; } = null!;
+		public string name { get; set; } = null!;
+		public DateTime published_at { get; set; }
+		public string sha256 { get; set; } = null!;
+		public Version version { get; set; } = null!;
 	}
 
 }

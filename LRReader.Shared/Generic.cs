@@ -72,12 +72,15 @@ public static class JsonSettings
 [JsonSerializable(typeof(BaseRegistry))]
 [JsonSerializable(typeof(RegistryResult))]
 [JsonSerializable(typeof(RegistryMetadataResult))]
-[JsonSerializable(typeof(RegistryDefaultResult))]
 [JsonSerializable(typeof(Registry))]
 [JsonSerializable(typeof(RegistriesResult))]
 [JsonSerializable(typeof(RegistryUpdatedResult))]
 [JsonSerializable(typeof(PluginInstall))]
 [JsonSerializable(typeof(PluginInstallResult))]
+[JsonSerializable(typeof(RegistryRefreshResult))]
+[JsonSerializable(typeof(RegistryIndex))]
+[JsonSerializable(typeof(RegistryIndexPlugin))]
+[JsonSerializable(typeof(RegistryIndexPluginArtifact))]
 public partial class JsonSourceGenerationContext : JsonSerializerContext
 {
 

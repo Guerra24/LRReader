@@ -154,7 +154,7 @@ namespace LRReader.Avalonia.Views.Controls
 			{
 				WebView.InvokeScript($$"""
 					var style = document.createElement('style');
-					style.innerHTML = '{{Regex.Replace(Css, @"\t|\n|\r", " ")}}';
+					style.innerHTML = '{{CleanCss().Replace(Css, " ")}}';
 					document.head.appendChild(style);
 					""");
 			}
@@ -165,6 +165,8 @@ namespace LRReader.Avalonia.Views.Controls
 			args.Handled = true;
 		}
 
+		[GeneratedRegex(@"\t|\n|\r")]
+		private static partial Regex CleanCss();
 	}
 
 	public partial class NativeWebDialogWebView : UserControl, IWebView
@@ -233,11 +235,15 @@ namespace LRReader.Avalonia.Views.Controls
 			Modern.NavigationCompleted(this, args.IsSuccess);
 			if (args.IsSuccess)
 			{
-				WebView?.InvokeScript($$"""
-					var style = document.createElement('style');
-					style.innerHTML = '{{Regex.Replace(Css, @"\t|\n|\r", " ")}}';
-					document.head.appendChild(style);
-					""");
+				try
+				{
+					WebView?.InvokeScript($$"""
+						var style = document.createElement('style');
+						style.innerHTML = '{{CleanCss().Replace(Css, " ")}}';
+						document.head.appendChild(style);
+						""");
+				}
+				catch { }
 			}
 		}
 
@@ -245,5 +251,8 @@ namespace LRReader.Avalonia.Views.Controls
 		{
 			e.Handled = true;
 		}
+
+		[GeneratedRegex(@"\t|\n|\r")]
+		private static partial Regex CleanCss();
 	}
 }
