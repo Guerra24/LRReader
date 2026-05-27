@@ -9,6 +9,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Uid="/Tabs/Tools/Tab"
+	CustomTabId="Tools"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	mc:Ignorable="d">

@@ -1,0 +1,31 @@
+<controls:ModernBasePage xmlns="https://github.com/avaloniaui"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:controls="using:LRReader.Avalonia.Views.Controls"
+                         xmlns:ext="using:LRReader.Avalonia.Extensions"
+                         xmlns:local="using:LRReader.Avalonia.Views.Content.Tools"
+                         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                         x:Class="LRReader.Avalonia.Views.Content.Tools.Main">
+    <ScrollViewer x:Name="ScrollViewer" Padding="10,0" BringIntoViewOnFocusChange="False">
+        <StackPanel Width="{Binding #ScrollViewer.Viewport.Width, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">
+            <controls:ModernGroup>
+                <controls:ModernInput Title="{ext:LocalizedString /Tools/DeduplicatorPage/Title}" Click="PageButton_Click" Glyph="&#xE8C8;" IsButton="True" RightGlyph="&#xE76C;" IsEnabled="False">
+                    <controls:ModernInput.Tag>
+                        <controls:ModernPageTabItem Title="{ext:LocalizedString /Tools/DeduplicatorPage/Title}" /> <!-- Page="local:Deduplicator" -->
+                    </controls:ModernInput.Tag>
+                </controls:ModernInput>
+                <controls:ModernInput Title="{ext:LocalizedString /Tools/BulkEditorPage/Title}" Click="PageButton_Click" Glyph="&#xE932;" IsButton="True" RightGlyph="&#xE76C;" IsEnabled="False">
+                    <controls:ModernInput.Tag>
+                        <controls:ModernPageTabItem Title="{ext:LocalizedString /Tools/BulkEditorPage/Title}" /> <!-- Page="local:BulkEditor" -->
+                    </controls:ModernInput.Tag>
+                </controls:ModernInput>
+                <controls:ModernInput Title="Registry Manager (DEBUG)" Click="PageButton_Click" Glyph="&#xEA86;" IsButton="True" RightGlyph="&#xE76C;" IsEnabled="False">
+                    <controls:ModernInput.Tag>
+                        <controls:ModernPageTabItem Title="Registry Manager (DEBUG)" /> <!-- Page="local:RegistryManager" -->
+                    </controls:ModernInput.Tag>
+                </controls:ModernInput>
+            </controls:ModernGroup>
+        </StackPanel>
+    </ScrollViewer>
+</controls:ModernBasePage>

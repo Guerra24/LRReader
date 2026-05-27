@@ -46,6 +46,7 @@ namespace LRReader.Avalonia.Services
 			Tabs.MapTabToType<ArchiveTab>(Tab.Archive);
 			Tabs.MapTabToType<SearchResultsTab>(Tab.SearchResults);
 			Tabs.MapTabToType<BookmarksTab>(Tab.Bookmarks);
+			Tabs.MapTabToType<ToolsTab>(Tab.Tools);
 
 			MapDialogToType<ServerProfileDialog>(Dialog.ServerProfile);
 			MapDialogToType<MarkdownDialog>(Dialog.Markdown);

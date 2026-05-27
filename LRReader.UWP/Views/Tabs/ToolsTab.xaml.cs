@@ -7,7 +7,7 @@ namespace LRReader.UWP.Views.Tabs
 		public ToolsTab()
 		{
 			this.InitializeComponent();
-			GoBack += () => ContentPage.GoBack();
+			GoBack += ContentPage.GoBack;
 		}
 	}
 }

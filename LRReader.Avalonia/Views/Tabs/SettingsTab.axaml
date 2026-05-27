@@ -3,18 +3,17 @@
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:controls="using:LRReader.Avalonia.Views.Controls"
-                xmlns:content="using:LRReader.Avalonia.Views.Tabs.Content"
                 xmlns:ui="using:FluentAvalonia.UI.Controls"
                 xmlns:ext="using:LRReader.Avalonia.Extensions"
                 xmlns:settings="using:LRReader.Avalonia.Views.Content.Settings"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:Class="LRReader.Avalonia.Views.Tabs.SettingsTab"
                 CustomTabId="Settings"
-                Header="{ext:LocalizedString Key=/Tabs/Settings/Tab/Header}"
+                Header="{ext:LocalizedString /Tabs/Settings/Tab/Header}"
                 Loaded="UserControl_Loaded">
     <ui:FATabViewItem.IconSource>
         <ui:FASymbolIconSource Symbol="Settings" />
     </ui:FATabViewItem.IconSource>
 
-    <controls:ModernPageTab x:Name="ContentPage" Title="{ext:LocalizedString Key=/Settings/MainPage/Title}" Initial="settings:Main" />
+    <controls:ModernPageTab x:Name="ContentPage" Title="{ext:LocalizedString /Settings/MainPage/Title}" Initial="settings:Main" />
 </controls:ModernTab>
