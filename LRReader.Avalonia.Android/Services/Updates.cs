@@ -141,5 +141,18 @@ namespace LRReader.Avalonia.Android.Services
 		}
 	}
 
+	[BroadcastReceiver(Enabled = true, Exported = true)]
+	[IntentFilter([Intent.ActionMyPackageReplaced])]
+	public class RestartReceiver : BroadcastReceiver
+	{
+		public override void OnReceive(Context? context, Intent? intent)
+		{
+			var i = context!.PackageManager!.GetLaunchIntentForPackage(context.PackageName!)!;
+			i.AddFlags(ActivityFlags.ClearTask);
+			i.AddFlags(ActivityFlags.NewTask);
+			context!.StartActivity(i);
+		}
+	}
+
 	public record AndroidUpdateResult(bool Result, string Message = "");
 }

@@ -29,6 +29,7 @@
 							IsActive="{Binding Active, Mode=OneWay}" />
             <ProgressBar Width="200"
                          Margin="0,18,0,0"
+                         Maximum="1.0"
                          Value="{Binding Progress, Mode=OneWay}"
                          IsVisible="{Binding Updating, Mode=OneWay}"
                          VerticalAlignment="Top"/>
