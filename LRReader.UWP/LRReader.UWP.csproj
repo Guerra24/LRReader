@@ -16,7 +16,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.260316102</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
+    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.260518100</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
     <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.7705</MicrosoftWindowsSDKBuildToolsPackageVersion>
     <WindowsSdkPackageVersion>10.0.26100.73-preview</WindowsSdkPackageVersion>
     <RootNamespace>LRReader.UWP</RootNamespace>
@@ -177,7 +177,6 @@
   <PropertyGroup>
     <AppxPackageDir>$(AppxPackageDirInProjectDir)</AppxPackageDir>
     <AppxPackageTestDir Condition="'$(AppxPackageDir)' != ''">$(AppxPackageDir)$(ProjectName)\</AppxPackageTestDir>
-    <AppxBundleAutoResourcePackageQualifiers>Scale|DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
   </PropertyGroup>
 
   <!-- Fixes xBind inside template inside style inside resource dictionary with code-behind class -->
@@ -194,47 +193,5 @@
   <!-- Remove uneeded files -->
   <Target Name="_AddWindowsInstallScriptToTestLayout">
     <Message Importance="High" Text="Remove _AddWindowsInstallScriptToTestLayout" />
-  </Target>
-  <!-- Override the entire thing because it copies more than what it needs... -->
-  <Target Name="_GenerateAppxSymbolPackage" Condition="'@(PDBPayload)' != ''" Inputs="$(MSBuildAllProjects);@(PDBPayload);@(FinalAppxManifest)" Outputs="$(AppxSymbolPackageOutput)" DependsOnTargets="_EnsurePdbCmfExeFullPath">
-    <ItemGroup>
-      <FilesToCopy Include="$(OutputPath)native\*.pdb" />
-    </ItemGroup>
-    <Message Importance="High" Text="Fix _GenerateAppxSymbolPackage" />
-    <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)" InputPdbs="@(FilesToCopy)" ProjectName="$(MSBuildProjectName)" StripPrivateSymbols="$(StripPrivateSymbols)" IntermediateSymbolRoot="$(AppxSymbolIntermediateDir)" AppxSymbolPackageOutput="$(AppxSymbolPackageOutput)" VsTelemetrySession="$(VsTelemetrySession)">
-      <Output TaskParameter="OutputPdbs" ItemName="OutputPdbFiles" />
-    </WinAppSdkGenerateAppxSymbolPackage>
-
-    <ItemGroup>
-      <FinalAppxSymbolPackageItem Include="$(AppxSymbolPackageOutput)" />
-      <PackagingFileWrites Include="@(FinalAppxSymbolPackageItem)" />
-      <FileWrites Include="@(OutputPdbFiles)" />
-      <PackagingDirectoryWrites Include="$(AppxSymbolIntermediateDir)" />
-    </ItemGroup>
-
-    <Message Text="$(MSBuildProjectName) -&gt; $(AppxSymbolPackageOutput)" />
-  </Target>
-  <!-- Override this entire thing... same as previous target -->
-  <Target Name="_GenerateAppxUploadSymbolPackage" Condition="'$(AppxSymbolPackageEnabled)' == 'true' and '@(PDBUploadPayload)' != '' and '$(BuildAppxUploadPackageForUap)' == 'true'" DependsOnTargets="_EnsurePdbCmfExeFullPath" Inputs="$(MSBuildAllProjects);@(PDBUploadPayload);@(FinalAppxManifest)" Outputs="$(AppxUploadSymbolPackageOutput)">
-    <ItemGroup>
-      <FilesToCopy Include="$(OutputPath)native\*.pdb" />
-    </ItemGroup>
-
-    <Message Importance="High" Text="Fix _GenerateAppxUploadSymbolPackage" />
-    <WinAppSdkGenerateAppxSymbolPackage MsPdbCmfExeFullpath="$(MsPdbCmfExeFullpath)" InputPdbs="@(FilesToCopy)" ProjectName="$(MSBuildProjectName)" IntermediateSymbolRoot="$(AppxUploadSymbolIntermediateDir)" StripPrivateSymbols="$(StripPrivateSymbols)" AppxSymbolPackageOutput="$(AppxUploadSymbolPackageOutput)" VsTelemetrySession="$(VsTelemetrySession)">
-      <Output TaskParameter="OutputPdbs" ItemName="OutputPdbUploadFiles" />
-    </WinAppSdkGenerateAppxSymbolPackage>
-
-    <ItemGroup>
-      <FinalAppxUploadSymbolPackageItem Include="$(AppxUploadSymbolPackageOutput)" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackagingFileWrites Include="@(FinalAppxUploadSymbolPackageItem)" />
-      <FileWrites Include="@(OutputPdbUploadFiles)" />
-      <PackagingDirectoryWrites Include="$(AppxUploadSymbolIntermediateDir)" />
-    </ItemGroup>
-
-    <Message Text="$(MSBuildProjectName) -&gt; $(AppxUploadSymbolPackageOutput)" />
   </Target>
 </Project>
