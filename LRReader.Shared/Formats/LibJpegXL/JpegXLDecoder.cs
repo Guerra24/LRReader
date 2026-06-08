@@ -41,30 +41,25 @@ public sealed class JpegXLDecoder : IImageDecoder
 				if (status != JxlDecoderStatus.JXL_DEC_FRAME)
 					throw new Exception();
 
-				byte[] buffer = new byte[info.xsize * info.ysize * info.num_color_channels];
-				fixed (byte* output = buffer)
+				var pixelFormat = new JxlPixelFormat
 				{
-					var pixelFormat = new JxlPixelFormat
-					{
-						data_type = JxlDataType.JXL_TYPE_UINT8,
-						endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
-						num_channels = info.num_color_channels,
-						align = 0
-					};
+					data_type = JxlDataType.JXL_TYPE_UINT8,
+					endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
+					num_channels = info.num_color_channels,
+					align = 0
+				};
 
-					nuint size = new();
-					Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
+				nuint size = new();
+				Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
 
-					if (info.xsize * info.ysize * sizeof(byte) * info.num_color_channels != size.ToUInt64())
-					{
-						throw new Exception();
-					}
-					if ((ulong)(buffer.Length * sizeof(byte)) != size.ToUInt64())
-					{
-						throw new Exception();
-					}
+				if (info.xsize * info.ysize * sizeof(byte) * info.num_color_channels != size.ToUInt64())
+					throw new Exception();
 
-					Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (nuint)(buffer.Length * sizeof(byte)));
+				var buffer = NativeMemory.Alloc(size);
+
+				try
+				{
+					Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, buffer, size);
 
 					status = Jxl.JxlDecoderProcessInput(decoder);
 
@@ -72,21 +67,22 @@ public sealed class JpegXLDecoder : IImageDecoder
 						throw new Exception();
 
 					var image = new Image<TPixel>(options.Configuration, (int)info.xsize, (int)info.ysize);
+					var span = new Span<byte>(buffer, (int)size);
 
 					if (image.Frames.RootFrame.DangerousTryGetSinglePixelMemory(out var pixels))
 					{
 						switch (info.num_color_channels)
 						{
 							case 1:
-								var r8 = MemoryMarshal.Cast<byte, L8>(buffer);
+								var r8 = MemoryMarshal.Cast<byte, L8>(span);
 								PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8, pixels.Span);
 								break;
 							case 3:
-								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(buffer);
+								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
 								PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
 								break;
 							case 4:
-								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(buffer);
+								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
 								PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
 								break;
 							default:
@@ -98,17 +94,17 @@ public sealed class JpegXLDecoder : IImageDecoder
 						switch (info.num_color_channels)
 						{
 							case 1:
-								var r8 = MemoryMarshal.Cast<byte, L8>(buffer);
+								var r8 = MemoryMarshal.Cast<byte, L8>(span);
 								for (int y = 0; y < image.Height; y++)
 									PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 								break;
 							case 3:
-								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(buffer);
+								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
 								for (int y = 0; y < image.Height; y++)
 									PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 								break;
 							case 4:
-								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(buffer);
+								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
 								for (int y = 0; y < image.Height; y++)
 									PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 								break;
@@ -123,6 +119,10 @@ public sealed class JpegXLDecoder : IImageDecoder
 						throw new Exception();
 
 					return image;
+				}
+				finally
+				{
+					NativeMemory.Free(buffer);
 				}
 			}
 			finally

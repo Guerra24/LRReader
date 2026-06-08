@@ -162,7 +162,7 @@ jobs:
           echo $env:LRR_VERSION >> version
           aws s3 cp ./version s3://$env:AWS_S3_BUCKET/projects/lrr/linux/nightly/version --no-progress --acl public-read
   buildUWP:
-    name: UWP Nightly
+    name: UWP
     runs-on: windows-2025-vs2026
     permissions:
       packages: read
@@ -260,34 +260,6 @@ jobs:
       with:
         name: ModernInstaller-${{ matrix.arch }}
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
-  buildInstaller:
-    name: Installer
-    runs-on: windows-2025-vs2026
-    permissions:
-      packages: read
-    strategy:
-      matrix:
-        arch: [x64, ARM64]
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v6
-    - name: Install .NET SDK
-      uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: 10.0.x
-    - name: Find MSBuild
-      uses: microsoft/setup-msbuild@v3
-    - name: Build
-      env:
-        APP_VERSION: Nightly
-      run: |
-        .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.Installer/Variables.cs"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v7
-      with:
-        name: Installer-${{ matrix.arch }}
-        path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
   purgeCache:
     name: Purge Nightly cache
     needs:

@@ -42,8 +42,7 @@
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<!-- THIS NEEDS TO SHOW UP -->
-				<StackPanel VerticalAlignment="Center" Orientation="Vertical" Visibility="Collapsed">
+				<StackPanel VerticalAlignment="Center" Orientation="Vertical" Visibility="{x:Bind Data.ShowError, Mode=OneWay}">
 					<TextBlock HorizontalAlignment="Center" Text="{x:Bind Data.Error, Mode=OneWay}" Margin="0,0,0,8" />
 					<!--<HyperlinkButton HorizontalAlignment="Center" Content="Open Settings" NavigateUri="ms-settings:developers" Margin="0,0,0,8" />-->
 				</StackPanel>
@@ -56,11 +55,12 @@
 				</StackPanel>
 			</Grid>
 		</Grid>
+		<!--
 		<Button Click="Button_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="8" Style="{StaticResource MiniButton}">
 			<Viewbox>
 				<SymbolIcon Symbol="Setting" />
 			</Viewbox>
-		</Button>
+		</Button>-->
 		<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="42">
 			<StackPanel Orientation="Horizontal" Spacing="32">
 				<FontIcon FontSize="40" Glyph="&#xE736;" />

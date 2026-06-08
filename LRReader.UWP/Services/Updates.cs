@@ -160,10 +160,7 @@ namespace LRReader.UWP.Services
 		{
 			try
 			{
-				// We can't use Current here cause it crashes on 1809...
-				var pm = new PackageManager();
-				var package = pm.FindPackageForUser(string.Empty, Current.Id.FullName);
-				var result = await package.CheckUpdateAvailabilityAsync();
+				var result = await Current.CheckUpdateAvailabilityAsync();
 				return new CheckForUpdatesResult { Result = result.Availability == PackageUpdateAvailability.Available || result.Availability == PackageUpdateAvailability.Required };
 			}
 			catch (Exception e)
@@ -175,6 +172,7 @@ namespace LRReader.UWP.Services
 
 		public override async Task<UpdateResult> DownloadAndInstall(IProgress<double> progress, CheckForUpdatesResult? check = null)
 		{
+			await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 			try
 			{
 				var pm = new PackageManager();

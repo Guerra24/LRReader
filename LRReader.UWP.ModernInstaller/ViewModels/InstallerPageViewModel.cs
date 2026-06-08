@@ -25,6 +25,9 @@ public partial class InstallerPageViewModel : ObservableObject
 	private bool _showButtons;
 
 	[ObservableProperty]
+	private bool _showError;
+
+	[ObservableProperty]
 	private bool _showProgress;
 
 	public InstallerPageViewModel(InstallerService installer)
@@ -42,16 +45,25 @@ public partial class InstallerPageViewModel : ObservableObject
 	private async Task Install()
 	{
 		InstallProgress = -1;
-		ShowButtons = false;
+		ShowButtons = ShowError = false;
 		ShowProgress = true;
-		var result = await Installer.Install(new Progress<DeploymentProgress>(progress => InstallProgress = progress.percentage));
-		if (result.IsRegistered)
+		try
 		{
-			await Installer.Launch();
+			var result = await Installer.Install(new Progress<DeploymentProgress>(progress => InstallProgress = progress.percentage));
+			if (result.IsRegistered)
+			{
+				await Installer.Launch();
+			}
+			else
+			{
+				ShowError = true;
+				Error = result.ErrorText;
+			}
 		}
-		else
+		catch (Exception e)
 		{
-			Error = result.ErrorText;
+			ShowError = true;
+			Error = string.Format("Unable to install app. Error: 0x{0:X}", e.HResult);
 		}
 		ShowProgress = false;
 		InstallState = await Installer.CheckAppState();

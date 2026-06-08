@@ -1,5 +1,4 @@
-﻿#if NET
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
@@ -54,5 +53,3 @@ public class CertUtil : IDisposable
 		return col != null && col.Count > 0;
 	}
 }
-
-#endif

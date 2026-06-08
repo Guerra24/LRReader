@@ -65,7 +65,7 @@ public class InstallerService
 			}
 		}
 		using var cts = new CancellationTokenSource();
-		var result = await PackageManager.AddPackageByAppInstallerFileAsync(AppInfo.AppInstallerUrl, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, PackageManager.GetDefaultPackageVolume()).AsTask(cts.Token, progress); ;
+		var result = await PackageManager.AddPackageByAppInstallerFileAsync(AppInfo.AppInstallerUrl, AddPackageByAppInstallerOptions.ForceTargetAppShutdown, PackageManager.GetDefaultPackageVolume()).AsTask(cts.Token, progress);
 		return new(result.IsRegistered, result.ErrorText);
 	}
 

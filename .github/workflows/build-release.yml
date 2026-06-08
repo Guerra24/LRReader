@@ -4,7 +4,7 @@ on:
     types: [published]
 jobs:
   buildAppxBundle:
-    name: UWP Sideload
+    name: UWP (Sideload)
     runs-on: windows-2025-vs2026
     permissions:
       packages: read
@@ -68,11 +68,9 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       run: aws s3 sync LRReader.UWP/AppPackages s3://${env:AWS_S3_BUCKET}/projects/lrr/$(Get-Content ".\version.txt") --no-progress --acl public-read --follow-symlinks
     - name: Upload to Release
-      uses: Guerra24/upload-to-release@v1
-      with:
-        name: LRReader.appinstaller
-        path: LRReader.UWP/AppPackages/LRReader.UWP.appinstaller
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh release upload ${{ github.event.release.tag_name }} ./LRReader.UWP/AppPackages/LRReader.UWP.appinstaller#LRReader.appinstaller
   buildModernInstaller:
     name: Modern Installer
     runs-on: windows-2025-vs2026
@@ -103,51 +101,13 @@ jobs:
       with:
         name: ModernInstaller-${{ matrix.arch }}
         path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
-#    - name: Upload to Release
-#      uses: Guerra24/upload-to-release@v1
-#      if: ${{ matrix.arch }} == 'x64'
-#      with:
-#        name: LRReader.exe
-#        path: LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe
-#        repo-token: ${{ secrets.GITHUB_TOKEN }}
-  buildInstaller:
-    name: Installer
-    runs-on: windows-2025-vs2026
-    permissions:
-      packages: read
-      contents: write
-    strategy:
-      matrix:
-        arch: [x64, ARM64]
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v6
-    - name: Install .NET SDK
-      uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: 10.0.x
-    - name: Find MSBuild
-      uses: microsoft/setup-msbuild@v3
-    - name: Build
-      run: |
-        [xml]$xmlDoc = Get-Content "./Util/Package.appxmanifest"
-        $env:APP_INSTALLER_URL="https://s3.guerra24.net/projects/lrr/$($xmlDoc.Package.Identity.Version)/LRReader.UWP.appinstaller"
-        $env:APP_VERSION="$($xmlDoc.Package.Identity.Version)"
-        .\Util\ConfigureInstaller.ps1 "$(Get-Location)/LRReader.UWP.Installer/Variables.cs"
-        MSBuild LRReader.UWP.Installer\LRReader.UWP.Installer.csproj -nologo -r -v:minimal /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:Deterministic=true /p:ContinuousIntegrationBuild=true
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v7
-      with:
-        name: Installer-${{ matrix.arch }}
-        path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
     - name: Upload to Release
-      uses: Guerra24/upload-to-release@v1
-      with:
-        name: LRReader.${{ matrix.arch }}.exe
-        path: LRReader.UWP.Installer/bin/${{ matrix.arch }}/Release/net472/LRReader.UWP.Installer.exe
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ matrix.arch == 'x64' }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh release upload ${{ github.event.release.tag_name }} ./LRReader.UWP.ModernInstaller/bin/publish/win-${{ matrix.arch }}/LRReader.UWP.ModernInstaller.exe#LRReader.exe
   buildStoreBundle:
-    name: UWP Store
+    name: UWP (Store)
     runs-on: windows-2025-vs2026
     permissions:
       packages: read
