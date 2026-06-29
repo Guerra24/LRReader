@@ -72,7 +72,7 @@ namespace LRReader.Avalonia.Views.Controls
 		protected override void OnPointerPressed(PointerPressedEventArgs e)
 		{
 			var point = e.GetCurrentPoint(this);
-			if (!point.Properties.IsLeftButtonPressed)
+			if (!point.Properties.IsLeftButtonPressed && point.Properties.PointerUpdateKind != PointerUpdateKind.MiddleButtonPressed)
 				return;
 			base.OnPointerPressed(e);
 			if (IsEnabled)
@@ -86,12 +86,12 @@ namespace LRReader.Avalonia.Views.Controls
 		protected override void OnPointerReleased(PointerReleasedEventArgs e)
 		{
 			var point = e.GetCurrentPoint(this);
-			if (point.Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonReleased)
+			if (point.Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonReleased && point.Properties.PointerUpdateKind != PointerUpdateKind.MiddleButtonReleased)
 				return;
 			base.OnPointerReleased(e);
 			if (IsEnabled && DateTime.Now - current < holdDuration)
 			{
-				var param = new GridViewExtParameter(!e.KeyModifiers.HasFlag(KeyModifiers.Control), CommandParameter!);
+				var param = new GridViewExtParameter(!e.KeyModifiers.HasFlag(KeyModifiers.Control) && point.Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonReleased, CommandParameter!);
 				if (Command != null && Command.CanExecute(param))
 					Command.Execute(param);
 				RaiseEvent(new ItemClickEventArgs(ClickEvent, this, DataContext!));
