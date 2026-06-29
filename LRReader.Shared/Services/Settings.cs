@@ -633,6 +633,7 @@ namespace LRReader.Shared.Services
 	{
 		Original, Web, Custom
 	}
+
 	public enum ArchiveStyle
 	{
 		Default, ThumbnailOnly, Compact

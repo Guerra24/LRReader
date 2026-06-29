@@ -270,12 +270,19 @@
 							MaxHeight="190" TextWrapping="Wrap"
 							Text="{x:Bind Data.Summary, Mode=TwoWay}" />
 						<Grid>
-							<ToggleButton
-								Padding="4.5" HorizontalAlignment="Right" VerticalAlignment="Top"
-								Content="&#xE8AB;"
-								FontFamily="{StaticResource SymbolThemeFontFamily}"
-								IsChecked="{x:Bind Data.UseTextTags, Mode=TwoWay}"
-								IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+							<StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Top">
+								<Button
+									Padding="4.5"
+									Content="&#xE75C;"
+									FontFamily="{StaticResource SymbolThemeFontFamily}"
+									Command="{x:Bind Data.ClearTagsCommand}"/>
+								<ToggleButton
+									Padding="4.5"
+									Content="&#xE8AB;"
+									FontFamily="{StaticResource SymbolThemeFontFamily}"
+									IsChecked="{x:Bind Data.UseTextTags, Mode=TwoWay}"
+									IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+							</StackPanel>
 							<TextBox
 								x:Name="TextTags" x:Uid="/Tabs/ArchiveEdit/Tags" MinHeight="80"
 								IsEnabled="{x:Bind Data.Saving, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"

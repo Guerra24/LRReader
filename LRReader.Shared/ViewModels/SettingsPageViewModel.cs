@@ -29,7 +29,7 @@ namespace LRReader.Shared.ViewModels
 
 		public readonly string LRReader = "LRReader";
 
-		public SettingsService SettingsManager { get; private set; }
+		public SettingsService SettingsManager { get; }
 		public Version Version => Platform.Version;
 		public Version MinVersion => Updates.MIN_VERSION;
 		public Version MaxVersion => Updates.MAX_VERSION;

@@ -264,6 +264,8 @@ namespace LRReader.Shared.ViewModels
 			Tags = BuildTags();
 		}
 
+		[RelayCommand]
+		private void ClearTags() => ReloadTagsList(Tags = "");
 
 		private T ColorTag<T>(T tag) where T : EditableTag
 		{
