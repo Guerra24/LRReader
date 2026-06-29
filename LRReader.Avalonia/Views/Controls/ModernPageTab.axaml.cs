@@ -29,7 +29,9 @@ public partial class ModernPageTab : UserControl, IDisposable
 	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
 	public Type? Initial
 	{
+#pragma warning disable IL2073
 		get => GetValue(InitialProperty);
+#pragma warning restore IL2073
 		set => SetValue(InitialProperty, value);
 	}
 

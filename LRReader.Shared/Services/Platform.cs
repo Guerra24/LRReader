@@ -74,6 +74,7 @@ namespace LRReader.Shared.Services
 
 		public abstract void GoToPage(Pages page, PagesTransition transition, object? parameter = null);
 
+		[return: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
 		public Type GetPage(Pages page) => Pages[page].Type;
 
 		public void MapTransitionToType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(PagesTransition transition) where T : class => Transitions.Add(transition, new AotDictionaryHelper(typeof(T)));
