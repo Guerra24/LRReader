@@ -21,7 +21,8 @@ namespace LRReader.Shared.Providers
 				rq.AddParameter("category", category);
 			rq.AddParameter("sortby", sortby);
 			rq.AddParameter("order", order.String());
-			//rq.AddParameter("groupby_tanks", "true");
+			if (Api.ControlFlags.V0980)
+				rq.AddParameter("groupby_tanks", "false");
 
 			var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
 

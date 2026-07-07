@@ -6,9 +6,8 @@
     <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>x64;ARM64;ARM32</Platforms>
-    <!--<PublishAot>true</PublishAot>-->
-    <RuntimeIdentifiers>android-x64;android-arm64;android-arm</RuntimeIdentifiers>
+    <Platforms>ARM64</Platforms>
+    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
     <ApplicationId>net.guerra24.lrreader</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <Version>1.9.6.0</Version>

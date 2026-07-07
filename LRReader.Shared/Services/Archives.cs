@@ -77,7 +77,7 @@ namespace LRReader.Shared.Services
 					var index = Files.GetFile($"{MetadataPath}/Index-v4.json");
 					var tags = Files.GetFile($"{MetadataPath}/Tags-v2.json");
 					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v2.json");
-					var categories = Files.GetFile($"{MetadataPath}/Categories-v2.json");
+					//var categories = Files.GetFile($"{MetadataPath}/Categories-v2.json");
 					Archives = JsonSerializer.Deserialize<ConcurrentDictionary<string, Archive>>(await index, JsonSettings.Options) ?? new();
 					TagStats = JsonSerializer.Deserialize<List<TagStats>>(await tags, JsonSettings.Options) ?? new();
 					Namespaces = JsonSerializer.Deserialize<List<string>>(await namespaces, JsonSettings.Options) ?? new();
@@ -135,40 +135,48 @@ namespace LRReader.Shared.Services
 		{
 			Directory.CreateDirectory(path);
 
-			if (!Settings.UseIncrementalCaching)
+			var archives = Task.Run(async () =>
 			{
-				var archives = await ArchivesProvider.GetArchives();
-				if (archives != null)
+				if (!Settings.UseIncrementalCaching)
 				{
-					var temp = new ConcurrentDictionary<string, Archive>(archives.ToDictionary(c => c.arcid, c => c));
+					var archives = await ArchivesProvider.GetArchives();
+					if (archives != null)
+					{
+						var temp = new ConcurrentDictionary<string, Archive>(archives.ToDictionary(c => c.arcid, c => c));
 
-					/*var tanks = await TankoubonsProvider.GetTankoubons(-1);
+						/*var tanks = await TankoubonsProvider.GetTankoubons(-1);
 
-					if (tanks != null)
-						foreach (var tank in tanks.result)
-						{
-							var metadata = await ArchivesProvider.GetArchive(tank.id);
-							if (metadata != null)
-								temp[tank.id] = metadata;
-						}*/
+						if (tanks != null)
+							foreach (var tank in tanks.result)
+							{
+								var metadata = await ArchivesProvider.GetArchive(tank.id);
+								if (metadata != null)
+									temp[tank.id] = metadata;
+							}*/
 
-					await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
-					Archives = temp;
+						await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
+						Archives = temp;
+					}
 				}
-			}
+			});
 
-			var tagStats = await DatabaseProvider.GetTagStats();
-			if (tagStats != null)
+			var tags = Task.Run(async () =>
 			{
-				await Files.StoreFile($"{path}/Tags-v2.json", JsonSerializer.Serialize(tagStats, JsonSettings.Options));
-				foreach (var t in tagStats)
+				var tagStats = await DatabaseProvider.GetTagStats();
+				if (tagStats != null)
 				{
-					if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
-						Namespaces.Add(t.@namespace);
-					TagStats.Add(t);
+					await Files.StoreFile($"{path}/Tags-v2.json", JsonSerializer.Serialize(tagStats, JsonSettings.Options));
+					foreach (var t in tagStats)
+					{
+						if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
+							Namespaces.Add(t.@namespace);
+						TagStats.Add(t);
+					}
+					await Files.StoreFile($"{path}/Namespaces-v2.json", JsonSerializer.Serialize(Namespaces, JsonSettings.Options));
 				}
-				await Files.StoreFile($"{path}/Namespaces-v2.json", JsonSerializer.Serialize(Namespaces, JsonSettings.Options));
-			}
+			});
+
+			await Task.WhenAll(archives, tags);
 			/*var resultC = await CategoriesProvider.GetCategories();
 			if (resultC != null)
 			{

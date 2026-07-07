@@ -96,6 +96,7 @@ namespace LRReader.Shared.Services
 		public bool ProgressTracking { get; private set; } = false;
 
 		public bool V0940 { get; private set; }
+		public bool V0980 { get; private set; }
 
 		public bool BrokenCache { get; private set; }
 
@@ -106,6 +107,7 @@ namespace LRReader.Shared.Services
 			BrokenCache = true;
 
 			V0940 = serverInfo.version >= new Version(0, 9, 40);
+			V0980 = serverInfo.version >= new Version(0, 9, 80);
 
 			ProgressTracking = serverInfo.server_tracks_progress;
 		}
