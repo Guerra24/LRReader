@@ -8,14 +8,15 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid Margin="{TemplateBinding Padding}">
+                <Grid Name="LayoutRoot" Margin="{TemplateBinding Padding}" Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <Grid Name="TabContainerGrid"
-                          Background="{TemplateBinding Background}">
+                          Background="{TemplateBinding Background}"
+                          XYFocus.NavigationModes="Enabled">
 
                         <Grid.ColumnDefinitions>
                             <!-- x:Name="LeftContentColumn -->
@@ -31,9 +32,10 @@
                         <ContentPresenter Grid.Column="0"
                                           Name="LeftContentPresenter"
                                           Content="{TemplateBinding TabStripHeader}"
-                                          ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"/>
+                                          ContentTemplate="{TemplateBinding TabStripHeaderTemplate}"
+                                          Margin="0,0,3,0" />
 
-                        <uip:FATabViewListView Grid.Column="1"
+                        <uip:FATabViewListView Grid.Column="1" HorizontalAlignment="Stretch"
                                                Name="TabListView"
                                                Padding="0 8"
                                                ItemsSource="{TemplateBinding TabItemsSource}"
@@ -41,7 +43,7 @@
                                                CanReorderItems="{TemplateBinding CanReorderTabs}"
                                                CanDragItems="{TemplateBinding CanDragTabs}"
                                                DragDrop.AllowDrop="{TemplateBinding AllowDropTabs}"
-                                               Theme="{StaticResource ModernTabViewList}"/>
+                                               Theme="{StaticResource ModernTabViewList}" />
 
                         <Border Grid.Column="2" Width="1" Height="16" Margin="3,0,3,0" VerticalAlignment="Center" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
 
@@ -208,59 +210,75 @@
         </Setter>
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="LayoutRootBorder"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        Padding="{TemplateBinding Padding}">
-                    <Grid Name="LayoutRoot">
-                        <Border Name="TabContainerBorder"
-                                TemplatedControl.IsTemplateFocusTarget="True">
-                            <Grid Name="TabContainer">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                <Grid Name="LayoutRoot" UseLayoutRounding="False">
+                    <Grid.ColumnDefinitions>
+                        <!--x:name=LeftColumn-->
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <!--x:name=RightColumn-->
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                                <Viewbox Name="IconBox"
-                                         MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
-                                         MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
-                                         Margin="{DynamicResource TabViewItemHeaderIconMargin}"
-                                         IsVisible="False">
-                                    <ContentControl Name="IconControl"
-                                                    Content="{Binding TabViewTemplateSettings.IconElement, RelativeSource={RelativeSource TemplatedParent}}"
-                                                    KeyboardNavigation.IsTabStop="False"
-                                                    Foreground="{TemplateBinding Foreground}"/>
-                                </Viewbox>
+                    <Border Name="TabDragVisualContainer"
+                            Grid.Column="1"
+                            IsVisible="False"
+                            Background="{DynamicResource TabViewItemHeaderDragBackground}"
+                            BorderBrush="{DynamicResource TabViewBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                    </Border>
 
-                                <!-- If we template bind the ContentPresenter's Content property to the TabViewItem.Header property
-                                we unfortunately run into the following issue if the header is [null] or empty:
-                                The TabViewItem.Content property will be implictly bound to the Content property of the ContentPresenter.
-                                To prevent this, we explicitly set a default empty content here and update the content in code behind. -->
+                    <Border Name="TabContainerBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Padding="{TemplateBinding Padding}"
+                            TemplatedControl.IsTemplateFocusTarget="True"
+                            Grid.Column="1">
+                        <Grid Name="TabContainer">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                                <ContentPresenter Name="ContentPresenter"
-                                                  Grid.Column="1"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Content=""
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                  FontWeight="{TemplateBinding FontWeight}"
-                                                  FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-                                                  Foreground="{TemplateBinding Foreground}"
-                                                  Padding="0 4"/>
+                            <Viewbox Name="IconBox"
+                                        MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                                        MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                                        Margin="{DynamicResource TabViewItemHeaderIconMargin}"
+                                        IsVisible="False">
+                                <ContentControl Name="IconControl"
+                                                Content="{Binding TabViewTemplateSettings.IconElement, RelativeSource={RelativeSource TemplatedParent}}"
+                                                KeyboardNavigation.IsTabStop="False"
+                                                Foreground="{TemplateBinding Foreground}"/>
+                            </Viewbox>
 
-                                <Button Name="CloseButton"
-                                        Grid.Column="2"
-                                        Margin="{DynamicResource TabViewItemHeaderCloseMargin}"
-                                        Content="&#xE711;"
-                                        Theme="{StaticResource TabViewCloseButtonTheme}"
-                                        KeyboardNavigation.IsTabStop="False"/>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </Border>
+                            <!-- If we template bind the ContentPresenter's Content property to the TabViewItem.Header property
+                            we unfortunately run into the following issue if the header is [null] or empty:
+                            The TabViewItem.Content property will be implictly bound to the Content property of the ContentPresenter.
+                            To prevent this, we explicitly set a default empty content here and update the content in code behind. -->
+
+                            <ContentPresenter Name="ContentPresenter"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Content=""
+                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                FontWeight="{TemplateBinding FontWeight}"
+                                                FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Padding="0 4"/>
+
+                            <Button Name="CloseButton"
+                                    Grid.Column="2"
+                                    Margin="{DynamicResource TabViewItemHeaderCloseMargin}"
+                                    Content="&#xE711;"
+                                    Theme="{StaticResource TabViewCloseButtonTheme}"
+                                    KeyboardNavigation.IsTabStop="False"/>
+                        </Grid>
+                    </Border>
+                </Grid>
             </ControlTemplate>
         </Setter>
 
