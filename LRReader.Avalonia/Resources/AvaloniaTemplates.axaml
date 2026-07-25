@@ -319,6 +319,11 @@
                 <Setter Property="IsVisible" Value="False" />
             </Style>
         </Style>
+
+        <Style Selector="^:dragging /template/ Grid#LayoutRoot">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+
     </ControlTheme>
 
     <ControlTheme x:Key="TextBlockButtonStyle" TargetType="Button">
