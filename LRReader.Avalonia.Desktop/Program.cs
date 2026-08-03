@@ -20,6 +20,7 @@ static class Program
 	public static AppBuilder BuildAvaloniaApp() =>
 		AppBuilder.Configure<App>()
 		.UsePlatformDetect()
+		.UseWaylandWithFallback()
 		.With(new SkiaOptions
 		{
 			MaxGpuResourceSizeBytes = 268435456 // 256mib

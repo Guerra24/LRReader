@@ -12,7 +12,8 @@
     <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Wayland" Version="12.1.1" />
     <PackageReference Include="AvifNet.Natives" Version="1.4.1" />
   </ItemGroup>
   <ItemGroup>

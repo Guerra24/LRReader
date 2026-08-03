@@ -24,12 +24,12 @@
     <PackageReference Include="AvifNet" Version="0.0.0-alpha.0.6" />
     <PackageReference Include="CommunityToolkit.Common" Version="8.4.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="Caching" Version="5.0.0" />
+    <PackageReference Include="Caching" Version="5.0.1" />
     <PackageReference Include="JxlNet" Version="0.11.2.2" />
     <PackageReference Include="KeyedSemaphores" Version="6.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
     <PackageReference Include="RestSharp" Version="114.0.0" />
-    <PackageReference Include="Sentry" Version="6.7.0" />
+    <PackageReference Include="Sentry" Version="6.8.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="4.0.0" />
   </ItemGroup>
 

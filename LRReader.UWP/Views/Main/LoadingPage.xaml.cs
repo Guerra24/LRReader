@@ -79,10 +79,6 @@ namespace LRReader.UWP.Views.Main
 				CertUtil.Close();
 			}
 #endif
-			await Task.Yield();
-
-			await Service.Files.StoreFile(Path.Combine(Service.Files.Local, "startup.txt"), (DateTime.Now - System.Diagnostics.Process.GetCurrentProcess().StartTime).Milliseconds.ToString());
-
 			await ViewModel.Startup();
 		}
 
