@@ -43,6 +43,14 @@ This version is in an in-development/experimental state and does not contain all
 
 Nightly AppImage builds are available for [x86_64](https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.x86_64.AppImage) and [aarch64](https://s3.guerra24.net/projects/lrr/linux/nightly/LRReader.aarch64.AppImage). Self-updater included.
 
+### Image formats
+
+Support for TGA, Gif, EXR, WebP, BMP, JPEG and PNG images is included. You can add support for Avif and JpegXL by installing the OS package for each one.
+
+ArchLinux `pacman -S libjxl libavif`
+
+Debian 13 `apt install libjxl0.11 libavif16`
+
 # Usage
 
 ## Profile
