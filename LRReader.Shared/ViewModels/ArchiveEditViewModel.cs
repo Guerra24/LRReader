@@ -188,6 +188,10 @@ namespace LRReader.Shared.ViewModels
 								OnPropertyChanged("PluginTagsList");
 							}
 						}
+						if (!string.IsNullOrEmpty(result.data.title))
+							Title = result.data.title;
+						if (!string.IsNullOrEmpty(result.data.summary))
+							Summary = result.data.summary;
 					}
 					else
 					{

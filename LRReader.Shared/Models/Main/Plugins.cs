@@ -61,6 +61,8 @@ namespace LRReader.Shared.Models.Main
 	public class PluginResultData
 	{
 		public string new_tags { get; set; } = null!;
+		public string? title { get; set; }
+		public string? summary { get; set; }
 	}
 
 	public class UsePluginResult : GenericApiResult
