@@ -275,7 +275,7 @@
 									Padding="4.5"
 									Content="&#xE75C;"
 									FontFamily="{StaticResource SymbolThemeFontFamily}"
-									Command="{x:Bind Data.ClearTagsCommand}"/>
+									Command="{x:Bind Data.ClearTagsCommand}" />
 								<ToggleButton
 									Padding="4.5"
 									Content="&#xE8AB;"
@@ -310,6 +310,30 @@
 								SelectedItem="{x:Bind Data.CurrentPlugin, Mode=TwoWay}" />
 							<Button x:Uid="/Tabs/ArchiveEdit/RunPlugin" VerticalAlignment="Bottom" Command="{x:Bind Data.UsePluginCommand}" />
 						</StackPanel>
+						<Grid Visibility="{x:Bind Data.NewTitle, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" >
+							<Button
+								ToolTipService.ToolTip="Set Title"
+								Padding="4.5" HorizontalAlignment="Right"
+								VerticalAlignment="Top"
+								Command="{x:Bind Data.SetTitleCommand}"
+								Content="&#xE710;"
+								FontFamily="{StaticResource SymbolThemeFontFamily}" />
+							<TextBox x:Uid="/Tabs/ArchiveEdit/Title" IsReadOnly="True" Text="{x:Bind Data.NewTitle, Mode=OneWay}" />
+						</Grid>
+						<Grid Visibility="{x:Bind Data.NewSummary, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" >
+							<Button
+								ToolTipService.ToolTip="Set Summary"
+								Padding="4.5" HorizontalAlignment="Right"
+								VerticalAlignment="Top"
+								Command="{x:Bind Data.SetSummaryCommand}"
+								Content="&#xE710;"
+								FontFamily="{StaticResource SymbolThemeFontFamily}" />
+							<TextBox
+								x:Uid="/Tabs/ArchiveEdit/Summary" IsReadOnly="True"
+								ScrollViewer.VerticalScrollBarVisibility="Auto"
+								MaxHeight="190" TextWrapping="Wrap" Text="{x:Bind Data.NewSummary, Mode=OneWay}"
+								Visibility="{x:Bind Data.NewSummary, Mode=OneWay, Converter={StaticResource StringVisibilityConverter}}" />
+						</Grid>
 						<Grid x:Name="PluginTags" Visibility="{x:Bind Data.PluginTagsList, Mode=OneWay, Converter={StaticResource EmptyCollectionToObjectConverter}}">
 							<Button
 								x:Uid="/Tabs/ArchiveEdit/AddAllTags" Padding="4.5" HorizontalAlignment="Right"

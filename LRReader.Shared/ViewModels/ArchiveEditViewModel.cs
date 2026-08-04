@@ -17,10 +17,7 @@ namespace LRReader.Shared.ViewModels
 		private readonly ImagesService Images;
 		private readonly PlatformService Platform;
 
-		public AsyncRelayCommand SaveCommand { get; }
 		public AsyncRelayCommand UsePluginCommand { get; }
-		public AsyncRelayCommand ReloadCommand { get; }
-		public AsyncRelayCommand ChangeThumbnailCommand { get; }
 
 		private RelayCommand<EditableTag> TagCommand { get; }
 		public RelayCommand AddAllTags { get; }
@@ -37,11 +34,19 @@ namespace LRReader.Shared.ViewModels
 		private object? _thumbnail;
 
 		[ObservableProperty]
+		private string _newTitle = "";
+		[ObservableProperty]
+		private string _newSummary = "";
+
+		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(SaveCommand))]
 		[NotifyCanExecuteChangedFor(nameof(TagCommand))]
 		[NotifyCanExecuteChangedFor(nameof(UsePluginCommand))]
 		[NotifyCanExecuteChangedFor(nameof(ReloadCommand))]
 		[NotifyCanExecuteChangedFor(nameof(AddAllTags))]
+		[NotifyCanExecuteChangedFor(nameof(ClearTagsCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SetTitleCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SetSummaryCommand))]
 		private bool _saving;
 
 		public ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
@@ -59,6 +64,8 @@ namespace LRReader.Shared.ViewModels
 
 		public string Arg = "";
 
+		private bool ModifyCommandCanExecute => !Saving;
+
 		public ArchiveEditViewModel(SettingsService settings, ImageProcessingService imageProcessing, ImagesService images, PlatformService platformService)
 		{
 			ImageProcessing = imageProcessing;
@@ -67,10 +74,7 @@ namespace LRReader.Shared.ViewModels
 
 			UseTextTags = !settings.UseVisualTags;
 
-			SaveCommand = new AsyncRelayCommand(SaveArchive, () => !Saving);
 			UsePluginCommand = new AsyncRelayCommand(UsePlugin, () => !Saving && Plugins.Count > 0);
-			ReloadCommand = new AsyncRelayCommand(ReloadArchive, () => !Saving);
-			ChangeThumbnailCommand = new AsyncRelayCommand(ChangeThumbnail, () => !Saving);
 
 			TagCommand = new RelayCommand<EditableTag>(HandleTagCommand, (_) => !Saving);
 			AddAllTags = new RelayCommand(AddPluginTags, () => !Saving && Plugins.Count > 0 && PluginTagsList.Count > 0);
@@ -91,7 +95,8 @@ namespace LRReader.Shared.ViewModels
 			await ReloadPlugins();
 		}
 
-		private async Task ReloadArchive()
+		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
+		private async Task Reload()
 		{
 			try
 			{
@@ -111,6 +116,7 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
+		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
 		private async Task ChangeThumbnail()
 		{
 			var dialog = Platform.CreateDialog<IThumbnailPickerDialog>(Dialog.ThumbnailPicker, Archive.arcid);
@@ -123,7 +129,8 @@ namespace LRReader.Shared.ViewModels
 			}
 		}
 
-		private async Task SaveArchive()
+		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
+		private async Task Save()
 		{
 			try
 			{
@@ -146,6 +153,8 @@ namespace LRReader.Shared.ViewModels
 						Tags = BuildTags();
 					PluginTagsList.Clear();
 					OnPropertyChanged("PluginTagsList");
+					NewTitle = "";
+					NewSummary = "";
 					AddAllTags.NotifyCanExecuteChanged();
 					OnPropertyChanged("Archive");
 				}
@@ -163,10 +172,12 @@ namespace LRReader.Shared.ViewModels
 				return;
 			try
 			{
-				await SaveArchive();
+				await Save();
 				Saving = true;
 				PluginTagsList.Clear();
 				OnPropertyChanged("PluginTagsList");
+				NewTitle = "";
+				NewSummary = "";
 				var result = await ServerProvider.UsePlugin(CurrentPlugin.@namespace, Archive.arcid, Arg);
 				if (result != null)
 				{
@@ -188,10 +199,10 @@ namespace LRReader.Shared.ViewModels
 								OnPropertyChanged("PluginTagsList");
 							}
 						}
-						if (!string.IsNullOrEmpty(result.data.title))
-							Title = result.data.title;
+						if (!string.IsNullOrEmpty(result.data.title) && result.data.title != Title)
+							NewTitle = result.data.title;
 						if (!string.IsNullOrEmpty(result.data.summary))
-							Summary = result.data.summary;
+							NewSummary = result.data.summary;
 					}
 					else
 					{
@@ -215,6 +226,8 @@ namespace LRReader.Shared.ViewModels
 				return;
 			}
 			PluginTagsList.Clear();
+			NewTitle = "";
+			NewSummary = "";
 			Plugins.Clear();
 			plugins.ForEach(Plugins.Add);
 			CurrentPlugin = Plugins.ElementAt(0);
@@ -228,6 +241,18 @@ namespace LRReader.Shared.ViewModels
 			foreach (var tag in PluginTagsList)
 				if (!TagsList.Contains(tag))
 					TagsList.Insert(TagsList.Count - 1, ColorTag(new EditableTag { Tag = tag.Tag, Command = TagCommand }));
+		}
+
+		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
+		private void SetTitle()
+		{
+			Title = NewTitle;
+		}
+
+		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
+		private void SetSummary()
+		{
+			Summary = NewSummary;
 		}
 
 		private string BuildTags()
@@ -268,7 +293,7 @@ namespace LRReader.Shared.ViewModels
 			Tags = BuildTags();
 		}
 
-		[RelayCommand]
+		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
 		private void ClearTags() => ReloadTagsList(Tags = "");
 
 		private T ColorTag<T>(T tag) where T : EditableTag

@@ -161,7 +161,11 @@ public partial class BulkEditorViewModel : ObservableObject
 				a.BuildVirtualTags();
 				a.tags = a.BuildStringTags();
 				a.UpdateTags();
-				await ArchivesProvider.UpdateArchive(a.arcid, tags: a.tags);
+				if (!string.IsNullOrEmpty(result.data.title) && result.data.title != a.title)
+					a.title = result.data.title;
+				if (!string.IsNullOrEmpty(result.data.summary))
+					a.summary = result.data.summary;
+				await ArchivesProvider.UpdateArchive(a.arcid, a.title, a.tags, a.summary);
 			}
 		}
 		items.Clear();
