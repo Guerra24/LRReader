@@ -244,16 +244,10 @@ namespace LRReader.Shared.ViewModels
 		}
 
 		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
-		private void SetTitle()
-		{
-			Title = NewTitle;
-		}
+		private void SetTitle() => Title = NewTitle;
 
 		[RelayCommand(CanExecute = nameof(ModifyCommandCanExecute))]
-		private void SetSummary()
-		{
-			Summary = NewSummary;
-		}
+		private void SetSummary() => Summary = NewSummary;
 
 		private string BuildTags()
 		{

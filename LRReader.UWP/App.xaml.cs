@@ -127,17 +127,18 @@ namespace LRReader.UWP
 
 		private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			// Let it go down otherwise we get stuck and that's worse
 			var exception = e.Exception;
-			if (exception is LayoutCycleException)
-				return;
-			e.Handled = true;
 			exception.Data[Mechanism.HandledKey] = false;
 			exception.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
 
 			SentrySdk.CaptureException(exception);
 
 			SentrySdk.Flush(TimeSpan.FromSeconds(2));
+
+			// Let it go down otherwise we get stuck and that's worse
+			if (exception is LayoutCycleException)
+				return;
+			e.Handled = true;
 
 			Dispatcher.Run(async () => await Platform.OpenGenericDialog("Internal Error", "Continue", content: exception.Message));
 		}

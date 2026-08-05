@@ -84,7 +84,7 @@ public partial class DefaultElementAnimator : ElementAnimator
 		batch.Completed += delegate
 		{
 			visual.Opacity = 1.0f;
-			OnHideAnimationCompleted(element); // System.AccessViolationException
+			OnHideAnimationCompleted(element);
 		};
 	}
 

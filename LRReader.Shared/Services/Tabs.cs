@@ -50,7 +50,7 @@ namespace LRReader.Shared.Services
 		{
 			var newTab = (ICustomTab)Activator.CreateInstance(Tabs[tab].Type, args)!;
 			newTab.Tab = tab;
-			var current = GetTabFromId(newTab.CustomTabId);
+			var current = GetTabFromId(newTab.CustomTabId); // This NEEDS a rework ASAP
 			if (current != null)
 			{
 				if (switchToTab)
