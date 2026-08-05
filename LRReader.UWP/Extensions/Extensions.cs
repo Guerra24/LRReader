@@ -397,6 +397,17 @@ namespace LRReader.UWP.Extensions
 		}
 	}
 
+	[MarkupExtensionReturnType(ReturnType = typeof(VirtualKey))]
+	public partial class IntToVKExtension : MarkupExtension
+	{
+		public int Key { get; set; }
+
+		protected override object ProvideValue()
+		{
+			return (VirtualKey)Key;
+		}
+	}
+
 	public static class PackageVersionExtension
 	{
 		public static Version ToVersion(this PackageVersion version) => new Version(version.Major, version.Minor, version.Build, version.Revision);

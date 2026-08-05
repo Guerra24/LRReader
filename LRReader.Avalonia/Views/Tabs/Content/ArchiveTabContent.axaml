@@ -128,6 +128,11 @@
 							Grid.Column="2" Width="1" Margin="6,4,6,4"
 							Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
 						<Button
+                            Content="{ext:LocalizedString Key=/Tabs/Archive/Prev/Content}"
+							Click="PrevArchive"
+							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
+							IsVisible="{Binding CanGoPrev, Mode=OneWay}" />
+                        <Button
                             Content="{ext:LocalizedString Key=/Tabs/Archive/Next/Content}"
 							Click="NextArchive"
 							IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"

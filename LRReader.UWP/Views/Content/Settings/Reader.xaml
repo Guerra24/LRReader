@@ -115,9 +115,14 @@
 						SpinButtonPlacementMode="Inline"
 						Value="{x:Bind Data.SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput x:Uid="/Settings/Reader/NextArchive" Glyph="&#xE761;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
-					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.OpenNextArchive, Mode=TwoWay}" />
-				</controls:ModernInput>
+				<controls:ModernExpander x:Uid="/Settings/Reader/NextArchive" Glyph="&#xE761;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsExpanded="{x:Bind Data.SettingsManager.OpenPrevOrNext, Mode=OneWay}">
+					<controls:ModernExpander.Input>
+						<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.OpenPrevOrNext, Mode=TwoWay}" />
+					</controls:ModernExpander.Input>
+					<controls:ModernInput x:Uid="/Settings/Reader/PrevNextArchiveLastPage">
+						<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.OpenPrevOrNextLastPage, Mode=TwoWay}" />
+					</controls:ModernInput>
+				</controls:ModernExpander>
 				<controls:ModernInput x:Uid="/Settings/Reader/ScrollToChange" Glyph="&#xECE7;" IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<ToggleSwitch IsEnabled="{x:Bind Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsOn="{x:Bind Data.SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
 				</controls:ModernInput>

@@ -496,10 +496,13 @@
     <value>Удалить профиль</value>
   </data>
   <data name="Reader.NextArchive.Description" xml:space="preserve">
-    <value>Переход к следующему архиву в конце</value>
+    <value>Switch to next/previous archive at the end/start</value>
   </data>
   <data name="Reader.NextArchive.Title" xml:space="preserve">
-    <value>Открыть следующий архив</value>
+    <value>Open next or previous archive</value>
+  </data>
+  <data name="Reader.PrevNextArchiveLastPage.Title" xml:space="preserve">
+    <value>Open last page when going backwards</value>
   </data>
   <data name="Profiles.AutoLogin.Title" xml:space="preserve">
     <value>Подключить при запуске</value>

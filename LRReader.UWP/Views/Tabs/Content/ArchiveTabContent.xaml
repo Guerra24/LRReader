@@ -146,6 +146,11 @@
 										Grid.Column="2" Width="1" Margin="6,4,6,4"
 										Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
 									<Button
+										x:Uid="/Tabs/Archive/Prev"
+										Click="{x:Bind PrevArchive}"
+										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
+										Visibility="{x:Bind Data.CanGoPrev, Mode=OneWay}" />
+									<Button
 										x:Uid="/Tabs/Archive/Next"
 										Click="{x:Bind NextArchive}"
 										IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}"
@@ -162,6 +167,8 @@
 				<GridView.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" Invoked="Refresh_Invoked" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 					<util:IgnoreFocusKeyboardAccelerator Key="N" Invoked="Next_Invoked" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+					<util:IgnoreFocusKeyboardAccelerator Key="{ext:IntToVK Key=190}" Invoked="Next_Invoked" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
+					<util:IgnoreFocusKeyboardAccelerator Key="{ext:IntToVK Key=188}" Invoked="Prev_Invoked" IsEnabled="{x:Bind Data.ControlsEnabled, Mode=OneWay}" />
 					<KeyboardAccelerator
 						Key="R"
 						ext:KeyboardAcceleratorExt.Command="{x:Bind RandomCommand}"

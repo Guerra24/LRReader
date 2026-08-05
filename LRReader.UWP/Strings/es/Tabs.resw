@@ -168,6 +168,9 @@
   <data name="Archive.Next.Content" xml:space="preserve">
     <value>Siguiente archivo</value>
   </data>
+  <data name="Archive.Prev.Content" xml:space="preserve">
+    <value>Previous archive</value>
+  </data>
   <data name="Archive.Pages.Text" xml:space="preserve">
     <value>Páginas</value>
   </data>

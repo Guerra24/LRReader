@@ -20,9 +20,11 @@ namespace LRReader.Shared.ViewModels
 
 		[ObservableProperty]
 		[NotifyPropertyChangedFor("CanGoNext")]
+		[NotifyPropertyChangedFor("CanGoPrev")]
 		private List<Archive> _group = new List<Archive>();
 
 		public bool CanGoNext => Group.Count != 0 && Group.ElementAtOrDefault(Group.IndexOf(Archive) + 1) != null;
+		public bool CanGoPrev => Group.Count != 0 && Group.ElementAtOrDefault(Group.IndexOf(Archive) - 1) != null;
 
 		[ObservableProperty]
 		private bool _loadingImages = false;
@@ -309,16 +311,17 @@ namespace LRReader.Shared.ViewModels
 			_loading = false;
 		}
 
-		public async Task NextArchive()
+		public async Task PrevNextArchive(int dir)
 		{
 			if (Group.Count == 0)
 				return;
 			int i = Group.IndexOf(Archive);
-			var next = Group.ElementAtOrDefault(i + 1);
+			var next = Group.ElementAtOrDefault(i + dir);
 			if (next == null)
 				return;
 			Archive = next;
 			OnPropertyChanged("CanGoNext");
+			OnPropertyChanged("CanGoPrev");
 			await Reload(true);
 		}
 
@@ -327,6 +330,7 @@ namespace LRReader.Shared.ViewModels
 			Group = new List<Archive>();
 			Archive = archive;
 			OnPropertyChanged("CanGoNext");
+			OnPropertyChanged("CanGoPrev");
 			await Reload(true);
 		}
 

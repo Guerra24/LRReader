@@ -496,10 +496,13 @@
     <value>移除配置文件</value>
   </data>
   <data name="Reader.NextArchive.Description" xml:space="preserve">
-    <value>最后切换到下一个存档</value>
+    <value>Switch to next/previous archive at the end/start</value>
   </data>
   <data name="Reader.NextArchive.Title" xml:space="preserve">
-    <value>打开下一个存档</value>
+    <value>Open next or previous archive</value>
+  </data>
+  <data name="Reader.PrevNextArchiveLastPage.Title" xml:space="preserve">
+    <value>Open last page when going backwards</value>
   </data>
   <data name="Profiles.AutoLogin.Title" xml:space="preserve">
     <value>启动时连接</value>

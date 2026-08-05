@@ -168,6 +168,9 @@
   <data name="Archive.Next.Content" xml:space="preserve">
     <value>下一个存档</value>
   </data>
+  <data name="Archive.Prev.Content" xml:space="preserve">
+    <value>Previous archive</value>
+  </data>
   <data name="Archive.Pages.Text" xml:space="preserve">
     <value>Pages</value>
   </data>

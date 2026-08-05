@@ -57,9 +57,16 @@
 						SpinButtonPlacementMode="Inline"
 						Value="{Binding SettingsManager.KeyboardScroll, Mode=TwoWay}" />
 				</controls:ModernInput>
-				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/NextArchive/Title}" Description="{ext:LocalizedString /Settings/Reader/NextArchive/Description}" Glyph="&#xE761;" IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
-					<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.OpenNextArchive, Mode=TwoWay}" />
-				</controls:ModernInput>
+				<controls:ModernExpander Title="{ext:LocalizedString /Settings/Reader/NextArchive/Title}" Description="{ext:LocalizedString /Settings/Reader/NextArchive/Description}" Glyph="&#xE761;" IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsExpanded="{Binding SettingsManager.OpenPrevOrNext, Mode=OneWay}">
+                    <controls:ModernExpander.Input>
+                        <ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.OpenPrevOrNext, Mode=TwoWay}" />
+                    </controls:ModernExpander.Input>
+                    <controls:ModernExpander.Items>
+                        <controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/PrevNextArchiveLastPage/Title}">
+						    <ToggleSwitch IsEnabled="{Binding $parent[local:Reader].Data.SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding $parent[local:Reader].Data.SettingsManager.OpenPrevOrNextLastPage, Mode=TwoWay}" />
+					    </controls:ModernInput>
+                    </controls:ModernExpander.Items>
+                </controls:ModernExpander>
 				<controls:ModernInput Title="{ext:LocalizedString /Settings/Reader/ScrollToChange/Title}" Description="{ext:LocalizedString /Settings/Reader/ScrollToChange/Description}" Glyph="&#xECE7;" IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
 					<ToggleSwitch IsEnabled="{Binding SettingsManager.UseVerticalReader, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" IsChecked="{Binding SettingsManager.ScrollToChangePage, Mode=TwoWay}" />
 				</controls:ModernInput>

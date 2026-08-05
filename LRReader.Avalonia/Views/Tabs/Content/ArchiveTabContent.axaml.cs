@@ -264,8 +264,24 @@ public partial class ArchiveTabContent : UserControl
 			return;
 		_transition = true;
 		await HideReader();
-		await Data.NextArchive();
+		await Data.PrevNextArchive(1);
 		await ShowReader();
+		Data.PageCounter = 0;
+		_transition = false;
+	}
+
+	private async void PrevArchive(object? sender, RoutedEventArgs e) => await PrevArchiveAsync();
+
+	private async Task PrevArchiveAsync()
+	{
+		if (!Data.CanGoPrev)
+			return;
+		if (_transition)
+			return;
+		_transition = true;
+		await HideReader();
+		await Data.PrevNextArchive(-1);
+		await ShowReader(Service.Settings.OpenPrevOrNextLastPage ? Data.Pages - 1 : 0);
 		Data.PageCounter = 0;
 		_transition = false;
 	}
@@ -452,6 +468,12 @@ public partial class ArchiveTabContent : UserControl
 			case Key.Escape:
 				CloseReader();
 				break;
+			case Key.OemPeriod:
+				NextArchive(null, null!);
+				break;
+			case Key.OemComma:
+				PrevArchive(null, null!);
+				break;
 		}
 	}
 
@@ -623,7 +645,7 @@ public partial class ArchiveTabContent : UserControl
 	{
 		if (Data.UseVerticalReader || _transition)
 			return;
-		if (Service.Settings.OpenNextArchive && Data.ReaderContent.Page + 1 >= Data.Pages)
+		if (Service.Settings.OpenPrevOrNext && Data.ReaderContent.Page + 1 >= Data.Pages)
 		{
 			await NextArchiveAsync();
 			return;
@@ -641,6 +663,11 @@ public partial class ArchiveTabContent : UserControl
 	{
 		if (Data.UseVerticalReader || _transition)
 			return;
+		if (Service.Settings.OpenPrevOrNext && Data.ReaderContent.Page == 0)
+		{
+			await PrevArchiveAsync();
+			return;
+		}
 		if (Data.ReaderIndex > 0)
 		{
 			--Data.ReaderIndex;

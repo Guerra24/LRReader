@@ -496,10 +496,13 @@
     <value>Eliminar perfil</value>
   </data>
   <data name="Reader.NextArchive.Description" xml:space="preserve">
-    <value>Pasar al siguiente archivo al final</value>
+    <value>Switch to next/previous archive at the end/start</value>
   </data>
   <data name="Reader.NextArchive.Title" xml:space="preserve">
-    <value>Abrir siguiente archivo</value>
+    <value>Open next or previous archive</value>
+  </data>
+  <data name="Reader.PrevNextArchiveLastPage.Title" xml:space="preserve">
+    <value>Open last page when going backwards</value>
   </data>
   <data name="Profiles.AutoLogin.Title" xml:space="preserve">
     <value>Conectarse al inicio</value>

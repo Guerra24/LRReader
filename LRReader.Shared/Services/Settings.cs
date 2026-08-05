@@ -191,10 +191,14 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectLocal(false);
 			set => SettingsStorage.StoreObjectLocal(value);
 		}
-		public bool OpenNextArchive
+		public bool OpenPrevOrNext
 		{
 			get => SettingsStorage.GetObjectRoamed(false);
-			set => SettingsStorage.StoreObjectRoamed(value);
+			set
+			{
+				SettingsStorage.StoreObjectRoamed(value);
+				OnPropertyChanged();
+			}
 		}
 		public bool AutoLogin
 		{
@@ -362,6 +366,11 @@ namespace LRReader.Shared.Services
 			get => (SessionMode)SettingsStorage.GetObjectRoamed((int)SessionMode.Ask);
 			set => SettingsStorage.StoreObjectRoamed((int)value);
 		}
+		public bool OpenPrevOrNextLastPage
+		{
+			get => SettingsStorage.GetObjectRoamed(false);
+			set => SettingsStorage.StoreObjectRoamed(value);
+		}
 
 		public static readonly int CurrentLocalVersion = 4;
 		public int SettingsVersionLocal
@@ -369,7 +378,7 @@ namespace LRReader.Shared.Services
 			get => SettingsStorage.GetObjectLocal(CurrentLocalVersion);
 			set => SettingsStorage.StoreObjectLocal(value);
 		}
-		public static readonly int CurrentRoamedVersion = 2;
+		public static readonly int CurrentRoamedVersion = 3;
 		public int SettingsVersionRoamed
 		{
 			get => SettingsStorage.GetObjectRoamed(CurrentRoamedVersion);
@@ -512,6 +521,11 @@ namespace LRReader.Shared.Services
 							Profiles = JsonSerializer.Deserialize<ObservableCollection<ServerProfile>>(profiles, JsonSettings.Options) ?? new ObservableCollection<ServerProfile>();
 						}
 						SettingsStorage.DeleteObjectRoamed("Profiles");
+						break;
+					case 2:
+						var old = SettingsStorage.GetObjectRoamed(false, "OpenNextArchive");
+						OpenPrevOrNext = old;
+						SettingsStorage.DeleteObjectRoamed("OpenNextArchive");
 						break;
 				}
 				if (roamedVersion >= CurrentRoamedVersion - 1)

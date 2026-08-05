@@ -246,8 +246,24 @@ namespace LRReader.UWP.Views.Tabs.Content
 				return;
 			_transition = true;
 			await HideReader();
-			await Data.NextArchive();
+			await Data.PrevNextArchive(1);
 			await ShowReader();
+			Data.PageCounter = 0;
+			_transition = false;
+		}
+
+		private async void PrevArchive() => await PrevArchiveAsync();
+
+		private async Task PrevArchiveAsync()
+		{
+			if (!Data.CanGoPrev)
+				return;
+			if (_transition)
+				return;
+			_transition = true;
+			await HideReader();
+			await Data.PrevNextArchive(-1);
+			await ShowReader(Service.Settings.OpenPrevOrNextLastPage ? Data.Pages - 1 : 0);
 			Data.PageCounter = 0;
 			_transition = false;
 		}
@@ -349,6 +365,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 			args.Handled = true;
 			await NextArchiveAsync();
 		}
+		private async void Prev_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			args.Handled = true;
+			await PrevArchiveAsync();
+		}
 
 		private void ImagesGrid_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -433,6 +454,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 					break;
 				case VirtualKey.Escape:
 					CloseReader();
+					break;
+				case (VirtualKey)190:
+					NextArchive();
+					break;
+				case (VirtualKey)188:
+					PrevArchive();
 					break;
 			}
 		}
@@ -605,7 +632,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (Data.UseVerticalReader || _transition)
 				return;
-			if (Service.Settings.OpenNextArchive && Data.ReaderContent.Page + 1 >= Data.Pages)
+			if (Service.Settings.OpenPrevOrNext && Data.ReaderContent.Page + 1 >= Data.Pages)
 			{
 				await NextArchiveAsync();
 				return;
@@ -623,6 +650,11 @@ namespace LRReader.UWP.Views.Tabs.Content
 		{
 			if (Data.UseVerticalReader || _transition)
 				return;
+			if (Service.Settings.OpenPrevOrNext && Data.ReaderContent.Page == 0)
+			{
+				await PrevArchiveAsync();
+				return;
+			}
 			if (Data.ReaderIndex > 0)
 			{
 				--Data.ReaderIndex;
