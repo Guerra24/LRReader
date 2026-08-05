@@ -175,6 +175,7 @@
 
   <PropertyGroup>
     <AppxPackageDir>$(AppxPackageDirInProjectDir)</AppxPackageDir>
+    <AppxUploadPackageDir>$(AppxPackageDirInProjectDir)</AppxUploadPackageDir>
     <AppxPackageTestDir Condition="'$(AppxPackageDir)' != ''">$(AppxPackageDir)$(ProjectName)\</AppxPackageTestDir>
   </PropertyGroup>
 
