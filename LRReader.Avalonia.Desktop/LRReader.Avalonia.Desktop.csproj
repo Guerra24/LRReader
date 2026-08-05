@@ -6,7 +6,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>1.9.6.0</Version>
+    <Version>1.9.7.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="logo.ico" />

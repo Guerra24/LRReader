@@ -82,9 +82,10 @@ Scrolling at top/bottom changes page accordingly, prev/next.<br>
 `Right`/`Left` to change page.<br>
 `Space` to scroll down.<br>
 `Esc` to close the reader.<br>
-`N` to open next archive.<br>
-`Click` or `Ctrl + R` to open random archive.<br>
-`Shift + Click` or `Shift + R` to open *new* archive.<br>
+`N` or `.` to open the next archive.<br>
+`,` to open the previous archive.<br>
+`Click` or `Ctrl + R` to open a random archive.<br>
+`Shift + Click` or `Shift + R` to open a *new* archive.<br>
 
 
 Click on the left/right of the window to change pages.<br>
