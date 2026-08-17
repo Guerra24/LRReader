@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Primitives;
+﻿using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using FluentAvalonia.UI.Controls;
 using LRReader.Shared.Services;
@@ -12,16 +13,14 @@ namespace LRReader.Avalonia.Views.Controls
 
 		private Button? TogglePaneButton;
 		private SplitView? SplitView;
+		private ContentPresenter? RightContentPresenter;
 		//public StackedNotificationsBehavior Notifications { get; private set; } = null!;
 
 		public ModernTabView()
 		{
-			if (Service.Settings.UseVerticalTabs)
-			{
-				Loaded += ModernTabView_Loaded;
-				Unloaded += ModernTabView_Unloaded;
-				SizeChanged += ModernTabView_SizeChanged;
-			}
+			Loaded += ModernTabView_Loaded;
+			Unloaded += ModernTabView_Unloaded;
+			SizeChanged += ModernTabView_SizeChanged;
 		}
 
 		protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -30,7 +29,14 @@ namespace LRReader.Avalonia.Views.Controls
 
 			TogglePaneButton = e.NameScope.Find<Button>("TogglePaneButton");
 			SplitView = e.NameScope.Find<SplitView>("SplitView");
+			RightContentPresenter = e.NameScope.Find<ContentPresenter>("RightContentPresenter");
 			//Notifications = (StackedNotificationsBehavior)GetTemplateChild("Notifications");
+		}
+
+		public object? FakeTabStripFooter
+		{
+			get => GetValue(FakeTabStripFooterProperty);
+			set => SetValue(FakeTabStripFooterProperty, value);
 		}
 
 		public object? TabTools
@@ -58,11 +64,14 @@ namespace LRReader.Avalonia.Views.Controls
 
 		private void ModernTabView_Loaded(object? sender, RoutedEventArgs e)
 		{
-			TogglePaneButton!.Click += PaneToggle_Click;
-			SplitView!.PaneOpening += SplitView_PaneOpening;
-			SplitView!.PaneClosed += SplitView_PaneClosed;
+			TogglePaneButton?.Click += PaneToggle_Click;
+			SplitView?.PaneOpening += SplitView_PaneOpening;
+			SplitView?.PaneClosed += SplitView_PaneClosed;
+
 			if (Bounds.Width < SPLIT)
 				IsPaneOpen = false;
+
+			RightContentPresenter?.Width = 339; // This should be dynamic but ALAS here we are
 		}
 
 		private void SplitView_PaneOpening(object? sender, CancelRoutedEventArgs args)
@@ -79,11 +88,14 @@ namespace LRReader.Avalonia.Views.Controls
 
 		private void ModernTabView_Unloaded(object? sender, RoutedEventArgs e)
 		{
-			TogglePaneButton!.Click -= PaneToggle_Click;
+			TogglePaneButton?.Click -= PaneToggle_Click;
 		}
 
 		private void ModernTabView_SizeChanged(object? sender, SizeChangedEventArgs e)
 		{
+			if (!Service.Settings.UseVerticalTabs)
+				return;
+
 			/*if (e.NewSize.Width >= SPLIT)
 			{
 				if (e.PreviousSize.Width < SPLIT)
@@ -97,6 +109,7 @@ namespace LRReader.Avalonia.Views.Controls
 			}*/
 		}
 
+		public static readonly StyledProperty<object?> FakeTabStripFooterProperty = AvaloniaProperty.Register<ModernTabView, object?>("FakeTabStripFooter");
 		public static readonly StyledProperty<object?> TabToolsProperty = AvaloniaProperty.Register<ModernTabView, object?>("TabTools");
 		public static readonly StyledProperty<object?> ExtraFooterProperty = AvaloniaProperty.Register<ModernTabView, object?>("ExtraFooter");
 		public static readonly StyledProperty<bool> IsPaneOpenProperty = AvaloniaProperty.Register<ModernTabView, bool>("IsPaneOpen", true);

@@ -8,15 +8,13 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid Name="LayoutRoot" Margin="{TemplateBinding Padding}" Background="Transparent">
+                <Grid Name="LayoutRoot" Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Grid Name="TabContainerGrid"
-                          Background="{TemplateBinding Background}"
-                          XYFocus.NavigationModes="Enabled">
+                    <Grid Name="TabContainerGrid" Background="Transparent" XYFocus.NavigationModes="Enabled">
 
                         <Grid.ColumnDefinitions>
                             <!-- x:Name="LeftContentColumn -->
@@ -37,7 +35,7 @@
 
                         <uip:FATabViewListView Grid.Column="1" HorizontalAlignment="Stretch"
                                                Name="TabListView"
-                                               Padding="0 8"
+                                               Padding="{TemplateBinding Padding}"
                                                ItemsSource="{TemplateBinding TabItemsSource}"
                                                ItemTemplate="{TemplateBinding TabItemTemplate}"
                                                CanReorderItems="{TemplateBinding CanReorderTabs}"
@@ -50,7 +48,7 @@
                         <Grid Grid.Column="3" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" MinWidth="50" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -67,18 +65,14 @@
                                     <Setter Property="MaxHeight" Value="16" />
                                 </Style>
                             </Grid.Styles>
-                            <ContentPresenter Name="RightContentPresenter"
-                                              Content="{TemplateBinding TabStripFooter}"
-                                              ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
-                            <ContentPresenter Grid.Column="2"
-                                              Content="{TemplateBinding TabTools}"
-                                              ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                            <ContentPresenter Content="{TemplateBinding FakeTabStripFooter}" />
+                            <ContentPresenter x:Name="ToolsContentPresenter"
+                                              Grid.Column="2"
+                                              Content="{TemplateBinding TabTools}" />
                             <Border Grid.Column="3" Width="1" Height="16"
                                     Margin="3,0,3,0" VerticalAlignment="Center"
                                     Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
-                            <ContentPresenter Grid.Column="4"
-                                              Content="{TemplateBinding ExtraFooter}"
-                                              ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                            <ContentPresenter Grid.Column="4" Content="{TemplateBinding ExtraFooter}" />
                         </Grid>
 
                         <Border IsVisible="False"
@@ -92,6 +86,13 @@
                                        HorizontalAlignment="Right" />
                         </Border>
                     </Grid>
+
+                    <!-- This is a massive hack just to get TabView to behave correctly MAN WHY -->
+                        <ContentPresenter
+                            x:Name="RightContentPresenter"
+                            Content="{TemplateBinding TabStripFooter}"
+                            ContentTemplate="{TemplateBinding TabStripFooterTemplate}"
+                            HorizontalAlignment="Right" />
 
                     <ContentPresenter Name="TabContentPresenter" Grid.Row="1" />
 
@@ -244,10 +245,10 @@
                             </Grid.ColumnDefinitions>
 
                             <Viewbox Name="IconBox"
-                                        MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
-                                        MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
-                                        Margin="{DynamicResource TabViewItemHeaderIconMargin}"
-                                        IsVisible="False">
+                                     MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                                     MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                                     Margin="{DynamicResource TabViewItemHeaderIconMargin}"
+                                     IsVisible="False">
                                 <ContentControl Name="IconControl"
                                                 Content="{Binding TabViewTemplateSettings.IconElement, RelativeSource={RelativeSource TemplatedParent}}"
                                                 KeyboardNavigation.IsTabStop="False"
@@ -260,15 +261,15 @@
                             To prevent this, we explicitly set a default empty content here and update the content in code behind. -->
 
                             <ContentPresenter Name="ContentPresenter"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Content=""
-                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                FontWeight="{TemplateBinding FontWeight}"
-                                                FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-                                                Foreground="{TemplateBinding Foreground}"
-                                                Padding="0 4"/>
+                                              Grid.Column="1"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content=""
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              FontWeight="{TemplateBinding FontWeight}"
+                                              FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              Padding="0 4"/>
 
                             <Button Name="CloseButton"
                                     Grid.Column="2"
@@ -321,7 +322,7 @@
         </Style>
 
         <Style Selector="^:dragging /template/ Grid#LayoutRoot">
-            <Setter Property="Opacity" Value="0" />
+            <Setter Property="Opacity" Value="1" />
         </Style>
 
     </ControlTheme>

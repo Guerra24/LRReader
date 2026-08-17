@@ -46,7 +46,7 @@
 			<muxc:TabView.TabStripHeader>
 				<Grid x:Name="TabViewStartHeader" />
 			</muxc:TabView.TabStripHeader>
-			<muxc:TabView.TabStripFooter>
+			<controls:ModernTabView.FakeTabStripFooter>
 				<StackPanel VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">
 					<Button x:Uid="/Pages/HostTabPage/Bookmarks" Command="{x:Bind Data.OpenTabCommand}" CommandParameter="{helpers:EnumValue Type=services:Tab, Member=Bookmarks}">
 						<Viewbox>
@@ -76,7 +76,7 @@
 						</Viewbox>
 					</Button>
 				</StackPanel>
-			</muxc:TabView.TabStripFooter>
+			</controls:ModernTabView.FakeTabStripFooter>
 			<controls:ModernTabView.TabTools>
 				<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" VerticalAlignment="Center" IsTabStop="False" />
 			</controls:ModernTabView.TabTools>

@@ -23,12 +23,15 @@
                                 TabCloseRequested="TabView_TabCloseRequested"
                                 TabItemsSource="{Binding TabItems}"
                                 TabWidthMode="SizeToContent"
+                                Padding="0 8"
                                 Theme="{StaticResource ModernTabView}"
-                                CanDragTabs="False">
+                                CanDragTabs="False"
+                                CanReorderTabs="False"
+                                AllowDropTabs="False">
             <ui:FATabView.TabStripHeader>
                 <Grid x:Name="TabViewStartHeader" />
             </ui:FATabView.TabStripHeader>
-            <ui:FATabView.TabStripFooter>
+            <controls:ModernTabView.FakeTabStripFooter>
                 <StackPanel Orientation="Horizontal" Spacing="2">
                     <Button ToolTip.Tip="{ext:LocalizedString Key=/Pages/HostTabPage/Bookmarks/ToolTipService/ToolTip}" Command="{Binding OpenTabCommand}" CommandParameter="{ext:EnumValue Type=services:Tab, Member=Bookmarks}">
                         <Viewbox>
@@ -51,7 +54,7 @@
                         </Viewbox>
                     </Button>
                 </StackPanel>
-            </ui:FATabView.TabStripFooter>
+            </controls:ModernTabView.FakeTabStripFooter>
             <controls:ModernTabView.TabTools>
                 <ContentControl Content="{Binding CurrentTab.CustomTabControl, Mode=OneWay}" />
             </controls:ModernTabView.TabTools>
