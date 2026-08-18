@@ -46,7 +46,7 @@ namespace LRReader.Avalonia.Views.Main
 			if (insets != null)
 			{
 				insets.SafeAreaChanged += TitleBar_LayoutMetricsChanged;
-				TabViewControl.Padding = insets.SafeAreaPadding;
+				TabViewControl.Margin = insets.SafeAreaPadding;
 			}
 
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -86,7 +86,7 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void HostTabPage_BackRequested(object? sender, RoutedEventArgs e) => e.Handled = Data.CurrentTab!.BackRequested();
 
-		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e) => TabViewControl.Padding = e.SafeAreaPadding;
+		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e) => TabViewControl.Margin = e.SafeAreaPadding;
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);
 

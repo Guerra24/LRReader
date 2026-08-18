@@ -24,10 +24,7 @@
                                 TabItemsSource="{Binding TabItems}"
                                 TabWidthMode="SizeToContent"
                                 Padding="0 8"
-                                Theme="{StaticResource ModernTabView}"
-                                CanDragTabs="False"
-                                CanReorderTabs="False"
-                                AllowDropTabs="False">
+                                Theme="{StaticResource ModernTabView}">
             <ui:FATabView.TabStripHeader>
                 <Grid x:Name="TabViewStartHeader" />
             </ui:FATabView.TabStripHeader>

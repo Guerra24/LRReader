@@ -154,7 +154,7 @@
                         <Border Name="ScrollDecreaseButtonContainer"
                                 IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
                                 Padding="{DynamicResource TabViewItemLeftScrollButtonContainerPadding}"
-                                VerticalAlignment="Bottom">
+                                VerticalAlignment="Center">
                             <RepeatButton Name="ScrollDecreaseButton"
                                           Delay="50"
                                           Interval="100"
@@ -182,7 +182,7 @@
                                 IsVisible="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SVVTBC}}"
                                 Grid.Column="2"
                                 Padding="{DynamicResource TabViewItemRightScrollButtonContainerPadding}"
-                                VerticalAlignment="Bottom">
+                                VerticalAlignment="Center">
                             <RepeatButton Name="ScrollIncreaseButton"
                                           Delay="50"
                                           Interval="100"
