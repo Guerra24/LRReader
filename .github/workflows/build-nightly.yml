@@ -34,7 +34,7 @@ jobs:
         ./Util/Version-Android.ps1 "C:\Program Files\Git\mingw64\bin\git.exe"
         dotnet publish LRReader.Avalonia.Android\LRReader.Avalonia.Android.csproj -nologo -v:minimal -c Release --self-contained true -p:Version=$env:LRR_VERSION -p:NightlyAndroid=true -p:ApplicationVersion=$env:LRR_BUILD -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../guerra24.keystore -p:AndroidSigningKeyAlias=guerra24 -p:AndroidSigningKeyPass=env:KEYSTORE_PASSWORD -p:AndroidSigningStorePass=env:KEYSTORE_PASSWORD
         Remove-Item -Path "./guerra24.keystore.gpg","./guerra24.keystore"
-        Set-Location "./LRReader.Avalonia.Android/bin/Release/net10.0-android/publish"
+        Set-Location "./LRReader.Avalonia.Android/bin/Release/net11.0-android/publish"
         echo $env:LRR_BUILD >> version
         Get-ChildItem "*Signed.apk" | foreach { echo (Get-FileHash  $_).Hash.ToLower() >> sha256.txt }
     - name: Configure AWS credentials
@@ -47,12 +47,12 @@ jobs:
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       run: |
-        aws s3 cp ./LRReader.Avalonia.Android/bin/Release/net10.0-android/publish/ s3://${env:AWS_S3_BUCKET}/projects/lrr/android/nightly/ --recursive --exclude "*" --include "*Signed.apk" --include "*.txt" --include "version" --no-progress --acl public-read
+        aws s3 cp ./LRReader.Avalonia.Android/bin/Release/net11.0-android/publish/ s3://${env:AWS_S3_BUCKET}/projects/lrr/android/nightly/ --recursive --exclude "*" --include "*Signed.apk" --include "*.txt" --include "version" --no-progress --acl public-read
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
         name: LRReader.Avalonia.Android
-        path: LRReader.Avalonia.Android/bin/Release/net10.0-android/publish/*Signed.apk
+        path: LRReader.Avalonia.Android/bin/Release/net11.0-android/publish/*Signed.apk
   buildAvaloniaUnpackaged:
     name: Avalonia (Desktop Testing)
     runs-on: windows-2025-vs2026
