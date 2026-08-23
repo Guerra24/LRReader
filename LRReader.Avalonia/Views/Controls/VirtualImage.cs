@@ -131,30 +131,51 @@ public partial class VirtualImage : Control
 		Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
 	}
 
-	public async Task SetSourceAsync(byte[] bytes)
+	public async Task SetSourceAsync(byte[] bytes, CancellationToken cancellationToken = default)
 	{
 		var decodePixelWidth = DecodePixelWidth;
 		var decodePixelHeight = DecodePixelHeight;
 
-		var results = await Task.Run(() =>
+		var results = await Task.Run<(Image<Rgba32>? source, SKImage? image)>(() =>
 		{
+			if (cancellationToken.IsCancellationRequested)
+				return (null, null);
+
 			var source = SixLabors.ImageSharp.Image.Load<Rgba32>(bytes);
 			var scaledSource = source;
 
-			if (decodePixelWidth != 0 || decodePixelHeight != 0)
-				scaledSource = source.Clone(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
+			try
+			{
+				if (cancellationToken.IsCancellationRequested)
+				{
+					source.Dispose();
+					return (null, null);
+				}
 
-			var img = scaledSource.ToSKImage();
+				if (decodePixelWidth != 0 || decodePixelHeight != 0)
+					scaledSource = source.Clone(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
 
-			if (scaledSource != source)
-				scaledSource.Dispose();
+				if (cancellationToken.IsCancellationRequested)
+				{
+					if (scaledSource != source)
+						source.Dispose();
+					return (null, null);
+				}
 
-			return (source, image: img);
+				var img = scaledSource.ToSKImage();
+
+				return (source, image: img);
+			}
+			finally
+			{
+				if (scaledSource != source)
+					scaledSource.Dispose();
+			}
 		});
 
 		Source = results.source;
 		Image = results.image;
-		Visual?.SendHandlerMessage(results.image);
+		Visual?.SendHandlerMessage(results.image!);
 	}
 
 	private async void ReloadDisplaySource()

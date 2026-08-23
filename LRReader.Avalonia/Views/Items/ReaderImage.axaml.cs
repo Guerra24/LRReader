@@ -9,45 +9,61 @@ namespace LRReader.Avalonia.Views.Items;
 public partial class ReaderImage : UserControl
 {
 
-	//private static AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseIn);
-	//private static AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseOut);
+	//private static readonly AnimationBuilder FadeIn = AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseIn);
+	//private static readonly AnimationBuilder FadeOut = AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromMilliseconds(80), easingMode: EasingMode.EaseOut);
 
 	public bool disableAnimation = true;
 	private int _height, _width;
 
-	private SemaphoreSlim decodePixel = new SemaphoreSlim(1);
+	private readonly SemaphoreSlim decodePixel = new(1);
+	private CancellationTokenSource Cts = new();
 
 	public ReaderImage()
 	{
 		InitializeComponent();
 	}
 
-	public async Task ChangePage(ReaderImageSet set)
+	public async Task ChangePage(ReaderImageSet set, CancellationToken cancellationToken = default)
 	{
 		await decodePixel.WaitAsync();
-		var images = await Task.WhenAll(Images.GetImageCached(set.LeftImage), Images.GetImageCached(set.RightImage));
-		/*var imageBitmaps = */
-		await Task.WhenAll(ImageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage), ImageProcessing.ByteToBitmap(images[1], _width, _height, RightImage));
-		//LeftImage.Source = imageBitmaps[0] as Bitmap;
-		//RightImage.Source = imageBitmaps[1] as Bitmap;
-		var sizes = await Task.WhenAll(Images.GetImageSizeCached(set.LeftImage), Images.GetImageSizeCached(set.RightImage));
-		var size = new Size(Math.Max(sizes[0].Width, sizes[1].Width), Math.Max(sizes[0].Height, sizes[1].Height));
-		LeftImage.Height = RightImage.Height = 0;
-		LeftImage.Width = RightImage.Width = 0;
+		try
+		{
+			if (cancellationToken.IsCancellationRequested)
+				return;
+			var images = await Task.WhenAll(Images.GetImageCached(set.LeftImage, cancellationToken: cancellationToken), Images.GetImageCached(set.RightImage, cancellationToken: cancellationToken));
+			if (cancellationToken.IsCancellationRequested)
+				return;
+			/*var imageBitmaps = */
+			await Task.WhenAll(ImageProcessing.ByteToBitmap(images[0], _width, _height, LeftImage, cancellationToken), ImageProcessing.ByteToBitmap(images[1], _width, _height, RightImage, cancellationToken));
+			if (cancellationToken.IsCancellationRequested)
+				return;
+			//LeftImage.Source = imageBitmaps[0] as Bitmap;
+			//RightImage.Source = imageBitmaps[1] as Bitmap;
+			var sizes = await Task.WhenAll(Images.GetImageSizeCached(set.LeftImage, cancellationToken: cancellationToken), Images.GetImageSizeCached(set.RightImage, cancellationToken: cancellationToken));
+			if (cancellationToken.IsCancellationRequested)
+				return;
+			var size = new Size(Math.Max(sizes[0].Width, sizes[1].Width), Math.Max(sizes[0].Height, sizes[1].Height));
+			LeftImage.Height = RightImage.Height = 0;
+			LeftImage.Width = RightImage.Width = 0;
 
-		if (LeftImage.Source != null)
-		{
-			var aspect0 = (float)sizes[0].Width / (float)sizes[0].Height;
-			LeftImage.Width = Math.Round(size.Height * aspect0);
-			LeftImage.Height = size.Height;
+			if (LeftImage.Source != null)
+			{
+				var aspect0 = (float)sizes[0].Width / (float)sizes[0].Height;
+				var height = set.Height == 0 ? size.Height : set.Height;
+				LeftImage.Width = Math.Round(height * aspect0);
+				LeftImage.Height = height;
+			}
+			if (RightImage.Source != null)
+			{
+				var aspect1 = (float)sizes[1].Width / (float)sizes[1].Height;
+				RightImage.Width = Math.Round(size.Height * aspect1);
+				RightImage.Height = size.Height;
+			}
 		}
-		if (RightImage.Source != null)
+		finally
 		{
-			var aspect1 = (float)sizes[1].Width / (float)sizes[1].Height;
-			RightImage.Width = Math.Round(size.Height * aspect1);
-			RightImage.Height = size.Height;
+			decodePixel.Release();
 		}
-		decodePixel.Release();
 	}
 
 	public async Task FadeOutPage()
@@ -108,6 +124,11 @@ public partial class ReaderImage : UserControl
 	private async void UserControl_DataContextChanged(object? sender, EventArgs e)
 	{
 		if (DataContext is ReaderImageSet set)
-			await ChangePage(set);
+		{
+			Cts.Cancel();
+			Cts.Dispose();
+			Cts = new();
+			await ChangePage(set, Cts.Token);
+		}
 	}
 }

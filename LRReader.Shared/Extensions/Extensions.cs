@@ -86,6 +86,7 @@ public static class ActionExtensions
 		return arg =>
 		{
 			cancelTokenSource?.Cancel();
+			cancelTokenSource?.Dispose();
 			cancelTokenSource = new CancellationTokenSource();
 
 			Task.Delay(milliseconds, cancelTokenSource.Token)
@@ -94,6 +95,27 @@ public static class ActionExtensions
 					if (t.IsCompletedSuccessfully)
 					{
 						func(arg);
+					}
+				});
+		};
+	}
+
+	public static Action<T1, T2, T3> Debounce<T1, T2, T3>(this Action<T1, T2, T3> func, int milliseconds = 300)
+	{
+		CancellationTokenSource? cancelTokenSource = null;
+
+		return (arg1, arg2, arg3) =>
+		{
+			cancelTokenSource?.Cancel();
+			cancelTokenSource?.Dispose();
+			cancelTokenSource = new CancellationTokenSource();
+
+			Task.Delay(milliseconds, cancelTokenSource.Token)
+				.ContinueWith(t =>
+				{
+					if (t.IsCompletedSuccessfully)
+					{
+						func(arg1, arg2, arg3);
 					}
 				});
 		};

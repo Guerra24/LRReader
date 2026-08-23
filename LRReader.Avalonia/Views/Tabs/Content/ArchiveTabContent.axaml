@@ -8,6 +8,7 @@
              xmlns:controls="using:LRReader.Avalonia.Views.Controls"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:services="using:LRReader.Shared.Services"
+             xmlns:main="using:LRReader.Shared.Models.Main"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              Loaded="UserControl_Loaded"
              x:Class="LRReader.Avalonia.Views.Tabs.Content.ArchiveTabContent"
@@ -185,20 +186,21 @@
 				    PointerWheelChanged="ReaderControl_PointerWheelChanged"
 				    SizeChanged="ReaderControl_SizeChanged"
                     Focusable="True"
+                    Background="Transparent"
                     ClipToBounds="False">
                     <!-- ManipulationDelta="ReaderControl_ManipulationDelta" ManipulationMode="TranslateY,TranslateX,System" -->
                     <Grid>
 					    <items:ReaderImage x:Name="ReaderImage" IsVisible="{Binding !UseVerticalReader, Mode=OneWay}" />
-					    <!--<muxc:ItemsRepeater x:Name="ReaderVertical" x:Load="{Binding UseVerticalReader, Mode=OneWay}" ItemsSource="{Binding ArchiveImagesReader}">
-						    <muxc:ItemsRepeater.ItemTemplate>
-							    <DataTemplate x:DataType="main:ReaderImageSet">
-								    <items:ReaderImage Height="{x:Bind Height}" HorizontalAlignment="Center" DataContext="{x:Bind}" />
+					    <ItemsRepeater x:Name="ReaderVertical" IsVisible="{Binding UseVerticalReader, Mode=OneWay}" ItemsSource="{Binding ArchiveImagesReader}">
+						    <ItemsRepeater.ItemTemplate>
+							    <DataTemplate>
+								    <items:ReaderImage Height="{Binding Height}" HorizontalAlignment="Center" />
 							    </DataTemplate>
-						    </muxc:ItemsRepeater.ItemTemplate>
-						    <muxc:ItemsRepeater.Layout>
-							    <muxc:StackLayout />
-						    </muxc:ItemsRepeater.Layout>
-					    </muxc:ItemsRepeater>-->
+						    </ItemsRepeater.ItemTemplate>
+						    <ItemsRepeater.Layout>
+							    <StackLayout />
+						    </ItemsRepeater.Layout>
+					    </ItemsRepeater>
 				    </Grid>
 			    </ContentControl>
             </LayoutTransformControl>

@@ -374,6 +374,11 @@ namespace LRReader.Shared.ViewModels
 			await ArchivesProvider.ClearNewArchive(Archive.arcid);
 		}
 
+		public void ClearImageSets()
+		{
+			ArchiveImagesReader.Clear();
+		}
+
 		public async Task CreateImageSets()
 		{
 			ArchiveImagesReader.Clear();

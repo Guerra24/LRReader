@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls.Experimental;
 using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Views.Controls;
+using LRReader.Avalonia.Views.Items;
 using LRReader.Shared.Extensions;
 using LRReader.Shared.Models;
 using LRReader.Shared.Models.Main;
@@ -44,6 +45,7 @@ public partial class ArchiveTabContent : UserControl
 	private bool Animate => Service.Platform.AnimationsEnabled && Service.Settings.ReaderAnimations;
 
 	private Action<int> _resizer;
+	private Action<int, ReaderImage, int> _resizerVertical;
 
 	public ArchiveTabContent()
 	{
@@ -64,15 +66,30 @@ public partial class ArchiveTabContent : UserControl
 
 		Service.Events.RebuildReaderImagesSetEvent += RebuildReader;
 
-		Action<int> resizer = (param) =>
+		Action<int> resizer = (height) =>
 		{
 			Service.Dispatcher.Run(async () =>
 			{
-				await ReaderImage.ResizeHeight(param);
+				await ReaderImage.ResizeHeight(height);
+			});
+		};
+
+		Action<int, ReaderImage, int> resizerVertical = (width, image, index) =>
+		{
+			Service.Dispatcher.Run(async () =>
+			{
+				await image.ResizeWidth(width);
+				if (ReaderVertical.TryGetElement(index - 1) is ReaderImage imgminus1)
+					await imgminus1.ResizeWidth(width);
+				if (ReaderVertical.TryGetElement(index + 1) is ReaderImage img1)
+					await img1.ResizeWidth(width);
+				if (ReaderVertical.TryGetElement(index + 2) is ReaderImage img2)
+					await img2.ResizeWidth(width);
 			});
 		};
 
 		_resizer = resizer.Debounce(500);
+		_resizerVertical = resizerVertical.Debounce(500);
 	}
 
 	private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -140,9 +157,10 @@ public partial class ArchiveTabContent : UserControl
 		if (Data.UseVerticalReader)
 		{
 			await Task.Delay(100);
-			/*var element = ReaderVertical.GetOrCreateElement(index);
+			var element = ReaderVertical.GetOrCreateElement(index);
 			element.UpdateLayout();
-			element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });*/
+			element.BringIntoView();
+			//element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });
 		}
 		else
 			await ChangePage(false);
@@ -314,6 +332,7 @@ public partial class ArchiveTabContent : UserControl
 		{
 			_transition = true;
 			page = Data.ReaderContent.Page;
+			Data.ClearImageSets();
 			await HideReader();
 		}
 		await Data.CreateImageSets();
@@ -355,10 +374,11 @@ public partial class ArchiveTabContent : UserControl
 
 			if (Data.UseVerticalReader)
 			{
-				/*await Task.Delay(100);
+				await Task.Delay(100);
 				var element = ReaderVertical.GetOrCreateElement(index);
 				element.UpdateLayout();
-				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });*/
+				element.BringIntoView();
+				//element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = false, VerticalAlignmentRatio = 0f });
 			}
 			else
 				await ChangePage();
@@ -744,7 +764,8 @@ public partial class ArchiveTabContent : UserControl
 			_lastZoom = zoom;
 			var yOffset = ScrollViewer.Offset.Y / Data.ZoomFactor * zoom;
 			Data.ZoomFactor = zoom;
-			ScrollViewer.Offset = new Point(ScrollViewer.Offset.X, yOffset);
+			if (!Data.UseVerticalReader)
+				ScrollViewer.Offset = new Point(ScrollViewer.Offset.X, yOffset);
 		}
 	}
 
@@ -755,16 +776,13 @@ public partial class ArchiveTabContent : UserControl
 		// Use width instead of height in vertical mode
 		if (Data.UseVerticalReader)
 		{
-			/*if (ScrollViewer.CurrentAnchor is ReaderImage image)
+			if (ScrollViewer.CurrentAnchor is ReaderImage image)
 			{
 				var index = ReaderVertical.GetElementIndex(ScrollViewer.CurrentAnchor);
 				Data.ReaderIndex = index;
 
-				var width = (int)Math.Round(ScrollViewer.ExtentWidth);
-				await image.ResizeWidth(width);
-				(ReaderVertical.TryGetElement(index + 1) as ReaderImage)?.ResizeWidth(width);
-				(ReaderVertical.TryGetElement(index + 2) as ReaderImage)?.ResizeWidth(width);
-			}*/
+				_resizerVertical.Invoke((int)Math.Round(ScrollViewer.Extent.Width), image, index);
+			}
 		}
 		else
 			_resizer.Invoke((int)Math.Round(ScrollViewer.Extent.Height));

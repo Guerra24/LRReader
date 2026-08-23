@@ -296,6 +296,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				_transition = true;
 				page = Data.ReaderContent.Page;
+				Data.ClearImageSets();
 				await HideReader();
 			}
 			await Data.CreateImageSets();

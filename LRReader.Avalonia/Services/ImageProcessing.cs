@@ -22,7 +22,7 @@ namespace LRReader.Avalonia.Services
 			if (decodeHeight > 0)
 				image.DecodePixelHeight = decodeHeight;
 
-			await image.SetSourceAsync(bytes);
+			await image.SetSourceAsync(bytes, cancellationToken);
 
 			return image;
 		}

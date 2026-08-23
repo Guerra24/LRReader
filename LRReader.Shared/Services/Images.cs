@@ -24,10 +24,10 @@ public class ImagesService : IService
 	{
 		Files = files;
 		ImageProcessing = imageProcessing;
-		imagesCache = new LRUCache<string, byte[]>(500, 25)
+		imagesCache = new LRUCache<string, byte[]>(1000, 25)
 		{
 			SlidingExpiration = true,
-			MaxMemoryBytes = 268435456 // 256MiB
+			MaxMemoryBytes = 536870912 // 256MiB
 		};
 		imagesCache.SizeEstimator += SizeEstimator;
 		imagesSizeCache = new LRUCache<string, Size>(10000, 100);
@@ -66,7 +66,7 @@ public class ImagesService : IService
 		}
 	}
 
-	public async Task<Size> GetImageSizeCached(string? path)
+	public async Task<Size> GetImageSizeCached(string? path, CancellationToken cancellationToken = default)
 	{
 		if (string.IsNullOrEmpty(path))
 			return new Size(0, 0);
@@ -79,8 +79,10 @@ public class ImagesService : IService
 		{
 			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
 			{
-				var image = await GetImageCached(path);
+				var image = await GetImageCached(path, cancellationToken: cancellationToken);
 				if (image == null)
+					return Size.Empty;
+				if (cancellationToken.IsCancellationRequested)
 					return Size.Empty;
 				size = await ImageProcessing.GetImageSize(image);
 				imagesSizeCache.AddReplace(path, size);
@@ -89,11 +91,13 @@ public class ImagesService : IService
 		}
 	}
 
-	public async Task<byte[]?> GetImageCached(string? path, bool forced = false)
+	public async Task<byte[]?> GetImageCached(string? path, bool forced = false, CancellationToken cancellationToken = default)
 	{
 		if (string.IsNullOrEmpty(path))
 			return null;
 		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+		if (cancellationToken.IsCancellationRequested)
+			return null;
 		if (imagesCache.TryGet(path, out var image) && !forced)
 		{
 			return image;
@@ -102,8 +106,12 @@ public class ImagesService : IService
 		{
 			using (var key = await KeyedSemaphore.LockAsync(path))
 			{
+				if (cancellationToken.IsCancellationRequested)
+					return null;
 				image = await ArchivesProvider.GetImage(path);
 				if (image == null)
+					return null;
+				if (cancellationToken.IsCancellationRequested)
 					return null;
 				imagesCache.AddReplace(path, image, DateTime.UtcNow.AddMinutes(15));
 				return image;
