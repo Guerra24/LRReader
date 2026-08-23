@@ -13,7 +13,7 @@
              x:Class="LRReader.Avalonia.Views.Tabs.ArchiveTab">
 
     <controls:ModernTab.Resources>
-		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="75" />
 	</controls:ModernTab.Resources>
 
     <ui:FATabViewItem.Header>

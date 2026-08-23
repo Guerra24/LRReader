@@ -516,7 +516,7 @@ public partial class ArchiveTabContent : UserControl
 			if (e.KeyModifiers == KeyModifiers.Control || pointerPoint.Properties.IsRightButtonPressed)
 			{
 				e.Handled = true;
-				Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
+				Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 75 : 100, 400);
 			}
 			else if (e.KeyModifiers == KeyModifiers.None)
 			{
@@ -779,7 +779,8 @@ public partial class ArchiveTabContent : UserControl
 			if (ScrollViewer.CurrentAnchor is ReaderImage image)
 			{
 				var index = ReaderVertical.GetElementIndex(ScrollViewer.CurrentAnchor);
-				Data.ReaderIndex = index;
+				if (!_transition)
+					Data.ReaderIndex = index;
 
 				_resizerVertical.Invoke((int)Math.Round(ScrollViewer.Extent.Width), image, index);
 			}

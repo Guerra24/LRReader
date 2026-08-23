@@ -484,7 +484,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (e.KeyModifiers == VirtualKeyModifiers.Control || pointerPoint.Properties.IsRightButtonPressed)
 				{
 					e.Handled = true;
-					Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
+					Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 75 : 100, 400);
 				}
 				else if (e.KeyModifiers == VirtualKeyModifiers.None)
 				{
@@ -745,10 +745,12 @@ namespace LRReader.UWP.Views.Tabs.Content
 				if (ScrollViewer.CurrentAnchor is ReaderImage image)
 				{
 					var index = ReaderVertical.GetElementIndex(ScrollViewer.CurrentAnchor);
-					Data.ReaderIndex = index;
+					if (!_transition)
+						Data.ReaderIndex = index;
 
 					var width = (int)Math.Round(ScrollViewer.ExtentWidth);
 					await image.ResizeWidth(width);
+					(ReaderVertical.TryGetElement(index - 1) as ReaderImage)?.ResizeWidth(width);
 					(ReaderVertical.TryGetElement(index + 1) as ReaderImage)?.ResizeWidth(width);
 					(ReaderVertical.TryGetElement(index + 2) as ReaderImage)?.ResizeWidth(width);
 				}
@@ -938,7 +940,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 				await Task.Delay(100);
 				var element = ReaderVertical.GetOrCreateElement(index);
 				element.UpdateLayout();
-				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = true, VerticalAlignmentRatio = 0f });
+				element.StartBringIntoView(new BringIntoViewOptions { AnimationDesired = true, VerticalAlignmentRatio = 0.0f });
 			}
 			else
 			{

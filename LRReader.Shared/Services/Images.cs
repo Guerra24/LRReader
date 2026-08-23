@@ -27,7 +27,7 @@ public class ImagesService : IService
 		imagesCache = new LRUCache<string, byte[]>(1000, 25)
 		{
 			SlidingExpiration = true,
-			MaxMemoryBytes = 536870912 // 256MiB
+			MaxMemoryBytes = 536870912 // 512MiB
 		};
 		imagesCache.SizeEstimator += SizeEstimator;
 		imagesSizeCache = new LRUCache<string, Size>(10000, 100);

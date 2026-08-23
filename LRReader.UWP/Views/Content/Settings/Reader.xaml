@@ -16,7 +16,7 @@
 	mc:Ignorable="d">
 
 	<Page.Resources>
-		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="75" />
 		<converters2:ClearNewEnabledConverter x:Key="ClearNewEnabledConverter" />
 	</Page.Resources>
 
