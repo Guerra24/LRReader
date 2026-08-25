@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\LRReader.Base\**\*.cs" LinkBase="Shared" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaResource Include="..\Privacy.md">
       <Link>Privacy.md</Link>

@@ -1,21 +1,20 @@
-﻿namespace LRReader.UWP.Views.Controls
+﻿namespace LRReader.UWP.Views.Controls;
+
+[ContentProperty(Name = "Items")]
+public sealed partial class ModernGroup : ContentControl
 {
-	[ContentProperty(Name = "Items")]
-	public sealed partial class ModernGroup : ContentControl
+	public ModernGroup()
 	{
-		public ModernGroup()
-		{
-			this.DefaultStyleKey = typeof(ModernGroup);
-			Content = new List<object>();
-		}
-
-		public IList<object> Items
-		{
-			get => (IList<object>)GetValue(ContentProperty);
-			set => SetValue(ContentProperty, value);
-		}
-
-		[GeneratedDependencyProperty(DefaultValue = "")]
-		public partial string Title { get; set; }
+		this.DefaultStyleKey = typeof(ModernGroup);
+		Content = new List<object>();
 	}
+
+	public IList<object> Items
+	{
+		get => (IList<object>)GetValue(ContentProperty);
+		set => SetValue(ContentProperty, value);
+	}
+
+	[GeneratedDependencyProperty(DefaultValue = "")]
+	public partial string Title { get; set; }
 }

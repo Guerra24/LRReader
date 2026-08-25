@@ -42,6 +42,7 @@
     <AddMicrosoftVCLibsDesktopSDKReference>true</AddMicrosoftVCLibsDesktopSDKReference>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <!--<Features>runtime-async=on</Features>-->
+    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Nightly)' == 'true'">
@@ -100,6 +101,9 @@
     <DirectPInvoke Include="jxl_threads" />
   </ItemGroup>
 -->
+  <ItemGroup>
+    <Compile Include="..\LRReader.Base\**\*.cs" LinkBase="Shared" Visible="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\LargeTile.scale-100.png" />

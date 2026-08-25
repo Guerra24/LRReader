@@ -15,6 +15,7 @@
   </Project>
   <Project Path="LRReader.Avalonia.Desktop/LRReader.Avalonia.Desktop.csproj" />
   <Project Path="LRReader.Avalonia/LRReader.Avalonia.csproj" />
+  <Project Path="LRReader.Base/LRReader.Base.csproj" Id="73abc322-ef4c-4fe0-b1af-7ed74630dad6" />
   <Project Path="LRReader.Shared/LRReader.Shared.csproj" />
   <Project Path="LRReader.UWP.ModernInstaller/LRReader.UWP.ModernInstaller.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />

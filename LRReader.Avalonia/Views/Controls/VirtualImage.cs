@@ -57,13 +57,12 @@ public partial class VirtualImage : Control
 		if (compositor == null)
 			return;
 
-		Visual = compositor.CreateCustomVisual(new VirtualImageCustomVisualHandler());
-
-		ElementComposition.SetElementChildVisual(this, Visual);
-
 		LayoutUpdated += OnLayoutUpdated;
 
+		Visual = compositor.CreateCustomVisual(new VirtualImageCustomVisualHandler());
 		Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+
+		ElementComposition.SetElementChildVisual(this, Visual);
 
 		if (Image != null)
 			Visual.SendHandlerMessage(Image);

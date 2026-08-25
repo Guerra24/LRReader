@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7">
+
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <GenerateMSBuildEditorConfigFile>False</GenerateMSBuildEditorConfigFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="**\*.cs" />
+  </ItemGroup>
+
+</Project>
