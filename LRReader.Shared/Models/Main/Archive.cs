@@ -51,7 +51,7 @@ namespace LRReader.Shared.Models.Main
 			TagsClean = "";
 			if (tags == null) // TODO: v0.7.7 returns null tags when there are no plugins enabled.
 				tags = ""; // Use empty string as fallback instead
-			foreach (var s in tags.Split([','], StringSplitOptions.RemoveEmptyEntries))
+			foreach (var s in tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
 				TagsClean += s.Substring(Math.Max(s.IndexOf(':') + 1, 0)).Trim() + ", ";
 			TagsClean = TagsClean.Trim().TrimEnd(',');
 
@@ -81,9 +81,9 @@ namespace LRReader.Shared.Models.Main
 		public void BuildVirtualTags()
 		{
 			VirtualTags.Clear();
-			foreach (var s in tags.Split([','], StringSplitOptions.RemoveEmptyEntries))
+			foreach (var s in tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
 			{
-				var parts = s.Trim().Split([':'], 2);
+				var parts = s.Trim().Split(':', 2);
 				var @namespace = parts.Length == 2 ? parts[0] : "other";
 				var tag = parts[parts.Length - 1];
 				var group = AddOrGetNamespace(@namespace);
@@ -104,7 +104,7 @@ namespace LRReader.Shared.Models.Main
 					builder.Append(tag.FullTag);
 					builder.Append(", ");
 				}
-			return builder.ToString().Trim([',', ' ']);
+			return builder.ToString().Trim(',', ' ');
 		}
 
 		private ArchiveTagsGroup AddOrGetNamespace(string @namespace)

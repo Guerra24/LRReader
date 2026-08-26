@@ -17,7 +17,7 @@
              x:Class="LRReader.Avalonia.Views.Content.Settings.Reader">
 
     <controls:ModernBasePage.Resources>
-		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="75" />
+		<converters:BoolToObjectConverter x:Key="MinZoomConverter" FalseValue="100" TrueValue="50" />
 		<converters:ClearNewEnabledConverter x:Key="ClearNewEnabledConverter" />
 		<converters:StringToColorConverter x:Key="StringToColorConverter" />
         <conv:EnumToBoolConverter x:Key="EnumToBoolConverter"/>

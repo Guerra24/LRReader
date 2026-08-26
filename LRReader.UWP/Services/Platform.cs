@@ -127,7 +127,7 @@ namespace LRReader.UWP.Services
 		{
 			if (LocalizationCache.TryGetValue(key, out var val))
 				return val;
-			var split = key.Split(['/'], 2);
+			var split = key.Split('/', 2);
 			return LocalizationCache[key] = ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 

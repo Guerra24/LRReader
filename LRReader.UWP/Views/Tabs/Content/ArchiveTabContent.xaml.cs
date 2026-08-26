@@ -154,7 +154,7 @@ public sealed partial class ArchiveTabContent : UserControl
 			if (e.KeyModifiers == VirtualKeyModifiers.Control || pointerPoint.Properties.IsRightButtonPressed)
 			{
 				e.Handled = true;
-				Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 75 : 100, 400);
+				Data.ZoomValue = Math.Clamp(Data.ZoomValue + (int)(delta * 0.1), Data.UseVerticalReader ? 50 : 100, 400);
 			}
 			else if (e.KeyModifiers == VirtualKeyModifiers.None)
 			{
@@ -180,7 +180,7 @@ public sealed partial class ArchiveTabContent : UserControl
 		ScrollViewer.ChangeView(horizontal - e.Delta.Translation.X, vertical - e.Delta.Translation.Y, null, true);
 	}
 
-	private void FitImages(bool disableAnim = false)
+	private void FitImages(bool disableAnim = false, bool force = false)
 	{
 		if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 			return;
@@ -189,7 +189,7 @@ public sealed partial class ArchiveTabContent : UserControl
 		{
 			if (_fitAgainstFixedWidth == 0)
 				_fitAgainstFixedWidth = ReaderControl.ActualWidth;
-			zoomFactor = (float)(ScrollViewer.ViewportWidth / _fitAgainstFixedWidth) * 0.5f;
+			zoomFactor = (float)(ScrollViewer.ViewportWidth / _fitAgainstFixedWidth);
 		}
 		else if (Data.FitToWidth)
 		{
@@ -200,7 +200,7 @@ public sealed partial class ArchiveTabContent : UserControl
 			zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 		}
 		var zoom = zoomFactor * (Data.ZoomValue * 0.01f);
-		if (zoom != _lastZoom)
+		if (zoom != _lastZoom || force)
 		{
 			_lastZoom = zoom;
 			var yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;

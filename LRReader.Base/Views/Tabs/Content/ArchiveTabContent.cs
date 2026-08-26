@@ -478,12 +478,12 @@ public partial class ArchiveTabContent : UserControl
 		var pointerPoint = e.GetCurrentPoint(ScrollViewer);
 		var point = pointerPoint.Position;
 #if WINDOWS_UWP
-		double distance = ScrollViewer.ActualWidth / 6.0;
-		if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+		var width = ScrollViewer.ActualWidth;
 #else
-		double distance = ScrollViewer.Bounds.Width / 6.0;
-		if (point.X > distance && point.X < ScrollViewer.Bounds.Width - distance)
+		var width = ScrollViewer.Bounds.Width;
 #endif
+		double distance = width / 6.0;
+		if (point.X > distance && point.X < width - distance)
 		{
 			//_handleDoubleTap = pointerPoint.Properties.IsLeftButtonPressed;
 		}
@@ -526,12 +526,12 @@ public partial class ArchiveTabContent : UserControl
 	{
 		var point = e.GetPosition(ScrollViewer);
 #if WINDOWS_UWP
-		double distance = ScrollViewer.ActualWidth / 6.0;
-		if (point.X > distance && point.X < ScrollViewer.ActualWidth - distance)
+		var width = ScrollViewer.ActualWidth;
 #else
-		double distance = ScrollViewer.Bounds.Width / 6.0;
-		if (point.X > distance && point.X < ScrollViewer.Bounds.Width - distance)
+		var width = ScrollViewer.Bounds.Width;
 #endif
+		double distance = width / 6.0;
+		if (point.X > distance && point.X < width - distance)
 		{
 			Service.Platform.ToggleFullScreenMode();
 			e.Handled = true;
@@ -684,7 +684,7 @@ public partial class ArchiveTabContent : UserControl
 
 	private void ScrollViewer_SizeChanged(object? sender, SizeChangedEventArgs e)
 	{
-		FitImages(Data.UseVerticalReader);
+		FitImages(Data.UseVerticalReader, true);
 		ReaderThumbnailOverlay.Width = e.NewSize.Width;
 		//LeftHitTargetOverlay.Width = RightHitTargetOverlay.Width = ScrollViewer.ActualWidth / 6.0;
 #if WINDOWS_UWP

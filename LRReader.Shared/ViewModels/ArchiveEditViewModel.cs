@@ -258,7 +258,7 @@ namespace LRReader.Shared.ViewModels
 					builder.Append(t.Tag);
 					builder.Append(", ");
 				}
-			return builder.ToString().Trim([',', ' ']);
+			return builder.ToString().Trim(',', ' ');
 		}
 
 		private void HandleTagCommand(EditableTag? tag)
@@ -281,7 +281,7 @@ namespace LRReader.Shared.ViewModels
 		private void ReloadTagsList(string tags)
 		{
 			TagsList.Clear();
-			foreach (var t in tags.Split([','], StringSplitOptions.RemoveEmptyEntries).OrderByDescending(t => t.Contains(":")).ThenBy(t => t.Trim()))
+			foreach (var t in tags.Split(',', StringSplitOptions.RemoveEmptyEntries).OrderByDescending(t => t.Contains(':')).ThenBy(t => t.Trim()))
 				TagsList.Add(ColorTag(new EditableTag { Tag = t.Trim(), Command = TagCommand }));
 			TagsList.Add(new AddTag { Command = TagCommand });
 			Tags = BuildTags();

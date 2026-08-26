@@ -82,7 +82,7 @@ namespace LRReader.Avalonia.Services
 
 		public override string GetLocalizedString(string key)
 		{
-			var split = key.Split(['/'], 2);
+			var split = key.Split('/', 2);
 			return ResourceLoader.GetForCurrentView(split[0]).GetString(split[1]);
 		}
 
