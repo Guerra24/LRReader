@@ -10,7 +10,7 @@ namespace LRReader.Avalonia.Services
 		{
 			var image = img as VirtualImage ?? new VirtualImage();
 
-			image.Source = null;
+			image.ClearSource();
 
 			if (bytes == null)
 				return null;

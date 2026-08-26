@@ -46,14 +46,14 @@ public partial class ReaderImage : UserControl
 			LeftImage.Height = RightImage.Height = 0;
 			LeftImage.Width = RightImage.Width = 0;
 
-			if (LeftImage.Source != null)
+			if (LeftImage.IsValid)
 			{
 				var aspect0 = (float)sizes[0].Width / (float)sizes[0].Height;
 				var height = set.Height == 0 ? size.Height : set.Height;
 				LeftImage.Width = Math.Round(height * aspect0);
 				LeftImage.Height = height;
 			}
-			if (RightImage.Source != null)
+			if (RightImage.IsValid)
 			{
 				var aspect1 = (float)sizes[1].Width / (float)sizes[1].Height;
 				RightImage.Width = Math.Round(size.Height * aspect1);
@@ -101,9 +101,9 @@ public partial class ReaderImage : UserControl
 			return;
 		await decodePixel.WaitAsync();
 		_height = height;
-		if (LeftImage.Source != null)
+		if (LeftImage.IsValid)
 			LeftImage.DecodePixelHeight = height;
-		if (RightImage.Source != null)
+		if (RightImage.IsValid)
 			RightImage.DecodePixelHeight = height;
 		decodePixel.Release();
 	}
@@ -114,9 +114,9 @@ public partial class ReaderImage : UserControl
 			return;
 		await decodePixel.WaitAsync();
 		_width = width;
-		if (LeftImage.Source != null)
+		if (LeftImage.IsValid)
 			LeftImage.DecodePixelWidth = width;
-		if (RightImage.Source != null)
+		if (RightImage.IsValid)
 			RightImage.DecodePixelWidth = width;
 		decodePixel.Release();
 	}

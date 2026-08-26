@@ -5,7 +5,7 @@ using Avalonia.Skia;
 using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Services;
 using LRReader.Shared.Services;
-using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SkiaSharp;
@@ -17,19 +17,17 @@ public partial class VirtualImage : Control
 {
 	private CompositionCustomVisual? Visual;
 	private SKImage? Image;
+	private byte[]? Original;
+	private int ImageWidth, ImageHeight;
 	private double RenderScaling = ((AvaloniaPlatformService)Service.Platform).RenderScaling;
 
 	static VirtualImage()
 	{
-		AffectsRender<VirtualImage>(SourceProperty, DecodePixelWidthProperty, DecodePixelHeightProperty);
-		AffectsMeasure<VirtualImage>(SourceProperty, DecodePixelWidthProperty, DecodePixelHeightProperty);
+		AffectsRender<VirtualImage>(DecodePixelWidthProperty, DecodePixelHeightProperty);
+		AffectsMeasure<VirtualImage>(DecodePixelWidthProperty, DecodePixelHeightProperty);
 	}
 
-	public Image<Rgba32>? Source
-	{
-		get => GetValue(SourceProperty);
-		set => SetValue(SourceProperty, value);
-	}
+	public bool IsValid => Original != null;
 
 	public int DecodePixelWidth
 	{
@@ -50,22 +48,27 @@ public partial class VirtualImage : Control
 		base.OnAttachedToVisualTree(e);
 
 		RenderScaling = e.PresentationSource.RenderScaling;
-
-		var elementVisual = ElementComposition.GetElementVisual(this);
-		var compositor = elementVisual?.Compositor;
-
-		if (compositor == null)
-			return;
-
 		LayoutUpdated += OnLayoutUpdated;
 
-		Visual = compositor.CreateCustomVisual(new VirtualImageCustomVisualHandler());
-		Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+		if (Visual == null)
+		{
+			var elementVisual = ElementComposition.GetElementVisual(this);
+			var compositor = elementVisual?.Compositor;
 
-		ElementComposition.SetElementChildVisual(this, Visual);
+			if (compositor == null)
+				return;
 
-		if (Image != null)
-			Visual.SendHandlerMessage(Image);
+			Visual = compositor.CreateCustomVisual(new VirtualImageCustomVisualHandler());
+			Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+
+			ElementComposition.SetElementChildVisual(this, Visual);
+
+			if (Image != null)
+			{
+				Visual.SendHandlerMessage(Image);
+				Image = null;
+			}
+		}
 
 		InvalidateVisual();
 	}
@@ -75,15 +78,15 @@ public partial class VirtualImage : Control
 		base.OnDetachedFromVisualTree(e);
 
 		LayoutUpdated -= OnLayoutUpdated;
-
-		Visual?.SendHandlerMessage(null!);
-		Visual = null;
 	}
 
 	protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
 		base.OnDetachedFromLogicalTree(e);
-		Source = null;
+		Visual?.SendHandlerMessage(null!);
+		Visual = null;
+
+		Original = null;
 		Image?.Dispose();
 		Image = null;
 	}
@@ -94,33 +97,20 @@ public partial class VirtualImage : Control
 
 		var prop = change.Property;
 
-		if (prop == SourceProperty)
-		{
-			if (change.OldValue is Image<Rgba32> old)
-				old.Dispose();
-		}
-		else if (prop == DecodePixelWidthProperty)
-		{
-			ReloadDisplaySource();
-		}
-		else if (prop == DecodePixelHeightProperty)
+		if (prop == DecodePixelWidthProperty || prop == DecodePixelHeightProperty)
 		{
 			ReloadDisplaySource();
 		}
 	}
 
-	protected override global::Avalonia.Size MeasureOverride(global::Avalonia.Size availableSize)
+	protected override Size MeasureOverride(Size availableSize)
 	{
-		if (Image == null)
-			return new global::Avalonia.Size();
-		return Stretch.Uniform.CalculateSize(availableSize, new global::Avalonia.Size(Image.Width, Image.Height));
+		return Stretch.Uniform.CalculateSize(availableSize, new Size(ImageWidth, ImageHeight));
 	}
 
-	protected override global::Avalonia.Size ArrangeOverride(global::Avalonia.Size finalSize)
+	protected override Size ArrangeOverride(Size finalSize)
 	{
-		if (Image == null)
-			return new global::Avalonia.Size();
-		return Stretch.Uniform.CalculateSize(finalSize, new global::Avalonia.Size(Image.Width, Image.Height));
+		return Stretch.Uniform.CalculateSize(finalSize, new Size(ImageWidth, ImageHeight));
 	}
 
 	private void OnLayoutUpdated(object? sender, EventArgs e)
@@ -135,73 +125,68 @@ public partial class VirtualImage : Control
 		var decodePixelWidth = DecodePixelWidth;
 		var decodePixelHeight = DecodePixelHeight;
 
-		var results = await Task.Run<(Image<Rgba32>? source, SKImage? image)>(() =>
+		var image = await Task.Run(() =>
 		{
 			if (cancellationToken.IsCancellationRequested)
-				return (null, null);
+				return null;
 
-			var source = SixLabors.ImageSharp.Image.Load<Rgba32>(bytes);
-			var scaledSource = source;
-
-			try
+			var options = new DecoderOptions
 			{
-				if (cancellationToken.IsCancellationRequested)
-				{
-					source.Dispose();
-					return (null, null);
-				}
+				Sampler = KnownResamplers.Lanczos2,
+				TargetSize = (decodePixelWidth != 0 || decodePixelHeight != 0) ? new((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling)) : null
+			};
 
-				if (decodePixelWidth != 0 || decodePixelHeight != 0)
-					scaledSource = source.Clone(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
+			using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(options, bytes);
 
-				if (cancellationToken.IsCancellationRequested)
-				{
-					if (scaledSource != source)
-						source.Dispose();
-					return (null, null);
-				}
+			if (cancellationToken.IsCancellationRequested)
+				return null;
 
-				var img = scaledSource.ToSKImage();
+			ImageWidth = source.Width;
+			ImageHeight = source.Height;
 
-				return (source, image: img);
-			}
-			finally
-			{
-				if (scaledSource != source)
-					scaledSource.Dispose();
-			}
+			return source.ToSKImage();
 		});
 
-		Source = results.source;
-		Image = results.image;
-		Visual?.SendHandlerMessage(results.image!);
+		Original = image != null ? bytes : null;
+		if (Visual == null)
+			Image = image;
+		else
+			Visual?.SendHandlerMessage(image!);
+		InvalidateMeasure();
+	}
+
+	public void ClearSource()
+	{
+		Visual?.SendHandlerMessage(null!);
+		Original = null;
 	}
 
 	private async void ReloadDisplaySource()
 	{
-		if (Source == null || Visual == null)
+		if (Original == null || Visual == null)
 			return;
 
 		var decodePixelWidth = DecodePixelWidth;
 		var decodePixelHeight = DecodePixelHeight;
-		var scaledSource = Source;
 
 		var image = await Task.Run(() =>
 		{
-			if (decodePixelWidth != 0 || decodePixelHeight != 0)
-				scaledSource = scaledSource.Clone(p => p.Resize((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling), KnownResamplers.Lanczos2));
+			var options = new DecoderOptions
+			{
+				Sampler = KnownResamplers.Lanczos2,
+				TargetSize = (decodePixelWidth != 0 || decodePixelHeight != 0) ? new((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling)) : null
+			};
 
-			return scaledSource.ToSKImage();
+			using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(options, Original);
+
+			ImageWidth = source.Width;
+			ImageHeight = source.Height;
+
+			return source.ToSKImage();
 		});
-
-		if (scaledSource != Source)
-			scaledSource.Dispose();
-
-		Image = image;
 		Visual.SendHandlerMessage(image);
 	}
 
-	public static readonly StyledProperty<Image<Rgba32>?> SourceProperty = AvaloniaProperty.Register<VirtualImage, Image<Rgba32>?>("Source");
 	public static readonly StyledProperty<int> DecodePixelWidthProperty = AvaloniaProperty.Register<VirtualImage, int>("DecodePixelWidth");
 	public static readonly StyledProperty<int> DecodePixelHeightProperty = AvaloniaProperty.Register<VirtualImage, int>("DecodePixelHeight");
 }
@@ -223,12 +208,20 @@ public class VirtualImageCustomVisualHandler : CompositionCustomVisualHandler
 		var bounds = GetRenderBounds().Size;
 		var viewPort = new Rect(bounds);
 
-		var size = new global::Avalonia.Size(image.Width, image.Height);
+		var size = new Size(image.Width, image.Height);
 		var scale = Stretch.Uniform.CalculateScaling(bounds, size);
 		var scaledSize = size * scale;
 		var destRect = viewPort.CenterRect(new Rect(scaledSize)).Intersect(viewPort);
 
 		using var lease = skia.Lease();
+
+		if (lease.GrContext != null && !image.IsTextureBacked)
+		{
+			var gpuImage = image.ToTextureImage(lease.GrContext);
+			image.Dispose();
+			image = gpuImage;
+		}
+
 		using var paint = new SKPaint();
 		paint.ColorF = new SKColorF(0, 0, 0, (float)lease.CurrentOpacity);
 		lease.SkCanvas.DrawImage(image, destRect.ToSKRect(), SamplingOptions, paint);
@@ -236,9 +229,9 @@ public class VirtualImageCustomVisualHandler : CompositionCustomVisualHandler
 
 	public override void OnMessage(object message)
 	{
+		image?.Dispose();
 		if (message is SKImage img)
 		{
-			image?.Dispose();
 			image = img;
 			Invalidate();
 		}
