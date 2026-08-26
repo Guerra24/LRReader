@@ -206,8 +206,11 @@ public partial class ArchiveTabContent : UserControl
 			_lastZoom = zoom;
 			var yOffset = ScrollViewer.Offset.Y / Data.ZoomFactor * zoom;
 			Data.ZoomFactor = zoom;
-			// A bit hacky but the scrollviewer is not aware of the scaling so it needs one frame to realize the new size
-			Service.Dispatcher.Run(() => ScrollViewer.Offset = new Point(ScrollViewer.Offset.X, yOffset));
+			if (!Data.UseVerticalReader)
+				ScrollViewer.Offset = new Point(ScrollViewer.Offset.X, yOffset);
+			else
+				// A bit hacky but the scrollviewer is not aware of the scaling so it needs one frame to realize the new size
+				Service.Dispatcher.Run(() => ScrollViewer.Offset = new Point(ScrollViewer.Offset.X, yOffset));
 		}
 	}
 
