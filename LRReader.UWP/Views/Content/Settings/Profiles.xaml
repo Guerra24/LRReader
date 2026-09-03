@@ -11,9 +11,6 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	x:Name="Root"
 	mc:Ignorable="d">
-	<Page.Resources>
-		<controls:DefaultElementAnimator x:Key="ItemsRepeaterAnimator" />
-	</Page.Resources>
 
 	<ScrollViewer x:Name="ScrollViewer" Padding="10,0">
 		<StackPanel Width="{x:Bind ScrollViewer.ViewportWidth, Mode=OneWay}" MaxWidth="1000" HorizontalAlignment="Center">

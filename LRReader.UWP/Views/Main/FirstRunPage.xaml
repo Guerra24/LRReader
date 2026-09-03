@@ -8,14 +8,10 @@
 	xmlns:local="using:LRReader.UWP.Views.Main"
 	xmlns:services="using:LRReader.Shared.Services"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	xmlns:controls="using:LRReader.UWP.Views.Controls"
 	Loaded="Page_Loaded"
 	NavigationCacheMode="Required"
 	SizeChanged="Page_SizeChanged"
 	mc:Ignorable="d">
-	<Page.Resources>
-		<controls:DefaultElementAnimator x:Key="ItemsRepeaterAnimator" />
-	</Page.Resources>
 
 	<Grid>
 		<Grid.ColumnDefinitions>

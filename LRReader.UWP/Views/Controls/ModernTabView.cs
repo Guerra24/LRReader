@@ -16,7 +16,7 @@ namespace LRReader.UWP.Views.Controls
 		private ColumnDefinition? SpacerColumn;
 		private ColumnDefinition? ExtraColumn;
 		private ContentPresenter? ToolsContentPresenter;*/
-		private ContentPresenter? RightContentPresenter;
+		//private ContentPresenter? RightContentPresenter;
 		public StackedNotificationsBehavior Notifications { get; private set; } = null!;
 
 		public ModernTabView()
@@ -41,7 +41,7 @@ namespace LRReader.UWP.Views.Controls
 			SpacerColumn = GetTemplateChild("SpacerColumn") as ColumnDefinition;
 			ExtraColumn = GetTemplateChild("ExtraColumn") as ColumnDefinition;
 			ToolsContentPresenter = GetTemplateChild("ToolsContentPresenter") as ContentPresenter;*/
-			RightContentPresenter = GetTemplateChild("RightContentPresenter") as ContentPresenter;
+			//RightContentPresenter = GetTemplateChild("RightContentPresenter") as ContentPresenter;
 			Notifications = (StackedNotificationsBehavior)GetTemplateChild("Notifications");
 		}
 
@@ -72,7 +72,6 @@ namespace LRReader.UWP.Views.Controls
 
 			//ToolsContentPresenter?.SizeChanged += ToolsContentPresenter_SizeChanged;
 			//RightContentPresenter?.Width = FooterColumn!.ActualWidth + BlankColumn!.MinWidth + ToolsColumn!.ActualWidth + SpacerColumn!.ActualWidth + ExtraColumn!.ActualWidth;
-			RightContentPresenter?.Width = 527; // This should be dynamic but ALAS here we are
 		}
 
 		private void SplitView_PaneOpening(SplitView sender, object args)

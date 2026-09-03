@@ -78,7 +78,7 @@
 				</StackPanel>
 			</controls:ModernTabView.FakeTabStripFooter>
 			<controls:ModernTabView.TabTools>
-				<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" VerticalAlignment="Center" IsTabStop="False" />
+				<ContentControl Content="{x:Bind Data.CurrentTab.CustomTabControl, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Right" IsTabStop="False" />
 			</controls:ModernTabView.TabTools>
 			<controls:ModernTabView.ExtraFooter>
 				<StackPanel x:Name="TabViewEndHeader" VerticalAlignment="Center" Orientation="Horizontal" Spacing="2">

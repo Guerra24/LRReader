@@ -1739,11 +1739,10 @@
 					Margin="3,0,3,0" VerticalAlignment="Center"
 					Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
-				<Grid x:Name="FakeColumn" Grid.Column="3" HorizontalAlignment="Stretch">
+				<Grid x:Name="RightContentPresenter" Grid.Column="3" HorizontalAlignment="Stretch">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition x:Name="FooterColumn" Width="Auto" />
-						<ColumnDefinition x:Name="BlankColumn" Width="*" MinWidth="50" />
-						<ColumnDefinition x:Name="ToolsColumn" Width="Auto" />
+						<ColumnDefinition x:Name="ToolsColumn" Width="*" MinWidth="86" />
 						<ColumnDefinition x:Name="SpacerColumn" Width="Auto" />
 						<ColumnDefinition x:Name="ExtraColumn" Width="Auto" />
 					</Grid.ColumnDefinitions>
@@ -1762,22 +1761,15 @@
 					<ContentPresenter Content="{TemplateBinding FakeTabStripFooter}" />
 					<ContentPresenter
 						x:Name="ToolsContentPresenter"
-						Grid.Column="2"
+						Grid.Column="1"
 						Content="{TemplateBinding TabTools}" />
 					<Border
-						Grid.Column="3" Width="1" Height="16"
+						Grid.Column="2" Width="1" Height="16"
 						Margin="3,0,3,0" VerticalAlignment="Center"
 						Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-					<ContentPresenter Grid.Column="4" Content="{TemplateBinding ExtraFooter}" />
+					<ContentPresenter Grid.Column="3" Content="{TemplateBinding ExtraFooter}" />
 				</Grid>
 			</Grid>
-
-			<!-- This is a massive hack just to get TabView to behave correctly MAN WHY -->
-			<ContentPresenter
-				x:Name="RightContentPresenter"
-				Content="{TemplateBinding TabStripFooter}"
-				ContentTemplate="{TemplateBinding TabStripFooterTemplate}"
-				HorizontalAlignment="Right" />
 
 			<ContentPresenter
 				x:Name="TabContentPresenter" Grid.Row="1"

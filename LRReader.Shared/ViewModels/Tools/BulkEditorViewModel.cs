@@ -155,12 +155,15 @@ public partial class BulkEditorViewModel : ObservableObject
 		{
 			Progress++;
 			var result = await ServerProvider.UsePlugin(Plugin.@namespace, a.arcid);
-			if (result != null && result.success && !string.IsNullOrEmpty(result.data.new_tags))
+			if (result != null && result.success)
 			{
-				a.tags += $", {result.data.new_tags}";
-				a.BuildVirtualTags();
-				a.tags = a.BuildStringTags();
-				a.UpdateTags();
+				if (!string.IsNullOrEmpty(result.data.new_tags))
+				{
+					a.tags += $", {result.data.new_tags}";
+					a.BuildVirtualTags();
+					a.tags = a.BuildStringTags();
+					a.UpdateTags();
+				}
 				if (!string.IsNullOrEmpty(result.data.title) && result.data.title != a.title)
 					a.title = result.data.title;
 				if (!string.IsNullOrEmpty(result.data.summary))

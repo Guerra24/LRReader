@@ -55,6 +55,16 @@
     </Application>
   </Applications>
 
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Graphics.Canvas.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Canvas.Geometry.CanvasGeometry" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Graphics.Canvas.Effects.GaussianBlurEffect" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="privateNetworkClientServer"/>
