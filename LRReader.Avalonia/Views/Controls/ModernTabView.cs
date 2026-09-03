@@ -71,7 +71,7 @@ namespace LRReader.Avalonia.Views.Controls
 			if (Bounds.Width < SPLIT)
 				IsPaneOpen = false;
 
-			RightContentPresenter?.Width = 339; // This should be dynamic but ALAS here we are
+			RightContentPresenter?.Width = 305; // This should be dynamic but ALAS here we are
 		}
 
 		private void SplitView_PaneOpening(object? sender, CancelRoutedEventArgs args)

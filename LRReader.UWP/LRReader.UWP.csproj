@@ -186,6 +186,13 @@
     <AppxPackageTestDir Condition="'$(AppxPackageDir)' != ''">$(AppxPackageDir)$(ProjectName)\</AppxPackageTestDir>
   </PropertyGroup>
 
+  
+  <Target Name="RemoveMergedPris" AfterTargets="GetPackagingOutputs">
+    <ItemGroup>
+      <PackagingOutputs Remove="@(PackagingOutputs)" Condition="'%(Extension)' == '.pri' And '%(Filename)' != 'resources'" />
+    </ItemGroup>
+  </Target>
+
   <!-- Fixes xBind inside template inside style inside resource dictionary with code-behind class -->
   <Target Name="FixupXamlCompiler" BeforeTargets="CoreCompile">
     <PropertyGroup>
