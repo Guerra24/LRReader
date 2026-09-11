@@ -69,7 +69,7 @@
     <PackageReference Include="CommunityToolkit.Uwp.Extensions" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Helpers" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Media" Version="8.2.251219" />
-    <PackageReference Include="COMplicated.WinUI" Version="2.8.8-prerelease.260903001" />
+    <PackageReference Include="COMplicated.WinUI" Version="2.8.8-prerelease.260908003" />
     <PackageReference Include="Markdig" Version="1.3.2" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="*" ExcludeAssets="all" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4191.47" />
@@ -186,10 +186,10 @@
     <AppxPackageTestDir Condition="'$(AppxPackageDir)' != ''">$(AppxPackageDir)$(ProjectName)\</AppxPackageTestDir>
   </PropertyGroup>
 
-  
-  <Target Name="RemoveMergedPris" AfterTargets="GetPackagingOutputs">
+
+  <Target Name="RemoveMergedPrisAndUnusedFiles" AfterTargets="GetPackagingOutputs" Condition="'$(Configuration)' == 'Release'">
     <ItemGroup>
-      <PackagingOutputs Remove="@(PackagingOutputs)" Condition="'%(Extension)' == '.pri' And '%(Filename)' != 'resources'" />
+      <PackagingOutputs Remove="@(PackagingOutputs)" Condition="('%(Extension)' == '.pri' And '%(Filename)' != 'resources') Or '%(Extension)' == '.winmd'" />
     </ItemGroup>
   </Target>
 
