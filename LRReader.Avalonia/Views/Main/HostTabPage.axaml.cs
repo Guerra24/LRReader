@@ -1,9 +1,11 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Platform;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Messaging;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Navigation;
+using LRReader.Avalonia.Extensions;
 using LRReader.Avalonia.Resources;
 using LRReader.Avalonia.Views.Controls;
 using LRReader.Shared.Extensions;
@@ -16,6 +18,9 @@ namespace LRReader.Avalonia.Views.Main
 {
 	public partial class HostTabPage : UserControl, IRecipient<ShowNotification>
 	{
+		private static readonly Thickness EmptySafeArea = new();
+		private static readonly Thickness HiddenTabBar = new(0, -48, 0, 0);
+
 		private TabsService Data;
 
 		private ResourceLoader lang;
@@ -23,6 +28,8 @@ namespace LRReader.Avalonia.Views.Main
 		private WindowState WindowState;
 
 		private TopLevel TopLevel = null!;
+
+		private bool _showTabBarFullScreen, _immersiveMode;
 
 		public HostTabPage()
 		{
@@ -50,14 +57,24 @@ namespace LRReader.Avalonia.Views.Main
 			}
 
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
 				desktop.MainWindow!.PropertyChanged += MainWindow_PropertyChanged;
+				TabViewControl.PointerMoved += TabViewControl_PointerMoved;
+			}
+			else
+			{
+				Platform.SetImmersiveModeRequested += Platform_SetImmersiveModeRequested;
+			}
 
 			Platform.ToggleFullScreenModeRequested += Platform_ToggleFullScreenModeRequested;
 
+
+			TabViewControl.SetRepositionAnimation();
+
 			Data.OpenTab(Tab.Archives);
-			/*if (Settings.OpenBookmarksTab)
-				Data.AddTab(new BookmarksTab(), false);
-			if (Api.ControlFlags.CategoriesEnabled)
+			if (Settings.OpenBookmarksTab)
+				Data.OpenTab(Tab.Bookmarks, false);
+			/*if (Api.ControlFlags.CategoriesEnabled)
 				if (Settings.OpenCategoriesTab)
 					Data.AddTab(new CategoriesTab(), false);*/
 
@@ -71,10 +88,18 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void OnNavigatingFrom(object? sender, FANavigatingCancelEventArgs e)
 		{
+
 			Platform.ToggleFullScreenModeRequested -= Platform_ToggleFullScreenModeRequested;
 
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			{
+				TabViewControl.PointerMoved -= TabViewControl_PointerMoved;
 				desktop.MainWindow!.PropertyChanged -= MainWindow_PropertyChanged;
+			}
+			else
+			{
+				Platform.SetImmersiveModeRequested -= Platform_SetImmersiveModeRequested;
+			}
 
 			var insets = TopLevel.InsetsManager;
 			insets?.SafeAreaChanged -= TitleBar_LayoutMetricsChanged;
@@ -86,7 +111,13 @@ namespace LRReader.Avalonia.Views.Main
 
 		private void HostTabPage_BackRequested(object? sender, RoutedEventArgs e) => e.Handled = Data.CurrentTab!.BackRequested();
 
-		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e) => TabViewControl.Margin = e.SafeAreaPadding;
+		private void TitleBar_LayoutMetricsChanged(object? sender, SafeAreaChangedArgs e)
+		{
+			if (Data.Fullscreen && _immersiveMode)
+				SetTabViewMargin(false);
+			else
+				SetTabViewMargin(true);
+		}
 
 		public void Receive(ShowNotification message) => ShowNotification(message.Value.Title, message.Value.Content, message.Value.Duration, message.Value.Severity);
 
@@ -149,7 +180,10 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			if (e.Property == Window.WindowStateProperty)
 			{
-				Data.Fullscreen = ((WindowState)e.NewValue!) == WindowState.FullScreen;
+				if (Data.Fullscreen = ((WindowState)e.NewValue!) == WindowState.FullScreen)
+					SetTabViewMargin(false);
+				else
+					SetTabViewMargin(true);
 			}
 		}
 
@@ -157,6 +191,7 @@ namespace LRReader.Avalonia.Views.Main
 		{
 			if (!Data.Fullscreen)
 			{
+				Data.Fullscreen = true;
 				if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 				{
 					var window = desktop.MainWindow!;
@@ -166,20 +201,51 @@ namespace LRReader.Avalonia.Views.Main
 				else
 				{
 					TopLevel.InsetsManager?.IsSystemBarVisible = false;
+					if (_immersiveMode)
+						SetTabViewMargin(false);
 				}
-				Data.Fullscreen = true;
 			}
 			else
 			{
+				Data.Fullscreen = false;
 				if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 					desktop.MainWindow!.WindowState = WindowState;
 				else
 				{
 					TopLevel.InsetsManager?.IsSystemBarVisible = true;
+					if (_immersiveMode)
+						SetTabViewMargin(true);
 				}
-				Data.Fullscreen = false;
 			}
 		}
 
+		private void Platform_SetImmersiveModeRequested(bool state)
+		{
+			_immersiveMode = state;
+
+			if (Data.Fullscreen)
+				SetTabViewMargin(!state);
+		}
+
+		private void TabViewControl_PointerMoved(object? sender, PointerEventArgs e)
+		{
+			if (!Data.Fullscreen)
+				return;
+			var point = e.GetPosition(TabViewControl);
+
+			if (!_showTabBarFullScreen && point.Y <= 48 + 8)
+				SetTabViewMargin(_showTabBarFullScreen = true);
+			else if (_showTabBarFullScreen && point.Y > 48 + 8)
+				SetTabViewMargin(_showTabBarFullScreen = false);
+		}
+
+		private void SetTabViewMargin(bool showTabBar)
+		{
+			var safeArea = TopLevel.InsetsManager?.SafeAreaPadding ?? EmptySafeArea;
+			if (showTabBar)
+				TabViewControl.Margin = safeArea;
+			else
+				TabViewControl.Margin = safeArea + HiddenTabBar;
+		}
 	}
 }

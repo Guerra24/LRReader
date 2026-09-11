@@ -64,11 +64,24 @@ public partial class ArchiveTabContent : UserControl
 		_resizerVertical = resizerVertical.Debounce(500);
 	}
 
+	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+	{
+		base.OnAttachedToVisualTree(e);
+		Service.Platform.SetImmersiveMode(Data.ShowReader);
+	}
+
+	protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+	{
+		base.OnDetachedFromVisualTree(e);
+		Service.Platform.SetImmersiveMode(false);
+	}
+
 	public async void CloseReader()
 	{
 		if (_transition)
 			return;
 		_transition = true;
+
 		if (!StackRoot.IsVisible)
 		{
 			StackRoot.IsVisible = true;
@@ -143,6 +156,8 @@ public partial class ArchiveTabContent : UserControl
 		Data.ShowReader = false;
 
 		_wasNew = await Data.SaveReaderData(_wasNew);
+
+		Service.Platform.SetImmersiveMode(false);
 
 		_transition = false;
 		_open = false;

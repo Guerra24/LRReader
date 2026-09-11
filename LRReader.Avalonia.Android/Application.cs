@@ -1,10 +1,7 @@
 ﻿using Android.Runtime;
 using Avalonia;
 using Avalonia.Android;
-using LRReader.Avalonia.Android.Services;
 using LRReader.Shared.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace LRReader.Avalonia.Android
 {

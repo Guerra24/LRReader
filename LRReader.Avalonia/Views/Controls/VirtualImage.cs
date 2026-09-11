@@ -136,15 +136,23 @@ public partial class VirtualImage : Control
 				TargetSize = (decodePixelWidth != 0 || decodePixelHeight != 0) ? new((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling)) : null
 			};
 
-			using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(options, bytes);
+			try
+			{
+				using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(options, bytes);
 
-			if (cancellationToken.IsCancellationRequested)
+				if (cancellationToken.IsCancellationRequested)
+					return null;
+
+				ImageWidth = source.Width;
+				ImageHeight = source.Height;
+
+				return source.ToSKImage();
+			}
+			catch (Exception e)
+			{
+				SentrySdk.CaptureException(e);
 				return null;
-
-			ImageWidth = source.Width;
-			ImageHeight = source.Height;
-
-			return source.ToSKImage();
+			}
 		});
 
 		Original = image != null ? bytes : null;

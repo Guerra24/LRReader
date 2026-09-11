@@ -20,6 +20,7 @@ namespace LRReader.Avalonia.Views.Controls
 		}
 
 		public Shared.Services.Tab Tab { get; set; }
+
 		public virtual TabState GetTabState() => new TabState(Tab);
 
 		public event Func<bool>? GoBack;
