@@ -67,13 +67,13 @@ public partial class ArchiveTabContent : UserControl
 	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
 	{
 		base.OnAttachedToVisualTree(e);
-		Service.Platform.SetImmersiveMode(Data.ShowReader);
+		Service.Platform.ImmersiveMode(Data.ShowReader);
 	}
 
 	protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
 	{
 		base.OnDetachedFromVisualTree(e);
-		Service.Platform.SetImmersiveMode(false);
+		Service.Platform.ImmersiveMode(false);
 	}
 
 	public async void CloseReader()
@@ -157,7 +157,7 @@ public partial class ArchiveTabContent : UserControl
 
 		_wasNew = await Data.SaveReaderData(_wasNew);
 
-		Service.Platform.SetImmersiveMode(false);
+		Service.Platform.ImmersiveMode(false);
 
 		_transition = false;
 		_open = false;

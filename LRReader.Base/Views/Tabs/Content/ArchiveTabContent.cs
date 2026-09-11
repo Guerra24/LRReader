@@ -116,7 +116,7 @@ public partial class ArchiveTabContent : UserControl
 			return;
 		_transition = true;
 
-		Service.Platform.SetImmersiveMode(true);
+		Service.Platform.ImmersiveMode(true);
 
 		var index = Data.ArchiveImagesReader.IndexOf(readerSet);
 

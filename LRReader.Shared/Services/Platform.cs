@@ -38,7 +38,7 @@ namespace LRReader.Shared.Services
 		public bool IsMobile { get; protected set; }
 		public bool IsDesktop { get; protected set; }
 		public event Action? ToggleFullScreenModeRequested;
-		public event Action<bool>? SetImmersiveModeRequested;
+		public event Action<bool>? ImmersiveModeChanged;
 		public abstract void Init();
 		public abstract void ChangeTheme(AppTheme theme);
 		public abstract string GetLocalizedString(string key);
@@ -86,7 +86,7 @@ namespace LRReader.Shared.Services
 
 		public void ToggleFullScreenMode() => ToggleFullScreenModeRequested?.Invoke();
 
-		public void SetImmersiveMode(bool state) => SetImmersiveModeRequested?.Invoke(state);
+		public void ImmersiveMode(bool state) => ImmersiveModeChanged?.Invoke(state);
 
 #if WINDOWS_UWP
 		public abstract bool WinRT_IsApiContractPresent(string contractName, ushort majorVersion);

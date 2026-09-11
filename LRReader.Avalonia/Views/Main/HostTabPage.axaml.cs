@@ -63,7 +63,7 @@ namespace LRReader.Avalonia.Views.Main
 			}
 			else
 			{
-				Platform.SetImmersiveModeRequested += Platform_SetImmersiveModeRequested;
+				Platform.ImmersiveModeChanged += Platform_ImmersiveModeChanged;
 			}
 
 			Platform.ToggleFullScreenModeRequested += Platform_ToggleFullScreenModeRequested;
@@ -98,7 +98,7 @@ namespace LRReader.Avalonia.Views.Main
 			}
 			else
 			{
-				Platform.SetImmersiveModeRequested -= Platform_SetImmersiveModeRequested;
+				Platform.ImmersiveModeChanged -= Platform_ImmersiveModeChanged;
 			}
 
 			var insets = TopLevel.InsetsManager;
@@ -179,12 +179,7 @@ namespace LRReader.Avalonia.Views.Main
 		private void MainWindow_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
 		{
 			if (e.Property == Window.WindowStateProperty)
-			{
-				if (Data.Fullscreen = ((WindowState)e.NewValue!) == WindowState.FullScreen)
-					SetTabViewMargin(false);
-				else
-					SetTabViewMargin(true);
-			}
+				SetTabViewMargin(!(Data.Fullscreen = ((WindowState)e.NewValue!) == WindowState.FullScreen));
 		}
 
 		private void Platform_ToggleFullScreenModeRequested()
@@ -219,7 +214,7 @@ namespace LRReader.Avalonia.Views.Main
 			}
 		}
 
-		private void Platform_SetImmersiveModeRequested(bool state)
+		private void Platform_ImmersiveModeChanged(bool state)
 		{
 			_immersiveMode = state;
 

@@ -1,6 +1,5 @@
 ﻿using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.Threading;
 using System.Text.RegularExpressions;
 
 namespace LRReader.Avalonia.Views.Controls
