@@ -17,6 +17,8 @@ namespace LRReader.UWP.Views.Tabs.Content
 
 		private ResourceLoader lang;
 
+		private int _currentCount;
+
 		public CategoryEdit()
 		{
 			this.InitializeComponent();
@@ -72,6 +74,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				e.AcceptedOperation = DataPackageOperation.Link;
 				e.DragUIOverride.Caption = lang.GetString("CategoriesEdit/DragAdd");
+				e.Handled = true;
 			}
 		}
 
@@ -90,6 +93,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private void ArchivesGrid_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
 		{
+			_currentCount = ViewModel.CategoryArchives.Count;
 			e.Data.RequestedOperation = DataPackageOperation.Link;
 			if (e.Items.Any())
 				e.Data.Properties.Add("archivesAdd", JsonSerializer.Serialize(e.Items.ToList(), JsonSettings.Options));
@@ -102,6 +106,7 @@ namespace LRReader.UWP.Views.Tabs.Content
 			{
 				e.AcceptedOperation = DataPackageOperation.Move;
 				e.DragUIOverride.Caption = lang.GetString("CategoriesEdit/DragRemove");
+				e.Handled = true;
 			}
 		}
 
@@ -120,10 +125,18 @@ namespace LRReader.UWP.Views.Tabs.Content
 		[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AOT", "IL3050")]
 		private void CategoryArchives_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
 		{
+			_currentCount = ViewModel.CategoryArchives.Count;
 			e.Data.RequestedOperation = DataPackageOperation.Move;
 			if (e.Items.Any())
 				e.Data.Properties.Add("archivesRemove", JsonSerializer.Serialize(e.Items.ToList(), JsonSettings.Options));
 		}
 
+		// Reorder
+		private async void CategoryArchives_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs e)
+		{
+			// Nothing got changed but something moved so remove and readd the reorganized list of archives
+			if (_currentCount == ViewModel.CategoryArchives.Count)
+				await ViewModel.RefreshArchives();
+		}
 	}
 }

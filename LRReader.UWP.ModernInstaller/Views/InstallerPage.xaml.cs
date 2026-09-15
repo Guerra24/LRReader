@@ -1,28 +1,26 @@
 using LRReader.UWP.Installer.Services;
 using LRReader.UWP.Installer.ViewModels;
+using LRReader.UWP.ModernInstaller.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Modern.UI.Xaml;
 using System;
 using System.IO;
 using System.Reflection;
-using Windows.UI;
+using System.Threading;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using XamlHostingKit;
 
 namespace LRReader.UWP.Installer.Views;
 
-public sealed partial class InstallerPage : UserControl
+public sealed partial class InstallerPage : Page
 {
 	public InstallerPageViewModel Data;
-	//private XamlWindow test;
 
 	public InstallerPage()
 	{
 		this.InitializeComponent();
-		if (Environment.OSVersion.Version >= new Version(10, 0, 22621, 0))
-			Root.Background = new SolidColorBrush(Colors.Transparent);
 		Data = Service.Services.GetRequiredService<InstallerPageViewModel>();
 	}
 
@@ -37,9 +35,17 @@ public sealed partial class InstallerPage : UserControl
 		await Data.Load();
 	}
 
-	/*private void Button_Click(object sender, RoutedEventArgs e)
+	private void Button_Click(object sender, RoutedEventArgs e)
 	{
-		test = new("Settings");
-		test.Activate();
-	}*/
+		XamlApplication.CreateNewWindow(new WindowCreationOptions { Title = "Settings" }, (p) =>
+		{
+			SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+
+			var window = XamlWindow.Current;
+
+			window.Content = new SettingsPage();
+
+			window.Show();
+		});
+	}
 }

@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net11.0;net10.0-windows10.0.26100.0</TargetFrameworks>
+    <TargetFrameworks>net11.0;net11.0-windows10.0.26100.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <!--<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>-->
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>x64;ARM64;ARM32</Platforms>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <IsAotCompatible>true</IsAotCompatible>
     <WindowsSdkPackageVersion>10.0.26100.87</WindowsSdkPackageVersion>
@@ -14,10 +14,10 @@
     <CsWinRTEnableManifestFreeActivation>false</CsWinRTEnableManifestFreeActivation>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-    <Features Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0'))">runtime-async=on</Features>
+    <Features>runtime-async=on</Features>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-windows10.0.26100.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net11.0-windows10.0.26100.0'">
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 
@@ -30,9 +30,9 @@
     <PackageReference Include="KeyedSemaphores" Version="6.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
     <PackageReference Include="RestSharp" Version="114.0.0" />
-    <PackageReference Include="Sentry" Version="6.10.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="4.1.1" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" Condition="'$(TargetFramework)' == 'net10.0-windows10.0.26100.0'" />
+    <PackageReference Include="Sentry" Version="6.11.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="4.1.2" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" Condition="'$(TargetFramework)' == 'net11.0-windows10.0.26100.0'" />
   </ItemGroup>
 
 </Project>

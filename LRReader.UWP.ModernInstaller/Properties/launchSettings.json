@@ -2,7 +2,7 @@
   "profiles": {
     "Local Machine": {
       "commandName": "Project",
-      "nativeDebugging": false
+      "debugEngines": "managed"
     }
   }
 }

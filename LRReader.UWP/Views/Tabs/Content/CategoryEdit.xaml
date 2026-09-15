@@ -50,8 +50,9 @@
 			<GridView
 				x:Name="CategoryArchives"
 				ext:Element.ModernShadow="{StaticResource ElementShadow}"
-				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" AllowDrop="True" CanDragItems="True"
+				ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True" AllowDrop="True" CanDragItems="True" CanReorderItems="True"
 				DragItemsStarting="CategoryArchives_DragItemsStarting" DragOver="CategoryArchives_DragOver" Drop="CategoryArchives_Drop"
+				DragItemsCompleted="CategoryArchives_DragItemsCompleted"
 				ItemsSource="{x:Bind ViewModel.CategoryArchives}"
 				SelectionMode="Extended">
 				<GridView.ItemTemplate>

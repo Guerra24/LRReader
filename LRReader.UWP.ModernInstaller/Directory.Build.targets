@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <MrmPatcherEmbedPri Condition="'$(MrmPatcherEmbedPri)' == ''">false</MrmPatcherEmbedPri>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="MrmPatcher.EmbedPri" Value="$(MrmPatcherEmbedPri)" Trim="true" />
+  </ItemGroup>
+
+  <Target Name="_EmbedPriIntoDll" BeforeTargets="BeforeResGen" Condition="'$(MrmPatcherEmbedPri)' == 'true'" >
+    <MSBuild Projects="$(ProjectPath)" Targets="Build;GenerateProjectPriFile" Properties="AppxGeneratePriEnabled=true;MrmPatcherEmbedPri=false" />
+    <ItemGroup>
+      <EmbeddedResource Include="$(ProjectPriFullPath)" Type="Non-Resx" WithCulture="false" Condition="Exists('$(ProjectPriFullPath)')" />
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,18 +1,17 @@
-﻿<modern:XamlApplication
+﻿<Application
 	x:Class="LRReader.UWP.Installer.App"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:modern="using:Modern.UI.Xaml"
+	xmlns:controls="using:Microsoft.UI.Xaml.Controls"
 	xmlns:converters="using:LRReader.UWP.Installer.Converters">
 	<Application.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="ms-appx:///Mile.Xaml.Styles.SunValley.xbf" />
+		<controls:XamlControlsResources>
+			<controls:XamlControlsResources.MergedDictionaries>
 				<ResourceDictionary>
 					<converters:InstallStateToVisibilityConverter x:Key="InstallStateToVisibilityConverter" />
 					<converters:ProgressBarIsIndeterminateConverter x:Key="ProgressBarIsIndeterminateConverter" />
 				</ResourceDictionary>
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
+			</controls:XamlControlsResources.MergedDictionaries>
+		</controls:XamlControlsResources>
 	</Application.Resources>
-</modern:XamlApplication>
+</Application>

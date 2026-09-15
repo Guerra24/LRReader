@@ -4,6 +4,7 @@ using LRReader.UWP.Installer.Services;
 using System;
 using System.Threading.Tasks;
 using Windows.Management.Deployment;
+using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Installer.ViewModels;
 
@@ -68,6 +69,23 @@ public partial class InstallerPageViewModel : ObservableObject
 		ShowProgress = false;
 		InstallState = await Installer.CheckAppState();
 		ShowButtons = true;
+	}
+
+	[RelayCommand]
+	private async Task UninstallAskFirst()
+	{
+		var dialog = new ContentDialog()
+		{
+			Title = "Do you want to uninstall LRReader?",
+			PrimaryButtonText = "Yes",
+			CloseButtonText = "Cancel"
+		};
+
+		if (await dialog.ShowAsync() == ContentDialogResult.None)
+			return;
+
+		await Installer.Uninstall();
+		InstallState = await Installer.CheckAppState();
 	}
 
 	[RelayCommand]

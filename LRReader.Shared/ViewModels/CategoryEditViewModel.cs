@@ -9,30 +9,24 @@ namespace LRReader.Shared.ViewModels
 	public partial class CategoryEditViewModel : ObservableObject
 	{
 		private readonly ArchivesService Archives;
-		private readonly ApiService Api;
 
 		public Category category = null!;
 		public string Name { get; set; } = string.Empty;
 		public string Search { get; set; } = null!;
 		public bool Pinned { get; set; }
 
+		[ObservableProperty]
 		private bool _canSave;
-		public bool CanSave
-		{
-			get => _canSave;
-			set => SetProperty(ref _canSave, value);
-		}
 
-		public ObservableCollection<Archive> CategoryArchives = new ObservableCollection<Archive>();
+		public ObservableCollection<Archive> CategoryArchives { get; } = new();
 
 		public bool Empty => CategoryArchives.Count == 0;
 
 		private bool _loading;
 
-		public CategoryEditViewModel(ArchivesService archives, ApiService api)
+		public CategoryEditViewModel(ArchivesService archives)
 		{
 			Archives = archives;
-			Api = api;
 		}
 
 		public async Task LoadCategory(Category cat)
@@ -146,5 +140,15 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
+
+		public async Task RefreshArchives()
+		{
+			foreach (var a in CategoryArchives)
+			{
+				await CategoriesProvider.RemoveArchiveFromCategory(category.id, a.arcid);
+				await CategoriesProvider.AddArchiveToCategory(category.id, a.arcid);
+			}
+		}
+
 	}
 }

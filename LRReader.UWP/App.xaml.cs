@@ -5,11 +5,14 @@ using Sentry.Protocol;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.ViewManagement;
 using static LRReader.Shared.Services.Service;
 using ColorHelper = CommunityToolkit.WinUI.Helpers.ColorHelper;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
+
+#if DEBUG_WINUI
+using Windows.ApplicationModel.Resources.Core;
+#endif
 
 namespace LRReader.UWP
 {
@@ -110,8 +113,9 @@ namespace LRReader.UWP
 				Platform.GoToPage(Pages.Loading, PagesTransition.None, e.SplashScreen);
 			Window.Current.Activate();
 
-			//var file = await StorageFile.GetFileFromPathAsync(Path.Combine(AppContext.BaseDirectory, "Microsoft.UI.Xaml.pri"));
-			//ResourceManager.Current.LoadPriFiles(new List<StorageFile> { file });
+#if DEBUG_WINUI
+			StorageFile.GetFileFromPathAsync(Path.Combine(AppContext.BaseDirectory, "Microsoft.UI.Xaml.pri")).AsTask().ContinueWith(t => ResourceManager.Current.LoadPriFiles(new List<StorageFile> { t.Result }));
+#endif
 		}
 
 		[DynamicWindowsRuntimeCast(typeof(AppServiceTriggerDetails))]

@@ -1,27 +1,32 @@
 ﻿using LRReader.UWP.Installer.Services;
 using LRReader.UWP.Installer.Views;
-using Modern.UI.Xaml;
+using System.Threading;
+using Windows.ApplicationModel.Activation;
+using Windows.System;
+using Windows.UI.Xaml;
+using XamlHostingKit;
 
 namespace LRReader.UWP.Installer;
 
-public partial class App : XamlApplication
+public partial class App : Application
 {
-
-	private XamlWindow mainWindow = null!;
 
 	public App()
 	{
 		this.InitializeComponent();
 	}
 
-	protected override void OnLaunched()
+	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
-		mainWindow = new($"LRReader {Service.AppInfo.Version}", 976, 521)
-		{
-			MinWidth = 976,
-			MinHeight = 521,
-			Content = new InstallerPage()
-		};
-		mainWindow.Activate();
+		SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+
+		var window = XamlWindow.Current;
+
+		window.Title = $"LRReader {Service.AppInfo.Version}";
+
+		window.Content = new InstallerPage();
+
+		window.Resize(976, 521);
+		window.Show();
 	}
 }
