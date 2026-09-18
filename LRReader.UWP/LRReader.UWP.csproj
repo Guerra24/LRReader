@@ -103,10 +103,14 @@
     <Using Include="WinRT" />
   </ItemGroup>
 
+  <!-- This requires a bit of work
   <ItemGroup>
+    <NativeLibrary Include="jxl.lib" />
+    <NativeLibrary Include="jxl_threads.lib" />
     <DirectPInvoke Include="jxl" />
     <DirectPInvoke Include="jxl_threads" />
   </ItemGroup>
+-->
 
   <ItemGroup>
     <Compile Include="..\LRReader.Base\**\*.cs" LinkBase="Shared" Visible="false" />
