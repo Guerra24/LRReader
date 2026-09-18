@@ -2,13 +2,16 @@
 using LRReader.UWP.Servicing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using TerraFX.Interop.Windows;
+using Windows.Management.Deployment;
 using XamlHostingKit;
 using static TerraFX.Interop.Windows.MB;
 using static TerraFX.Interop.Windows.Windows;
@@ -24,12 +27,11 @@ internal partial class Program
 	[STAThread]
 	public static unsafe int Main(string[] args)
 	{
-		if (Environment.OSVersion.Version < new Version(10, 0, 19041, 0))
+		if (!OperatingSystem.IsWindowsVersionAtLeast(10, 0, 19041, 0))
 		{
-			var title = (char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "Not supported".GetPinnableReference()));
-			var content = (char*)Unsafe.AsPointer(ref Unsafe.AsRef(in "LRReader requires Windows 10 20H1 or newer".GetPinnableReference()));
-
-			MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
+			fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Not supported"))
+			fixed (char* content = &Utf16StringMarshaller.GetPinnableReference("LRReader requires Windows 10 20H1 or newer"))
+				MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 			return 0;
 		}
 
@@ -66,12 +68,50 @@ internal partial class Program
 			return ok ? 0 : -1;
 		}
 
-		//AddPackage("Microsoft.VCLibs.140.00_8wekyb3d8bbwe");
-		AddPackage("Microsoft.UI.Xaml.2.8_8wekyb3d8bbwe");
+		var winuiPfn = "Microsoft.UI.Xaml.2.8_8wekyb3d8bbwe";
+
+		var pm = new PackageManager();
+		var currentArch = RuntimeInformation.ProcessArchitecture switch
+		{
+			Architecture.X64 => Windows.System.ProcessorArchitecture.X64,
+			Architecture.Arm64 => Windows.System.ProcessorArchitecture.Arm64,
+			_ => Windows.System.ProcessorArchitecture.Unknown,
+		};
+
+		if (!pm.FindPackagesForUser(string.Empty, winuiPfn).Any(pkg => pkg.Id.Version.ToVersion() >= new Version(8, 2501, 31001, 0) && pkg.Id.Architecture == currentArch))
+		{
+			try
+			{
+				var res = pm.AddPackageByUriAsync(new Uri($"https://s3.guerra24.net/projects/lrr/windows/deps/{currentArch.ToString().ToLower()}/Microsoft.UI.Xaml.2.8.appx"), new AddPackageOptions()).GetAwaiter().GetResult();
+				if (!res.IsRegistered)
+				{
+					fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
+					fixed (char* content = &Utf16StringMarshaller.GetPinnableReference(res.ErrorText))
+						MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
+					return 0;
+				}
+				/*else
+				{
+					Process.Start(Environment.ProcessPath!);
+					return 0;
+				}*/
+			}
+			catch (Exception e)
+			{
+				fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
+				fixed (char* content = &Utf16StringMarshaller.GetPinnableReference(e.Message))
+					MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
+				return 0;
+			}
+		}
+
+		AddPackage(winuiPfn);
+
+		XamlConfig.EnableWebView = false;
 
 		if (EmbedPri)
 		{
-			using var stream = Assembly.GetEntryAssembly()!.GetManifestResourceStream("resources.pri")!;
+			using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("resources.pri")!;
 			var data = new byte[stream.Length];
 			stream.ReadExactly(data);
 			XamlApplication.Start((p) => new App(), data.AsBuffer());
@@ -96,7 +136,12 @@ internal partial class Program
 					null,
 					pfn,
 					new PACKAGE_VERSION(),
-					PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None,
+					RuntimeInformation.ProcessArchitecture switch
+					{
+						Architecture.X64 => PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X64,
+						Architecture.Arm64 => PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Arm64,
+						_ => PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None,
+					},
 					PackageDependencyLifetimeKind.PackageDependencyLifetimeKind_Process,
 					null,
 					CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, &output);
@@ -111,11 +156,16 @@ internal partial class Program
 		}
 		else
 		{
-			AddDependencyToProcessPackageGraph("Microsoft.UI.Xaml.2.8_8wekyb3d8bbwe");
+			AddDependencyToProcessPackageGraph(packageFamilyName);
 		}
 	}
 
 	[LibraryImport("kernel.appcore.dll", StringMarshalling = StringMarshalling.Utf16)]
 	public static partial int AddDependencyToProcessPackageGraph(string packageFamilyName, nint unk = 0, uint unk2 = 0, uint unk3 = 0);
 
+}
+
+public static class Extensions
+{
+	public static Version ToVersion(this Windows.ApplicationModel.PackageVersion version) => new Version(version.Major, version.Minor, version.Build, version.Revision);
 }

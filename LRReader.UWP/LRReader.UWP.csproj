@@ -65,8 +65,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.260914-build.2663" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.260914-build.2663" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.260915-build.2673" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.260915-build.2673" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250828-build.2223" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.251219" />
@@ -103,14 +103,11 @@
     <Using Include="WinRT" />
   </ItemGroup>
 
-<!-- This requires a bit of work
   <ItemGroup>
-    <NativeLibrary Include="jxl.lib" />
-    <NativeLibrary Include="jxl_threads.lib" />
     <DirectPInvoke Include="jxl" />
     <DirectPInvoke Include="jxl_threads" />
   </ItemGroup>
--->
+
   <ItemGroup>
     <Compile Include="..\LRReader.Base\**\*.cs" LinkBase="Shared" Visible="false" />
   </ItemGroup>
