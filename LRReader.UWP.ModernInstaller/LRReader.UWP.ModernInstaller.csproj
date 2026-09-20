@@ -47,7 +47,7 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4191.47" />
-    <PackageReference Include="XamlHostingKit.Static" Version="0.2.0" />
+    <PackageReference Include="XamlHostingKit.Static" Version="0.2.6" />
   </ItemGroup>
 
   <ItemGroup>

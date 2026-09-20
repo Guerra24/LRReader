@@ -2,19 +2,18 @@
 using LRReader.UWP.Servicing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
 using TerraFX.Interop.Windows;
 using Windows.Management.Deployment;
 using XamlHostingKit;
 using static TerraFX.Interop.Windows.MB;
 using static TerraFX.Interop.Windows.Windows;
+
 
 namespace LRReader.UWP.Installer;
 
@@ -90,11 +89,6 @@ internal partial class Program
 						MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 					return 0;
 				}
-				/*else
-				{
-					Process.Start(Environment.ProcessPath!);
-					return 0;
-				}*/
 			}
 			catch (Exception e)
 			{
@@ -105,9 +99,14 @@ internal partial class Program
 			}
 		}
 
-		AddPackage(winuiPfn);
-
-		XamlConfig.EnableWebView = false;
+		var hr = AddPackage(winuiPfn);
+		if (!SUCCEEDED(hr))
+		{
+			fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
+			fixed (char* content = &Utf16StringMarshaller.GetPinnableReference($"Unable to create package dependency. Error: {Marshal.GetExceptionForHR(hr)?.Message} (0x{hr:X8})"))
+				MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
+			return 0;
+		}
 
 		if (EmbedPri)
 		{
@@ -125,7 +124,7 @@ internal partial class Program
 	}
 
 	[UnconditionalSuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-	private static unsafe void AddPackage(string packageFamilyName)
+	private static unsafe HRESULT AddPackage(string packageFamilyName)
 	{
 		if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000, 0))
 		{
@@ -146,17 +145,22 @@ internal partial class Program
 					null,
 					CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, &output);
 
-				if (SUCCEEDED(hr))
+				if (!SUCCEEDED(hr))
+					return hr;
+				try
 				{
 					PACKAGEDEPENDENCY_CONTEXT context = new();
-					AddPackageDependency(output, 0, AddPackageDependencyOptions.AddPackageDependencyOptions_None, &context, &pfn);
+					return AddPackageDependency(output, 0, AddPackageDependencyOptions.AddPackageDependencyOptions_None, &context, &pfn);
 				}
-				HeapFree(GetProcessHeap(), 0, output);
+				finally
+				{
+					HeapFree(GetProcessHeap(), 0, output);
+				}
 			}
 		}
 		else
 		{
-			AddDependencyToProcessPackageGraph(packageFamilyName);
+			return AddDependencyToProcessPackageGraph(packageFamilyName);
 		}
 	}
 
@@ -167,5 +171,5 @@ internal partial class Program
 
 public static class Extensions
 {
-	public static Version ToVersion(this Windows.ApplicationModel.PackageVersion version) => new Version(version.Major, version.Minor, version.Build, version.Revision);
+	public static Version ToVersion(this Windows.ApplicationModel.PackageVersion version) => new(version.Major, version.Minor, version.Build, version.Revision);
 }
