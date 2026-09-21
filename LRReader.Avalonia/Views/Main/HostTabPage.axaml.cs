@@ -54,7 +54,7 @@ namespace LRReader.Avalonia.Views.Main
 			{
 				insets.SafeAreaChanged += TitleBar_LayoutMetricsChanged;
 				SafeAreaOverlay.BorderThickness = TabViewControl.Margin = insets.SafeAreaPadding;
-				SafeAreaOverlay.IsVisible = !insets.IsSystemBarVisible ?? false;
+				SafeAreaOverlay.IsVisible = false;
 			}
 
 			if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
