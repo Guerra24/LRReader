@@ -100,7 +100,7 @@ internal partial class Program
 		}
 
 		var hr = AddPackage(winuiPfn);
-		if (!SUCCEEDED(hr))
+		if (FAILED(hr))
 		{
 			fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
 			fixed (char* content = &Utf16StringMarshaller.GetPinnableReference($"Unable to create package dependency. Error: {Marshal.GetExceptionForHR(hr)?.Message} (0x{hr:X8})"))
@@ -145,8 +145,9 @@ internal partial class Program
 					null,
 					CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, &output);
 
-				if (!SUCCEEDED(hr))
+				if (FAILED(hr))
 					return hr;
+
 				try
 				{
 					PACKAGEDEPENDENCY_CONTEXT context = new();

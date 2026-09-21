@@ -3,6 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net11.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Platforms>x64;ARM64</Platforms>
     <PublishTrimmed>true</PublishTrimmed>
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>

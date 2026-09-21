@@ -75,6 +75,7 @@
                 </StackPanel>
             </controls:ModernTabView.ExtraFooter>
         </controls:ModernTabView>
+        <Border x:Name="SafeAreaOverlay" BorderBrush="{DynamicResource SafeAreaColor}" IsHitTestVisible="False" />
         <ui:FATeachingTip IsOpen="{Binding ShowRestore, Mode=TwoWay, Source={x:Static services:Service.Session}}" Title="{ext:LocalizedString /Pages/HostTabPage/RestoreSession/Title}" Subtitle="{ext:LocalizedString /Pages/HostTabPage/RestoreSession/Subtitle}" ActionButtonContent="{ext:LocalizedString /Pages/HostTabPage/RestoreSession/ActionButtonContent}" IsLightDismissEnabled="False" PreferredPlacement="TopRight" PlacementMargin="0,33,0,0" ActionButtonStyle="{StaticResource AccentButtonStyle}" ActionButtonClick="RestoreSession_ActionButtonClick" />
         <!-- Temporary -->
         <ui:FAInfoBar x:Name="Notifications" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32" Background="{DynamicResource SolidBackgroundFillColorBase}" />

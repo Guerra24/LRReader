@@ -13,8 +13,15 @@
     <Platform Solution="*|x64" Project="ARM64" />
     <Deploy />
   </Project>
-  <Project Path="LRReader.Avalonia.Desktop/LRReader.Avalonia.Desktop.csproj" />
-  <Project Path="LRReader.Avalonia/LRReader.Avalonia.csproj" />
+  <Project Path="LRReader.Avalonia.Desktop/LRReader.Avalonia.Desktop.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="LRReader.Avalonia/LRReader.Avalonia.csproj">
+    <Platform Solution="*|ARM32" Project="ARM32" />
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="LRReader.Base/LRReader.Base.csproj" Id="73abc322-ef4c-4fe0-b1af-7ed74630dad6" />
   <Project Path="LRReader.Shared/LRReader.Shared.csproj">
     <Platform Solution="*|ARM32" Project="ARM32" />

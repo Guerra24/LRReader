@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net11.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>x64;ARM64;ARM32</Platforms>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

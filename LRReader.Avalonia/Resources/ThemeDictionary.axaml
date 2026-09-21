@@ -6,10 +6,7 @@
             <Color x:Key="MicaFallback">White</Color>
             <Color x:Key="BrushDeepBackgroundColor">White</Color>
             <SolidColorBrush x:Key="GridOverGridBackground" Color="#E5E5E5" />
-            <!--<muxcm:AcrylicBrush
-            x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#E5E5E5"
-            TintColor="{StaticResource BrushDeepBackgroundColor}"
-            TintOpacity="0.6" />-->
+            <SolidColorBrush x:Key="SafeAreaColor" Color="White" />
             <Color x:Key="ColorNavTop">#D0D0D0</Color>
             <Color x:Key="BrushItemGridBackgroundColor">#B3FFFFFF</Color>
             <SolidColorBrush x:Key="BrushItemGridBackground" Color="{DynamicResource ControlFillColorDefault}" />
@@ -29,10 +26,7 @@
             <Color x:Key="MicaFallback">Black</Color>
             <Color x:Key="BrushDeepBackgroundColor">#0a0a0a</Color>
             <SolidColorBrush x:Key="GridOverGridBackground" Color="#1f1f1f" />
-            <!--<muxcm:AcrylicBrush
-            x:Key="GridOverGridBackground" BackgroundSource="Backdrop" FallbackColor="#1f1f1f"
-            TintColor="{StaticResource BrushDeepBackgroundColor}"
-            TintOpacity="0.6" />-->
+            <SolidColorBrush x:Key="SafeAreaColor" Color="Black" />
             <Color x:Key="ColorNavTop">#151515</Color>
             <Color x:Key="BrushItemGridBackgroundColor">#0FFFFFFF</Color>
             <SolidColorBrush x:Key="BrushItemGridBackground" Color="{DynamicResource ControlFillColorDefault}" />
