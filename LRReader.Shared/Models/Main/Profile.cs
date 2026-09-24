@@ -14,7 +14,7 @@ namespace LRReader.Shared.Models.Main
 		public List<BookmarkedArchive> Bookmarks { get; set; }
 		public bool AcceptedDisclaimer { get; set; }
 		public List<ArchiveHit> MarkedAsNonDuplicated { get; set; }
-		public int CacheTimestamp { get; set; }
+		public long CacheTimestamp { get; set; }
 		public bool Integration { get; set; }
 
 		[ObservableProperty]

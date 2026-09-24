@@ -98,13 +98,13 @@ namespace LRReader.Shared.Services
 		public bool V0940 { get; private set; }
 		public bool V0980 { get; private set; }
 
-		public bool BrokenCache { get; private set; }
+		//public bool BrokenCache { get; private set; }
 
 		public bool V0940Edit => V0940 & Service.Settings.Profile.HasApiKey;
 
 		public void Check(ServerInfo serverInfo)
 		{
-			BrokenCache = false;
+			//BrokenCache = false;
 
 			V0940 = serverInfo.version >= new Version(0, 9, 40);
 			V0980 = serverInfo.version >= new Version(0, 9, 80);

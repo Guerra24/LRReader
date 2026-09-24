@@ -19,7 +19,7 @@ namespace LRReader.Shared.ViewModels
 
 		public async Task Refresh()
 		{
-			await Archives.ReloadArchives();
+			await Archives.ReloadArchives(true);
 		}
 
 		public async Task LoadBookmarks()

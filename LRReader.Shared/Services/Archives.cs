@@ -38,15 +38,13 @@ namespace LRReader.Shared.Services
 
 		[UnconditionalSuppressMessage("Trimming", "IL2026")]
 		[UnconditionalSuppressMessage("AOT", "IL3050")]
-		public async Task ReloadArchives()
+		public async Task ReloadArchives(bool force = false)
 		{
 			await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 			Archives.Clear();
 			TagStats.Clear();
 			Namespaces.Clear();
 			//Categories.Clear();
-			foreach (var json in Directory.GetFiles(Files.LocalCache, "*.json", SearchOption.TopDirectoryOnly))
-				File.Delete(json);
 
 			var serverInfo = await ServerProvider.GetServerInfo();
 			if (serverInfo == null)
@@ -54,7 +52,6 @@ namespace LRReader.Shared.Services
 
 			var profile = Settings.Profile;
 
-			var currentTimestamp = profile.CacheTimestamp;
 			MetadataPath = Path.Combine(metadataDirectory.FullName, profile.UID);
 
 			SettingsStorage.DeleteObjectLocal("CacheTimestamp");
@@ -64,9 +61,11 @@ namespace LRReader.Shared.Services
 			else
 				BookmarkLink = string.Empty;
 
-			if (currentTimestamp != serverInfo.cache_last_cleared || !Directory.Exists(MetadataPath) || Api.ControlFlags.BrokenCache)
+			var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+			if (TimeSpan.FromSeconds(now - profile.CacheTimestamp) > TimeSpan.FromDays(1) /*serverInfo.cache_last_cleared*/ || !Directory.Exists(MetadataPath) /*|| Api.ControlFlags.BrokenCache*/ || force)
 			{
-				profile.CacheTimestamp = serverInfo.cache_last_cleared;
+				profile.CacheTimestamp = now;
 				Settings.SaveProfiles();
 				await Update(MetadataPath);
 			}
@@ -137,26 +136,25 @@ namespace LRReader.Shared.Services
 
 			var archives = Task.Run(async () =>
 			{
-				if (!Settings.UseIncrementalCaching)
+				if (Settings.UseIncrementalCaching)
+					return;
+				var archives = await ArchivesProvider.GetArchives();
+				if (archives != null)
 				{
-					var archives = await ArchivesProvider.GetArchives();
-					if (archives != null)
-					{
-						var temp = new ConcurrentDictionary<string, Archive>(archives.ToDictionary(c => c.arcid, c => c));
+					var temp = new ConcurrentDictionary<string, Archive>(archives.ToDictionary(c => c.arcid, c => c));
 
-						/*var tanks = await TankoubonsProvider.GetTankoubons(-1);
+					/*var tanks = await TankoubonsProvider.GetTankoubons(-1);
 
-						if (tanks != null)
-							foreach (var tank in tanks.result)
-							{
-								var metadata = await ArchivesProvider.GetArchive(tank.id);
-								if (metadata != null)
-									temp[tank.id] = metadata;
-							}*/
+					if (tanks != null)
+						foreach (var tank in tanks.result)
+						{
+							var metadata = await ArchivesProvider.GetArchive(tank.id);
+							if (metadata != null)
+								temp[tank.id] = metadata;
+						}*/
 
-						await Files.StoreFile(Path.Combine(path, "Index-v4.json"), JsonSerializer.Serialize(temp, JsonSettings.Options));
-						Archives = temp;
-					}
+					await Files.StoreFile(Path.Combine(path, "Index-v4.json"), JsonSerializer.Serialize(temp, JsonSettings.Options));
+					Archives = temp;
 				}
 			});
 
