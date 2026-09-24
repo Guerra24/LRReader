@@ -24,7 +24,7 @@ namespace LRReader.Shared.Services
 
 		private string MetadataPath = "";
 
-		private DirectoryInfo metadataDirectory;
+		private readonly DirectoryInfo metadataDirectory;
 
 		public ArchivesService(IFilesService files, ISettingsStorageService settingsStorage, SettingsService settings, TabsService tabs, ApiService api)
 		{
@@ -55,7 +55,7 @@ namespace LRReader.Shared.Services
 			var profile = Settings.Profile;
 
 			var currentTimestamp = profile.CacheTimestamp;
-			MetadataPath = $"{metadataDirectory.FullName}/{profile.UID}";
+			MetadataPath = Path.Combine(metadataDirectory.FullName, profile.UID);
 
 			SettingsStorage.DeleteObjectLocal("CacheTimestamp");
 
@@ -74,13 +74,13 @@ namespace LRReader.Shared.Services
 			{
 				try
 				{
-					var index = Files.GetFile($"{MetadataPath}/Index-v4.json");
-					var tags = Files.GetFile($"{MetadataPath}/Tags-v2.json");
-					var namespaces = Files.GetFile($"{MetadataPath}/Namespaces-v2.json");
+					var index = Files.GetFile(Path.Combine(MetadataPath, "Index-v4.json"));
+					var tags = Files.GetFile(Path.Combine(MetadataPath, "Tags-v2.json"));
+					var namespaces = Files.GetFile(Path.Combine(MetadataPath, "Namespaces-v2.json"));
 					//var categories = Files.GetFile($"{MetadataPath}/Categories-v2.json");
 					Archives = JsonSerializer.Deserialize<ConcurrentDictionary<string, Archive>>(await index, JsonSettings.Options) ?? new();
-					TagStats = JsonSerializer.Deserialize<List<TagStats>>(await tags, JsonSettings.Options) ?? new();
-					Namespaces = JsonSerializer.Deserialize<List<string>>(await namespaces, JsonSettings.Options) ?? new();
+					TagStats = JsonSerializer.Deserialize<List<TagStats>>(await tags, JsonSettings.Options) ?? [];
+					Namespaces = JsonSerializer.Deserialize<List<string>>(await namespaces, JsonSettings.Options) ?? [];
 					//Categories = JsonConvert.DeserializeObject<Dictionary<string, Category>>(await categories);
 				}
 				catch (Exception)
@@ -154,7 +154,7 @@ namespace LRReader.Shared.Services
 									temp[tank.id] = metadata;
 							}*/
 
-						await Files.StoreFile($"{path}/Index-v4.json", JsonSerializer.Serialize(temp, JsonSettings.Options));
+						await Files.StoreFile(Path.Combine(path, "Index-v4.json"), JsonSerializer.Serialize(temp, JsonSettings.Options));
 						Archives = temp;
 					}
 				}
@@ -165,14 +165,14 @@ namespace LRReader.Shared.Services
 				var tagStats = await DatabaseProvider.GetTagStats();
 				if (tagStats != null)
 				{
-					await Files.StoreFile($"{path}/Tags-v2.json", JsonSerializer.Serialize(tagStats, JsonSettings.Options));
+					await Files.StoreFile(Path.Combine(path, "Tags-v2.json"), JsonSerializer.Serialize(tagStats, JsonSettings.Options));
 					foreach (var t in tagStats)
 					{
 						if (!string.IsNullOrEmpty(t.@namespace) && !Namespaces.Exists(s => s.Equals(t.@namespace)))
 							Namespaces.Add(t.@namespace);
 						TagStats.Add(t);
 					}
-					await Files.StoreFile($"{path}/Namespaces-v2.json", JsonSerializer.Serialize(Namespaces, JsonSettings.Options));
+					await Files.StoreFile(Path.Combine(path, "Namespaces-v2.json"), JsonSerializer.Serialize(Namespaces, JsonSettings.Options));
 				}
 			});
 

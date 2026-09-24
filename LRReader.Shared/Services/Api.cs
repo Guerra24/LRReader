@@ -93,7 +93,7 @@ namespace LRReader.Shared.Services
 
 	public class ControlFlags
 	{
-		public bool ProgressTracking { get; private set; } = false;
+		public bool ProgressTracking { get; private set; }
 
 		public bool V0940 { get; private set; }
 		public bool V0980 { get; private set; }
@@ -104,7 +104,7 @@ namespace LRReader.Shared.Services
 
 		public void Check(ServerInfo serverInfo)
 		{
-			BrokenCache = true;
+			BrokenCache = false;
 
 			V0940 = serverInfo.version >= new Version(0, 9, 40);
 			V0980 = serverInfo.version >= new Version(0, 9, 80);
