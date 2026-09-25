@@ -125,7 +125,8 @@
 						Background="{ThemeResource AutoSuggestBoxSuggestionsListBackground}"
 						BorderBrush="{ThemeResource AutoSuggestBoxSuggestionsListBorderBrush}"
 						BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
-						CornerRadius="{ThemeResource OverlayCornerRadius}">
+						CornerRadius="{ThemeResource OverlayCornerRadius}"
+						MinWidth="250">
 						<ListView
 							x:Name="SuggestionsList"
 							MaxHeight="{ThemeResource AutoSuggestListMaxHeight}"
@@ -210,9 +211,6 @@
 							</Storyboard>
 						</VisualState>
 						<VisualState x:Name="Focused">
-							<VisualState.Setters>
-								<Setter Target="ContentElement.MinWidth" Value="250" />
-							</VisualState.Setters>
 							<Storyboard>
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
 									<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundFocused}" />
