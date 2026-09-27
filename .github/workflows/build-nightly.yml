@@ -114,7 +114,7 @@ jobs:
       run: |
         ./Util/Version-Avalonia.ps1 "git"
         ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.Avalonia/Secrets.cs"
-        pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -p:SysRoot=/opt/sysroot -p:CppCompilerAndLinker=clang -p:LinkerFlavor=lld -y
+        pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
     - name: Setup sentry-cli
       uses: matbour/setup-sentry-cli@v2
       with:
