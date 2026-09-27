@@ -12,8 +12,8 @@ runs:
       shell: bash
       run: |
         docker run -d --name sysroot ubuntu:18.04 sleep infinity
-        docker exec -i sysroot apt-get -y update && apt-get -y dist-upgrade
-        docker exec -i sysroot apt-get -y install build-essential libc6-dev libstdc++-7-dev
+        docker exec -i sysroot apt-get update
+        docker exec -i sysroot apt-get install -y build-essential libc6-dev libstdc++-7-dev
         docker exec -i sysroot bash -c 'for root in /usr/*-gnu*; do ln -s .. "${root}"/usr; done'
         docker container export sysroot | tar -C /opt/sysroot -xf -
         docker rm -f sysroot
