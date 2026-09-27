@@ -83,12 +83,16 @@ jobs:
         path: LRReader.Avalonia.Desktop/bin/publish/${{ matrix.platform }}
   buildAvaloniaAppImage:
     name: Avalonia (AppImage)
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.variant.os }}
     strategy:
       matrix:
-        platform:
-          - linux-x64
-          - linux-arm64
+        variant:
+          - os: ubuntu-24.04
+            platform: linux-x64
+            appimagetool: x86_64
+          - os: ubuntu-24.04-arm
+            platform: linux-arm64
+            appimagetool: aarch64
     steps:
     - name: Checkout
       uses: actions/checkout@v6
@@ -103,8 +107,8 @@ jobs:
     - name: Setup Tools
       run: |
         dotnet tool install -g KuiperZone.PupNet
-        wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
-        chmod +x ./appimagetool-x86_64.AppImage
+        wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${{ matrix.variant.appimagetool }}.AppImage
+        chmod +x ./appimagetool-${{ matrix.variant.appimagetool }}.AppImage
     - name: Create SysRoot
       uses: ./.github/actions/create-sysroot
     - name: Build
@@ -114,7 +118,7 @@ jobs:
       run: |
         ./Util/Version-Avalonia.ps1 "git"
         ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.Avalonia/Secrets.cs"
-        pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
+        pupnet -r ${{ matrix.variant.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
     - name: Setup sentry-cli
       uses: matbour/setup-sentry-cli@v2
       with:
@@ -139,7 +143,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: LRReader.Avalonia.${{ matrix.platform }}
+        name: LRReader.Avalonia.${{ matrix.variant.platform }}
         path: LRReader.Avalonia.Desktop/AppPackages/*.AppImage
   updateAvaloniaAppImageVersion:
     name: Update Avalonia Version (AppImage)

@@ -16,7 +16,7 @@ runs:
         docker exec -i sysroot apt-get install -y build-essential libc6-dev libstdc++-7-dev
         docker container export sysroot | tar -C /opt/sysroot -xf -
         docker rm -f sysroot
-    - name: Fixup
+    - name: Relink
       shell: bash
       run: |
         ./Util/Relink.sh /opt/sysroot
