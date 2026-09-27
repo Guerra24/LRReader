@@ -58,8 +58,6 @@ jobs:
     strategy:
       matrix:
         platform:
-          - macos-x64
-          - macos-arm64
           - win-x64
     steps:
     - name: Checkout
