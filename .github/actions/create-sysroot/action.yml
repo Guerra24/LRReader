@@ -3,15 +3,21 @@ description: 'Ubuntu 18.04'
 runs:
   using: "composite"
   steps:
+    - name: Prepare
+      shell: bash
+      run: |
+        sudo mkdir -p /opt/sysroot
+        sudo chown -R $(whoami):$(whoami) /opt/sysroot
     - name: Create
       shell: bash
       run: |
         docker run -d --name sysroot ubuntu:18.04 sleep infinity
-        docker exec -i sysroot apt-get update
-        docker exec -i sysroot apt-get install -y build-essential libc6-dev libstdc++-7-dev
-        sudo apt-get install -y symlinks
-        sudo mkdir -p /opt/sysroot
-        sudo chown -R $(whoami):$(whoami) /opt/sysroot
+        docker exec -i sysroot apt-get -y update && apt-get -y dist-upgrade
+        docker exec -i sysroot apt-get -y install build-essential libc6-dev libstdc++-7-dev
+        docker exec -i sysroot bash -c 'for root in /usr/*-gnu*; do ln -s .. "${root}"/usr; done'
         docker container export sysroot | tar -C /opt/sysroot -xf -
         docker rm -f sysroot
-        symlinks -cr /opt/sysroot
+    - name: Fixup
+      shell: bash
+      run: |
+        ./Util/Relink.sh /opt/sysroot
