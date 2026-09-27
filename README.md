@@ -14,7 +14,8 @@
 
 # Requirements
 
-- Windows 10 20H1 (x64 or ARM64) or a modern Linux distro (x86_64 or aarch64).
+- Windows 10 20H1 (x64 or ARM64)
+- Linux (x86_64 or aarch64) with GLIBC 2.31 or newer (Ubuntu 20.04, Debian 11 or Fedora 32).
 - LANraragi v0.9.10
 
 # Installing
