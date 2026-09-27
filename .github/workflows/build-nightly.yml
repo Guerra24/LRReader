@@ -6,7 +6,7 @@ on:
 jobs:
   buildAvaloniaAndroid:
     name: Avalonia (Android)
-    runs-on: windows-2025-vs2026
+    runs-on: windows-2025
     steps:
     - name: Checkout
       uses: actions/checkout@v6
@@ -17,7 +17,6 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          10.0.x
           11.0.x
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v3
@@ -55,7 +54,7 @@ jobs:
         path: LRReader.Avalonia.Android/bin/Release/net11.0-android/publish/*Signed.apk
   buildAvaloniaUnpackaged:
     name: Avalonia (Desktop Testing)
-    runs-on: windows-2025-vs2026
+    runs-on: windows-2025
     strategy:
       matrix:
         platform:
@@ -72,7 +71,6 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          10.0.x
           11.0.x
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v3
@@ -103,13 +101,14 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          10.0.x
           11.0.x
     - name: Setup Tools
       run: |
         dotnet tool install -g KuiperZone.PupNet
         wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
         chmod +x ./appimagetool-x86_64.AppImage
+    - name: Create SysRoot
+      uses: ./.github/actions/create-sysroot
     - name: Build
       shell: pwsh
       env:
@@ -117,7 +116,7 @@ jobs:
       run: |
         ./Util/Version-Avalonia.ps1 "git"
         ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.Avalonia/Secrets.cs"
-        pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
+        pupnet -r ${{ matrix.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -p:SysRoot=/opt/sysroot -p:CppCompilerAndLinker=clang -p:LinkerFlavor=lld -y
     - name: Setup sentry-cli
       uses: matbour/setup-sentry-cli@v2
       with:
@@ -171,7 +170,7 @@ jobs:
           aws s3 cp ./version s3://$env:AWS_S3_BUCKET/projects/lrr/linux/nightly/version --no-progress --acl public-read
   buildUWP:
     name: UWP
-    runs-on: windows-2025-vs2026
+    runs-on: windows-2025
     permissions:
       packages: read
     steps:
@@ -184,7 +183,6 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          10.0.x
           11.0.x
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v3
@@ -238,7 +236,7 @@ jobs:
         path: LRReader.UWP/AppPackages
   buildModernInstaller:
     name: Modern Installer
-    runs-on: windows-2025-vs2026
+    runs-on: windows-2025
     permissions:
       packages: read
     strategy:
@@ -254,7 +252,6 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          10.0.x
           11.0.x
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v3
