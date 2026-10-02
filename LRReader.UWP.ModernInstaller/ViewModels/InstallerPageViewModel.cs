@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace LRReader.UWP.Installer.ViewModels;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator", "MVVMTK0045:Using [ObservableProperty] on fields is not AOT compatible for WinRT", Justification = "<Pending>")]
+[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator", "MVVMTK0045:Using [ObservableProperty] on fields is not AOT compatible for WinRT", Justification = "<Pending>")]
 public partial class InstallerPageViewModel : ObservableObject
 {
 	private readonly InstallerService Installer;
@@ -31,9 +31,14 @@ public partial class InstallerPageViewModel : ObservableObject
 	[ObservableProperty]
 	private bool _showProgress;
 
-	public InstallerPageViewModel(InstallerService installer)
+	[ObservableProperty]
+	private string _versionTitle = string.Empty;
+
+	public InstallerPageViewModel(InstallerService installer, AppInfo appInfo)
 	{
 		Installer = installer;
+
+		VersionTitle = $"LRReader {appInfo.Version}";
 	}
 
 	public async Task Load()

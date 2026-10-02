@@ -27,10 +27,10 @@ public partial class App : Application
 		window.Content = new InstallerPage();
 
 		window.TitleBar.ExtendViewIntoTitleBar = true;
-		window.MinWidth = 960;
+		window.MinWidth = 620;
 		window.MinHeight = 512;
 
-		window.Resize(976, 521);
+		window.Resize(636, 521);
 		window.Show();
 	}
 }

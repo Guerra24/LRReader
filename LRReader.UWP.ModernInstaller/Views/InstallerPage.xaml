@@ -24,11 +24,9 @@
 	</Page.Resources>
 
 	<Grid x:Name="Root">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-		<Grid x:Name="TitleBar" Grid.ColumnSpan="2" Height="32" VerticalAlignment="Top" Background="Transparent" />
+		<Grid x:Name="TitleBar" Height="32" VerticalAlignment="Top" Background="Transparent">
+			<TextBlock Text="{x:Bind Data.VersionTitle}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="14,0,0,0" Style="{StaticResource CaptionTextBlockStyle}" />
+		</Grid>
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition />
@@ -63,28 +61,5 @@
 				<SymbolIcon Symbol="Setting" />
 			</Viewbox>
 		</Button>
-		<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="42">
-			<StackPanel Orientation="Horizontal" Spacing="32">
-				<FontIcon FontSize="40" Glyph="&#xE736;" />
-				<StackPanel Width="286" VerticalAlignment="Center" Spacing="8">
-					<TextBlock FontSize="17" Text="Advanced reader" />
-					<TextBlock FontSize="14" Text="Keyboard or mouse, two pages, right to left, bookmarks and much more." TextWrapping="WrapWholeWords" />
-				</StackPanel>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Spacing="32">
-				<FontIcon FontSize="40" Glyph="&#xEC7A;" />
-				<StackPanel Width="286" VerticalAlignment="Center" Spacing="8">
-					<TextBlock FontSize="17" Text="Archive management" />
-					<TextBlock FontSize="14" Text="Manage your archives from one place with tags editor, categories editor, archive deduplicator and batch editing." TextWrapping="WrapWholeWords" />
-				</StackPanel>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Spacing="32">
-				<FontIcon FontSize="40" Glyph="&#xE895;" />
-				<StackPanel Width="286" VerticalAlignment="Center" Spacing="8">
-					<TextBlock FontSize="17" Text="Always up to date" />
-					<TextBlock FontSize="14" Text="Making use of the latest and greatest LANraragi features." TextWrapping="WrapWholeWords" />
-				</StackPanel>
-			</StackPanel>
-		</StackPanel>
 	</Grid>
 </Page>
