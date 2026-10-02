@@ -83,16 +83,16 @@ jobs:
         path: LRReader.Avalonia.Desktop/bin/publish/${{ matrix.platform }}
   buildAvaloniaAppImage:
     name: Avalonia (AppImage)
-    runs-on: ${{ matrix.variant.os }}
+    runs-on: ${{ matrix.variant.runner }}
     strategy:
       matrix:
         variant:
-          - os: ubuntu-24.04
-            platform: linux-x64
+          - platform: linux-x64
             appimagetool: x86_64
-          - os: ubuntu-24.04-arm
-            platform: linux-arm64
+            runner: ubuntu-24.04
+          - platform: linux-arm64
             appimagetool: aarch64
+            runner: ubuntu-24.04-arm
     steps:
     - name: Checkout
       uses: actions/checkout@v6
@@ -120,7 +120,7 @@ jobs:
         ./Util/ConfigureAppCenter.ps1 "$(Get-Location)/LRReader.Avalonia/Secrets.cs"
         pupnet -r ${{ matrix.variant.platform }} -k appimage -v "$env:LRR_VERSION[1]" -p:NightlyAppImage=true -y
     - name: Setup sentry-cli
-      uses: matbour/setup-sentry-cli@v2
+      uses: matbour/setup-sentry-cli@v3
       with:
         version: 2.39.1
         token: ${{ secrets.SENTRY_TOKEN }}
@@ -209,7 +209,7 @@ jobs:
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
     - name: Setup sentry-cli
-      uses: matbour/setup-sentry-cli@v2
+      uses: matbour/setup-sentry-cli@v3
       with:
         version: 2.39.1
         token: ${{ secrets.SENTRY_TOKEN }}

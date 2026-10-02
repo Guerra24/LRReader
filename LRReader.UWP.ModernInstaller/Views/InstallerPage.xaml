@@ -28,7 +28,7 @@
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<Grid x:Name="TitleBar" Grid.ColumnSpan="2" Height="48" VerticalAlignment="Top" Background="Transparent" />
+		<Grid x:Name="TitleBar" Grid.ColumnSpan="2" Height="32" VerticalAlignment="Top" Background="Transparent" />
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition />

@@ -41,7 +41,7 @@ namespace LRReader.Avalonia.Views.Main
 			AddHandler(FAFrame.NavigatingFromEvent, OnNavigatingFrom);
 		}
 
-		protected async void OnNavigatedTo(object? sender, FANavigationEventArgs e)
+		private async void OnNavigatedTo(object? sender, FANavigationEventArgs e)
 		{
 			WeakReferenceMessenger.Default.Register(this);
 

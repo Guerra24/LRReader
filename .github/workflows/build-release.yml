@@ -41,7 +41,7 @@ jobs:
     - name: Prepare for upload
       run: ./Util/PrepareForUpload.ps1
     - name: Setup sentry-cli
-      uses: matbour/setup-sentry-cli@v2
+      uses: matbour/setup-sentry-cli@v3
       with:
         version: 2.39.1
         token: ${{ secrets.SENTRY_TOKEN }}
@@ -132,7 +132,7 @@ jobs:
         dotnet restore .\LRReader.UWP\LRReader.UWP.csproj -a x64
         MSBuild LRReader.UWP\LRReader.UWP.csproj -nologo -r -v:minimal /p:Deterministic=true /p:ContinuousIntegrationBuild=true /p:Configuration=Release /p:UapAppxPackageBuildMode=StoreOnly /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
     - name: Setup sentry-cli
-      uses: matbour/setup-sentry-cli@v2
+      uses: matbour/setup-sentry-cli@v3
       with:
         version: 2.39.1
         token: ${{ secrets.SENTRY_TOKEN }}

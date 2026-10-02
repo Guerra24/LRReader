@@ -26,7 +26,7 @@ namespace LRReader.Avalonia.Android
 			return base.CustomizeAppBuilder(builder)
 			.With(new SkiaOptions
 			{
-				MaxGpuResourceSizeBytes = 268435456 // 256mib
+				MaxGpuResourceSizeBytes = 536870912 // 512mib
 			})
 			/*.With(new AndroidPlatformOptions
 			{

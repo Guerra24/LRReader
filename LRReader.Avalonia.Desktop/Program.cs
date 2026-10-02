@@ -23,7 +23,7 @@ static class Program
 		.UseWaylandWithFallback()
 		.With(new SkiaOptions
 		{
-			MaxGpuResourceSizeBytes = 268435456 // 256mib
+			MaxGpuResourceSizeBytes = 536870912 // 512mib
 		})
 		/*.With(new Win32PlatformOptions
 		{
@@ -33,6 +33,9 @@ static class Program
 		{
 			RenderingMode = [X11RenderingMode.Vulkan, X11RenderingMode.Glx, X11RenderingMode.Software],
 			OverlayPopups = true // Otherwise teaching tip breaks
+		})
+		.With(new WaylandPlatformOptions
+		{
 		})
 #if DEBUG
 		.WithDeveloperTools()

@@ -22,6 +22,8 @@ public sealed partial class InstallerPage : Page
 	{
 		this.InitializeComponent();
 		Data = Service.Services.GetRequiredService<InstallerPageViewModel>();
+
+		XamlWindow.Current.TitleBar.SetTitleBar(TitleBar);
 	}
 
 	private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -44,6 +46,7 @@ public sealed partial class InstallerPage : Page
 			var window = XamlWindow.Current;
 
 			window.Content = new SettingsPage();
+			window.TitleBar.ExtendViewIntoTitleBar = true;
 
 			window.Show();
 		});
