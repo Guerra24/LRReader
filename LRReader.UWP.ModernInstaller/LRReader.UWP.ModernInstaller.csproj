@@ -26,7 +26,6 @@
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
     <ProjectPriFileName>resources.pri</ProjectPriFileName>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-    <MrmPatcherEmbedPri>true</MrmPatcherEmbedPri>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -47,7 +46,7 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
-    <PackageReference Include="XamlHostingKit.Static" Version="0.2.9" />
+    <PackageReference Include="XamlHostingKit.Static" Version="0.2.10" />
   </ItemGroup>
 
   <ItemGroup>

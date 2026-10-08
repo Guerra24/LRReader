@@ -30,7 +30,7 @@ public partial class App : Application
 		window.MinWidth = 620;
 		window.MinHeight = 512;
 
-		window.Resize(636, 521);
+		window.Resize(620, 512);
 		window.Show();
 	}
 }
