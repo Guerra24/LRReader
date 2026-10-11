@@ -3,134 +3,135 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Metadata;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using System.Runtime.InteropServices;
 
 namespace LRReader.Shared.Formats.LibJpegXL;
 
 public sealed class JpegXLDecoder : IImageDecoder
 {
-	public Image<TPixel> Decode<TPixel>(DecoderOptions options, Stream stream) where TPixel : unmanaged, IPixel<TPixel>
+	public unsafe Image<TPixel> Decode<TPixel>(DecoderOptions options, Stream stream) where TPixel : unmanaged, IPixel<TPixel>
 	{
-		unsafe
+		var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
+		var decoder = Jxl.JxlDecoderCreate(null);
+		var input = NativeMemory.Alloc((nuint)stream.Length);
+		Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
+		try
 		{
-			var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
-			var decoder = Jxl.JxlDecoderCreate(null);
-			var input = NativeMemory.Alloc((nuint)stream.Length);
-			Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
+			var inputSpan = new Span<byte>(input, (int)stream.Length);
+			stream.ReadExactly(inputSpan);
+
+			Jxl.JxlDecoderSetInput(decoder, (byte*)input, (nuint)inputSpan.Length);
+			Jxl.JxlDecoderCloseInput(decoder);
+			Jxl.JxlDecoderSubscribeEvents(decoder, (int)(JxlDecoderStatus.JXL_DEC_BASIC_INFO | JxlDecoderStatus.JXL_DEC_FRAME | JxlDecoderStatus.JXL_DEC_FULL_IMAGE));
+
+			var status = Jxl.JxlDecoderProcessInput(decoder);
+
+			if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
+				throw new Exception();
+
+			var info = new JxlBasicInfo();
+			Jxl.JxlDecoderGetBasicInfo(decoder, &info);
+
+			JxlThreads.JxlResizableParallelRunnerSetThreads(runner, JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
+
+			status = Jxl.JxlDecoderProcessInput(decoder);
+
+			if (status != JxlDecoderStatus.JXL_DEC_FRAME)
+				throw new Exception();
+
+			var pixelFormat = new JxlPixelFormat
+			{
+				data_type = JxlDataType.JXL_TYPE_UINT8,
+				endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
+				num_channels = info.num_color_channels,
+				align = 0
+			};
+
+			nuint size = new();
+			Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
+
+			if (info.xsize * info.ysize * sizeof(byte) * info.num_color_channels != size.ToUInt64())
+				throw new Exception();
+
+			var buffer = NativeMemory.Alloc(size);
+
 			try
 			{
-				var inputSpan = new Span<byte>(input, (int)stream.Length);
-				stream.ReadExactly(inputSpan);
-
-				Jxl.JxlDecoderSetInput(decoder, (byte*)input, (nuint)inputSpan.Length);
-				Jxl.JxlDecoderCloseInput(decoder);
-				Jxl.JxlDecoderSubscribeEvents(decoder, (int)(JxlDecoderStatus.JXL_DEC_BASIC_INFO | JxlDecoderStatus.JXL_DEC_FRAME | JxlDecoderStatus.JXL_DEC_FULL_IMAGE));
-
-				var status = Jxl.JxlDecoderProcessInput(decoder);
-
-				if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
-					throw new Exception();
-
-				var info = new JxlBasicInfo();
-				Jxl.JxlDecoderGetBasicInfo(decoder, &info);
-
-				JxlThreads.JxlResizableParallelRunnerSetThreads(runner, JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
+				Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, buffer, size);
 
 				status = Jxl.JxlDecoderProcessInput(decoder);
 
-				if (status != JxlDecoderStatus.JXL_DEC_FRAME)
+				if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
 					throw new Exception();
 
-				var pixelFormat = new JxlPixelFormat
+				var image = new Image<TPixel>(options.Configuration, (int)info.xsize, (int)info.ysize);
+				var span = new Span<byte>(buffer, (int)size);
+
+				if (image.Frames.RootFrame.DangerousTryGetSinglePixelMemory(out var pixels))
 				{
-					data_type = JxlDataType.JXL_TYPE_UINT8,
-					endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
-					num_channels = info.num_color_channels,
-					align = 0
-				};
+					switch (info.num_color_channels)
+					{
+						case 1:
+							var r8 = MemoryMarshal.Cast<byte, L8>(span);
+							PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8, pixels.Span);
+							break;
+						case 3:
+							var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
+							PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
+							break;
+						case 4:
+							var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
+							PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
+							break;
+						default:
+							throw new Exception();
+					}
+				}
+				else
+				{
+					switch (info.num_color_channels)
+					{
+						case 1:
+							var r8 = MemoryMarshal.Cast<byte, L8>(span);
+							for (int y = 0; y < image.Height; y++)
+								PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+							break;
+						case 3:
+							var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
+							for (int y = 0; y < image.Height; y++)
+								PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+							break;
+						case 4:
+							var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
+							for (int y = 0; y < image.Height; y++)
+								PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+							break;
+						default:
+							throw new Exception();
+					}
+				}
 
-				nuint size = new();
-				Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
+				status = Jxl.JxlDecoderProcessInput(decoder);
 
-				if (info.xsize * info.ysize * sizeof(byte) * info.num_color_channels != size.ToUInt64())
+				if (status != JxlDecoderStatus.JXL_DEC_SUCCESS)
 					throw new Exception();
 
-				var buffer = NativeMemory.Alloc(size);
+				if (options.TargetSize != null)
+					image.Mutate(o => o.Resize(options.TargetSize.Value, options.Sampler, false));
 
-				try
-				{
-					Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, buffer, size);
-
-					status = Jxl.JxlDecoderProcessInput(decoder);
-
-					if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
-						throw new Exception();
-
-					var image = new Image<TPixel>(options.Configuration, (int)info.xsize, (int)info.ysize);
-					var span = new Span<byte>(buffer, (int)size);
-
-					if (image.Frames.RootFrame.DangerousTryGetSinglePixelMemory(out var pixels))
-					{
-						switch (info.num_color_channels)
-						{
-							case 1:
-								var r8 = MemoryMarshal.Cast<byte, L8>(span);
-								PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8, pixels.Span);
-								break;
-							case 3:
-								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
-								PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
-								break;
-							case 4:
-								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
-								PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
-								break;
-							default:
-								throw new Exception();
-						}
-					}
-					else
-					{
-						switch (info.num_color_channels)
-						{
-							case 1:
-								var r8 = MemoryMarshal.Cast<byte, L8>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromL8(options.Configuration, r8.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
-								break;
-							case 3:
-								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
-								break;
-							case 4:
-								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
-								break;
-							default:
-								throw new Exception();
-						}
-					}
-
-					status = Jxl.JxlDecoderProcessInput(decoder);
-
-					if (status != JxlDecoderStatus.JXL_DEC_SUCCESS)
-						throw new Exception();
-
-					return image;
-				}
-				finally
-				{
-					NativeMemory.Free(buffer);
-				}
+				return image;
 			}
 			finally
 			{
-				Jxl.JxlDecoderDestroy(decoder);
-				JxlThreads.JxlResizableParallelRunnerDestroy(runner);
-				NativeMemory.Free(input);
+				NativeMemory.Free(buffer);
 			}
+		}
+		finally
+		{
+			Jxl.JxlDecoderDestroy(decoder);
+			JxlThreads.JxlResizableParallelRunnerDestroy(runner);
+			NativeMemory.Free(input);
 		}
 	}
 
@@ -146,37 +147,34 @@ public sealed class JpegXLDecoder : IImageDecoder
 		return Task.FromResult(Decode(options, stream));
 	}
 
-	public ImageInfo Identify(DecoderOptions options, Stream stream)
+	public unsafe ImageInfo Identify(DecoderOptions options, Stream stream)
 	{
-		unsafe
+		var decoder = Jxl.JxlDecoderCreate(null);
+		var input = NativeMemory.Alloc((nuint)stream.Length);
+		try
 		{
-			var decoder = Jxl.JxlDecoderCreate(null);
-			var input = NativeMemory.Alloc((nuint)stream.Length);
-			try
-			{
-				var span = new Span<byte>(input, (int)stream.Length);
-				stream.ReadExactly(span);
+			var span = new Span<byte>(input, (int)stream.Length);
+			stream.ReadExactly(span);
 
-				Jxl.JxlDecoderSetInput(decoder, (byte*)input, (nuint)span.Length);
-				Jxl.JxlDecoderCloseInput(decoder);
-				Jxl.JxlDecoderSubscribeEvents(decoder, (int)JxlDecoderStatus.JXL_DEC_BASIC_INFO);
-				var status = Jxl.JxlDecoderProcessInput(decoder);
-				if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
-					throw new Exception();
-				var info = new JxlBasicInfo();
-				Jxl.JxlDecoderGetBasicInfo(decoder, &info);
+			Jxl.JxlDecoderSetInput(decoder, (byte*)input, (nuint)span.Length);
+			Jxl.JxlDecoderCloseInput(decoder);
+			Jxl.JxlDecoderSubscribeEvents(decoder, (int)JxlDecoderStatus.JXL_DEC_BASIC_INFO);
+			var status = Jxl.JxlDecoderProcessInput(decoder);
+			if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
+				throw new Exception();
+			var info = new JxlBasicInfo();
+			Jxl.JxlDecoderGetBasicInfo(decoder, &info);
 
-				var metadata = new ImageMetadata();
-				var jpegxlMetadata = metadata.GetFormatMetadata(JpegXLFormat.Instance);
-				jpegxlMetadata.BitsPerSample = (int)info.bits_per_sample;
+			var metadata = new ImageMetadata();
+			var jpegxlMetadata = metadata.GetFormatMetadata(JpegXLFormat.Instance);
+			jpegxlMetadata.BitsPerSample = (int)info.bits_per_sample;
 
-				return new ImageInfo(new Size((int)info.xsize, (int)info.ysize), metadata);
-			}
-			finally
-			{
-				Jxl.JxlDecoderDestroy(decoder);
-				NativeMemory.Free(input);
-			}
+			return new ImageInfo(new Size((int)info.xsize, (int)info.ysize), metadata);
+		}
+		finally
+		{
+			Jxl.JxlDecoderDestroy(decoder);
+			NativeMemory.Free(input);
 		}
 	}
 

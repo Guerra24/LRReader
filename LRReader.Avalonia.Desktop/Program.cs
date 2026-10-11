@@ -36,7 +36,7 @@ static class Program
 		})
 		.With(new WaylandPlatformOptions
 		{
-			AppId = "net.guerra24.lrreader"
+			AppId = "LRReader.Avalonia.Desktop"
 		})
 #if DEBUG
 		.WithDeveloperTools()

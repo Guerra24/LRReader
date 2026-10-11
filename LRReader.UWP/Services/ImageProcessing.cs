@@ -195,12 +195,13 @@ namespace LRReader.UWP.Services
 			return size;
 		}
 
-		private bool IsJxl(byte[] bytes)
+		private unsafe bool IsJxl(byte[] bytes)
 		{
-			var jxlCodestream = bytes[0] == 0xff && bytes[1] == 0x0A;
-			var jxlContainer = bytes[0] == 0 && bytes[1] == 0 && bytes[2] == 0 && bytes[3] == 0xC && bytes[4] == 'J' && bytes[5] == 'X' && bytes[6] == 'L' && bytes[7] == ' ' && bytes[8] == 0xD && bytes[9] == 0xA && bytes[10] == 0x87 && bytes[11] == 0xA;
-
-			return jxlCodestream || jxlContainer;
+			fixed (byte* header = bytes[..16])
+			{
+				var signature = Jxl.JxlSignatureCheck(header, 16);
+				return signature == JxlSignature.JXL_SIG_CODESTREAM || signature == JxlSignature.JXL_SIG_CONTAINER;
+			}
 		}
 
 	}
