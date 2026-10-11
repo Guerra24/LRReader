@@ -29,14 +29,16 @@ static class Program
 		{
 			RenderingMode = [Win32RenderingMode.Vulkan, Win32RenderingMode.AngleEgl, Win32RenderingMode.Software]
 		})
-		*/.With(new X11PlatformOptions
+		*/
+		.With(new X11PlatformOptions
 		{
 			RenderingMode = [X11RenderingMode.Vulkan, X11RenderingMode.Glx, X11RenderingMode.Software],
-			OverlayPopups = true // Otherwise teaching tip breaks
+			OverlayPopups = true, // Otherwise teaching tip breaks
+			WmClass = "net.guerra24.lrreader"
 		})
 		.With(new WaylandPlatformOptions
 		{
-			AppId = "LRReader.Avalonia.Desktop"
+			AppId = "net.guerra24.lrreader"
 		})
 #if DEBUG
 		.WithDeveloperTools()

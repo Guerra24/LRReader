@@ -2,7 +2,7 @@
 Type=Application
 Name=${APP_FRIENDLY_NAME}
 Icon=${APP_ID}
-StartupWMClass=${APP_BASE_NAME}
+StartupWMClass=${APP_ID}
 Comment=${APP_SHORT_SUMMARY}
 Exec=env WEBKIT_DISABLE_COMPOSITING_MODE=1 ${INSTALL_EXEC}
 TryExec=${INSTALL_EXEC}
