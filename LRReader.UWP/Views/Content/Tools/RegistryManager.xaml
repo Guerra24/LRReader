@@ -46,7 +46,7 @@
 			</GridView.Header>
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="main:Registry">
-					<Grid Padding="10">
+					<Grid Padding="10" Width="400">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>

@@ -36,6 +36,7 @@ static class Program
 		})
 		.With(new WaylandPlatformOptions
 		{
+			AppId = "net.guerra24.lrreader"
 		})
 #if DEBUG
 		.WithDeveloperTools()
