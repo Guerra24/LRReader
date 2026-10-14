@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <IsAotCompatible>true</IsAotCompatible>
     <!--<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>-->
+    <Features>runtime-async=on</Features>
   </PropertyGroup>
 
 </Project>

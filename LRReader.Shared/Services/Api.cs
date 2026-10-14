@@ -3,6 +3,7 @@
 using Microsoft.AppCenter.Crashes;
 #endif
 using RestSharp;
+using System.Net;
 using System.Text;
 
 namespace LRReader.Shared.Services
@@ -22,6 +23,7 @@ namespace LRReader.Shared.Services
 			var options = new RestClientOptions(profile.ServerAddress)
 			{
 				UserAgent = "LRReader",
+#if !BROWSER
 				ConfigureMessageHandler = (handler) =>
 				{
 					// Restsharp uses HttpClientHandler by default but we do not want that so kill it
@@ -31,18 +33,25 @@ namespace LRReader.Shared.Services
 						MaxConnectionsPerServer = 20, // Limit this so that mojo does not think we are dos'ing it
 						PooledConnectionIdleTimeout = TimeSpan.FromSeconds(30), // Mojo default idle timeout
 						UseCookies = false,
-						AutomaticDecompression = System.Net.DecompressionMethods.All,
+						AutomaticDecompression = DecompressionMethods.All,
 					};
 					return socket;
 				}
+#endif
 			};
+#if BROWSER
+			options.UserAgent = null;
+#endif
+
 			Client?.Dispose();
 			Client = new RestClient(options);
 			if (!string.IsNullOrEmpty(profile.ServerApiKey))
 			{
 				var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(profile.ServerApiKey));
 				Client.AddDefaultHeader("Authorization", $"Bearer {base64Key}");
+#if !BROWSER
 				Client.AddDefaultHeader("Accept-Language", lang);
+#endif
 			}
 			return true;
 		}

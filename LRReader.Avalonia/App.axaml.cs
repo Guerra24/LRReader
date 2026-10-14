@@ -111,6 +111,10 @@ namespace LRReader.Avalonia
 			exception.Data[Mechanism.HandledKey] = false;
 			exception.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
 
+#if BROWSER
+			Console.WriteLine(exception.ToString());
+#endif
+
 			SentrySdk.CaptureException(exception);
 
 			SentrySdk.Flush(TimeSpan.FromSeconds(2));

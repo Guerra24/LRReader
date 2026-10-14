@@ -9,6 +9,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>1.9.7.0</Version>
     <Features>runtime-async=on</Features>
+    <AssemblyName Condition="('$(RuntimeIdentifier)' == 'linux-x64' or '$(RuntimeIdentifier)' == 'linux-arm64') and '$(_IsPublishing)' != '' and '$(PublishAot)' == 'true' and ('$(OutputType)' == 'Exe' or '$(OutputType)' == 'WinExe')">lrreader</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="logo.ico" />

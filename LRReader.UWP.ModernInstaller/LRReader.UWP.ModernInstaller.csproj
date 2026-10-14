@@ -17,7 +17,7 @@
     <PublishLzmaCompressed>true</PublishLzmaCompressed>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.260903100</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
+    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.260930100</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
     <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.28000.2705</MicrosoftWindowsSDKBuildToolsPackageVersion>
     <WindowsSdkPackageVersion>10.0.26100.87</WindowsSdkPackageVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -26,6 +26,7 @@
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
     <ProjectPriFileName>resources.pri</ProjectPriFileName>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Features>runtime-async=on</Features>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -40,13 +41,13 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-rc.1.26425.128" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-rc.2.26504.105" />
     <PackageReference Include="PublishAotCompressed" Version="1.0.5" Condition="'$(Platform)' == 'x64'" />
     <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.26100.6" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
-    <PackageReference Include="XamlHostingKit.Static" Version="0.2.10" />
+    <PackageReference Include="XamlHostingKit.Static" Version="0.2.11" />
   </ItemGroup>
 
   <ItemGroup>

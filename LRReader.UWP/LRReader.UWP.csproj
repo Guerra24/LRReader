@@ -4,7 +4,8 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == 'AnyCPU' ">x64</Platform>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net11.0-windows10.0.26100.0</TargetFramework>
+    <TargetFramework>net11.0-windows10.0.28000.0</TargetFramework>
+    <UseWindowsSDKPreview>true</UseWindowsSDKPreview>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -16,9 +17,9 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.260903100</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
+    <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.260930100</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
     <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.28000.2705</MicrosoftWindowsSDKBuildToolsPackageVersion>
-    <WindowsSdkPackageVersion>10.0.26100.87</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.28000.87</WindowsSdkPackageVersion>
     <RootNamespace>LRReader.UWP</RootNamespace>
     <AssemblyName>LRReader.UWP</AssemblyName>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
