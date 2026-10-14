@@ -21,7 +21,7 @@ jobs:
     - name: Find MSBuild
       uses: microsoft/setup-msbuild@v3
     - name: Restore workloads
-      run: dotnet workload restore
+      run: dotnet workload restore LRReader.Avalonia.Android\LRReader.Avalonia.Android.csproj
     - name: Build
       env:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
