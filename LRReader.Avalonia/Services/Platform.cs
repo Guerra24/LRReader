@@ -57,6 +57,7 @@ namespace LRReader.Avalonia.Services
 
 			TopLevel = TopLevel.GetTopLevel(Root)!;
 
+			TopLevel.ScalingChanged += (_, _) => RenderScaling = TopLevel.RenderScaling;
 			RenderScaling = TopLevel.RenderScaling;
 		}
 

@@ -27,6 +27,7 @@
     <ProjectPriFileName>resources.pri</ProjectPriFileName>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <Features>runtime-async=on</Features>
+    <UseOptimizedPublish>false</UseOptimizedPublish> <!-- Workaround -->
   </PropertyGroup>
 
   <PropertyGroup>
