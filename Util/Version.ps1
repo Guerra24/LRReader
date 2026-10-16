@@ -4,7 +4,7 @@ $version = [System.Version]::Parse($xmlDoc.Package.Identity.Version);
 
 $tag = "v$version"
 
-$count = [int]$(& "C:\Program Files\Git\mingw64\bin\git.exe" rev-list --count "$tag..HEAD")
+$count = [int]$(& "git.exe" rev-list --count "$tag..HEAD")
 
 $count += 1000
 

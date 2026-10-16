@@ -27,7 +27,7 @@ jobs:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
-        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
+        & "gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         $Thumbprint = (Import-PfxCertificate .\Cert.pfx -Password (ConvertTo-SecureString "${env:CERT_PASSWORD}" -AsPlainText -Force) -CertStoreLocation Cert:\CurrentUser\My).Thumbprint
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force

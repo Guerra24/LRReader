@@ -29,8 +29,8 @@ jobs:
         CERT_GPG: ${{ secrets.CERT_GPG }}
       run: |
         [IO.File]::WriteAllBytes("./guerra24.keystore.gpg", [Convert]::FromBase64String("${env:KEYSTORE_BASE64}"))
-        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output guerra24.keystore guerra24.keystore.gpg
-        ./Util/Version-Android.ps1 "C:\Program Files\Git\mingw64\bin\git.exe"
+        & "gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output guerra24.keystore guerra24.keystore.gpg
+        ./Util/Version-Android.ps1 "git.exe"
         dotnet publish LRReader.Avalonia.Android\LRReader.Avalonia.Android.csproj -nologo -v:minimal -c Release --self-contained true -p:PublishAot=true -p:Version=$env:LRR_VERSION -p:NightlyAndroid=true -p:ApplicationVersion=$env:LRR_BUILD -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../guerra24.keystore -p:AndroidSigningKeyAlias=guerra24 -p:AndroidSigningKeyPass=env:KEYSTORE_PASSWORD -p:AndroidSigningStorePass=env:KEYSTORE_PASSWORD
         Remove-Item -Path "./guerra24.keystore.gpg","./guerra24.keystore"
         Set-Location "./LRReader.Avalonia.Android/bin/Release/net11.0-android/publish"
@@ -74,7 +74,7 @@ jobs:
       uses: microsoft/setup-msbuild@v3
     - name: Build
       run: |
-        ./Util/Version-Avalonia.ps1 "C:\Program Files\Git\mingw64\bin\git.exe"
+        ./Util/Version-Avalonia.ps1 "git.exe"
         dotnet publish LRReader.Avalonia.Desktop\LRReader.Avalonia.Desktop.csproj -nologo -v:minimal -p:PublishProfile=${{ matrix.platform }} -p:Version=$env:LRR_VERSION
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
@@ -196,7 +196,7 @@ jobs:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
         [IO.File]::WriteAllBytes("./Cert.pfx.gpg", [Convert]::FromBase64String("${env:CERT_BASE64}"))
-        & "C:\Program Files\Git\usr\bin\gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
+        & "gpg.exe" --quiet --batch --yes --decrypt --passphrase="${env:CERT_GPG}" --output Cert.pfx Cert.pfx.gpg
         $Thumbprint = (Import-PfxCertificate .\Cert.pfx -Password (ConvertTo-SecureString "${env:CERT_PASSWORD}" -AsPlainText -Force) -CertStoreLocation Cert:\CurrentUser\My).Thumbprint
         Remove-Item -Path "./Cert.pfx.gpg","./Cert.pfx"
         Move-Item -Path "./Util/Package.appxmanifest" -Destination "./LRReader.UWP/Package.appxmanifest" -Force
