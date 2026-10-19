@@ -66,7 +66,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.260915-build.2673" />
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.260924-build.2680" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.DependencyPropertyGenerator" Version="0.1.261017-build.2694" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250828-build.2223" />
     <PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Behaviors" Version="8.2.251219" />
@@ -77,7 +77,7 @@
     <PackageReference Include="CommunityToolkit.Uwp.Helpers" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Media" Version="8.2.251219" />
     <PackageReference Include="COMplicated.WinUI" Version="2.8.8-prerelease.260914002" Condition="'$(DebuggingWinUI)' == 'false'" />
-    <PackageReference Include="Markdig" Version="1.4.0" />
+    <PackageReference Include="Markdig" Version="1.4.1" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" ExcludeAssets="all" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />

@@ -15,7 +15,10 @@ runs:
       uses: docker/setup-buildx-action@v4
     - name: Build Docker image
       uses: docker/build-push-action@v7
+      env:
+        DOCKER_BUILD_SUMMARY: false
       with:
+        context: .
         file: Util/Dockerfile
         outputs: type=local,dest=/opt/sysroot
         cache-from: type=gha,scope=sysroot-${{ inputs.platform }}
