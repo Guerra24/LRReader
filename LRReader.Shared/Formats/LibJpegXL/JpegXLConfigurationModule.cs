@@ -8,7 +8,7 @@ public sealed class JpegXLConfigurationModule : IImageFormatConfigurationModule
 {
 	public void Configure(Configuration configuration)
 	{
-		if (!Jxl.IsAvailable || !JxlThreads.IsAvailable)
+		if (!Jxl.IsAvailable)
 			return;
 		configuration.ImageFormatsManager.SetDecoder(JpegXLFormat.Instance, new JpegXLDecoder());
 		configuration.ImageFormatsManager.AddImageFormatDetector(new JpegXLImageFormatDetector());

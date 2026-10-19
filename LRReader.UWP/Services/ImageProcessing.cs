@@ -61,7 +61,7 @@ namespace LRReader.UWP.Services
 								var decoder = Jxl.JxlDecoderCreate(null);
 								try
 								{
-									Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
+									Jxl.JxlDecoderSetParallelRunner(decoder, Jxl.JxlResizableParallelRunner, runner);
 									if (cancellationToken.IsCancellationRequested)
 										return false;
 									fixed (byte* input = bytes)

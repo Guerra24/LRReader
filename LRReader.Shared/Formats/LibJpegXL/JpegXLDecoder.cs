@@ -15,7 +15,7 @@ public sealed class JpegXLDecoder : IImageDecoder
 		var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
 		var decoder = Jxl.JxlDecoderCreate(null);
 		var input = NativeMemory.Alloc((nuint)stream.Length);
-		Jxl.JxlDecoderSetParallelRunner(decoder, JxlThreads.JxlResizableParallelRunner, runner);
+		Jxl.JxlDecoderSetParallelRunner(decoder, Jxl.JxlResizableParallelRunner, runner);
 		try
 		{
 			var inputSpan = new Span<byte>(input, (int)stream.Length);
