@@ -111,6 +111,8 @@ jobs:
         chmod +x ./appimagetool-${{ matrix.variant.appimagetool }}.AppImage
     - name: Create SysRoot
       uses: ./.github/actions/create-sysroot
+      with:
+        platform: ${{ matrix.variant.platform }}
     - name: Build
       shell: pwsh
       env:
