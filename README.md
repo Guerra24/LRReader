@@ -46,11 +46,7 @@ Nightly AppImage builds are available for [x86_64](https://s3.guerra24.net/proje
 
 ### Image formats
 
-Support for TGA, Gif, EXR, WebP, BMP, JPEG and PNG images is included. You can add support for Avif and JpegXL by installing the OS package for each one.
-
-ArchLinux `pacman -S libjxl libavif`
-
-Debian 13 `apt install libjxl0.11 libavif16`
+Support for JPEG, PNG, WebP, JpegXL, Avif, BMP, GIF, EXR and TGA images is included.
 
 # Usage
 
