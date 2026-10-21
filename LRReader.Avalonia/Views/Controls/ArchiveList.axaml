@@ -30,9 +30,11 @@
                     <AutoCompleteBox x:Name="SearchBox" PlaceholderText="{ext:LocalizedString /Tabs/Archives/Search/PlaceholderText}" MinWidth="300"
                                         HorizontalAlignment="Center"
                                         IsEnabled="{Binding ControlsEnabled, Mode=OneWay}"
-                                        AsyncPopulator="SearchBox_AsyncPopulator"
+                                        ItemsSource="{Binding Suggestions, Mode=OneWay}"
+                                        Populating="SearchBox_Populating"
                                         TextChanged="SearchTextChanged"
-                                        MaxDropDownHeight="400">
+                                        MaxDropDownHeight="400"
+                                        FilterMode="None">
                         <AutoCompleteBox.InnerRightContent>
                             <StackPanel Orientation="Horizontal" Spacing="2">
                                 <Button Click="ClearSearch_Click" Padding="4">

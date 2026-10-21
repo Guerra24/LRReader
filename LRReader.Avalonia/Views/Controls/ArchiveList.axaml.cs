@@ -75,20 +75,20 @@ public partial class ArchiveList : UserControl
 
 	private async void Button_Click(object sender, RoutedEventArgs e) => await Refresh();
 
-	private async Task<IEnumerable<object>> SearchBox_AsyncPopulator(string? arg1, CancellationToken arg2)
+	private void SearchBox_Populating(object sender, PopulatingEventArgs e)
 	{
-		var suggestions = new List<object>();
-		if (!string.IsNullOrEmpty(arg1))
+		Data.Suggestions.Clear();
+		if (!string.IsNullOrEmpty(e.Parameter))
 		{
-			var text = arg1;
+			var text = e.Parameter;
 			//var queryText = text.Split(",").Last().Trim();
 			var comma = text.LastIndexOf(',');
 			var queryText = text;
 
 			if (comma != -1)
 			{
-				text = arg1.Substring(0, comma);
-				queryText = arg1.Substring(comma + 1).Trim();
+				text = e.Parameter.Substring(0, comma);
+				queryText = e.Parameter.Substring(comma + 1).Trim();
 			}
 
 			foreach (var t in Archives.TagStats.Where(t =>
@@ -97,12 +97,10 @@ public partial class ArchiveList : UserControl
 				return t.GetNamespacedTag().Contains(queryText, StringComparison.OrdinalIgnoreCase) && !Api.ServerInfo.excluded_namespaces.Contains(names);
 			}))
 			{
-				suggestions.Add((comma == -1 ? "" : text + (string.IsNullOrEmpty(text) ? "" : ", ")) + t.GetNamespacedTag());
-				await Task.Yield();
+				Data.Suggestions.Add((comma == -1 ? "" : text + (string.IsNullOrEmpty(text) ? "" : ", ")) + t.GetNamespacedTag());
 				//Data.Suggestions.Add(t.GetNamespacedTag());
 			}
 		}
-		return suggestions;
 	}
 
 	public async void SearchTextChanged(object sender, TextChangedEventArgs args)

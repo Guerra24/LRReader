@@ -64,16 +64,16 @@ public static class ArchivesProvider
 		return await r.GetResult<ArchiveCategories>().ConfigureAwait(false);
 	}
 
-	public static async Task<ThumbnailRequest?> GetThumbnail(string id, bool noFallback = false, int page = 0)
+	public static async Task<ThumbnailRequest?> GetThumbnail(string id, int page, CancellationToken cancellationToken)
 	{
 		var client = Api.Client;
 
 		var rq = new RestRequest("api/archives/{id}/thumbnail");
 		rq.AddUrlSegment("id", id);
-		rq.AddQueryParameter("no_fallback", noFallback.ToString().ToLower());
-		rq.AddQueryParameter("page", page.ToString());
+		rq.AddQueryParameter("no_fallback", "true");
+		rq.AddQueryParameter("page", page);
 
-		var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
+		var r = await client.ExecuteGetAsync(rq, cancellationToken).ConfigureAwait(false);
 
 		switch (r.StatusCode)
 		{
@@ -183,7 +183,7 @@ public static class ArchivesProvider
 		return await r.GetResult<DeleteArchiveResult>().ConfigureAwait(false);
 	}
 
-	public static async Task<byte[]?> GetImage(string path)
+	public static async Task<byte[]?> GetImage(string path, CancellationToken cancellationToken)
 	{
 		if (string.IsNullOrEmpty(path))
 			return null;
@@ -191,7 +191,7 @@ public static class ArchivesProvider
 
 		var rq = new RestRequest(path);
 
-		var r = await client.ExecuteGetAsync(rq).ConfigureAwait(false);
+		var r = await client.ExecuteGetAsync(rq, cancellationToken).ConfigureAwait(false);
 
 		switch (r.StatusCode)
 		{

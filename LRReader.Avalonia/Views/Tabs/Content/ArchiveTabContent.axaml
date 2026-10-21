@@ -176,10 +176,10 @@
 			IsVisible="{Binding ShowReader, Mode=OneWay}"
             BringIntoViewOnFocusChange="False">
             <!-- HorizontalAnchorRatio="0.5" VerticalAnchorRatio="0.01" -->
-            <LayoutTransformControl HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="False">
-                <LayoutTransformControl.LayoutTransform>
+            <controls:LayoutTransformControl HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="False">
+                <controls:LayoutTransformControl.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding ZoomFactor, Mode=OneWay}" ScaleY="{Binding ZoomFactor, Mode=OneWay}" />
-                </LayoutTransformControl.LayoutTransform>
+                </controls:LayoutTransformControl.LayoutTransform>
 			    <ContentControl
 				    x:Name="ReaderControl" HorizontalAlignment="Center" VerticalAlignment="Center"
 				    IsTabStop="True" KeyDown="ReaderControl_KeyDown" KeyUp="ReaderControl_KeyUp"
@@ -203,7 +203,7 @@
 					    </ItemsRepeater>
 				    </Grid>
 			    </ContentControl>
-            </LayoutTransformControl>
+            </controls:LayoutTransformControl>
 		</ScrollViewer>
 		<Grid x:Name="ReaderThumbnailOverlayHitArea"
 			Height="48" VerticalAlignment="Bottom" Background="Transparent"

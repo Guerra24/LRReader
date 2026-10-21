@@ -26,7 +26,7 @@
 
 		public Task<string> GetFile(string path) => Task.FromResult("");
 
-		public Task<byte[]> GetFileBytes(string path) => Task.FromResult(new byte[0]);
+		public Task<byte[]> GetFileBytes(string path) => Task.FromResult(Array.Empty<byte>());
 
 		public Task StoreFile(string path, string content) => Task.CompletedTask;
 

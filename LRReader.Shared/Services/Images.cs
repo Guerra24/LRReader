@@ -10,19 +10,19 @@ namespace LRReader.Shared.Services;
 
 public class ImagesService : IService
 {
-	private readonly IFilesService Files;
 	private readonly ImageProcessingService ImageProcessing;
+
+	private readonly KeyedSemaphoresDictionary<string> keyedSemaphores = new(Environment.ProcessorCount, 1024, EqualityComparer<string>.Default, TimeSpan.FromMilliseconds(10));
 
 	// Implement persistence
 	// https://github.com/jchristn/Caching?tab=readme-ov-file#persistence
-	private LRUCache<string, byte[]> imagesCache;
-	private LRUCache<string, Size> imagesSizeCache;
-	private LRUCache<string, byte[]> thumbnailsCache;
-	private DirectoryInfo thumbnailCacheDirectory;
+	private readonly LRUCache<string, byte[]> imagesCache;
+	private readonly LRUCache<string, Size> imagesSizeCache;
+	private readonly LRUCache<string, byte[]> thumbnailsCache;
+	private readonly DirectoryInfo thumbnailCacheDirectory;
 
 	public ImagesService(IFilesService files, ImageProcessingService imageProcessing)
 	{
-		Files = files;
 		ImageProcessing = imageProcessing;
 		imagesCache = new LRUCache<string, byte[]>(1000, 25)
 		{
@@ -77,16 +77,21 @@ public class ImagesService : IService
 		}
 		else
 		{
-			using (var key = await KeyedSemaphore.LockAsync(path + "size"))
+			try
 			{
+				using var key = await keyedSemaphores.LockAsync(path + "size", cancellationToken);
 				var image = await GetImageCached(path, cancellationToken: cancellationToken);
 				if (image == null)
 					return Size.Empty;
 				if (cancellationToken.IsCancellationRequested)
 					return Size.Empty;
 				size = await ImageProcessing.GetImageSize(image);
-				imagesSizeCache.AddReplace(path, size);
+				await imagesSizeCache.AddReplaceAsync(path, size);
 				return size;
+			}
+			catch (OperationCanceledException)
+			{
+				return Size.Empty;
 			}
 		}
 	}
@@ -104,17 +109,22 @@ public class ImagesService : IService
 		}
 		else
 		{
-			using (var key = await KeyedSemaphore.LockAsync(path))
+			try
 			{
+				using var key = await keyedSemaphores.LockAsync(path, cancellationToken);
 				if (cancellationToken.IsCancellationRequested)
 					return null;
-				image = await ArchivesProvider.GetImage(path);
+				image = await ArchivesProvider.GetImage(path, cancellationToken);
 				if (image == null)
 					return null;
 				if (cancellationToken.IsCancellationRequested)
 					return null;
-				imagesCache.AddReplace(path, image, DateTime.UtcNow.AddMinutes(15));
+				await imagesCache.AddReplaceAsync(path, image, DateTime.UtcNow.AddMinutes(15));
 				return image;
+			}
+			catch (OperationCanceledException)
+			{
+				return null;
 			}
 		}
 	}
@@ -135,16 +145,17 @@ public class ImagesService : IService
 		}
 		else
 		{
-			using (var key = await KeyedSemaphore.LockAsync(thumbKey))
+			try
 			{
+				using var key = await keyedSemaphores.LockAsync(thumbKey, cancellationToken);
 				if (cancellationToken.IsCancellationRequested)
 					return null;
-				var path = $"{thumbnailCacheDirectory.FullName}/{id!.Substring(0, 2)}/{id}/{page}.cache";
+				var path = Path.Combine(thumbnailCacheDirectory.FullName, id[..2], id, $"{page}.cache");
 				if (File.Exists(path) && !forced)
 				{
 					if (cancellationToken.IsCancellationRequested)
 						return null;
-					data = await Files.GetFileBytes(path);
+					data = await File.ReadAllBytesAsync(path, cancellationToken);
 				}
 				else
 				{
@@ -155,10 +166,14 @@ public class ImagesService : IService
 						return null;
 					// While overloaded the api might return ok but without any content
 					Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-					await Files.StoreFile(path, data);
+					await File.WriteAllBytesAsync(path, data, cancellationToken);
 				}
-				thumbnailsCache.AddReplace(thumbKey, data, DateTime.UtcNow.AddMinutes(15));
+				await thumbnailsCache.AddReplaceAsync(thumbKey, data, DateTime.UtcNow.AddMinutes(15));
 				return data;
+			}
+			catch (OperationCanceledException)
+			{
+				return null;
 			}
 		}
 	}
@@ -171,7 +186,7 @@ public class ImagesService : IService
 			retries--;
 			if (cancellationToken.IsCancellationRequested)
 				return null;
-			var data = await ArchivesProvider.GetThumbnail(id, true, page);
+			var data = await ArchivesProvider.GetThumbnail(id, page, cancellationToken);
 			if (data == null)
 				return null;
 			if (data.Thumbnail != null)
@@ -186,9 +201,9 @@ public class ImagesService : IService
 	{
 		await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 
-		imagesCache.Clear();
-		imagesSizeCache.Clear();
-		thumbnailsCache.Clear();
+		await imagesCache.ClearAsync();
+		await imagesSizeCache.ClearAsync();
+		await thumbnailsCache.ClearAsync();
 		thumbnailCacheDirectory.GetDirectories().ToList().ForEach(dir => dir.Delete(true));
 	}
 

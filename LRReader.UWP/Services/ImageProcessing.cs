@@ -46,113 +46,111 @@ namespace LRReader.UWP.Services
 			{
 				if (/*!UseOsJpegXL && */IsJxl(bytes))
 				{
-					using (var converted = new InMemoryRandomAccessStream())
+					using var converted = new InMemoryRandomAccessStream();
+					var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
+					if (cancellationToken.IsCancellationRequested)
+						return null;
+					var ok = await TaskFactory.StartNew(() =>
 					{
-						var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, converted);
 						if (cancellationToken.IsCancellationRequested)
-							return null;
-						var ok = await TaskFactory.StartNew(() =>
+							return false;
+						unsafe
 						{
-							if (cancellationToken.IsCancellationRequested)
-								return false;
-							unsafe
+							var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
+							var decoder = Jxl.JxlDecoderCreate(null);
+							try
 							{
-								var runner = JxlThreads.JxlResizableParallelRunnerCreate(null);
-								var decoder = Jxl.JxlDecoderCreate(null);
-								try
+								Jxl.JxlDecoderSetParallelRunner(decoder, Jxl.JxlResizableParallelRunner, runner);
+								if (cancellationToken.IsCancellationRequested)
+									return false;
+								fixed (byte* input = bytes)
 								{
-									Jxl.JxlDecoderSetParallelRunner(decoder, Jxl.JxlResizableParallelRunner, runner);
+									Jxl.JxlDecoderSetInput(decoder, input, (nuint)bytes.Length);
+									Jxl.JxlDecoderCloseInput(decoder);
+									Jxl.JxlDecoderSubscribeEvents(decoder, (int)(JxlDecoderStatus.JXL_DEC_BASIC_INFO | JxlDecoderStatus.JXL_DEC_FRAME | JxlDecoderStatus.JXL_DEC_FULL_IMAGE));
+
+									var status = Jxl.JxlDecoderProcessInput(decoder);
+
 									if (cancellationToken.IsCancellationRequested)
 										return false;
-									fixed (byte* input = bytes)
-									{
-										Jxl.JxlDecoderSetInput(decoder, input, (nuint)bytes.Length);
-										Jxl.JxlDecoderCloseInput(decoder);
-										Jxl.JxlDecoderSubscribeEvents(decoder, (int)(JxlDecoderStatus.JXL_DEC_BASIC_INFO | JxlDecoderStatus.JXL_DEC_FRAME | JxlDecoderStatus.JXL_DEC_FULL_IMAGE));
+									if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
+										return false;
 
-										var status = Jxl.JxlDecoderProcessInput(decoder);
+									var info = new JxlBasicInfo();
+									Jxl.JxlDecoderGetBasicInfo(decoder, &info);
+
+									JxlThreads.JxlResizableParallelRunnerSetThreads(runner, JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
+
+									status = Jxl.JxlDecoderProcessInput(decoder);
+
+									if (cancellationToken.IsCancellationRequested)
+										return false;
+									if (status != JxlDecoderStatus.JXL_DEC_FRAME)
+										return false;
+
+									byte[] buffer = new byte[info.xsize * info.ysize * 4];
+									fixed (byte* output = buffer)
+									{
+										var pixelFormat = new JxlPixelFormat
+										{
+											data_type = JxlDataType.JXL_TYPE_UINT8,
+											endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
+											num_channels = 4,
+											align = 0
+										};
+
+										nuint size = new();
+										Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
+
+										if (info.xsize * info.ysize * sizeof(byte) * 4 != size.ToUInt64())
+										{
+											return false;
+										}
+										if ((ulong)(buffer.Length * sizeof(byte)) != size.ToUInt64())
+										{
+											return false;
+										}
 
 										if (cancellationToken.IsCancellationRequested)
 											return false;
-										if (status != JxlDecoderStatus.JXL_DEC_BASIC_INFO)
-											return false;
 
-										var info = new JxlBasicInfo();
-										Jxl.JxlDecoderGetBasicInfo(decoder, &info);
-
-										JxlThreads.JxlResizableParallelRunnerSetThreads(runner, JxlThreads.JxlResizableParallelRunnerSuggestThreads(info.xsize, info.ysize));
+										Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (nuint)(buffer.Length * sizeof(byte)));
 
 										status = Jxl.JxlDecoderProcessInput(decoder);
 
 										if (cancellationToken.IsCancellationRequested)
 											return false;
-										if (status != JxlDecoderStatus.JXL_DEC_FRAME)
+										if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
 											return false;
 
-										byte[] buffer = new byte[info.xsize * info.ysize * 4];
-										fixed (byte* output = buffer)
-										{
-											var pixelFormat = new JxlPixelFormat
-											{
-												data_type = JxlDataType.JXL_TYPE_UINT8,
-												endianness = JxlEndianness.JXL_NATIVE_ENDIAN,
-												num_channels = 4,
-												align = 0
-											};
+										encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Ignore, info.xsize, info.ysize, 96, 96, buffer);
 
-											nuint size = new();
-											Jxl.JxlDecoderImageOutBufferSize(decoder, &pixelFormat, &size);
+										status = Jxl.JxlDecoderProcessInput(decoder);
 
-											if (info.xsize * info.ysize * sizeof(byte) * 4 != size.ToUInt64())
-											{
-												return false;
-											}
-											if ((ulong)(buffer.Length * sizeof(byte)) != size.ToUInt64())
-											{
-												return false;
-											}
-
-											if (cancellationToken.IsCancellationRequested)
-												return false;
-
-											Jxl.JxlDecoderSetImageOutBuffer(decoder, &pixelFormat, output, (nuint)(buffer.Length * sizeof(byte)));
-
-											status = Jxl.JxlDecoderProcessInput(decoder);
-
-											if (cancellationToken.IsCancellationRequested)
-												return false;
-											if (status != JxlDecoderStatus.JXL_DEC_FULL_IMAGE)
-												return false;
-
-											encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Ignore, info.xsize, info.ysize, 96, 96, buffer);
-
-											status = Jxl.JxlDecoderProcessInput(decoder);
-
-											// JXL_DEC_FRAME means animation, we don't support that so display a single frame instead
-											if (status != JxlDecoderStatus.JXL_DEC_SUCCESS && status != JxlDecoderStatus.JXL_DEC_FRAME)
-												return false;
-										}
+										// JXL_DEC_FRAME means animation, we don't support that so display a single frame instead
+										if (status != JxlDecoderStatus.JXL_DEC_SUCCESS && status != JxlDecoderStatus.JXL_DEC_FRAME)
+											return false;
 									}
 								}
-								finally
-								{
-									Jxl.JxlDecoderDestroy(decoder);
-									JxlThreads.JxlResizableParallelRunnerDestroy(runner);
-								}
 							}
-							return true;
-						});
-						if (ok)
-						{
-							if (cancellationToken.IsCancellationRequested)
-								return null;
-							await encoder.FlushAsync();
-							await image.SetSourceAsync(converted);
+							finally
+							{
+								Jxl.JxlDecoderDestroy(decoder);
+								JxlThreads.JxlResizableParallelRunnerDestroy(runner);
+							}
 						}
-						else
-						{
+						return true;
+					});
+					if (ok)
+					{
+						if (cancellationToken.IsCancellationRequested)
 							return null;
-						}
+						await encoder.FlushAsync();
+						await image.SetSourceAsync(converted);
+					}
+					else
+					{
+						return null;
 					}
 				}
 				else
