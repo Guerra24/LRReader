@@ -9,7 +9,6 @@ using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SkiaSharp;
-using System.Numerics;
 
 namespace LRReader.Avalonia.Views.Controls;
 
@@ -59,7 +58,7 @@ public partial class VirtualImage : Control
 				return;
 
 			Visual = compositor.CreateCustomVisual(new VirtualImageCustomVisualHandler());
-			Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+			Visual.Size = new Vector(Bounds.Size.Width, Bounds.Size.Height);
 
 			ElementComposition.SetElementChildVisual(this, Visual);
 
@@ -117,7 +116,7 @@ public partial class VirtualImage : Control
 	{
 		if (Visual == null)
 			return;
-		Visual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+		Visual.Size = new Vector(Bounds.Size.Width, Bounds.Size.Height);
 	}
 
 	public async Task SetSourceAsync(byte[] bytes, CancellationToken cancellationToken = default)

@@ -184,27 +184,27 @@ public sealed partial class ArchiveTabContent : UserControl
 	{
 		if (ReaderControl.ActualWidth == 0 || ReaderControl.ActualHeight == 0)
 			return;
-		float zoomFactor;
+		double zoomFactor;
 		if (Data.UseVerticalReader)
 		{
 			if (_fitAgainstFixedWidth == 0)
 				_fitAgainstFixedWidth = ReaderControl.ActualWidth;
-			zoomFactor = (float)(ScrollViewer.ViewportWidth / _fitAgainstFixedWidth);
+			zoomFactor = ScrollViewer.ViewportWidth / _fitAgainstFixedWidth;
 		}
 		else if (Data.FitToWidth)
 		{
-			zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Data.FitScaleLimit * 0.01);
+			zoomFactor = Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, Data.FitScaleLimit * 0.01);
 		}
 		else
 		{
-			zoomFactor = (float)Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
+			zoomFactor = Math.Min(ScrollViewer.ViewportWidth / ReaderControl.ActualWidth, ScrollViewer.ViewportHeight / ReaderControl.ActualHeight);
 		}
-		var zoom = zoomFactor * (Data.ZoomValue * 0.01f);
+		var zoom = zoomFactor * (Data.ZoomValue * 0.01);
 		if (zoom != _lastZoom || force)
 		{
 			_lastZoom = zoom;
 			var yOffset = ScrollViewer.VerticalOffset / ScrollViewer.ZoomFactor * zoom;
-			ScrollViewer.ChangeView(null, yOffset, zoom, disableAnim || !Animate);
+			ScrollViewer.ChangeView(null, yOffset, (float)zoom, disableAnim || !Animate);
 		}
 	}
 

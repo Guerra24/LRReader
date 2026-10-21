@@ -200,22 +200,22 @@ public partial class ArchiveTabContent : UserControl
 	{
 		if (ReaderControl.Bounds.Width == 0 || ReaderControl.Bounds.Height == 0)
 			return;
-		float zoomFactor;
+		double zoomFactor;
 		if (Data.UseVerticalReader)
 		{
 			if (_fitAgainstFixedWidth == 0)
 				_fitAgainstFixedWidth = ReaderControl.Bounds.Width;
-			zoomFactor = (float)(ScrollViewer.Viewport.Width / _fitAgainstFixedWidth);
+			zoomFactor = ScrollViewer.Viewport.Width / _fitAgainstFixedWidth;
 		}
 		else if (Data.FitToWidth)
 		{
-			zoomFactor = (float)Math.Min(ScrollViewer.Viewport.Width / ReaderControl.Bounds.Width, Data.FitScaleLimit * 0.01);
+			zoomFactor = Math.Min(ScrollViewer.Viewport.Width / ReaderControl.Bounds.Width, Data.FitScaleLimit * 0.01);
 		}
 		else
 		{
-			zoomFactor = (float)Math.Min(ScrollViewer.Viewport.Width / ReaderControl.Bounds.Width, ScrollViewer.Viewport.Height / ReaderControl.Bounds.Height);
+			zoomFactor = Math.Min(ScrollViewer.Viewport.Width / ReaderControl.Bounds.Width, ScrollViewer.Viewport.Height / ReaderControl.Bounds.Height);
 		}
-		var zoom = zoomFactor * (Data.ZoomValue * 0.01f);
+		var zoom = zoomFactor * (Data.ZoomValue * 0.01);
 		if (zoom != _lastZoom || force)
 		{
 			_lastZoom = zoom;

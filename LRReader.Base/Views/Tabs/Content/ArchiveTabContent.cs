@@ -43,7 +43,7 @@ public partial class ArchiveTabContent : UserControl
 	private bool _opened;
 	private bool _focus = true;
 	private bool _changingPage;
-	private float _lastZoom;
+	private double _lastZoom;
 	private double _fitAgainstFixedWidth;
 	private bool _overlayDelayOpen;
 

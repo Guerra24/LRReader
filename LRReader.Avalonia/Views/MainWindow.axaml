@@ -6,6 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="LRReader.Avalonia.Views.MainWindow"
         Title="LRReader"
+        MinWidth="500"
+        MinHeight="320"
         Icon="/Assets/Square44x44Logo.altform-unplated_targetsize-256.png">
     <views:Root x:Name="Root" x:FieldModifier="public" />
 </Window>
