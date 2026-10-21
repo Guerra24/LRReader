@@ -42,7 +42,7 @@ public partial class ArchiveList : UserControl
 		});
 		SearchBox.DropDownClosed += async (sender, e) =>
 		{
-			if (SearchBox.SelectedItem != null)
+			if (SearchBox.SelectedItem != null && SearchBox.SelectedItem.ToString() == SearchBox.Text)
 			{
 				query = SearchBox.Text ?? "";
 				await HandleSearch();
