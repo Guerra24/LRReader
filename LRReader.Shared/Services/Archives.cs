@@ -38,7 +38,7 @@ namespace LRReader.Shared.Services
 
 		[UnconditionalSuppressMessage("Trimming", "IL2026")]
 		[UnconditionalSuppressMessage("AOT", "IL3050")]
-		public async Task ReloadArchives(bool force = true) // TODO: Change this later
+		public async Task ReloadArchives(bool force = false)
 		{
 			await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 			Archives.Clear();
