@@ -1,5 +1,4 @@
 ﻿using LRReader.Shared.Extensions;
-using LRReader.Shared.Models.Main;
 using LRReader.Shared.Services;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;

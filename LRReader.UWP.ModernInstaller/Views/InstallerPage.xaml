@@ -56,10 +56,10 @@
 				</StackPanel>
 			</Grid>
 		</Grid>
-		<Button Click="Button_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="8" Style="{StaticResource MiniButton}">
+		<!--<Button Click="Button_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="8" Style="{StaticResource MiniButton}">
 			<Viewbox>
 				<SymbolIcon Symbol="Setting" />
 			</Viewbox>
-		</Button>
+		</Button>-->
 	</Grid>
 </Page>

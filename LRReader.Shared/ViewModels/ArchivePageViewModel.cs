@@ -11,8 +11,6 @@ using System.Collections.ObjectModel;
 namespace LRReader.Shared.ViewModels
 {
 
-	public delegate void ZoomChanged();
-
 	public partial class ArchivePageViewModel : ArchiveBaseViewModel
 	{
 		private readonly IDispatcherService Dispatcher;
@@ -89,7 +87,7 @@ namespace LRReader.Shared.ViewModels
 				}
 			}
 		}
-		public event ZoomChanged? ZoomChangedEvent;
+		public event Action? ZoomChangedEvent;
 
 		private bool _readRTL;
 		public bool ReadRTL

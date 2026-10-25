@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TerraFX.Interop.Windows;
 using Windows.Management.Deployment;
@@ -28,8 +27,8 @@ internal partial class Program
 	{
 		if (!OperatingSystem.IsWindowsVersionAtLeast(10, 0, 19041, 0))
 		{
-			fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Not supported"))
-			fixed (char* content = &Utf16StringMarshaller.GetPinnableReference("LRReader requires Windows 10 20H1 or newer"))
+			fixed (char* title = "Not supported")
+			fixed (char* content = "LRReader requires Windows 10 20H1 or newer")
 				MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 			return 0;
 		}
@@ -84,16 +83,16 @@ internal partial class Program
 				var res = pm.AddPackageByUriAsync(new Uri($"https://s3.guerra24.net/projects/lrr/windows/deps/{currentArch.ToString().ToLower()}/Microsoft.UI.Xaml.2.8.appx"), new AddPackageOptions()).GetAwaiter().GetResult();
 				if (!res.IsRegistered)
 				{
-					fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
-					fixed (char* content = &Utf16StringMarshaller.GetPinnableReference(res.ErrorText))
+					fixed (char* title = "Error")
+					fixed (char* content = res.ErrorText)
 						MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 					return 0;
 				}
 			}
 			catch (Exception e)
 			{
-				fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
-				fixed (char* content = &Utf16StringMarshaller.GetPinnableReference(e.Message))
+				fixed (char* title = "Error")
+				fixed (char* content = e.Message)
 					MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 				return 0;
 			}
@@ -102,8 +101,8 @@ internal partial class Program
 		var hr = AddPackage(winuiPfn);
 		if (FAILED(hr))
 		{
-			fixed (char* title = &Utf16StringMarshaller.GetPinnableReference("Error"))
-			fixed (char* content = &Utf16StringMarshaller.GetPinnableReference($"Unable to create package dependency. Error: {Marshal.GetExceptionForHR(hr)?.Message} (0x{hr:X8})"))
+			fixed (char* title = "Error")
+			fixed (char* content = $"Unable to create package dependency. Error: {Marshal.GetExceptionForHR(hr)?.Message} (0x{hr:X8})")
 				MessageBoxW(HWND.NULL, content, title, MB_ICONERROR | MB_OK);
 			return 0;
 		}
@@ -128,7 +127,7 @@ internal partial class Program
 	{
 		if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000, 0))
 		{
-			fixed (char* pfn = &Utf16StringMarshaller.GetPinnableReference(packageFamilyName))
+			fixed (char* pfn = packageFamilyName)
 			{
 				char* output;
 				var hr = TryCreatePackageDependency(

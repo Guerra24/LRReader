@@ -5,112 +5,108 @@ using LRReader.Shared.ViewModels.Items;
 using LRReader.Shared.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LRReader.Shared.Services
+namespace LRReader.Shared.Services;
+
+public class Service
 {
-	public delegate void ConfigureServices(ServiceCollection collection);
+	public static IServiceProvider Services { get; private set; } = null!;
 
-	public class Service
+	private static bool Loaded;
+
+	public static void BuildServices(Action<ServiceCollection>? services = null)
 	{
+		var collection = new ServiceCollection();
+		//collection.AddLogging();
 
-		public static IServiceProvider Services { get; set; } = null!;
+		// Services
+		collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
+		collection.AddSingleton<IFilesService, StubFilesService>();
+		collection.AddSingleton<IDispatcherService, StubDispatcherService>();
+		collection.AddSingleton<PlatformService, StubPlatformService>();
+		collection.AddSingleton<UpdatesService, StubUpdatesService>();
+		collection.AddSingleton<ArchivesService>();
+		collection.AddSingleton<SettingsService>();
+		collection.AddSingleton<ImagesService>();
+		collection.AddSingleton<EventsService>();
+		collection.AddSingleton<ApiService>();
+		collection.AddSingleton<TabsService>();
+		collection.AddSingleton<IKarenService, StubKarenService>();
+		collection.AddSingleton<SessionService>();
 
-		private static bool Loaded;
+		// Tools
+		collection.AddSingleton<DeduplicationTool>();
 
-		public static void BuildServices(ConfigureServices? services = null)
-		{
-			var collection = new ServiceCollection();
-			//collection.AddLogging();
+		// Pages
+		collection.AddSingleton<ArchivesPageViewModel>();
+		collection.AddSingleton<BookmarksTabViewModel>();
+		collection.AddSingleton<CategoriesViewModel>();
+		collection.AddSingleton<LoadingPageViewModel>();
+		collection.AddSingleton<SettingsPageViewModel>();
+		collection.AddTransient<SearchResultsViewModel>();
+		collection.AddTransient<ArchiveEditViewModel>();
+		collection.AddTransient<ArchivePageViewModel>();
+		collection.AddTransient<CategoryEditViewModel>();
+		collection.AddTransient<ArchiveItemViewModel>();
+		collection.AddTransient<CategoryBaseViewModel>();
+		collection.AddTransient<ArchiveImageViewModel>();
+		collection.AddTransient<TankoubonsViewModel>();
+		collection.AddTransient<TankoubonBaseViewModel>();
+		collection.AddTransient<TankoubonViewModel>();
+		collection.AddTransient<TankoubonEditViewModel>();
 
-			// Services
-			collection.AddSingleton<ISettingsStorageService, StubSettingsStorageService>();
-			collection.AddSingleton<IFilesService, StubFilesService>();
-			collection.AddSingleton<IDispatcherService, StubDispatcherService>();
-			collection.AddSingleton<PlatformService, StubPlatformService>();
-			collection.AddSingleton<UpdatesService, StubUpdatesService>();
-			collection.AddSingleton<ArchivesService>();
-			collection.AddSingleton<SettingsService>();
-			collection.AddSingleton<ImagesService>();
-			collection.AddSingleton<EventsService>();
-			collection.AddSingleton<ApiService>();
-			collection.AddSingleton<TabsService>();
-			collection.AddSingleton<IKarenService, StubKarenService>();
-			collection.AddSingleton<SessionService>();
+		collection.AddTransient<ArchiveHitViewModel>();
+		collection.AddTransient<ArchiveHitPreviewViewModel>();
 
-			// Tools
-			collection.AddSingleton<DeduplicationTool>();
+		// Tool's Pages
+		collection.AddSingleton<DeduplicatorToolViewModel>();
+		collection.AddSingleton<DeduplicatorHiddenViewModel>();
+		collection.AddSingleton<BulkEditorViewModel>();
+		collection.AddSingleton<RegistryManagerViewModel>();
 
-			// Pages
-			collection.AddSingleton<ArchivesPageViewModel>();
-			collection.AddSingleton<BookmarksTabViewModel>();
-			collection.AddSingleton<CategoriesViewModel>();
-			collection.AddSingleton<LoadingPageViewModel>();
-			collection.AddSingleton<SettingsPageViewModel>();
-			collection.AddTransient<SearchResultsViewModel>();
-			collection.AddTransient<ArchiveEditViewModel>();
-			collection.AddTransient<ArchivePageViewModel>();
-			collection.AddTransient<CategoryEditViewModel>();
-			collection.AddTransient<ArchiveItemViewModel>();
-			collection.AddTransient<CategoryBaseViewModel>();
-			collection.AddTransient<ArchiveImageViewModel>();
-			collection.AddTransient<TankoubonsViewModel>();
-			collection.AddTransient<TankoubonBaseViewModel>();
-			collection.AddTransient<TankoubonViewModel>();
-			collection.AddTransient<TankoubonEditViewModel>();
-
-			collection.AddTransient<ArchiveHitViewModel>();
-			collection.AddTransient<ArchiveHitPreviewViewModel>();
-
-			// Tool's Pages
-			collection.AddSingleton<DeduplicatorToolViewModel>();
-			collection.AddSingleton<DeduplicatorHiddenViewModel>();
-			collection.AddSingleton<BulkEditorViewModel>();
-			collection.AddSingleton<RegistryManagerViewModel>();
-
-			services?.Invoke(collection);
-			Services = collection.BuildServiceProvider();
-		}
-
-		public static async Task InitServices()
-		{
-			if (Loaded)
-				return;
-			Loaded = true;
-			Dispatcher.Init();
-			Platform.Init();
-			await SettingsStorage.Init();
-			await Settings.Init();
-			await Images.Init();
-			await ImageProcessing.Init();
-		}
-
-		public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
-		public static IFilesService Files => Services.GetRequiredService<IFilesService>();
-		public static IDispatcherService Dispatcher => Services.GetRequiredService<IDispatcherService>();
-		public static PlatformService Platform => Services.GetRequiredService<PlatformService>();
-		public static UpdatesService Updates => Services.GetRequiredService<UpdatesService>();
-		public static ImageProcessingService ImageProcessing => Services.GetRequiredService<ImageProcessingService>();
-		public static ArchivesService Archives => Services.GetRequiredService<ArchivesService>();
-		public static SettingsService Settings => Services.GetRequiredService<SettingsService>();
-		public static ImagesService Images => Services.GetRequiredService<ImagesService>();
-		public static EventsService Events => Services.GetRequiredService<EventsService>();
-		public static ApiService Api => Services.GetRequiredService<ApiService>();
-		public static TabsService Tabs => Services.GetRequiredService<TabsService>();
-		public static IKarenService Karen => Services.GetRequiredService<IKarenService>();
-		public static SessionService Session => Services.GetRequiredService<SessionService>();
-
-		// Insanity
-		public static SettingsPageViewModel SettingsPageViewModel => Services.GetRequiredService<SettingsPageViewModel>();
-		public static DeduplicatorToolViewModel DeduplicatorToolViewModel => Services.GetRequiredService<DeduplicatorToolViewModel>();
-		public static DeduplicatorHiddenViewModel DeduplicatorHiddenViewModel => Services.GetRequiredService<DeduplicatorHiddenViewModel>();
-
+		services?.Invoke(collection);
+		Services = collection.BuildServiceProvider();
 	}
 
-	public interface IService
+	public static async Task InitServices()
 	{
-		Task Init();
+		if (Loaded)
+			return;
+		Loaded = true;
+		Dispatcher.Init();
+		Platform.Init();
+		await SettingsStorage.Init();
+		await Settings.Init();
+		await Images.Init();
+		await ImageProcessing.Init();
 	}
 
-	public interface IEntryPoint
-	{
-	}
+	public static ISettingsStorageService SettingsStorage => Services.GetRequiredService<ISettingsStorageService>();
+	public static IFilesService Files => Services.GetRequiredService<IFilesService>();
+	public static IDispatcherService Dispatcher => Services.GetRequiredService<IDispatcherService>();
+	public static PlatformService Platform => Services.GetRequiredService<PlatformService>();
+	public static UpdatesService Updates => Services.GetRequiredService<UpdatesService>();
+	public static ImageProcessingService ImageProcessing => Services.GetRequiredService<ImageProcessingService>();
+	public static ArchivesService Archives => Services.GetRequiredService<ArchivesService>();
+	public static SettingsService Settings => Services.GetRequiredService<SettingsService>();
+	public static ImagesService Images => Services.GetRequiredService<ImagesService>();
+	public static EventsService Events => Services.GetRequiredService<EventsService>();
+	public static ApiService Api => Services.GetRequiredService<ApiService>();
+	public static TabsService Tabs => Services.GetRequiredService<TabsService>();
+	public static IKarenService Karen => Services.GetRequiredService<IKarenService>();
+	public static SessionService Session => Services.GetRequiredService<SessionService>();
+
+	// Insanity
+	public static SettingsPageViewModel SettingsPageViewModel => Services.GetRequiredService<SettingsPageViewModel>();
+	public static DeduplicatorToolViewModel DeduplicatorToolViewModel => Services.GetRequiredService<DeduplicatorToolViewModel>();
+	public static DeduplicatorHiddenViewModel DeduplicatorHiddenViewModel => Services.GetRequiredService<DeduplicatorHiddenViewModel>();
+
+}
+
+public interface IService
+{
+	Task Init();
+}
+
+public interface IEntryPoint
+{
 }
