@@ -6,16 +6,16 @@ namespace LRReader.UWP.Services;
 
 public class SettingsStorageService : ISettingsStorageService
 {
-	private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-	private ApplicationDataContainer roamedSettings = ApplicationData.Current.RoamingSettings;
+	private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+	private readonly ApplicationDataContainer roamedSettings = ApplicationData.Current.RoamingSettings;
 
-	private Dictionary<string, object?> Cache = new();
+	private readonly Dictionary<string, object?> Cache = new();
 
 	public Task Init() => Task.CompletedTask;
 
 	public T? GetObjectLocal<T>([CallerMemberName] string? key = null) => GetObjectLocal<T>(default, key);
 
-	[return: NotNullIfNotNull("def")]
+	[return: NotNullIfNotNull(nameof(def))]
 	public T? GetObjectLocal<T>(T? def, [CallerMemberName] string? key = null)
 	{
 		if (Cache.TryGetValue(key!, out var obj))
@@ -28,7 +28,7 @@ public class SettingsStorageService : ISettingsStorageService
 
 	public T? GetObjectRoamed<T>([CallerMemberName] string? key = null) => GetObjectRoamed<T>(default, key);
 
-	[return: NotNullIfNotNull("def")]
+	[return: NotNullIfNotNull(nameof(def))]
 	public T? GetObjectRoamed<T>(T? def, [CallerMemberName] string? key = null)
 	{
 		if (Cache.TryGetValue(key!, out var obj))
