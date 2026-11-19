@@ -4,7 +4,9 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LRReader.Shared.Models.Main;
 using LRReader.Shared.Providers;
+
 #if WINDOWS_UWP
+using Windows.Foundation;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using Windows.Storage.AccessCache;

@@ -56,24 +56,32 @@ public sealed class AvifDecoder : IImageDecoder
 							if (rgb.depth > 8)
 							{
 								var rgb48 = MemoryMarshal.Cast<byte, Rgb48>(span);
-								PixelOperations<TPixel>.Instance.FromRgb48(options.Configuration, rgb48, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, rgb48, pixels.Span);
 							}
 							else
 							{
 								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
-								PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, rgb24, pixels.Span);
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_RGBA:
 							if (rgb.depth > 8)
 							{
 								var rgba64 = MemoryMarshal.Cast<byte, Rgba64>(span);
-								PixelOperations<TPixel>.Instance.FromRgba64(options.Configuration, rgba64, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, rgba64, pixels.Span);
 							}
 							else
 							{
-								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
-								PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32, pixels.Span);
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var rgba32 = MemoryMarshal.Cast<byte, Rgba32P>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, rgba32, pixels.Span);
+								}
+								else
+								{
+									var rgba32p = MemoryMarshal.Cast<byte, Rgba32>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, rgba32p, pixels.Span);
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_ARGB:
@@ -83,8 +91,16 @@ public sealed class AvifDecoder : IImageDecoder
 							}
 							else
 							{
-								var argb32 = MemoryMarshal.Cast<byte, Argb32>(span);
-								PixelOperations<TPixel>.Instance.FromArgb32(options.Configuration, argb32, pixels.Span);
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var argb32p = MemoryMarshal.Cast<byte, Argb32P>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, argb32p, pixels.Span);
+								}
+								else
+								{
+									var argb32 = MemoryMarshal.Cast<byte, Argb32>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, argb32, pixels.Span);
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_BGR:
@@ -95,7 +111,7 @@ public sealed class AvifDecoder : IImageDecoder
 							else
 							{
 								var bgr24 = MemoryMarshal.Cast<byte, Bgr24>(span);
-								PixelOperations<TPixel>.Instance.FromBgr24(options.Configuration, bgr24, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, bgr24, pixels.Span);
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_BGRA:
@@ -105,8 +121,16 @@ public sealed class AvifDecoder : IImageDecoder
 							}
 							else
 							{
-								var bgra32 = MemoryMarshal.Cast<byte, Bgra32>(span);
-								PixelOperations<TPixel>.Instance.FromBgra32(options.Configuration, bgra32, pixels.Span);
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var bgra32p = MemoryMarshal.Cast<byte, Bgra32P>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, bgra32p, pixels.Span);
+								}
+								else
+								{
+									var bgra32 = MemoryMarshal.Cast<byte, Bgra32>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, bgra32, pixels.Span);
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_ABGR:
@@ -116,32 +140,40 @@ public sealed class AvifDecoder : IImageDecoder
 							}
 							else
 							{
-								var abgr32 = MemoryMarshal.Cast<byte, Abgr32>(span);
-								PixelOperations<TPixel>.Instance.FromAbgr32(options.Configuration, abgr32, pixels.Span);
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var abgr32p = MemoryMarshal.Cast<byte, Abgr32P>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, abgr32p, pixels.Span);
+								}
+								else
+								{
+									var abgr32 = MemoryMarshal.Cast<byte, Abgr32>(span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, abgr32, pixels.Span);
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_GRAY:
 							if (rgb.depth > 8)
 							{
 								var l16 = MemoryMarshal.Cast<byte, L16>(span);
-								PixelOperations<TPixel>.Instance.FromL16(options.Configuration, l16, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, l16, pixels.Span);
 							}
 							else
 							{
 								var l8 = MemoryMarshal.Cast<byte, L8>(span);
-								PixelOperations<TPixel>.Instance.FromL8(options.Configuration, l8, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, l8, pixels.Span);
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_GRAYA:
 							if (rgb.depth > 8)
 							{
 								var la32 = MemoryMarshal.Cast<byte, La32>(span);
-								PixelOperations<TPixel>.Instance.FromLa32(options.Configuration, la32, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, la32, pixels.Span);
 							}
 							else
 							{
 								var la16 = MemoryMarshal.Cast<byte, La16>(span);
-								PixelOperations<TPixel>.Instance.FromLa16(options.Configuration, la16, pixels.Span);
+								PixelOperations<TPixel>.Instance.From(options.Configuration, la16, pixels.Span);
 							}
 							break;
 						default:
@@ -157,14 +189,13 @@ public sealed class AvifDecoder : IImageDecoder
 							{
 								var rgb48 = MemoryMarshal.Cast<byte, Rgb48>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromRgb48(options.Configuration, rgb48.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
-								PixelOperations<TPixel>.Instance.FromRgb48(options.Configuration, rgb48, pixels.Span);
+									PixelOperations<TPixel>.Instance.From(options.Configuration, rgb48.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							else
 							{
 								var rgb24 = MemoryMarshal.Cast<byte, Rgb24>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromRgb24(options.Configuration, rgb24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, rgb24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_RGBA:
@@ -172,13 +203,22 @@ public sealed class AvifDecoder : IImageDecoder
 							{
 								var rgba64 = MemoryMarshal.Cast<byte, Rgba64>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromRgba64(options.Configuration, rgba64.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, rgba64.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							else
 							{
-								var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromRgba32(options.Configuration, rgba32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var rgba32p = MemoryMarshal.Cast<byte, Rgba32P>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, rgba32p.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
+								else
+								{
+									var rgba32 = MemoryMarshal.Cast<byte, Rgba32>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, rgba32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_ARGB:
@@ -188,9 +228,18 @@ public sealed class AvifDecoder : IImageDecoder
 							}
 							else
 							{
-								var argb32 = MemoryMarshal.Cast<byte, Argb32>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromArgb32(options.Configuration, argb32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var argb32p = MemoryMarshal.Cast<byte, Argb32P>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, argb32p.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
+								else
+								{
+									var argb32 = MemoryMarshal.Cast<byte, Argb32>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, argb32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_BGR:
@@ -202,7 +251,7 @@ public sealed class AvifDecoder : IImageDecoder
 							{
 								var bgr24 = MemoryMarshal.Cast<byte, Bgr24>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromBgr24(options.Configuration, bgr24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, bgr24.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_BGRA:
@@ -212,9 +261,18 @@ public sealed class AvifDecoder : IImageDecoder
 							}
 							else
 							{
-								var bgra32 = MemoryMarshal.Cast<byte, Bgra32>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromBgra32(options.Configuration, bgra32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var bgra32p = MemoryMarshal.Cast<byte, Bgra32P>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, bgra32p.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
+								else
+								{
+									var bgra32 = MemoryMarshal.Cast<byte, Bgra32>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, bgra32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_ABGR:
@@ -224,9 +282,18 @@ public sealed class AvifDecoder : IImageDecoder
 							}
 							else
 							{
-								var abgr32 = MemoryMarshal.Cast<byte, Abgr32>(span);
-								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromAbgr32(options.Configuration, abgr32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								if (rgb.alphaPremultiplied == 1)
+								{
+									var abgr32p = MemoryMarshal.Cast<byte, Abgr32P>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, abgr32p.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
+								else
+								{
+									var abgr32 = MemoryMarshal.Cast<byte, Abgr32>(span);
+									for (int y = 0; y < image.Height; y++)
+										PixelOperations<TPixel>.Instance.From(options.Configuration, abgr32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+								}
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_GRAY:
@@ -234,13 +301,13 @@ public sealed class AvifDecoder : IImageDecoder
 							{
 								var l16 = MemoryMarshal.Cast<byte, L16>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromL16(options.Configuration, l16.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, l16.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							else
 							{
 								var l8 = MemoryMarshal.Cast<byte, L8>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromL8(options.Configuration, l8.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, l8.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							break;
 						case avifRGBFormat.AVIF_RGB_FORMAT_GRAYA:
@@ -248,13 +315,13 @@ public sealed class AvifDecoder : IImageDecoder
 							{
 								var la32 = MemoryMarshal.Cast<byte, La32>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromLa32(options.Configuration, la32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, la32.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							else
 							{
 								var la16 = MemoryMarshal.Cast<byte, La16>(span);
 								for (int y = 0; y < image.Height; y++)
-									PixelOperations<TPixel>.Instance.FromLa16(options.Configuration, la16.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
+									PixelOperations<TPixel>.Instance.From(options.Configuration, la16.Slice(image.Width * y, image.Width), image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y));
 							}
 							break;
 						default:

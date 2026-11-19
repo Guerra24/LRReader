@@ -137,7 +137,7 @@ public partial class VirtualImage : Control
 
 			try
 			{
-				using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(options, bytes);
+				using var source = SixLabors.ImageSharp.Image.Load<Rgba32P>(options, bytes);
 
 				if (cancellationToken.IsCancellationRequested)
 					return null;
@@ -184,7 +184,7 @@ public partial class VirtualImage : Control
 				TargetSize = (decodePixelWidth != 0 || decodePixelHeight != 0) ? new((int)Math.Round(decodePixelWidth * RenderScaling), (int)Math.Round(decodePixelHeight * RenderScaling)) : null
 			};
 
-			using var source = SixLabors.ImageSharp.Image.Load<Rgba32>(options, Original);
+			using var source = SixLabors.ImageSharp.Image.Load<Rgba32P>(options, Original);
 
 			ImageWidth = source.Width;
 			ImageHeight = source.Height;

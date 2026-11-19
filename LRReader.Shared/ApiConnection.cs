@@ -32,7 +32,7 @@ public static class ApiExtensions
 		}
 		else
 		{
-			ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
+			ShowNotification(result.Error?.errors?.FirstOrDefault()?.message ?? result.Error?.operation ?? "", result.Error?.error ?? "");
 			return false;
 		}
 	}
@@ -62,7 +62,7 @@ public static class ApiExtensions
 		}
 		else
 		{
-			ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
+			ShowNotification(result.Error?.errors?.FirstOrDefault()?.message ?? result.Error?.operation ?? "", result.Error?.error ?? "");
 			return default;
 		}
 	}
@@ -81,7 +81,7 @@ public static class ApiExtensions
 		}
 		else
 		{
-			ShowNotification(result.Error?.operation ?? "", result.Error?.error ?? "");
+			ShowNotification(result.Error?.errors?.FirstOrDefault()?.message ?? result.Error?.operation ?? "", result.Error?.error ?? "");
 			return null;
 		}
 	}

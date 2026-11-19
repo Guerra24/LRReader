@@ -9,7 +9,9 @@ using LRReader.Shared.Providers;
 using LRReader.Shared.Services;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+
 #if WINDOWS_UWP
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System.UserProfile;

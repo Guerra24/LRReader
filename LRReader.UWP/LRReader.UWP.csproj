@@ -17,7 +17,7 @@
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
     <MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>1.7.261102100</MicrosoftWindowsSdkBuildToolsMSIXPackageVersion>
-    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.26100.9457</MicrosoftWindowsSDKBuildToolsPackageVersion>
+    <MicrosoftWindowsSDKBuildToolsPackageVersion>10.0.28000.2957</MicrosoftWindowsSDKBuildToolsPackageVersion>
     <WindowsSdkPackageVersion>10.0.26100.87</WindowsSdkPackageVersion>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
@@ -74,7 +74,7 @@
     <PackageReference Include="CommunityToolkit.Uwp.Extensions" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Helpers" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.Uwp.Media" Version="8.2.251219" />
-    <PackageReference Include="COMplicated.WinUI" Version="2.8.8-prerelease.261109002" Condition="'$(DebuggingWinUI)' == 'false'" />
+    <PackageReference Include="COMplicated.WinUI" Version="2.8.8-prerelease.261111001" Condition="'$(DebuggingWinUI)' == 'false'" />
     <PackageReference Include="Markdig" Version="1.6.0" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" ExcludeAssets="all" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />

@@ -206,7 +206,7 @@ public class ButtonExtension : AvaloniaObject
 
 public static class ImageExtensions
 {
-	public static SKImage ToSKImage(this Image<Rgba32> image)
+	public static SKImage ToSKImage(this Image<Rgba32P> image)
 	{
 		var info = new SKImageInfo(image.Width, image.Height, SKColorType.Rgba8888, SKAlphaType.Opaque);
 		unsafe

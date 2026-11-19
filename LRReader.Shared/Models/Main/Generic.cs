@@ -10,7 +10,11 @@ namespace LRReader.Shared.Models.Main
 		[JsonConverter(typeof(BoolConverter))]
 		public bool success { get; set; }
 		public string? error { get; set; }
+		public List<OAPIError>? errors { get; set; }
+		public int status { get; set; }
 	}
+
+	public record OAPIError(string message, string path);
 
 	public class MinionJob : GenericApiResult
 	{

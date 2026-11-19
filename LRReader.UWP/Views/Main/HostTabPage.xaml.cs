@@ -172,8 +172,10 @@ namespace LRReader.UWP.Views.Main
 
 		private async void AddFile_Click(object sender, RoutedEventArgs e)
 		{
-			var picker = new FileOpenPicker();
-			picker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+			var picker = new FileOpenPicker
+			{
+				SuggestedStartLocation = PickerLocationId.ComputerFolder
+			};
 			picker.FileTypeFilter.Add(".zip");
 			picker.FileTypeFilter.Add(".rar");
 			picker.FileTypeFilter.Add(".7z");
@@ -194,7 +196,7 @@ namespace LRReader.UWP.Views.Main
 			if (file != null)
 			{
 				var data = await FileIO.ReadBufferAsync(file);
-				await LRReader.Shared.Providers.ArchivesProvider.UploadArchive(file.Name, data.ToArray());
+				await Shared.Providers.ArchivesProvider.UploadArchive(file.Name, data.ToArray());
 			}
 		}
 
